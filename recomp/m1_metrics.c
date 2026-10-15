@@ -3,6 +3,43 @@
 #include <stdlib.h>
 #include "cpu_state.h"
 #include "snes/snes.h"
+#include "audio_trace.h"
+
+/* Desktop shutdown invokes this before destroying the APU mutex. The
+ * existing API takes a coherent PCM snapshot while holding that mutex. */
+void M1AudioShutdown(void)
+{
+    const char *wav = getenv("M1_AUDIO_WAV");
+    const char *report = getenv("M1_AUDIO_REPORT");
+    if (!wav || !*wav) return;
+    uint64_t start = 0, count = 0;
+    AudioTraceStats stats;
+    audio_trace_get_stats(&stats);
+    int result = audio_trace_dump_wav(wav, 0, 0, &start, &count);
+    if (report && *report) {
+        FILE *out = fopen(report, "w");
+        if (!out) { perror("M1_AUDIO_REPORT"); exit(1); }
+        fprintf(out,
+                "{\"wav_result\":%d,\"start_sample\":%llu,\"sample_frames\":%llu,"
+                "\"produced\":%llu,\"consumed\":%llu,\"dropped\":%llu,"
+                "\"dropped_audible\":%llu,\"output_underflows\":%llu,"
+                "\"output_missing_frames\":%llu,\"output_priming\":%llu,"
+                "\"produced_cpu\":%llu,\"produced_audio\":%llu}\n",
+                result, (unsigned long long)start, (unsigned long long)count,
+                (unsigned long long)stats.produced, (unsigned long long)stats.consumed,
+                (unsigned long long)stats.dropped, (unsigned long long)stats.dropped_audible,
+                (unsigned long long)stats.output_underflows,
+                (unsigned long long)stats.output_missing_frames,
+                (unsigned long long)stats.output_priming,
+                (unsigned long long)stats.produced_cpu, (unsigned long long)stats.produced_audio);
+        if (fclose(out)) { perror("M1_AUDIO_REPORT close"); exit(1); }
+    }
+    if (result || start != 0 || count == 0) {
+        fprintf(stderr, "[m1] incomplete audio capture: result=%d start=%llu count=%llu\n",
+                result, (unsigned long long)start, (unsigned long long)count);
+        exit(1);
+    }
+}
 
 extern CpuState g_cpu;
 extern Snes *g_snes;

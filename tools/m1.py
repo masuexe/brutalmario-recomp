@@ -39,12 +39,17 @@ def install_metrics():
         glue.write_text(source)
     main = EXPERIMENT / 'src/main.c'
     source = main.read_text()
+    if '.on_shutdown        = &M1AudioShutdown,' not in source:
+        source = source.replace('static const SnesDesktopHostGame kGameHost = {',
+                                'extern void M1AudioShutdown(void);\n\nstatic const SnesDesktopHostGame kGameHost = {\n'
+                                '    .on_shutdown        = &M1AudioShutdown,')
     if 'M1MetricsRegister();' not in source:
         entry = 'int main(int argc, char **argv)\n{\n'
         if source.count(entry) != 1:
             raise ValueError('unexpected host main template; review instrumentation')
         source = source.replace(entry, 'extern void M1MetricsRegister(void);\n\n' +
                                 entry + '    M1MetricsRegister();\n')
+    if source != main.read_text():
         main.write_text(source)
     cmake = EXPERIMENT / 'CMakeLists.txt'
     source = cmake.read_text()
@@ -96,6 +101,7 @@ def run(command, *, log, cwd=ROOT, env=None, seconds=600, memory_gib=None):
 
 
 def main():
+    global BUILD
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stage', choices=['check', 'scaffold', 'generate', 'build', 'reference', 'native'])
     parser.add_argument('--capture', help='new capture name; refuses existing directories')
@@ -104,7 +110,17 @@ def main():
                         help='native renderer override; the default follows recomp/m1-config.ini')
     parser.add_argument('--interpreter-only', action='store_true',
                         help='native diagnostic: exclude every generated PC from AOT bouncing')
+    parser.add_argument('--audio', action='store_true',
+                        help='build/native: isolated full-history audio build; native runs without turbo')
+    parser.add_argument('--audio-device-rate', type=int, choices=[32000, 32040, 48000],
+                        help='native --audio only: override the isolated SDL device rate')
     args = parser.parse_args()
+    if args.audio_device_rate and (args.stage != 'native' or not args.audio):
+        parser.error('--audio-device-rate requires native --audio')
+    if args.audio:
+        if args.stage not in ('build', 'native'):
+            parser.error('--audio applies only to build/native stages')
+        BUILD = ROOT / 'local/build/demo-1-1-audio'
     if args.interpreter_only and args.stage != 'native':
         parser.error('--interpreter-only applies only to the native stage')
     if args.renderer and args.stage != 'native':
@@ -118,7 +134,8 @@ def main():
         build_receipt = json.loads(receipt_path.read_text())
         binary_sha = hashlib.sha256((BUILD / 'BrutalMarioDemo11SNESRecomp').read_bytes()).hexdigest()
         if (build_receipt['runtime_patches'] != runtime_patches or
-                build_receipt['binary_sha256'] != binary_sha):
+                build_receipt['binary_sha256'] != binary_sha or
+                build_receipt.get('audio_diagnostics', False) != args.audio):
             raise ValueError('binary does not match the current runtime patch receipt; rebuild first')
     reports = ROOT / 'local/reports'
     reports.mkdir(parents=True, exist_ok=True)
@@ -150,11 +167,13 @@ def main():
         run(['cmake', '-S', EXPERIMENT, '-B', BUILD, '-G', 'Ninja',
              '-DCMAKE_BUILD_TYPE=Release', f'-DSNESRECOMP_ROOT={ENGINE}',
              '-DSNESRECOMP_SDL_BACKEND=SDL2', '-DSNESRECOMP_SDL3_FETCH=OFF',
+             '-DSNESRECOMP_AUDIO_TRACE_HISTORY=' + ('FULL' if args.audio else 'SMALL'),
              '-DSNESRECOMP_FRAME_IMPL=LLE'], log=reports / 'native-configure.log')
         run(['cmake', '--build', BUILD, '--parallel', '2'], log=reports / 'native-build.log')
         (BUILD / 'm1-build.json').write_text(json.dumps({
             'binary_sha256': hashlib.sha256((BUILD / 'BrutalMarioDemo11SNESRecomp').read_bytes()).hexdigest(),
             'runtime_patches': runtime_patches,
+            'audio_diagnostics': args.audio,
         }, indent=2) + '\n')
     else:
         name = args.capture or args.stage + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
@@ -173,18 +192,26 @@ def main():
                        ROOT / 'local/upstream/snes9x/libretro/snes9x_libretro.so', ROM]
         else:
             script_copy = directory / 'input.script'
-            script_copy.write_text('turbo on\n' + script.read_text())
+            script_copy.write_text(('' if args.audio else 'turbo on\n') + script.read_text())
             config_file = ROOT / 'recomp/m1-config.ini'
-            if args.renderer:
+            if args.renderer or args.audio_device_rate:
                 config_file = directory / 'config.ini'
-                config_file.write_text((ROOT / 'recomp/m1-config.ini').read_text().replace(
-                    'NewRenderer=0', 'NewRenderer=' + str(int(args.renderer == 'optimized'))))
+                settings = (ROOT / 'recomp/m1-config.ini').read_text()
+                if args.renderer:
+                    settings = settings.replace('NewRenderer=0', 'NewRenderer=' + str(int(args.renderer == 'optimized')))
+                if args.audio_device_rate:
+                    settings = settings.replace('EnableAudio=1', 'EnableAudio=1\nAudioFreq=' + str(args.audio_device_rate))
+                config_file.write_text(settings)
             env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy',
                        M1_TIMING_TRACE=str(directory / 'timing.csv'),
                        SNESRECOMP_REWIND='0', SNESRECOMP_CPU_TRACE_RING_ENTRIES='65536',
                        SNESRECOMP_COVERAGE_DIR=str(directory / 'coverage'),
                        SNESRECOMP_DUMP_DIR=str(directory),
                        SNESRECOMP_STATE_TRACE=str(directory / 'state-trace.txt'))
+            if args.audio:
+                env.update(M1_AUDIO_WAV=str(directory / 'audio.wav'),
+                           M1_AUDIO_REPORT=str(directory / 'audio-stats.json'),
+                           SNESRECOMP_AUDIO_STATS=str(directory / 'audio-stats.txt'))
             if args.interpreter_only:
                 manifest = json.loads((EXPERIMENT / 'src/gen/program_manifest.json').read_text())
                 pcs = {int(key.split(':')[0], 16) for key in manifest['nodes']}
@@ -208,6 +235,8 @@ def main():
             'lle_bounce_override': env.get('SNESRECOMP_LLE_BOUNCE', 'upstream default'),
             'interpreter_only_requested': args.interpreter_only,
             'renderer_override': args.renderer,
+            'audio_diagnostics': args.audio,
+            'audio_device_rate_override': args.audio_device_rate,
         }
         (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         run(command, log=directory / 'run.log', cwd=directory, env=env, seconds=180)

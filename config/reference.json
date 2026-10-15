@@ -12,5 +12,11 @@
     "initial_wram_fill": 0,
     "initial_sram": "Fresh core session; no imported SRAM or savestate",
     "input_script": "recomp/inputs/m1-route.script"
+  },
+  "user_reported_native_playtest": {
+    "scope": "Played level 1-1; no issues found so far; level completion not explicitly confirmed",
+    "audio_enabled": true,
+    "audio_observation": "Background music and action effects sounded normal compared with the user's memory of ZSNES 1.51",
+    "evidence": "User report, not a recorded cross-emulator comparison"
   }
 }
