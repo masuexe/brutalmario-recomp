@@ -92,10 +92,13 @@ timing before changing inputs or game code. Snes9x 1.63 remains a comparator;
 the user-confirmed historical compatibility baseline is **ZSNES 1.51**, which
 has not been run locally.
 
-The file-menu background is missing in native output with both renderers.
-The before-timing-fix capture has the same issue, so this patch does not cause
-it. It remains a separate PPU investigation. Audio, level clearing, boss
-qualification, and Windows-native execution are still unqualified.
+At this timing checkpoint, the file-menu background was missing with both
+renderers. This was subsequently traced to render-only HDMA state being
+discarded by complete-register restoration, and is now fixed; see
+[menu-background.md](menu-background.md). Both the file-menu and opening-message
+samples now match the reference picture. The timing differences above remain.
+For later audio and boss checkpoints, see [playtesting.md](playtesting.md).
+Windows-native execution remains unqualified.
 
 ## Reproduction and local evidence
 

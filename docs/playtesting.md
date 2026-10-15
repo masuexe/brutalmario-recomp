@@ -46,4 +46,10 @@ death returns also manually confirmed, this round of basic functionality
 validation is complete, subject to the accepted victory-screen limitation.
 Exact session duration, controller route, and executable hash were not supplied.
 
+After the [file-menu background / HDMA fix](menu-background.md), the user
+manually retested and reported no issues found. This is a further manual
+checkpoint for the rebuilt runtime; the exact route and duration were not
+specified. Residual cross-core timing differences remain an investigation
+item rather than a user-reported gameplay defect.
+
 See [timing.md](timing.md) for automated timing evidence and remaining issues.
