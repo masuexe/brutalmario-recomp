@@ -17,6 +17,7 @@ import sys
 import time
 
 from prepare_rom import verify
+from runtime_patches import configure_runtime, patch_plan
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'local/upstream/snesrecomp'
@@ -88,12 +89,27 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stage', choices=['check', 'scaffold', 'generate', 'build', 'reference', 'native'])
     parser.add_argument('--capture', help='new capture name; refuses existing directories')
+    parser.add_argument('--script', type=Path, help='alternate deterministic input script')
+    parser.add_argument('--renderer', choices=['legacy', 'optimized'],
+                        help='native renderer override; the default follows recomp/m1-config.ini')
     parser.add_argument('--interpreter-only', action='store_true',
                         help='native diagnostic: exclude every generated PC from AOT bouncing')
     args = parser.parse_args()
     if args.interpreter_only and args.stage != 'native':
         parser.error('--interpreter-only applies only to the native stage')
+    if args.renderer and args.stage != 'native':
+        parser.error('--renderer applies only to the native stage')
     pins = pins_check()
+    runtime_patches = patch_plan()
+    if args.stage == 'native':
+        receipt_path = BUILD / 'm1-build.json'
+        if not receipt_path.is_file():
+            raise ValueError('missing build receipt; run tools/m1.py build first')
+        build_receipt = json.loads(receipt_path.read_text())
+        binary_sha = hashlib.sha256((BUILD / 'BrutalMarioDemo11SNESRecomp').read_bytes()).hexdigest()
+        if (build_receipt['runtime_patches'] != runtime_patches or
+                build_receipt['binary_sha256'] != binary_sha):
+            raise ValueError('binary does not match the current runtime patch receipt; rebuild first')
     reports = ROOT / 'local/reports'
     reports.mkdir(parents=True, exist_ok=True)
     if args.stage == 'check':
@@ -120,11 +136,16 @@ def main():
         run(command, log=reports / 'emission-repeat.log', memory_gib=4)
     elif args.stage == 'build':
         install_metrics()
+        configure_runtime(EXPERIMENT)
         run(['cmake', '-S', EXPERIMENT, '-B', BUILD, '-G', 'Ninja',
              '-DCMAKE_BUILD_TYPE=Release', f'-DSNESRECOMP_ROOT={ENGINE}',
              '-DSNESRECOMP_SDL_BACKEND=SDL2', '-DSNESRECOMP_SDL3_FETCH=OFF',
              '-DSNESRECOMP_FRAME_IMPL=LLE'], log=reports / 'native-configure.log')
         run(['cmake', '--build', BUILD, '--parallel', '2'], log=reports / 'native-build.log')
+        (BUILD / 'm1-build.json').write_text(json.dumps({
+            'binary_sha256': hashlib.sha256((BUILD / 'BrutalMarioDemo11SNESRecomp').read_bytes()).hexdigest(),
+            'runtime_patches': runtime_patches,
+        }, indent=2) + '\n')
     else:
         name = args.capture or args.stage + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
         if not re.fullmatch(r'[A-Za-z0-9_-]+', name):
@@ -132,7 +153,7 @@ def main():
         directory = ROOT / 'local/captures' / name
         directory.mkdir(parents=True, exist_ok=False)
         env = os.environ.copy()
-        script = ROOT / 'recomp/inputs/m1-route.script'
+        script = args.script.resolve() if args.script else ROOT / 'recomp/inputs/m1-route.script'
         if args.stage == 'reference':
             env.update(SNESREF_HEADLESS='1', SNESREF_WRAM_FILL='0',
                        SNESREF_SCRIPT=str(script), SNESREF_DUMP_DIR=str(directory),
@@ -143,6 +164,11 @@ def main():
         else:
             script_copy = directory / 'input.script'
             script_copy.write_text('turbo on\n' + script.read_text())
+            config_file = ROOT / 'recomp/m1-config.ini'
+            if args.renderer:
+                config_file = directory / 'config.ini'
+                config_file.write_text((ROOT / 'recomp/m1-config.ini').read_text().replace(
+                    'NewRenderer=0', 'NewRenderer=' + str(int(args.renderer == 'optimized'))))
             env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy',
                        SNESRECOMP_REWIND='0', SNESRECOMP_CPU_TRACE_RING_ENTRIES='65536',
                        SNESRECOMP_COVERAGE_DIR=str(directory / 'coverage'),
@@ -158,17 +184,19 @@ def main():
                 env['SNESRECOMP_LLE_INTERP_TARGET_FILE'] = str(targets)
                 env['SNESRECOMP_LLE_BOUNCE'] = '0'
             command = [BUILD / 'BrutalMarioDemo11SNESRecomp', '--no-launcher',
-                       '--config', ROOT / 'recomp/m1-config.ini', '--coverage-capture=on',
+                       '--config', config_file, '--coverage-capture=on',
                        '--script', script_copy, '--rom', ROM]
         receipt = {
             'stage': args.stage,
             'upstream_pins': pins,
+            'runtime_patches': runtime_patches,
             'rom_sha256': hashlib.sha256(ROM.read_bytes()).hexdigest(),
             'route_sha256': hashlib.sha256(script.read_bytes()).hexdigest(),
             'host_binary_sha256': hashlib.sha256(Path(command[0]).read_bytes()).hexdigest(),
             'initial_state': 'Fresh capture directory; no imported SRAM or savestate',
             'lle_bounce_override': env.get('SNESRECOMP_LLE_BOUNCE', 'upstream default'),
             'interpreter_only_requested': args.interpreter_only,
+            'renderer_override': args.renderer,
         }
         (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
         run(command, log=directory / 'run.log', cwd=directory, env=env, seconds=180)

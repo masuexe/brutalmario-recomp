@@ -1,0 +1,104 @@
+--- a/runner/src/snes/ppu.c
++++ b/runner/src/snes/ppu.c
+@@ -802,17 +802,19 @@
+     s_oam_snap_frame = snes_frame_counter;
+     debug_server_on_oam_render();
+   }
++  /* Frame-model scanout may start at visible line 1, and raster replay can
++   * change MOSAIC between lines. Keep the sampling cache current at every
++   * scanline entry instead of relying on an optional pre-render call. */
++  if (PPU_mosaicSize(ppu) != ppu->lastMosaicModulo) {
++    int mod = PPU_mosaicSize(ppu);
++    ppu->lastMosaicModulo = mod;
++    for (int i = 0, j = 0; i < countof(ppu->mosaicModulo); i++) {
++      ppu->mosaicModulo[i] = i - j;
++      j = (j + 1 == mod ? 0 : j + 1);
++    }
++  }
++
+   if(line == 0) {
+-    if (PPU_mosaicSize(ppu) != ppu->lastMosaicModulo) {
+-      int mod = PPU_mosaicSize(ppu);
+-      ppu->lastMosaicModulo = mod;
+-      for (int i = 0, j = 0; i < countof(ppu->mosaicModulo); i++) {
+-        ppu->mosaicModulo[i] = i - j;
+-        j = (j + 1 == mod ? 0 : j + 1);
+-      }
+-    }
+-
+-
+     // pre-render line
+     // TODO: this now happens halfway into the first line
+     ppu->mosaicStartLine = 1;
+@@ -3176,8 +3178,10 @@
+ static uint8_t s_raster_hdmaen;
+ static int s_raster_hdmaen_pending;
+ static struct {
++  uint8_t regs[PPU_SAVESTATE_REGS_SIZE];
++  uint8_t scrollPrev, scrollPrev2, m7prev;
+   uint8_t oamAdr, oamInHigh, oamSecondWrite, oamBuffer;
+-} s_raster_port;
++} s_raster_guest;
+ 
+ /* Only the machine's PPU journals: the debug server and a few tools run
+  * ppu_write on scratch copies. */
+@@ -3279,10 +3283,17 @@
+    * all there is. */
+   f = s_raster_have_completed ? &s_field[s_raster_cur ^ 1]
+                               : &s_field[s_raster_cur];
+-  s_raster_port.oamAdr = ppu->oamAdr;
+-  s_raster_port.oamInHigh = ppu->oamInHigh;
+-  s_raster_port.oamSecondWrite = ppu->oamSecondWrite;
+-  s_raster_port.oamBuffer = ppu->oamBuffer;
++  /* Scanout reconstructs a completed field, not the guest's current register
++   * file. Save the live state even when the new field has no writes: replay
++   * alone cannot restore registers absent from that field's journal. */
++  memcpy(s_raster_guest.regs, &ppu->inidisp, PPU_SAVESTATE_REGS_SIZE);
++  s_raster_guest.scrollPrev = ppu->scrollPrev;
++  s_raster_guest.scrollPrev2 = ppu->scrollPrev2;
++  s_raster_guest.m7prev = ppu->m7prev;
++  s_raster_guest.oamAdr = ppu->oamAdr;
++  s_raster_guest.oamInHigh = ppu->oamInHigh;
++  s_raster_guest.oamSecondWrite = ppu->oamSecondWrite;
++  s_raster_guest.oamBuffer = ppu->oamBuffer;
+   memcpy(&ppu->inidisp, f->regs, PPU_SAVESTATE_REGS_SIZE);
+   ppu->scrollPrev = f->scrollPrev;
+   ppu->scrollPrev2 = f->scrollPrev2;
+@@ -3326,26 +3337,20 @@
+   }
+ }
+ 
+-/* The render reconstructed the completed field. Writes the guest has made
+- * since that field ended -- a CPU half that ran past V=225 -- are still in
+- * the recording journal: put them back, so the guest resumes with the
+- * register file it last wrote. The OAM port is the guest's, not display
+- * state: an OAMADD replay must not move it. */
++/* Rendering must not roll the live guest back to a completed field's state.
++ * Restore the complete register file and write latches saved at RenderBegin,
++ * including registers with no new-field journal entries and the OAM port. */
+ void ppu_rasterRenderEnd(Ppu *ppu) {
+-  const PpuRasterField *f;
+-  int i;
+   if (!s_raster_armed || !s_raster_rendering) return;
+   s_raster_rendering = 0;
+-  if (s_raster_have_completed) {
+-    f = &s_field[s_raster_cur];
+-    for (i = 0; i < f->count; i++)
+-      if (f->e[i].reg != 0x420C)
+-        raster_replay(ppu, f->e[i].reg, f->e[i].val);
+-  }
+-  ppu->oamAdr = s_raster_port.oamAdr;
+-  ppu->oamInHigh = s_raster_port.oamInHigh;
+-  ppu->oamSecondWrite = s_raster_port.oamSecondWrite;
+-  ppu->oamBuffer = s_raster_port.oamBuffer;
++  memcpy(&ppu->inidisp, s_raster_guest.regs, PPU_SAVESTATE_REGS_SIZE);
++  ppu->scrollPrev = s_raster_guest.scrollPrev;
++  ppu->scrollPrev2 = s_raster_guest.scrollPrev2;
++  ppu->m7prev = s_raster_guest.m7prev;
++  ppu->oamAdr = s_raster_guest.oamAdr;
++  ppu->oamInHigh = s_raster_guest.oamInHigh;
++  ppu->oamSecondWrite = s_raster_guest.oamSecondWrite;
++  ppu->oamBuffer = s_raster_guest.oamBuffer;
+ }
+ 
+ /* Snapshot of the journal as the renderer will consume it, for the debug
