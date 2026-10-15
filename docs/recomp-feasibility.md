@@ -1,6 +1,6 @@
 # Recompilation feasibility and M1 experiment
 
-Reviewed on 2026-10-15. **A controlled M1 experiment is justified; Brutal Mario recompilation and playability remain unproven.** This pass covers local M0 inspection and online upstream documentation/selected source reads. No upstream analyzer, compiler, or game was run.
+Initial assessment on 2026-10-15, retained below as the experiment plan. **M1 has since reached native boot and a scripted level segment; fidelity and boss acceptance remain unproven.** See [m1.md](m1.md) for pinned source revisions, actual commands, measured results, and limitations.
 
 ## Verified upstream boundaries
 
@@ -11,7 +11,7 @@ Reviewed on 2026-10-15. **A controlled M1 experiment is justified; Brutal Mario 
 - The [SMW project README](https://github.com/mstan/SuperMarioWorldRecomp) and [regen.sh](https://github.com/mstan/SuperMarioWorldRecomp/blob/main/tools/regen.sh) establish game-specific configuration and runtime integration. Swapping ROMs cannot establish reuse of stock function boundaries, HLE, or audio assumptions.
 - Current [SNESRecomp](https://github.com/RetroPortingToolKit/snesrecomp/blob/main/LICENSE) and [SMW](https://github.com/mstan/SuperMarioWorldRecomp/blob/main/LICENSE) license files say PolyForm Noncommercial 1.0.0; dependencies have separate notices. No upstream code was copied into this repository.
 
-Limitation: online main references are mutable and have not been pinned. GitHub API commit queries failed; local network policy blocked an outbound request, while browser reads succeeded. M1 must obtain usable source, record exact commits/submodule pins, and recheck these findings. Some design documents retain older status text; documentation is not local execution evidence.
+Initial limitation: the M0 browser references were mutable and unpinned. M1 resolved this by downloading local checkouts and recording exact commits in `config/upstreams.json`. Source inspection also corrected an outdated assumption: the current analyzer is Rust-only, and the current scaffold supplies a shared beam-aligned frame driver. Some upstream design documents retain older status text; use the pinned implementation and execution evidence in [m1.md](m1.md).
 
 ## Risks and open questions
 
@@ -42,4 +42,4 @@ Limitation: online main references are mutable and have not been pinned. GitHub 
 - Gameplay: complete a level segment and a custom boss attack cycle. Compare logic, video, and audio against the same-input baseline; document differences and fallback coverage.
 - If mapping, frame driving, or the fallback bridge blocks progress, or the same failure persists after two evidence-based repair attempts, produce a focused reproducer and assess framework changes or another route. Do not substitute indefinite attempts or silent HLE for a result.
 
-The next implementation step is pinning the toolchain and preparing the local target ROM. Historical content integration remains deferred until Demo 1-1 is stable.
+Toolchain pinning, ROM preparation, initial code generation, native compilation, and boot smoke tests are now implemented. The next work is isolating observed reference/native divergences before expanding static coverage or testing a custom boss. Historical content integration remains deferred until Demo 1-1 is stable.

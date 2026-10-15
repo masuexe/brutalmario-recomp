@@ -1,0 +1,16 @@
+{
+  "user_reported_working_environment": {
+    "emulator": "ZSNES",
+    "version": "1.51",
+    "locally_reproduced": false
+  },
+  "automated_comparator": {
+    "emulator": "Snes9x",
+    "version": "1.63",
+    "commit_key": "snes9x_reference",
+    "role": "Independent automated comparator; does not replace the ZSNES baseline",
+    "initial_wram_fill": 0,
+    "initial_sram": "Fresh core session; no imported SRAM or savestate",
+    "input_script": "recomp/inputs/m1-route.script"
+  }
+}

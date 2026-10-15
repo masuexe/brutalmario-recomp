@@ -1,0 +1,17 @@
+# Start from a clean session; inspect each menu transition.
+wait 600
+press start 2
+wait 180
+dump files
+press start 2
+wait 180
+dump player-menu
+press start 2
+wait 600
+dump intro-or-map
+press b 2
+wait 300
+dump after-confirm
+wait 300
+dump later
+quit

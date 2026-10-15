@@ -1,0 +1,28 @@
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press y 30
+wait 180
+dump level-entry
+press right+y 60
+dump walk
+press right+y+b 30
+press right+y 30
+press right+y+b 30
+press right+y 30
+dump segment
+wait 3600
+dump endurance
+quit

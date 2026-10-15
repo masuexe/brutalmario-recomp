@@ -32,7 +32,7 @@ Demo 1-1 writes ROM/SRAM size fields at IPS offset `0x81D7`. Standard headerless
 
 This supports headered IPS coordinates for Demo 1-1. Direct application can retain the original title and checksum/complement relationship while putting modifications at incorrect offsets. Those checks alone do not detect the problem.
 
-The **candidate** correctly aligned headerless Demo 1-1 has SHA-256 `314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32` and CRC32 `08ad808b`. It has only been constructed in memory, not saved or run. Its header retains the stock checksum a0da while its actual body sum is 1d59. Record this discrepancy without silently repairing the original patch to satisfy a probe.
+The correctly aligned headerless Demo 1-1 has SHA-256 `314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32` and CRC32 `08ad808b`. It was initially previewed in memory; M1 subsequently saved it with `tools/prepare_rom.py` and booted it in both reference and native hosts. Its header retains the stock checksum a0da while its actual body sum is 1d59. Record this discrepancy without silently repairing the original patch to satisfy a probe.
 
 The other eight patches also have separate in-memory previews with both prefix conventions in the local JSON. Their base and header assumptions still need individual review; a shared write extent is insufficient proof.
 
@@ -43,6 +43,10 @@ The other eight patches also have separate in-memory previews with both prefix c
 - `demo8/demo8.txt` identifies an unofficial edit and records graphics, music, and overworld-display problems.
 - No separate Demo 1-1 compatibility notes were found. Cheap Demo claims must not be generalized to Demo 1-1.
 
-## Reference baseline still needed
+## Reference baseline status
 
-Run the Demo 1-1 candidate in a reference core, recording exact emulator version, ROM hash, inputs, initial SRAM, video/audio, and frame state. If a modern core fails, compare against an older working core and identify the first divergence. A suitable ZSNES version has not been verified. No timing or audio compatibility fixes have been made.
+The user identifies **ZSNES 1.51** as their known-working environment. This is user-reported evidence; no ZSNES executable has been obtained or run in this workspace. It remains the intended historical behavior baseline, especially for content that modern cores cannot run.
+
+For an independent automated comparison, M1 built Snes9x 1.63 at commit `1bcc369e89f08243e0a462882fb1f3e42e51de3a`. It can display the title and file menu, dismiss the opening message with A, and enter level $105. Opening text appears garbled; whether that is original/incomplete content or a compatibility problem is not established. Reaching one level does not contradict the older packages' documented compatibility problems or establish boss compatibility.
+
+A shared-input reference/native run now has eight scene dumps and a captured reference WAV. Title and file-menu pixels match after common 5-bit color quantization; later scenes differ. No timing or audio compatibility fixes have been made. See [m1.md](m1.md) for measured results and remaining qualification.

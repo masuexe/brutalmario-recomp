@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "checked_at": "2026-10-15",
+  "repositories": {
+    "snesrecomp": {
+      "url": "https://github.com/RetroPortingToolKit/snesrecomp.git",
+      "commit": "a6be9756285f26ccc74539c811d4d23d57d8c33d",
+      "local_path": "local/upstream/snesrecomp",
+      "license_sha256": "b5cb175d55c9f49f0f532aff9d04424444f3354bc274fc4d0d726292701b8dfd"
+    },
+    "smw_reference": {
+      "url": "https://github.com/mstan/SuperMarioWorldRecomp.git",
+      "commit": "8dedb2869414f20d1d86d34081be26594560cc15",
+      "local_path": "local/upstream/SuperMarioWorldRecomp",
+      "license_sha256": "168689b754213aaa4f64b974ecfb15203b31f46b824ef436482cdb4a88a35b50"
+    },
+    "snes9x_reference": {
+      "url": "https://github.com/snes9xgit/snes9x.git",
+      "commit": "1bcc369e89f08243e0a462882fb1f3e42e51de3a",
+      "local_path": "local/upstream/snes9x",
+      "license_sha256": "70efeee282d82a6e9d26aeed5466d08c632369858371dc6a4644c8dcedc2be78"
+    }
+  },
+  "rust_toolchain": "1.97.1-x86_64-unknown-linux-gnu",
+  "build": {
+    "python": "3.12.3",
+    "gcc": "13.3.0",
+    "cmake": "3.28.3",
+    "sdl_backend": "SDL2",
+    "sdl_version": "2.30.0",
+    "frame_impl": "LLE"
+  },
+  "rust_toolchain_source": "snesrecomp/recompiler-rs/rust-toolchain.toml"
+}

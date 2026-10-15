@@ -1,0 +1,20 @@
+# Investigate opening-message dismissal without modifying memory.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro-before
+press b 30
+wait 180
+dump intro-after-b
+press a 30
+wait 180
+dump intro-after-a
+press y 30
+wait 180
+dump intro-after-y
+press start 30
+wait 600
+dump intro-after-start
+quit

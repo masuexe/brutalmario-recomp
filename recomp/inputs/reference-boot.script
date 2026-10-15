@@ -1,0 +1,11 @@
+# Deterministic first look: title, Start, then menu/gameplay observation.
+wait 300
+dump boot-300
+wait 300
+dump title-600
+press start 2
+wait 180
+dump after-start
+wait 300
+dump after-wait
+quit
