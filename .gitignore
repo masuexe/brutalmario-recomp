@@ -1,0 +1,7 @@
+tmp/
+local/
+build*/
+__pycache__/
+*.pyc
+*.smc
+*.sfc
