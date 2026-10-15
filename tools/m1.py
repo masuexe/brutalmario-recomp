@@ -236,6 +236,7 @@ def main():
                            SNESRECOMP_AUDIO_STATS=str(directory / 'audio-stats.txt'))
             if args.target == 'demo-only-1':
                 env.setdefault('SNESRECOMP_SEPARATE_ECHO', '1')
+            env.setdefault('SNESRECOMP_APU_MASTER_CLOCK', '1')
             if args.interpreter_only:
                 manifest = json.loads((EXPERIMENT / 'src/gen/program_manifest.json').read_text())
                 pcs = {int(key.split(':')[0], 16) for key in manifest['nodes']}
@@ -263,6 +264,8 @@ def main():
             'audio_diagnostics': args.audio,
             'audio_device_rate_override': args.audio_device_rate,
             'separate_echo_compatibility': env.get('SNESRECOMP_SEPARATE_ECHO', '0'),
+            'apu_master_clock_override': env.get('SNESRECOMP_APU_MASTER_CLOCK', '0'),
+            'boot_instruction_trace': env.get('M1_BOOT_TRACE'),
             'reference_core_options': env.get('SNESREF_CORE_OPTIONS', 'defaults'),
         }
         (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')

@@ -1,0 +1,66 @@
+--- a/cpuexec.cpp
++++ b/cpuexec.cpp
+@@ -9,6 +9,7 @@
+ #include "cpuops.h"
+ #include "dma.h"
+ #include "apu/apu.h"
++#include "apu/bapu/snes/snes.hpp"
+ #include "fxemu.h"
+ #include "snapshot.h"
+ #include "movie.h"
+@@ -17,10 +18,39 @@
+ #include "missing.h"
+ #endif
+
++// Read-only, local diagnostic instrumentation; never used by stock captures.
++static unsigned long long bm_line_clock;
++static unsigned bm_host_frame;
++static void bm_boot_trace(void) {
++    static FILE *out;
++    static bool initialized;
++    static unsigned previous_mode;
++    if (!initialized) {
++        initialized = true;
++        const char *path = getenv("BM_BOOT_TRACE");
++        if (path && *path) {
++            out = fopen(path, "w");
++            if (!out) abort();
++            fprintf(out, "frame,clock,pc,v,h,mode,counter13,m,x,apu_clock,spc_pc,timer0_prescaler,timer0_divider,timer0_counter,timer0_target,apu_out01\n");
++        }
++    }
++    if (!out) return;
++    if (Memory.RAM[0x100] == 3 || previous_mode == 3)
++        fprintf(out, "%u,%llu,%u,%d,%d,%u,%u,%d,%d,%u,%u,%u,%u,%u,%u,%u\n",
++                bm_host_frame, bm_line_clock + CPU.Cycles, Registers.PBPC,
++                CPU.V_Counter, CPU.Cycles, Memory.RAM[0x100], Memory.RAM[0x13],
++                !!CheckFlag(MemoryFlag), !!CheckFlag(IndexFlag),
++                0u, SNES::smp.regs.pc, SNES::smp.timer0.stage1_ticks,
++                SNES::smp.timer0.stage2_ticks, SNES::smp.timer0.stage3_ticks,
++                SNES::smp.timer0.target, SNES::smp.apuram[0xf4] | (unsigned(SNES::smp.apuram[0xf5]) << 8));
++    previous_mode = Memory.RAM[0x100];
++}
++
+ static inline void S9xReschedule (void);
+
+ void S9xMainLoop (void)
+ {
++    ++bm_host_frame;
+ 	#define CHECK_FOR_IRQ_CHANGE() \
+ 	if (Timings.IRQFlagChanging) \
+ 	{ \
+@@ -135,6 +165,7 @@
+ 		{
+ 			break;
+ 		}
++		bm_boot_trace();
+ 		if (CPU.WaitingForInterrupt)
+ 		{
+ 			CPU.Cycles += ONE_CYCLE;
+@@ -272,6 +303,7 @@
+ 			}
+
+ 			S9xAPUEndScanline();
++			bm_line_clock += Timings.H_Max;
+ 			CPU.Cycles -= Timings.H_Max;
+ 			if (Timings.NMITriggerPos != 0xffff)
+ 				Timings.NMITriggerPos -= Timings.H_Max;

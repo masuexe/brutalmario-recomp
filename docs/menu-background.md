@@ -5,6 +5,11 @@ renderer choices match the Snes9x file-menu picture on the RGB5 grid. The
 opening-message picture also now matches. This is a rendering/state fix;
 the remaining one-to-two-tick cross-core timing differences are unchanged.
 
+Follow-up: demoOnly1's shop exposed a missing raster-journal path for temporary
+CGRAM writes after this HDMA ownership change. The
+[shop cursor fix](shop-cursor.md) adds palette/port snapshots and chronological
+color-write replay while retaining live-beam HDMA ownership.
+
 ## Cause
 
 The menu uses BG3 on the main screen (`TM=$04`) and BG1/BG2/OBJ on the

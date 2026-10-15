@@ -1,0 +1,69 @@
+--- a/runner/src/common_rtl.c
++++ b/runner/src/common_rtl.c
+@@ -233,9 +233,14 @@
+   return g_apu_frame_time_valid;
+ }
+
++static bool rtl_apu_master_timeline(void);
++
+ double RtlLastFramePeriods(void) {
++  double period = rtl_apu_master_timeline()
++      ? (double)RTL_MASTER_CYCLES_PER_FRAME * 15664.0 / 328125.0
++      : (double)RTL_APU_CYCLES_PER_FRAME;
+   return g_extended_frame_timing && g_apu_frame_clock.last_duration
+-      ? (double)g_apu_frame_clock.last_duration / RTL_APU_CYCLES_PER_FRAME : 1.0;
++      ? (double)g_apu_frame_clock.last_duration / period : 1.0;
+ }
+
+ void RtlEnableExtendedFrameTiming(void) {
+@@ -271,7 +276,30 @@
+ static int16 g_audio_last_output_r;
+ static void rtl_sync_apu_frame_boundary(void);
+
++/* A beam-scheduled CPU already advances through WAI and long loaders.
++ * Opt-in absolute pacing avoids inventing a full APU field for a partial
++ * RESET field, and avoids per-host-call rounding/minimum drift. */
++static bool rtl_apu_master_timeline(void) {
++  static int enabled = -1;
++  if (enabled < 0) {
++    const char *value = getenv("SNESRECOMP_APU_MASTER_CLOCK");
++    enabled = value && *value && *value != '0';
++  }
++  return g_extended_frame_timing && enabled;
++}
++
++static uint64_t rtl_apu_master_cycle(uint64_t master) {
++  /* NTSC master = 236250000/11 Hz, nominal DSP = 32040 Hz, SPC = DSP*32.
++   * Their reduced SPC/master ratio is 15664/328125. The old 17088/357368
++   * assumes exactly 60 fields/sec and runs the SPC about 0.164% faster.
++   * Quotient/remainder form avoids overflowing long-running master clocks. */
++  return (master / 328125ull) * 15664ull +
++         (master % 328125ull) * 15664ull / 328125ull;
++}
++
+ static uint64_t rtl_apu_guest_cycle(void) {
++  if (rtl_apu_master_timeline())
++    return rtl_apu_master_cycle(g_cpu.master_cycles);
+   if (g_extended_frame_timing)
+     return rtl_apu_clock_now(&g_apu_frame_clock, g_cpu.master_cycles);
+   uint64_t within = g_cpu.master_cycles - g_apu_frame_start_master;
+@@ -2182,9 +2210,16 @@
+   /* RtlRunFrame has already incremented snes_frame_counter. This is the exact
+    * boundary after the completed frame; adding its stale within-frame master
+    * offset here would count the frame body twice. */
+-  uint64_t boundary = g_extended_frame_timing
+-      ? rtl_apu_clock_finish(&g_apu_frame_clock, g_cpu.master_cycles)
+-      : (uint64_t)snes_frame_counter * RTL_APU_CYCLES_PER_FRAME;
++  uint64_t boundary;
++  if (rtl_apu_master_timeline()) {
++    boundary = rtl_apu_master_cycle(g_cpu.master_cycles);
++    g_apu_frame_clock.last_duration = boundary - g_apu_frame_clock.start_guest;
++    g_apu_frame_clock.next_guest = boundary;
++  } else {
++    boundary = g_extended_frame_timing
++        ? rtl_apu_clock_finish(&g_apu_frame_clock, g_cpu.master_cycles)
++        : (uint64_t)snes_frame_counter * RTL_APU_CYCLES_PER_FRAME;
++  }
+   bool synced = apu_runToGuestCycle(g_snes->apu, boundary,
+                                     1u << 20);
+   audio_trace_on_guest_sync(1, g_snes->apu->portClock - before);

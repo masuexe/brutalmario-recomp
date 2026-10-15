@@ -15,6 +15,12 @@ class PpuMosaicTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which('cc') and
                          (ROOT / 'local/upstream/snesrecomp/runner/src/snes/ppu.c').is_file(),
                          'requires the pinned local runtime checkout and a C compiler')
+    def test_scanline_palette_and_guest_cgram_port_are_preserved(self):
+        self.compile_and_run('ppu_palette_raster_test.c')
+
+    @unittest.skipUnless(shutil.which('cc') and
+                         (ROOT / 'local/upstream/snesrecomp/runner/src/snes/ppu.c').is_file(),
+                         'requires the pinned local runtime checkout and a C compiler')
     def test_visible_only_scanout_and_mosaic_size_changes(self):
         self.compile_and_run('ppu_mosaic_test.c')
 

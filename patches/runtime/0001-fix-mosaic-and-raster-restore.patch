@@ -30,19 +30,69 @@
      // pre-render line
      // TODO: this now happens halfway into the first line
      ppu->mosaicStartLine = 1;
-@@ -3176,8 +3178,10 @@
+@@ -3158,8 +3160,32 @@
+ /* key: beam position within the field, monotonic from its start at V=225
+  * (0) through vblank (36 = V=261) and the visible lines (37 = V=0 ...). */
+ typedef struct { uint16_t key; uint16_t reg; uint8_t val; } PpuRasterEntry;
++/* Palette RAM is raster-visible state too: HDMA may temporarily change a
++ * color and restore it later in the same field. End-of-field CGRAM alone
++ * cannot reconstruct that picture. Keep the shared two-write port latch. */
++typedef struct {
++  uint16_t colors[256];
++  uint8_t pointer, buffer;
++  bool second;
++} PpuRasterPalette;
++
++static void raster_palette_save(PpuRasterPalette *dst, const Ppu *ppu) {
++  memcpy(dst->colors, ppu->cgram, sizeof(dst->colors));
++  dst->pointer = ppu->cgramPointer;
++  dst->buffer = ppu->cgramBuffer;
++  dst->second = ppu->cgramSecondWrite;
++}
++
++static void raster_palette_restore(Ppu *ppu, const PpuRasterPalette *src) {
++  memcpy(ppu->cgram, src->colors, sizeof(src->colors));
++  ppu->cgramPointer = src->pointer;
++  ppu->cgramBuffer = src->buffer;
++  ppu->cgramSecondWrite = src->second;
++}
++
+ typedef struct {
+   uint8_t regs[PPU_SAVESTATE_REGS_SIZE];   /* inidisp..cgwsel at field start */
++  PpuRasterPalette palette;
+   uint8_t scrollPrev, scrollPrev2, m7prev;
+   uint8_t hdmaen;
+   int count;
+@@ -3176,8 +3202,11 @@
  static uint8_t s_raster_hdmaen;
  static int s_raster_hdmaen_pending;
  static struct {
 +  uint8_t regs[PPU_SAVESTATE_REGS_SIZE];
++  PpuRasterPalette palette;
 +  uint8_t scrollPrev, scrollPrev2, m7prev;
    uint8_t oamAdr, oamInHigh, oamSecondWrite, oamBuffer;
 -} s_raster_port;
 +} s_raster_guest;
- 
+
  /* Only the machine's PPU journals: the debug server and a few tools run
   * ppu_write on scratch copies. */
-@@ -3279,10 +3283,17 @@
+@@ -3198,7 +3227,6 @@
+     case 0x2104:                                       /* OAMDATA */
+     case 0x2115: case 0x2116: case 0x2117:             /* VRAM port */
+     case 0x2118: case 0x2119:
+-    case 0x2121: case 0x2122:                          /* CGRAM port */
+       return 0;
+     default:
+       return 1;
+@@ -3206,6 +3234,7 @@
+ }
+
+ static void raster_snapshot(PpuRasterField *f, const Ppu *ppu) {
++  raster_palette_save(&f->palette, ppu);
+   memcpy(f->regs, &ppu->inidisp, PPU_SAVESTATE_REGS_SIZE);
+   f->scrollPrev = ppu->scrollPrev;
+   f->scrollPrev2 = ppu->scrollPrev2;
+@@ -3279,10 +3308,19 @@
     * all there is. */
    f = s_raster_have_completed ? &s_field[s_raster_cur ^ 1]
                                : &s_field[s_raster_cur];
@@ -53,6 +103,7 @@
 +  /* Scanout reconstructs a completed field, not the guest's current register
 +   * file. Save the live state even when the new field has no writes: replay
 +   * alone cannot restore registers absent from that field's journal. */
++  raster_palette_save(&s_raster_guest.palette, ppu);
 +  memcpy(s_raster_guest.regs, &ppu->inidisp, PPU_SAVESTATE_REGS_SIZE);
 +  s_raster_guest.scrollPrev = ppu->scrollPrev;
 +  s_raster_guest.scrollPrev2 = ppu->scrollPrev2;
@@ -61,13 +112,14 @@
 +  s_raster_guest.oamInHigh = ppu->oamInHigh;
 +  s_raster_guest.oamSecondWrite = ppu->oamSecondWrite;
 +  s_raster_guest.oamBuffer = ppu->oamBuffer;
++  raster_palette_restore(ppu, &f->palette);
    memcpy(&ppu->inidisp, f->regs, PPU_SAVESTATE_REGS_SIZE);
    ppu->scrollPrev = f->scrollPrev;
    ppu->scrollPrev2 = f->scrollPrev2;
-@@ -3326,26 +3337,20 @@
+@@ -3326,26 +3364,21 @@
    }
  }
- 
+
 -/* The render reconstructed the completed field. Writes the guest has made
 - * since that field ended -- a CPU half that ran past V=225 -- are still in
 - * the recording journal: put them back, so the guest resumes with the
@@ -91,6 +143,7 @@
 -  ppu->oamInHigh = s_raster_port.oamInHigh;
 -  ppu->oamSecondWrite = s_raster_port.oamSecondWrite;
 -  ppu->oamBuffer = s_raster_port.oamBuffer;
++  raster_palette_restore(ppu, &s_raster_guest.palette);
 +  memcpy(&ppu->inidisp, s_raster_guest.regs, PPU_SAVESTATE_REGS_SIZE);
 +  ppu->scrollPrev = s_raster_guest.scrollPrev;
 +  ppu->scrollPrev2 = s_raster_guest.scrollPrev2;
@@ -100,5 +153,5 @@
 +  ppu->oamSecondWrite = s_raster_guest.oamSecondWrite;
 +  ppu->oamBuffer = s_raster_guest.oamBuffer;
  }
- 
+
  /* Snapshot of the journal as the renderer will consume it, for the debug

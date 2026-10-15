@@ -8,6 +8,9 @@ The [HDMA state fix](menu-background.md) moves those transfers to the live
 beam while preserving this raster restoration and the MARIO START fix.
 Measurements below describe the original transition-fix checkpoint.
 
+The later [shop selection fix](shop-cursor.md) additionally preserves and
+replays CGRAM palette/port state for scanline color changes.
+
 ## Reproduction and causes
 
 The interactive configuration uses `NewRenderer = 1`. The original automated M1 route selected `NewRenderer=0`, so it did not cover the optimized renderer's mosaic cache.

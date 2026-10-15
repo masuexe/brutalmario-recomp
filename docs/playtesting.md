@@ -52,4 +52,24 @@ checkpoint for the rebuilt runtime; the exact route and duration were not
 specified. Residual cross-core timing differences remain an investigation
 item rather than a user-reported gameplay defect.
 
+The later [APU-clock correction](boot-timing.md) has automated boot, gameplay,
+audio-capture, and death-return regressions. Later gameplay feedback is
+recorded below; a new explicit audio listening comparison after that clock
+change has not been reported.
+
+The user subsequently reported a missing item-selection cursor in demoOnly1's
+Vivian's Shop, entered through Baby Yoshi Hill's opening pipe. They confirmed
+that descriptions still changed with Up/Down. This was reproduced as a missing
+scanline palette highlight, independently of the APU-clock setting, and fixed;
+see [shop-cursor.md](shop-cursor.md). Automated four-item selection and B-exit
+comparisons pass; subsequent manual confirmation is recorded below.
+
+On 2026-10-16, the user retested after the shop palette rebuild and reported
+no issues. This completes manual confirmation of the reported shop selection
+defect and closes the current basic-functionality and reported-display-defect
+checkpoint. The report does not specify a new audio listening comparison,
+test duration, or full-version playthrough. Remaining cross-core timing
+differences, wider AOT coverage, and the accepted/deferred boss-victory black
+screen retain their separately documented status.
+
 See [timing.md](timing.md) for automated timing evidence and remaining issues.

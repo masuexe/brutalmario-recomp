@@ -4,6 +4,11 @@ Date: 2026-10-15. The initial audio smoke gate now has both user listening
 evidence and a reproducible recorded comparison. Exact cross-core waveform
 and timing equivalence remain open.
 
+Later update: the [boot timing fix](boot-timing.md) corrects the CPU/APU clock
+ratio for the beam driver. Capture results below describe the earlier clock
+model. The new short audio smoke capture and remaining manual listening
+check are recorded separately in that investigation.
+
 ## Manual evidence
 
 The user played level 1-1 with audio enabled and reported that background

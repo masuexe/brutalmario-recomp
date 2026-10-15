@@ -1,0 +1,4 @@
+# No input or guest-memory edits: includes the complete initial mode-3 load.
+wait 350
+dump boot-end
+quit

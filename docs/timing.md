@@ -3,6 +3,11 @@
 Date: 2026-10-15. A frame-driver bug is fixed and the native executable has
 been rebuilt. Cross-core timing acceptance remains open.
 
+Later update: the [boot APU-clock investigation](boot-timing.md) fixes the
+first 225–226 divergence by making the sound-processor clock consistent with
+NTSC beam timing. The first remaining selected-state mismatch is now frame
+838. Measurements below retain the earlier interrupt-fix checkpoint.
+
 ## Confirmed cause and fix
 
 The beam driver sets a master-clock deadline, but invokes interrupts through

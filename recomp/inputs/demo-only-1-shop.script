@@ -1,0 +1,63 @@
+# Natural input route: Special -> Baby Yoshi Hill -> opening pipe -> Vivian.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are host-frame calls.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press right 30
+wait 180
+press right 30
+wait 180
+dump hill-map
+press y 30
+wait 240
+dump hill-entry
+press right 8
+press down 30
+wait 240
+dump shop-open
+press down 2
+wait 60
+dump shop-down
+press up 2
+wait 60
+dump shop-up
+wait 8
+dump shop-later
+# Finish the greeting and open the item selector. No purchases: fresh coins=0.
+wait 180
+press a 2
+wait 120
+dump menu-first
+press down 2
+wait 60
+dump menu-second
+press down 2
+wait 60
+dump menu-third
+press down 2
+wait 60
+dump menu-fourth
+press up 2
+wait 60
+dump menu-third-again
+press up 2
+wait 60
+dump menu-second-again
+press up 2
+wait 60
+dump menu-first-again
+press b 2
+wait 180
+dump menu-exit
+quit
