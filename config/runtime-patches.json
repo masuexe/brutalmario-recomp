@@ -17,6 +17,14 @@
       "source_sha256": "bfda741f7d82667c40e1ab9f9c4dabf5de0943e8104688fc35caea0e87d339ee",
       "patch_sha256": "0a2ac37ac829384e35e288e96359075814042de093d15e22d58f7b16c8c17886",
       "result_sha256": "f1bed1e6671e8d8d6a38868a5b29fdef6d311197690b607325f9b38cad9d8b40"
+    },
+    {
+      "id": "dsp-separate-echo-compatibility",
+      "source": "runner/src/snes/dsp.c",
+      "patch": "patches/runtime/0003-add-separate-echo-compatibility.patch",
+      "source_sha256": "a8bb2d6ffcf661676eaa576e0477333689b0853270cdcc558babd00567c86874",
+      "patch_sha256": "271066b4f5394cc2f985ee1dd8beda0351f9115e527b29ab4578e3c680fc3232",
+      "result_sha256": "670df6906773781951de62c927b19bf22713060db1c9c836050b463531cd006f"
     }
   ]
 }

@@ -48,19 +48,19 @@ def prepare_runtime():
     return outputs
 
 
-def configure_runtime(experiment):
+def configure_runtime(experiment, target='BrutalMarioDemo11SNESRecomp'):
     outputs = prepare_runtime()
     items = patch_plan()
     path = experiment / 'CMakeLists.txt'
     source = path.read_text()
     begin = '# BEGIN project runtime overrides'
     end = '# END project runtime overrides'
-    lines = [begin, 'get_target_property(_m1_sources BrutalMarioDemo11SNESRecomp SOURCES)']
+    lines = [begin, f'get_target_property(_m1_sources {target} SOURCES)']
     for item in items:
         lines.append(f'list(REMOVE_ITEM _m1_sources "${{SNESRECOMP_ROOT}}/{item["source"]}")')
-    lines.append('set_property(TARGET BrutalMarioDemo11SNESRecomp PROPERTY SOURCES ${_m1_sources})')
+    lines.append(f'set_property(TARGET {target} PROPERTY SOURCES ${{_m1_sources}})')
     for output in outputs:
-        lines.append(f'target_sources(BrutalMarioDemo11SNESRecomp PRIVATE "{output.as_posix()}")')
+        lines.append(f'target_sources({target} PRIVATE "{output.as_posix()}")')
     lines.append(end)
     block = '\n'.join(lines)
     if begin in source:

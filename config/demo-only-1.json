@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario demoOnly1",
+  "base": {
+    "size": 524288,
+    "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+  },
+  "ips": {
+    "size": 3860889,
+    "sha256": "1080862aaf3e9bacfae97868806ee8faa53b2b4d6518fd2713aeda3c0c5e6880"
+  },
+  "copier_prefix_bytes": 512,
+  "output": {
+    "size": 4194304,
+    "sha256": "b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b"
+  }
+}

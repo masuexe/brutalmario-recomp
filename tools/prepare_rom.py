@@ -63,11 +63,13 @@ def main():
     parser.add_argument('--base', type=Path, required=True)
     parser.add_argument('--ips', type=Path, default=PROJECT.parent / 'patches/1-1.ips')
     parser.add_argument('--output', type=Path, default=PROJECT / 'local/roms/demo-1-1.sfc')
+    parser.add_argument('--manifest', type=Path, default=PROJECT / 'config/inputs.json',
+                        help='pinned input/output manifest; alternate versions require an explicit output path')
     args = parser.parse_args()
     try:
         if args.output.resolve() in (args.base.resolve(), args.ips.resolve()):
             raise ValueError('output must differ from input paths')
-        manifest = json.loads((PROJECT / 'config/inputs.json').read_text())
+        manifest = json.loads(args.manifest.read_text())
         base, ips = args.base.read_bytes(), args.ips.read_bytes()
         data = prepare_bytes(base, ips, manifest)
         status = write_new_or_verify(args.output, data)

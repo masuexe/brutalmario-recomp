@@ -16,8 +16,8 @@ All regular members of ten ZIPs were read and hashed, also checking ZIP CRCs. No
 
 | Material | Confirmed contents | Status / scope |
 | --- | --- | --- |
-| 1-1 | ZIP contains only 1-1.ips | Primary target; level/boss list unknown |
-| demoOnly1 | ZIP contains only its IPS | Historical candidate; content relationship to 1-1 unknown |
+| 1-1 | ZIP contains only 1-1.ips | Primary target; user confirms one ordinary level and no boss |
+| demoOnly1 | ZIP contains only its IPS | Separately prepared and compiled; Athletic Special route to the user-identified boss arena is located; see [boss-entry.md](boss-entry.md) |
 | demo6 / demo7 | Each ZIP contains its IPS | Historical candidates; dates/content differences unknown |
 | cheap_demo | ZIP contains cheap_demo, 7hero, mazo, and ow IPS/readme pairs plus 7hero.xls | All four candidates are present |
 | 7hero | Bundled notes describe a Bowser Castle boss test, not the final boss, with branches and unfinished content | Documentation evidence; untested |

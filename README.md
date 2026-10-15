@@ -24,5 +24,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Timing investigation and resumable interrupt fix](docs/timing.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
+- [demoOnly1 boss route and fast native pre-boss entry](docs/boss-entry.md)
+- [demoOnly1 death black-screen fix](docs/death-black-screen.md)
 
 Original archives, patches, third-party sources, and ROMs are not included in the repository. Historical versions are not automatically merged.

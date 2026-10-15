@@ -13,9 +13,37 @@ or independently reproduced by the agent.
 The user also confirmed that audio was enabled and that background music and
 action effects sounded normal compared with their memory of ZSNES 1.51.
 
-The latest report establishes useful manual gameplay and listening checkpoints.
-It does not explicitly establish a completed level, tested boss, or a recorded
-ZSNES comparison. Those acceptance gates remain separate. Exact session
-duration, controller route, and executable hash were not supplied.
+The user subsequently clarified that Demo 1-1 has only one ordinary level
+and no boss. They authorized map edits or exploration of demoOnly1 for boss
+testing, identified Athletic Special's end boss, and confirmed its final
+rainbow-room door. This corrects the earlier assumption that a custom boss
+could be qualified in Demo 1-1; see [boss-entry.md](boss-entry.md).
+
+The user then tested the demoOnly1 boss and reported that boss functionality
+worked, but death frequently caused a black screen. This triggered the
+[legacy audio-memory fix](death-black-screen.md). Automated death regressions
+pass after rebuilding. The user subsequently confirmed that several deaths
+all returned to the overworld without a black-screen hang. The manual
+death-return checkpoint therefore passes; the exact number of deaths and
+whether air swimming remained enabled were not specified.
+
+The user later reported accidentally reaching Star World and difficulty
+staying on the boss arena's platforms. They requested air swimming for
+practice. The launcher now offers fresh Special/Boss practice sessions with
+isolated saves and optional water physics; see [boss-entry.md](boss-entry.md).
+The user confirmed that air swimming works and that they could defeat the
+boss with it enabled. After victory the screen turned black without showing
+"MARIO STAGE CLEAR". The user suspects the original behaves the same way
+and explicitly deferred investigation. Original-version parity is unverified;
+record this as a known, accepted limitation of the current checkpoint, not
+as a confirmed original behavior or a verified post-victory transition.
+
+The current boss-functionality checkpoint passes with air swimming enabled:
+the user reports normal boss functionality and a successful defeat. This
+does not qualify an unassisted clear, complete post-victory flow, full
+demoOnly1 compatibility, or a recorded ZSNES comparison. With repeated
+death returns also manually confirmed, this round of basic functionality
+validation is complete, subject to the accepted victory-screen limitation.
+Exact session duration, controller route, and executable hash were not supplied.
 
 See [timing.md](timing.md) for automated timing evidence and remaining issues.

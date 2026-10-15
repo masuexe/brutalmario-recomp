@@ -1,0 +1,113 @@
+--- a/runner/src/snes/dsp.c
++++ b/runner/src/snes/dsp.c
+@@ -64,19 +64,48 @@
+ /* dsp_getSample is declared non-static in dsp.h (dev faithful reference uses it). */
+ static void dsp_handleNoise(Dsp* dsp);
+ 
++/* Explicit compatibility mode for legacy music engines that permit echo
++ * addresses to wrap into SPC program RAM. Default hardware behavior remains
++ * shared RAM. Each DSP owns independent echo storage, including save state. */
++typedef struct DspEchoStorage {
++  Dsp *owner;
++  struct DspEchoStorage *next;
++  uint8_t ram[65536];
++} DspEchoStorage;
++static DspEchoStorage *s_echo_storage;
++
++static DspEchoStorage *echo_storage(const Dsp *dsp) {
++  for (DspEchoStorage *p = s_echo_storage; p; p = p->next)
++    if (p->owner == dsp) return p;
++  return NULL;
++}
++
+ Dsp* dsp_init(uint8_t *ram) {
+   Dsp* dsp = calloc(1, sizeof(Dsp));  /* zero padding: saveload/co-sim hash determinism */
++  const char *compat = getenv("SNESRECOMP_SEPARATE_ECHO");
++  if (compat && strcmp(compat, "1") == 0) {
++    DspEchoStorage *p = calloc(1, sizeof(*p));
++    if (!p) { free(dsp); return NULL; }
++    p->owner = dsp;
++    p->next = s_echo_storage;
++    s_echo_storage = p;
++  }
+   dsp->apu_ram = ram;
+   dsp->shadow = dsp_shadow_create();  // opt-in; NULL/disabled unless env set
+   return dsp;
+ }
+ 
+ void dsp_free(Dsp* dsp) {
++  DspEchoStorage **p = &s_echo_storage;
++  while (*p && (*p)->owner != dsp) p = &(*p)->next;
++  if (*p) { DspEchoStorage *old = *p; *p = old->next; free(old); }
+   dsp_shadow_free((DspShadow*)dsp->shadow);
+   free(dsp);
+ }
+ 
+ void dsp_reset(Dsp* dsp) {
++  DspEchoStorage *echo = echo_storage(dsp);
++  if (echo) memset(echo->ram, 0, sizeof(echo->ram));
+   memset(dsp->ram, 0, sizeof(dsp->ram));
+   dsp->ram[0x7c] = 0xff; // set ENDx
+   for(int i = 0; i < 8; i++) {
+@@ -161,6 +190,27 @@
+ 
+ void dsp_saveload(Dsp *dsp, SaveLoadInfo *sli) {
+   sli->func(sli, &dsp->ram, sizeof(Dsp) - offsetof(Dsp, ram));
++  DspEchoStorage *echo = echo_storage(dsp);
++  uint32_t header[2] = {0x4f484345u, 65536u}; /* ECHO, byte count */
++  if (sli->peek) {
++    uint32_t next[2];
++    if (!sli->peek(sli, 0, next, sizeof(next)) ||
++        memcmp(next, header, sizeof(header)) != 0) {
++      /* Older states have no separate echo history. Do not consume the
++       * following APU state; start with a silent feedback buffer. */
++      if (echo) memset(echo->ram, 0, sizeof(echo->ram));
++      return;
++    }
++    sli->func(sli, header, sizeof(header));
++    if (echo) sli->func(sli, echo->ram, sizeof(echo->ram));
++    else {
++      uint8_t discard[65536];
++      sli->func(sli, discard, sizeof(discard));
++    }
++  } else if (echo) {
++    sli->func(sli, header, sizeof(header));
++    sli->func(sli, echo->ram, sizeof(echo->ram));
++  }
+ }
+ 
+ void dsp_cycle(Dsp* dsp) {
+@@ -212,14 +262,16 @@
+ }
+ 
+ static void dsp_handleEcho(Dsp* dsp, int* outputL, int* outputR) {
++  DspEchoStorage *storage = echo_storage(dsp);
++  uint8_t *echo_ram = storage ? storage->ram : dsp->apu_ram;
+   // get value out of ram
+   uint16_t adr = dsp->echoBufferAdr + dsp->echoBufferIndex * 4;
+   dsp->firBufferL[dsp->firBufferIndex] = (
+-    dsp->apu_ram[adr] + (dsp->apu_ram[(adr + 1) & 0xffff] << 8)
++    echo_ram[adr] + (echo_ram[(adr + 1) & 0xffff] << 8)
+   );
+   dsp->firBufferL[dsp->firBufferIndex] >>= 1;
+   dsp->firBufferR[dsp->firBufferIndex] = (
+-    dsp->apu_ram[(adr + 2) & 0xffff] + (dsp->apu_ram[(adr + 3) & 0xffff] << 8)
++    echo_ram[(adr + 2) & 0xffff] + (echo_ram[(adr + 3) & 0xffff] << 8)
+   );
+   dsp->firBufferR[dsp->firBufferIndex] >>= 1;
+   // calculate FIR-sum
+@@ -265,10 +317,10 @@
+   inL &= 0xfffe;
+   inR &= 0xfffe;
+   if(dsp->echoWrites) {
+-    dsp->apu_ram[adr] = inL & 0xff;
+-    dsp->apu_ram[(adr + 1) & 0xffff] = inL >> 8;
+-    dsp->apu_ram[(adr + 2) & 0xffff] = inR & 0xff;
+-    dsp->apu_ram[(adr + 3) & 0xffff] = inR >> 8;
++    echo_ram[adr] = inL & 0xff;
++    echo_ram[(adr + 1) & 0xffff] = inL >> 8;
++    echo_ram[(adr + 2) & 0xffff] = inR & 0xff;
++    echo_ram[(adr + 3) & 0xffff] = inR >> 8;
+   }
+   // handle indexes
+   dsp->firBufferIndex++;

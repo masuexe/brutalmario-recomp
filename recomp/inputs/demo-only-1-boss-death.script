@@ -1,0 +1,65 @@
+# Exploration only: existing room exits; player coordinates and door state are poked.
+# Not a natural-route or full-level-clear acceptance test.
+# Fresh-session input route shared by reference and native hosts.
+# No imported savestates. All waits are host-frame calls.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press y 30
+wait 180
+dump athletic-entry
+# Diagnostic shortcut to the existing exit on screen $13.
+# No exit destination, player power, or boss state is changed.
+poke 94 80134001
+poke 88 0000
+poke 71 06
+wait 180
+dump corridor-entry
+# Follow the unmodified final-screen exit of room $174.
+poke 94 801e3001
+poke 88 0000
+poke 71 06
+wait 180
+dump room-before-1
+poke 94 80143001
+poke 88 0000
+poke 71 06
+wait 180
+dump room-before-2
+poke 94 80153001
+poke 88 0000
+poke 71 06
+wait 180
+dump boss-door-room
+# Reach the top platform and activate the real door with normal input.
+poke 94 78002000
+wait 90
+dump door-platform
+press up 10
+wait 120
+wait 30
+dump before-death
+# Controlled death initialization matching the ROM's $00:F606 writes.
+poke 7d 90
+poke 1dfb 09
+poke 0dda ff
+poke 140d 00
+poke 1496 2e
+poke 9d 2e
+poke 1407 00
+poke 188a 00
+poke 71 09
+until 0100 == 0e 1800
+wait 120
+dump after-death
+quit

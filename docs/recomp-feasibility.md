@@ -32,14 +32,14 @@ Initial limitation: the M0 browser references were mutable and unpinned. M1 reso
 3. Verify title, game start, and a level segment in a reference core. Save inputs and initial state. If this fails, investigate alignment/compatibility before expanding static analysis.
 4. Create `local/experiments/demo-1-1/` with enhancements disabled. Seed actual RESET/NMI/IRQ vectors rather than importing all stock SMW configuration. Record analysis duration, entry/variant counts, unresolved indirect targets, WRAM execution, and fallback use.
 5. Build the native host, verify boot and frame/interrupt delivery, then enter a level. Resolve necessary dispatch configuration from traces; do not edit generated C to conceal gaps.
-6. Select one custom boss actually reachable in Demo 1-1, record the route, and exercise a full attack cycle. Do not assume 7hero or Marx is present.
+6. The original proposal to select a boss inside Demo 1-1 is superseded: the user confirms that version has no boss. Record a boss route in a separate, explicitly authorized demoOnly1 experiment; see [boss-entry.md](boss-entry.md). Do not make historical-content integration a prerequisite for primary-target validation.
 
 ## Acceptance and stopping criteria
 
 - Preparation: unchanged inputs, reproducible output hash, recorded commits and dependencies.
 - Analysis: convergence or actionable failure within a first-run budget of 10 minutes and 4 GiB. Save logs and reduce scope if exceeded. These are experiment limits, not performance estimates.
 - Boot: a native executable reaches gameplay and runs at least 3,600 frames with working input and no unexplained fatal diagnostics. Compilation alone does not pass.
-- Gameplay: complete a level segment and a custom boss attack cycle. Compare logic, video, and audio against the same-input baseline; document differences and fallback coverage.
+- Gameplay: complete a primary-target level segment, and separately qualify a custom boss attack cycle in a version containing one. Compare logic, video, and audio against the same-input baseline; document differences and fallback coverage.
 - If mapping, frame driving, or the fallback bridge blocks progress, or the same failure persists after two evidence-based repair attempts, produce a focused reproducer and assess framework changes or another route. Do not substitute indefinite attempts or silent HLE for a result.
 
 Toolchain pinning, ROM preparation, initial code generation, native compilation, and boot smoke tests are now implemented. The next work is isolating observed reference/native divergences before expanding static coverage or testing a custom boss. Historical content integration remains deferred until Demo 1-1 is stable.
