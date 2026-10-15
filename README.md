@@ -21,5 +21,6 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Recompilation feasibility and M1 experiment](docs/recomp-feasibility.md)
 - [M1 results and reproduction](docs/m1.md)
 - [Mosaic and start-screen rendering fixes](docs/ppu-fixes.md)
+- [Timing investigation and resumable interrupt fix](docs/timing.md)
 
 Original archives, patches, third-party sources, and ROMs are not included in the repository. Historical versions are not automatically merged.

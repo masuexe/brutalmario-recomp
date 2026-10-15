@@ -27,6 +27,16 @@ BUILD = ROOT / 'local/build/demo-1-1'
 
 
 def install_metrics():
+    glue = EXPERIMENT / 'src/game_rtl.c'
+    source = glue.read_text()
+    if 'M1TimingSample("begin");' not in source:
+        source = source.replace('#include "beam_frame_driver.h"',
+                                '#include "beam_frame_driver.h"\n\nextern void M1TimingSample(const char *phase);')
+        source = source.replace('    snes_beam_frame_driver_run_frame();',
+                                '    M1TimingSample("begin");\n    snes_beam_frame_driver_run_frame();\n    M1TimingSample("run");')
+        source = source.replace('    snes_beam_frame_driver_draw_ppu_frame();',
+                                '    snes_beam_frame_driver_draw_ppu_frame();\n    M1TimingSample("draw");')
+        glue.write_text(source)
     main = EXPERIMENT / 'src/main.c'
     source = main.read_text()
     if 'M1MetricsRegister();' not in source:
@@ -170,6 +180,7 @@ def main():
                 config_file.write_text((ROOT / 'recomp/m1-config.ini').read_text().replace(
                     'NewRenderer=0', 'NewRenderer=' + str(int(args.renderer == 'optimized'))))
             env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER='dummy',
+                       M1_TIMING_TRACE=str(directory / 'timing.csv'),
                        SNESRECOMP_REWIND='0', SNESRECOMP_CPU_TRACE_RING_ENTRIES='65536',
                        SNESRECOMP_COVERAGE_DIR=str(directory / 'coverage'),
                        SNESRECOMP_DUMP_DIR=str(directory),

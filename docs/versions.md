@@ -4,6 +4,12 @@ Inspected on 2026-10-15. Provenance is recorded as user-supplied local material.
 
 Scanned 1,746 regular files: 21 under patches, 1,724 under references, and one ROM. References includes an outer download ZIP, three inner ZIPs, and 1,720 extracted files; duplicate archive/extracted copies are not separate versions.
 
+That count describes the initial inventory. A second base ROM,
+`Super Mario World (U).smc`, was supplied afterward. Its game body is identical
+to the original base; it adds a 512-byte copier header. The aligned Demo 1-1
+patch result is identical to the existing research target; see the
+[base comparison](compatibility.md#comparison-with-the-users-working-base).
+
 All regular members of ten ZIPs were read and hashed, also checking ZIP CRCs. No unsafe paths or symlinks were found, and nothing was extracted. Each member has a same-hash loose file in its input tree; this is not exhaustive path-by-path authentication. All nine standalone IPS files parse successfully and match archived copies.
 
 ## Content and evidence

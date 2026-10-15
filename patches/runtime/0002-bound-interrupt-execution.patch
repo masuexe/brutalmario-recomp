@@ -1,0 +1,27 @@
+--- a/runner/src/beam_frame_driver.c
++++ b/runner/src/beam_frame_driver.c
+@@ -14,6 +14,7 @@
+ #include "common_cpu_infra.h"
+ #include "common_rtl.h"
+ #include "cpu_state.h"
++#include "ppu_dma_trace.h"
+ #include "snes/cart.h"
+ #include "snes/cx4.h"
+ #include "snes/dma.h"
+@@ -107,7 +108,15 @@
+    * already starts where the real CPU would take it. */
+   cpu_push_interrupt_frame_at(&g_cpu, s_resume_pc);
+   interp_bridge_set_master_deadline(deadline);
+-  (void)interp_bridge_run_interrupt(&g_cpu, vector);
++  /* Run on the resumable scheduler path. A handler may span fields (for
++   * example an SPC upload); running it atomically through RTI ignores the
++   * deadline and consumes multiple hardware fields in one host call.
++   * The architectural frame remains on the guest stack across a yield;
++   * RTI restores the interrupted PC naturally when execution resumes. */
++  ppudma_note_interrupt(g_snes && g_snes->inNmi);
++  (void)interp_bridge_run_until_quiescent(&g_cpu, vector);
++  if (interp_bridge_lle_took_wai())
++    s_wai_halted = true;
+   /* A deadline left armed stays true for every AOT block prologue afterwards
+    * and turns each compiled body into an immediate yield. */
+   interp_bridge_set_master_deadline(0);

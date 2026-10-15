@@ -19,6 +19,36 @@ Input: `../roms/Super Mario World (U) [!].smc`.
 
 The SHA-256 matches the stock base specified by [SuperMarioWorldRecomp's regen.sh](https://github.com/mstan/SuperMarioWorldRecomp/blob/main/tools/regen.sh). No independent archival database verification has been performed.
 
+### Comparison with the user's working base
+
+The user subsequently supplied `../roms/Super Mario World (U).smc` and reported
+that direct IPS patching works with this file but not the `[!]` file. Local
+byte comparison confirms the distinction is a **512-byte copier header**, not
+a different game revision:
+
+| Local file | File size | Copier header | Game-body SHA-256 |
+| --- | ---: | ---: | --- |
+| `Super Mario World (U) [!].smc` | 524,288 | None | `0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b` |
+| `Super Mario World (U).smc` | 524,800 | 512 bytes | `0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b` |
+
+The complete headered file has SHA-256
+`d70c9c7716ad12c674fc7dd744736aa48d4d7b4237f58066be620fda26024872`.
+Removing its first 512 bytes gives a byte-identical copy of the pinned base.
+Applying `1-1.ips` directly to this headered file and then removing its copier
+header produces a byte-identical copy of the **existing research target**,
+SHA-256 `314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32`.
+
+The preparation script already adds the required prefix before applying the
+patch to the headerless pinned base. Therefore the user's observation does
+not invalidate existing captures, runtime findings, or generated code. Neither
+original input was modified. The comparison was performed in memory; metadata
+is recorded in `local/reports/base-rom-comparison.json`.
+
+For manual patching, use the supplied headered file, or explicitly add a
+512-byte prefix to the headerless file first. A patcher that automatically
+handles copier headers may behave differently. These results establish the
+alignment for **Demo 1-1**; other IPS versions still require individual review.
+
 ## IPS offsets
 
 All nine standalone IPS files pass structural parsing and match their archived copies by hash. Each has an exclusive write extent of `0x400200`, with no explicit final-size field. IPS contains no base-ROM digest; valid structure does not establish playability.
@@ -49,4 +79,9 @@ The user identifies **ZSNES 1.51** as their known-working environment. This is u
 
 For an independent automated comparison, M1 built Snes9x 1.63 at commit `1bcc369e89f08243e0a462882fb1f3e42e51de3a`. It can display the title and file menu, dismiss the opening message with A, and enter level $105. Opening text appears garbled; whether that is original/incomplete content or a compatibility problem is not established. Reaching one level does not contradict the older packages' documented compatibility problems or establish boss compatibility.
 
-A shared-input reference/native run now has eight scene dumps and a captured reference WAV. Title and file-menu pixels match after common 5-bit color quantization; later scenes differ. No timing or audio compatibility fixes have been made. See [m1.md](m1.md) for measured results and remaining qualification.
+The initial shared-input reference/native run produced eight scene dumps and
+a captured reference WAV; its title and file-menu pictures matched after
+common 5-bit color quantization, while later scenes differed. Subsequent
+[PPU fixes](ppu-fixes.md) and a [timing fix](timing.md) have separate validation
+and remaining issues. Audio fidelity is still unqualified. See [m1.md](m1.md)
+for the original experiment and links to the follow-up findings.

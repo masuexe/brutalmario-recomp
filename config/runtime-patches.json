@@ -9,6 +9,14 @@
       "source_sha256": "c505bdfdc64cbc84ecdb2750fca34893ca93c43f789c85bbd6462b9488de2e46",
       "patch_sha256": "d5fa9320f648ae5a79f74e49713f022832058a1708f3584d38cb4ef91255f8c9",
       "result_sha256": "71c8710e137e244d4b439db552dc2e62d9b4907a3a901cba39da82de63ff0722"
+    },
+    {
+      "id": "beam-resumable-interrupts",
+      "source": "runner/src/beam_frame_driver.c",
+      "patch": "patches/runtime/0002-bound-interrupt-execution.patch",
+      "source_sha256": "bfda741f7d82667c40e1ab9f9c4dabf5de0943e8104688fc35caea0e87d339ee",
+      "patch_sha256": "0a2ac37ac829384e35e288e96359075814042de093d15e22d58f7b16c8c17886",
+      "result_sha256": "f1bed1e6671e8d8d6a38868a5b29fdef6d311197690b607325f9b38cad9d8b40"
     }
   ]
 }
