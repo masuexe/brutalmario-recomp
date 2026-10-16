@@ -18,6 +18,12 @@ from generator_patches import prepare
 INDEXED_CODE = bytes.fromhex('bc e5 0d b9 28 f8 85 00 ac d9 13 c0 0a d0 07 ac e8 1d c0 01 d0 11 ad d6 0d 4a 4a a8 b9 11 1f a8 b9 75 f8 25 00 f0 02 a9 01 60')
 CODE = bytes.fromhex('a7 8a a6 8a e8 d0 05 a2 00 80 e6 8c 86 8a 60')
 
+WRAM_FIXTURES = {
+    'clear': (0x16, 0x9f2b, b'\xad\x11\x1f\xc9\x06\xf0\x0b\xa2\x07\xa9\x00\x9f\xa0\xff\x7f\xca\x10\xf7`'),
+    'copy': (0x0d, 0xa6ba, b'\xa5\x04\x85k\x85n\xa5\x05\x85l\x85o\xad(\x19\x8d\xa1\x1b`'),
+    'copy_mmio': (0x0d, 0xa6ba, b'\xa5\x04\x85k\x85n\xa5\x05\x85l\x85o\xad(\x19\x8d\x00!`'),
+}
+
 
 @unittest.skipUnless(shutil.which('cc') and (ENGINE / 'recompiler/v2/emit_function.py').is_file(),
                      'requires the pinned engine and a C compiler')
@@ -48,12 +54,15 @@ class AotBusTimingTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.directory.cleanup()
 
-    def emit(self, generator, code=CODE, indexed=False):
+    def emit(self, generator, code=CODE, indexed=False, fixture=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
+        if fixture:
+            bank, pc, code = WRAM_FIXTURES[fixture]
+            m, x = 1, 1
         offset = bank * 32768 + (pc & 0x7fff)
         script = ('from snes65816 import set_rom_image_size\n'
                   'from v2.emit_function import emit_function\n'
-                  f'rom=bytearray(0x28000);rom[{offset}:{offset}+{len(code)}]={code!r}\n'
+                  f'rom=bytearray(0x100000);rom[{offset}:{offset}+{len(code)}]={code!r}\n'
                   'set_rom_image_size(len(rom))\n'
                   'print(\'#include "cpu_state.h"\\n#include "common_cpu_infra.h"\\n'
                   f'#include "cpu_trace.h"\\n\'+emit_function(bytes(rom),{bank},{pc},{m},{x},func_name="Probe"))\n')
@@ -62,8 +71,8 @@ class AotBusTimingTests(unittest.TestCase):
         return subprocess.run([sys.executable, '-c', script], cwd=ROOT, env=env,
                               capture_output=True, text=True)
 
-    def build_run(self, generator, indexed=False):
-        result = self.emit(generator, INDEXED_CODE if indexed else CODE, indexed)
+    def build_run(self, generator, indexed=False, fixture=None):
+        result = self.emit(generator, INDEXED_CODE if indexed else CODE, indexed, fixture)
         self.assertEqual(result.returncode, 0, result.stderr)
         generated = self.path / 'generated.c'
         generated.write_text(result.stdout)
@@ -71,9 +80,13 @@ class AotBusTimingTests(unittest.TestCase):
         command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
                    '-DSNESRECOMP_REVERSE_DEBUG=0', '-I' + str(self.include),
                    '-I' + str(self.include / 'snes'),
-                   ROOT / ('tests/aot_indexed_timing_test.c' if indexed else 'tests/aot_bus_timing_test.c'), generated,
+                   ROOT / ('tests/aot_wram_timing_test.c' if fixture else
+                           'tests/aot_indexed_timing_test.c' if indexed else 'tests/aot_bus_timing_test.c'), generated,
                    self.path / 'paced.c', ROOT / 'recomp/aot_timing.c',
                    self.include / 'snes/interp816.c', '-o', binary]
+        if fixture:
+            command.insert(1, '-DCLEAR_FIXTURE=1' if fixture=='clear' else
+                           '-DCOPY_MMIO_FIXTURE=1' if fixture=='copy_mmio' else '-DCOPY_FIXTURE=1')
         build = subprocess.run([str(x) for x in command], capture_output=True, text=True)
         self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
         return subprocess.run([str(binary)], capture_output=True, text=True)
@@ -97,4 +110,23 @@ class AotBusTimingTests(unittest.TestCase):
         if rom.is_file():
             self.assertEqual(rom.read_bytes()[0x2787c:0x2787c+len(INDEXED_CODE)], INDEXED_CODE)
         result = self.build_run(self.generator, indexed=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_long_indexed_wram_clear_and_deadlines(self):
+        self.check_wram_fixture('clear')
+
+    def test_direct_page_wram_copy_and_deadlines(self):
+        self.check_wram_fixture('copy')
+
+    def test_mmio_store_yields_before_effects(self):
+        result = self.build_run(self.generator, fixture='copy_mmio')
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def check_wram_fixture(self, fixture):
+        bank, pc, code = WRAM_FIXTURES[fixture]
+        rom = ROOT / 'local/roms/demo-1-1.sfc'
+        if rom.is_file():
+            offset=bank*32768+(pc&32767)
+            self.assertEqual(rom.read_bytes()[offset:offset+len(code)],code)
+        result = self.build_run(self.generator, fixture=fixture)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

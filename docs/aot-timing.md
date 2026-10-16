@@ -167,3 +167,7 @@ The measurements above describe the preceding 49-variant checkpoint.
 The 50-variant follow-up subsequently passed user testing, including normal
 DK coin pickup, closing the collectible pickup item left open above. See
 [playtesting.md](playtesting.md) for the later report.
+
+The [WRAM-store expansion](aot-wram.md) extends the opt-in model with guarded
+absolute and long-indexed WRAM stores. Hardware stores remain interpreted
+until register-write event timing is separately qualified.

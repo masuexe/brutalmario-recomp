@@ -46,3 +46,21 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive name for table/status leaf $04F87C-$04F8A5; instruction-paced, live indexed-address guards retain interpreter fallback."
+
+[[func]]
+name = "ClearEightWramBytesUnlessSix"
+addr = "9f2b"
+bank = 22
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $169F2B-$169F3D; conditionally clears $7F:FFA0-FFA7, WRAM stores only."
+
+[[func]]
+name = "CopyLevelBufferPointers"
+addr = "a6ba"
+bank = 13
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $0DA6BA-$0DA6CC; copies direct-page pointers and a WRAM buffer byte, with live store guards."

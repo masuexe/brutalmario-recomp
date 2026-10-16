@@ -114,3 +114,7 @@ and `aot-indexed-tests-final.log`.
 The preceding configuration, generated source, binary and receipt are archived
 at `local/probes/aot-indexed-baseline/`. Generator hashes, timing policy and
 built analysis identities remain recorded in generation/build/capture receipts.
+
+The next [WRAM-store expansion](aot-wram.md) promotes two additional leaves
+and reaches 52 eligible variants. The measurements and passed manual
+checkpoint above describe the preceding 50-variant build.

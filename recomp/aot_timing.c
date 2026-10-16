@@ -29,6 +29,16 @@ bool M1AotBusAddressSupported(uint32_t address, unsigned width) {
     return true;
 }
 
+/* This extension qualifies WRAM stores only. MMIO and cartridge writes
+ * retain interpreter ownership at the current instruction. */
+bool M1AotBusWriteSupported(uint32_t address, unsigned width) {
+    for (unsigned i = 0; i < width; ++i) {
+        uint32_t at = (address + i) & 0xffffff;
+        if (cpu_wram_offset(at >> 16, at) < 0) return false;
+    }
+    return true;
+}
+
 void M1AotBusBoundary(CpuState *cpu) {
     snes_refresh_charge();
     cpu->coprocessor_master_cycles = cpu->master_cycles;

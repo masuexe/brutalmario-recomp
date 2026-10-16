@@ -130,3 +130,11 @@ closes the previously outstanding DK coin pickup item. The report does not
 separately establish collectible persistence after saving/reloading, a full
 level clear, or whole-port fidelity; no exact duration or executable hash was
 supplied.
+
+The subsequent [WRAM-store expansion](aot-wram.md) produces a 52-variant
+executable. Automated differential, replay and matched-device audio checks
+are recorded separately. On 2026-10-16, in response to the requested map
+movement, Entry loading, pipe/underground and map-return checks, the user
+reported no issues. This passes the new build's bounded manual regression
+checkpoint. No exact duration, executable hash or new separate DK coin pickup
+report was supplied; the previous pickup confirmation remains recorded above.

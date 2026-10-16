@@ -5,8 +5,8 @@
       "source": "recompiler/v2/emit_function.py",
       "patch": "patches/generator/0001-add-opt-in-instruction-bus-timing.patch",
       "source_sha256": "d243c6e1df00899c33a799522e2a4e0458c05b20fc0f9473fc984fec34c59968",
-      "patch_sha256": "909c8607230389a3d5b8356497ffd1b034a8d275d1786ad7ed2a5c2c25deb720",
-      "result_sha256": "4865c3d715dc425913bb180ae6cb95a827bcb4defbd751e4d41fd39d4b9baac1"
+      "patch_sha256": "bd58ef471bfc6c83c57f6dd797732fcf26067b9ba0a9185d24fd41d6f78efa70",
+      "result_sha256": "0ddcf33a1c1f8b3ce97c1b55e798ef04664e6562d461f384ec511e1ad224e591"
     }
   ]
 }

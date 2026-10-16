@@ -2,6 +2,8 @@
   "schema": 1,
   "instruction_bus_variants": [
     "00B983:M1X0",
-    "04F87C:M1X1"
+    "04F87C:M1X1",
+    "169F2B:M1X1",
+    "0DA6BA:M1X1"
   ]
 }
