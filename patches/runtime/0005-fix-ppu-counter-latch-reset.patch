@@ -1,0 +1,12 @@
+--- a/runner/src/snes/snes.c
++++ b/runner/src/snes/snes.c
+@@ -248,7 +248,8 @@
+   snes->joypad1Index = snes->joypad2Index = 0;
+   snes->joypad1Latched = snes->joypad2Latched = 0;
+   joypad_reset_state();
+-  snes->ppuLatch = false;
++  snes->ppuLatch = true; /* WRIO resets high, enabling software counter latches. */
++  joypad_write_iobit(snes, 0xff);
+   snes->multiplyA = 0xff;
+   snes->multiplyResult = 0xfe01;
+   snes->divideA = 0xffff;

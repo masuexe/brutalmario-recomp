@@ -73,3 +73,11 @@ differences, wider AOT coverage, and the accepted/deferred boss-victory black
 screen retain their separately documented status.
 
 See [timing.md](timing.md) for automated timing evidence and remaining issues.
+
+The subsequent [PPU counter-read correction](loading-timing.md) has automated
+loading, full-route, shop-selection and three-death regressions, with 21 tests
+passing. It removes the compiled frame-838 mismatch; later timing differences
+remain. Some shop animation samples advance one guest frame earlier, while
+the highlight and exit remain functional. This build has no new user playtest
+or explicit listening report yet. The earlier manual checkpoint remains valid
+for the earlier build rather than automatically qualifying every later change.

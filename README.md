@@ -25,6 +25,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [demoOnly1 shop selection highlight and raster palette fix](docs/shop-cursor.md)
 - [Timing investigation and resumable interrupt fix](docs/timing.md)
 - [Boot-load timing and the corrected CPU/APU clock ratio](docs/boot-timing.md)
+- [Loading boundaries and the PPU counter-read protocol](docs/loading-timing.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [demoOnly1 boss route and fast native pre-boss entry](docs/boss-entry.md)

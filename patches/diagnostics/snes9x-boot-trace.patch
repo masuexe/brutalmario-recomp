@@ -8,7 +8,7 @@
  #include "fxemu.h"
  #include "snapshot.h"
  #include "movie.h"
-@@ -17,10 +18,39 @@
+@@ -17,10 +18,46 @@
  #include "missing.h"
  #endif
 
@@ -19,24 +19,31 @@
 +    static FILE *out;
 +    static bool initialized;
 +    static unsigned previous_mode;
++    static unsigned first, last;
 +    if (!initialized) {
 +        initialized = true;
++        const char *frames = getenv("BM_TRACE_FRAMES");
++        if (frames && (sscanf(frames, "%u:%u", &first, &last) != 2 || !first || last < first))
++            abort();
 +        const char *path = getenv("BM_BOOT_TRACE");
 +        if (path && *path) {
 +            out = fopen(path, "w");
 +            if (!out) abort();
-+            fprintf(out, "frame,clock,pc,v,h,mode,counter13,m,x,apu_clock,spc_pc,timer0_prescaler,timer0_divider,timer0_counter,timer0_target,apu_out01\n");
++            fprintf(out, "frame,clock,pc,v,h,mode,counter13,m,x,apu_clock,spc_pc,timer0_prescaler,timer0_divider,timer0_counter,timer0_target,apu_out01,counter14,a,rx,ry,s,d,db\n");
 +        }
 +    }
 +    if (!out) return;
-+    if (Memory.RAM[0x100] == 3 || previous_mode == 3)
-+        fprintf(out, "%u,%llu,%u,%d,%d,%u,%u,%d,%d,%u,%u,%u,%u,%u,%u,%u\n",
++    if (first ? (bm_host_frame >= first && bm_host_frame <= last) :
++                (Memory.RAM[0x100] == 3 || previous_mode == 3))
++        fprintf(out, "%u,%llu,%u,%d,%d,%u,%u,%d,%d,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u\n",
 +                bm_host_frame, bm_line_clock + CPU.Cycles, Registers.PBPC,
 +                CPU.V_Counter, CPU.Cycles, Memory.RAM[0x100], Memory.RAM[0x13],
 +                !!CheckFlag(MemoryFlag), !!CheckFlag(IndexFlag),
 +                0u, SNES::smp.regs.pc, SNES::smp.timer0.stage1_ticks,
 +                SNES::smp.timer0.stage2_ticks, SNES::smp.timer0.stage3_ticks,
-+                SNES::smp.timer0.target, SNES::smp.apuram[0xf4] | (unsigned(SNES::smp.apuram[0xf5]) << 8));
++                SNES::smp.timer0.target, SNES::smp.apuram[0xf4] | (unsigned(SNES::smp.apuram[0xf5]) << 8),
++                Memory.RAM[0x14], Registers.A.W, Registers.X.W, Registers.Y.W,
++                Registers.S.W, Registers.D.W, Registers.DB);
 +    previous_mode = Memory.RAM[0x100];
 +}
 +
@@ -48,7 +55,7 @@
  	#define CHECK_FOR_IRQ_CHANGE() \
  	if (Timings.IRQFlagChanging) \
  	{ \
-@@ -135,6 +165,7 @@
+@@ -135,6 +172,7 @@
  		{
  			break;
  		}
@@ -56,7 +63,7 @@
  		if (CPU.WaitingForInterrupt)
  		{
  			CPU.Cycles += ONE_CYCLE;
-@@ -272,6 +303,7 @@
+@@ -272,6 +310,7 @@
  			}
 
  			S9xAPUEndScanline();

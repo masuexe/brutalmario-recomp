@@ -7,8 +7,8 @@
       "source": "runner/src/snes/ppu.c",
       "patch": "patches/runtime/0001-fix-mosaic-and-raster-restore.patch",
       "source_sha256": "c505bdfdc64cbc84ecdb2750fca34893ca93c43f789c85bbd6462b9488de2e46",
-      "patch_sha256": "6bde9333f18f476e5fc327d9e6a3a6c72723fa16edac34fd1c1e7113376ee8f7",
-      "result_sha256": "7560b35a42ae99775a6f76c87aff50ebbe5d42372caa65b16c8ac16000cda2fc"
+      "patch_sha256": "bba7ca514d4b5ea4c25e404d76ad926db7579311de1828381734361fe91e1594",
+      "result_sha256": "452e63ea7606cd22cea25ac97d396a16aee66f580fdfde90f1bad43816c7bd14"
     },
     {
       "id": "beam-resumable-interrupts",
@@ -33,6 +33,14 @@
       "source_sha256": "1ffb60069b2e3a5fbd158e0e3d382739561461ae6b92356b7e33d57556202df3",
       "patch_sha256": "9c76ad4d995d12af3c668c430d4a6813048abe4343b22d0b23ad0253d3c69ec6",
       "result_sha256": "48355dd045f98a5e5276699b76314b07cd416d6fc819344390eee6ef76278b80"
+    },
+    {
+      "id": "ppu-counter-latch-reset",
+      "source": "runner/src/snes/snes.c",
+      "patch": "patches/runtime/0005-fix-ppu-counter-latch-reset.patch",
+      "source_sha256": "bdfff24401eb0470887e0f84e2a99fa1e6f1b05772ac138ab0a2df6dff7ef33b",
+      "patch_sha256": "d7fd9d0c6ca0abea0bfade196f5a56e65993cdde73be6537044087f720faee89",
+      "result_sha256": "6947070e5e3b0ac075edbab5a91583bd02d9b2e0f980d1a6fa18a184f8f89eb3"
     }
   ]
 }

@@ -61,23 +61,27 @@ extern CpuState g_cpu;
 extern Snes *g_snes;
 extern unsigned char g_ram[0x20000];
 
-/* Optional interpreted-instruction probe for the first boot-load phase.
+/* Optional interpreted-instruction probe, defaulting to the first boot load.
  * Use an interpreter-only run: compiled instructions do not call this hook.
  * The clock is the pre-op master clock, not an estimate from host frames. */
 static FILE *s_boot_trace;
+static unsigned s_trace_first, s_trace_last;
 static void M1BootTrace(uint32_t pc, int m, int x)
 {
     static unsigned previous_mode;
-    if (g_ram[0x100] == 3 || previous_mode == 3) {
+    unsigned frame = snes_frame_counter + 1;
+    if (s_trace_first ? (frame >= s_trace_first && frame <= s_trace_last) :
+                       (g_ram[0x100] == 3 || previous_mode == 3)) {
         RtlApuLock();
         Apu *apu = g_snes->apu;
-        fprintf(s_boot_trace, "%d,%llu,%u,%u,%u,%u,%u,%d,%d,%llu,%u,%u,%u,%u,%u,%u\n",
+        fprintf(s_boot_trace, "%d,%llu,%u,%u,%u,%u,%u,%d,%d,%llu,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u,%u\n",
                 snes_frame_counter + 1, (unsigned long long)g_cpu.master_cycles,
                 pc, g_snes->vPos, g_snes->hPos, g_ram[0x100],
                 g_ram[0x13], m, x, (unsigned long long)apu->portClock,
                 apu->spc->pc, apu->timer[0].cycles, apu->timer[0].divider,
                 apu->timer[0].counter, apu->timer[0].target,
-                apu->outPorts[0] | ((unsigned)apu->outPorts[1] << 8));
+                apu->outPorts[0] | ((unsigned)apu->outPorts[1] << 8),
+                g_ram[0x14], g_cpu.A, g_cpu.X, g_cpu.Y, g_cpu.S, g_cpu.D, g_cpu.DB);
         RtlApuUnlock();
     }
     previous_mode = g_ram[0x100];
@@ -147,11 +151,22 @@ void M1MetricsRegister(void)
         setenv("SNESRECOMP_APU_MASTER_CLOCK", "1", 0);
 #endif
     }
+    const char *trace_frames = getenv("M1_TRACE_FRAMES");
+    if (trace_frames && (sscanf(trace_frames, "%u:%u", &s_trace_first, &s_trace_last) != 2 ||
+                         !s_trace_first || s_trace_last < s_trace_first)) {
+        fprintf(stderr, "M1_TRACE_FRAMES: expected positive FIRST:LAST\n"); exit(1);
+    }
     const char *boot_trace = getenv("M1_BOOT_TRACE");
     if (boot_trace && *boot_trace) {
+        /* Publish the interpreter's local registers before each hook. */
+#ifdef _WIN32
+        _putenv_s("SNESRECOMP_WLOG_STATE", "1");
+#else
+        setenv("SNESRECOMP_WLOG_STATE", "1", 1);
+#endif
         s_boot_trace = fopen(boot_trace, "w");
         if (!s_boot_trace) { perror("M1_BOOT_TRACE"); exit(1); }
-        fprintf(s_boot_trace, "frame,clock,pc,v,h,mode,counter13,m,x,apu_clock,spc_pc,timer0_prescaler,timer0_divider,timer0_counter,timer0_target,apu_out01\n");
+        fprintf(s_boot_trace, "frame,clock,pc,v,h,mode,counter13,m,x,apu_clock,spc_pc,timer0_prescaler,timer0_divider,timer0_counter,timer0_target,apu_out01,counter14,a,rx,ry,s,d,db\n");
         g_interp_bridge_pc_hook = M1BootTrace;
         atexit(M1BootTraceClose);
     }

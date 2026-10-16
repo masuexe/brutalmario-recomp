@@ -266,6 +266,7 @@ def main():
             'separate_echo_compatibility': env.get('SNESRECOMP_SEPARATE_ECHO', '0'),
             'apu_master_clock_override': env.get('SNESRECOMP_APU_MASTER_CLOCK', '0'),
             'boot_instruction_trace': env.get('M1_BOOT_TRACE'),
+            'instruction_trace_frames': env.get('M1_TRACE_FRAMES'),
             'reference_core_options': env.get('SNESREF_CORE_OPTIONS', 'defaults'),
         }
         (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')

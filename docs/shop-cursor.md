@@ -6,6 +6,12 @@ The user supplied `tmp/Snipaste_2026-10-15_20-57-38.png` and confirmed that
 Up/Down still changed the item description. The rebuilt executables preserve
 the existing audio-clock correction and user saves.
 
+Later update: the [counter-read correction](loading-timing.md) preserves the
+selector but changes the animation phase by one guest frame at some samples.
+The zero-difference results below describe this original palette-fix checkpoint.
+The new `menu-first` picture matches the next reference idle frame exactly on
+the RGB5 grid.
+
 ## Reproduction and diagnosis
 
 A natural input route starts on Special, moves Right twice to Baby Yoshi

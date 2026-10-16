@@ -9,7 +9,9 @@ beam while preserving this raster restoration and the MARIO START fix.
 Measurements below describe the original transition-fix checkpoint.
 
 The later [shop selection fix](shop-cursor.md) additionally preserves and
-replays CGRAM palette/port state for scanline color changes.
+replays CGRAM palette/port state for scanline color changes. The later
+[counter-read fix](loading-timing.md) corrects the PPU2 bus and counter byte
+selectors; its snapshot extension and timing results are documented separately.
 
 ## Reproduction and causes
 

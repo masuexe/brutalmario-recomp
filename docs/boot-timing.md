@@ -4,6 +4,10 @@ Date: 2026-10-15. The initial native/reference state divergence at host
 frames 225–226 is fixed. This is a clock-model correction, not a claim that
 the complete game now has cycle-identical execution.
 
+Later update: the [counter-read investigation](loading-timing.md) fixes the
+frame-838 divergence. The compiled route now matches the three selected
+values through frame 2153. Measurements below retain the APU-clock checkpoint.
+
 ## Investigation
 
 Both cores enter game mode `$03` at host frame 192. Before this fix, Snes9x
@@ -159,5 +163,5 @@ Local evidence includes `timing-boot-stock`, `timing-boot-probe-verified`,
 `timing-master-analysis.json`, `timing-master-scenes.json`, and
 `timing-master-audio-summary.json` under `local/reports/`.
 
-Next isolate the frame-838 loading/handshake boundary using the corrected
-clock before attributing later differences to AOT coverage or importing content.
+The follow-up [loading-boundary investigation](loading-timing.md) isolates
+frame 838 and corrects the PPU counter-read protocol.

@@ -1,6 +1,75 @@
 --- a/runner/src/snes/ppu.c
 +++ b/runner/src/snes/ppu.c
-@@ -802,17 +802,19 @@
+@@ -71,6 +71,23 @@
+ static void PpuUpdateWidescreenOamHistory(Ppu *ppu, int line);
+
+
++/* PPU2's read bus belongs to a PPU instance, independently of CPU open bus.
++ * Keep this extension outside the pinned public struct layout. */
++typedef struct PpuReadBus {
++  Ppu *owner;
++  struct PpuReadBus *next;
++  uint8_t value;
++} PpuReadBus;
++static PpuReadBus *s_read_buses;
++static PpuReadBus *ppu_read_bus(Ppu *ppu) {
++  for (PpuReadBus *p = s_read_buses; p; p = p->next)
++    if (p->owner == ppu) return p;
++  PpuReadBus *p = calloc(1, sizeof(*p));
++  if (!p) abort();
++  p->owner = ppu; p->next = s_read_buses; s_read_buses = p;
++  return p;
++}
++
+ Ppu* ppu_init(void) {
+   Ppu* ppu = calloc(1, sizeof(Ppu));  /* zero padding: saveload/co-sim hash determinism */
+   if (ppu)
+@@ -80,10 +97,14 @@
+ }
+
+ void ppu_free(Ppu* ppu) {
++  PpuReadBus **link = &s_read_buses;
++  while (*link && (*link)->owner != ppu) link = &(*link)->next;
++  if (*link) { PpuReadBus *old = *link; *link = old->next; free(old); }
+   free(ppu);
+ }
+
+ void ppu_reset(Ppu* ppu) {
++  ppu_read_bus(ppu)->value = 0;
+   {
+     size_t pitch = ppu->renderPitch;
+     uint8_t *renderBuffer = ppu->renderBuffer;
+@@ -127,6 +148,29 @@
+   if (memcmp(oam_before, ppu->oam, sizeof(oam_before)) != 0 ||
+       memcmp(high_before, ppu->highOam, sizeof(high_before)) != 0)
+     ppu->oamWriteCount++;
++  /* Optional extension: old states end at PPU0; never consume the next chunk.
++   * Counters and read selectors were absent from the old generic snapshot. */
++  uint32_t header[2] = {0x324f4950u, 8u}; /* PIO2 */
++  uint8_t io[8] = {ppu_read_bus(ppu)->value, ppu->hCount, ppu->hCount >> 8,
++                  ppu->vCount, ppu->vCount >> 8, ppu->hCountSecond,
++                  ppu->vCountSecond, ppu->countersLatched};
++  if (sli->peek) {
++    uint32_t next[2];
++    if (!sli->peek(sli, 0, next, sizeof(next)) || memcmp(next, header, sizeof(header))) {
++      ppu_read_bus(ppu)->value = 0;
++      ppu->hCount = ppu->vCount = 0;
++      ppu->hCountSecond = ppu->vCountSecond = ppu->countersLatched = false;
++      return;
++    }
++  }
++  sli->func(sli, header, sizeof(header));
++  sli->func(sli, io, sizeof(io));
++  ppu_read_bus(ppu)->value = io[0];
++  ppu->hCount = io[1] | ((uint16_t)io[2] << 8);
++  ppu->vCount = io[3] | ((uint16_t)io[4] << 8);
++  ppu->hCountSecond = io[5] != 0;
++  ppu->vCountSecond = io[6] != 0;
++  ppu->countersLatched = io[7] != 0;
+ }
+
+ void PpuResetWidescreenOamHistory(Ppu *ppu) {
+@@ -802,17 +846,19 @@
      s_oam_snap_frame = snes_frame_counter;
      debug_server_on_oam_render();
    }
@@ -30,7 +99,77 @@
      // pre-render line
      // TODO: this now happens halfway into the first line
      ppu->mosaicStartLine = 1;
-@@ -3158,8 +3160,32 @@
+@@ -3008,11 +3054,12 @@
+       /* SLHV latches the live beam. LLE advances Snes::hPos/vPos from the
+        * shared master-clock timeline; hard-coding a convenient scanline made
+        * games waiting for any other line loop forever. */
+-      ppu->hCount = g_snes->hPos / 4;
+-      ppu->vCount = g_snes->vPos;
+-      ppu->hCountSecond = false;
+-      ppu->vCountSecond = false;
+-      ppu->countersLatched = true;
++      if (g_snes->ppuLatch) {
++        ppu->hCount = g_snes->hPos / 4;
++        ppu->vCount = g_snes->vPos;
++        ppu->countersLatched = true;
++      }
++      /* Latching does not reset either read selector; STAT78 does. */
+       return 0;
+     }
+     case 0x38: {
+@@ -3055,29 +3102,33 @@
+       if(!ppu->cgramSecondWrite) {
+         ret = ppu->cgram[ppu->cgramPointer] & 0xff;
+       } else {
+-        ret = ((ppu->cgram[ppu->cgramPointer++] >> 8) & 0x7f);
++        ret = ((ppu->cgram[ppu->cgramPointer++] >> 8) & 0x7f) |
++              (ppu_read_bus(ppu)->value & 0x80);
+       }
+       ppu->cgramSecondWrite = !ppu->cgramSecondWrite;
++      ppu_read_bus(ppu)->value = ret;
+       return ret;
+     }
+     case 0x3c: {
+       uint8_t val = 0;
+       if(ppu->hCountSecond) {
+-        val = ((ppu->hCount >> 8) & 1);
++        val = (ppu_read_bus(ppu)->value & 0xfe) | ((ppu->hCount >> 8) & 1);
+       } else {
+         val = ppu->hCount & 0xff;
+       }
+       ppu->hCountSecond = !ppu->hCountSecond;
++      ppu_read_bus(ppu)->value = val;
+       return val;
+     }
+     case 0x3d: {
+       uint8_t val = 0;
+       if(ppu->vCountSecond) {
+-        val = ((ppu->vCount >> 8) & 1);
++        val = (ppu_read_bus(ppu)->value & 0xfe) | ((ppu->vCount >> 8) & 1);
+       } else {
+         val = ppu->vCount & 0xff;
+       }
+       ppu->vCountSecond = !ppu->vCountSecond;
++      ppu_read_bus(ppu)->value = val;
+       return val;
+     }
+     case 0x3e: {
+@@ -3088,11 +3139,13 @@
+     }
+     case 0x3f: {
+       uint8_t val = 0x3; // ppu2 version (4 bit), bit 4: ntsc/pal
++      val |= ppu_read_bus(ppu)->value & 0x20;
+       val |= ppu->countersLatched << 6;
+       val |= ppu->evenFrame << 7;
+-      ppu->countersLatched = false; // TODO: only when ppulatch is set
++      if (g_snes->ppuLatch) ppu->countersLatched = false;
+       ppu->hCountSecond = false;
+       ppu->vCountSecond = false;
++      ppu_read_bus(ppu)->value = val;
+       return val;
+     }
+     default: {
+@@ -3158,8 +3211,32 @@
  /* key: beam position within the field, monotonic from its start at V=225
   * (0) through vblank (36 = V=261) and the visible lines (37 = V=0 ...). */
  typedef struct { uint16_t key; uint16_t reg; uint8_t val; } PpuRasterEntry;
@@ -63,7 +202,7 @@
    uint8_t scrollPrev, scrollPrev2, m7prev;
    uint8_t hdmaen;
    int count;
-@@ -3176,8 +3202,11 @@
+@@ -3176,8 +3253,11 @@
  static uint8_t s_raster_hdmaen;
  static int s_raster_hdmaen_pending;
  static struct {
@@ -76,7 +215,7 @@
 
  /* Only the machine's PPU journals: the debug server and a few tools run
   * ppu_write on scratch copies. */
-@@ -3198,7 +3227,6 @@
+@@ -3198,7 +3278,6 @@
      case 0x2104:                                       /* OAMDATA */
      case 0x2115: case 0x2116: case 0x2117:             /* VRAM port */
      case 0x2118: case 0x2119:
@@ -84,7 +223,7 @@
        return 0;
      default:
        return 1;
-@@ -3206,6 +3234,7 @@
+@@ -3206,6 +3285,7 @@
  }
 
  static void raster_snapshot(PpuRasterField *f, const Ppu *ppu) {
@@ -92,7 +231,7 @@
    memcpy(f->regs, &ppu->inidisp, PPU_SAVESTATE_REGS_SIZE);
    f->scrollPrev = ppu->scrollPrev;
    f->scrollPrev2 = ppu->scrollPrev2;
-@@ -3279,10 +3308,19 @@
+@@ -3279,10 +3359,19 @@
     * all there is. */
    f = s_raster_have_completed ? &s_field[s_raster_cur ^ 1]
                                : &s_field[s_raster_cur];
@@ -116,7 +255,7 @@
    memcpy(&ppu->inidisp, f->regs, PPU_SAVESTATE_REGS_SIZE);
    ppu->scrollPrev = f->scrollPrev;
    ppu->scrollPrev2 = f->scrollPrev2;
-@@ -3326,26 +3364,21 @@
+@@ -3326,26 +3415,21 @@
    }
  }
 
