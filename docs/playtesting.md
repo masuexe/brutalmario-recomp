@@ -81,3 +81,9 @@ remain. Some shop animation samples advance one guest frame earlier, while
 the highlight and exit remain functional. This build has no new user playtest
 or explicit listening report yet. The earlier manual checkpoint remains valid
 for the earlier build rather than automatically qualifying every later change.
+
+After the counter-read rebuild, the user reported that all tests they tried
+were free of issues and authorized the next stage: expanding static
+recompilation coverage. This confirms that build's manual checkpoint; no
+exact route, duration or separate audio listening comparison was supplied.
+Subsequent AOT qualification is recorded in [aot-coverage.md](aot-coverage.md).

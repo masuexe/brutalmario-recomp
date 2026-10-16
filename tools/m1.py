@@ -66,6 +66,17 @@ def install_metrics():
         cmake.write_text(source)
 
 
+def analysis_identity():
+    cfg = EXPERIMENT / 'recomp'
+    files = sorted(cfg.glob('bank*.cfg')) + [cfg / 'symbols.toml']
+    return {
+        'inputs': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                   for p in files if p.is_file()},
+        'program_manifest_sha256': hashlib.sha256(
+            (EXPERIMENT / 'src/gen/program_manifest.json').read_bytes()).hexdigest(),
+    }
+
+
 def pins_check():
     pins = json.loads((ROOT / 'config/upstreams.json').read_text())
     inputs = json.loads(INPUT_MANIFEST.read_text())
@@ -143,6 +154,11 @@ def main():
         parser.error('--renderer applies only to the native stage')
     pins = pins_check()
     runtime_patches = patch_plan()
+    if args.stage in ('build', 'native'):
+        owned_symbols = ROOT / 'recomp/targets' / args.target / 'symbols.toml'
+        if (owned_symbols.is_file() and
+                owned_symbols.read_bytes() != (EXPERIMENT / 'recomp/symbols.toml').read_bytes()):
+            raise ValueError('analysis symbols changed; run tools/m1.py generate for this target first')
     if args.stage == 'native':
         receipt_path = BUILD / 'm1-build.json'
         if not receipt_path.is_file():
@@ -151,7 +167,9 @@ def main():
         binary_sha = hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest()
         if (build_receipt['runtime_patches'] != runtime_patches or
                 build_receipt['binary_sha256'] != binary_sha or
-                build_receipt.get('audio_diagnostics', False) != args.audio):
+                build_receipt.get('audio_diagnostics', False) != args.audio or
+                (build_receipt.get('analysis') is not None and
+                 build_receipt['analysis'] != analysis_identity())):
             raise ValueError('binary does not match the current runtime patch receipt; rebuild first')
     reports = ROOT / 'local/reports'
     if args.target != 'demo-1-1':
@@ -171,6 +189,12 @@ def main():
         install_metrics()
     elif args.stage == 'generate':
         cfg = EXPERIMENT / 'recomp'
+        owned_symbols = ROOT / 'recomp/targets' / args.target / 'symbols.toml'
+        if owned_symbols.is_file():
+            (cfg / 'symbols.toml').write_bytes(owned_symbols.read_bytes())
+        # Synchronize declarations before funcs.h so new roots are declared.
+        run([sys.executable, ENGINE / 'tools/sync_symbols.py', '--cfg-dir', cfg],
+            log=reports / 'sync-symbols.log')
         run([sys.executable, ENGINE / 'tools/v2_sync_funcs_h.py', '--cfg-dir', cfg,
              '--out', cfg / 'funcs.h'], log=reports / 'sync-funcs.log')
         command = [sys.executable, ENGINE / 'tools/v2_emit.py', '--rom', ROM,
@@ -192,6 +216,7 @@ def main():
             'binary_sha256': hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest(),
             'runtime_patches': runtime_patches,
             'audio_diagnostics': args.audio,
+            'analysis': analysis_identity(),
         }, indent=2) + '\n')
     else:
         name = args.capture or args.stage + '-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
@@ -249,6 +274,9 @@ def main():
             command = [BUILD / TARGET, '--no-launcher',
                        '--config', config_file, '--coverage-capture=on',
                        '--script', script_copy, '--rom', ROM]
+        if args.stage == 'native':
+            (directory / 'program-manifest.json').write_bytes(
+                (EXPERIMENT / 'src/gen/program_manifest.json').read_bytes())
         receipt = {
             'stage': args.stage,
             'target': args.target,
@@ -265,6 +293,7 @@ def main():
             'audio_device_rate_override': args.audio_device_rate,
             'separate_echo_compatibility': env.get('SNESRECOMP_SEPARATE_ECHO', '0'),
             'apu_master_clock_override': env.get('SNESRECOMP_APU_MASTER_CLOCK', '0'),
+            'analysis': analysis_identity() if args.stage == 'native' else None,
             'boot_instruction_trace': env.get('M1_BOOT_TRACE'),
             'instruction_trace_frames': env.get('M1_TRACE_FRAMES'),
             'reference_core_options': env.get('SNESREF_CORE_OPTIONS', 'defaults'),
