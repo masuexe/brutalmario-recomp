@@ -9,6 +9,11 @@ ratio for the beam driver. Capture results below describe the earlier clock
 model. The new short audio smoke capture and remaining manual listening
 check are recorded separately in that investigation.
 
+The later [star-music probe](star-audio.md) investigates a reported subjective
+slowdown after AOT expansion. Generated Demo 1-1 star PCM shows no accumulating
+lag against Snes9x in the measured passage; ZSNES and physical playback remain
+unqualified.
+
 ## Manual evidence
 
 The user played level 1-1 with audio enabled and reported that background

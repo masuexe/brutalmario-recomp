@@ -87,3 +87,9 @@ were free of issues and authorized the next stage: expanding static
 recompilation coverage. This confirms that build's manual checkpoint; no
 exact route, duration or separate audio listening comparison was supplied.
 Subsequent AOT qualification is recorded in [aot-coverage.md](aot-coverage.md).
+
+After the first AOT expansion, the user reported normal functionality but
+perceived slower invincibility-star music relative to the original. Treat this
+as a new audio concern. The [star-music probe](star-audio.md) finds no accumulating
+lag in generated Demo 1-1 PCM versus Snes9x over the measured passage; it does
+not resolve a historical ZSNES or physical-device listening comparison.

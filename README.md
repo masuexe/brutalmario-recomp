@@ -29,6 +29,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Measured static recompilation coverage](docs/aot-coverage.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
+- [Star-music timing probe](docs/star-audio.md)
 - [demoOnly1 boss route and fast native pre-boss entry](docs/boss-entry.md)
 - [demoOnly1 death black-screen fix](docs/death-black-screen.md)
 
