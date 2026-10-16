@@ -18,6 +18,7 @@ import time
 
 from prepare_rom import verify
 from runtime_patches import configure_runtime, patch_plan
+from generator_patches import identity as generator_identity, prepare as prepare_generator
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'local/upstream/snesrecomp'
@@ -69,7 +70,12 @@ def install_metrics():
 def analysis_identity():
     cfg = EXPERIMENT / 'recomp'
     files = sorted(cfg.glob('bank*.cfg')) + [cfg / 'symbols.toml']
+    generated = EXPERIMENT / 'src/gen'
     return {
+        'generated_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
+                              for p in sorted(generated.iterdir())
+                              if p.suffix in ('.c', '.h')},
+        'generator': generator_identity('demo-only-1' if TARGET == 'BrutalMarioDemoOnly1SNESRecomp' else 'demo-1-1'),
         'inputs': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in files if p.is_file()},
         'program_manifest_sha256': hashlib.sha256(
@@ -154,7 +160,13 @@ def main():
         parser.error('--renderer applies only to the native stage')
     pins = pins_check()
     runtime_patches = patch_plan()
+    generator_identity(args.target)
     if args.stage in ('build', 'native'):
+        if generator_identity(args.target) is not None:
+            generation_receipt = EXPERIMENT / 'recomp/generation.json'
+            if (not generation_receipt.is_file() or
+                    json.loads(generation_receipt.read_text()) != analysis_identity()):
+                raise ValueError('generator policy or generated sources changed; run tools/m1.py generate first')
         owned_symbols = ROOT / 'recomp/targets' / args.target / 'symbols.toml'
         if (owned_symbols.is_file() and
                 owned_symbols.read_bytes() != (EXPERIMENT / 'recomp/symbols.toml').read_bytes()):
@@ -197,15 +209,21 @@ def main():
             log=reports / 'sync-symbols.log')
         run([sys.executable, ENGINE / 'tools/v2_sync_funcs_h.py', '--cfg-dir', cfg,
              '--out', cfg / 'funcs.h'], log=reports / 'sync-funcs.log')
-        command = [sys.executable, ENGINE / 'tools/v2_emit.py', '--rom', ROM,
+        generator = prepare_generator(args.target)
+        command = [sys.executable, generator / 'tools/v2_emit.py', '--rom', ROM,
                    '--cfg-dir', cfg, '--out-dir', EXPERIMENT / 'src/gen',
                    '--analysis-backend', 'native', '--no-hle']
         for name in ('main.c', 'game_rtl.c', 'host_contract.c'):
             command.extend(['--source-root', EXPERIMENT / 'src' / name])
         run(command, log=reports / 'emission-repeat.log', memory_gib=4)
+        (cfg / 'generation.json').write_text(json.dumps(analysis_identity(), indent=2) + '\n')
     elif args.stage == 'build':
         install_metrics()
         configure_runtime(EXPERIMENT, TARGET)
+        cmake = EXPERIMENT / 'CMakeLists.txt'
+        support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
+        if support not in cmake.read_text():
+            cmake.write_text(cmake.read_text() + '\n# Instruction-paced AOT support.\n' + support + '\n')
         run(['cmake', '-S', EXPERIMENT, '-B', BUILD, '-G', 'Ninja',
              '-DCMAKE_BUILD_TYPE=Release', f'-DSNESRECOMP_ROOT={ENGINE}',
              '-DSNESRECOMP_SDL_BACKEND=SDL2', '-DSNESRECOMP_SDL3_FETCH=OFF',

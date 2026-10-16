@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "patches": [
+    {
+      "source": "recompiler/v2/emit_function.py",
+      "patch": "patches/generator/0001-add-opt-in-instruction-bus-timing.patch",
+      "source_sha256": "d243c6e1df00899c33a799522e2a4e0458c05b20fc0f9473fc984fec34c59968",
+      "patch_sha256": "929344a2551fb52588431bc58e0a13fa681bdd4b6341a9c5b2b8037c71384bf3",
+      "result_sha256": "edce9e70ce8fa76f83f3d30bc8caa90b1fbcab661df609ad7bfd36020af6d8df"
+    }
+  ]
+}

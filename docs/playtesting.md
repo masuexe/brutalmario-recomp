@@ -93,3 +93,27 @@ perceived slower invincibility-star music relative to the original. Treat this
 as a new audio concern. The [star-music probe](star-audio.md) finds no accumulating
 lag in generated Demo 1-1 PCM versus Snes9x over the measured passage; it does
 not resolve a historical ZSNES or physical-device listening comparison.
+
+The user listened to the native/reference star clips and reported that they
+sounded identical, then explicitly deferred further investigation of the
+subjective star-music concern. Physical-output and ZSNES parity were not
+thereby established.
+
+The subsequent [AOT instruction-timing correction](aot-timing.md) has generated
+code/interpreter differential tests, complete-route and transition regressions,
+and byte-identical generated audio against the preceding native capture.
+Manual confirmation of this 49-variant executable is recorded below.
+
+On 2026-10-16, after the instruction-timing rebuild, the user reported no
+issues in Demo 1-1's Entry course itself. They also entered the underground
+Entry area through its pipe and confirmed that the Baby Yoshi mechanic
+worked normally. The user had not obtained the DK coin, so its collection
+behavior remains explicitly untested. No exact session duration or new
+explicit listening/death-return report was supplied.
+
+Combined with the automated differential and replay checks, this passes the
+current AOT instruction-timing regression checkpoint for the covered Entry
+and underground Baby Yoshi flows. DK coin collection remains a follow-up
+coverage item; it does not block this bounded checkpoint. This report does
+not establish a full level clear, complete collectible/persistence coverage,
+or whole-port fidelity.

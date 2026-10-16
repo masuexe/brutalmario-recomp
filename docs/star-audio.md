@@ -7,6 +7,10 @@ The version/comparison baseline was requested; pending clarification, this
 probe uses Demo 1-1 and the pinned Snes9x 1.63 reference. It does not settle
 a ZSNES 1.51 or demoOnly1 comparison.
 
+Later feedback: the user listened to both clips and reported they sounded
+identical, then deferred further investigation. No tempo correction was made;
+physical-device and ZSNES comparisons retain their unqualified status.
+
 ## Method
 
 The [diagnostic route](../recomp/inputs/star-audio.script) starts fresh, follows

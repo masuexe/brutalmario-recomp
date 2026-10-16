@@ -1,0 +1,81 @@
+--- a/recompiler/v2/emit_function.py
++++ b/recompiler/v2/emit_function.py
+@@ -35,6 +35,7 @@
+ from v2.cfg import V2Block, V2CFG, build_cfg  # noqa: E402
+ from v2.lowering import lower  # noqa: E402
+ from v2.codegen import emit_op, _transfer_target_expr  # noqa: E402
++from v2 import instruction_bus as _instruction_bus
+ from v2.naming import (  # noqa: E402
+     default_func_name as _default_func_name,
+     variant_suffix as _variant_suffix,
+@@ -1337,6 +1338,10 @@
+             f"target outside this bank's import range */"
+         )
+
++    instruction_bus = _instruction_bus.selected(bank, start, entry_m, entry_x)
++    if instruction_bus:
++        bus_max_dp, bus_pointers = _instruction_bus.validate(block_per_insn_ir)
++
+     for key in block_order:
+         block = cfg.blocks[key]
+         lines: List[str] = []
+@@ -1344,6 +1349,8 @@
+         # Axis-5: master-clocks-per-CPU-cycle for this block's code region, used
+         # to weight the dynamic (D.l/page-cross/branch-taken) master charges.
+         _blk_spd_expr, _blk_spd_const = _block_speed(bank, key.pc)
++        if instruction_bus:
++            _blk_spd_expr, _blk_spd_const = "6", 6
+
+         # Iterate the pre-lowered (Insn, [IROp]) pairs. Calling lower()
+         # again here would mint fresh Value-ids and break codegen's
+@@ -1495,6 +1502,8 @@
+                 continue
+             # Axis-2 step C dynamics: charge runtime-only modifiers (D.l != 0,
+             # abs,X/Y read page-cross) for this instruction before its effect.
++            if instruction_bus:
++                lines.extend(_instruction_bus.prefix(di_insn, _transfer_target_expr(di_insn.addr, False)))
+             for _ln in _dynamic_charge_lines(di_insn, _blk_spd_expr):
+                 lines.append(_ln)
+             for op in ir_ops:
+@@ -2052,6 +2061,14 @@
+     #      in-flight NLR state.
+     # Preceded by a `(void)` cast so the C compiler doesn't warn when
+     # NLR detection didn't fire on this function (most functions).
++    if instruction_bus:
++        src.append('  extern void M1AotBusBoundary(CpuState *cpu);')
++        src.append('  extern bool M1AotBusContextSupported(CpuState *, unsigned, int);')
++        checks = [f'!M1AotBusContextSupported(cpu, {bus_max_dp}u, {p})' for p in (bus_pointers or [-1])]
++        src.append('  if (' + ' || '.join(checks) + ') {')
++        src.append('    RecompStackPopYield();')
++        src.append(f'    return interp_bridge_lle_yield_unwind(cpu, {_transfer_target_expr(fn_entry_pc, False)});')
++        src.append('  }')
+     src.append(f'  RecompReturn _pending_skip = RECOMP_RETURN_NORMAL;')
+     src.append(f'  (void)_pending_skip;  /* unused if no NLR site in this fn */')
+     # cpu->S balance marker for the PEI-trampoline detector (2026-05-24,
+@@ -2155,7 +2172,7 @@
+         # Axis-5: also charge the region-weighted MASTER clocks (CPU cycles x
+         # code-region speed) into cpu->master_cycles, which paces the SPC700.
+         _cyc_const = _block_cycle_const(block_per_insn_ir.get(key, []))
+-        if _cyc_const:
++        if _cyc_const and not instruction_bus:
+             src.append(f'    cpu->cycles += {_cyc_const};')
+             _spd_expr, _spd_const = _block_speed(bank, key.pc)
+             if _spd_const is not None:
+@@ -2163,6 +2180,8 @@
+             else:
+                 src.append(f'    cpu->master_cycles += {_cyc_const} * {_spd_expr};')
+         for ln in block_lines[key]:
++            if instruction_bus:
++                ln = _instruction_bus.pace(ln)
+             # Inject a stack-auditor pop before any return so the shadow
+             # stack stays balanced. An LLE yield unwind is NOT a return: the
+             # bounce site resumes the interpreter mid-routine with pushed
+@@ -2170,6 +2189,8 @@
+             # imbalance. Pop it without recording a balance figure.
+             stripped = ln.strip()
+             if stripped.startswith("return"):
++                if instruction_bus:
++                    src.append("    M1AotBusBoundary(cpu);")
+                 _pop = ("RecompStackPopYield"
+                         if "interp_bridge_lle_yield_unwind" in stripped
+                         else "RecompStackPop")

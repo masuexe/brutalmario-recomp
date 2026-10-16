@@ -6,6 +6,10 @@ The user confirmed no issues in the preceding counter-read build and authorized
 coverage work. This document records automated evidence for the new build;
 that preceding manual report does not qualify this later executable.
 
+Later update: [instruction bus timing](aot-timing.md) corrects the deferred
+pointer-read leaf and qualifies its promotion to 49 variants. Measurements
+below retain the first 48-variant expansion.
+
 ## Selection and implementation
 
 The accepted 6,104-call route executed 81,207,715 interpreted instructions,
@@ -138,7 +142,8 @@ The prior binary, configuration and generated tree were archived at
 `aot-round1-final-floor-scenes.json`, `aot-round1-state-check.json`, and
 `aot-round1-transition-scenes.json`, and `aot-round1-transition-regression.json`.
 
-Next address the AOT/interpreter timing model before promoting the deferred
-pointer-read leaf, while continuing to choose bounded, observed entries.
+The subsequent [instruction-timing work](aot-timing.md) resolves the pointer
+leaf's promotion blocker. Further work should continue to choose bounded,
+observed entries and qualify newly modeled addressing modes.
 The majority of execution is still interpreted, and the overall recompilation
 and fidelity goals remain open.
