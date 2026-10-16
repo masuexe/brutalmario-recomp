@@ -19,6 +19,16 @@ bool M1AotBusContextSupported(CpuState *cpu, unsigned max_dp, int pointer) {
     return true;
 }
 
+/* Guard each live indexed address before charging or accessing it. */
+bool M1AotBusAddressSupported(uint32_t address, unsigned width) {
+    for (unsigned i = 0; i < width; ++i) {
+        uint32_t at = (address + i) & 0xffffff;
+        if (cpu_wram_offset(at >> 16, at) < 0 && (at & 0xffff) < 0x8000)
+            return false;
+    }
+    return true;
+}
+
 void M1AotBusBoundary(CpuState *cpu) {
     snes_refresh_charge();
     cpu->coprocessor_master_cycles = cpu->master_cycles;

@@ -1,4 +1,7 @@
 {
   "schema": 1,
-  "instruction_bus_variants": ["00B983:M1X0"]
+  "instruction_bus_variants": [
+    "00B983:M1X0",
+    "04F87C:M1X1"
+  ]
 }

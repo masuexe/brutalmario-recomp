@@ -117,3 +117,16 @@ and underground Baby Yoshi flows. DK coin collection remains a follow-up
 coverage item; it does not block this bounded checkpoint. This report does
 not establish a full level clear, complete collectible/persistence coverage,
 or whole-port fidelity.
+
+The subsequent [indexed table-read expansion](aot-indexed.md) produces a
+50-variant executable with automated differential, full-route, transition and
+matched-device audio regression checks.
+
+On 2026-10-16, in response to the requested checks of map movement, level entry,
+and the pipe/underground return route, the user reported no issues with the new
+build. They also explicitly confirmed that the DK coin could be collected
+normally. This passes the 50-variant build's manual regression checkpoint and
+closes the previously outstanding DK coin pickup item. The report does not
+separately establish collectible persistence after saving/reloading, a full
+level clear, or whole-port fidelity; no exact duration or executable hash was
+supplied.

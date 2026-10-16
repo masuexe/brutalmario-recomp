@@ -159,3 +159,11 @@ Reports under `local/reports/`: `aot-bus-final-scenes.json`,
 Future promotions can extend this restricted timing model with differential
 cases for each new addressing mode. Wider timing/fidelity, a recorded ZSNES
 comparison and historical content integration retain their separate status.
+
+The subsequent [indexed table-read expansion](aot-indexed.md) adds native
+M1/X1 addressing coverage and increases the frontier to 50 eligible variants.
+The measurements above describe the preceding 49-variant checkpoint.
+
+The 50-variant follow-up subsequently passed user testing, including normal
+DK coin pickup, closing the collectible pickup item left open above. See
+[playtesting.md](playtesting.md) for the later report.

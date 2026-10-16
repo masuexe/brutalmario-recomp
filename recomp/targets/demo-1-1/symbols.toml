@@ -37,3 +37,12 @@ emit = true
 entry_m = 1
 entry_x = 0
 note = "Native M1/X0 leaf, qualified with opt-in instruction bus timing; unusual contexts retain interpreter fallback."
+
+[[func]]
+name = "CheckOverworldAccessMask"
+addr = "f87c"
+bank = 4
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive name for table/status leaf $04F87C-$04F8A5; instruction-paced, live indexed-address guards retain interpreter fallback."

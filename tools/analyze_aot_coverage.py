@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 
 LEAVES = {
+    'CheckOverworldAccessMask': (0x04f87c, 0x04f8a5, '04F87C:M1X1'),
     'CopyEightWordsAndEightBytes': (0x0480b9, 0x0480df, '0480B9:M0X0'),
     'ReadByteAdvanceLoRomPointer': (0x00b983, 0x00b991, '00B983:M1X0'),
 }

@@ -37,13 +37,14 @@
              for _ln in _dynamic_charge_lines(di_insn, _blk_spd_expr):
                  lines.append(_ln)
              for op in ir_ops:
-@@ -2052,6 +2061,14 @@
+@@ -2052,6 +2061,15 @@
      #      in-flight NLR state.
      # Preceded by a `(void)` cast so the C compiler doesn't warn when
      # NLR detection didn't fire on this function (most functions).
 +    if instruction_bus:
 +        src.append('  extern void M1AotBusBoundary(CpuState *cpu);')
 +        src.append('  extern bool M1AotBusContextSupported(CpuState *, unsigned, int);')
++        src.append('  extern bool M1AotBusAddressSupported(uint32, unsigned);')
 +        checks = [f'!M1AotBusContextSupported(cpu, {bus_max_dp}u, {p})' for p in (bus_pointers or [-1])]
 +        src.append('  if (' + ' || '.join(checks) + ') {')
 +        src.append('    RecompStackPopYield();')
@@ -52,7 +53,16 @@
      src.append(f'  RecompReturn _pending_skip = RECOMP_RETURN_NORMAL;')
      src.append(f'  (void)_pending_skip;  /* unused if no NLR site in this fn */')
      # cpu->S balance marker for the PEI-trampoline detector (2026-05-24,
-@@ -2155,7 +2172,7 @@
+@@ -2135,6 +2153,8 @@
+         # across a frame boundary. Every CFG block starts at an architectural
+         # instruction boundary, so it is safe to unwind here and resume this
+         # exact PC through the owning interpreter after host events run.
++        if instruction_bus:
++            src.append('    M1AotBusBoundary(cpu);')
+         src.append(
+             f'    if (interp_bridge_lle_master_deadline_reached(cpu)) {{')
+         src.append('      RecompStackPopYield();')
+@@ -2155,7 +2175,7 @@
          # Axis-5: also charge the region-weighted MASTER clocks (CPU cycles x
          # code-region speed) into cpu->master_cycles, which paces the SPC700.
          _cyc_const = _block_cycle_const(block_per_insn_ir.get(key, []))
@@ -61,7 +71,7 @@
              src.append(f'    cpu->cycles += {_cyc_const};')
              _spd_expr, _spd_const = _block_speed(bank, key.pc)
              if _spd_const is not None:
-@@ -2163,6 +2180,8 @@
+@@ -2163,6 +2183,8 @@
              else:
                  src.append(f'    cpu->master_cycles += {_cyc_const} * {_spd_expr};')
          for ln in block_lines[key]:
@@ -70,7 +80,7 @@
              # Inject a stack-auditor pop before any return so the shadow
              # stack stays balanced. An LLE yield unwind is NOT a return: the
              # bounce site resumes the interpreter mid-routine with pushed
-@@ -2170,6 +2189,8 @@
+@@ -2170,6 +2192,8 @@
              # imbalance. Pop it without recording a balance figure.
              stripped = ln.strip()
              if stripped.startswith("return"):
