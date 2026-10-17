@@ -138,3 +138,28 @@ movement, Entry loading, pipe/underground and map-return checks, the user
 reported no issues. This passes the new build's bounded manual regression
 checkpoint. No exact duration, executable hash or new separate DK coin pickup
 report was supplied; the previous pickup confirmation remains recorded above.
+
+On 2026-10-16, the user requested arbitrary map-position teleport, specifically
+World 1's castle for Larry investigation. The [practice selector](level-select.md)
+implements map/pixel coordinates and a castle preset with isolated saves.
+Its automated entry/return and launcher-isolation checks pass; user testing
+of the new selector and Larry battle is pending. The user also confirmed that
+Milky Way Wishes and End of Special Zone hang at MARIO START in original
+demoOnly1. These are recorded as original-version unavailable entries, with
+matching reference loading observations, rather than native-only regressions.
+
+The user confirmed that arbitrary map teleport works, but identified the old
+World 1 castle preset as a World 6 level. They requested a separate all-levels
+and DK-coin completion cheat to unlock Warp Stars. Their lower-left castle /
+raised-ground / animated-skull landmark was used to correct the preset to map
+0, X=$0018, Y=$01B8. The [completion option](completion-cheat.md) has automated
+Warp Star, ordinary-level return and isolated-launcher checks; user acceptance
+of this new option is pending.
+
+The corrected castle starts loading $010 but stalls at MARIO START in native
+and Snes9x reference runs, with and without the cheat. The user explicitly said
+they do not know whether the original behaves this way. Original ZSNES 1.51
+parity is therefore unknown; do not record this castle as a confirmed original
+unavailable level or a qualified Larry encounter. This differs from their
+explicit original-version confirmation for Milky Way Wishes and End of Special
+Zone. The earlier $101 sample belongs to the misidentified World 6 node.

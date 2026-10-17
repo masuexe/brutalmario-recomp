@@ -64,13 +64,15 @@ python3 tools/play_demo_only1.py
 ```
 
 The launcher verifies the ROM and binary/runtime receipts. Ordinary launches
-retain the existing executable-relative config and saves in
-`local/build/demo-only-1/`; earlier documentation incorrectly said their
-working directory isolated those saves. Practice launches pass an explicit
-config path to prevent the host from switching back to the executable
-directory, while retaining the ordinary desktop settings. The binary is
-`local/build/demo-only-1/BrutalMarioDemoOnly1SNESRecomp`. The primary Demo 1-1
-ROM, build, settings, and saves are unchanged.
+retain executable-relative config and saves in `local/build/demo-only-1/`.
+Practice launches copy the ordinary config into the new session and pass that
+explicit path, retaining desktop settings while keeping the working directory
+inside the practice session. The binary is
+`local/build/demo-only-1/BrutalMarioDemoOnly1SNESRecomp`.
+
+The [map teleport and practice selector](level-select.md) additionally supports
+`--select-level`, the `--level world1-castle` preset, and arbitrary map/pixel
+coordinates through `--teleport MAP X Y`, all compatible with `--air-swim`.
 
 The shortcut is **not a level-clear test**. It writes Mario's position and
 door/pipe transition state to exercise existing exits, then releases all
@@ -157,10 +159,14 @@ Numeric correspondence with supplied sprite lists is not established.
 Additional position-clamped captures are diagnostic only and do not count
 as gameplay acceptance. Boss health/state was not patched.
 
-World 1's castle `$101` was reached in Snes9x by both an overworld-node
-remap and overworld position **map 1, X=$0058, Y=$0088**. Both exploratory
-entries show garbled graphics before any native comparison. Larry is not
-qualified, and this route is not preferred over the user-confirmed door.
+The earlier map 1 / `$0058,$0088` node loaded `$101` with garbled graphics.
+The user subsequently confirmed that it is a World 6 location, so its original
+World 1/Larry attribution is withdrawn. The corrected lower-left World 1
+castle node is **map 0 / `$0018,$01B8`**, using the user's raised-ground/animated
+skull landmark. It starts loading `$010` but stalls at MARIO START in native
+and Snes9x reference runs, with and without completion flags. Original ZSNES
+behavior is unknown and Larry remains unqualified. See
+[completion-cheat.md](completion-cheat.md) for the corrected preset and probes.
 
 ## Current checkpoint and remaining validation
 

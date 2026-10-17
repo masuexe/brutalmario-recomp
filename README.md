@@ -34,6 +34,8 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Star-music timing probe](docs/star-audio.md)
 - [demoOnly1 boss route and fast native pre-boss entry](docs/boss-entry.md)
+- [demoOnly1 map teleport and practice selector](docs/level-select.md)
+- [demoOnly1 all-completion and DK-coin practice cheat](docs/completion-cheat.md)
 - [demoOnly1 death black-screen fix](docs/death-black-screen.md)
 
 Original archives, patches, third-party sources, and ROMs are not included in the repository. Historical versions are not automatically merged.
