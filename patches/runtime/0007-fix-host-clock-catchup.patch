@@ -1,0 +1,21 @@
+--- a/runner/src/desktop/host_clock.c
++++ b/runner/src/desktop/host_clock.c
+@@ -21,11 +21,13 @@
+ void snes_host_clock_simulation_done(SnesHostClock *c, double now,
+                                      bool preserve_debt, double elapsed_periods) {
+   double deadline = c->next_simulation + elapsed_periods / c->simulation_hz;
+-  /* Keep ordinary sub-frame scheduling jitter on the original phase. A
+-   * loader may preserve its backlog so its non-interactive frames refill the
+-   * guest-driven audio queue; all ordinary gameplay drops stale work. */
+-  c->next_simulation = preserve_debt || now <= deadline
+-      ? deadline : now + 1.0 / c->simulation_hz;
++  /* Repay short scheduling overruns on the original guest-time phase.
++   * Adding another whole frame after every missed deadline systematically
++   * slows simulation and starves guest-driven audio. Bound catch-up after a
++   * long desktop stall; do not carry seconds of debt back into user input. */
++  const double catchup_window = 4.0 / c->simulation_hz;
++  c->next_simulation = preserve_debt || now - deadline <= catchup_window
++      ? deadline : now;
+   ++c->simulation_frames;
+ }
+ 

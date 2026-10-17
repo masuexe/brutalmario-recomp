@@ -77,7 +77,51 @@
      host_report_breadcrumb("audio disabled in config");
    }
  
-@@ -4362,7 +4373,7 @@
+@@ -4192,6 +4203,23 @@
+       exit_reason = g_script_failed ? "script until timed out" : "script quit";
+       break;
+     }
++    /* A script can change turbo in TickScript after pacing was computed.
++     * Notify the audio runtime on every frame, including its recovery window,
++     * so accelerated startup cannot leave old PCM queued during live play. */
++    bool realtime_now = !g_turbo && !g_config.disable_frame_delay;
++    if (realtime_now != paced_realtime) {
++      snes_host_clock_reset(&video_clock, MonotonicSeconds(), g_simulation_hz, presentation_hz);
++      paced_realtime = realtime_now;
++      paced_custom = PresentationDecoupled() && paced_realtime;
++    }
++    static bool audio_was_fast_forward;
++    if (audio_was_fast_forward && paced_realtime) {
++      snes_host_clock_reset(&video_clock, MonotonicSeconds(), g_simulation_hz, presentation_hz);
++      ResetAudioTimeline();
++      host_report_breadcrumb("audio timeline: fast-forward -> realtime");
++    }
++    RtlAudioSetFastForward(!paced_realtime);
++    audio_was_fast_forward = !paced_realtime;
+     inputs |= debug_server_get_controller_inputs();
+     double profile_start = ProfileStart();
+     double guest_start = MonotonicSeconds();
+@@ -4303,6 +4331,19 @@
+     }
+     free(g_frame_timings);
+     g_frame_timings = NULL;
++  }
++  {
++    AudioTraceStats audio;
++    RtlApuLock();
++    audio_trace_get_stats(&audio);
++    uint32_t queued = dsp_available(g_snes->apu->dsp);
++    RtlApuUnlock();
++    host_report_breadcrumb(
++        "audio totals: produced=%llu consumed=%llu dropped=%llu fast_forward_discarded=%llu underflows=%llu missing=%llu queued=%u",
++        (unsigned long long)audio.produced, (unsigned long long)audio.consumed,
++        (unsigned long long)audio.dropped, (unsigned long long)audio.fast_forward_discarded,
++        (unsigned long long)audio.output_underflows,
++        (unsigned long long)audio.output_missing_frames, queued);
+   }
+   host_report_breadcrumb("exit: %s after %u frames", exit_reason, frameCtr);
+   host_report_breadcrumb("video totals: simulations=%u presentations=%llu seconds=%.3f",
+@@ -4362,7 +4403,7 @@
    SDL_DestroyAudioStream(g_audio_stream);
    g_audio_stream = NULL;
  #else

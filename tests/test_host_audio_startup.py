@@ -2,6 +2,7 @@
 import hashlib
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -19,7 +20,7 @@ ROM = ROOT / 'local/roms/demo-only-1.sfc'
 @unittest.skipUnless(BINARY.is_file() and ROM.is_file(),
                      'requires the locally built demoOnly1 host and ROM')
 class HostAudioStartupTests(unittest.TestCase):
-    def run_host(self, driver, enabled=True, alsa_config=None):
+    def run_host(self, driver, enabled=True, alsa_config=None, script=None, frames=5):
         # Check the binary receipt so an old build cannot silently test old code.
         receipt = json.loads((BINARY.parent / 'm1-build.json').read_text())
         self.assertEqual(receipt['runtime_patches'], patch_plan(), 'rebuild demo-only-1 first')
@@ -33,19 +34,24 @@ class HostAudioStartupTests(unittest.TestCase):
             trace = directory / 'state.csv'
             env = os.environ.copy()
             env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER=driver,
-                       SNESRECOMP_RUN_FRAMES='5', SNESRECOMP_STATE_TRACE=str(trace))
+                       SNESRECOMP_RUN_FRAMES=str(frames), SNESRECOMP_STATE_TRACE=str(trace))
             if alsa_config is not None:
                 alsa = directory / 'alsa.conf'
                 alsa.write_text(alsa_config)
                 env['ALSA_CONFIG_PATH'] = str(alsa)
-            result = subprocess.run([str(BINARY), '--no-launcher', '--rom', str(ROM),
-                                     '--config', str(config)], cwd=directory,
+            command = [str(BINARY), '--no-launcher', '--rom', str(ROM),
+                       '--config', str(config)]
+            if script is not None:
+                path = directory / 'input.script'
+                path.write_text(script)
+                command += ['--script', str(path)]
+            result = subprocess.run(command, cwd=directory,
                                     env=env, capture_output=True, text=True, timeout=30)
             output = result.stdout + result.stderr
             self.assertEqual(result.returncode, 0, output)
-            self.assertIn('exit: RUN_FRAMES reached after 5 frames', output)
+            self.assertIn(f'exit: RUN_FRAMES reached after {frames} frames', output)
             self.assertTrue(trace.is_file(), output)
-            self.assertEqual(trace.read_text().splitlines()[-1].split(',')[0], '5')
+            self.assertEqual(trace.read_text().splitlines()[-1].split(',')[0], str(frames))
             self.assertIn('EnableAudio=' + str(int(enabled)), config.read_text())
             return output
 
@@ -62,6 +68,16 @@ class HostAudioStartupTests(unittest.TestCase):
 
     def test_working_audio_device_still_opens(self):
         self.assertIn('audio device opened:', self.run_host('dummy'))
+
+    def test_repeated_fast_forward_release_discards_stale_audio(self):
+        output = self.run_host('dummy', script=(
+            'turbo on\nwait 900\nturbo off\nwait 90\n'
+            'turbo on\nwait 100\nturbo off\nwait 90\n'), frames=1180)
+        self.assertEqual(output.count('audio timeline: fast-forward -> realtime'), 2, output)
+        totals = re.search(r'audio totals: .*fast_forward_discarded=(\d+).*queued=(\d+)', output)
+        self.assertIsNotNone(totals, output)
+        self.assertGreater(int(totals[1]), 4000, output)
+        self.assertLess(int(totals[2]), 4096, output)
 
     def test_disabled_audio_does_not_initialize_missing_driver(self):
         output = self.run_host('nonexistent-audio-driver', enabled=False)

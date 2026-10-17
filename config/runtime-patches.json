@@ -47,8 +47,16 @@
       "source": "runner/src/desktop/host_main.c",
       "patch": "patches/runtime/0006-allow-startup-without-audio.patch",
       "source_sha256": "a92f6761fdc959af221fb1087dfa8712899b48ad61ea349a848d9a767efcf8b0",
-      "patch_sha256": "0101b087c4dd08acddf514348ea6e050ea3fa17ac20a7e474f2abba89e30c3b3",
-      "result_sha256": "27f9dc3fb0d740ae864b3fc36d553dca37291c318ce05c502af8d91ade316a56"
+      "patch_sha256": "97fb922c6f9f68df5943b9fc3ea729f3c1a14a38c7035fd08f1490b0ae9fe9c1",
+      "result_sha256": "8ea19890f44c21fc1aa066c663187e316a47f02ed4fdf99b2dd152f7ace06bb8"
+    },
+    {
+      "id": "host-clock-bounded-catchup",
+      "source": "runner/src/desktop/host_clock.c",
+      "patch": "patches/runtime/0007-fix-host-clock-catchup.patch",
+      "source_sha256": "7f39dbbba673b7a3a0143745d2a7b1665a1ee6436b5dc894e23837713cc0a6e3",
+      "patch_sha256": "29519fa3bc1b0343ca600a103c8d1830148caa2af0d9dbfb53c80752686a8bf6",
+      "result_sha256": "9a7b8e8d8277e79d28849f05a375688721de3891c8828bb3282e539ae7c4360b"
     }
   ]
 }

@@ -172,3 +172,7 @@ AOT bridge entries and 8,034,583 interpreted opcodes; its log is
 requires launching from a terminal connected to the desktop display. This
 patch permits silent play when audio is unavailable; it does not provide a
 system sound card or a desktop display connection.
+
+The later [practice-startup synchronization fix](audio-sync.md) connects the
+desktop turbo lifecycle to audio recovery and corrects late-frame scheduling.
+It includes repeated-turbo, synthetic jitter, and two-minute practice checks.
