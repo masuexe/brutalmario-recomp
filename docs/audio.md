@@ -143,3 +143,32 @@ Final local evidence:
 The four analyzer tests check known delay direction, silence without an
 invented alignment, PCM measurements, and incomplete-history rejection.
 All **16 project tests pass**.
+
+## Startup without a host audio device
+
+The desktop host previously exited before its first guest frame when ALSA had
+no default sound card. Runtime patch `0006-allow-startup-without-audio.patch`
+makes audio initialization and device opening optional. Either failure logs
+`continuing without sound` and leaves the device closed while the game runs.
+It preserves `EnableAudio` so a later launch can use a working device. Disabling
+audio in the config also skips SDL audio initialization entirely.
+
+Rebuild and launch demoOnly1 with:
+
+```sh
+python3 tools/m1.py build --target demo-only-1
+python3 tools/play_demo_only1.py
+```
+
+`tests/test_host_audio_startup.py` exercises missing-driver, missing-ALSA-device,
+working dummy-device, and explicitly disabled-audio startup paths against the
+local binary and ROM, using temporary config/save directories. All four paths
+advance guest frames and exit normally. A separate 600-frame smoke run using
+the reported `offscreen` video / `alsa` audio environment completed with 3,964
+AOT bridge entries and 8,034,583 interpreted opcodes; its log is
+`local/reports/demo-only-1/startup-no-audio.log`.
+
+`video=offscreen` renders without a visible desktop window. Interactive play
+requires launching from a terminal connected to the desktop display. This
+patch permits silent play when audio is unavailable; it does not provide a
+system sound card or a desktop display connection.

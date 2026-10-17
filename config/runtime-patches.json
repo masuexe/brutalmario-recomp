@@ -41,6 +41,14 @@
       "source_sha256": "bdfff24401eb0470887e0f84e2a99fa1e6f1b05772ac138ab0a2df6dff7ef33b",
       "patch_sha256": "d7fd9d0c6ca0abea0bfade196f5a56e65993cdde73be6537044087f720faee89",
       "result_sha256": "6947070e5e3b0ac075edbab5a91583bd02d9b2e0f980d1a6fa18a184f8f89eb3"
+    },
+    {
+      "id": "desktop-optional-audio",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0006-allow-startup-without-audio.patch",
+      "source_sha256": "a92f6761fdc959af221fb1087dfa8712899b48ad61ea349a848d9a767efcf8b0",
+      "patch_sha256": "0101b087c4dd08acddf514348ea6e050ea3fa17ac20a7e474f2abba89e30c3b3",
+      "result_sha256": "27f9dc3fb0d740ae864b3fc36d553dca37291c318ce05c502af8d91ade316a56"
     }
   ]
 }

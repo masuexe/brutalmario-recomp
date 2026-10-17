@@ -1,0 +1,88 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -3484,10 +3484,20 @@
+   SDL_SetMainReady();
+   /* Return convention flipped in SDL3 (0 == success became true == success),
+    * so this MUST go through the shim. */
+-  if (!snesrecomp_sdl_init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER)) {
++  if (!snesrecomp_sdl_init(SDL_INIT_VIDEO | SDL_INIT_GAMECONTROLLER)) {
+     host_report_breadcrumb("SDL_Init FAILED: %s", SDL_GetError());
+     printf("Failed to init SDL: %s\n", SDL_GetError());
+     return 1;
++  }
++  /* Audio is optional: missing drivers/devices must not prevent play.
++   * Keep enable_audio unchanged so the user's preference survives a restart. */
++  bool audio_ready = false;
++  if (g_config.enable_audio) {
++    audio_ready = snesrecomp_sdl_init(SDL_INIT_AUDIO);
++    if (!audio_ready) {
++      host_report_breadcrumb("audio init FAILED: %s; continuing without sound", SDL_GetError());
++      fprintf(stderr, "Audio unavailable: %s; continuing without sound.\n", SDL_GetError());
++    }
+   }
+   host_report_breadcrumb("SDL init ok: video=%s audio=%s",
+                          SDL_GetCurrentVideoDriver() ? SDL_GetCurrentVideoDriver() : "(none)",
+@@ -3647,7 +3657,7 @@
+   }
+ 
+   int audio_output_rate = 0;
+-  if (g_config.enable_audio) {
++  if (audio_ready) {
+     /* Enumerate output devices into the breadcrumb ring: which device
+      * SDL picks (and what else was available) is exactly the per-machine
+      * variable a non-reproducible audio/boot crash report needs. */
+@@ -3689,26 +3699,27 @@
+ #endif
+     if (g_audio_device == 0) {
+       host_report_breadcrumb("audio device open FAILED: %s", SDL_GetError());
+-      printf("Failed to open audio device: %s\n", SDL_GetError());
+-      return 1;
+-    }
+-    g_audio_channels = 2;
+-    /* The SPC's native rate is 32040 Hz (1.024 MHz / 32), not 32000. The
+-     * consumer converts onto the device rate and cannot infer it. */
+-    RtlSetAudioOutputRate(have.freq);
+-    audio_output_rate = have.freq;
+-    g_frames_per_block = (534 * have.freq + 32040 / 2) / 32040;
+-    g_audiobuffer = (uint8 *)calloc(g_frames_per_block * have.channels * sizeof(int16), 1);
+-    host_report_breadcrumb(
+-        "audio device opened: freq=%d (want %d) ch=%d samples=%d frames_per_block=%d",
+-        have.freq, want.freq, have.channels,
++      fprintf(stderr, "Audio unavailable: %s; continuing without sound.\n", SDL_GetError());
++      host_report_breadcrumb("continuing without sound");
++    } else {
++      g_audio_channels = 2;
++      /* The SPC's native rate is 32040 Hz (1.024 MHz / 32), not 32000. The
++       * consumer converts onto the device rate and cannot infer it. */
++      RtlSetAudioOutputRate(have.freq);
++      audio_output_rate = have.freq;
++      g_frames_per_block = (534 * have.freq + 32040 / 2) / 32040;
++      g_audiobuffer = (uint8 *)calloc(g_frames_per_block * have.channels * sizeof(int16), 1);
++      host_report_breadcrumb(
++          "audio device opened: freq=%d (want %d) ch=%d samples=%d frames_per_block=%d",
++          have.freq, want.freq, have.channels,
+ #if SNESRECOMP_SDL3
+-        g_config.audio_samples,
++          g_config.audio_samples,
+ #else
+-        have.samples,
+-#endif
+-        g_frames_per_block);
+-  } else {
++          have.samples,
++#endif
++          g_frames_per_block);
++    }
++  } else if (!g_config.enable_audio) {
+     host_report_breadcrumb("audio disabled in config");
+   }
+ 
+@@ -4362,7 +4373,7 @@
+   SDL_DestroyAudioStream(g_audio_stream);
+   g_audio_stream = NULL;
+ #else
+-  SDL_CloseAudioDevice(g_audio_device);
++  if (g_audio_device) SDL_CloseAudioDevice(g_audio_device);
+ #endif
+   SDL_DestroyMutex(g_audio_mutex);
+   free(g_audiobuffer);
