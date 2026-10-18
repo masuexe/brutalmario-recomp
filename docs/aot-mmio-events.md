@@ -1,5 +1,10 @@
 # PPU write-event qualification before AOT promotion
 
+Later update: the [restricted palette event model](aot-palette.md) resolves
+this promotion barrier for byte stores to $2121/$2122 and qualifies two actual
+loops, reaching 54 variants. The original negative control is retained. The
+52-variant decision below records the preceding investigation checkpoint.
+
 Date: 2026-10-18. The next palette-loop expansion is **blocked by a reproduced
 event-timestamp mismatch**, not by a total-clock mismatch. The accepted
 frontier remains 52 eligible variants. No game runtime, generator policy,

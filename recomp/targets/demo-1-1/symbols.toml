@@ -64,3 +64,22 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $0DA6BA-$0DA6CC; copies direct-page pointers and a WRAM buffer byte, with live store guards."
+
+
+[[func]]
+name = "UploadIndexedPalette80"
+addr = "9585"
+bank = 22
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $169585-$16959E; indexed palette-port byte loop with instruction-start event timing and live address guards."
+
+[[func]]
+name = "UploadIndexedPalette30"
+addr = "efb2"
+bank = 19
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $13EFB2-$13EFCE; palette-port byte loop and live final index reload, with instruction-start event timing."

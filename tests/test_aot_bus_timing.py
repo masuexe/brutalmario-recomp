@@ -18,6 +18,10 @@ from generator_patches import prepare
 INDEXED_CODE = bytes.fromhex('bc e5 0d b9 28 f8 85 00 ac d9 13 c0 0a d0 07 ac e8 1d c0 01 d0 11 ad d6 0d 4a 4a a8 b9 11 1f a8 b9 75 f8 25 00 f0 02 a9 01 60')
 CODE = bytes.fromhex('a7 8a a6 8a e8 d0 05 a2 00 80 e6 8c 86 8a 60')
 PALETTE_CODE = bytes.fromhex('a9 23 8d 21 21 a9 34 8d 22 21 a9 12 8d 22 21 60')
+PALETTE_LOOPS = {
+    'palette80': (0x16, 0x9585, bytes.fromhex('a2 00 bd 94 94 f0 12 8d 21 21 bd 35 95 8d 22 21 bd e5 94 8d 22 21 e8 80 e9 60'), 0x9494, 0x9585, 80),
+    'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
+}
 
 WRAM_FIXTURES = {
     'clear': (0x16, 0x9f2b, b'\xad\x11\x1f\xc9\x06\xf0\x0b\xa2\x07\xa9\x00\x9f\xa0\xff\x7f\xca\x10\xf7`'),
@@ -55,12 +59,15 @@ class AotBusTimingTests(unittest.TestCase):
     def tearDownClass(cls):
         cls.directory.cleanup()
 
-    def emit(self, generator, code=CODE, indexed=False, fixture=None):
+    def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
             bank, pc, code = ((0x0d, 0xa6ba, PALETTE_CODE) if fixture == 'palette'
+                              else PALETTE_LOOPS[fixture][:3] if fixture in PALETTE_LOOPS
                               else WRAM_FIXTURES[fixture])
             m, x = 1, 1
+        if fixture_code is not None:
+            code = fixture_code
         offset = bank * 32768 + (pc & 0x7fff)
         script = ('from snes65816 import set_rom_image_size\n'
                   'from v2.emit_function import emit_function\n'
@@ -124,12 +131,56 @@ class AotBusTimingTests(unittest.TestCase):
         result = self.build_run(self.generator, fixture='copy_mmio')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
-    def test_palette_write_events_block_mmio_promotion(self):
+    def test_palette_write_events_match_with_legacy_counterexample(self):
         """Total-clock equality must not hide different hardware event times."""
-        result = self.emit(self.generator, fixture='palette')
+        result = self.palette_probe()
+        self.assertIn('412 exact-event cases', result.stdout)
+        print(result.stdout, end='')
+
+    def test_real_palette_loops_and_complete_deadline_sweeps(self):
+        rom_path = ROOT / 'local/roms/demo-1-1.sfc'
+        if not rom_path.is_file():
+            self.skipTest('requires the verified local ROM for the two palette tables')
+        rom = rom_path.read_bytes()
+        for fixture, (bank, pc, code, base, end, count) in PALETTE_LOOPS.items():
+            with self.subTest(fixture=fixture):
+                offset = bank * 32768 + (pc & 32767)
+                self.assertEqual(rom[offset:offset+len(code)], code)
+                table = rom[bank*32768+(base&32767):bank*32768+(end&32767)]
+                self.assertEqual(table.index(0), count)
+                header = (f'#define CODE_BANK {bank}\n#define CODE_PC {pc}\n'
+                          f'#define TABLE_BASE {base}\n#define INDEX_BASE {base}\n'
+                          f'#define COLOR_COUNT {count}\n'
+                          'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n'
+                          'static const uint8_t table_bytes[] = {' + ','.join(map(str, table)) + '};\n')
+                (self.path / 'palette_loop_fixture.h').write_text(header)
+                result = self.palette_probe(fixture, loop=True)
+                self.assertIn(f'{count} colors;', result.stdout)
+                print(result.stdout, end='')
+                if fixture == 'palette80':
+                    # Synthetic relocation of the verified tables crosses an
+                    # absolute-indexed read page without changing the ROM.
+                    relocated = bytearray(code)
+                    for at in (3, 11, 17):
+                        address = int.from_bytes(code[at:at+2], 'little')
+                        relocated[at:at+2] = (address-base+0xa0f0).to_bytes(2, 'little')
+                    relocated_header = header.replace(f'#define TABLE_BASE {base}', '#define TABLE_BASE 41200').replace(
+                        f'#define INDEX_BASE {base}', '#define INDEX_BASE 41200').replace(
+                        'static const uint8_t code[] = {' + ','.join(map(str, code)),
+                        'static const uint8_t code[] = {' + ','.join(map(str, relocated)))
+                    (self.path / 'palette_loop_fixture.h').write_text(relocated_header)
+                    result = self.palette_probe(fixture, loop=True, code_override=bytes(relocated))
+                    print('Relocated page-crossing fixture: ' + result.stdout, end='')
+
+    def palette_probe(self, fixture='palette', loop=False, code_override=None):
+        result = self.emit(self.generator, fixture=fixture, fixture_code=code_override)
         self.assertEqual(result.returncode, 0, result.stderr)
         generated = self.path / 'palette.c'
         generated.write_text(result.stdout)
+        legacy = self.path / 'legacy-palette.c'
+        legacy.write_text(result.stdout.replace('Probe_M1X1', 'LegacyProbe_M1X1').replace(
+            'M1AotPaletteWrite8', 'LegacyPaletteWrite8').replace(
+            'M1AotPaletteWriteSupported', 'M1AotBusWriteSupported'))
         source = (self.include / 'snes/interp_bridge.c').read_text()
         bodies = []
         for name in ('bridge_region_speed', 'bridge_timing_bus', 'bridge_is_apu_port',
@@ -157,15 +208,15 @@ class AotBusTimingTests(unittest.TestCase):
         command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
                    '-DSNESRECOMP_REVERSE_DEBUG=0', '-I' + str(self.include),
                    '-I' + str(self.include / 'snes'), '-I' + str(self.path),
-                   ROOT / 'tests/aot_mmio_event_test.c', generated,
+                   ROOT / ('tests/aot_palette_loop_test.c' if loop else 'tests/aot_mmio_event_test.c'),
+                   generated, legacy,
                    self.path / 'paced.c', wrapper,
                    self.include / 'snes/interp816.c', '-o', binary]
         build = subprocess.run([str(x) for x in command], capture_output=True, text=True)
         self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
         result = subprocess.run([str(binary)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        self.assertIn('promotion blocked', result.stdout)
-        print(result.stdout, end='')
+        return result
 
     def check_wram_fixture(self, fixture):
         bank, pc, code = WRAM_FIXTURES[fixture]

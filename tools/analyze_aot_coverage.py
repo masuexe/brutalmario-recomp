@@ -11,6 +11,8 @@ from pathlib import Path
 import re
 
 LEAVES = {
+    'UploadIndexedPalette80': (0x169585, 0x16959e, '169585:M1X1'),
+    'UploadIndexedPalette30': (0x13efb2, 0x13efce, '13EFB2:M1X1'),
     'ClearEightWramBytesUnlessSix': (0x169f2b, 0x169f3d, '169F2B:M1X1'),
     'CopyLevelBufferPointers': (0x0da6ba, 0x0da6cc, '0DA6BA:M1X1'),
     'CheckOverworldAccessMask': (0x04f87c, 0x04f8a5, '04F87C:M1X1'),

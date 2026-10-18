@@ -23,6 +23,9 @@ uint8_t cpu_read8(CpuState *cpu, uint8_t bank, uint16_t addr) {
     if ((bank == 0 || bank == 0x80) && addr >= 0xf800 && addr < 0xfa00)
         return table[addr - 0xf800];
 #endif
+#ifdef PALETTE_LOOP_FIXTURE
+    return FixtureRead(bank, addr);
+#endif
     return ((uint32_t)bank * 19 + addr * 17 + (addr >> 8)) & 255;
 }
 uint16_t cpu_read16(CpuState *cpu, uint8_t bank, uint16_t addr) {

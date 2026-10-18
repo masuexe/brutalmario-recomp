@@ -40,6 +40,10 @@ equal final clocks conceal 24/30-master-clock write-event differences. The
 production guard preserves interpreter timestamps through fallback. Palette
 promotion remains deferred; the accepted frontier stays at 52 variants.
 
+The later [palette-port expansion](aot-palette.md) qualifies a restricted
+instruction-start event model and promotes both loops to a 54-variant candidate.
+The 52-variant measurements and manual checkpoint below remain historical.
+
 ## Differential checks
 
 Real generated C runs against the pinned `interp816`, using the runtime's

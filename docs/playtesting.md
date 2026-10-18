@@ -226,3 +226,28 @@ rather than an identified native-only regression. Historical ZSNES appearance
 remains unknown. No visual correction was applied; the earlier functional
 Lemmy checkpoint remains accepted. See the linked investigation for the
 reproducible input route, ROM byte anchors and local comparison report.
+
+
+On 2026-10-18, the [restricted palette-port event model](aot-palette.md)
+produces a **54-variant Demo 1-1 candidate**. It promotes the $169585 and
+$13EFB2 palette loops after exact write-event qualification, retaining the
+old timing counterexample as a negative control. All 57 project tests pass.
+Full-route, dense-transition, pure-interpreter and generated-audio regression
+results are documented in the linked report. **Manual acceptance of this new
+executable is pending.** Previous 52-variant user feedback remains historical.
+The requested next manual pass covers ordinary map movement, Entry loading
+and play, the pipe/underground return route, map return, palette/transition
+appearance and ordinary music/effects. No new demoOnly1 manual qualification
+is implied by this primary-target AOT expansion.
+
+
+The user subsequently confirmed launching
+`local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` directly and reported no
+issues. This response to the requested regression pass accepts the 54-variant
+build's bounded manual checkpoint, superseding the pending status above.
+The current workspace binary's SHA-256 is
+`14218a4054260558b6437889a8f1452c926f0dfcf3446a5c30ffe9e6d21eb231`,
+which matches the final automated full-route capture; the user did not supply
+an independent hash. Exact duration and individual checklist results were
+not separately supplied. This closes the current palette AOT expansion
+checkpoint without asserting whole-port fidelity or new demoOnly1 coverage.
