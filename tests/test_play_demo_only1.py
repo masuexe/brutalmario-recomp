@@ -89,6 +89,28 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertNotIn('--config', command)
         self.assertFalse((self.root / 'local/play').exists())
 
+    def test_windows_output_launch_and_sdl_fallback(self):
+        with patch.object(play.windows_audio, 'available', return_value=True), \
+                patch.object(play.windows_audio, 'run', return_value=7) as native:
+            with self.assertRaises(SystemExit) as result:
+                self.invoke(['--level', 'world1-castle', '--complete-all'])
+            self.assertEqual(result.exception.code, 7)
+            command, directory, root = native.call_args.args
+            self.assertEqual(root, self.root)
+            self.assertEqual(Path(command[command.index('--config') + 1]).parent, directory)
+            self.assertTrue((directory / 'input.script').is_file())
+        with patch.object(play.windows_audio, 'available', return_value=True), \
+                patch.object(play.windows_audio, 'run', return_value=None) as native:
+            _, execute, _ = self.invoke([])
+            native.assert_called_once()
+            execute.assert_called_once()
+        self.config.write_text('[Sound]\nEnableAudio=0\n')
+        with patch.object(play.windows_audio, 'available', return_value=True), \
+                patch.object(play.windows_audio, 'run') as native:
+            _, execute, _ = self.invoke([])
+            native.assert_not_called()
+            execute.assert_called_once()
+
     def test_menu_retries_and_selects_a_level(self):
         chdir, execute, output = self.invoke(['--select-level'], ['99', '2'])
         command = execute.call_args.args[1]

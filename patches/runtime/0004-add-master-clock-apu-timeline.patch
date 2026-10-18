@@ -16,7 +16,17 @@
  }
 
  void RtlEnableExtendedFrameTiming(void) {
-@@ -271,7 +276,30 @@
+@@ -261,7 +266,8 @@
+  * guest time and must not become permanent A/V latency. The short ramp joins
+  * the last delivered sample to the first current sample without a hard edge. */
+ #define RTL_AUDIO_RECOVERY_RAMP 128u
+-#define RTL_AUDIO_TARGET_NATIVES 2136u /* 4 native blocks, ~67 ms cushion */
++#define RTL_AUDIO_TARGET_NATIVES 2136u /* minimum native scheduling cushion */
++static uint32_t s_audio_target_natives = RTL_AUDIO_TARGET_NATIVES;
+ static bool g_audio_fast_forward;
+ static uint32_t g_audio_recovery_frames;
+ static uint32_t g_audio_recovery_remaining;
+@@ -271,7 +277,30 @@
  static int16 g_audio_last_output_r;
  static void rtl_sync_apu_frame_boundary(void);
 
@@ -47,7 +57,7 @@
    if (g_extended_frame_timing)
      return rtl_apu_clock_now(&g_apu_frame_clock, g_cpu.master_cycles);
    uint64_t within = g_cpu.master_cycles - g_apu_frame_start_master;
-@@ -2182,9 +2210,16 @@
+@@ -2182,9 +2211,16 @@
    /* RtlRunFrame has already incremented snes_frame_counter. This is the exact
     * boundary after the completed frame; adding its stale within-frame master
     * offset here would count the frame body twice. */
@@ -67,3 +77,75 @@
    bool synced = apu_runToGuestCycle(g_snes->apu, boundary,
                                      1u << 20);
    audio_trace_on_guest_sync(1, g_snes->apu->portClock - before);
+@@ -2228,7 +2264,7 @@
+      * prevent playback from ever restarting and perpetually renew recovery.
+      * Remove stale latency while allowing the same delivery gate to open. */
+     uint32_t discarded = dsp_trimSamples(g_snes->apu->dsp,
+-                                          RTL_AUDIO_TARGET_NATIVES);
++                                          s_audio_target_natives);
+     if (discarded != 0) {
+       audio_trace_on_fast_forward_discard(discarded,
+                                            available - discarded);
+@@ -2342,6 +2378,14 @@
+  *
+  * Called once from host audio init, before the device is unpaused and hence
+  * before any callback can run, so no lock is needed. */
++/* Set once before unpausing the device. Larger device callbacks need enough
++ * queued native PCM for both their own request and scheduling jitter. */
++void RtlSetAudioBufferTarget(uint32_t natives) {
++  if (natives < RTL_AUDIO_TARGET_NATIVES) natives = RTL_AUDIO_TARGET_NATIVES;
++  if (natives > DSP_SAMPLE_RING - 1024u) natives = DSP_SAMPLE_RING - 1024u;
++  s_audio_target_natives = natives;
++}
++
+ void RtlSetAudioOutputRate(int freq) {
+   if (freq >= 8000 && freq <= 192000)
+     s_render_output_rate = (double)freq;
+@@ -2361,7 +2405,7 @@
+   uint32_t available = dsp_available(dsp);
+
+   if (s_render_priming) {
+-    if (available < RTL_AUDIO_TARGET_NATIVES || s_render_fade_out) {
++    if (available < s_audio_target_natives || s_render_fade_out) {
+       rtl_render_wait(out, frames);
+       audio_trace_on_output_priming(available);
+       return;
+@@ -2377,8 +2421,8 @@
+   if (s_render_occ_ema < 0.0) s_render_occ_ema = (double)available;
+   else s_render_occ_ema += RTL_AUDIO_OCC_EMA *
+                            ((double)available - s_render_occ_ema);
+-  double err = (s_render_occ_ema - (double)RTL_AUDIO_TARGET_NATIVES) /
+-               (double)RTL_AUDIO_TARGET_NATIVES;
++  double err = (s_render_occ_ema - (double)s_audio_target_natives) /
++               (double)s_audio_target_natives;
+   double servo = 1.0 + RTL_AUDIO_SERVO_GAIN * err;
+   if (servo > 1.0 + RTL_AUDIO_SERVO_MAX) servo = 1.0 + RTL_AUDIO_SERVO_MAX;
+   if (servo < 1.0 - RTL_AUDIO_SERVO_MAX) servo = 1.0 - RTL_AUDIO_SERVO_MAX;
+@@ -2457,6 +2501,27 @@
+     audio_trace_on_output_underflow(available, (uint32_t)(frames - usable));
+     rtl_render_wait(out + usable*2, frames - usable);
+   }
++}
++
++/* A slow or stalled host device must not stop the guest clock. Retire
++ * obsolete output only when latency exceeds the host bound; leave all CPU,
++ * SPC and DSP synthesis state untouched. The next output crossfades from
++ * the last delivered sample, using the same ramp as fast-forward recovery. */
++uint32_t RtlAudioTrimBacklog(uint32_t high_water, uint32_t target) {
++  if (target > high_water) return 0;
++  RtlApuLock();
++  Dsp *dsp = g_snes->apu->dsp;
++  uint32_t discarded = 0;
++  if (dsp_available(dsp) > high_water) {
++    discarded = dsp_trimSamples(dsp, target);
++    s_render_phase = 0;
++    s_render_occ_ema = -1.0;
++    g_audio_recovery_anchor_l = g_audio_last_output_l;
++    g_audio_recovery_anchor_r = g_audio_last_output_r;
++    g_audio_recovery_remaining = RTL_AUDIO_RECOVERY_RAMP;
++  }
++  RtlApuUnlock();
++  return discarded;
+ }
+
+ void RtlRenderAudio(int16 *audio_buffer, int samples, int channels) {

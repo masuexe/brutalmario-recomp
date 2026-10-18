@@ -3,6 +3,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 from pathlib import Path
 import subprocess
 import sys
@@ -20,7 +21,7 @@ ROM = ROOT / 'local/roms/demo-only-1.sfc'
 @unittest.skipUnless(BINARY.is_file() and ROM.is_file(),
                      'requires the locally built demoOnly1 host and ROM')
 class HostAudioStartupTests(unittest.TestCase):
-    def run_host(self, driver, enabled=True, alsa_config=None, script=None, frames=5):
+    def run_host(self, driver, enabled=True, alsa_config=None, script=None, frames=5, extra_env=None):
         # Check the binary receipt so an old build cannot silently test old code.
         receipt = json.loads((BINARY.parent / 'm1-build.json').read_text())
         self.assertEqual(receipt['runtime_patches'], patch_plan(), 'rebuild demo-only-1 first')
@@ -35,6 +36,12 @@ class HostAudioStartupTests(unittest.TestCase):
             env = os.environ.copy()
             env.update(SDL_VIDEODRIVER='dummy', SDL_AUDIODRIVER=driver,
                        SNESRECOMP_RUN_FRAMES=str(frames), SNESRECOMP_STATE_TRACE=str(trace))
+            if extra_env:
+                for key, value in extra_env.items():
+                    if value is None:
+                        env.pop(key, None)
+                    else:
+                        env[key] = value
             if alsa_config is not None:
                 alsa = directory / 'alsa.conf'
                 alsa.write_text(alsa_config)
@@ -78,6 +85,28 @@ class HostAudioStartupTests(unittest.TestCase):
         self.assertIsNotNone(totals, output)
         self.assertGreater(int(totals[1]), 4000, output)
         self.assertLess(int(totals[2]), 4096, output)
+
+    @unittest.skipUnless(sys.platform.startswith('linux') and shutil.which('cc') and
+                         shutil.which('pkg-config'), 'requires a Linux SDL2 development environment')
+    def test_rdp_native_output_and_opt_out(self):
+        flags = subprocess.run(['pkg-config', '--cflags', 'sdl2'], capture_output=True, text=True)
+        if flags.returncode:
+            self.skipTest('requires SDL2 development headers')
+        with tempfile.TemporaryDirectory(prefix='rdp-audio-test-') as temporary:
+            shim = Path(temporary) / 'rdp-audio.so'
+            build = subprocess.run(['cc', '-shared', '-fPIC', '-Wall', '-Wextra', '-Werror',
+                                    *flags.stdout.split(), str(ROOT / 'tests/host_rdp_audio.c'),
+                                    '-o', str(shim)], capture_output=True, text=True)
+            self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+            output = self.run_host('dummy', extra_env={'LD_PRELOAD': str(shim),
+                                                     'SNESRECOMP_RDP_AUDIO': '1'})
+            self.assertIn('RDP audio compatibility: rate=44100 samples=2048', output)
+            self.assertIn('audio device opened: freq=44100 (want 44100) ch=2 samples=2048', output)
+            self.assertIn('audio queue: native_prefill=2978 high_water=5000', output)
+            output = self.run_host('dummy', extra_env={'LD_PRELOAD': str(shim),
+                                                     'SNESRECOMP_RDP_AUDIO': '0'})
+            self.assertNotIn('RDP audio compatibility:', output)
+            self.assertIn('audio device opened: freq=32040 (want 32040) ch=2 samples=512', output)
 
     def test_disabled_audio_does_not_initialize_missing_driver(self):
         output = self.run_host('nonexistent-audio-driver', enabled=False)

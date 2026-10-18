@@ -9,6 +9,7 @@ import tempfile
 
 from prepare_rom import verify
 from runtime_patches import patch_plan
+import windows_audio
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -228,6 +229,10 @@ def main():
         config = directory / 'config.ini'
         config.write_bytes(config_source.read_bytes())
         command += ['--config', str(config), '--script', str(script)]
+        # Retain device/queue counters and bounded frame timings for real
+        # desktop sessions; explicit diagnostic environment settings win.
+        os.environ.setdefault('SNESRECOMP_AUDIO_STATS', str(directory / 'audio-stats.txt'))
+        os.environ.setdefault('SNESRECOMP_FRAME_TIMING', str(directory / 'frame-timing.csv'))
         print(f'Fresh practice session: {directory.relative_to(ROOT)}', flush=True)
         if args.level:
             print(f"Practice level: {LEVELS[args.level]['name']}. Use the normal level-entry button.", flush=True)
@@ -243,6 +248,10 @@ def main():
         directory = build
     os.chdir(directory)
     os.environ['SNESRECOMP_SEPARATE_ECHO'] = '1'
+    if windows_audio.available(ROOT) and windows_audio.enabled(directory / 'config.ini'):
+        result = windows_audio.run(command, directory, ROOT)
+        if result is not None:
+            raise SystemExit(result)
     os.execv(str(binary), command)
 
 

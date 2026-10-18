@@ -31,8 +31,8 @@
       "source": "runner/src/common_rtl.c",
       "patch": "patches/runtime/0004-add-master-clock-apu-timeline.patch",
       "source_sha256": "1ffb60069b2e3a5fbd158e0e3d382739561461ae6b92356b7e33d57556202df3",
-      "patch_sha256": "9c76ad4d995d12af3c668c430d4a6813048abe4343b22d0b23ad0253d3c69ec6",
-      "result_sha256": "48355dd045f98a5e5276699b76314b07cd416d6fc819344390eee6ef76278b80"
+      "patch_sha256": "910f9b1b3382d40f5784b04aebd7e3c9258d35b7ac91a39583a159249cddc6d8",
+      "result_sha256": "26ec1df7690d6794f5ebd590169a0b224c81c6d72f2c5b54e762e6cea1e70999"
     },
     {
       "id": "ppu-counter-latch-reset",
@@ -47,8 +47,8 @@
       "source": "runner/src/desktop/host_main.c",
       "patch": "patches/runtime/0006-allow-startup-without-audio.patch",
       "source_sha256": "a92f6761fdc959af221fb1087dfa8712899b48ad61ea349a848d9a767efcf8b0",
-      "patch_sha256": "97fb922c6f9f68df5943b9fc3ea729f3c1a14a38c7035fd08f1490b0ae9fe9c1",
-      "result_sha256": "8ea19890f44c21fc1aa066c663187e316a47f02ed4fdf99b2dd152f7ace06bb8"
+      "patch_sha256": "ab0d736406e6ffb1892e9ec1d3ac4c00e08bd48ed59fb7c768fe54ddb5b5aef3",
+      "result_sha256": "caabc2c238d095a8908bd3bbad41da2e3acc5d06ee802b5e46cdb9e2020e10ee"
     },
     {
       "id": "host-clock-bounded-catchup",

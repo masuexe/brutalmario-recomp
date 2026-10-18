@@ -32,6 +32,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [WRAM-store AOT expansion](docs/aot-wram.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
+- [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)
 - [Star-music timing probe](docs/star-audio.md)
 - [demoOnly1 boss route and fast native pre-boss entry](docs/boss-entry.md)
 - [demoOnly1 map teleport and practice selector](docs/level-select.md)

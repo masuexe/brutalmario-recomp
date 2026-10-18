@@ -1,6 +1,196 @@
 --- a/runner/src/desktop/host_main.c
 +++ b/runner/src/desktop/host_main.c
-@@ -3484,10 +3484,20 @@
+@@ -18,6 +18,7 @@
+ #include <stdbool.h>
+ #include <assert.h>
+ #include <signal.h>
++#include <errno.h>
+
+ #include "debug_server.h"
+ #include "desktop/sdl_compat.h"
+@@ -29,6 +30,7 @@
+ #include <sys/types.h>
+ #include <time.h>
+ #include <unistd.h>
++#include <poll.h>
+ #endif
+
+ #ifndef SYSTEM_VOLUME_MIXER_AVAILABLE
+@@ -272,13 +274,17 @@
+ int snesrecomp_desktop_frame_height(void) { return g_snes_height > 0 ? g_snes_height : 224; }
+ void snesrecomp_desktop_request_clock_reset(void) { g_reset_clock = true; }
+
++#if defined(__linux__)
++static bool g_windows_audio_clock;
++#endif
+ static double MonotonicSeconds(void) {
+ #if defined(__linux__)
+-  /* Match the clock used by Linux sleep/audio scheduling. SDL's performance
+-   * counter uses MONOTONIC_RAW, which excludes frequency corrections: on a
+-   * drifting VM it can pace the guest slower than the audio device. */
++  /* Match the output clock: Linux backends use corrected scheduling time;
++   * Windows waveform output follows QPC, matching the VM's raw clock.
++   * WSL frequency corrections can exceed the audio drift servo's range. */
+   struct timespec now;
+-  if (clock_gettime(CLOCK_MONOTONIC, &now) == 0)
++  clockid_t clock = g_windows_audio_clock ? CLOCK_MONOTONIC_RAW : CLOCK_MONOTONIC;
++  if (clock_gettime(clock, &now) == 0)
+     return (double)now.tv_sec + (double)now.tv_nsec / 1e9;
+ #endif
+   return (double)SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency();
+@@ -2040,15 +2046,23 @@
+ static int g_frames_per_block;
+ static uint8 g_audio_channels;
+ static SDL_AudioDeviceID g_audio_device;
+-/* Only the thread executing guest work may wait for the audio consumer. */
+-static _Thread_local bool g_audio_producer_active;
+-static _Thread_local unsigned g_apu_lock_depth;
+-static _Thread_local bool g_audio_consumer_stalled;
+-static _Thread_local uint64_t g_audio_stalled_callback;
+-static uint64_t g_audio_callback_count;  /* protected by g_audio_mutex */
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++static int g_windows_audio_fd = -1;
++static int g_windows_audio_ack_fd = -1;
++static SDL_Thread *g_windows_audio_thread;
++static SDL_atomic_t g_windows_audio_stop;
++static SDL_atomic_t g_windows_audio_paused;
++#endif
++/* Audio-device delivery must never throttle guest execution. */
++extern uint32_t RtlAudioTrimBacklog(uint32_t high_water, uint32_t target);
++extern void RtlSetAudioBufferTarget(uint32_t natives);
++static uint64_t g_audio_backlog_discarded;
++static uint64_t g_audio_backlog_events;
+ static bool g_audio_primed;  /* protected by g_audio_mutex */
+ #define HOST_AUDIO_PREFILL 2136u
+ #define HOST_AUDIO_HIGH_WATER 4096u
++static uint32_t g_audio_prefill = HOST_AUDIO_PREFILL;
++static uint32_t g_audio_high_water = HOST_AUDIO_HIGH_WATER;
+ #if SNESRECOMP_SDL3
+ /* SDL3 replaced the pull callback with an SDL_AudioStream the app pushes into,
+  * so the mixer needs a scratch buffer sized to whatever the stream asks for. */
+@@ -2071,36 +2085,9 @@
+
+ void RtlApuLock(void) {
+   SDL_LockMutex(g_audio_mutex);
+-  ++g_apu_lock_depth;
+ }
+
+ void RtlApuUnlock(void) {
+-  --g_apu_lock_depth;
+-  if (g_apu_lock_depth == 0 && g_audio_producer_active &&
+-      g_audio_consumer_stalled &&
+-      g_audio_callback_count != g_audio_stalled_callback)
+-    g_audio_consumer_stalled = false;
+-  if (g_apu_lock_depth == 0 && g_audio_producer_active &&
+-      !g_audio_consumer_stalled &&
+-      dsp_available(g_snes->apu->dsp) > HOST_AUDIO_HIGH_WATER) {
+-    /* Fast hosts can generate a multi-frame loader's PCM in milliseconds.
+-     * Let the device drain it before the bounded ring overflows. Always
+-     * release the mutex while waiting, and stop waiting if the device stalls. */
+-    double limit = MonotonicSeconds() + 0.25;
+-    while (dsp_available(g_snes->apu->dsp) > HOST_AUDIO_HIGH_WATER) {
+-      SDL_UnlockMutex(g_audio_mutex);
+-      SDL_Delay(1);
+-      SDL_LockMutex(g_audio_mutex);
+-      if (MonotonicSeconds() >= limit) {
+-        /* A disconnected device must not add this timeout to every frame.
+-         * Rearm only after the consumer has actually made progress. */
+-        g_audio_consumer_stalled = true;
+-        g_audio_stalled_callback = g_audio_callback_count;
+-        g_audio_producer_active = false;
+-        break;
+-      }
+-    }
+-  }
+   SDL_UnlockMutex(g_audio_mutex);
+ }
+
+@@ -2113,11 +2100,10 @@
+   if (SDL_AtomicCAS(&first_cb, 0, 1))
+     host_report_breadcrumb("first audio callback (len=%d)", len);
+   if (!snesrecomp_sdl_lock_mutex(g_audio_mutex)) Die("Mutex lock failed!");
+-  ++g_audio_callback_count;
+   while (len != 0) {
+     if (g_audiobuffer_end - g_audiobuffer_cur == 0) {
+       uint32_t available = dsp_available(g_snes->apu->dsp);
+-      if (!g_audio_primed && available < HOST_AUDIO_PREFILL) {
++      if (!g_audio_primed && available < g_audio_prefill) {
+         /* Startup/save-load starvation needs a cushion before playback
+          * resumes. Retain all native PCM; count the undelivered output just
+          * like any other underrun rather than hiding it from diagnostics. */
+@@ -2178,7 +2164,71 @@
+ }
+ #endif
+
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++/* Completion credits are the sole output clock. SDL's dummy-device timer
++ * would add a second sleep after each Windows completion, then catch up in
++ * bursts. Keep its device paused and consume on a dedicated stoppable thread. */
++static bool WindowsAudioReady(int fd, short events) {
++  while (!SDL_AtomicGet(&g_windows_audio_stop)) {
++    struct pollfd pending = {fd, events, 0};
++    int ready = poll(&pending, 1, 50);
++    if (ready < 0 && errno == EINTR) continue;
++    if (ready < 0) return false;
++    if (!ready) continue;
++    return (pending.revents & events) != 0;
++  }
++  return false;
++}
++
++static int WindowsAudioThread(void *unused) {
++  (void)unused;
++  SDL_SetThreadPriority(SDL_THREAD_PRIORITY_HIGH);
++  Uint8 pcm[512 * 2 * sizeof(int16)];
++  bool have_credit = false;
++  while (!SDL_AtomicGet(&g_windows_audio_stop)) {
++    if (SDL_AtomicGet(&g_windows_audio_paused)) {
++      SDL_Delay(5);
++      continue;
++    }
++    if (!have_credit) {
++      char credit;
++      if (!WindowsAudioReady(g_windows_audio_ack_fd, POLLIN)) break;
++      ssize_t received;
++      do { received = read(g_windows_audio_ack_fd, &credit, 1); }
++      while (received < 0 && errno == EINTR);
++      if (received != 1) break;
++      have_credit = true;
++      /* Preserve a credit acquired while the main thread was pausing. */
++      if (SDL_AtomicGet(&g_windows_audio_paused)) continue;
++    }
++    FillAudioBuffer(pcm, sizeof(pcm));
++    int offset = 0;
++    while (offset < (int)sizeof(pcm)) {
++      if (!WindowsAudioReady(g_windows_audio_fd, POLLOUT)) goto finished;
++      ssize_t written = write(g_windows_audio_fd, pcm + offset, sizeof(pcm) - offset);
++      if (written < 0 && errno == EINTR) continue;
++      if (written <= 0) goto finished;
++      offset += (int)written;
++    }
++    have_credit = false;
++  }
++finished:
++  if (!SDL_AtomicGet(&g_windows_audio_stop))
++    host_report_breadcrumb("Windows audio channel closed; continuing without sound");
++  close(g_windows_audio_fd);
++  close(g_windows_audio_ack_fd);
++  /* Only this thread owns the descriptors after creation. */
++  return 0;
++}
++#endif
++
+ static void SetAudioPaused(bool paused) {
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++  if (g_windows_audio_thread) {
++    SDL_AtomicSet(&g_windows_audio_paused, paused);
++    return;
++  }
++#endif
+ #if SNESRECOMP_SDL3
+   if (g_audio_stream) {
+     if (paused) SDL_PauseAudioStreamDevice(g_audio_stream);
+@@ -3484,10 +3534,20 @@
    SDL_SetMainReady();
    /* Return convention flipped in SDL3 (0 == success became true == success),
     * so this MUST go through the shim. */
@@ -22,16 +212,60 @@
    }
    host_report_breadcrumb("SDL init ok: video=%s audio=%s",
                           SDL_GetCurrentVideoDriver() ? SDL_GetCurrentVideoDriver() : "(none)",
-@@ -3647,7 +3657,7 @@
+@@ -3647,7 +3707,7 @@
    }
- 
+
    int audio_output_rate = 0;
 -  if (g_config.enable_audio) {
 +  if (audio_ready) {
      /* Enumerate output devices into the breadcrumb ring: which device
       * SDL picks (and what else was available) is exactly the per-machine
       * variable a non-reproducible audio/boot crash report needs. */
-@@ -3689,26 +3699,27 @@
+@@ -3684,31 +3744,116 @@
+     }
+ #else
+     want.samples = g_config.audio_samples;
++#ifndef _WIN32
++    const char *windows_audio = getenv("SNESRECOMP_WINDOWS_AUDIO");
++    const char *windows_fd = getenv("SNESRECOMP_WINDOWS_AUDIO_FD");
++    const char *windows_ack = getenv("SNESRECOMP_WINDOWS_AUDIO_ACK_FD");
++    if (windows_audio && strcmp(windows_audio, "1") == 0 && windows_fd && windows_ack &&
++        SDL_GetCurrentAudioDriver() && strcmp(SDL_GetCurrentAudioDriver(), "dummy") == 0) {
++      char *end, *ack_end;
++      long fd = strtol(windows_fd, &end, 10);
++      long ack_fd = strtol(windows_ack, &ack_end, 10);
++      if (*windows_fd && !*end && fd >= 3 && fd <= INT_MAX &&
++          *windows_ack && !*ack_end && ack_fd >= 3 && ack_fd <= INT_MAX && ack_fd != fd) {
++        g_windows_audio_fd = (int)fd;
++        g_windows_audio_ack_fd = (int)ack_fd;
++        want.freq = 44100;
++        want.samples = 512;
++        host_report_breadcrumb("audio output: Windows native pipe (44100 Hz)");
++      }
++    }
++#endif
++#if SDL_VERSION_ATLEAST(2, 24, 0)
++    /* WSLg's RDP sink is a network transport. Small PulseAudio requests
++     * force tiny RDP packets and can progressively stall output delivery.
++     * Match the sink's native rate and give its transport a full block. */
++    const char *rdp_audio = getenv("SNESRECOMP_RDP_AUDIO");
++    const char *audio_driver = SDL_GetCurrentAudioDriver();
++    if ((!rdp_audio || strcmp(rdp_audio, "0") != 0) && audio_driver &&
++        strcmp(audio_driver, "pulseaudio") == 0) {
++      char *device_name = NULL;
++      SDL_AudioSpec native = {0};
++      if (SDL_GetDefaultAudioInfo(&device_name, &native, 0) == 0 &&
++          device_name && strstr(device_name, "RDP")) {
++        if (native.freq >= 11025 && native.freq <= 48000) want.freq = native.freq;
++        if (want.samples < 2048) want.samples = 2048;
++        host_report_breadcrumb("RDP audio compatibility: rate=%d samples=%d (configured %d/%d)",
++                               want.freq, want.samples, g_config.audio_freq, g_config.audio_samples);
++      }
++      SDL_free(device_name);
++    }
++#endif
+     want.callback = &AudioCallback;
+     g_audio_device = SDL_OpenAudioDevice(NULL, 0, &want, &have, 0);
  #endif
      if (g_audio_device == 0) {
        host_report_breadcrumb("audio device open FAILED: %s", SDL_GetError());
@@ -55,29 +289,74 @@
 +      /* The SPC's native rate is 32040 Hz (1.024 MHz / 32), not 32000. The
 +       * consumer converts onto the device rate and cannot infer it. */
 +      RtlSetAudioOutputRate(have.freq);
++      /* Keep two device requests resident, with the original 67 ms minimum.
++       * Derive this in native samples, not in output-rate sample frames. */
++      uint32_t device_frames =
+ #if SNESRECOMP_SDL3
+-        g_config.audio_samples,
++          g_config.audio_samples;
+ #else
+-        have.samples,
+-#endif
+-        g_frames_per_block);
+-  } else {
++          have.samples;
++#endif
++      uint32_t native_request = ((uint64_t)device_frames * 32040u + have.freq - 1) / have.freq;
++      g_audio_prefill = IntMax(HOST_AUDIO_PREFILL, 2u * native_request + 2u);
++      g_audio_prefill = IntMin(g_audio_prefill, DSP_SAMPLE_RING - 1024u);
++      /* Callback-size bursts are ordinary occupancy jitter. Leave one full
++       * request plus a guest block above the target before discarding PCM. */
++      g_audio_high_water = IntMax(HOST_AUDIO_HIGH_WATER, g_audio_prefill + native_request + 534u);
++      g_audio_high_water = IntMin(g_audio_high_water, DSP_SAMPLE_RING - 534u);
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++      if (g_windows_audio_fd >= 0) {
++        /* WSL/Windows completion notifications can arrive as a three-buffer
++         * burst. Six guest blocks cover that burst plus host scheduling
++         * jitter; retain another whole burst above the servo target. */
++        g_audio_prefill = IntMax(g_audio_prefill, 6u * 534u);
++        g_audio_high_water = IntMax(g_audio_high_water,
++                                    g_audio_prefill + 3u * native_request + 534u);
++      }
++#endif
++      RtlSetAudioBufferTarget(g_audio_prefill);
++      host_report_breadcrumb("audio queue: native_prefill=%u high_water=%u", g_audio_prefill, g_audio_high_water);
 +      audio_output_rate = have.freq;
 +      g_frames_per_block = (534 * have.freq + 32040 / 2) / 32040;
 +      g_audiobuffer = (uint8 *)calloc(g_frames_per_block * have.channels * sizeof(int16), 1);
 +      host_report_breadcrumb(
 +          "audio device opened: freq=%d (want %d) ch=%d samples=%d frames_per_block=%d",
 +          have.freq, want.freq, have.channels,
- #if SNESRECOMP_SDL3
--        g_config.audio_samples,
++#if SNESRECOMP_SDL3
 +          g_config.audio_samples,
- #else
--        have.samples,
--#endif
--        g_frames_per_block);
--  } else {
++#else
 +          have.samples,
 +#endif
 +          g_frames_per_block);
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++      if (g_windows_audio_fd >= 0) {
++        SDL_AtomicSet(&g_windows_audio_paused, 1);
++        g_windows_audio_thread = SDL_CreateThread(WindowsAudioThread, "windows-audio", NULL);
++#if defined(__linux__)
++        if (g_windows_audio_thread) {
++          g_windows_audio_clock = true;
++          host_report_breadcrumb("frame clock: MONOTONIC_RAW (Windows audio)");
++        }
++#endif
++        if (!g_windows_audio_thread) {
++          host_report_breadcrumb("Windows audio thread FAILED: %s; continuing without sound", SDL_GetError());
++          close(g_windows_audio_fd);
++          close(g_windows_audio_ack_fd);
++          g_windows_audio_fd = g_windows_audio_ack_fd = -1;
++        }
++      }
++#endif
 +    }
 +  } else if (!g_config.enable_audio) {
      host_report_breadcrumb("audio disabled in config");
    }
- 
-@@ -4192,6 +4203,23 @@
+
+@@ -4192,12 +4337,28 @@
        exit_reason = g_script_failed ? "script until timed out" : "script quit";
        break;
      }
@@ -101,7 +380,35 @@
      inputs |= debug_server_get_controller_inputs();
      double profile_start = ProfileStart();
      double guest_start = MonotonicSeconds();
-@@ -4303,6 +4331,19 @@
+     PushExtraSeats();
+     if (game->before_run_frame) game->before_run_frame();
+-    g_audio_producer_active = paced_realtime && g_audio_device != 0;
+     /* Run-ahead owns the whole frame when it is on: it advances the guest
+      * once and speculates N further, so calling RtlRunFrame as well would
+      * double-advance. It declines (returns 0) during netplay and whenever
+@@ -4211,6 +4372,13 @@
+         RtlRunFrame(word);
+       else
+         runahead_captured = true;   /* it rasterised the speculated frame */
++    }
++    if (paced_realtime && g_audio_device) {
++      uint32_t discarded = RtlAudioTrimBacklog(g_audio_high_water, g_audio_prefill);
++      if (discarded) {
++        g_audio_backlog_discarded += discarded;
++        ++g_audio_backlog_events;
++      }
+     }
+     ApplyScriptForcePokes();
+     snes_osd_note_frame();
+@@ -4253,7 +4421,6 @@
+     if (!runahead_captured)
+       CaptureSimulationFrame(frameCtr);
+     NoteStateFrame();
+-    g_audio_producer_active = false;
+     ProfileEnd(kProfileRaster, profile_start);
+     profile_start = ProfileStart();
+     if (state_trace)
+@@ -4303,6 +4470,21 @@
      }
      free(g_frame_timings);
      g_frame_timings = NULL;
@@ -113,15 +420,29 @@
 +    uint32_t queued = dsp_available(g_snes->apu->dsp);
 +    RtlApuUnlock();
 +    host_report_breadcrumb(
-+        "audio totals: produced=%llu consumed=%llu dropped=%llu fast_forward_discarded=%llu underflows=%llu missing=%llu queued=%u",
++        "audio totals: produced=%llu consumed=%llu dropped=%llu fast_forward_discarded=%llu underflows=%llu missing=%llu queued=%u backlog_discarded=%llu backlog_events=%llu",
 +        (unsigned long long)audio.produced, (unsigned long long)audio.consumed,
 +        (unsigned long long)audio.dropped, (unsigned long long)audio.fast_forward_discarded,
 +        (unsigned long long)audio.output_underflows,
-+        (unsigned long long)audio.output_missing_frames, queued);
++        (unsigned long long)audio.output_missing_frames, queued,
++        (unsigned long long)g_audio_backlog_discarded,
++        (unsigned long long)g_audio_backlog_events);
    }
    host_report_breadcrumb("exit: %s after %u frames", exit_reason, frameCtr);
    host_report_breadcrumb("video totals: simulations=%u presentations=%llu seconds=%.3f",
-@@ -4362,7 +4403,7 @@
+@@ -4357,12 +4539,19 @@
+
+   // clean sdl
+   SetAudioPaused(true);
++#if !defined(_WIN32) && !SNESRECOMP_SDL3
++  if (g_windows_audio_thread) {
++    SDL_AtomicSet(&g_windows_audio_stop, 1);
++    SDL_WaitThread(g_windows_audio_thread, NULL);
++    g_windows_audio_thread = NULL;
++  }
++#endif
+ #if SNESRECOMP_SDL3
+   /* Destroying the stream closes the device it was opened against. */
    SDL_DestroyAudioStream(g_audio_stream);
    g_audio_stream = NULL;
  #else
