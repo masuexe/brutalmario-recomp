@@ -170,3 +170,9 @@ Local captures use `aot-arithmetic-full`, `aot-arithmetic-transitions`,
 `local/reports/` use the same `aot-arithmetic-` prefix, including the complete
 test log and final arithmetic differential log. Tracked upstream files remain
 unchanged.
+
+
+The subsequent [nested caller expansion](aot-caller.md) promotes $13F1A7
+and removes the residual interpreted fall-through work in this helper on the
+measured route. The 55-variant checkpoint above remains the accepted baseline;
+manual acceptance of the 56-variant build is recorded in the linked report.

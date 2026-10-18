@@ -1,4 +1,4 @@
-"""Opt-in native M1 leaf timing; reject instructions not yet modeled.
+"""Opt-in native function timing; reject instructions not yet modeled.
 
 Fetches and internal cycles are charged here. Actual data/stack transfers
 use the runtime's existing paced accessors. No ROM addresses are special.
@@ -14,10 +14,13 @@ DATA_TRANSFERS = {0xa7: 4, 0xa6: 2, 0xe8: 0, 0xd0: 0,
                   0xad: 1, 0x4a: 0, 0xa8: 0, 0x25: 1, 0xf0: 0, 0xa9: 0,
                   0xc9: 0, 0xca: 0, 0x10: 0, 0x9f: 1, 0xa5: 1, 0x8d: 1,
                   0xbd: 1, 0x80: 0, 0xae: 1,
-                  0xeb: 0, 0xc2: 0, 0xe2: 0, 0x38: 0, 0xf9: 1, 0x99: 1}
-DP_END = {0xa7: 2, 0xa6: 1, 0xe6: 0, 0x86: 1, 0x85: 0, 0x25: 0, 0xa5: 0}
+                  0xeb: 0, 0xc2: 0, 0xe2: 0, 0x38: 0, 0xf9: 1, 0x99: 1,
+                  0x8a: 0, 0x18: 0, 0x69: 0, 0xaa: 0, 0xa0: 0,
+                  0x20: 2, 0xfd: 1, 0xb0: 0, 0xc6: 2}
+DP_END = {0xa7: 2, 0xa6: 1, 0xe6: 0, 0x86: 1, 0x85: 0, 0x25: 0, 0xa5: 0,
+          0xc6: 0}
 ABS_READS = {0xbc: 'X', 0xb9: 'Y', 0xac: None, 0xad: None, 0xbd: 'X', 0xae: None,
-             0xf9: 'Y'}
+             0xf9: 'Y', 0xfd: 'X'}
 WRAM_WRITES = {0x8d, 0x9f, 0x99}
 
 
@@ -41,8 +44,12 @@ def validate(blocks):
             if (insn.opcode not in DATA_TRANSFERS or
                     (insn.m_flag != 1 and not wide) or insn.x_flag not in (0, 1) or
                     (insn.opcode in (0xc2, 0xe2) and insn.operand != 0x20)):
-                raise ValueError('instruction-bus timing requires a supported native M1 leaf: '
+                raise ValueError('instruction-bus timing requires a supported native M1 function: '
                                  f'${insn.addr:06X} {insn.mnem}')
+            if insn.opcode == 0x20 and not selected(
+                    insn.addr >> 16, insn.operand, insn.m_flag, insn.x_flag):
+                raise ValueError('instruction-bus calls require a qualified callee: '
+                                 f'${insn.addr:06X} -> ${insn.operand:04X}')
             if insn.opcode in DP_END:
                 end = DP_END[insn.opcode]
                 if insn.opcode in (0xa6, 0x86) and insn.x_flag:
@@ -61,6 +68,9 @@ def prefix(insn, target_expr):
     fetches = [f'cpu_region_speed(((uint32)cpu->PB << 16) | 0x{(insn.addr + i) & 0xffff:04x}u)'
                for i in range(insn.length)]
     guard = "interp_bridge_lle_master_deadline_reached(cpu)"
+    if insn.opcode == 0x20:
+        # Both native JSR pushes must land in WRAM before entering a child.
+        guard += ' || cpu->S == 0 || cpu->S > 0x1fffu'
     if insn.opcode in ABS_READS:
         index = ABS_READS[insn.opcode]
         address = f"(((uint32)cpu->DB << 16) + 0x{insn.operand:04x}u"

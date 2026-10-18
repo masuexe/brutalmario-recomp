@@ -33,6 +33,9 @@ uint16_t cpu_read16(CpuState *cpu, uint8_t bank, uint16_t addr) {
 }
 void cpu_write8(CpuState *cpu, uint8_t bank, uint16_t addr, uint8_t value) {
     (void)cpu; int32_t offset = cpu_wram_offset(bank, addr);
+#ifdef NESTED_CALL_FIXTURE
+    RecordBusWrite(((uint32_t)bank << 16) | addr, value);
+#endif
 #ifdef MMIO_EVENT_FIXTURE
     if (offset < 0) {
         RecordMmioEvent(cpu, ((uint32_t)bank << 16) | addr, value);
@@ -69,7 +72,13 @@ int interp_bridge_lle_master_deadline_reached(const CpuState *cpu) {
     return deadline && cpu->master_cycles >= deadline;
 }
 RecompReturn interp_bridge_lle_yield_unwind(CpuState *cpu, uint32_t pc) {
-    (void)cpu; yielded = pc; return RECOMP_RETURN_SKIP_1;
+    (void)cpu; yielded = pc;
+#ifdef NESTED_CALL_FIXTURE
+    unwind_parents = g_recomp_stack_top;
+    return (RecompReturn)RECOMP_RETURN_LLE_UNWIND_BASE;
+#else
+    return RECOMP_RETURN_SKIP_1;
+#endif
 }
 int interp_bridge_return_targets_owner(uint16_t a, uint16_t b) { (void)a; (void)b; return 0; }
 int interp_bridge_has_direct_paired_bounce(void) { return 0; }

@@ -276,3 +276,28 @@ at `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` has SHA-256
 build receipt. No independent user hash, exact duration or individual checklist
 results were supplied. The 55-variant build becomes the next bounded regression
 baseline; no new demoOnly1 or whole-port fidelity claim is made.
+
+
+The subsequent [nested coordinate caller expansion](aot-caller.md) produces
+a **56-variant Demo 1-1 candidate** by qualifying $13F1A7, its nested helper
+call and its inline helper continuation. All 62 project tests pass, including
+27,604 new caller differential cases. Full-route, dense-transition,
+pure-interpreter and generated-audio regressions pass against the accepted
+55-variant baseline. **Manual acceptance of this executable is pending.**
+The verified regular binary SHA-256 is
+`a6a578adf8c17521da45f68ad5b4312cb029ce3d606a9efe5fbba5fd5132a21f`.
+The next check uses `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` for
+map movement, Entry loading/play, movement/jumping, object/enemy/player
+positions and graphics, pipe/underground return, map return, transitions and
+ordinary sound. Previous manual feedback does not automatically accept this
+candidate; demoOnly1 qualification is unchanged.
+
+
+The user subsequently reported no issues in response to the requested
+56-variant manual regression pass. This accepts the nested-coordinate-caller
+checkpoint and supersedes the pending status above. The workspace executable
+was rechecked against its build receipt and checkpoint SHA-256
+`a6a578adf8c17521da45f68ad5b4312cb029ce3d606a9efe5fbba5fd5132a21f`.
+No independent user hash, exact session duration or individual checklist
+results were supplied. The accepted 56-variant build becomes the next bounded
+regression baseline; no new demoOnly1 or whole-port fidelity claim is made.

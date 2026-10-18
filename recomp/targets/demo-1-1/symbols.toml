@@ -93,3 +93,13 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $13F1C2-$13F1D4; assembles an indexed word, subtracts DB:$001A+Y and stores DB:Y, returning M1. Word bank endpoints retain interpreter fallback."
+
+
+[[func]]
+name = "BuildCoordinatePair"
+addr = "f1a7"
+bank = 19
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $13F1A7-$13F1D4; calls the qualified coordinate leaf, updates the direct-page pair with borrow, then executes the coordinate leaf inline."
