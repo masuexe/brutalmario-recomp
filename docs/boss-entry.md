@@ -10,8 +10,9 @@ death black screens. The rebuilt target now enables legacy echo-buffer
 compatibility; see [death-black-screen.md](death-black-screen.md).
 
 The user identifies a boss at the end of Athletic Special and suggests
-World 1's Larry castle as another candidate requiring overworld-coordinate
-changes. They confirm that the large door at the top of the rainbow room
+World 1's castle as another candidate requiring overworld-coordinate changes
+(initially called Larry; the later manual encounter was identified as Lemmy).
+They confirm that the large door at the top of the rainbow room
 is the final pre-boss entrance, and describe the boss as a black sphere
 with eyes and fangs. They warn that Mario must stay alive on the arena's
 platforms long enough for the boss to appear.
@@ -71,7 +72,7 @@ inside the practice session. The binary is
 `local/build/demo-only-1/BrutalMarioDemoOnly1SNESRecomp`.
 
 The [map teleport and practice selector](level-select.md) additionally supports
-`--select-level`, the `--level world1-castle` preset, and arbitrary map/pixel
+`--select-level` and arbitrary map/pixel
 coordinates through `--teleport MAP X Y`, all compatible with `--air-swim`.
 
 The shortcut is **not a level-clear test**. It writes Mario's position and
@@ -159,14 +160,14 @@ Numeric correspondence with supplied sprite lists is not established.
 Additional position-clamped captures are diagnostic only and do not count
 as gameplay acceptance. Boss health/state was not patched.
 
-The earlier map 1 / `$0058,$0088` node loaded `$101` with garbled graphics.
-The user subsequently confirmed that it is a World 6 location, so its original
-World 1/Larry attribution is withdrawn. The corrected lower-left World 1
-castle node is **map 0 / `$0018,$01B8`**, using the user's raised-ground/animated
-skull landmark. It starts loading `$010` but stalls at MARIO START in native
-and Snes9x reference runs, with and without completion flags. Original ZSNES
-behavior is unknown and Larry remains unqualified. See
-[completion-cheat.md](completion-cheat.md) for the corrected preset and probes.
+Both guessed World 1 castle positions have been withdrawn. Map 1 /
+`$0058,$0088` loads `$101` (user-confirmed World 6); map 0 / `$0018,$01B8`
+starts loading `$010` but the user also rejected it as the intended castle.
+Its native/reference loading stall is a wrong-node observation only. On
+2026-10-18 the user manually found the intended castle and reported normal
+**Lemmy** boss functionality, with coordinates unrecorded. The castle shortcut
+has been removed pending a real location reading. See
+[level-select.md](level-select.md#capture-the-real-castle-location).
 
 ## Current checkpoint and remaining validation
 

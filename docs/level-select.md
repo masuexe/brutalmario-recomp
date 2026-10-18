@@ -3,38 +3,39 @@
 Date: 2026-10-17. The [demoOnly1 launcher](../tools/play_demo_only1.py) supports
 **any map position** through map ID and pixel coordinates, plus named shortcuts
 and an interactive menu. Each destination starts a fresh practice session
-with separate saves. The World 1 castle preset is available for investigating
-Larry without first unlocking its map path.
+with separate saves.
 
-## World 1 castle
+## Capture the real castle location
 
-From the project directory:
+On 2026-10-18 the user confirmed that the second World 1 castle preset was
+also wrong. They manually found the intended castle and reported that its
+**Lemmy boss worked normally**. Correct coordinates and the room ID were not
+recorded. The `world1-castle` shortcut has been removed; neither previous guess
+is a verified route to this encounter.
+
+From the project directory, start a practice session with location output:
 
 ```sh
-python3 tools/play_demo_only1.py --level world1-castle
+python3 tools/play_demo_only1.py --select-level --complete-all --show-location
 ```
 
-With the existing air-swimming practice option:
+For an ordinary saved game, use `python3 tools/play_demo_only1.py --show-location`.
+The optional readout appears in the **launching terminal**, not the game window.
+It prints changed map coordinates and room IDs, plus a `--teleport MAP X Y`
+line while on the overworld. Stop on the intended castle's map node and copy
+the final teleport line. After entering, copy the `Room` value as well.
+The readout samples guest memory at frame boundaries without writing to it.
+It needs the rebuilt demoOnly1 executable; it does not require a debug server.
 
-```sh
-python3 tools/play_demo_only1.py --level world1-castle --air-swim
-```
-
-The corrected preset hands control back at **map 0, X=`$0018`, Y=`$01B8`**,
-the lower-left castle beside the user's animated-skull landmark. Use the normal
-level-entry button. This starts loading `$010`, but currently stalls at MARIO
-START in both native and Snes9x reference runs, even without completion flags.
-Larry has not been reached; original ZSNES behavior remains unknown.
-
-The previous map 1 / `$0058,$0088` preset was misidentified and was confirmed by
-the user to enter a World 6 level. Its earlier `$101` entry/return results do
-not qualify World 1 or Larry. See [completion-cheat.md](completion-cheat.md)
-for the correction and investigation status.
+`OW` is the overworld position, retained while inside a level. `Room` is the
+16-bit room ID at `$010B`; `Translevel` is `$13BF`. These level fields can
+retain a previous level while on the map; they do not identify the node under
+Mario until level entry. Take the map reading while Mario is stationary.
+Direct binary launches can enable the same readout with `M1_SHOW_LOCATION=1`.
 
 ## Any map position
 
 ```sh
-python3 tools/play_demo_only1.py --teleport 0 0x18 0x1b8
 python3 tools/play_demo_only1.py --teleport 5 0x178 0x128 --air-swim
 python3 tools/play_demo_only1.py --teleport 6 0x178 0x1a8
 ```
@@ -45,8 +46,8 @@ from 0 to 511 (`0x1ff`) on each axis. Decimal, `0x` hexadecimal and quoted
 engine's overworld coordinate space, rather than tile indices or the visible
 window's coordinates. Typical node centers end in hexadecimal `8`.
 
-The examples locate the World 1 castle, Baby Yoshi Hill on Special, and the
-previously observed Star World arrival position. Other coordinates are allowed
+The examples locate Baby Yoshi Hill on Special and the previously observed
+Star World arrival position. Other coordinates are allowed
 for exploration. A location on empty terrain need not contain a level entrance.
 The destination is written once; the player can move normally after handoff.
 
@@ -57,7 +58,7 @@ python3 tools/play_demo_only1.py --select-level
 python3 tools/play_demo_only1.py --select-level --air-swim
 ```
 
-The menu offers Athletic Special, Baby Yoshi Hill, World 1 castle (loading investigation),
+The menu offers Athletic Special, Baby Yoshi Hill,
 the existing Athletic Special boss-door shortcut, and **Custom map position**.
 Choose a number or key. Custom positions accept a line such as `0 0x18 0x1b8`;
 enter `q` to cancel. Enter `c` to toggle the optional all-levels/DK completion
@@ -111,11 +112,14 @@ Demo 1-1 remains the separate primary target.
 
 ## Exploration status
 
-The corrected World 1 castle preset is available for loading investigation.
-It selects `$010` but stalls in mode `$12` in native and reference runs. The
-previous `$101` node was a World 6 location and retains its separate garbled
-interior observation. Neither result verifies Larry or an original-version
-castle hang.
+Both guessed castle coordinates have been withdrawn: map 1 / `$0058,$0088`
+loads `$101` (user-confirmed World 6); map 0 / `$0018,$01B8` starts loading
+`$010` but is also not the intended castle. The latter node's native/reference
+mode `$12` stall remains an observation of that node only. It establishes
+neither an intended-castle loading bug nor original ZSNES behavior. The user's
+manual Lemmy check passes as a bounded functionality report; the exact route,
+clear/death coverage and practice settings were not supplied.
+
 Milky Way Wishes and End of Special Zone have no named shortcut. On 2026-10-16,
 the user confirmed that both also hang at MARIO START in the original demoOnly1.
 Reference probes of those nodes likewise remain in loading mode `$12` after
@@ -124,15 +128,23 @@ teleport remains available for exploring any coordinates, including those nodes.
 
 ## Validation and local evidence
 
-The initial teleport selector passed user testing. The user identified the
-incorrect castle label; the corrected coordinates and completion option are
-recorded in [completion-cheat.md](completion-cheat.md). The complete suite now
-passes 41 tests. Native and reference checks cover map handoff, ordinary-level
-entry/return, Warp Star round trips with completion flags, and the corrected
-castle's unresolved loading stall.
+The initial teleport selector passed user testing. Completion-option evidence
+is recorded in [completion-cheat.md](completion-cheat.md). Historical automated
+checks cover map handoff, ordinary-level entry/return and Warp Star round trips
+with completion flags. Wrong-node castle probes are retained as such.
 
 Earlier evidence under `local/captures/level-select-*` includes Athletic Special,
 Baby Yoshi Hill, custom Star World coordinates and the old World 6 node. The
 old castle-entry comparisons describe `$101`, not World 1. Ordinary save,
 backup-save, configuration and binding hashes were preserved in real launcher
-smoke runs. No full-state, whole-ROM or Larry-battle acceptance is claimed.
+smoke runs. No full-state, whole-ROM or full Lemmy-battle fidelity is claimed.
+
+
+On 2026-10-18, demoOnly1 was rebuilt with the optional `--show-location`
+frame-boundary readout. All 15 launcher tests pass. A deterministic native
+Baby Yoshi Hill route prints map 5 / `$0178,$0128` and then room `$126`.
+With the readout enabled and disabled, both checkpoints have identical WRAM,
+SRAM, VRAM, CGRAM, OAM and raw framebuffer dumps. Local evidence is under
+`local/play/demo-only-1/practice/location-console-z1s61pc3/`, including
+`comparison.json` and each run's `host.log`. This validates the readout on a
+known route; the intended Lemmy entrance remains to be recorded.

@@ -47,6 +47,11 @@ def install_metrics():
         source = source.replace('static const SnesDesktopHostGame kGameHost = {',
                                 'extern void M1AudioShutdown(void);\n\nstatic const SnesDesktopHostGame kGameHost = {\n'
                                 '    .on_shutdown        = &M1AudioShutdown,')
+    if '.after_run_frame    = &M1LocationSample,' not in source:
+        source = source.replace('static const SnesDesktopHostGame kGameHost = {',
+                                'extern void M1LocationSample(const SnesDesktopHostFrameStats *stats);\n\n'
+                                'static const SnesDesktopHostGame kGameHost = {\n'
+                                '    .after_run_frame    = &M1LocationSample,')
     if 'M1MetricsRegister();' not in source:
         entry = 'int main(int argc, char **argv)\n{\n'
         if source.count(entry) != 1:

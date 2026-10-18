@@ -163,3 +163,21 @@ parity is therefore unknown; do not record this castle as a confirmed original
 unavailable level or a qualified Larry encounter. This differs from their
 explicit original-version confirmation for Milky Way Wishes and End of Special
 Zone. The earlier $101 sample belongs to the misidentified World 6 node.
+
+
+On 2026-10-18, the user confirmed that the second castle preset (map 0 /
+$0018,$01B8) was also wrong. They manually entered the actual intended castle
+and reported that the **Lemmy boss worked normally**. This supersedes the
+castle-location assumptions in the preceding historical entries: neither
+$101 nor $010 is a verified route to that encounter. Their loading observations
+remain attached to their sampled nodes, not to the intended castle. The prior
+Larry attribution is withdrawn.
+
+The manual Lemmy functionality checkpoint passes within the reported scope.
+Correct coordinates and room ID were not recorded; exact duration, clear,
+death-return, audio and cheat settings were not separately supplied. The
+unverified named shortcut is removed, and `tools/play_demo_only1.py --show-location`
+provides a read-only map/room diagnostic for capturing a reproducible route.
+The next core work is qualifying PPU register-write timestamps against the
+interpreter before promoting the remaining palette/CGRAM hotspots to AOT;
+see [aot-wram.md](aot-wram.md).

@@ -14,17 +14,14 @@ import windows_audio
 ROOT = Path(__file__).resolve().parents[1]
 
 
-# Named practice entrances. The World 1 castle was located by the user's
-# lower-left/skull-landmark description; its room $010 still stalls at load.
+# Confirmed named practice entrances. The castle shortcut is withdrawn until
+# its real map coordinates are captured; both previous guesses were wrong.
 LEVELS = {
     'athletic-special': {'name': 'Athletic Special', 'map': 5,
                          'x': 0x138, 'y': 0x108, 'level': 0x134, 'moves': ()},
     'baby-yoshi-hill': {'name': 'Baby Yoshi Hill', 'map': 5,
                        'x': 0x178, 'y': 0x128, 'level': 0x126,
                        'moves': ('right', 'right')},
-    'world1-castle': {'name': 'World 1 castle (loading investigation)', 'map': 0,
-                      'x': 0x18, 'y': 0x1b8, 'level': 0x010,
-                      'teleport': (0, 0x18, 0x1b8)},
 }
 
 
@@ -180,6 +177,8 @@ def main():
                         help='mark all levels, overworld events, switches and DK coins complete in a fresh practice save')
     parser.add_argument('--air-swim', action='store_true',
                         help='enable normal swimming in air for this practice session (tap jump to rise)')
+    parser.add_argument('--show-location', action='store_true',
+                        help='print map coordinates and room IDs in this terminal as they change')
     args = parser.parse_args()
     if args.list_levels:
         print_levels()
@@ -246,6 +245,9 @@ def main():
     else:
         # Preserve the existing executable-relative normal save/config paths.
         directory = build
+    if args.show_location:
+        os.environ['M1_SHOW_LOCATION'] = '1'
+        print('Location readout ON in this terminal. OW coordinates persist inside levels; room IDs may be stale on the map.', flush=True)
     os.chdir(directory)
     os.environ['SNESRECOMP_SEPARATE_ECHO'] = '1'
     if windows_audio.available(ROOT) and windows_audio.enabled(directory / 'config.ini'):

@@ -6,6 +6,7 @@
 #include "audio_trace.h"
 #include "snes/interp_bridge.h"
 #include "common_rtl.h"
+#include "desktop/host_main.h"
 
 extern Snes *g_snes;
 
@@ -60,6 +61,36 @@ void M1AudioShutdown(void)
 extern CpuState g_cpu;
 extern Snes *g_snes;
 extern unsigned char g_ram[0x20000];
+
+/* Optional frame-boundary observations for recording reproducible entrances.
+ * No guest writes, debugger thread or instruction hooks are needed. */
+void M1LocationSample(const SnesDesktopHostFrameStats *stats)
+{
+    static int enabled = -1;
+    static unsigned previous[6];
+    static int have_previous;
+    if (enabled < 0) {
+        const char *value = getenv("M1_SHOW_LOCATION");
+        enabled = value && value[0] == '1';
+    }
+    if (!enabled || !g_snes) return;
+    unsigned player = g_ram[0xdd6];
+    if (player != 0 && player != 4) return;
+    unsigned values[] = {
+        g_ram[0x100], g_ram[0x1f11 + player / 4],
+        g_ram[0x1f17 + player] | (g_ram[0x1f18 + player] << 8),
+        g_ram[0x1f19 + player] | (g_ram[0x1f1a + player] << 8),
+        g_ram[0x10b] | (g_ram[0x10c] << 8), g_ram[0x13bf],
+    };
+    if (have_previous && !memcmp(previous, values, sizeof(values))) return;
+    memcpy(previous, values, sizeof(values));
+    have_previous = 1;
+    fprintf(stderr, "[location frame=%u] Mode=$%02X | OW map=%u X=0x%03x Y=0x%03x | Room=$%03X Translevel=$%02X\n",
+            stats->frame, values[0], values[1], values[2], values[3], values[4], values[5]);
+    if (values[0] == 0x0e)
+        fprintf(stderr, "[location] --teleport %u 0x%03x 0x%03x\n", values[1], values[2], values[3]);
+    fflush(stderr);
+}
 
 /* Optional interpreted-instruction probe, defaulting to the first boot load.
  * Use an interpreter-only run: compiled instructions do not call this hook.

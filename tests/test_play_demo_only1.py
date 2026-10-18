@@ -93,7 +93,7 @@ class PracticeLauncherTests(unittest.TestCase):
         with patch.object(play.windows_audio, 'available', return_value=True), \
                 patch.object(play.windows_audio, 'run', return_value=7) as native:
             with self.assertRaises(SystemExit) as result:
-                self.invoke(['--level', 'world1-castle', '--complete-all'])
+                self.invoke(['--level', 'baby-yoshi-hill', '--complete-all'])
             self.assertEqual(result.exception.code, 7)
             command, directory, root = native.call_args.args
             self.assertEqual(root, self.root)
@@ -110,6 +110,18 @@ class PracticeLauncherTests(unittest.TestCase):
             _, execute, _ = self.invoke([])
             native.assert_not_called()
             execute.assert_called_once()
+
+    def test_location_option_enables_host_readout_without_a_practice_save(self):
+        with patch.dict(play.os.environ, {}, clear=True):
+            def check_env(*args):
+                self.assertEqual(play.os.environ.get('M1_SHOW_LOCATION'), '1')
+                return False
+            with patch.object(play.windows_audio, 'available', side_effect=check_env) as check:
+                chdir, _, output = self.invoke(['--show-location'])
+            check.assert_called_once()
+            self.assertEqual(chdir.call_args.args[0], self.build)
+            self.assertFalse((self.root / 'local/play').exists())
+            self.assertIn('Location readout ON', output)
 
     def test_menu_retries_and_selects_a_level(self):
         chdir, execute, output = self.invoke(['--select-level'], ['99', '2'])
@@ -154,15 +166,14 @@ class PracticeLauncherTests(unittest.TestCase):
         command = execute.call_args.args[1]
         content = Path(command[command.index('--script')+1]).read_text()
         self.assertIn('poke 1f11 0101', content)
-        self.assertIn('World 1 castle', output)
+        self.assertNotIn('World 1 castle', output)
         self.assertIn('use decimal', output)
 
-    def test_castle_preset_uses_requested_world1_coordinates(self):
-        _, execute, _ = self.invoke(['--level', 'world1-castle'])
-        command = execute.call_args.args[1]
-        content = Path(command[command.index('--script')+1]).read_text()
-        self.assertIn('poke 1f17 1800b8011800b801', content)
-        self.assertIn('poke 1f11 0000', content)
+    def test_unconfirmed_castle_preset_is_rejected(self):
+        with self.assertRaises(SystemExit) as error:
+            self.invoke(['--level', 'world1-castle'])
+        self.assertEqual(error.exception.code, 2)
+        self.assertFalse((self.root / 'local/play').exists())
 
     def test_invalid_teleport_does_not_create_session(self):
         for args in (['--teleport', '7', '0', '0'], ['--teleport', '1', '-1', '0'],

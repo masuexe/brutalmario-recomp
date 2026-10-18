@@ -51,34 +51,24 @@ a practice session without the synthetic completion state. Loading an older
 in-game save or savestate can replace the one-shot state; this option is not
 a permanent memory freeze or a save-conversion tool.
 
-## Corrected World 1 castle preset
+## Withdrawn castle preset
 
-The user confirmed that the former `world1-castle` preset actually entered a
-World 6 level. Map IDs are not world numbers. Their lower-left castle and
-animated skull/raised-ground landmark identifies a main-map node at:
+Updated 2026-10-18: both guessed World 1 castle positions were wrong. Map 1 /
+`$0058,$0088` loads `$101`, which the user identified as World 6. Map 0 /
+`$0018,$01B8` starts loading `$010` but was also rejected by the user as the
+intended castle. Its native/Snes9x loading stall cannot qualify the intended
+castle or establish original ZSNES behavior. `--level world1-castle` has been
+removed until the actual location is captured.
 
-**Map 0, X=`$0018`, Y=`$01B8`.**
+The user manually entered the correct castle and reported normal **Lemmy**
+boss functionality. The coordinates were not recorded. Use the
+[location readout](level-select.md#capture-the-real-castle-location) to capture
+the map node and entered room next time. This is a bounded manual checkpoint;
+no specific victory, death-return or cheat-setting report was supplied.
 
-`--level world1-castle` now uses this position. The old map 1 position
-`$0058,$0088`, which loads `$101`, remains reachable through arbitrary teleport
-but is no longer labelled World 1. The corrected node starts loading `$010`.
-
-```sh
-python3 tools/play_demo_only1.py --level world1-castle --complete-all --air-swim
-# Equivalent map position:
-python3 tools/play_demo_only1.py --teleport 0 0x18 0x1b8 --complete-all
-```
-
-The corrected castle currently stalls at MARIO START / mode `$12` in both
-native and Snes9x reference runs, with and without completion flags. Larry
-has not been reached. **Original ZSNES 1.51 behavior is unknown**: matching the
-Snes9x reference does not establish that the original also hangs. Keep this
-as an unresolved compatibility/content-loading investigation. The user has
-not confirmed an original-version hang for this castle.
-
-This differs from Milky Way Wishes and End of Special Zone, whose original
-MARIO START hangs were explicitly confirmed by the user. Completion flags
-unlock progression checks; they do not establish that every room is playable.
+Milky Way Wishes and End of Special Zone remain separate cases with
+user-confirmed original MARIO START hangs. Completion flags unlock progression
+checks; they do not establish that every room is playable.
 
 ## Validation
 
@@ -99,8 +89,8 @@ check, not a new fight/victory acceptance.
 
 Both cores enter Baby Yoshi Hill (`$126`) and return to its map entrance after
 a diagnostic death with every level-status byte still `$9F`, every event byte
-`$FF`, all DK bits set and counter 96. The corrected castle was separately
-checked without the cheat to avoid attributing its loading stall to completion.
+`$FF`, all DK bits set and counter 96. The misidentified map 0 node was separately checked without the cheat; its
+loading stall belongs only to that node.
 
 A real interactive launcher smoke test toggles `c`, chooses custom Star World
 coordinates with air swimming, and uses the Warp Star to Special. It creates
@@ -114,5 +104,6 @@ Local scripts: `local/probes/completion/`. Captures include
 `completion-larry-correct-full` and `completion-larry-correct-reference`.
 Reports include `local/reports/completion-tests-final.log`,
 `completion-checkpoints.json` (including ROM byte anchors), and
-`completion-launch-smoke.json`. User confirmation of the new completion option
-and the corrected castle preset remains pending.
+`completion-launch-smoke.json`. The `completion-larry-correct-*` artifact names predate the location correction
+and refer to the wrong map 0 node. User confirmation of the new completion
+option remains pending; Lemmy functionality was reported separately.
