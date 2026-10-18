@@ -17,6 +17,7 @@ from generator_patches import prepare
 # when available. Nothing is copied into a prepared game image.
 INDEXED_CODE = bytes.fromhex('bc e5 0d b9 28 f8 85 00 ac d9 13 c0 0a d0 07 ac e8 1d c0 01 d0 11 ad d6 0d 4a 4a a8 b9 11 1f a8 b9 75 f8 25 00 f0 02 a9 01 60')
 CODE = bytes.fromhex('a7 8a a6 8a e8 d0 05 a2 00 80 e6 8c 86 8a 60')
+PALETTE_CODE = bytes.fromhex('a9 23 8d 21 21 a9 34 8d 22 21 a9 12 8d 22 21 60')
 
 WRAM_FIXTURES = {
     'clear': (0x16, 0x9f2b, b'\xad\x11\x1f\xc9\x06\xf0\x0b\xa2\x07\xa9\x00\x9f\xa0\xff\x7f\xca\x10\xf7`'),
@@ -57,7 +58,8 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            bank, pc, code = WRAM_FIXTURES[fixture]
+            bank, pc, code = ((0x0d, 0xa6ba, PALETTE_CODE) if fixture == 'palette'
+                              else WRAM_FIXTURES[fixture])
             m, x = 1, 1
         offset = bank * 32768 + (pc & 0x7fff)
         script = ('from snes65816 import set_rom_image_size\n'
@@ -121,6 +123,49 @@ class AotBusTimingTests(unittest.TestCase):
     def test_mmio_store_yields_before_effects(self):
         result = self.build_run(self.generator, fixture='copy_mmio')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_palette_write_events_block_mmio_promotion(self):
+        """Total-clock equality must not hide different hardware event times."""
+        result = self.emit(self.generator, fixture='palette')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        generated = self.path / 'palette.c'
+        generated.write_text(result.stdout)
+        source = (self.include / 'snes/interp_bridge.c').read_text()
+        bodies = []
+        for name in ('bridge_region_speed', 'bridge_timing_bus', 'bridge_is_apu_port',
+                     'bridge_apu_port_diag_enabled', 'bridge_bus_write'):
+            start = re.search(r'^static\s+\w+\s+' + name + r'\(', source, re.M).start()
+            brace = source.index('{', start)
+            end, depth = brace + 1, 1
+            while depth:
+                depth += (source[end] == '{') - (source[end] == '}')
+                end += 1
+            bodies.append(source[start:end] + '\n')
+        # Reuse the bridge's actual post-op clock accounting as well as its
+        # callbacks. Leave cartridge/APU scheduling outside this PPU bus probe.
+        start = source.index('            unsigned _internal = (unsigned)_cyc > s_interp_bus_cycles')
+        end = source.index('            if (g_snes && g_snes->cart)', start)
+        bodies.append('static void bridge_finish_opcode(CpuState *cpu, int _cyc) {\n' +
+                      source[start:end] + '}\n')
+        (self.path / 'bridge_write.inc').write_text(''.join(bodies))
+        # Compile the unmodified production guard under a second name, then
+        # bypass it only in this disposable probe's controlled PPU bus.
+        wrapper = self.path / 'production_timing.c'
+        wrapper.write_text('#define M1AotBusWriteSupported M1ProductionBusWriteSupported\n'
+                           f'#include "{ROOT / "recomp/aot_timing.c"}"\n')
+        binary = self.path / 'palette-events'
+        command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
+                   '-DSNESRECOMP_REVERSE_DEBUG=0', '-I' + str(self.include),
+                   '-I' + str(self.include / 'snes'), '-I' + str(self.path),
+                   ROOT / 'tests/aot_mmio_event_test.c', generated,
+                   self.path / 'paced.c', wrapper,
+                   self.include / 'snes/interp816.c', '-o', binary]
+        build = subprocess.run([str(x) for x in command], capture_output=True, text=True)
+        self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+        result = subprocess.run([str(binary)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn('promotion blocked', result.stdout)
+        print(result.stdout, end='')
 
     def check_wram_fixture(self, fixture):
         bank, pc, code = WRAM_FIXTURES[fixture]

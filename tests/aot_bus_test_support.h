@@ -30,6 +30,12 @@ uint16_t cpu_read16(CpuState *cpu, uint8_t bank, uint16_t addr) {
 }
 void cpu_write8(CpuState *cpu, uint8_t bank, uint16_t addr, uint8_t value) {
     (void)cpu; int32_t offset = cpu_wram_offset(bank, addr);
+#ifdef MMIO_EVENT_FIXTURE
+    if (offset < 0) {
+        RecordMmioEvent(cpu, ((uint32_t)bank << 16) | addr, value);
+        return;
+    }
+#endif
     assert(offset >= 0); ram[offset] = value;
 }
 void cpu_write16(CpuState *cpu, uint8_t bank, uint16_t addr, uint16_t value) {

@@ -34,6 +34,12 @@ the register-write timestamp. A separate event-ordering test is needed before
 expanding this WRAM-only store model to those loops. No hardware-write timing
 fix or global timing compensation is introduced here.
 
+The subsequent [PPU event qualification](aot-mmio-events.md) reproduces the
+barrier with real generated code and the pinned interpreter's write callbacks:
+equal final clocks conceal 24/30-master-clock write-event differences. The
+production guard preserves interpreter timestamps through fallback. Palette
+promotion remains deferred; the accepted frontier stays at 52 variants.
+
 ## Differential checks
 
 Real generated C runs against the pinned `interp816`, using the runtime's
