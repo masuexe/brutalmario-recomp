@@ -11,6 +11,7 @@ from pathlib import Path
 import re
 
 LEAVES = {
+    'SubtractIndexedCoordinateWord': (0x13f1c2, 0x13f1d4, '13F1C2:M1X1'),
     'UploadIndexedPalette80': (0x169585, 0x16959e, '169585:M1X1'),
     'UploadIndexedPalette30': (0x13efb2, 0x13efce, '13EFB2:M1X1'),
     'ClearEightWramBytesUnlessSix': (0x169f2b, 0x169f3d, '169F2B:M1X1'),

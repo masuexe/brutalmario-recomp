@@ -32,6 +32,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [WRAM-store AOT expansion](docs/aot-wram.md)
 - [PPU write-event qualification before AOT promotion](docs/aot-mmio-events.md)
 - [Palette-port event timing and two-loop AOT expansion](docs/aot-palette.md)
+- [Indexed coordinate arithmetic and mixed accumulator widths](docs/aot-coordinate.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)

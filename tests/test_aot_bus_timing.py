@@ -18,6 +18,7 @@ from generator_patches import prepare
 INDEXED_CODE = bytes.fromhex('bc e5 0d b9 28 f8 85 00 ac d9 13 c0 0a d0 07 ac e8 1d c0 01 d0 11 ad d6 0d 4a 4a a8 b9 11 1f a8 b9 75 f8 25 00 f0 02 a9 01 60')
 CODE = bytes.fromhex('a7 8a a6 8a e8 d0 05 a2 00 80 e6 8c 86 8a 60')
 PALETTE_CODE = bytes.fromhex('a9 23 8d 21 21 a9 34 8d 22 21 a9 12 8d 22 21 60')
+COORDINATE_CODE = bytes.fromhex('bd 65 0e eb bd 35 0e c2 20 38 f9 1a 00 99 00 00 e2 20 60')
 PALETTE_LOOPS = {
     'palette80': (0x16, 0x9585, bytes.fromhex('a2 00 bd 94 94 f0 12 8d 21 21 bd 35 95 8d 22 21 bd e5 94 8d 22 21 e8 80 e9 60'), 0x9494, 0x9585, 80),
     'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
@@ -62,9 +63,14 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            bank, pc, code = ((0x0d, 0xa6ba, PALETTE_CODE) if fixture == 'palette'
-                              else PALETTE_LOOPS[fixture][:3] if fixture in PALETTE_LOOPS
-                              else WRAM_FIXTURES[fixture])
+            if fixture == 'coordinate':
+                bank, pc, code = 0x13, 0xf1c2, COORDINATE_CODE
+            elif fixture == 'palette':
+                bank, pc, code = 0x0d, 0xa6ba, PALETTE_CODE
+            elif fixture in PALETTE_LOOPS:
+                bank, pc, code = PALETTE_LOOPS[fixture][:3]
+            else:
+                bank, pc, code = WRAM_FIXTURES[fixture]
             m, x = 1, 1
         if fixture_code is not None:
             code = fixture_code
@@ -130,6 +136,61 @@ class AotBusTimingTests(unittest.TestCase):
     def test_mmio_store_yields_before_effects(self):
         result = self.build_run(self.generator, fixture='copy_mmio')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_coordinate_word_arithmetic_widths_flags_and_deadlines(self):
+        rom = ROOT / 'local/roms/demo-1-1.sfc'
+        if rom.is_file():
+            offset = 0x13 * 32768 + (0xf1c2 & 32767)
+            self.assertEqual(rom.read_bytes()[offset:offset+len(COORDINATE_CODE)], COORDINATE_CODE)
+        self.coordinate_probe()
+
+    def test_coordinate_byte_arithmetic_flags_and_deadlines(self):
+        self.coordinate_probe(narrow=True)
+
+    def test_coordinate_word_endpoints_and_unsafe_contexts_yield(self):
+        cases = (
+            ('read-bank-end', 11, 0xffff, 0xf1cc, (0x7e, 0x7f), 0),
+            ('store-bank-end', 14, 0xffff, 0xf1cf, (0x7e, 0x7f), 0),
+            ('read-hardware', 11, 0x1fff, 0xf1cc, (0, 0x80), 0),
+            ('store-hardware', 14, 0x1f00, 0xf1cf, (0, 0x80), 0xff),
+            ('store-last-safe', 14, 0x1ffe, 0, (0, 0x80, 0x7e, 0x7f), 0),
+            ('unsafe-data-bank', 14, 0, 0xf1c2, (0x40, 0xc0), 0),
+        )
+        for name, *guard in cases:
+            with self.subTest(fixture=name):
+                self.coordinate_probe(guard=guard)
+
+    def coordinate_probe(self, narrow=False, guard=None):
+        code = bytearray(COORDINATE_CODE)
+        if narrow:
+            code[7:9] = code[16:18] = b'\x38\x38'
+        if guard:
+            at, address, pc, dbs, y = guard
+            code[at:at+2] = address.to_bytes(2, 'little')
+            (self.path / 'coordinate_guard_fixture.h').write_text(
+                f'#define EXPECTED_GUARD_PC {pc}\n#define GUARD_Y {y}\n'
+                'static const unsigned guard_dbs[] = {' + ','.join(map(str, dbs)) + '};\n'
+                'static uint8_t code[] = {' + ','.join(map(str, code)) + '};\n')
+        result = self.emit(self.generator, fixture='coordinate', fixture_code=bytes(code))
+        self.assertEqual(result.returncode, 0, result.stderr)
+        generated = self.path / 'coordinate.c'
+        generated.write_text(result.stdout)
+        binary = self.path / 'coordinate'
+        command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
+                   '-DSNESRECOMP_REVERSE_DEBUG=0', '-I' + str(self.include),
+                   '-I' + str(self.include / 'snes'), '-I' + str(self.path),
+                   ROOT / 'tests/aot_coordinate_timing_test.c', generated,
+                   self.path / 'paced.c', ROOT / 'recomp/aot_timing.c',
+                   self.include / 'snes/interp816.c', '-o', binary]
+        if narrow:
+            command.insert(1, '-DNARROW_FIXTURE=1')
+        if guard:
+            command.insert(1, '-DCOORDINATE_OVERRIDE=1')
+        build = subprocess.run([str(x) for x in command], capture_output=True, text=True)
+        self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
+        result = subprocess.run([str(binary)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        print(result.stdout, end='')
 
     def test_palette_write_events_match_with_legacy_counterexample(self):
         """Total-clock equality must not hide different hardware event times."""

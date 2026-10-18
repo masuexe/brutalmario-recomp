@@ -13,15 +13,19 @@ DATA_TRANSFERS = {0xa7: 4, 0xa6: 2, 0xe8: 0, 0xd0: 0,
                   0xbc: 1, 0xb9: 1, 0x85: 1, 0xac: 1, 0xc0: 0,
                   0xad: 1, 0x4a: 0, 0xa8: 0, 0x25: 1, 0xf0: 0, 0xa9: 0,
                   0xc9: 0, 0xca: 0, 0x10: 0, 0x9f: 1, 0xa5: 1, 0x8d: 1,
-                  0xbd: 1, 0x80: 0, 0xae: 1}
+                  0xbd: 1, 0x80: 0, 0xae: 1,
+                  0xeb: 0, 0xc2: 0, 0xe2: 0, 0x38: 0, 0xf9: 1, 0x99: 1}
 DP_END = {0xa7: 2, 0xa6: 1, 0xe6: 0, 0x86: 1, 0x85: 0, 0x25: 0, 0xa5: 0}
-ABS_READS = {0xbc: 'X', 0xb9: 'Y', 0xac: None, 0xad: None, 0xbd: 'X', 0xae: None}
-WRAM_WRITES = {0x8d, 0x9f}
+ABS_READS = {0xbc: 'X', 0xb9: 'Y', 0xac: None, 0xad: None, 0xbd: 'X', 0xae: None,
+             0xf9: 'Y'}
+WRAM_WRITES = {0x8d, 0x9f, 0x99}
 
 
 def transfers(insn):
     if insn.opcode in (0xa6, 0x86, 0xbc, 0xac, 0xae):
         return 1 if insn.x_flag else 2
+    if insn.opcode in (0xf9, 0x99):
+        return 1 if insn.m_flag else 2
     return DATA_TRANSFERS[insn.opcode]
 
 
@@ -33,8 +37,10 @@ def validate(blocks):
     max_dp, pointers = 0, set()
     for pairs in blocks.values():
         for insn, _ in pairs:
+            wide = insn.m_flag == 0 and insn.opcode in (0x38, 0xf9, 0x99, 0xe2)
             if (insn.opcode not in DATA_TRANSFERS or
-                    insn.m_flag != 1 or insn.x_flag not in (0, 1)):
+                    (insn.m_flag != 1 and not wide) or insn.x_flag not in (0, 1) or
+                    (insn.opcode in (0xc2, 0xe2) and insn.operand != 0x20)):
                 raise ValueError('instruction-bus timing requires a supported native M1 leaf: '
                                  f'${insn.addr:06X} {insn.mnem}')
             if insn.opcode in DP_END:
@@ -61,14 +67,24 @@ def prefix(insn, target_expr):
         address += f" + cpu->{index})" if index else ")"
         width = transfers(insn)
         guard += f" || !M1AotBusAddressSupported({address}, {width}u)"
+        if width == 2:
+            # Runtime word accessors wrap the high byte within its bank;
+            # interp816 indexed words carry into the next bank. Defer that
+            # unsupported endpoint before either byte is read.
+            guard += f" || (({address} & 0xffffu) == 0xffffu)"
     palette = insn.opcode == 0x8d and insn.operand in (0x2121, 0x2122)
     if insn.opcode in WRAM_WRITES:
         if insn.opcode == 0x8d:
             address = f"(((uint32)cpu->DB << 16) | 0x{insn.operand:04x}u)"
+        elif insn.opcode == 0x99:
+            address = f"(((uint32)cpu->DB << 16) + 0x{insn.operand:04x}u + cpu->Y)"
         else:
             address = f"((0x{insn.operand:06x}u + cpu->X) & 0xffffffu)"
         checker = 'M1AotPaletteWriteSupported' if palette else 'M1AotBusWriteSupported'
-        guard += f" || !{checker}({address}, 1u)"
+        width = transfers(insn)
+        guard += f" || !{checker}({address}, {width}u)"
+        if width == 2:
+            guard += f" || (({address} & 0xffffu) == 0xffffu)"
     return [
         'M1AotBusBoundary(cpu);',
         f'if ({guard}) {{',

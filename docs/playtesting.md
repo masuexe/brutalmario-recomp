@@ -251,3 +251,28 @@ which matches the final automated full-route capture; the user did not supply
 an independent hash. Exact duration and individual checklist results were
 not separately supplied. This closes the current palette AOT expansion
 checkpoint without asserting whole-port fidelity or new demoOnly1 coverage.
+
+
+The subsequent [indexed coordinate arithmetic expansion](aot-coordinate.md)
+produces a **55-variant Demo 1-1 candidate**. It promotes only the $13F1C2
+helper's compiled call path after binary/decimal arithmetic, accumulator-width,
+flag, full-memory, deadline/continuation and indexed word-boundary checks.
+All 60 project tests pass, with an additional final arithmetic-only run after
+strengthening intermediate XBA/B-register cases. Full-route, dense-transition,
+pure-interpreter and generated-audio regressions pass against the accepted
+54-variant baseline. **Manual acceptance of this new executable is pending.**
+The requested next pass uses the same direct launch command and checks ordinary
+map movement, Entry loading/play, movement/jumping, pipe/underground return,
+map return, character/enemy/object positions and graphics, transitions and
+ordinary sound. Prior 54-variant feedback does not automatically accept this
+new executable; demoOnly1 coverage is unchanged.
+
+
+The user subsequently reported no issues in response to the requested
+55-variant manual regression pass. This accepts the indexed-coordinate-helper
+checkpoint and supersedes its pending status above. The workspace executable
+at `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` has SHA-256
+`2811b0080b0606058f333a9b83a06677a0176230dcb41de46e44aefa7db10423`, verified against its
+build receipt. No independent user hash, exact duration or individual checklist
+results were supplied. The 55-variant build becomes the next bounded regression
+baseline; no new demoOnly1 or whole-port fidelity claim is made.

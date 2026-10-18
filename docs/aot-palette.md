@@ -8,6 +8,10 @@ executable directly and reported no issues, passing the bounded manual
 regression checkpoint.
 demoOnly1 remains a separate target.
 
+The subsequent [coordinate helper expansion](aot-coordinate.md) produces a
+55-variant candidate after mixed-width arithmetic qualification. The accepted
+54-variant results below remain its regression baseline.
+
 ## Implementation and boundaries
 
 | Project label | Native entry | Observed ROM behavior |

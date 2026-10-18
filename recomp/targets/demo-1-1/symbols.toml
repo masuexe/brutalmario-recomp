@@ -83,3 +83,13 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $13EFB2-$13EFCE; palette-port byte loop and live final index reload, with instruction-start event timing."
+
+
+[[func]]
+name = "SubtractIndexedCoordinateWord"
+addr = "f1c2"
+bank = 19
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $13F1C2-$13F1D4; assembles an indexed word, subtracts DB:$001A+Y and stores DB:Y, returning M1. Word bank endpoints retain interpreter fallback."
