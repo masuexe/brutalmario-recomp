@@ -51,20 +51,24 @@ a practice session without the synthetic completion state. Loading an older
 in-game save or savestate can replace the one-shot state; this option is not
 a permanent memory freeze or a save-conversion tool.
 
-## Withdrawn castle preset
+## Recorded castle preset and withdrawn guesses
 
 Updated 2026-10-18: both guessed World 1 castle positions were wrong. Map 1 /
 `$0058,$0088` loads `$101`, which the user identified as World 6. Map 0 /
 `$0018,$01B8` starts loading `$010` but was also rejected by the user as the
 intended castle. Its native/Snes9x loading stall cannot qualify the intended
-castle or establish original ZSNES behavior. `--level world1-castle` has been
-removed until the actual location is captured.
+castle or establish original ZSNES behavior. `--level world1-castle` was temporarily
+removed, then restored using the user-recorded position below.
 
 The user manually entered the correct castle and reported normal **Lemmy**
-boss functionality. The coordinates were not recorded. Use the
-[location readout](level-select.md#capture-the-real-castle-location) to capture
-the map node and entered room next time. This is a bounded manual checkpoint;
+boss functionality, then recorded **map 0 / `$00A8,$01A8`** at frame 3608.
+The restored `--level world1-castle` uses this position. See the
+[location readout](level-select.md#recorded-lemmy-castle-entrance) for usage. This is a bounded manual checkpoint;
 no specific victory, death-return or cheat-setting report was supplied.
+Automated native entrance checks reach `$10E` / translevel `$32`. With
+`--complete-all`, press L+R together to re-enter the cleared castle; normal
+entry is ignored. Both the ordinary and completed-state entry paths reach
+gameplay mode `$14`.
 
 Milky Way Wishes and End of Special Zone remain separate cases with
 user-confirmed original MARIO START hangs. Completion flags unlock progression

@@ -14,14 +14,16 @@ import windows_audio
 ROOT = Path(__file__).resolve().parents[1]
 
 
-# Confirmed named practice entrances. The castle shortcut is withdrawn until
-# its real map coordinates are captured; both previous guesses were wrong.
+# Named entrances use observed map positions; map IDs are not world numbers.
 LEVELS = {
     'athletic-special': {'name': 'Athletic Special', 'map': 5,
                          'x': 0x138, 'y': 0x108, 'level': 0x134, 'moves': ()},
     'baby-yoshi-hill': {'name': 'Baby Yoshi Hill', 'map': 5,
                        'x': 0x178, 'y': 0x128, 'level': 0x126,
                        'moves': ('right', 'right')},
+    'world1-castle': {'name': 'World 1 castle (Lemmy)', 'map': 0,
+                      'x': 0x0a8, 'y': 0x1a8, 'level': 0x10e,
+                      'teleport': (0, 0x0a8, 0x1a8)},
 }
 
 
@@ -240,6 +242,8 @@ def main():
             print(f'Map {map_id}, X={x:#05x}, Y={y:#05x}. Use the normal level-entry button.', flush=True)
         if args.complete_all:
             print('All levels + DK coins complete: ON (fresh practice save).', flush=True)
+        if args.level == 'world1-castle' and args.complete_all:
+            print('Lemmy castle is marked clear: press the L+R shoulder buttons together to re-enter.', flush=True)
         if args.air_swim:
             print('Air swim ON: tap jump repeatedly to rise; release to sink. Restart without --air-swim to disable.', flush=True)
     else:

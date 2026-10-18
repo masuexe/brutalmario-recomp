@@ -181,3 +181,48 @@ provides a read-only map/room diagnostic for capturing a reproducible route.
 The next core work is qualifying PPU register-write timestamps against the
 interpreter before promoting the remaining palette/CGRAM hotspots to AOT;
 see [aot-wram.md](aot-wram.md).
+
+
+Later on 2026-10-18, the user supplied the stationary Lemmy castle entrance
+reading: frame 3608, mode `$0E`, map 0, X=$00A8, Y=$01A8. This closes the map
+coordinate item. The `world1-castle` shortcut is restored at that measured
+position. The supplied on-map Room=$1C5 / Translevel=$00 remains prior level
+state and does not establish the entered castle room. Both earlier guessed
+positions remain withdrawn. The manual Lemmy functionality report remains
+accepted within its previously recorded scope.
+
+
+Native checks of the restored preset reach room $10E / translevel $32 in
+active mode $14. Without completion flags, ordinary entry works; with all
+completion flags, ordinary entry is ignored even after 600 extra frames,
+but L+R shoulder-button re-entry reaches the same room. These are entrance
+checks only and do not replace the user's manual Lemmy encounter report.
+
+On 2026-10-18, the user reported thin vertical lines below Mario and at the
+far-left screen edge while a background layer obscures the scene in Lemmy's
+castle. The supplied screenshot is
+`tmp/Snipaste_2026-10-18_21-48-35.png`. Screenshot inspection confirms the
+reported visual artifact, but does not identify its cause. Original ZSNES
+behavior is unknown; no matched scene has yet been compared with the reference
+or the alternate native renderer. The earlier castle entrance captures are
+not sufficient to qualify this later scene.
+
+Keep this as an open visual-fidelity item, separate from the accepted manual
+boss-functionality checkpoint. Investigate window boundaries, layer rendering
+and per-line register/HDMA behavior before changing shared PPU semantics. A
+confirmed original-game artifact would require a separate decision about any
+optional visual correction rather than being silently classified as a native
+regression.
+
+
+The subsequent [spotlight investigation](lemmy-mask.md) reproduces the scene
+in room $08C via the existing screen-5 exit of $10E. Native legacy and optimized
+framebuffers match exactly; the Snes9x sample matches every pixel at five-bit
+channel precision. Both left-edge and below-circle seams are explained by
+actual guest-generated HDMA tables: equal left/right bounds at zero above the
+circle, and at center X below it after table termination. This reclassifies
+the reported seams as a ROM-driven visual artifact reproduced by the reference,
+rather than an identified native-only regression. Historical ZSNES appearance
+remains unknown. No visual correction was applied; the earlier functional
+Lemmy checkpoint remains accepted. See the linked investigation for the
+reproducible input route, ROM byte anchors and local comparison report.

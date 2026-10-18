@@ -5,13 +5,29 @@ Date: 2026-10-17. The [demoOnly1 launcher](../tools/play_demo_only1.py) supports
 and an interactive menu. Each destination starts a fresh practice session
 with separate saves.
 
-## Capture the real castle location
+## Recorded Lemmy castle entrance
 
 On 2026-10-18 the user confirmed that the second World 1 castle preset was
 also wrong. They manually found the intended castle and reported that its
-**Lemmy boss worked normally**. Correct coordinates and the room ID were not
-recorded. The `world1-castle` shortcut has been removed; neither previous guess
-is a verified route to this encounter.
+**Lemmy boss worked normally**. They subsequently supplied this stationary
+map reading at frame 3608: mode `$0E`, **map 0, X=`$00A8`, Y=`$01A8`**.
+The `world1-castle` shortcut now uses that recorded position:
+
+```sh
+python3 tools/play_demo_only1.py --level world1-castle --show-location
+```
+
+The supplied on-map `Room=$1C5 Translevel=$00` is retained level state and does
+not identify the castle's entered room. Neither earlier guessed position is
+used by the restored shortcut. Native entry checks identify the first castle
+room as `$10E` (translevel `$32`), reaching gameplay mode `$14`.
+
+Without completion flags, use the normal entry button. With `--complete-all`,
+the castle is already cleared: press the **L+R shoulder buttons together** to
+re-enter. A normal entry press is ignored in that state; an additional 600-frame
+wait does not change it. The launcher prints this reminder for the completed
+castle preset. Both entry paths were checked in native disposable sessions;
+this is an entrance check, not a new boss-fight acceptance.
 
 From the project directory, start a practice session with location output:
 
@@ -58,7 +74,7 @@ python3 tools/play_demo_only1.py --select-level
 python3 tools/play_demo_only1.py --select-level --air-swim
 ```
 
-The menu offers Athletic Special, Baby Yoshi Hill,
+The menu offers Athletic Special, Baby Yoshi Hill, World 1 castle (Lemmy),
 the existing Athletic Special boss-door shortcut, and **Custom map position**.
 Choose a number or key. Custom positions accept a line such as `0 0x18 0x1b8`;
 enter `q` to cancel. Enter `c` to toggle the optional all-levels/DK completion
@@ -117,8 +133,9 @@ loads `$101` (user-confirmed World 6); map 0 / `$0018,$01B8` starts loading
 `$010` but is also not the intended castle. The latter node's native/reference
 mode `$12` stall remains an observation of that node only. It establishes
 neither an intended-castle loading bug nor original ZSNES behavior. The user's
-manual Lemmy check passes as a bounded functionality report; the exact route,
-clear/death coverage and practice settings were not supplied.
+manual Lemmy check passes as a bounded functionality report. The map route
+is now recorded above; clear/death coverage and practice settings were not
+separately supplied.
 
 Milky Way Wishes and End of Special Zone have no named shortcut. On 2026-10-16,
 the user confirmed that both also hang at MARIO START in the original demoOnly1.
@@ -147,4 +164,14 @@ With the readout enabled and disabled, both checkpoints have identical WRAM,
 SRAM, VRAM, CGRAM, OAM and raw framebuffer dumps. Local evidence is under
 `local/play/demo-only-1/practice/location-console-z1s61pc3/`, including
 `comparison.json` and each run's `host.log`. This validates the readout on a
-known route; the intended Lemmy entrance remains to be recorded.
+known route; the user subsequently recorded the intended Lemmy map entrance above.
+
+
+The restored Lemmy preset passes all 15 launcher tests. Native checkpoint
+artifacts are under `local/play/demo-only-1/practice/lemmy-location-3o77wu4y/`
+(normal entry and the ignored completed-state entry),
+and the successful completed
+L+R entry is under `local/play/demo-only-1/practice/lemmy-location-ne3dfa_4/`.
+Each run contains the input script, map/entry WRAM dumps, host log and
+`checkpoint.json`. The first and last successful samples both reach `$10E` /
+mode `$14`.

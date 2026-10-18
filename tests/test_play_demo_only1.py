@@ -166,14 +166,20 @@ class PracticeLauncherTests(unittest.TestCase):
         command = execute.call_args.args[1]
         content = Path(command[command.index('--script')+1]).read_text()
         self.assertIn('poke 1f11 0101', content)
-        self.assertNotIn('World 1 castle', output)
+        self.assertIn('World 1 castle (Lemmy)', output)
         self.assertIn('use decimal', output)
 
-    def test_unconfirmed_castle_preset_is_rejected(self):
-        with self.assertRaises(SystemExit) as error:
-            self.invoke(['--level', 'world1-castle'])
-        self.assertEqual(error.exception.code, 2)
-        self.assertFalse((self.root / 'local/play').exists())
+    def test_castle_preset_uses_user_recorded_location(self):
+        _, execute, output = self.invoke(['--level', 'world1-castle'])
+        command = execute.call_args.args[1]
+        content = Path(command[command.index('--script')+1]).read_text()
+        self.assertIn('poke 1f11 0000', content)
+        self.assertIn('poke 1f17 a800a801a800a801', content)
+        self.assertIn('poke 1f1f 0a001a000a001a00', content)
+        self.assertIn('World 1 castle (Lemmy)', output)
+        self.assertNotIn('shoulder buttons', output)
+        _, _, completed_output = self.invoke(['--level', 'world1-castle', '--complete-all'])
+        self.assertIn('L+R shoulder buttons together', completed_output)
 
     def test_invalid_teleport_does_not_create_session(self):
         for args in (['--teleport', '7', '0', '0'], ['--teleport', '1', '-1', '0'],

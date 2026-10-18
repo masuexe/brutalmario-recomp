@@ -165,9 +165,10 @@ Both guessed World 1 castle positions have been withdrawn. Map 1 /
 starts loading `$010` but the user also rejected it as the intended castle.
 Its native/reference loading stall is a wrong-node observation only. On
 2026-10-18 the user manually found the intended castle and reported normal
-**Lemmy** boss functionality, with coordinates unrecorded. The castle shortcut
-has been removed pending a real location reading. See
-[level-select.md](level-select.md#capture-the-real-castle-location).
+**Lemmy** boss functionality. Their subsequent stationary reading identifies
+map 0 / `$00A8,$01A8`; the restored `--level world1-castle` shortcut uses this
+observed position. The on-map `$1C5` room value is stale, not the castle room ID.
+See [level-select.md](level-select.md#recorded-lemmy-castle-entrance).
 
 ## Current checkpoint and remaining validation
 

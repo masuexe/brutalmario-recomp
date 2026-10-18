@@ -1,0 +1,33 @@
+turbo on
+# Exploration only: existing room exits; player coordinates and door state are poked.
+# Not a natural-route or full-level-clear acceptance test.
+# Fresh-session input route shared by reference and native hosts.
+# No imported savestates. All waits are host-frame calls.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 0, X=0x0a8, Y=0x1a8.
+poke 1f11 0000
+poke 1f17 a800a801a800a801
+poke 1f1f 0a001a000a001a00
+poke 0100 0b
+wait 240
+
+press y 30
+wait 360
+# Diagnostic: take existing screen 5 exit; no destination edits.
+poke 94 80054001
+poke 88 0000
+poke 71 06
+wait 240
+dump next-room
+wait 120
+dump next-idle
+quit
