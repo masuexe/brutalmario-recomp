@@ -103,3 +103,12 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $13F1A7-$13F1D4; calls the qualified coordinate leaf, updates the direct-page pair with borrow, then executes the coordinate leaf inline."
+
+[[func]]
+name = "BuildIndexedSpriteEntries"
+addr = "f06f"
+bank = 19
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $13F06F-$13F0C4; calls the qualified coordinate pair, scans 32 indexed candidates and writes visible entries plus size bytes."

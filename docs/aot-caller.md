@@ -127,3 +127,9 @@ The workspace regular executable was rechecked against the build receipt;
 the user did not supply an independent hash, exact session duration or
 individual checklist results. The accepted 56-variant build becomes the next
 regression baseline.
+
+
+The subsequent [indexed sprite-loop expansion](aot-sprite.md) qualifies the
+$13F06F caller and its 32-iteration output loop. The accepted 56-variant build
+above remains its regression baseline; manual acceptance of the 57-variant
+build is recorded in the linked report.

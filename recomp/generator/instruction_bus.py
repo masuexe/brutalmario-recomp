@@ -16,11 +16,12 @@ DATA_TRANSFERS = {0xa7: 4, 0xa6: 2, 0xe8: 0, 0xd0: 0,
                   0xbd: 1, 0x80: 0, 0xae: 1,
                   0xeb: 0, 0xc2: 0, 0xe2: 0, 0x38: 0, 0xf9: 1, 0x99: 1,
                   0x8a: 0, 0x18: 0, 0x69: 0, 0xaa: 0, 0xa0: 0,
-                  0x20: 2, 0xfd: 1, 0xb0: 0, 0xc6: 2}
+                  0x20: 2, 0xfd: 1, 0xb0: 0, 0xc6: 2,
+                  0x7d: 1, 0x09: 0, 0x5a: 1, 0x7a: 1, 0x98: 0, 0xc8: 0}
 DP_END = {0xa7: 2, 0xa6: 1, 0xe6: 0, 0x86: 1, 0x85: 0, 0x25: 0, 0xa5: 0,
           0xc6: 0}
 ABS_READS = {0xbc: 'X', 0xb9: 'Y', 0xac: None, 0xad: None, 0xbd: 'X', 0xae: None,
-             0xf9: 'Y', 0xfd: 'X'}
+             0xf9: 'Y', 0xfd: 'X', 0x7d: 'X'}
 WRAM_WRITES = {0x8d, 0x9f, 0x99}
 
 
@@ -43,7 +44,8 @@ def validate(blocks):
             wide = insn.m_flag == 0 and insn.opcode in (0x38, 0xf9, 0x99, 0xe2)
             if (insn.opcode not in DATA_TRANSFERS or
                     (insn.m_flag != 1 and not wide) or insn.x_flag not in (0, 1) or
-                    (insn.opcode in (0xc2, 0xe2) and insn.operand != 0x20)):
+                    (insn.opcode in (0xc2, 0xe2) and insn.operand != 0x20) or
+                    (insn.opcode in (0x5a, 0x7a) and insn.x_flag != 1)):
                 raise ValueError('instruction-bus timing requires a supported native M1 function: '
                                  f'${insn.addr:06X} {insn.mnem}')
             if insn.opcode == 0x20 and not selected(
@@ -68,6 +70,10 @@ def prefix(insn, target_expr):
     fetches = [f'cpu_region_speed(((uint32)cpu->PB << 16) | 0x{(insn.addr + i) & 0xffff:04x}u)'
                for i in range(insn.length)]
     guard = "interp_bridge_lle_master_deadline_reached(cpu)"
+    if insn.opcode == 0x5a:
+        guard += ' || cpu->S > 0x1fffu'
+    if insn.opcode == 0x7a:
+        guard += ' || cpu->S >= 0x1fffu'
     if insn.opcode == 0x20:
         # Both native JSR pushes must land in WRAM before entering a child.
         guard += ' || cpu->S == 0 || cpu->S > 0x1fffu'
