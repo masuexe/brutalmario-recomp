@@ -413,3 +413,16 @@ See [audio synchronization](audio-sync.md) for the measured comparison
 run) and for the focus-loss analysis, which found no host focus handling at
 all. **Gameplay acceptance stands; audio verification on the native path is
 pending.** Launch with `python3 tools/play_demo_1_1.py`.
+
+
+The user subsequently reported that the helper batch and demo-1-1 audio
+stutter follow-up were tested without issues. This accepts the 63-variant
+build's bounded gameplay/audio checkpoint, superseding its pending native-path
+audio status above. The workspace regular binary still matches its build
+receipt SHA-256
+`334bcdd755914f66b92efc4579979c1d4a19b81c9f7aec7a894f9e1956a633d0`.
+No exact duration, individual checklist results or independent user hash were
+supplied. Future interactive checks must use `python3 tools/play_demo_1_1.py`
+to select the Windows-native output path on this WSL setup. The 63-variant
+build is the next bounded regression baseline; no new demoOnly1 or whole-port
+fidelity claim is made.

@@ -423,3 +423,14 @@ For a controlled comparison on the old path:
 ```sh
 python3 tools/play_demo_1_1.py --no-windows-audio
 ```
+
+
+### User acceptance of the demo-1-1 launcher follow-up
+
+The user subsequently reported that the demo-1-1 audio stutter issue was fixed
+and the resulting build tested without issues. This closes the pending audible
+checkpoint for the current 63-variant build within that reported session.
+Exact duration, individual perceptual checks and the launch command were not
+separately supplied. The recommended interactive entry remains
+`python3 tools/play_demo_1_1.py`; direct executable launch does not select the
+Windows-native path automatically. The launcher's five unit tests also pass.

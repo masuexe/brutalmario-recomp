@@ -1,9 +1,9 @@
 # Pointer and indexed-phase helper batch
 
 This checkpoint promotes three M1/X1 leaves for the **63-variant Demo 1-1
-candidate**. The 60-variant build is the bounded non-audio manual regression
-baseline; its audible music/effects check remains pending and is carried
-forward. There are no separate 61- or 62-variant manual checkpoints.
+build**. The 60-variant build was its bounded non-audio regression baseline.
+The user subsequently reported no issues after the demo-1-1 native-audio
+launcher follow-up; the 63-variant build is accepted within that reported scope. There are no separate 61- or 62-variant manual checkpoints.
 The separate demoOnly1 target is unchanged.
 
 ## Selection and behavior
@@ -112,4 +112,27 @@ python3 tools/m1.py native --audio --audio-device-rate 32000 \
 
 The prior binary, generated tree and configuration are archived with hashes
 under `local/probes/aot-helpers-baseline/`. Captures and local reports use
-the `aot-helpers-` prefix. The new candidate's manual acceptance is pending.
+the `aot-helpers-` prefix. The user's subsequent gameplay/audio acceptance is recorded below.
+
+
+## Accepted manual follow-up and launcher
+
+The user reports that this batch and the demo-1-1 audio stutter follow-up were
+completed and tested without issues. This accepts the 63-variant build's
+bounded gameplay/audio checkpoint and closes the carried audible check for
+this current build. Exact session duration, individual checklist results and
+an independent executable hash were not supplied. The workspace regular
+binary still matches its recorded build receipt.
+
+Use the launcher for subsequent interactive testing:
+
+```sh
+python3 tools/play_demo_1_1.py
+```
+
+Direct executable launch bypasses Windows-native audio selection on this WSL
+setup. See [audio synchronization](audio-sync.md) for the RDP-versus-native
+measurements. The historical dummy-output counter variability remains in the
+automated evidence and is not reclassified as physical listening evidence.
+The accepted 63-variant build becomes the next bounded regression baseline;
+no whole-port fidelity or new demoOnly1 coverage is claimed.
