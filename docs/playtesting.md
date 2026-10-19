@@ -401,3 +401,15 @@ graphics, pipe/underground return, map return, transitions and ordinary sound.
 Prior manual feedback does not automatically accept this candidate; the
 audible music/effects check carried forward from the 60-variant build is still
 outstanding, and demoOnly1 qualification is unchanged.
+
+The 63-variant candidate's gameplay and graphics passed this check, but the
+user reported the previously fixed A/V desync and audio stutter returning.
+The session report shows the executable had been launched directly, so it
+ran on SDL's WSLg RDP sink instead of the project's Windows-native output
+path; the fixes are present in the binary but only engage through the
+launcher. `tools/play_demo_1_1.py` now applies that path to demo-1-1.
+See [audio synchronization](audio-sync.md) for the measured comparison
+(RDP consumption collapse at about 98 s versus a stable four-minute Windows
+run) and for the focus-loss analysis, which found no host focus handling at
+all. **Gameplay acceptance stands; audio verification on the native path is
+pending.** Launch with `python3 tools/play_demo_1_1.py`.

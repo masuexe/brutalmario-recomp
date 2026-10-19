@@ -354,3 +354,72 @@ results cleanly and the build receipt matches the tested executable.
 This establishes stable playback for this ten-minute reproduction. Longer
 interactive sessions and perceptual A/V alignment remain separate checks;
 the earlier short runs were insufficient to establish either.
+## Follow-up: demo-1-1 direct launch bypassed the native output path
+
+The user reported that the 63-variant demo-1-1 candidate again showed A/V
+desync shortly after startup and audio stuttering after the window lost
+focus, while gameplay and graphics were correct.
+
+`local/build/demo-1-1/last_run_report.json` from that session records
+`audio output[0]: RDP Sink`, `RDP audio compatibility: rate=44100
+samples=2048`, and no `frame clock: MONOTONIC_RAW` breadcrumb. The
+executable therefore ran on SDL's WSLg PulseAudio path. That is expected:
+`tools/play_demo_only1.py` is the only launcher that starts the Windows
+waveform helper, and the demo-1-1 instructions tell the user to run
+`local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` directly. The binary
+contains both fixes, but the fixes engage only when the host receives
+`SNESRECOMP_WINDOWS_AUDIO_FD` / `_ACK_FD`. This is a launcher gap, not a
+regression in the audio code.
+
+`tools/play_demo_1_1.py` now applies the same verified path to demo-1-1:
+receipt and ROM verification, the executable-relative config, and
+`windows_audio.run` with an `--no-windows-audio` opt-out for controlled
+comparison. `tests/test_play_demo_1_1.py` covers native launch, forced SDL,
+disabled audio, unavailable helper, and stale-receipt rejection.
+
+### Measured difference on this machine
+
+Both paths ran the same executable and config with offscreen video, reading
+the per-second audio counters:
+
+| Path | Duration | Produced | Consumed | Result |
+| --- | ---: | ---: | ---: | --- |
+| SDL / WSLg RDP sink | 178 s | 32,040/s | 18,190/s | consumption collapsed to ~1.6k/s at t≈98 s |
+| Windows native pipe | 237 s | 31,710/s | 31,673/s | stable, no new underruns after startup |
+
+The RDP collapse reproduces the documented transport failure. Its consumption
+rate fell by more than an order of magnitude within one second while guest
+production stayed at 32,040/s, which is the signature of a blocked output
+consumer rather than a DSP underrun.
+
+`MONOTONIC` and `MONOTONIC_RAW` were also measured on this host: over ten
+seconds they differed by about 0.7%, exceeding the audio servo's ±0.5%
+range. The Windows path selects `MONOTONIC_RAW`, so the frame clock and the
+output clock agree. On the RDP path the corrected clock is used, so a drift
+the servo cannot absorb accumulates as A/V offset. That is consistent with
+desync appearing early and worsening.
+
+### Focus loss
+
+No focus-loss handling exists in the host: the runtime has no
+`SDL_WINDOWEVENT` case at all, so losing focus changes neither simulation
+nor audio. The observed post-focus stutter is therefore not a code path that
+pauses and resumes audio. It is more likely explained by the RDP transport
+itself being throttled while the window is unfocused, which this project
+cannot fix. The Windows native path does not depend on that transport.
+
+These measurements establish which path this host's RDP sink fails on. They
+do not establish that the RDP transport can be made reliable from inside the
+emulator, and they are not a substitute for listening.
+
+Launch the candidate with:
+
+```sh
+python3 tools/play_demo_1_1.py
+```
+
+For a controlled comparison on the old path:
+
+```sh
+python3 tools/play_demo_1_1.py --no-windows-audio
+```
