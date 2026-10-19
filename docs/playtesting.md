@@ -385,3 +385,19 @@ No independent user hash, exact duration or individual checklist results
 were supplied. The 60-variant build becomes the bounded non-audio regression
 baseline, carrying the pending audible check forward; no new demoOnly1 or
 whole-port fidelity claim is made.
+
+The subsequent [pointer and indexed-phase helper batch](aot-helpers.md)
+produces a **63-variant Demo 1-1 candidate**, promoting $0DA6B1, $0DA97D and
+$15A055 on top of the accepted 60-variant build. All 70 project tests pass,
+including 311,172 new differential cases. Full-route, dense-transition,
+pure-interpreter and generated-PCM regressions pass, with 64,560 fewer
+interpreted instructions on the fixed route. **Manual acceptance of this
+executable is pending.**
+The verified regular binary SHA-256 is
+`334bcdd755914f66b92efc4579979c1d4a19b81c9f7aec7a894f9e1956a633d0`.
+The next check uses `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` for
+map movement, Entry loading/play, jumping, player/enemy/object positions and
+graphics, pipe/underground return, map return, transitions and ordinary sound.
+Prior manual feedback does not automatically accept this candidate; the
+audible music/effects check carried forward from the 60-variant build is still
+outstanding, and demoOnly1 qualification is unchanged.

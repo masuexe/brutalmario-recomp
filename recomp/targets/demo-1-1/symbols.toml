@@ -139,3 +139,30 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $15A023-$15A044; calls the qualified bank-15 leaf with Y=2, reloads X, then executes the leaf inline with Y=0. No direct-page borrow adjustment."
+
+[[func]]
+name = "RestoreLevelBufferPointer"
+addr = "a6b1"
+bank = 13
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label: Copies direct-page $6B/$6C into $04/$05; RTS."
+
+[[func]]
+name = "AdvanceLevelBufferRow"
+addr = "a97d"
+bank = 13
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label: Adds $10 to direct-page $57, updates Y, and propagates carry through $6C into $6C/$6F/$05; RTS."
+
+[[func]]
+name = "ComputeIndexedFramePhase"
+addr = "a055"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label: Adds DB:$A045,X to direct-page $13 with carry cleared; RTS."

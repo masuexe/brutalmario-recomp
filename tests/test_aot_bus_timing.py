@@ -28,6 +28,12 @@ PALETTE_LOOPS = {
     'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
 }
 
+HELPER_FIXTURES = {
+    'restore_pointer': (0x0d, 0xa6b1, bytes.fromhex('a5 6b 85 04 a5 6c 85 05 60'), 0x6c),
+    'advance_row': (0x0d, 0xa97d, bytes.fromhex('a5 57 18 69 10 85 57 a8 90 0a a5 6c 69 00 85 6c 85 6f 85 05 60'), 0x6f),
+    'frame_phase': (0x15, 0xa055, bytes.fromhex('a5 13 18 7d 45 a0 60'), 0x13),
+}
+
 WRAM_FIXTURES = {
     'clear': (0x16, 0x9f2b, b'\xad\x11\x1f\xc9\x06\xf0\x0b\xa2\x07\xa9\x00\x9f\xa0\xff\x7f\xca\x10\xf7`'),
     'copy': (0x0d, 0xa6ba, b'\xa5\x04\x85k\x85n\xa5\x05\x85l\x85o\xad(\x19\x8d\xa1\x1b`'),
@@ -81,6 +87,8 @@ class AotBusTimingTests(unittest.TestCase):
                 bank, pc, code = 0x13, 0xf1c2, COORDINATE_CODE
             elif fixture == 'palette':
                 bank, pc, code = 0x0d, 0xa6ba, PALETTE_CODE
+            elif fixture in HELPER_FIXTURES:
+                bank, pc, code = HELPER_FIXTURES[fixture][:3]
             elif fixture in PALETTE_LOOPS:
                 bank, pc, code = PALETTE_LOOPS[fixture][:3]
             else:
@@ -195,6 +203,47 @@ class AotBusTimingTests(unittest.TestCase):
         self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
         result = subprocess.run([str(binary)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        print(result.stdout, end='')
+
+    def test_restore_pointer_bytes_flags_and_deadlines(self):
+        self.helper_probe('restore_pointer')
+
+    def test_advance_row_carry_decimal_flags_and_deadlines(self):
+        self.helper_probe('advance_row')
+
+    def test_frame_phase_indexed_adc_flags_and_deadlines(self):
+        self.helper_probe('frame_phase')
+
+    def helper_probe(self, fixture):
+        bank, pc, code, max_dp = HELPER_FIXTURES[fixture]
+        rom_path = ROOT / 'local/roms/demo-1-1.sfc'
+        table = bytes((i*17+3)&255 for i in range(256))
+        if rom_path.is_file():
+            rom = rom_path.read_bytes()
+            offset = bank*32768+(pc&32767)
+            self.assertEqual(rom[offset:offset+len(code)], code)
+            table = rom[0x15*32768+0x2045:0x15*32768+0x2145]
+        elif fixture == 'frame_phase':
+            self.skipTest('requires the verified local ROM for the indexed table span')
+        header = (f'#define CODE_BANK {bank}\n#define CODE_PC {pc}\n'
+                  f'#define LAST_DP {0x1fff-max_dp}\n'
+                  f'#define HELPER_{fixture.upper()} 1\n'
+                  'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n'
+                  'static const uint8_t table_bytes[] = {' + ','.join(map(str, table)) + '};\n')
+        (self.path/'helper_fixture.h').write_text(header)
+        result = self.emit(self.generator, fixture=fixture)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        source = self.path/'helper.c'; source.write_text(result.stdout)
+        binary = self.path/'helper'
+        command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
+                   '-DSNESRECOMP_REVERSE_DEBUG=0', '-I'+str(self.include),
+                   '-I'+str(self.include/'snes'), '-I'+str(self.path),
+                   ROOT/'tests/aot_helpers_timing_test.c', source, self.path/'paced.c',
+                   ROOT/'recomp/aot_timing.c', self.include/'snes/interp816.c', '-o', binary]
+        build = subprocess.run(list(map(str, command)), capture_output=True, text=True)
+        self.assertEqual(build.returncode, 0, build.stdout+build.stderr)
+        result = subprocess.run([str(binary)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout+result.stderr)
         print(result.stdout, end='')
 
     def test_bank15_coordinate_caller_and_deadline_continuations(self):
