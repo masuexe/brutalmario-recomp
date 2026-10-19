@@ -353,3 +353,35 @@ checkpoint SHA-256
 No independent user hash, exact session duration or individual checklist
 results were supplied. The accepted 58-variant build becomes the next bounded
 regression baseline; no new demoOnly1 or whole-port fidelity claim is made.
+
+
+The subsequent [bank-15 coordinate expansion](aot-coordinate15.md) produces
+a **60-variant Demo 1-1 candidate**, promoting $15A023 and $15A032 together
+from the accepted 58-variant build. All 67 project tests pass, including
+51,332 new differential cases. Full-route, dense-transition, pure-interpreter
+and generated-PCM regressions pass. Dummy output counters vary across runs;
+a selective interpreter control also reproduces extra underflows. The linked
+report retains all measurements and does not claim exact historical output
+parity. **Manual acceptance of this executable is pending.**
+The verified regular binary SHA-256 is
+`e3e62825d7615aaa589080bf0f715fcfcaf8f39230991f82d4150c4ed648ac63`.
+The next check uses `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` for
+map movement, Entry loading/play, jumping, player/enemy/object positions and
+graphics, pipe/underground return, map return, transitions and ordinary sound.
+Prior manual feedback does not automatically accept this candidate;
+demoOnly1 qualification is unchanged.
+
+
+The user subsequently reported no issues while testing the 60-variant build
+in a silent environment. This passes its bounded non-audio manual checkpoint
+and supersedes the corresponding pending status above. **Audible music/effects
+verification remains pending.** The report does not establish whether audio
+was disabled or simply unavailable to hear, and does not resolve the recorded
+dummy-output counter variability.
+The workspace regular executable was rechecked against its build receipt,
+capture receipt and checkpoint SHA-256
+`e3e62825d7615aaa589080bf0f715fcfcaf8f39230991f82d4150c4ed648ac63`.
+No independent user hash, exact duration or individual checklist results
+were supplied. The 60-variant build becomes the bounded non-audio regression
+baseline, carrying the pending audible check forward; no new demoOnly1 or
+whole-port fidelity claim is made.

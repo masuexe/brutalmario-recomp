@@ -7,12 +7,32 @@
 #include "snes/snes.h"
 #include "snes/interp816.h"
 
+#ifdef BANK15_FIXTURE
+#define CODE_BANK 0x15
+#define CODE_PC 0xa023
+#define CALLEE_PC 0xa032
+#define JSR_PC 0xa02a
+#define LAST_DP 0x1fff
+#define bank_13_F1C2_M1X1 bank_15_A032_M1X1
+#define bank_13_F1C2_M0X0 bank_15_A032_M0X0
+#define bank_13_F1C2_M0X1 bank_15_A032_M0X1
+#define bank_13_F1C2_M1X0 bank_15_A032_M1X0
+#else
 #define CODE_BANK 0x13
 #define CODE_PC 0xf1a7
+#define CALLEE_PC 0xf1c2
+#define JSR_PC 0xf1ae
+#define LAST_DP 0x1ffc
+#endif
 #define NESTED_CALL_FIXTURE 1
 static const uint8_t code[] = {
-0x8a,0x18,0x69,0x10,0xaa,0xa0,0x02,0x20,0xc2,0xf1,0xae,0xde,0x0d,
+0x8a,0x18,0x69,0x10,0xaa,0xa0,0x02,0x20,
+#ifdef BANK15_FIXTURE
+0x32,0xa0,0xae,0xde,0x0d,0xa0,0x00,
+#else
+0xc2,0xf1,0xae,0xde,0x0d,
 0xa5,0x02,0x38,0xfd,0x55,0x0e,0x85,0x02,0xb0,0x02,0xc6,0x03,0xa0,0x00,
+#endif
 0xbd,0x65,0x0e,0xeb,0xbd,0x35,0x0e,0xc2,0x20,0x38,0xf9,0x1a,0x00,
 0x99,0x00,0x00,0xe2,0x20,0x60};
 static int unwind_parents;
@@ -136,7 +156,7 @@ int main(void) {
     unsigned cases=0;
     const unsigned indices[]={0,1,0xef,0xf0,0xff};
     const unsigned dbs[]={0,0x3f,0x80,0xbf,0x7e,0x7f};
-    const unsigned dps[]={0,0x101,0x1ffc};
+    const unsigned dps[]={0,0x101,LAST_DP};
     const unsigned values[]={0,1,0x7fff,0x8000,0xffff,0x9999};
     refresh_at=100;
     for(unsigned fast=0;fast<2;++fast) for(unsigned mirror=0;mirror<2;++mirror)
@@ -149,7 +169,7 @@ int main(void) {
         current_x=indices[xi]; current_y=indices[yi]; g_memsel=fast;
         deadline=0; cases+=check_case();
     }
-    current_pb=0x93; current_db=0; current_dp=0x101;
+    current_pb=CODE_BANK|0x80; current_db=0; current_dp=0x101;
     current_x=0xff; current_y=0xf0;
     for(unsigned fast=0;fast<2;++fast) for(unsigned decimal=0;decimal<2;++decimal)
     for(unsigned vi=0;vi<6;++vi) for(unsigned cut=1;cut<=1000;++cut) {
@@ -160,11 +180,11 @@ int main(void) {
     /* Compare precise fallback boundaries with the interpreter stopped before
        the unsafe operation, including an already-pushed child frame. */
     const unsigned stacks[]={0,1,0x1ed,0x1ed};
-    const unsigned guard_pc[]={0xf1ae,0xf1c2,0xf1c2,0xf1a7};
+    const unsigned guard_pc[]={JSR_PC,CALLEE_PC,CALLEE_PC,CODE_PC};
     static uint8_t expected_ram[sizeof(ram)];
     for(unsigned i=0;i<4;++i) {
         current_s=stacks[i]; current_db=i==2?0x40:0;
-        current_dp=i==3?0x1ffd:0; deadline=0;
+        current_dp=i==3?LAST_DP+1:0; deadline=0;
         stop_pc=guard_pc[i]; initialize(); interpret((current_pb<<16)|CODE_PC);
         CpuState expected=g_cpu; memcpy(expected_ram,ram,sizeof(ram));
         Write expected_writes[32]; unsigned expected_count=write_count;

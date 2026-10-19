@@ -138,3 +138,9 @@ python3 tools/m1.py native --audio --audio-device-rate 32000 \
 The accepted prior binary, generated tree and configuration are archived with
 hashes under `local/probes/aot-sprite-y-baseline/`. Captures and reports use
 the `aot-sprite-y-` prefix.
+
+
+The subsequent [bank-15 coordinate expansion](aot-coordinate15.md) qualifies
+$15A023 and $15A032 together. The accepted 58-variant build above remains its
+regression baseline; the 60-variant build's silent manual pass and pending
+audible verification are recorded in the linked report.

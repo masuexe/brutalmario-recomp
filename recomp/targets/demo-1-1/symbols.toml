@@ -121,3 +121,21 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $13F13D-$13F192; preserves the incoming Y around the qualified coordinate call and scans 26 indexed candidates, appending visible sprite entries."
+
+[[func]]
+name = "SubtractIndexedCoordinateWordBank15"
+addr = "a032"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $15A032-$15A044; byte-identical to the qualified bank-13 mixed-width coordinate leaf, separately qualified at this entry."
+
+[[func]]
+name = "BuildCoordinatePairBank15"
+addr = "a023"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $15A023-$15A044; calls the qualified bank-15 leaf with Y=2, reloads X, then executes the leaf inline with Y=0. No direct-page borrow adjustment."

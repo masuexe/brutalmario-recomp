@@ -7,8 +7,13 @@
 #include "snes/snes.h"
 #include "snes/interp816.h"
 
+#ifdef BANK15_FIXTURE
+#define CODE_BANK 0x15
+#define CODE_PC 0xa032
+#else
 #define CODE_BANK 0x13
 #define CODE_PC 0xf1c2
+#endif
 #ifdef COORDINATE_OVERRIDE
 #include "coordinate_guard_fixture.h"
 #else
@@ -135,7 +140,7 @@ int main(void) {
         CpuState expected=g_cpu; memcpy(expected_ram,ram,sizeof(ram));
         initialize(); Probe_M1X1(&g_cpu); compare(&expected,expected_ram);
         assert(yielded==(EXPECTED_GUARD_PC?((current_pb<<16)|EXPECTED_GUARD_PC):0));
-        if(EXPECTED_GUARD_PC==0xf1cc || EXPECTED_GUARD_PC==0xf1cf)
+        if(EXPECTED_GUARD_PC==CODE_PC+10 || EXPECTED_GUARD_PC==CODE_PC+13)
             assert(g_cpu.m_flag==0); /* preserve the live REP state on fallback */
         ++cases;
     }
