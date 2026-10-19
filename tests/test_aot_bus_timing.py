@@ -28,6 +28,8 @@ PALETTE_LOOPS = {
     'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
 }
 
+BUFFER_INDEX_CODE = bytes.fromhex('a5 00 29 0f 00 85 04 a5 00 29 10 00 0a 0a 0a 0a 65 04 85 04 a5 02 0a 0a 0a 0a 29 ff 00 65 04 85 04 a5 02 29 10 00 f0 08 a5 04 18 69 00 02 85 04 bd 11 1f 29 ff 00 f0 08 a5 04 18 69 00 04 85 04 60')
+
 HELPER_FIXTURES = {
     'restore_pointer': (0x0d, 0xa6b1, bytes.fromhex('a5 6b 85 04 a5 6c 85 05 60'), 0x6c),
     'advance_row': (0x0d, 0xa97d, bytes.fromhex('a5 57 18 69 10 85 57 a8 90 0a a5 6c 69 00 85 6c 85 6f 85 05 60'), 0x6f),
@@ -73,7 +75,9 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            if fixture == 'caller15':
+            if fixture == 'buffer_index':
+                bank, pc, code = 0x15, 0xa2fd, BUFFER_INDEX_CODE
+            elif fixture == 'caller15':
                 bank, pc, code = 0x15, 0xa023, CALLER15_CODE
             elif fixture == 'coordinate15':
                 bank, pc, code = 0x15, 0xa032, COORDINATE_CODE
@@ -93,7 +97,7 @@ class AotBusTimingTests(unittest.TestCase):
                 bank, pc, code = PALETTE_LOOPS[fixture][:3]
             else:
                 bank, pc, code = WRAM_FIXTURES[fixture]
-            m, x = 1, 1
+            m, x = (0 if fixture == 'buffer_index' else 1), 1
         if fixture_code is not None:
             code = fixture_code
         offset = bank * 32768 + (pc & 0x7fff)
@@ -140,7 +144,7 @@ class AotBusTimingTests(unittest.TestCase):
     def test_unmodeled_instruction_is_rejected(self):
         result = self.emit(self.generator, CODE[:4] + b'\xea' + CODE[5:])
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn('requires a supported native M1 function', result.stderr)
+        self.assertIn('requires a supported native width/opcode combination', result.stderr)
 
     def test_indexed_reads_branches_and_deadlines(self):
         rom = ROOT / 'local/roms/demo-1-1.sfc'
@@ -203,6 +207,41 @@ class AotBusTimingTests(unittest.TestCase):
         self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
         result = subprocess.run([str(binary)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        print(result.stdout, end='')
+
+    def test_buffer_index_words_flags_and_deadlines(self):
+        self.buffer_index_probe(False)
+
+    def test_buffer_index_bank_endpoint_yields_before_word_read(self):
+        self.buffer_index_probe(True)
+
+    def buffer_index_probe(self, bank_wrap):
+        rom_path = ROOT / 'local/roms/demo-1-1.sfc'
+        if rom_path.is_file():
+            offset = 0x15*32768+0x22fd
+            self.assertEqual(rom_path.read_bytes()[offset:offset+len(BUFFER_INDEX_CODE)], BUFFER_INDEX_CODE)
+        code = BUFFER_INDEX_CODE
+        if bank_wrap:
+            code = code.replace(bytes.fromhex('bd 11 1f'), bytes.fromhex('bd ff ff'))
+        (self.path/'buffer_index_fixture.h').write_text(
+            '#define CODE_BANK 0x15\n#define CODE_PC 0xa2fd\n'
+            f'#define TABLE_OPERAND {0xffff if bank_wrap else 0x1f11}\n' +
+            ('#define BANK_WRAP_FIXTURE 1\n' if bank_wrap else '') +
+            'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n')
+        result = self.emit(self.generator, fixture='buffer_index', fixture_code=code)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        source = self.path/'buffer_index.c'; source.write_text(result.stdout)
+        binary = self.path/'buffer_index'
+        command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
+                   '-DSNESRECOMP_REVERSE_DEBUG=0', '-I'+str(self.include),
+                   '-I'+str(self.include/'snes'), '-I'+str(self.path),
+                   ROOT/'tests/aot_buffer_index_timing_test.c', source,
+                   self.path/'paced.c', ROOT/'recomp/aot_timing.c',
+                   self.include/'snes/interp816.c', '-o', binary]
+        build = subprocess.run(list(map(str, command)), capture_output=True, text=True)
+        self.assertEqual(build.returncode, 0, build.stdout+build.stderr)
+        result = subprocess.run([str(binary)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout+result.stderr)
         print(result.stdout, end='')
 
     def test_restore_pointer_bytes_flags_and_deadlines(self):

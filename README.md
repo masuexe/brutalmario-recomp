@@ -38,6 +38,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Sprite-entry append loop and preserved Y](docs/aot-sprite-y.md)
 - [Bank-15 coordinate pair and word subtraction](docs/aot-coordinate15.md)
 - [Pointer and indexed-phase helper batch](docs/aot-helpers.md)
+- [Word buffer-index AOT expansion](docs/aot-buffer-index.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)

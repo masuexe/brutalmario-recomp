@@ -426,3 +426,29 @@ supplied. Future interactive checks must use `python3 tools/play_demo_1_1.py`
 to select the Windows-native output path on this WSL setup. The 63-variant
 build is the next bounded regression baseline; no new demoOnly1 or whole-port
 fidelity claim is made.
+
+
+The [word buffer-index expansion](aot-buffer-index.md) produces a **64-variant
+Demo 1-1 candidate**, qualifying $15A2FD in M0/X1 after the accepted 63-variant
+baseline. All 77 project tests pass, including 291,525 new differential cases.
+The full-route and 85 dense-transition samples match the baseline; the
+interpreter-only floor is unchanged. The fixed route removes 308,970
+interpreted instructions, and generated PCM and selected audio-route
+state/clock samples match exactly. **Manual acceptance remains pending.**
+The verified regular executable SHA-256 is
+`9955ebe282746c00ca41f2b466a706a48bdaec846021d15e7d6edcbd9d669c5d`.
+Launch with `python3 tools/play_demo_1_1.py` and check Entry loading,
+movement/jumping, tile collision and objects, pipe/underground travel and
+return, map return, transitions and ordinary music/effects. Prior acceptance
+does not automatically accept this new executable; demoOnly1 is unchanged.
+
+
+The user subsequently reported no issues in response to the requested
+64-variant gameplay/audio check. This accepts the word buffer-index
+checkpoint and supersedes its pending manual status above. The workspace
+regular executable still matches its build receipt and SHA-256
+`9955ebe282746c00ca41f2b466a706a48bdaec846021d15e7d6edcbd9d669c5d`.
+No exact duration, itemized outcomes or independent user hash were supplied.
+The accepted 64-variant build becomes the next bounded regression baseline;
+continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
+or whole-port fidelity claim is made.
