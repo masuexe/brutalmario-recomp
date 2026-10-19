@@ -184,3 +184,12 @@ emit = true
 entry_m = 0
 entry_x = 1
 note = "Descriptive label for $15A0E3-$15A105: reads $7EC800 indexed by direct-page word $04 if below $0800; clears carry for values $01-$86, sets it otherwise; returns M1/X1."
+
+[[func]]
+name = "UpdateLevelBufferMatchFlags"
+addr = "a110"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $15A110-$15A166: reads a word buffer entry, scans ten comparison entries with a special coordinate predicate, and ORs the matching mask into direct-page $07."

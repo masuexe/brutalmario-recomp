@@ -40,6 +40,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Pointer and indexed-phase helper batch](docs/aot-helpers.md)
 - [Word buffer-index AOT expansion](docs/aot-buffer-index.md)
 - [Buffer-value AOT expansion and word stack order](docs/aot-buffer-read.md)
+- [Buffer-match flag AOT expansion and index-width correction](docs/aot-buffer-flags.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)

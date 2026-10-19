@@ -28,6 +28,8 @@ PALETTE_LOOPS = {
     'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
 }
 
+BUFFER_FLAGS_CODE = bytes.fromhex('c2 30 a6 08 bf 00 d0 7e 29 ff 00 e2 30 85 08 a2 09 bf 78 90 04 c9 ff f0 0c c5 08 f0 32 da fa e2 20 ca 10 ed 60 c2 20 da ad b3 0d 29 ff 00 aa bd 11 1f 29 ff 00 d0 e7 ae d6 0d bd 19 1f cf 82 90 04 d0 db bd 17 1f cf 84 90 04 d0 d2 fa e2 20 bd 06 a1 05 07 85 07 60')
+
 BUFFER_READ_CODE = bytes.fromhex('a5 04 c9 00 08 b0 18 c2 30 da a6 04 bf 00 c8 7e fa 29 ff 00 f0 09 c9 87 00 b0 04 e2 30 18 60 e2 30 38 60')
 
 BUFFER_INDEX_CODE = bytes.fromhex('a5 00 29 0f 00 85 04 a5 00 29 10 00 0a 0a 0a 0a 65 04 85 04 a5 02 0a 0a 0a 0a 29 ff 00 65 04 85 04 a5 02 29 10 00 f0 08 a5 04 18 69 00 02 85 04 bd 11 1f 29 ff 00 f0 08 a5 04 18 69 00 04 85 04 60')
@@ -77,7 +79,9 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            if fixture == 'buffer_read':
+            if fixture == 'buffer_flags':
+                bank, pc, code = 0x15, 0xa110, BUFFER_FLAGS_CODE
+            elif fixture == 'buffer_read':
                 bank, pc, code = 0x15, 0xa0e3, BUFFER_READ_CODE
             elif fixture == 'buffer_index':
                 bank, pc, code = 0x15, 0xa2fd, BUFFER_INDEX_CODE
@@ -211,6 +215,50 @@ class AotBusTimingTests(unittest.TestCase):
         self.assertEqual(build.returncode, 0, build.stdout + build.stderr)
         result = subprocess.run([str(binary)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        print(result.stdout, end='')
+
+    def test_buffer_flags_lookup_predicate_masks_and_deadlines(self):
+        self.buffer_flags_probe(None)
+
+    def test_buffer_flags_long_compare_hardware_guard(self):
+        self.buffer_flags_probe(0x001fff)
+
+    def test_buffer_flags_long_compare_bank_endpoint_guard(self):
+        self.buffer_flags_probe(0x7effff)
+
+    def test_buffer_flags_long_compare_last_safe_word(self):
+        self.buffer_flags_probe(0x7efffe)
+
+    def buffer_flags_probe(self, compare_address):
+        rom_path = ROOT / 'local/roms/demo-1-1.sfc'
+        if not rom_path.is_file():
+            self.skipTest('requires the verified local ROM for lookup tables')
+        rom = rom_path.read_bytes(); offset = 0x15*32768+0x2110
+        self.assertEqual(rom[offset:offset+len(BUFFER_FLAGS_CODE)], BUFFER_FLAGS_CODE)
+        code = BUFFER_FLAGS_CODE
+        if compare_address is not None:
+            code = code.replace(bytes.fromhex('cf 82 90 04'),
+                                bytes([0xcf])+compare_address.to_bytes(3, 'little'))
+        (self.path/'buffer_flags_fixture.h').write_text(
+            '#define CODE_BANK 0x15\n#define CODE_PC 0xa110\n' +
+            (f'#define RELOCATED_FIXTURE 1\n#define COMPARE_GUARD {0 if compare_address==0x7efffe else 0xa14d}\n' if compare_address is not None else '') +
+            'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n' +
+            'static const uint8_t table_bytes[] = {' + ','.join(map(str, rom[0x21078:0x21086])) + '};\n' +
+            'static const uint8_t mask_bytes[] = {' + ','.join(map(str, rom[0xaa106:0xaa110])) + '};\n')
+        result = self.emit(self.generator, fixture='buffer_flags', fixture_code=code)
+        self.assertEqual(result.returncode, 0, result.stderr)
+        source = self.path/'buffer_flags.c'; source.write_text(result.stdout)
+        binary = self.path/'buffer_flags'
+        command = ['cc', '-std=c11', '-O2', '-DSNESRECOMP_TRACE=0',
+                   '-DSNESRECOMP_REVERSE_DEBUG=0', '-I'+str(self.include),
+                   '-I'+str(self.include/'snes'), '-I'+str(self.path),
+                   ROOT/'tests/aot_buffer_flags_timing_test.c', source,
+                   self.path/'paced.c', ROOT/'recomp/aot_timing.c',
+                   self.include/'snes/interp816.c', '-o', binary]
+        build = subprocess.run(list(map(str, command)), capture_output=True, text=True)
+        self.assertEqual(build.returncode, 0, build.stdout+build.stderr)
+        result = subprocess.run([str(binary)], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout+result.stderr)
         print(result.stdout, end='')
 
     def test_buffer_read_width_stack_predicate_and_deadlines(self):

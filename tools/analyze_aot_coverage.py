@@ -12,6 +12,7 @@ import re
 
 LEAVES = {
     # Address spans can overlap: report independently, never sum the leaf rows.
+    'UpdateLevelBufferMatchFlags': (0x15a110, 0x15a166, '15A110:M1X1'),
     'CheckLevelBufferValue': (0x15a0e3, 0x15a105, '15A0E3:M0X1'),
     'ComputeLevelBufferIndex': (0x15a2fd, 0x15a33d, '15A2FD:M0X1'),
     'RestoreLevelBufferPointer': (0x0da6b1, 0x0da6b9, '0DA6B1:M1X1'),

@@ -480,3 +480,32 @@ No exact duration, itemized outcomes or independent user hash were supplied.
 The accepted 65-variant build becomes the next bounded regression baseline;
 continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
 or whole-port fidelity claim is made.
+
+
+The [buffer-match flag expansion](aot-buffer-flags.md) produces a **66-variant
+Demo 1-1 candidate**, qualifying $15A110 after the accepted 65-variant build.
+All 84 project tests pass, including 519,998 new differential cases. A
+post-SEP deadline probe exposed a missing X high-byte truncation; the shared
+instruction-bus transformation now enforces the interpreter's X/Y truncation
+at flag synchronization. Full-route and dense-transition samples, selected
+state/clocks, the interpreter-only floor and generated PCM retain baseline
+parity. The fixed route removes 401,661 interpreted instructions. Dummy audio
+output counters vary and are retained in the linked report.
+**Manual gameplay/audio acceptance remains pending.**
+The verified regular executable SHA-256 is
+`5def7c6769443ca30003500b0a08d5fa29c27a6b67a09256782c8633be794768`.
+Launch with `python3 tools/play_demo_1_1.py` and check Entry loading,
+movement/jumping, tile collision and objects, pipe/underground travel and
+return, map return, transitions and ordinary music/effects. demoOnly1 is
+unchanged; prior acceptance does not automatically accept this candidate.
+
+
+The user subsequently reported one test round without issues and authorized
+committing/pushing the 66-variant checkpoint before continuing. This accepts
+the buffer-match flag checkpoint and supersedes its pending manual status
+above. The workspace regular executable still matches its build receipt and
+SHA-256 `5def7c6769443ca30003500b0a08d5fa29c27a6b67a09256782c8633be794768`.
+No exact duration, itemized outcomes or independent user hash were supplied.
+The accepted 66-variant build becomes the next bounded regression baseline;
+continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
+or whole-port fidelity claim is made.
