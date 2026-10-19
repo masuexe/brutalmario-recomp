@@ -112,3 +112,12 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $13F06F-$13F0C4; calls the qualified coordinate pair, scans 32 indexed candidates and writes visible entries plus size bytes."
+
+[[func]]
+name = "AppendIndexedSpriteEntries"
+addr = "f13d"
+bank = 19
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $13F13D-$13F192; preserves the incoming Y around the qualified coordinate call and scans 26 indexed candidates, appending visible sprite entries."

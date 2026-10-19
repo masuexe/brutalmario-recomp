@@ -12,6 +12,7 @@ import re
 
 LEAVES = {
     # Address spans can overlap: report independently, never sum the leaf rows.
+    'AppendIndexedSpriteEntries': (0x13f13d, 0x13f192, '13F13D:M1X1'),
     'BuildIndexedSpriteEntries': (0x13f06f, 0x13f0c4, '13F06F:M1X1'),
     'BuildCoordinatePair': (0x13f1a7, 0x13f1d4, '13F1A7:M1X1'),
     'SubtractIndexedCoordinateWord': (0x13f1c2, 0x13f1d4, '13F1C2:M1X1'),

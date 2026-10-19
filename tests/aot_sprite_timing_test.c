@@ -8,13 +8,12 @@
 #include "snes/interp816.h"
 
 #define CODE_BANK 0x13
-#define CODE_PC 0xf06f
 #define SPRITE_LOOP_FIXTURE 1
 #define NESTED_CALL_FIXTURE 1
 #include "sprite_fixture.h"
 static uint8_t FixtureRead(uint8_t bank,uint16_t addr) {
-    if((bank==CODE_BANK || bank==(CODE_BANK|0x80)) && addr>=0xefcf && addr<0xf06f)
-        return table_bytes[addr-0xefcf];
+    if((bank==CODE_BANK || bank==(CODE_BANK|0x80)) && addr>=TABLE_BASE && addr<CODE_PC)
+        return table_bytes[addr-TABLE_BASE];
     return ((uint32_t)bank*19+addr*17+(addr>>8))&255;
 }
 static int unwind_parents;
@@ -84,7 +83,7 @@ static void initialize(void) {
         /* Zero offsets force visible paths when the coordinate pair is zero;
            mixed offsets exercise clipping and ADC page-crossing paths. */
         for(unsigned i=0;i<sizeof(table_bytes);++i)
-            ram[base+0xefcf+i]=current_a==0?0:table_bytes[i];
+            ram[base+TABLE_BASE+i]=current_a==0?0:table_bytes[i];
     }
     ram[base+0xdde]=current_y;
     ram[base+0xe65+current_x]=current_a>>8;
@@ -171,17 +170,23 @@ int main(void) {
         current_flags=0xc7|decimal*8; g_memsel=fast;
         deadline=cut; cases+=check_case();
     }
-    /* Force every iteration through all five output writes and PHY/PLY. */
-    visible_fixture=1; current_a=current_b=current_x=current_y=current_dp=0;
+    /* Force every candidate through output writes, including unaligned Y
+       and wrapping Y for the append loop. Y arithmetic wraps at eight bits;
+       absolute indexed store addresses still include the full operand. */
+    const unsigned starts[]={0,1,0xef,0xf0,0xfc,0xff};
+    visible_fixture=1; current_a=current_b=current_x=current_dp=0;
     current_db=0x7e;
+    for(unsigned si=0;si<(SAVED_Y?6:1);++si)
     for(unsigned fast=0;fast<2;++fast) for(unsigned decimal=0;decimal<2;++decimal) {
-        g_memsel=fast; current_flags=decimal*8;
+        current_y=starts[si]; g_memsel=fast; current_flags=decimal*8;
         deadline=0; cases+=check_case();
-        assert(g_cpu.Y==128 && write_count==265);
-        for(unsigned i=0;i<32;++i) {
-            assert(ram[0x300+i*4]==0 && ram[0x301+i*4]==0);
-            assert(ram[0x302+i*4]==0 && ram[0x303+i*4]==0x30);
-            assert(ram[0x460+i]==2);
+        assert(g_cpu.Y==((current_y+LOOP_COUNT*4)&255));
+        assert(write_count==9+SAVED_Y+LOOP_COUNT*8);
+        for(unsigned i=0;i<LOOP_COUNT;++i) {
+            unsigned y=(current_y+i*4)&255;
+            assert(ram[0x300+y]==0 && ram[0x301+y]==0);
+            assert(ram[0x302+y]==0 && ram[0x303+y]==0x30);
+            assert(ram[0x460+(y>>2)]==2);
         }
         for(unsigned cut=1;cut<=18000;++cut) {
             deadline=cut; cases+=check_case();
@@ -190,12 +195,17 @@ int main(void) {
     visible_fixture=0;
     /* Compare precise fallback boundaries with the interpreter stopped before
        the unsafe operation, including an already-pushed child frame. */
+#if SAVED_Y
+    const unsigned stacks[]={0,1,2,0x1ed,0x1ed};
+    const unsigned guard_pc[]={0xf13e,0xf13e,0xf1a7,0xf1c2,0xf13d};
+#else
     const unsigned stacks[]={0,1,0x1ed,0x1ed};
     const unsigned guard_pc[]={0xf06f,0xf1a7,0xf1c2,0xf06f};
+#endif
     static uint8_t expected_ram[sizeof(ram)];
-    for(unsigned i=0;i<4;++i) {
-        current_s=stacks[i]; current_db=i==2?0x40:0;
-        current_dp=i==3?0x1ff1:0; deadline=0;
+    for(unsigned i=0;i<sizeof(stacks)/sizeof(stacks[0]);++i) {
+        current_s=stacks[i]; current_db=i==(SAVED_Y?3:2)?0x40:0;
+        current_dp=i==(SAVED_Y?4:3)?0x1ff1:0; deadline=0;
         stop_pc=guard_pc[i]; initialize(); interpret((current_pb<<16)|CODE_PC);
         CpuState expected=g_cpu; memcpy(expected_ram,ram,sizeof(ram));
         Write expected_writes[512]; unsigned expected_count=write_count;
@@ -209,6 +219,6 @@ int main(void) {
             assert(writes[j].address==expected_writes[j].address && writes[j].value==expected_writes[j].value);
         ++cases;
     }
-    printf("Indexed sprite loop: %u state/write-order/clock/continuation cases passed\n",cases);
+    printf("Indexed sprite loop (%s): %u state/write-order/clock/continuation cases passed\n",SAVED_Y?"saved Y":"reset Y",cases);
     return 0;
 }

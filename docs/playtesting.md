@@ -327,3 +327,29 @@ checkpoint SHA-256
 No independent user hash, exact session duration or individual checklist
 results were supplied. The accepted 57-variant build becomes the next bounded
 regression baseline; no new demoOnly1 or whole-port fidelity claim is made.
+
+
+The subsequent [sprite append-loop expansion](aot-sprite-y.md) produces
+a **58-variant Demo 1-1 candidate** by qualifying $13F13D and its preservation
+of Y around nested coordinate calls. All 64 project tests pass, including
+498,557 new differential cases and the existing sprite-loop fixture.
+Full-route, dense-transition, pure-interpreter and generated-audio regressions
+pass against the accepted 57-variant baseline. **Manual acceptance of this
+executable is pending.** The verified regular binary SHA-256 is
+`8a9f33d3fd6be204f20c1860bc05d77eab0f12b08057f0e5804b20a569c5fce1`.
+The next check uses `local/build/demo-1-1/BrutalMarioDemo11SNESRecomp` for
+map movement, Entry loading/play, jumping, player/enemy/object positions and
+graphics, pipe/underground return, map return, transitions and ordinary sound.
+Prior manual feedback does not automatically accept this candidate;
+demoOnly1 qualification is unchanged.
+
+
+The user subsequently reported no issues in response to the requested
+58-variant manual regression pass. This accepts the sprite append-loop
+checkpoint and supersedes the pending status above. The workspace regular
+executable was rechecked against its build receipt, capture receipt and
+checkpoint SHA-256
+`8a9f33d3fd6be204f20c1860bc05d77eab0f12b08057f0e5804b20a569c5fce1`.
+No independent user hash, exact session duration or individual checklist
+results were supplied. The accepted 58-variant build becomes the next bounded
+regression baseline; no new demoOnly1 or whole-port fidelity claim is made.

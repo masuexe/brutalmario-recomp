@@ -18,6 +18,7 @@ from generator_patches import prepare
 INDEXED_CODE = bytes.fromhex('bc e5 0d b9 28 f8 85 00 ac d9 13 c0 0a d0 07 ac e8 1d c0 01 d0 11 ad d6 0d 4a 4a a8 b9 11 1f a8 b9 75 f8 25 00 f0 02 a9 01 60')
 CODE = bytes.fromhex('a7 8a a6 8a e8 d0 05 a2 00 80 e6 8c 86 8a 60')
 PALETTE_CODE = bytes.fromhex('a9 23 8d 21 21 a9 34 8d 22 21 a9 12 8d 22 21 60')
+SPRITE_Y_CODE = bytes.fromhex('5a 20 a7 f1 7a a2 19 a5 00 18 7d dd f0 85 0e a5 01 7d f5 f0 d0 39 a5 02 18 7d 0d f1 85 0f a5 03 69 00 d0 2b a5 0e c9 f0 b0 25 99 00 03 a5 0f 99 01 03 bd c5 f0 99 02 03 bd 25 f1 09 30 99 03 03 5a 98 4a 4a a8 a9 02 99 60 04 7a c8 c8 c8 c8 ca 10 b5 ae de 0d 60')
 SPRITE_CODE = bytes.fromhex('20 a7 f1 a0 00 a2 1f a5 00 18 7d ef ef 85 0e a5 01 7d 0f f0 d0 39 a5 02 18 7d 2f f0 85 0f a5 03 69 00 d0 2b a5 0e c9 f0 b0 25 99 00 03 a5 0f 99 01 03 bd cf ef 99 02 03 bd 4f f0 09 30 99 03 03 5a 98 4a 4a a8 a9 02 99 60 04 7a c8 c8 c8 c8 ca 10 b5 ae de 0d 60')
 CALLER_CODE = bytes.fromhex('8a 18 69 10 aa a0 02 20 c2 f1 ae de 0d a5 02 38 fd 55 0e 85 02 b0 02 c6 03 a0 00 bd 65 0e eb bd 35 0e c2 20 38 f9 1a 00 99 00 00 e2 20 60')
 COORDINATE_CODE = bytes.fromhex('bd 65 0e eb bd 35 0e c2 20 38 f9 1a 00 99 00 00 e2 20 60')
@@ -65,7 +66,9 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            if fixture == 'sprite':
+            if fixture == 'sprite_y':
+                bank, pc, code = 0x13, 0xf13d, SPRITE_Y_CODE
+            elif fixture == 'sprite':
                 bank, pc, code = 0x13, 0xf06f, SPRITE_CODE
             elif fixture == 'caller':
                 bank, pc, code = 0x13, 0xf1a7, CALLER_CODE
@@ -144,21 +147,32 @@ class AotBusTimingTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 
     def test_sprite_loop_nested_calls_stack_and_deadlines(self):
+        self.sprite_probe(False)
+
+    def test_sprite_saved_y_loop_and_wrapping_destinations(self):
+        self.sprite_probe(True)
+
+    def sprite_probe(self, saved_y):
         rom_path = ROOT / 'local/roms/demo-1-1.sfc'
         if not rom_path.is_file():
             self.skipTest('requires the verified local ROM for sprite tables')
         rom = rom_path.read_bytes()
         offset = 0x13 * 32768
-        code = rom[offset+0x706f:offset+0x71d5]
-        self.assertEqual(code[:len(SPRITE_CODE)], SPRITE_CODE)
-        table = rom[offset+0x6fcf:offset+0x706f]
+        pc = 0xf13d if saved_y else 0xf06f
+        table_base = 0xf0c5 if saved_y else 0xefcf
+        code = rom[offset+(pc&32767):offset+0x71d5]
+        expected = SPRITE_Y_CODE if saved_y else SPRITE_CODE
+        self.assertEqual(code[:len(expected)], expected)
+        table = rom[offset+(table_base&32767):offset+(pc&32767)]
         (self.path / 'sprite_fixture.h').write_text(
+            f'#define CODE_PC {pc}\n#define TABLE_BASE {table_base}\n'
+            f'#define LOOP_COUNT {26 if saved_y else 32}\n#define SAVED_Y {int(saved_y)}\n'
             'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n'
             'static const uint8_t table_bytes[] = {' + ','.join(map(str, table)) + '};\n')
         sources = []
         declarations = ''.join(f'RecompReturn bank_13_{pc}_M{m}X{x}(CpuState *);\n'
                                for pc in ('F1A7','F1C2') for m in range(2) for x in range(2))
-        for fixture, name in (('sprite','Sprite'), ('caller','Caller'), ('coordinate','Callee')):
+        for fixture, name in (('sprite_y' if saved_y else 'sprite','Sprite'), ('caller','Caller'), ('coordinate','Callee')):
             result = self.emit(self.generator, fixture=fixture)
             self.assertEqual(result.returncode, 0, result.stderr)
             source = self.path / ('sprite_' + name + '.c')

@@ -35,6 +35,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Indexed coordinate arithmetic and mixed accumulator widths](docs/aot-coordinate.md)
 - [Nested coordinate caller and deadline continuation](docs/aot-caller.md)
 - [Indexed sprite-entry loop and nested calls](docs/aot-sprite.md)
+- [Sprite-entry append loop and preserved Y](docs/aot-sprite-y.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)
