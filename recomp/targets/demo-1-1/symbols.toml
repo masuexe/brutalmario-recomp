@@ -175,3 +175,12 @@ emit = true
 entry_m = 0
 entry_x = 1
 note = "Descriptive label for $15A2FD-$15A33D: computes a word buffer index in direct-page $04 from words $00/$02 and DB:$1F11,X; returns in M0/X1."
+
+[[func]]
+name = "CheckLevelBufferValue"
+addr = "a0e3"
+bank = 21
+emit = true
+entry_m = 0
+entry_x = 1
+note = "Descriptive label for $15A0E3-$15A105: reads $7EC800 indexed by direct-page word $04 if below $0800; clears carry for values $01-$86, sets it otherwise; returns M1/X1."

@@ -452,3 +452,31 @@ No exact duration, itemized outcomes or independent user hash were supplied.
 The accepted 64-variant build becomes the next bounded regression baseline;
 continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
 or whole-port fidelity claim is made.
+
+
+The [buffer-value expansion](aot-buffer-read.md) produces a **65-variant
+Demo 1-1 candidate**, qualifying $15A0E3 after the accepted 64-variant build.
+All 80 project tests pass; strengthened boundary probes bring the new
+state/write-order/clock/continuation coverage to 740,973 cases. The shared
+timed PHX transformation now writes high byte before low byte, matching the
+interpreter's stack-write order. Full-route and dense-transition samples,
+selected state/clocks, the interpreter-only floor and generated PCM retain
+baseline parity. The fixed route removes 89,258 interpreted instructions.
+**Manual gameplay/audio acceptance remains pending.**
+The verified regular executable SHA-256 is
+`3f4ef3817b249e595d66de8197e70a45b9e495255e7780e0554f4bb8629b2cb3`.
+Launch with `python3 tools/play_demo_1_1.py` and check Entry loading,
+movement/jumping, tile collision and objects, pipe/underground travel and
+return, map return, transitions and ordinary music/effects. demoOnly1 is
+unchanged; prior acceptance does not automatically accept this candidate.
+
+
+The user subsequently reported no issues in response to the requested
+65-variant gameplay/audio check. This accepts the buffer-value checkpoint
+and supersedes its pending manual status above. The workspace regular
+executable still matches its build receipt and SHA-256
+`3f4ef3817b249e595d66de8197e70a45b9e495255e7780e0554f4bb8629b2cb3`.
+No exact duration, itemized outcomes or independent user hash were supplied.
+The accepted 65-variant build becomes the next bounded regression baseline;
+continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
+or whole-port fidelity claim is made.
