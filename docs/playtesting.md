@@ -509,3 +509,35 @@ No exact duration, itemized outcomes or independent user hash were supplied.
 The accepted 66-variant build becomes the next bounded regression baseline;
 continue launching with `python3 tools/play_demo_1_1.py`. No new demoOnly1
 or whole-port fidelity claim is made.
+
+
+The [WRAM record-writer expansion](aot-records.md) produces a **68-variant
+Demo 1-1 candidate**, qualifying $15A19F and its $15A25B callee together after
+the accepted 66-variant build. There is no separate 67-variant checkpoint.
+All 85 project tests pass, including 424,913 new state/write-order/clock and
+continuation cases. Word stores, decimal pointer arithmetic, the narrowed-X
+terminator and parent/child unwind are qualified against the interpreter.
+Full-route and dense-transition samples, selected state/clocks, the
+interpreter-only floor and generated PCM retain baseline parity. The fixed
+route removes 51,595 interpreted instructions; it does not reach the alternate
+callee, whose qualification comes from the differential probe. Dummy output
+counter variability is retained in the linked report.
+**Manual gameplay/audio acceptance remains pending.**
+The verified regular executable SHA-256 is
+`3a9c1f5dc3d821d2fc02086785e36628349a96d340e02e5cf4b3c69c05866677`.
+Launch with `python3 tools/play_demo_1_1.py` and check Entry loading,
+movement/jumping, tile/object appearance and interactions, pipe/underground
+travel and return, map return, transitions and ordinary music/effects.
+demoOnly1 is unchanged; prior acceptance does not automatically accept this
+candidate or imply alternate-branch gameplay coverage.
+
+
+The user subsequently reported another test round without issues. This
+accepts the bounded 68-variant checkpoint and supersedes its pending manual
+status above. The regular executable still matches its build receipt and
+SHA-256 `3a9c1f5dc3d821d2fc02086785e36628349a96d340e02e5cf4b3c69c05866677`.
+No exact duration, itemized outcomes or independent user hash were supplied.
+The 68-variant build becomes the next bounded regression baseline. Future
+routine AOT changes use automatic qualification and milestone sampling as
+described in [content restoration](content-restoration.md); alternate-callee
+gameplay and demoOnly1 coverage are not expanded by this report.

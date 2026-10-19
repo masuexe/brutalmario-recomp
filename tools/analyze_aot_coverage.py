@@ -12,6 +12,8 @@ import re
 
 LEAVES = {
     # Address spans can overlap: report independently, never sum the leaf rows.
+    'AppendSelectedBufferRecords': (0x15a19f, 0x15a25a, '15A19F:M1X1'),
+    'AppendAlternateBufferRecords': (0x15a25b, 0x15a2fc, '15A25B:M1X1'),
     'UpdateLevelBufferMatchFlags': (0x15a110, 0x15a166, '15A110:M1X1'),
     'CheckLevelBufferValue': (0x15a0e3, 0x15a105, '15A0E3:M0X1'),
     'ComputeLevelBufferIndex': (0x15a2fd, 0x15a33d, '15A2FD:M0X1'),

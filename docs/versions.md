@@ -67,3 +67,16 @@ Entry counts include directories; expanded size sums declared member sizes. Inpu
 - 7hero.ips is present, but correspondence with releases called `7herodemo` elsewhere is unproven.
 - No authoritative per-version content lists; undefined, unfinished, and intentionally removed content remain unclassified.
 - Complete per-file/member SHA-256 metadata is in `local/reports/inventory.json`, without file bodies.
+
+
+## Restoration-track follow-up
+
+The user accepted the 68-variant baseline and chose to compare the existing
+local versions for cross-version restoration. All nine candidates now have
+pinned patch/body identities in `config/content-versions.json`, with isolated
+local copies prepared by `tools/audit_content_versions.py`. Both baseline
+copies match the accepted target ROMs. Donor +512 alignment remains a
+structural candidate until reference gameplay is qualified. No authoritative
+chronology or latest complete release is inferred. See
+[content restoration](content-restoration.md) for the comparison, per-course
+migration plan and reduced manual-checkpoint policy.

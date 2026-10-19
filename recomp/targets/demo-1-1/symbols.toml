@@ -193,3 +193,21 @@ emit = true
 entry_m = 1
 entry_x = 1
 note = "Descriptive label for $15A110-$15A166: reads a word buffer entry, scans ten comparison entries with a special coordinate predicate, and ORs the matching mask into direct-page $07."
+
+[[func]]
+name = "AppendSelectedBufferRecords"
+addr = "a19f"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $15A19F-$15A25A: checks a selected bit, calls $A25B when set, otherwise appends four word records after changing status to $22."
+
+[[func]]
+name = "AppendAlternateBufferRecords"
+addr = "a25b"
+bank = 21
+emit = true
+entry_m = 1
+entry_x = 1
+note = "Descriptive label for $15A25B-$15A2FC: if status differs from $33, updates it and appends four word records through the live WRAM pointer."

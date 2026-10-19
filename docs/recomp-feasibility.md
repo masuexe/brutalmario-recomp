@@ -43,3 +43,14 @@ Initial limitation: the M0 browser references were mutable and unpinned. M1 reso
 - If mapping, frame driving, or the fallback bridge blocks progress, or the same failure persists after two evidence-based repair attempts, produce a focused reproducer and assess framework changes or another route. Do not substitute indefinite attempts or silent HLE for a result.
 
 Toolchain pinning, ROM preparation, initial code generation, native compilation, and boot smoke tests are implemented. Subsequent manual gameplay and reported-defect checkpoints have passed; remaining fidelity qualifications retain their separate status. The first [measured static-coverage expansion](aot-coverage.md) promotes a bounded copy leaf and rejects a pointer-read candidate with a timing regression. The later [restricted instruction timing model](aot-timing.md) qualifies that candidate; unmodeled instructions still require explicit differential validation. Historical content integration remains deferred.
+
+
+## Priority update after the accepted 68-variant checkpoint
+
+The user has now prioritized cross-version content restoration using the
+existing local versions and requested fewer routine manual AOT checkpoints.
+This supersedes the historical deferral of content integration above.
+Routine AOT changes retain differential/integration qualification and can be
+batched without per-function manual acceptance. The next substantive milestone
+is a dependency-complete ordinary-course migration, with the original targets
+preserved as references; see [content restoration](content-restoration.md).

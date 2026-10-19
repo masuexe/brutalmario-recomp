@@ -1,6 +1,6 @@
 # Brutal Mario Recomp
 
-A faithful native PC port of carol's Brutal Mario / Super Kitiku Mario. Make Demo 1-1 independently playable first, then investigate content missing from that version. **M1 is in progress:** a local Linux native prototype boots Demo 1-1, enters a level, and runs a scripted 6,104-frame session. Fidelity, Windows execution, and custom-boss qualification remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current priority:** compare supplied versions and restore one dependency-complete ordinary course into an isolated candidate. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 
@@ -9,12 +9,13 @@ Reproduce the inventory with Python 3.12 (tested; no third-party packages):
 ```sh
 mkdir -p local/reports
 python3 tools/inventory.py ../patches ../references ../roms > local/reports/inventory.json
-python3 tools/analyze_m0.py > local/reports/analysis.json
+python3 tools/audit_content_versions.py --prepare-local-roms
 python3 -m unittest discover -s tests -v
 ```
 
-The second tool uses the supplied directory layout and a verified base-ROM SHA-256. Review those assumptions when changing inputs. It previews two IPS header conventions in memory without saving a target ROM.
+The second tool verifies the supplied base and nine patches against `config/content-versions.json`, compares their image layouts and prepares isolated candidate copies under gitignored `local/content-versions/`. The two original target images remain separate. Donor preparation is not gameplay qualification; see the restoration roadmap for current limits.
 
+- [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
 - [Versions and input inventory](docs/versions.md)
 - [Source analysis](docs/source-analysis.md)
 - [Patching and compatibility](docs/compatibility.md)
@@ -41,6 +42,7 @@ The second tool uses the supplied directory layout and a verified base-ROM SHA-2
 - [Word buffer-index AOT expansion](docs/aot-buffer-index.md)
 - [Buffer-value AOT expansion and word stack order](docs/aot-buffer-read.md)
 - [Buffer-match flag AOT expansion and index-width correction](docs/aot-buffer-flags.md)
+- [WRAM record writers and nested-call AOT expansion](docs/aot-records.md)
 - [User-reported manual playtests](docs/playtesting.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)

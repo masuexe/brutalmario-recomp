@@ -28,6 +28,9 @@ PALETTE_LOOPS = {
     'palette30': (0x13, 0xefb2, bytes.fromhex('a2 00 bd 57 ef f0 12 8d 21 21 bd 94 ef 8d 22 21 bd 76 ef 8d 22 21 e8 80 e9 ae de 0d 60'), 0xef57, 0xefb2, 30),
 }
 
+RECORDS_CALLER_CODE = bytes.fromhex('ad b7 06 29 07 a8 ad b7 06 4a 4a 4a aa bf 20 18 7f 39 97 a1 f0 04 20 5b a2 60 af dd ff 7f c9 22 d0 01 60 a9 22 8f dd ff 7f c2 30 af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 7c 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 fe 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 7d 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 fe 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 9c 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 fe 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 9d 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 fe 38 9f 81 83 7f e2 30 a9 ff 9f 83 83 7f 60')
+RECORDS_LEAF_CODE = bytes.fromhex('af dd ff 7f c9 33 d0 01 60 a9 33 8f dd ff 7f c2 30 af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 7c 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 38 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 7d 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 39 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 9c 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 48 38 9f 81 83 7f af 7b 83 7f aa 18 69 06 00 8f 7b 83 7f a9 50 9d 9f 7d 83 7f a9 00 01 9f 7f 83 7f a9 49 38 9f 81 83 7f e2 30 a9 ff 9f 83 83 7f 60')
+
 BUFFER_FLAGS_CODE = bytes.fromhex('c2 30 a6 08 bf 00 d0 7e 29 ff 00 e2 30 85 08 a2 09 bf 78 90 04 c9 ff f0 0c c5 08 f0 32 da fa e2 20 ca 10 ed 60 c2 20 da ad b3 0d 29 ff 00 aa bd 11 1f 29 ff 00 d0 e7 ae d6 0d bd 19 1f cf 82 90 04 d0 db bd 17 1f cf 84 90 04 d0 d2 fa e2 20 bd 06 a1 05 07 85 07 60')
 
 BUFFER_READ_CODE = bytes.fromhex('a5 04 c9 00 08 b0 18 c2 30 da a6 04 bf 00 c8 7e fa 29 ff 00 f0 09 c9 87 00 b0 04 e2 30 18 60 e2 30 38 60')
@@ -79,7 +82,11 @@ class AotBusTimingTests(unittest.TestCase):
     def emit(self, generator, code=CODE, indexed=False, fixture=None, fixture_code=None):
         bank, pc, m, x = (4, 0xf87c, 1, 1) if indexed else (0, 0xb983, 1, 0)
         if fixture:
-            if fixture == 'buffer_flags':
+            if fixture == 'records_caller':
+                bank, pc, code = 0x15, 0xa19f, RECORDS_CALLER_CODE
+            elif fixture == 'records_leaf':
+                bank, pc, code = 0x15, 0xa25b, RECORDS_LEAF_CODE
+            elif fixture == 'buffer_flags':
                 bank, pc, code = 0x15, 0xa110, BUFFER_FLAGS_CODE
             elif fixture == 'buffer_read':
                 bank, pc, code = 0x15, 0xa0e3, BUFFER_READ_CODE
@@ -216,6 +223,39 @@ class AotBusTimingTests(unittest.TestCase):
         result = subprocess.run([str(binary)], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         print(result.stdout, end='')
+
+    def test_records_word_stores_decimal_pointers_nested_calls_and_deadlines(self):
+        rom_path = ROOT / 'local/roms/demo-1-1.sfc'
+        if not rom_path.is_file():
+            self.skipTest('requires the verified local ROM for record masks')
+        rom=rom_path.read_bytes(); code=RECORDS_CALLER_CODE+RECORDS_LEAF_CODE
+        self.assertEqual(rom[0xaa19f:0xaa19f+len(code)], code)
+        (self.path/'records_fixture.h').write_text(
+            '#define CODE_BANK 0x15\n#define CODE_PC 0xa19f\n' +
+            'static const uint8_t code[] = {' + ','.join(map(str, code)) + '};\n' +
+            'static const uint8_t mask_bytes[] = {' + ','.join(map(str, rom[0xaa197:0xaa19f])) + '};\n')
+        declarations=''.join(f'RecompReturn bank_15_A25B_M{m}X{x}(CpuState *);\n'
+                             for m in range(2) for x in range(2))
+        sources=[]
+        for fixture,name in [('records_caller','Caller'),('records_leaf','Callee')]:
+            result=self.emit(self.generator,fixture=fixture)
+            self.assertEqual(result.returncode,0,result.stderr)
+            source=self.path/('records_'+name+'.c')
+            source.write_text('#include "cpu_state.h"\n'+declarations+
+                              result.stdout.replace('Probe_',name+'_'))
+            sources.append(source)
+        binary=self.path/'records'
+        command=['cc','-std=c11','-O2','-DSNESRECOMP_TRACE=0',
+                 '-DSNESRECOMP_REVERSE_DEBUG=0','-I'+str(self.include),
+                 '-I'+str(self.include/'snes'),'-I'+str(self.path),
+                 ROOT/'tests/aot_records_timing_test.c',*sources,
+                 self.path/'paced.c',ROOT/'recomp/aot_timing.c',
+                 self.include/'snes/interp816.c','-o',binary]
+        build=subprocess.run(list(map(str,command)),capture_output=True,text=True)
+        self.assertEqual(build.returncode,0,build.stdout+build.stderr)
+        result=subprocess.run([str(binary)],capture_output=True,text=True)
+        self.assertEqual(result.returncode,0,result.stdout+result.stderr)
+        print(result.stdout,end='')
 
     def test_buffer_flags_lookup_predicate_masks_and_deadlines(self):
         self.buffer_flags_probe(None)

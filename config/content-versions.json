@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "base": {
+    "size": 524288,
+    "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+  },
+  "patch_root": "../patches",
+  "scope": "Local patch/body identity and structural comparison; no official chronology, gameplay, room correspondence or migration compatibility established.",
+  "versions": [
+    {
+      "id": "demo-1-1",
+      "role": "recipient-baseline",
+      "ips_path": "1-1.ips",
+      "ips": {
+        "size": 3861390,
+        "sha256": "6a2425d0da2d222bbb86a2a0e1c509d2ec532774467c47c7858e50a4dae1b36e"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32"
+      },
+      "alignment_evidence": "verified-existing-target",
+      "playability": "not-qualified-by-this-audit"
+    },
+    {
+      "id": "7hero",
+      "role": "boss-donor-candidate",
+      "ips_path": "cheap_demo/7hero.ips",
+      "ips": {
+        "size": 3841447,
+        "sha256": "fbc1981c4e21cdffda785eeccca534e56da3e88ab53749afe1bf0d00f8bc8766"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "dd7007ad45da87647bbd7e6d3bda13b8555c05b64793a92824f12b347c7a2395"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit",
+      "bundled_readme": {
+        "path": "cheap_demo/7hero.txt",
+        "sha256": "63dc979efea2d6fca9af881736317bfd40abf6e7e90d16d35e28e659a7d089ff"
+      }
+    },
+    {
+      "id": "cheap-demo",
+      "role": "donor-candidate",
+      "ips_path": "cheap_demo/cheap_demo.ips",
+      "ips": {
+        "size": 3838623,
+        "sha256": "9c2ff02783ec5416988dc60c2e232b0b5dd6c31e8941f127a70d9df6e96bbae2"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "f4a781042cf384376db60cd83fbcc9a87e110571fcd37496f978d3c70e5e0822"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit",
+      "bundled_readme": {
+        "path": "cheap_demo/cheap_demo.txt",
+        "sha256": "136f1443d49310c82b1ed04cc88af3489e4ab95856bb9b34f21a5f2c4ea8110d"
+      }
+    },
+    {
+      "id": "mazo",
+      "role": "boss-donor-candidate",
+      "ips_path": "cheap_demo/mazo.ips",
+      "ips": {
+        "size": 3841249,
+        "sha256": "3eea9422a0585d0c1d12e0afa8e05e5a5b007238be1df35261d28e2f0c896272"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit",
+      "bundled_readme": {
+        "path": "cheap_demo/mazo.txt",
+        "sha256": "e2b3144c8f57e3adad9ca8d4c9c86b357f1305405ec60b5e5ba91bff0aade291"
+      }
+    },
+    {
+      "id": "ow",
+      "role": "overworld-only-not-level-donor",
+      "ips_path": "cheap_demo/ow.ips",
+      "ips": {
+        "size": 3841216,
+        "sha256": "c65cc8be84b5b382e88a62463737380909bad7a2a7ab38b7ea9ae4b170e22117"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "b5116eba4d88f0b254a17aae845a44a30f7000566ac21c1fca5b1403c0296d6e"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit",
+      "bundled_readme": {
+        "path": "cheap_demo/ow.txt",
+        "sha256": "9d9747868016078f7b3f59f37b5c4bad997b9dcf4ac763136ad35a3103271ff0"
+      }
+    },
+    {
+      "id": "demo6",
+      "role": "historical-donor-candidate",
+      "ips_path": "demo6.ips",
+      "ips": {
+        "size": 3836644,
+        "sha256": "569c02b13534cf02e55750bc3c759a2e29d5c6b852b89c9c5b27af71edaad8d4"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "c305c896395baac1d933a7e96ddd97cb9c2704f199e513a7ce2447253d1f26a6"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit"
+    },
+    {
+      "id": "demo7",
+      "role": "historical-donor-candidate",
+      "ips_path": "demo7.ips",
+      "ips": {
+        "size": 3836609,
+        "sha256": "2df0c5ac2dd7196ece5aee54cf58bdddd975a22bd6eba97de3621f0654b14b99"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "f462ddd7c30a641e57b586ebae003adc5eb3a5f19579d2348022b2be8934eae4"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit"
+    },
+    {
+      "id": "demo8",
+      "role": "unofficial-composite-donor-candidate",
+      "ips_path": "demo8/demo8.ips",
+      "ips": {
+        "size": 3297358,
+        "sha256": "480d6ed8ea59bb0104b234766497a680032e8072ac042d5edfa0a78deef6d4c7"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "6a5b8d6c5c6f16a9a0f552313467a6c08761d2ec3a5afcb84ef50dcb50217e0c"
+      },
+      "alignment_evidence": "structural-header-candidate-not-gameplay-verified",
+      "playability": "not-qualified-by-this-audit",
+      "bundled_readme": {
+        "path": "demo8/demo8.txt",
+        "sha256": "253f72e557e3bfe371f6aea9ecc61abe75b7e60f56ea2d9d41c54c84412e68bd"
+      }
+    },
+    {
+      "id": "demo-only-1",
+      "role": "recipient-baseline",
+      "ips_path": "demoOnly1.ips",
+      "ips": {
+        "size": 3860889,
+        "sha256": "1080862aaf3e9bacfae97868806ee8faa53b2b4d6518fd2713aeda3c0c5e6880"
+      },
+      "copier_prefix_bytes": 512,
+      "output": {
+        "size": 4194304,
+        "sha256": "b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b"
+      },
+      "alignment_evidence": "verified-existing-target",
+      "playability": "not-qualified-by-this-audit"
+    }
+  ]
+}
