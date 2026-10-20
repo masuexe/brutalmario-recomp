@@ -24,6 +24,10 @@ The first migration pilot should determine the recipient before a broad merge.
 
 ## Reduced manual checkpoints
 
+The user authorizes automatic commits and pushes for completed checkpoints
+once their required checks pass. Report the commit and verification results;
+unresolved failures must remain explicit rather than being marked accepted.
+
 Routine AOT transformations no longer require a separate user playtest or a
 "continue" response after every function/batch. When applicable differential,
 full-route, dense-transition, interpreter-floor, selected state/clock and PCM
@@ -189,9 +193,17 @@ gameplay patch was requested. Other unspecified issues remain unclassified.
 Individual full-course and sound coverage was not specified. Other courses
 and donor versions remain unqualified.
 
-The next pilot closeout item is an automated check of actual DK-coin pickup,
-the saved bit and persistence after return/re-entry, preserving the existing
-normal/secret-exit and death checks. After that, survey the other eight hub
-entrances with fresh uncleared saves and classify their failures before
-choosing the second restoration. Routine diagnostics need no additional
-manual gate; ask for a consolidated playthrough when new content is ready.
+The [first-course closeout and nine-star survey](star-hub-survey.md) found no
+loaded DK placement in the first course's four examined rooms in either
+version; pickup is not applicable to that path, rather than a fabricated pass.
+Actual normal-clear progress survives saving, native cold restart and console
+reset/File A reload. This uncovered and fixed a missing native hardware-reset
+callback. The 20 unchanged-entry scene samples remain byte-identical; all 92
+tests pass. Nonzero DK persistence is still unqualified by this course.
+
+All nine uncleared hub entrances now have bounded original/native/donor
+observations. The upper-left vertical cave (`$004`, map 6 / `$0128,$0168`)
+is the next restoration candidate: it selects missing ExGFX `$144`, and the
+donor supplies a valid matching resource. No second-course transplant has
+been made yet. Routine diagnostics need no additional manual gate; ask for
+a consolidated playthrough when new content is ready.

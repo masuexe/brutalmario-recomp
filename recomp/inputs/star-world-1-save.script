@@ -1,0 +1,60 @@
+# Actual normal goal, guest save to SRAM, console reset, File A reload and re-entry.
+# Player/map coordinate shortcuts and damage immunity; no completion/DK/SRAM edits.
+# This course has no standard DK placement in its four examined rooms.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+dump active
+# Diagnostic only: follow existing screen exits without editing destinations.
+forcepoke 1497 ff
+poke 94 801c6001
+poke 88 0000
+poke 71 06
+wait 180
+dump goal_room
+poke 94 60014001
+press right 60
+wait 360
+dump clear
+wait 600
+dump normal_clear_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+# Return to the original entrance without editing completion or DK records.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+dump reload_node
+press y 2
+wait 360
+dump reload_reentry
+quit

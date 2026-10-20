@@ -19,6 +19,14 @@ a gameplay change. This does not close other unspecified issues or qualify
 every individual branch, DK persistence or audio. Previous
 acceptances below apply to the original targets and earlier runtime checkpoints.
 
+The subsequent [automated save/hub checkpoint](star-hub-survey.md) checks
+actual normal-clear SRAM persistence and fixes a native console-reset hook.
+No loaded DK placement was found in the first course's examined dependency
+path in either version, so a collectible pickup was not fabricated. Nine
+uncleared hub entrances were surveyed, and the upper-left vertical cave is
+selected for the next restoration. These are automated observations, not a
+new user playthrough, listening acceptance or complete second-course recovery.
+
 Date: 2026-10-15. These observations are user-reported, rather than automated
 or independently reproduced by the agent.
 

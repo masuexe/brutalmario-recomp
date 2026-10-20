@@ -43,6 +43,15 @@ def install_metrics():
         source = source.replace('    snes_beam_frame_driver_draw_ppu_frame();',
                                 '    snes_beam_frame_driver_draw_ppu_frame();\n    M1TimingSample("draw");')
         glue.write_text(source)
+    # Console reset resets the hardware, then must discard the driver's old
+    # resume PC/WAI state so the next frame starts at the ROM reset vector.
+    # The scaffold only wires session_reset; RtlReset calls hardware_reset.
+    if '    .hardware_reset = &GameSessionReset,' not in source:
+        entry = '    .session_reset = &GameSessionReset,\n'
+        if source.count(entry) != 1:
+            raise ValueError('unexpected game reset template; review reset hooks')
+        source = source.replace(entry, entry + '    .hardware_reset = &GameSessionReset,\n')
+        glue.write_text(source)
     main = EXPERIMENT / 'src/main.c'
     source = main.read_text()
     if '.on_shutdown        = &M1AudioShutdown,' not in source:

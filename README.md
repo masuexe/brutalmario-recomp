@@ -1,6 +1,6 @@
 # Brutal Mario Recomp
 
-A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current pilot:** an isolated candidate restores missing graphics for the lower-left Star World course in demoOnly1; user testing broadly matches the original, with minor issues awaiting follow-up. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current pilot:** an isolated candidate restores missing graphics for the lower-left Star World course in demoOnly1; user testing broadly matches the original, and the reported fireball respawn behavior is confirmed as shared original logic. The entrance survey selects the upper-left vertical cave as the next restoration candidate. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 
@@ -52,6 +52,7 @@ The second tool verifies the supplied base and nine patches against `config/cont
 - [demoOnly1 map teleport, practice selector and location readout](docs/level-select.md)
 - [Lemmy castle spotlight seams investigation](docs/lemmy-mask.md)
 - [demoOnly1 all-completion and DK-coin practice cheat](docs/completion-cheat.md)
+- [Star World save checks, entrance survey and next restoration](docs/star-hub-survey.md)
 - [demoOnly1 death black-screen fix](docs/death-black-screen.md)
 
 Original archives, patches, third-party sources, and ROMs are not included in the repository. Historical versions are not automatically merged.

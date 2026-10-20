@@ -1,0 +1,28 @@
+# Fresh File A, then two console resets through the normal title/file menu.
+# No imported SRAM, savestates, WRAM pokes or completion cheats.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+dump first_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump first_reload
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump second_reload
+quit
