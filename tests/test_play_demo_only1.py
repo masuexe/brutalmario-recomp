@@ -89,38 +89,59 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertNotIn('--config', command)
         self.assertFalse((self.root / 'local/play').exists())
 
-    def test_restoration_uses_its_own_rom_binary_config_and_fresh_save(self):
-        build = self.root / 'local/build/star-world-1'
+    def restoration_fixture(self, name, binary_name):
+        build = self.root / 'local/build' / name
         build.mkdir(parents=True)
-        binary = build / 'BrutalMarioStarWorld1SNESRecomp'
-        binary.write_bytes(b'candidate executable')
-        rom = self.root / 'local/restoration/star-world-1/rom.sfc'
+        binary = build / binary_name
+        binary.write_bytes(b'candidate executable ' + name.encode())
+        rom = self.root / 'local/restoration' / name / 'rom.sfc'
         rom.parent.mkdir(parents=True)
-        rom.write_bytes(b'candidate ROM')
+        rom.write_bytes(b'candidate ROM ' + name.encode())
         digest = hashlib.sha256(rom.read_bytes()).hexdigest()
-        manifest = self.root / 'config/restorations/star-world-1.json'
-        manifest.parent.mkdir()
-        manifest.write_text(json.dumps({'target': 'candidate', 'output': {
+        manifest = self.root / 'config/restorations' / (name + '.json')
+        manifest.parent.mkdir(exist_ok=True)
+        manifest.write_text(json.dumps({'target': name, 'output': {
             'size': len(rom.read_bytes()), 'sha256': digest}}))
-        (build / 'm1-build.json').write_text(json.dumps({
+        receipt = build / 'm1-build.json'
+        receipt.write_text(json.dumps({
             'rom_sha256': digest, 'runtime_patches': [],
             'binary_sha256': hashlib.sha256(binary.read_bytes()).hexdigest()}))
-        chdir, execute, _ = self.invoke(['--restoration', 'star-world-1'])
-        directory = Path(chdir.call_args.args[0])
-        self.assertEqual(directory.parent, self.root / 'local/play/star-world-1/practice')
-        command = execute.call_args.args[1]
-        self.assertEqual(command[0], str(binary))
-        self.assertEqual(command[command.index('--rom')+1], str(rom))
-        script = (directory / 'input.script').read_text()
-        self.assertIn('poke 1f17 2801e8012801e801', script)
-        self.assertNotIn('poke 1ea2', script)
-        self.assertFalse((directory / 'ordinary.srm').exists())
+        return binary, rom, receipt
 
-    def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
+    def test_restoration_uses_its_own_rom_binary_config_and_fresh_save(self):
+        for name, binary_name, coordinates in (
+                ('star-world-1', 'BrutalMarioStarWorld1SNESRecomp', '2801e8012801e801'),
+                ('star-world-upper-left', 'BrutalMarioStarWorldUpperLeftSNESRecomp', '2801680128016801')):
+            with self.subTest(restoration=name):
+                binary, rom, _ = self.restoration_fixture(name, binary_name)
+                chdir, execute, _ = self.invoke(['--restoration', name])
+                directory = Path(chdir.call_args.args[0])
+                self.assertEqual(directory.parent, self.root / 'local/play' / name / 'practice')
+                command = execute.call_args.args[1]
+                self.assertEqual(command[0], str(binary))
+                self.assertEqual(command[command.index('--rom')+1], str(rom))
+                script = (directory / 'input.script').read_text()
+                self.assertIn('poke 1f17 ' + coordinates, script)
+                self.assertNotIn('poke 1ea2', script)
+                self.assertFalse((directory / 'ordinary.srm').exists())
+
+    def test_restoration_rejects_a_build_from_another_rom_before_creating_save(self):
+        _, _, receipt = self.restoration_fixture(
+            'star-world-upper-left', 'BrutalMarioStarWorldUpperLeftSNESRecomp')
+        data = json.loads(receipt.read_text())
+        data['rom_sha256'] = '0' * 64
+        receipt.write_text(json.dumps(data))
         with self.assertRaises(SystemExit) as error:
-            self.invoke(['--level', 'star-world-1', '--complete-all'])
+            self.invoke(['--restoration', 'star-world-upper-left'])
         self.assertEqual(error.exception.code, 2)
         self.assertFalse((self.root / 'local/play').exists())
+
+    def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
+        for name in ('star-world-1', 'star-world-upper-left'):
+            with self.subTest(restoration=name), self.assertRaises(SystemExit) as error:
+                self.invoke(['--level', name, '--complete-all'])
+            self.assertEqual(error.exception.code, 2)
+            self.assertFalse((self.root / 'local/play').exists())
 
     def test_windows_output_launch_and_sdl_fallback(self):
         with patch.object(play.windows_audio, 'available', return_value=True), \

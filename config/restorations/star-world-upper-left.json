@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World upper-left restoration candidate",
+  "id": "star-world-upper-left",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "star-world-1",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "88da794a436f97fe86ff60c48b74a8d7160e1ae39d304c648804d80b6d760bb5"
+  },
+  "room": "004",
+  "entrance": {
+    "map": 6,
+    "x": 296,
+    "y": 360,
+    "translevel": 4,
+    "requires": "Fresh uncleared save; completed practice nodes become portals."
+  },
+  "scope": "Cumulative candidate retaining the lower-left repair; restore room 004 graphics and its missing custom sprite 7A (water-level controller/platforms). Preserve recipient layout, sprite placements, exits and save rules.",
+  "gfx_record": {
+    "address": "14AD88",
+    "before": "0180ac00ba001700140044011300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1974272,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "144",
+      "target_id": "FFC",
+      "record_offset": 10,
+      "source_address": "2DF41F",
+      "compressed": {
+        "size": 1825,
+        "sha256": "45cb97429e803c9d2e30513f289378dea50b108aa0acbfce361ec7f60196ab52"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "1371bf9cc9dcdf74cfecbd42363d32198df7ad81a762a490d41ef5961e821b7b"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "7bffb1c7eb369297cd8dc2f6e84c908e718a5f06a5c445c722512f2e67e7aa37"
+  },
+  "custom_sprite": {
+    "id": "7A",
+    "rooms": [
+      4
+    ],
+    "source_record_address": "10B8FD",
+    "destination_record_address": "10B82A",
+    "before": "0000ffffffffffff218001218001ffff",
+    "source_record": "012200003b931957868b24b48b240000",
+    "source_address": "248B77",
+    "destination_address": "3D8B77",
+    "block": {
+      "size": 1320,
+      "sha256": "4c0f25b5ae55c150cecc97351251727768e9de8b4fe54e9f76e1be43c1ef1794"
+    },
+    "shared_dependencies": [
+      {
+        "address": "019138",
+        "size": 256,
+        "sha256": "618fa7f111059fed842e1f757f0ac9e51d1adbf0d60a9c3db2e3ef3f1e436063"
+      },
+      {
+        "address": "01801A",
+        "size": 16,
+        "sha256": "b067798f976495c4371df7d819573061183469dcab893ac6c5045c2de8ed2621"
+      },
+      {
+        "address": "018022",
+        "size": 16,
+        "sha256": "8b1e19c0035f7662b9c915bc103625254adb86cec00f4c2371e868d97f471498"
+      },
+      {
+        "address": "01A7DC",
+        "size": 384,
+        "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+      },
+      {
+        "address": "01B7B3",
+        "size": 256,
+        "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+      },
+      {
+        "address": "03B664",
+        "size": 96,
+        "sha256": "3c8a0e51b73328d60389967aa0ff89db54859b7cbf714a9479b743aa2f59c5da"
+      },
+      {
+        "address": "03B72B",
+        "size": 160,
+        "sha256": "3736580516c0dc9fe3de2068675a8b15012e0576991de3fabdc55150476137cd"
+      },
+      {
+        "address": "27FAE4",
+        "size": 256,
+        "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+      }
+    ]
+  }
+}

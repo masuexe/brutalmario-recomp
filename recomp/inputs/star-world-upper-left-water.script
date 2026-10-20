@@ -1,0 +1,55 @@
+# Real swimming input and water-platform interaction; coordinate/immunity shortcuts.
+# No water state, water target, sprite state, DK, completion or save bytes are poked.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+
+# Practice map transfer: map 6, X=0x128, Y=0x168.
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+wait 30
+dump standing
+forcepoke 1497 ff
+
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+wait 8
+press b 8
+dump swim
+# Touch an existing lower water-level switch platform through guest collision.
+poke 94 2000800c
+poke 7b 0000
+wait 180
+dump water_switch
+wait 180
+dump water_settled
+quit

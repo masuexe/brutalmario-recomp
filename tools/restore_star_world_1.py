@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""Prepare the isolated, hash-pinned Star World 1 restoration candidate."""
+"""Prepare isolated, hash-pinned Star World restoration candidates."""
+import argparse
 import hashlib
 import json
 from pathlib import Path
 
 from prepare_rom import verify
+from restoration_targets import RESTORATIONS
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG = ROOT / 'config/restorations/star-world-1.json'
 
 
 def sha(data):
@@ -73,8 +74,7 @@ def pointer_offset(gfx):
     return lorom(0x148008) + (gfx - 0x100) * 3
 
 
-def make_candidate(recipient, donor, config):
-    start, size = config['allocation']['offset'], config['allocation']['size']
+def check_allocation(recipient, start, size):
     end = start + size
     if (end > len(recipient) or start // 0x8000 != (end - 1) // 0x8000 or
             recipient[start:end] != bytes(size)):
@@ -88,6 +88,69 @@ def make_candidate(recipient, donor, config):
             if count ^ complement == 0xffff and cursor < end and cursor + count + 9 > start:
                 raise ValueError('allocation overlaps a protected RATS block')
         cursor += 4
+
+
+def sprite_rooms(rom, sprite_id):
+    """Audit the recipient's 512 three-byte sprite lists before enabling a slot."""
+    rooms = []
+    for room in range(512):
+        word = lorom(0x05ec00) + room * 2
+        address = (int.from_bytes(rom[word:word+2], 'little') |
+                   rom[lorom(0x0ef100) + room] << 16)
+        cursor = lorom(address) + 1  # Skip sprite-list header.
+        for _ in range(1024):
+            if cursor + 3 > len(rom):
+                raise ValueError('truncated sprite list')
+            if rom[cursor] == 0xff:
+                break
+            if rom[cursor] & 8 and rom[cursor+2] == sprite_id:
+                rooms.append(room)
+            cursor += 3
+        else:
+            raise ValueError('unterminated sprite list')
+    return sorted(set(rooms))
+
+
+def restore_sprite(recipient, donor, out, config):
+    sprite_id = int(config['id'], 16)
+    if sprite_rooms(recipient, sprite_id) != config['rooms']:
+        raise ValueError('custom sprite has unexpected room dependencies')
+    source = int(config['source_address'], 16)
+    destination = int(config['destination_address'], 16)
+    if source & 0xffff != destination & 0xffff:
+        raise ValueError('custom sprite relocation changes bank-local addresses')
+    size = config['block']['size']
+    block = donor[lorom(source):lorom(source)+size]
+    verify(block, config['block'], 'custom sprite code')
+    count = int.from_bytes(block[4:6], 'little')
+    if (block[:4] != b'STAR' or count + 9 != size or
+            count ^ int.from_bytes(block[6:8], 'little') != 0xffff):
+        raise ValueError('invalid custom sprite RATS block')
+    check_allocation(out, lorom(destination), size)
+    for item in config['shared_dependencies']:
+        offset = lorom(int(item['address'], 16))
+        for data in (recipient, donor):
+            verify(data[offset:offset+item['size']], item, 'custom sprite shared dependency')
+    source_record = lorom(int(config['source_record_address'], 16))
+    record = bytearray(donor[source_record:source_record+16])
+    if record.hex() != config['source_record']:
+        raise ValueError('custom sprite donor record changed')
+    for index in (8, 11):
+        address = int.from_bytes(record[index:index+3], 'little')
+        if not source + 8 <= address < source + size:
+            raise ValueError('custom sprite entry is outside its code block')
+        record[index+2] = destination >> 16
+    offset = lorom(int(config['destination_record_address'], 16))
+    if out[offset:offset+16].hex() != config['before']:
+        raise ValueError('custom sprite destination slot is occupied')
+    out[lorom(destination):lorom(destination)+size] = block
+    out[offset:offset+16] = record
+
+
+def make_candidate(recipient, donor, config):
+    start, size = config['allocation']['offset'], config['allocation']['size']
+    end = start + size
+    check_allocation(recipient, start, size)
     record = lorom(int(config['gfx_record']['address'], 16))
     before = bytes.fromhex(config['gfx_record']['before'])
     if recipient[record:record+len(before)] != before:
@@ -130,6 +193,8 @@ def make_candidate(recipient, donor, config):
                            rats_offset=cursor, pointer_offset=destination_pointer,
                            room_word_offset=word))
         cursor = stop
+    if config.get('custom_sprite'):
+        restore_sprite(recipient, donor, out, config['custom_sprite'])
     verify(out, config['output'], config['target'])
     return bytes(out), assets
 
@@ -140,8 +205,13 @@ def write_verified(path, data):
     path.write_bytes(data)
 
 
-def main():
-    config = json.loads(CONFIG.read_text())
+def prepare(target='star-world-1', ancestors=()):
+    if target not in RESTORATIONS or target in ancestors:
+        raise ValueError('unknown or cyclic restoration dependency')
+    config_path = ROOT / 'config/restorations' / (target + '.json')
+    config = json.loads(config_path.read_text())
+    if config['id'] != target:
+        raise ValueError('restoration config identity differs from target')
     versions = {v['id']: v for v in json.loads((ROOT / 'config/content-versions.json').read_text())['versions']}
     bodies = []
     for role in ('recipient', 'donor'):
@@ -149,16 +219,29 @@ def main():
         data = (ROOT / 'local/content-versions' / version / 'rom.sfc').read_bytes()
         verify(data, versions[version]['output'], role)
         bodies.append(data)
+    input_sha256 = {role: sha(data) for role, data in zip(('recipient', 'donor'), bodies)}
+    if config.get('base_restoration'):
+        base = prepare(config['base_restoration'], ancestors + (target,))
+        verify(base, config['base_output'], 'base restoration')
+        bodies[0] = base
+        input_sha256['base_restoration'] = sha(base)
     candidate, assets = make_candidate(*bodies, config)
-    directory = ROOT / 'local/restoration/star-world-1'
+    directory = ROOT / 'local/restoration' / target
     directory.mkdir(parents=True, exist_ok=True)
     manifest = dict(config, assets=assets, recipe_sha256=sha(Path(__file__).read_bytes()),
-                    config_sha256=sha(CONFIG.read_bytes()),
-                    input_sha256={role: sha(data) for role, data in zip(('recipient', 'donor'), bodies)})
+                    config_sha256=sha(config_path.read_bytes()), input_sha256=input_sha256)
     write_verified(directory / 'rom.sfc', candidate)
     # Receipts can change with recipe comments; the ROM is immutable by identity.
     (directory / 'input-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
     print(f'{directory.relative_to(ROOT)}/rom.sfc: {sha(candidate)}')
+    return candidate
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--target', choices=tuple(RESTORATIONS), default='star-world-1')
+    args = parser.parse_args()
+    prepare(args.target)
 
 
 if __name__ == '__main__':

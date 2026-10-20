@@ -111,7 +111,7 @@ the recipient. `$002`, `$004` and `$008` reach active, coherent openings in
 these probes. Several other donor candidates later enter transition modes;
 they are not accepted as complete/playable from these bounded samples.
 
-## Next restoration: upper-left vertical cave, room $004
+## Selected restoration: upper-left vertical cave, room $004
 
 Choose map 6 / `$0128,$0168`, translevel `$04`, as the second restoration
 candidate. Room `$004` selects missing ExGFX `$144` through a `$FFFFFF`
@@ -128,9 +128,12 @@ Preserve the recipient's layout rather than copying the donor room wholesale.
 
 Both versions' observed screen-exit tables send screens `$06` and `$08` to
 `$048`, the already examined goal-room branch, reducing the initial dependency
-surface. Full cave traversal, mechanics, its five-coin collection, exits and
-save behavior must still be qualified after a bounded repair. No second-course
-ROM or native restoration build is created by this survey.
+surface. This survey itself did not create a second-course ROM or build.
+The subsequent [cumulative cave candidate](star-world-upper-left-restoration.md)
+restores the graphics and a second missing dependency, custom sprite `$7A`.
+Water interactions, five actual DK pickups and nonzero-bit save/reload,
+examined exits and death/re-entry now pass bounded automated qualification.
+A consolidated manual cave playthrough and listening acceptance remain pending.
 
 ## Reproduce the survey
 

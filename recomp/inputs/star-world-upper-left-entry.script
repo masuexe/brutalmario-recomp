@@ -1,0 +1,36 @@
+# Upper-left vertical-cave opening and ordinary controls, from a fresh uncleared save.
+# Initial map coordinates are poked; no power, enemy, collision or progress cheats.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+
+# Practice map transfer: map 6, X=0x128, Y=0x168.
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+wait 180
+dump standing
+press left+y+b 45
+dump jump
+press left+y 45
+dump move
+wait 480
+dump later
+quit

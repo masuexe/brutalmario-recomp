@@ -202,8 +202,14 @@ callback. The 20 unchanged-entry scene samples remain byte-identical; all 92
 tests pass. Nonzero DK persistence is still unqualified by this course.
 
 All nine uncleared hub entrances now have bounded original/native/donor
-observations. The upper-left vertical cave (`$004`, map 6 / `$0128,$0168`)
-is the next restoration candidate: it selects missing ExGFX `$144`, and the
-donor supplies a valid matching resource. No second-course transplant has
-been made yet. Routine diagnostics need no additional manual gate; ask for
-a consolidated playthrough when new content is ready.
+observations. The [upper-left cave candidate](star-world-upper-left-restoration.md)
+(`$004`, map 6 / `$0128,$0168`) now builds cumulatively on the lower-left
+repair. It restores missing ExGFX `$144` and custom sprite `$7A`, whose absent
+water/platform behavior was found after the graphics-only prototype. All 99
+project tests pass. Five real DK pickups, their nonzero saved bit, normal
+clear, console reset/File A reload, water interactions, both examined cave
+pipes and death/re-entry pass bounded native/reference checks. The 28 shared
+lower-left/shop/Boss-door scene samples retain identical full WRAM and raw
+framebuffers. Full unassisted ascent and audible output remain pending in
+one consolidated manual cave session; automated qualification does not imply
+that acceptance. Routine diagnostics need no additional manual gate.

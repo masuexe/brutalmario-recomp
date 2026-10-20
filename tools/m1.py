@@ -19,6 +19,7 @@ import time
 from prepare_rom import verify
 from runtime_patches import configure_runtime, patch_plan
 from generator_patches import identity as generator_identity, prepare as prepare_generator
+from restoration_targets import RESTORATIONS
 
 ROOT = Path(__file__).resolve().parents[1]
 ENGINE = ROOT / 'local/upstream/snesrecomp'
@@ -30,6 +31,13 @@ TITLE = 'Brutal Mario Demo 1-1'
 INPUT_MANIFEST = ROOT / 'config/inputs.json'
 TARGET_ID = 'demo-1-1'
 SEPARATE_ECHO = False
+
+
+def verify_scaffold_rom(experiment, rom):
+    identity = (experiment / 'rom_identity.txt').read_text()
+    match = re.search(r'^expected_sha256\s*=\s*([0-9a-f]{64})\s*$', identity, re.MULTILINE)
+    if not match or match[1] != hashlib.sha256(rom.read_bytes()).hexdigest():
+        raise ValueError('restoration scaffold ROM identity is stale; recreate the scaffold for this candidate')
 
 
 def install_metrics():
@@ -97,7 +105,7 @@ def analysis_identity():
         'program_manifest_sha256': hashlib.sha256(
             (EXPERIMENT / 'src/gen/program_manifest.json').read_bytes()).hexdigest(),
     }
-    if TARGET_ID == 'star-world-1':
+    if TARGET_ID in RESTORATIONS:
         result['rom_sha256'] = hashlib.sha256(ROM.read_bytes()).hexdigest()
     return result
 
@@ -147,7 +155,7 @@ def main():
     global BUILD, EXPERIMENT, ROM, TARGET, TITLE, INPUT_MANIFEST, TARGET_ID, SEPARATE_ECHO
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stage', choices=['check', 'scaffold', 'generate', 'build', 'reference', 'native'])
-    parser.add_argument('--target', choices=['demo-1-1', 'demo-only-1', 'star-world-1'], default='demo-1-1',
+    parser.add_argument('--target', choices=['demo-1-1', 'demo-only-1', *RESTORATIONS], default='demo-1-1',
                         help='isolated ROM, scaffold, generated code, binary and captures')
     parser.add_argument('--capture', help='new capture name; refuses existing directories')
     parser.add_argument('--script', type=Path, help='alternate deterministic input script')
@@ -161,7 +169,7 @@ def main():
                         help='native --audio only: override the isolated SDL device rate')
     args = parser.parse_args()
     TARGET_ID = args.target
-    SEPARATE_ECHO = args.target in ('demo-only-1', 'star-world-1')
+    SEPARATE_ECHO = args.target == 'demo-only-1' or args.target in RESTORATIONS
     if args.target == 'demo-only-1':
         TARGET = 'BrutalMarioDemoOnly1SNESRecomp'
         TITLE = 'Brutal Mario Demo Only1'
@@ -169,13 +177,13 @@ def main():
         ROM = ROOT / 'local/roms/demo-only-1.sfc'
         INPUT_MANIFEST = ROOT / 'config/demo-only-1.json'
         BUILD = ROOT / 'local/build/demo-only-1'
-    elif args.target == 'star-world-1':
-        TARGET = 'BrutalMarioStarWorld1SNESRecomp'
-        TITLE = 'Brutal Mario Star World1'
+    elif args.target in RESTORATIONS:
+        TARGET = RESTORATIONS[args.target]['binary']
+        TITLE = RESTORATIONS[args.target]['title']
         EXPERIMENT = ROOT / 'local/experiments' / TARGET
-        ROM = ROOT / 'local/restoration/star-world-1/rom.sfc'
-        INPUT_MANIFEST = ROOT / 'config/restorations/star-world-1.json'
-        BUILD = ROOT / 'local/build/star-world-1'
+        ROM = ROOT / 'local/restoration' / args.target / 'rom.sfc'
+        INPUT_MANIFEST = ROOT / 'config/restorations' / (args.target + '.json')
+        BUILD = ROOT / 'local/build' / args.target
     if args.audio_device_rate and (args.stage != 'native' or not args.audio):
         parser.error('--audio-device-rate requires native --audio')
     if args.audio:
@@ -189,8 +197,10 @@ def main():
     pins = pins_check()
     runtime_patches = patch_plan()
     generator_identity(args.target)
+    if args.target in RESTORATIONS and args.stage in ('generate', 'build', 'native'):
+        verify_scaffold_rom(EXPERIMENT, ROM)
     if args.stage in ('build', 'native'):
-        if generator_identity(args.target) is not None or args.target == 'star-world-1':
+        if generator_identity(args.target) is not None or args.target in RESTORATIONS:
             generation_receipt = EXPERIMENT / 'recomp/generation.json'
             if (not generation_receipt.is_file() or
                     json.loads(generation_receipt.read_text()) != analysis_identity()):
@@ -204,7 +214,7 @@ def main():
         if not receipt_path.is_file():
             raise ValueError('missing build receipt; run tools/m1.py build first')
         build_receipt = json.loads(receipt_path.read_text())
-        if args.target == 'star-world-1' and build_receipt.get('rom_sha256') != hashlib.sha256(ROM.read_bytes()).hexdigest():
+        if args.target in RESTORATIONS and build_receipt.get('rom_sha256') != hashlib.sha256(ROM.read_bytes()).hexdigest():
             raise ValueError('restoration ROM differs from its build receipt; regenerate and rebuild')
         binary_sha = hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest()
         if (build_receipt['runtime_patches'] != runtime_patches or

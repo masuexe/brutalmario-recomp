@@ -1,0 +1,42 @@
+# Alternate existing cave pipe, shared goal-room side pipe and guest overworld return.
+# Position/damage-immunity shortcuts; no destination, DK or completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+
+# Practice map transfer: map 6, X=0x128, Y=0x168.
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+forcepoke 1497 ff
+poke 7d 00
+pokefor 94 40005006 600
+press left+y 60
+wait 240
+dump goal_room
+poke 94 10014001
+poke 88 0000
+poke 71 06
+wait 240
+dump side_room
+press left 120
+wait 180
+dump side_exit
+quit
