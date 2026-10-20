@@ -217,8 +217,20 @@ acceptance does not expand those coverage claims. This cumulative target is
 now the accepted restoration baseline. Routine diagnostics need no additional
 manual gate.
 
-The next investigation is the lower-right star (`$008`, map 6 /
-`$01C8,$01E8`). The recipient stalls at MARIO START while the same-number
-cheap_demo probe reaches an active room. ExGFX `$1B3` is missing; determine
-whether its restoration resolves the stall and audit gameplay dependencies
-before requesting another consolidated playtest.
+The [Snow Star lower-right candidate](star-world-lower-right-restoration.md)
+(`$008`, map 6 / `$01C8,$01E8`) now builds on that accepted baseline.
+The MARIO START stall is an SPC upload waiting on the missing `$54` music
+pointer; restoring ExGFX `$1B3` alone does not fix it. The candidate adapts
+the donor's actual song to the recipient driver, adds the graphics and
+restores shared missing ice Ptooie `$57`. Existing penguins, Santa, slots,
+layout and exit rules are retained.
+
+Five actual DK pickups, a real end-wall transfer to `$026`, timed slot jumps,
+normal goal, key/keyhole secret, Warp Star, death/re-entry and normal-clear/DK
+save/reload pass automated checks. Donor slot/goal and secret probes succeed,
+while their different completion flags remain documented. All 105 tests and
+191 selected local assertions pass, and 36 accepted route scene samples
+remain byte-identical. Native song memory matches the adapted payload and
+native/reference audio stays non-silent. One consolidated Snow Star playthrough
+and listening acceptance remain pending; this candidate does not replace the
+accepted restoration baseline yet.

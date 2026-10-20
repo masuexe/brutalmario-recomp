@@ -1,0 +1,333 @@
+# Fresh ice-course entry and ordinary controls; damage immunity only.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x1c8, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+forcepoke 1497 ff
+poke 94 00017000
+wait 1
+poke 94 08017000
+wait 1
+poke 94 10017000
+wait 1
+poke 94 18017000
+wait 1
+poke 94 20017000
+wait 1
+poke 94 28017000
+wait 1
+poke 94 30017000
+wait 1
+poke 94 38017000
+wait 1
+poke 94 40017000
+wait 1
+poke 94 48017000
+wait 1
+poke 94 50017000
+wait 1
+poke 94 58017000
+wait 1
+poke 94 60017000
+wait 1
+poke 94 68017000
+wait 1
+poke 94 70017000
+wait 1
+poke 94 78017000
+wait 1
+poke 94 80017000
+wait 1
+poke 94 88017000
+wait 1
+poke 94 90017000
+wait 1
+poke 94 98017000
+wait 1
+poke 94 a0017000
+wait 1
+poke 94 a8017000
+wait 1
+poke 94 b0017000
+wait 1
+poke 94 b8017000
+wait 1
+poke 94 c0017000
+wait 1
+poke 94 c8017000
+wait 1
+poke 94 d0017000
+wait 1
+poke 94 d8017000
+wait 1
+poke 94 e0017000
+wait 1
+poke 94 e8017000
+wait 1
+poke 94 f0017000
+wait 1
+poke 94 f8017000
+wait 1
+poke 94 00027000
+wait 1
+poke 94 08027000
+wait 1
+poke 94 10027000
+wait 1
+poke 94 18027000
+wait 1
+poke 94 20027000
+wait 1
+poke 94 28027000
+wait 1
+poke 94 30027000
+wait 1
+poke 94 38027000
+wait 1
+poke 94 40027000
+wait 1
+poke 94 48027000
+wait 1
+poke 94 50027000
+wait 1
+poke 94 58027000
+wait 1
+poke 94 60027000
+wait 1
+poke 94 68027000
+wait 1
+poke 94 70027000
+wait 1
+poke 94 78027000
+wait 1
+poke 94 80027000
+wait 1
+poke 94 88027000
+wait 1
+poke 94 90027000
+wait 1
+poke 94 98027000
+wait 1
+poke 94 a0027000
+wait 1
+poke 94 a8027000
+wait 1
+poke 94 b0027000
+wait 1
+poke 94 b8027000
+wait 1
+poke 94 c0027000
+wait 1
+poke 94 c8027000
+wait 1
+poke 94 d0027000
+wait 1
+poke 94 d8027000
+wait 1
+poke 94 e0027000
+wait 1
+poke 94 e8027000
+wait 1
+poke 94 f0027000
+wait 1
+poke 94 f8027000
+wait 1
+poke 94 00037000
+wait 1
+poke 94 08037000
+wait 1
+poke 94 10037000
+wait 1
+poke 94 18037000
+wait 1
+poke 94 20037000
+wait 1
+poke 94 28037000
+wait 1
+poke 94 30037000
+wait 1
+poke 94 38037000
+wait 1
+poke 94 40037000
+wait 1
+poke 94 48037000
+wait 1
+poke 94 50037000
+wait 1
+poke 94 58037000
+wait 1
+poke 94 60037000
+wait 1
+poke 94 68037000
+wait 1
+poke 94 70037000
+wait 1
+poke 94 78037000
+wait 1
+poke 94 80037000
+wait 1
+poke 94 88037000
+wait 1
+poke 94 90037000
+wait 1
+poke 94 98037000
+wait 1
+poke 94 a0037000
+wait 1
+poke 94 a8037000
+wait 1
+poke 94 b0037000
+wait 1
+poke 94 b8037000
+wait 1
+poke 94 c0037000
+wait 1
+poke 94 c8037000
+wait 1
+poke 94 d0037000
+wait 1
+poke 94 d8037000
+wait 1
+poke 94 e0037000
+wait 1
+poke 94 e8037000
+wait 1
+poke 94 f0037000
+wait 1
+poke 94 f8037000
+wait 1
+poke 94 00047000
+wait 1
+dump plants_loaded
+wait 60
+dump plants_active
+poke 94 08047000
+wait 1
+poke 94 10047000
+wait 1
+poke 94 18047000
+wait 1
+poke 94 20047000
+wait 1
+poke 94 28047000
+wait 1
+poke 94 30047000
+wait 1
+poke 94 38047000
+wait 1
+poke 94 40047000
+wait 1
+poke 94 48047000
+wait 1
+poke 94 50047000
+wait 1
+poke 94 58047000
+wait 1
+poke 94 60047000
+wait 1
+poke 94 68047000
+wait 1
+poke 94 70047000
+wait 1
+poke 94 78047000
+wait 1
+poke 94 80047000
+wait 1
+poke 94 88047000
+wait 1
+poke 94 90047000
+wait 1
+poke 94 98047000
+wait 1
+poke 94 a0047000
+wait 1
+poke 94 a8047000
+wait 1
+poke 94 b0047000
+wait 1
+poke 94 b8047000
+wait 1
+poke 94 c0047000
+wait 1
+poke 94 c8047000
+wait 1
+poke 94 d0047000
+wait 1
+poke 94 d8047000
+wait 1
+poke 94 e0047000
+wait 1
+poke 94 e8047000
+wait 1
+poke 94 f0047000
+wait 1
+poke 94 f8047000
+wait 1
+poke 94 00057000
+wait 1
+poke 94 08057000
+wait 1
+poke 94 10057000
+wait 1
+poke 94 18057000
+wait 1
+poke 94 20057000
+wait 1
+poke 94 28057000
+wait 1
+poke 94 30057000
+wait 1
+poke 94 38057000
+wait 1
+poke 94 40057000
+wait 1
+poke 94 48057000
+wait 1
+poke 94 50057000
+wait 1
+poke 94 58057000
+wait 1
+poke 94 60057000
+wait 1
+poke 94 68057000
+wait 1
+poke 94 70057000
+wait 1
+poke 94 78057000
+wait 1
+poke 94 80057000
+wait 1
+poke 94 88057000
+wait 1
+poke 94 90057000
+wait 1
+dump penguins_loaded
+wait 60
+dump penguins_active
+quit

@@ -587,3 +587,24 @@ The executable matches its build receipt with SHA-256
 These are verified workspace identities; no independent user hash was supplied.
 Use `star-world-upper-left` as the accepted cumulative restoration baseline.
 The original Demo 1-1 and demoOnly1 baselines remain separate.
+
+
+## Snow Star lower-right candidate awaiting manual acceptance
+
+The [Snow Star cumulative candidate](star-world-lower-right-restoration.md)
+restores the missing `$54` song that stalls MARIO START, ExGFX `$1B3` and
+ice Ptooie `$57`, retaining the accepted upper-left and lower-left repairs.
+All 105 project tests and 191 selected local assertions pass. Actual DK
+pickups/save/reload, timed slot/goal and key/keyhole exits, Warp Star,
+death/re-entry and sampled enemies pass bounded native/reference checks.
+The 36 earlier route samples retain exact full-WRAM/raw-framebuffer matches.
+Native song bytes match the adapted payload, and both hosts produce
+non-silent captured music; audible fidelity is still a human check.
+
+Candidate ROM SHA-256:
+`92cb99a4c48baf9493af7d37f0eddb3305dd6ccf617d2c5d21cf7c15ddc51fd8`.
+Launch with `python3 tools/play_demo_only1.py --restoration star-world-lower-right --show-location`.
+Request one consolidated course session for unassisted traversal, custom
+enemies, music/effects and the final slot interactions. The user has not yet
+accepted this candidate. The accepted restoration baseline remains
+`star-world-upper-left`; original-version acceptance is unchanged.

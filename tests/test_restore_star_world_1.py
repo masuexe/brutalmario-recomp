@@ -120,3 +120,56 @@ class RestorationSafetyTests(unittest.TestCase):
             if target == 'star-world-upper-left':
                 config.update(base_restoration='star-world-1', base_output=identity(b'other base'))
             (configs / (target + '.json')).write_text(json.dumps(config))
+
+
+class MusicMigrationTests(unittest.TestCase):
+    @staticmethod
+    def fixture():
+        song = bytearray(128)
+        song[:8] = bytes.fromhex('70687068ff000268')
+        song[8:64] = b'\xee' * 56  # Unused group headers must not survive extraction.
+        song[0x70:0x72] = bytes.fromhex('4068')
+        # An E9 echo parameter is data; only the following E9 is a call.
+        song[0x40:0x49] = bytes.fromhex('efe90000e950680100')
+        song[0x50:0x56] = bytes.fromhex('da10187fb700')
+        config = {'source_base': 0x6800, 'destination_base': 0x5400,
+                  'song_size': 128, 'relocations': [0, 2, 6, 0x45, 0x70]}
+        return bytearray(bytes.fromhex('80000068') + song + bytes(4)), config
+
+    def test_reachable_calls_relocate_and_echo_parameters_remain_data(self):
+        group, config = self.fixture()
+        result = restoration.adapt_music(group, config)
+        self.assertEqual(result[:12], bytes.fromhex('8000005470547054ff000254'))
+        self.assertEqual(result[4+8:4+64], bytes(56))
+        self.assertEqual(result[4+0x40:4+0x49], bytes.fromhex('efe90000e950540100'))
+        self.assertEqual(result[4+0x70:4+0x72], bytes.fromhex('4054'))
+        self.assertEqual(result[-4:], bytes(4))
+
+    def test_call_into_another_song_cannot_escape_the_reviewed_slice(self):
+        group, config = self.fixture()
+        group[4+0x45:4+0x47] = bytes.fromhex('8068')
+        with self.assertRaisesRegex(ValueError, 'escapes selected song'):
+            restoration.adapt_music(group, config)
+
+    def test_unreviewed_music_command_is_rejected(self):
+        group, config = self.fixture()
+        group[4+0x50] = 0xff
+        with self.assertRaisesRegex(ValueError, 'unsupported music command'):
+            restoration.adapt_music(group, config)
+
+    def test_changed_pointer_graph_cannot_be_silently_accepted(self):
+        group, config = self.fixture()
+        config['relocations'] = [0, 2, 6, 0x70]
+        with self.assertRaisesRegex(ValueError, 'pointer graph'):
+            restoration.adapt_music(group, config)
+
+    def test_truncated_upload_group_is_rejected(self):
+        group, config = self.fixture()
+        with self.assertRaisesRegex(ValueError, 'upload group'):
+            restoration.adapt_music(group[:-1], config)
+
+    def test_unreviewed_sequence_layout_is_rejected(self):
+        group, config = self.fixture()
+        group[4+2] = 0x71
+        with self.assertRaisesRegex(ValueError, 'sequence header'):
+            restoration.adapt_music(group, config)

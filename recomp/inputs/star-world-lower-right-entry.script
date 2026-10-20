@@ -1,0 +1,43 @@
+# Fresh ice-course entry and ordinary controls; damage immunity only.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x1c8, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+forcepoke 1497 ff
+wait 30
+dump early
+wait 150
+dump entry180
+wait 420
+dump entry600
+press right+y+b 90
+dump move
+wait 180
+dump later
+quit

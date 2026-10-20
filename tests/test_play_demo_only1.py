@@ -111,7 +111,8 @@ class PracticeLauncherTests(unittest.TestCase):
     def test_restoration_uses_its_own_rom_binary_config_and_fresh_save(self):
         for name, binary_name, coordinates in (
                 ('star-world-1', 'BrutalMarioStarWorld1SNESRecomp', '2801e8012801e801'),
-                ('star-world-upper-left', 'BrutalMarioStarWorldUpperLeftSNESRecomp', '2801680128016801')):
+                ('star-world-upper-left', 'BrutalMarioStarWorldUpperLeftSNESRecomp', '2801680128016801'),
+                ('star-world-lower-right', 'BrutalMarioStarWorldLowerRightSNESRecomp', 'c801e801c801e801')):
             with self.subTest(restoration=name):
                 binary, rom, _ = self.restoration_fixture(name, binary_name)
                 chdir, execute, _ = self.invoke(['--restoration', name])
@@ -137,7 +138,7 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertFalse((self.root / 'local/play').exists())
 
     def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
-        for name in ('star-world-1', 'star-world-upper-left'):
+        for name in ('star-world-1', 'star-world-upper-left', 'star-world-lower-right'):
             with self.subTest(restoration=name), self.assertRaises(SystemExit) as error:
                 self.invoke(['--level', name, '--complete-all'])
             self.assertEqual(error.exception.code, 2)

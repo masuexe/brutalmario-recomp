@@ -131,6 +131,10 @@ def restore_sprite(recipient, donor, out, config):
         offset = lorom(int(item['address'], 16))
         for data in (recipient, donor):
             verify(data[offset:offset+item['size']], item, 'custom sprite shared dependency')
+    for item in config.get('versioned_dependencies', []):
+        data = {'recipient': recipient, 'donor': donor}[item['role']]
+        offset = lorom(int(item['address'], 16))
+        verify(data[offset:offset+item['size']], item, 'custom sprite versioned dependency')
     source_record = lorom(int(config['source_record_address'], 16))
     record = bytearray(donor[source_record:source_record+16])
     if record.hex() != config['source_record']:
@@ -145,6 +149,92 @@ def restore_sprite(recipient, donor, out, config):
         raise ValueError('custom sprite destination slot is occupied')
     out[lorom(destination):lorom(destination)+size] = block
     out[offset:offset+16] = record
+
+
+def adapt_music(group, config):
+    """Extract one reviewed four-channel song from a donor's four-song group.
+
+    Only this song's command subset and single-pattern looping header are
+    supported. Walk reachable tracks/subroutines; never relocate raw matches
+    inside note parameters or unused songs.
+    """
+    source, destination = config['source_base'], config['destination_base']
+    count = int.from_bytes(group[:2], 'little')
+    if (len(group) != count + 8 or group[2:4] != source.to_bytes(2, 'little') or
+            group[-4:] != bytes(4) or not 64 < config['song_size'] <= count):
+        raise ValueError('unexpected music upload group')
+    song = bytearray(group[4:4+config['song_size']])
+    if song[:2] != song[2:4] or song[4:8] != b'\xff\x00' + (source+2).to_bytes(2, 'little'):
+        raise ValueError('unsupported music sequence header')
+    relocations = [0, 2, 6]
+
+    def offset(address, size=1):
+        result = address - source
+        if result < 0 or result + size > len(song):
+            raise ValueError('music pointer escapes selected song')
+        return result
+
+    pattern = offset(int.from_bytes(song[:2], 'little'), 16)
+    lengths = {0xda: 1, 0xdb: 1, 0xe0: 1, 0xe2: 1, 0xe7: 1,
+               0xe9: 3, 0xef: 3, 0xf1: 3, 0xf2: 3}
+    visited = set()
+    pending = []
+    for i in range(pattern, pattern+16, 2):
+        address = int.from_bytes(song[i:i+2], 'little')
+        if address:
+            pending.append(offset(address))
+            relocations.append(i)
+    while pending:
+        cursor = pending.pop()
+        while cursor not in visited:
+            offset(source + cursor)
+            visited.add(cursor)
+            command = song[cursor]
+            cursor += 1
+            if command == 0:
+                break
+            if command < 0x80:
+                offset(source + cursor)
+                if song[cursor] < 0x80:
+                    cursor += 1  # Optional note gate/volume after duration.
+            elif command >= 0xda:
+                if command not in lengths:
+                    raise ValueError('unsupported music command')
+                offset(source + cursor, lengths[command])
+                if command == 0xe9:
+                    pending.append(offset(int.from_bytes(song[cursor:cursor+2], 'little')))
+                    relocations.append(cursor)
+                cursor += lengths[command]
+    if sorted(relocations) != config['relocations']:
+        raise ValueError('music pointer graph differs from reviewed relocations')
+    for i in relocations:
+        address = int.from_bytes(song[i:i+2], 'little')
+        offset(address)
+        song[i:i+2] = (address-source+destination).to_bytes(2, 'little')
+    # The other three song headers and their padding are unreachable here.
+    song[8:64] = bytes(56)
+    return len(song).to_bytes(2, 'little') + destination.to_bytes(2, 'little') + song + bytes(4)
+
+
+def restore_music(donor, out, config):
+    source = lorom(int(config['source_address'], 16))
+    group = donor[source:source+config['source_group']['size']]
+    verify(group, config['source_group'], 'donor music group')
+    payload = adapt_music(group, config)
+    verify(payload, config['adapted'], 'adapted music')
+    start, size = config['allocation']['offset'], config['allocation']['size']
+    check_allocation(out, start, size)
+    if len(payload) + 8 > size:
+        raise ValueError('music exceeds reserved allocation')
+    pointer = lorom(int(config['pointer_address'], 16))
+    if out[pointer:pointer+3].hex() != config['before']:
+        raise ValueError('music destination slot is occupied')
+    count = len(payload) - 1
+    out[start:start+len(payload)+8] = (b'STAR' + count.to_bytes(2, 'little') +
+                                     (count ^ 0xffff).to_bytes(2, 'little') + payload)
+    address = ((start+8) // 0x8000) << 16 | 0x8000 | ((start+8) & 0x7fff)
+    # The recipient music table stores bank, high address, low address.
+    out[pointer:pointer+3] = address.to_bytes(3, 'big')
 
 
 def make_candidate(recipient, donor, config):
@@ -195,6 +285,8 @@ def make_candidate(recipient, donor, config):
         cursor = stop
     if config.get('custom_sprite'):
         restore_sprite(recipient, donor, out, config['custom_sprite'])
+    if config.get('music'):
+        restore_music(donor, out, config['music'])
     verify(out, config['output'], config['target'])
     return bytes(out), assets
 

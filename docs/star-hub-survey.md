@@ -137,6 +137,17 @@ The user subsequently accepted this cave restoration after confirming normal
 custom sprites and removal of the original damaged regions. Detailed coverage
 limits and the accepted identity are recorded in the linked restoration report.
 
+## Subsequent lower-right candidate
+
+The [Snow Star restoration](star-world-lower-right-restoration.md) now reaches
+active room `$008` at map 6 / `$01C8,$01E8`. Its MARIO START stall is caused
+by the absent `$54` song pointer and the resulting SPC upload wait; copying
+missing ExGFX `$1B3` alone does not resolve it. The new cumulative candidate
+also restores missing ice Ptooie `$57`, with real slot/normal-goal,
+key/keyhole secret, DK save/reload, death and Warp Star probes. The matrix
+above remains the historical unmodified-ROM survey. Consolidated manual
+Snow Star gameplay and listening acceptance remain pending.
+
 ## Reproduce the survey
 
 `tools/survey_star_hub.py prepare` writes 18 scripts under

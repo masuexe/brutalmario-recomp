@@ -127,7 +127,7 @@ completion, so no additional coverage is inferred from the acceptance.
 No further manual gate is needed to close this stage.
 
 Use this cumulative target as the accepted restoration baseline for subsequent
-work. The next investigation is the lower-right star, room `$008`, map 6 /
-`$01C8,$01E8`: the recipient stalls at MARIO START, whereas the same-number
-cheap_demo probe reaches an active room. Missing ExGFX `$1B3` is a verified
-resource dependency; it is not yet established as the complete stall cause.
+work. The subsequent [Snow Star candidate](star-world-lower-right-restoration.md)
+restores the lower-right `$008` course's missing music, graphics and ice
+Ptooie. Its bounded automated checks pass, but it remains a candidate until
+its consolidated manual milestone is accepted.
