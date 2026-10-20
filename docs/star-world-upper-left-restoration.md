@@ -129,5 +129,6 @@ No further manual gate is needed to close this stage.
 Use this cumulative target as the accepted restoration baseline for subsequent
 work. The subsequent [Snow Star candidate](star-world-lower-right-restoration.md)
 restores the lower-right `$008` course's missing music, graphics and ice
-Ptooie. Its bounded automated checks pass, but it remains a candidate until
-its consolidated manual milestone is accepted.
+Ptooie. The user has since tested its normal and key exits successfully.
+`star-world-lower-right` is now the cumulative gameplay baseline, with human
+listening checks tracked separately during a silent test window.

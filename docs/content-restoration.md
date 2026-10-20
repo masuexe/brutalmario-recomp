@@ -28,6 +28,13 @@ The user authorizes automatic commits and pushes for completed checkpoints
 once their required checks pass. Report the commit and verification results;
 unresolved failures must remain explicit rather than being marked accepted.
 
+The user is currently in a silent environment and will explicitly report when
+sound is available again. Continue automated audio qualification and visual /
+gameplay milestones; do not ask for listening confirmation in the meantime.
+Record new or unconfirmed audible checks in the [audio queue](audio-acceptance-queue.md)
+for one combined later session. Gameplay acceptance can advance independently;
+silent testing must never be labelled listening acceptance.
+
 Routine AOT transformations no longer require a separate user playtest or a
 "continue" response after every function/batch. When applicable differential,
 full-route, dense-transition, interpreter-floor, selected state/clock and PCM
@@ -231,6 +238,9 @@ save/reload pass automated checks. Donor slot/goal and secret probes succeed,
 while their different completion flags remain documented. All 105 tests and
 191 selected local assertions pass, and 36 accepted route scene samples
 remain byte-identical. Native song memory matches the adapted payload and
-native/reference audio stays non-silent. One consolidated Snow Star playthrough
-and listening acceptance remain pending; this candidate does not replace the
-accepted restoration baseline yet.
+native/reference audio stays non-silent. The user subsequently tested both
+normal and key exits without issues and authorized continuing. Snow Star is
+now the accepted cumulative gameplay baseline, `star-world-lower-right`.
+Audio was not separately itemized and remains in the listening queue. The
+next investigation is the upper-right star (`$002`, map 6 / `$01C8,$0168`),
+whose original loading samples request missing song `$5D`.

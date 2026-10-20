@@ -608,3 +608,21 @@ Request one consolidated course session for unassisted traversal, custom
 enemies, music/effects and the final slot interactions. The user has not yet
 accepted this candidate. The accepted restoration baseline remains
 `star-world-upper-left`; original-version acceptance is unchanged.
+
+
+## Snow Star gameplay accepted; silent test window
+
+The user subsequently tested both the normal and key exits without issues
+and authorized continuing. This accepts the Snow Star gameplay milestone and
+supersedes its pending gameplay status above. The accepted workspace ROM is
+`92cb99a4c48baf9493af7d37f0eddb3305dd6ccf617d2c5d21cf7c15ddc51fd8`;
+the regular executable matches its receipt with SHA-256
+`096318c7c040fbafa7c398fa9cb773a47afd65c382d1616f6c6c819f59190708`.
+Use `star-world-lower-right` as the cumulative gameplay baseline. No independent
+user hash or itemized listening result was supplied.
+
+The user is now in a silent environment and will notify us when sound becomes
+available. Continue gameplay/visual testing and automatic audio checks. Defer
+human listening to the [audio acceptance queue](audio-acceptance-queue.md);
+do not ask the user to verify sound during this window or infer an audible
+pass from silent gameplay.

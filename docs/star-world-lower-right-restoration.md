@@ -3,8 +3,9 @@
 Date: 2026-10-20. This candidate builds on the accepted upper-left cave
 restoration and retains both previously restored courses. The new entrance
 is map 6 / X=`$01C8`, Y=`$01E8`, translevel `$08`, room `$008`.
-Bounded automated qualification is complete; consolidated manual gameplay
-and listening acceptance remain pending.
+The user has accepted gameplay after testing both normal and key exits.
+Listening coverage was not separately reported; it is tracked in the
+[audio acceptance queue](audio-acceptance-queue.md).
 
 ```sh
 python3 tools/play_demo_only1.py --restoration star-world-lower-right --show-location
@@ -117,7 +118,7 @@ routes. Their initial/completion flags and map integration differ: donor slot
 `$08` remains `$0F`. Recipient rules are preserved; donor Warp Star behavior
 is not claimed to match the recipient's successful portal check.
 
-## Qualification and remaining manual milestone
+## Qualification and user acceptance
 
 All 105 project tests and 191 selected local assertions pass. The suite
 finishes in 118.330 seconds, including six music-adaptation
@@ -131,8 +132,17 @@ in `local/reports/lower-right-checkpoint.json`. Failed header/large-teleport
 hypotheses, a nonexistent door at the end decoration, the temporary alternate
 song and the off-screen `$026` goal-tape shortcut are diagnostic attempts,
 not acceptance evidence. The final route uses the actual end wall and slot
-reward. Whole-course unassisted traversal and audible output still need one
-consolidated human session. No new AOT variants are required; Demo 1-1 stays
+reward. The user subsequently reported that normal and key exits both work
+and authorized continuing. This accepts the gameplay milestone and makes
+`star-world-lower-right` the cumulative gameplay baseline. The verified native
+executable matches its build receipt with SHA-256
+`096318c7c040fbafa7c398fa9cb773a47afd65c382d1616f6c6c819f59190708`.
+No independent user hash or itemized sound report was supplied.
+
+The user is now in a silent environment and will notify us when sound is
+available again. Continue visual/gameplay acceptance and automatic audio
+checks; defer human listening to a combined later session. No new AOT
+variants are required; Demo 1-1 stays
 at its accepted 68 variants.
 
 Candidate SHA-256:

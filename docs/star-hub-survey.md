@@ -145,8 +145,9 @@ by the absent `$54` song pointer and the resulting SPC upload wait; copying
 missing ExGFX `$1B3` alone does not resolve it. The new cumulative candidate
 also restores missing ice Ptooie `$57`, with real slot/normal-goal,
 key/keyhole secret, DK save/reload, death and Warp Star probes. The matrix
-above remains the historical unmodified-ROM survey. Consolidated manual
-Snow Star gameplay and listening acceptance remain pending.
+above remains the historical unmodified-ROM survey. The user subsequently
+accepted Snow Star gameplay after testing normal and key exits. Listening
+coverage is tracked separately during the current silent test window.
 
 ## Reproduce the survey
 
