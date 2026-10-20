@@ -205,5 +205,12 @@ and build receipt are the candidate ROM
 `b565937be20d4342602b895a36447382a6f3eeda8979c519210749332cecc284`.
 The launcher accepts that pair.
 
-DK coins, the secret height check, and a death return are still
-unqualified. This is not an accepted restoration.
+DK coins and the secret height check are still unqualified. A time-over
+is qualified: the course timer starts at 300, and
+`recomp/inputs/star-world-middle-right-death.script` waits it out with no
+position or life poke. Reference and native both return to the hub in mode
+`$0E` at X `$010E`, Y `$012E` with lives dropped from 4 to 3, then a normal
+entry reaches room `$009` at X `$0070`, Y `$0CBF` with fuel `$0B` and the
+life still at 3. There is no pit on this course; the bottom of the shaft is
+a floor, and the gap at X `$0100` is the fuel block. This is not an accepted
+restoration.
