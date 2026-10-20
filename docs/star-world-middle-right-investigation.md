@@ -140,13 +140,18 @@ so that exit is not reached by the routes above.
 ## Secret fuel and the right-hand page
 
 The rocket's second height check is the secret case: X high `$01` and rocket
-Y below `$0450`. The wiki's secret is the same idea. Exhaust the fuel on a
-wall, fall, and the plus sprite `$17` at X `$0100`, Y `$0F90` refills
-`$1594` to `$0B`. Reference traces show that refill while Mario's Y is
-`$0F75`. Eleven fuel units then allow 2,816 frames of one-pixel climb, which
-ends at Mario Y `$0475`. The secret check needs Mario below `$0470`, so a
-perfect climb from this block is still a few pixels short unless another
-plus is collected on the way.
+Y below `$0450`. The secret exit is the fall the wiki describes. Hold the ship on a wall until
+`$1594` reaches 0, drop to the chimney at X `$0100`, and the plus sprite
+`$17` at X `$0100`, Y `$0F90` refills the ship. The contact frame still has
+Mario falling, at Y `$0F75`, and `$1570` is already 1. Climbing then starts
+at one pixel per frame. That first unit lasts 255 frames and the next nine
+last 256, then the last unit climbs 255 frames and the wrapping frame does
+not. The no-hit total is 2,814 pixels, so Mario ends at Y `$0477`. The
+secret check needs him below `$0470` with X high `$01`. The clean climb is
+short of that line, and any ceiling bounce spends more of the same budget.
+On the right page, row Y `$0440` holds three `$011A` tiles, at X `$0170`,
+`$01A0` and `$01D0`, in the band the check is looking at. A clean climb does
+not reach them.
 
 Zigzag reference climbs on the right page, after that refill, do get past
 several ceilings:
