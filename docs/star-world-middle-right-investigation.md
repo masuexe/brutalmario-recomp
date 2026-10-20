@@ -158,7 +158,13 @@ several ceilings:
 | Right again | through Y `$0B80`, down to about Y `$0A02` at X `$01D2` | Y `$08E0` |
 | Left, then a short right | through Y `$08E0` to X `$0192`, Y `$08B9` | Y `$07E0` if X stays `$0192` |
 
-Fuel was 4 at Y `$08B9` and 3 at the `$07E0` stop. Three units cannot reach
-`$0470` even with no further bounce. These routes are not a secret clear,
-a DK clear, or a save. The next pass has to thread the `$07E0` bar without
-losing the remaining fuel, and find whether a second plus exists above it.
+Continuing the same zigzag gets through the later bars as well. The best
+measured secret sample is a coast at X `$016D`: Mario climbs from Y `$0631`
+with fuel 2 to Y `$0541` while the last unit is almost spent. Rocket Y there
+is `$0522`, still above the `$0450` secret check. Two more plus sprites are
+visible from that corridor, at X `$0050` / Y `$0640` and X `$0090` / Y `$0510`,
+but the left side of the corridor is walled at X `$012D`. Moving left to reach
+either plus stalls and spends the remaining fuel. A perfect no-hit climb from
+the bottom refill alone still ends a few pixels short of the check, and every
+real route hits at least one bar. No secret clear, DK clear, or save is
+qualified.
