@@ -250,5 +250,10 @@ block change; graphics, layout, sprites, exits and runtime remain intact.
 Entry, real upward pipe/normal goal, five DK pickups and reset/save/re-entry,
 and death pass in both hosts. All 108 tests and 242 selected assertions pass;
 60 earlier full-WRAM/raw-framebuffer samples remain identical. Automated
-audio checks pass, with human listening deferred. One gameplay/visual pass
-is pending; Snow Star remains the accepted baseline until that report.
+audio data checks pass, with human listening deferred. The user confirmed
+normal entry and SMB3 brick behavior, then explicitly waived a complete manual
+run because of the course length. They accepted this stage using those
+observations plus the automated route/save checks. `star-world-upper-right`
+is now the accepted cumulative baseline; full manual traversal and listening
+remain unconfirmed. Continue with the middle-right loading stall (`$009`,
+map 6 / `$0198,$01A8`) under the existing automated-checkpoint workflow.

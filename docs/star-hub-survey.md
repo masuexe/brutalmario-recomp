@@ -154,9 +154,11 @@ coverage is tracked separately during the current silent test window.
 The subsequent [upper-right repair](star-world-upper-right-restoration.md)
 resolves `$002`'s loading stall by restoring missing song `$5D`. It requires
 no graphics or sprite import. Entry, actual pipe/normal goal, five DK pickups,
-save/reset/re-entry and death pass bounded native/reference checks. One user
-gameplay/visual pass is pending, with listening deferred during the silent
-window. The historical matrix above continues to describe the original ROM.
+save/reset/re-entry and death pass bounded native/reference checks. The user
+confirmed normal entry and SMB3 bricks and accepted the stage while waiving
+a complete manual run. Listening remains deferred during the silent window.
+The next investigation is the middle-right `$009` loading stall. The historical
+matrix above continues to describe the original ROM.
 
 `tools/survey_star_hub.py prepare` writes 18 scripts under
 `local/probes/star-hub-survey/`: nine recipient routes and nine donor variants.

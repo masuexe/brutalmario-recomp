@@ -1,12 +1,14 @@
 # Manual playtest evidence
 
-Current candidate: [upper-right Star World](star-world-upper-right-restoration.md),
-room `$002`. Its missing `$5D` song is restored; automated entry, actual pipe,
-normal goal, five DK pickups, reset/save/re-entry and death checks pass.
-One user gameplay/visual pass is pending. Do not record this as user acceptance
-or an audio pass. Snow Star remains the accepted cumulative gameplay baseline.
-The user is testing without sound and will notify us when listening can resume;
-new music belongs in the [deferred queue](audio-acceptance-queue.md).
+Current accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
+room `$002`. The user confirmed normal entry and working SMB3 bricks, then
+explicitly chose to waive a complete manual run because the course takes too
+long. They agreed to stage acceptance using those observations plus the
+automated actual pipe, normal-goal, five-DK, reset/save/re-entry and death
+checks. Record this as bounded stage acceptance, not a full manual playthrough
+or sound pass. The user remains in a silent environment and will notify us
+when listening can resume; new music remains in the
+[deferred queue](audio-acceptance-queue.md).
 
 On 2026-10-19 the user selected the lower-left course in the nine-star hub
 for the first restoration. They clarified that it becomes a Warp Star after

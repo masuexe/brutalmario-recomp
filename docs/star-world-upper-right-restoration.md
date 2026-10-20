@@ -2,8 +2,10 @@
 
 Date: 2026-10-20. This cumulative candidate adds the upper-right course to
 the accepted Snow Star gameplay baseline. Entrance: map 6, X=`$01C8`,
-Y=`$0168`, translevel `$02`, room `$002`. Automated qualification passes;
-the user has not yet accepted this course. Human listening is deferred during
+Y=`$0168`, translevel `$02`, room `$002`. The user accepted this restoration
+stage after confirming entry and SMB3 brick behavior, together with the
+automated route checks. A complete manual traversal was explicitly waived;
+this is not a full playthrough report. Human listening is deferred during
 the user's silent test window, as recorded in the
 [listening queue](audio-acceptance-queue.md).
 
@@ -12,10 +14,17 @@ python3 tools/play_demo_only1.py --restoration star-world-upper-right --show-loc
 ```
 
 The isolated launcher selects a fresh, uncleared node. Enter normally and
-play the vertical course, including its upward pipe and goal. Restart the
-command for a fresh attempt. Completion practice flags are rejected because
-they can replace Star World courses with portals. This checkpoint needs one
-gameplay/visual pass; audible confirmation can wait until sound is available.
+play the vertical course as desired. Restart the command for a fresh attempt.
+Completion practice flags are rejected because they can replace Star World
+courses with portals. No further full manual run is required for this stage;
+audible confirmation can wait until sound is available.
+
+The user reported that the long course was too time-consuming to finish
+manually. They confirmed normal entry and working SMB3 bricks, then agreed
+to accept the stage using those observations plus the bounded automated
+pipe/goal/DK/save/death checks. `star-world-upper-right` is now the accepted
+cumulative restoration baseline. Manual coverage remains limited to those
+reported interactions; complete traversal and listening are unconfirmed.
 
 ## Missing song, intact course data
 
