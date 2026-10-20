@@ -210,6 +210,15 @@ project tests pass. Five real DK pickups, their nonzero saved bit, normal
 clear, console reset/File A reload, water interactions, both examined cave
 pipes and death/re-entry pass bounded native/reference checks. The 28 shared
 lower-left/shop/Boss-door scene samples retain identical full WRAM and raw
-framebuffers. Full unassisted ascent and audible output remain pending in
-one consolidated manual cave session; automated qualification does not imply
-that acceptance. Routine diagnostics need no additional manual gate.
+framebuffers. The user subsequently accepted this restoration milestone,
+confirming normal custom-sprite loading and removal of the original damaged
+regions. The report does not separately itemize full traversal or sound;
+acceptance does not expand those coverage claims. This cumulative target is
+now the accepted restoration baseline. Routine diagnostics need no additional
+manual gate.
+
+The next investigation is the lower-right star (`$008`, map 6 /
+`$01C8,$01E8`). The recipient stalls at MARIO START while the same-number
+cheap_demo probe reaches an active room. ExGFX `$1B3` is missing; determine
+whether its restoration resolves the stall and audit gameplay dependencies
+before requesting another consolidated playtest.

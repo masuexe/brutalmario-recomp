@@ -568,3 +568,22 @@ The 68-variant build becomes the next bounded regression baseline. Future
 routine AOT changes use automatic qualification and milestone sampling as
 described in [content restoration](content-restoration.md); alternate-callee
 gameplay and demoOnly1 coverage are not expanded by this report.
+
+
+## Upper-left Star World cave restoration acceptance
+
+The user tested the [cumulative cave restoration](star-world-upper-left-restoration.md)
+and reported that custom sprites load normally and the damaged regions seen
+in the original no longer occur. They accepted this stage. This supersedes
+the pending manual cave milestone; it does not independently itemize sound,
+full ascent, every branch or completion. Existing bounded automated evidence
+covers water/platform interactions, five real DK pickups, save/reload,
+examined exits and death/re-entry, with 99 project tests passing.
+
+Accepted workspace ROM SHA-256:
+`7bffb1c7eb369297cd8dc2f6e84c908e718a5f06a5c445c722512f2e67e7aa37`.
+The executable matches its build receipt with SHA-256
+`eea9c5bd64e90689b4f047defb8bfc393781fb3d1c2144326dc75bec13eb66b1`.
+These are verified workspace identities; no independent user hash was supplied.
+Use `star-world-upper-left` as the accepted cumulative restoration baseline.
+The original Demo 1-1 and demoOnly1 baselines remain separate.

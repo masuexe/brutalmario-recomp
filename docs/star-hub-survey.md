@@ -133,7 +133,9 @@ The subsequent [cumulative cave candidate](star-world-upper-left-restoration.md)
 restores the graphics and a second missing dependency, custom sprite `$7A`.
 Water interactions, five actual DK pickups and nonzero-bit save/reload,
 examined exits and death/re-entry now pass bounded automated qualification.
-A consolidated manual cave playthrough and listening acceptance remain pending.
+The user subsequently accepted this cave restoration after confirming normal
+custom sprites and removal of the original damaged regions. Detailed coverage
+limits and the accepted identity are recorded in the linked restoration report.
 
 ## Reproduce the survey
 

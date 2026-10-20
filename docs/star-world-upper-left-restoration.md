@@ -3,8 +3,9 @@
 Date: 2026-10-20. This cumulative demoOnly1 candidate retains the previously
 restored lower-left course and restores the upper-left vertical cave at
 map 6 / X=`$0128`, Y=`$0168`, translevel `$04`, room `$004`.
-Automated qualification covers the bounded routes below; a full human
-playthrough and listening acceptance remain pending.
+The user has accepted this restoration milestone after testing: custom
+sprites load normally, and the original damaged regions no longer occur.
+Automated qualification covers the bounded routes below.
 
 ```sh
 python3 tools/play_demo_only1.py --restoration star-world-upper-left --show-location
@@ -101,7 +102,7 @@ and upstream identities verify, and `git diff --check` passes.
 This checks shared route samples, not a new full Boss fight.
 No new AOT variants are required; the accepted Demo 1-1 count remains 68.
 
-## Reproduction and next acceptance
+## Reproduction and manual acceptance
 
 ```sh
 python3 tools/restore_star_world_1.py --target star-world-upper-left
@@ -115,7 +116,18 @@ python3 tools/m1.py native --target star-world-upper-left \
   --script recomp/inputs/star-world-upper-left-water.script --capture upper-left-repeat-native
 ```
 
-Request one consolidated manual cave session covering ascent, changing water
-levels, pipe traversal, sound and finishing the course. Do not repeat all
-previous Boss/shop/baseline playtests. Record any new discrepancy against
-this candidate identity before extending restoration to another star node.
+The user subsequently reported that custom sprites load normally, the
+original damaged regions no longer occur, and this stage can pass. This
+accepts the upper-left cave restoration milestone and supersedes its pending
+manual status. The verified workspace ROM is the SHA-256 above; its executable
+matches the build receipt with SHA-256
+`eea9c5bd64e90689b4f047defb8bfc393781fb3d1c2144326dc75bec13eb66b1`.
+The report does not separately itemize full ascent, every branch, sound or
+completion, so no additional coverage is inferred from the acceptance.
+No further manual gate is needed to close this stage.
+
+Use this cumulative target as the accepted restoration baseline for subsequent
+work. The next investigation is the lower-right star, room `$008`, map 6 /
+`$01C8,$01E8`: the recipient stalls at MARIO START, whereas the same-number
+cheap_demo probe reaches an active room. Missing ExGFX `$1B3` is a verified
+resource dependency; it is not yet established as the complete stall cause.
