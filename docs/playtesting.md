@@ -1,6 +1,14 @@
 # Manual playtest evidence
 
-Current accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
+Current cumulative baseline: [Sky Star / middle-right](star-world-middle-right-restoration.md),
+room `$009` with destination `$09B`. The user reports that another agent
+completed the work and their playtest found no problems. They also report
+that sound is available again and the heard audio is normal. This accepts
+the stage and current Sky Star sound; secret completion and all five DK
+coins were not itemized and remain unqualified. The user authorizes an
+automatic restoration loop, with targeted human checks only when essential.
+
+Earlier accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
 room `$002`. The user confirmed normal entry and working SMB3 bricks, then
 explicitly chose to waive a complete manual run because the course takes too
 long. They agreed to stage acceptance using those observations plus the

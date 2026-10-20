@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 *.smc
 *.sfc
+/.agents/*-handoff.md

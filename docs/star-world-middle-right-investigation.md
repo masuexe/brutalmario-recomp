@@ -1,5 +1,12 @@
 # Middle-right Star World: dependency isolation
 
+This is a historical investigation log. The user has since accepted the
+Sky Star stage and reported normal audio after sound became available again.
+Use the [current restoration report](star-world-middle-right-restoration.md)
+for the accepted identity, current status and retained coverage limits.
+Statements below about an uncommitted candidate, stale scaffold or deferred
+listening describe earlier checkpoints rather than the current state.
+
 Date: 2026-10-20. The accepted cumulative baseline is now
 [`star-world-upper-right`](star-world-upper-right-restoration.md). The user
 accepted that stage after checking entry and SMB3 bricks, explicitly waiving

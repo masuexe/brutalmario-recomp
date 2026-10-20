@@ -28,12 +28,15 @@ The user authorizes automatic commits and pushes for completed checkpoints
 once their required checks pass. Report the commit and verification results;
 unresolved failures must remain explicit rather than being marked accepted.
 
-The user is currently in a silent environment and will explicitly report when
-sound is available again. Continue automated audio qualification and visual /
-gameplay milestones; do not ask for listening confirmation in the meantime.
-Record new or unconfirmed audible checks in the [audio queue](audio-acceptance-queue.md)
-for one combined later session. Gameplay acceptance can advance independently;
-silent testing must never be labelled listening acceptance.
+The user has now authorized a continuous restoration loop: automatically
+qualify, commit/push and advance through the remaining Star World courses.
+New content alone does not require a user playtest. Ask for a targeted human
+check only when essential behavior cannot be resolved automatically. Keep
+automatic qualification distinct from user-reported acceptance.
+
+Sound became available again with the accepted Sky Star playtest; the user
+reports its heard audio is normal. Earlier unitemized listening checks remain
+in the [audio queue](audio-acceptance-queue.md), without blocking progress.
 
 Routine AOT transformations no longer require a separate user playtest or a
 "continue" response after every function/batch. When applicable differential,
@@ -44,15 +47,14 @@ record every candidate's identity. Do not call automated qualification a new
 manual acceptance.
 
 Combine routine changes into milestone smoke checks. Request targeted human
-validation when introducing new playable content or a Boss, changing shared
-runtime behavior with an evidence gap, investigating an unexplained mismatch,
-or preparing a meaningful release milestone. Audible output remains distinct
+validation for an essential unresolved experience question, a shared-runtime
+change with an evidence gap, or an unexplained mismatch that automatic probes
+cannot resolve. Audible output remains distinct
 from generated PCM. A new opcode alone is not a reason for an extra manual
 gate if the qualified behavior and integration are covered automatically.
 
-The user can therefore focus on one combined playthrough for a restored level,
-its distinctive mechanics and perceived sound, instead of repeated checks of
-the unchanged Entry route. The recent word-push ordering and post-SEP index
+The user need not complete a combined playthrough for each restored level.
+The recent word-push ordering and post-SEP index
 truncation defects were caught by automated probes before user playtesting;
 this supports using those probes as the routine gate, not assuming future
 changes cannot fail.
@@ -273,4 +275,10 @@ reset and File A load. The same samples match on the recreated native build, and
 accepts this ROM. A time-over in both hosts drops one life, returns to the
 hub, and allows a fresh entry. The two upper DK coins are on opposite sides
 of a wall and do not both fit one climb. The secret exit remains open.
-Listening remains deferred.
+The user subsequently tested Sky Star without finding problems and reported
+that sound is available again and its audio is normal. The
+[middle-right restoration report](star-world-middle-right-restoration.md)
+records stage acceptance and the new cumulative baseline. Secret completion
+and all-five-DK coverage remain unconfirmed. Continue automatically with the
+center star (`$00A`, map 6 / `$0178,$01A8`), which lacks ExGFX `$10F` and
+custom sprite `$24`. A new manual gate is not required.
