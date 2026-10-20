@@ -168,3 +168,14 @@ either plus stalls and spends the remaining fuel. A perfect no-hit climb from
 the bottom refill alone still ends a few pixels short of the check, and every
 real route hits at least one bar. No secret clear, DK clear, or save is
 qualified.
+
+A later pass removed the long stall on the first right-page crossing. Holding
+right for 520 frames after the fall, then left, climbs the X `$012D` wall
+with fuel still 9 at Y `$0CFB`. Turning right there before Y `$0C70` reaches
+the right edge with no stall samples and fuel 8. The same early-turn pattern
+gets to X `$01AD`, Y `$064B`, fuel 2. Stopping in that column bonks
+immediately; the open step is only while still moving right. Fuel is then
+gone by about Y `$05A0`. The left page at X `$0040` climbs cleanly, with no
+wall-hit flag, until the bar at Y `$08D0` (fuel 8 at Y `$096E`). Moving
+right of about X `$0060` hits an earlier wall near Y `$0950`. Neither page
+has a qualified exit.
