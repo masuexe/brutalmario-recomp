@@ -155,8 +155,15 @@ identities still verify. `git diff --check` passes.
 
 The user subsequently reported that testing broadly matches the original,
 but revealed minor issues. They requested committing and pushing this
-checkpoint and deferring repairs until daytime. The symptoms and reproduction
-steps are not yet recorded. This is a manually exercised candidate with open
-issues, not a defect-free acceptance. The report does not separately qualify
+checkpoint and deferring repairs until daytime. The first specific report is
+the [LOVE ANIMAL corpse / respawn concern](star-world-1-animal.md); bounded
+comparison finds the expected fixed artwork and a persistent stomp kill
+in the native candidate, while default Snes9x rejects the artwork upload.
+The user clarified that living Koopas reappear after fireball / other kills.
+Leaving a fireball-created coin uncollected reproduces that respawn in both
+cheap_demo and the native candidate; this is shared existing gameplay logic.
+The user confirmed the explanation in testing and closed this report without
+requesting a gameplay change. Other unspecified issues remain unclassified;
+this is not a defect-free acceptance. The report does not separately qualify
 both pipe branches, screen `$0E`, normal/secret goals, sound, DK persistence
 or an unassisted complete traversal. No complete-game restoration is claimed.

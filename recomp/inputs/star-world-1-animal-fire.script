@@ -1,0 +1,68 @@
+# LOVE ANIMAL fireball diagnostic: leave the enemy-derived coin uncollected.
+# Player/map coordinates, Fire Mario, vertical speed and scrolling are adjusted.
+# Actual guest fireballs perform the kill; no enemy/load-record/flag/graphics edits.
+# Teleport to the existing sign trigger, then return through ordinary horizontal scrolling.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+wait 90
+press right+y 120
+dump koopa_before
+# Give Fire Mario; projectiles and enemy death remain guest actions.
+poke 19 03
+poke 94 40010001
+poke 7b 0000
+press right+y 12
+dump fire12
+press right+y 12
+dump fire24
+press y 30
+dump fire54
+# Coordinate shortcut to the existing sign trigger, no edits to its flag or graphics.
+poke 1412 00
+forcepoke 96 4000
+forcepoke 7d 00
+poke 94 100e
+poke 1c c000
+poke 1464 c000
+wait 2
+dump sign
+press left+y 200
+dump back0
+press left+y 200
+dump back1
+press left+y 200
+dump back2
+press left+y 200
+dump back3
+press left+y 200
+dump back4
+press left+y 200
+dump back5
+press left+y 200
+dump back6
+press left+y 200
+dump back7
+quit

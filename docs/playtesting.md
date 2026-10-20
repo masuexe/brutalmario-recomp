@@ -7,9 +7,16 @@ the warp. An isolated [restoration candidate](star-world-1-restoration.md) is
 available with automated bounded checks. The user subsequently tested it and
 reported behavior broadly matching the original, with some minor issues.
 They requested committing and pushing the current checkpoint and deferring
-those issues until daytime. Symptoms and reproduction steps have not yet
-been supplied; do not mark this candidate defect-free or infer which
-individual branches, DK persistence or audio were exercised. Previous
+those issues until daytime. The first specific report concerns the
+[LOVE ANIMAL corpse / respawn effect](star-world-1-animal.md). A bounded
+cheap_demo comparison reproduces the fixed artwork in the native candidate.
+After the user clarified that living Koopas reappear and selected fireball
+kills, the investigation reproduced that behavior in both versions: an
+uncollected enemy-derived coin unloads, clearing the original enemy's load
+record. A stomped Koopa does not respawn in the tested route. The user then
+reproduced the explained behavior and considers this report resolved without
+a gameplay change. This does not close other unspecified issues or qualify
+every individual branch, DK persistence or audio. Previous
 acceptances below apply to the original targets and earlier runtime checkpoints.
 
 Date: 2026-10-15. These observations are user-reported, rather than automated

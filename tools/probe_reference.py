@@ -42,6 +42,7 @@ def main():
     receipt['diagnostic_core_override'] = str(core) if args.core else None
     receipt['instruction_trace'] = os.environ.get('BM_BOOT_TRACE')
     receipt['instruction_trace_frames'] = os.environ.get('BM_TRACE_FRAMES')
+    receipt['reference_core_options'] = os.environ.get('SNESREF_CORE_OPTIONS', 'defaults')
     (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
     env = os.environ.copy()
     env.update(SNESREF_HEADLESS='1', SNESREF_WRAM_FILL='0',

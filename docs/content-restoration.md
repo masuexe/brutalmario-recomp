@@ -182,7 +182,16 @@ demoOnly1 map 6 / `$0128,$01E8`, room `$005` in an uncleared save. A bounded
 graphics streams from cheap_demo, using IDs referenced only by that room.
 Opening/death/re-entry, normal goal, keyhole and resulting World 1 warp have
 automated evidence. This is an actual isolated ROM/native build. The user
-reports testing broadly matches the original, with minor issues to describe
-and repair later; they requested committing this checkpoint first. Individual
-full-course and sound coverage was not specified. Other courses and donor
-versions remain unqualified.
+reports testing broadly matches the original. The first specific concern,
+[LOVE ANIMAL fireball respawning](star-world-1-animal.md), was reproduced in
+both versions and closed by the user as explained original behavior; no
+gameplay patch was requested. Other unspecified issues remain unclassified.
+Individual full-course and sound coverage was not specified. Other courses
+and donor versions remain unqualified.
+
+The next pilot closeout item is an automated check of actual DK-coin pickup,
+the saved bit and persistence after return/re-entry, preserving the existing
+normal/secret-exit and death checks. After that, survey the other eight hub
+entrances with fresh uncleared saves and classify their failures before
+choosing the second restoration. Routine diagnostics need no additional
+manual gate; ask for a consolidated playthrough when new content is ready.

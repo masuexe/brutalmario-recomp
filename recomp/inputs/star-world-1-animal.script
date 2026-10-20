@@ -1,0 +1,69 @@
+# LOVE ANIMAL diagnostic: one real stomp, sign-trigger shortcut, scrolling return.
+# Fresh uncleared save; no imported savestates.
+# Player/map coordinates, vertical speed and vertical scrolling are adjusted.
+# No edits to enemies, spawn/death records, the sign flag, graphics or progress.
+# The return keeps Mario above terrain so this is not an unassisted traversal.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+wait 90
+press right+y 120
+dump koopa_before
+poke 94 94010001
+poke 7b 0000
+wait 6
+dump stomp6
+wait 6
+dump stomp12
+wait 18
+dump stomp30
+wait 60
+dump stomp90
+# Coordinate shortcut to the existing sign trigger, no edits to its flag or graphics.
+poke 1412 00
+forcepoke 96 4000
+forcepoke 7d 00
+poke 94 100e
+poke 1c c000
+poke 1464 c000
+wait 2
+dump sign
+press left+y 200
+dump back0
+press left+y 200
+dump back1
+press left+y 200
+dump back2
+press left+y 200
+dump back3
+press left+y 200
+dump back4
+press left+y 200
+dump back5
+press left+y 200
+dump back6
+press left+y 200
+dump back7
+quit
