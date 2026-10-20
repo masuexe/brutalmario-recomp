@@ -257,3 +257,12 @@ observations plus the automated route/save checks. `star-world-upper-right`
 is now the accepted cumulative baseline; full manual traversal and listening
 remain unconfirmed. Continue with the middle-right loading stall (`$009`,
 map 6 / `$0198,$01A8`) under the existing automated-checkpoint workflow.
+
+The [middle-right dependency investigation](star-world-middle-right-investigation.md)
+now isolates missing ExGFX `$190/$193` and a null `$2E` music pointer.
+Graphics-only still stalls; an explicitly temporary existing-song substitution
+reaches active play but corrupts 4,863 low Map16 bytes; combining both keeps
+the sampled buffer intact. Twenty-five local assertions pass. These are
+reference diagnostics, not a new restored target or a manual acceptance gate.
+The next implementation must recover the actual song and qualify the course
+and shared-route regressions before offering a playable checkpoint.

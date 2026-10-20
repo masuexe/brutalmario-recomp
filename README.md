@@ -17,6 +17,7 @@ The second tool verifies the supplied base and nine patches against `config/cont
 
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
 - [Star World upper-right accepted restoration](docs/star-world-upper-right-restoration.md)
+- [Star World middle-right dependency investigation](docs/star-world-middle-right-investigation.md)
 - [Snow Star lower-right accepted gameplay baseline](docs/star-world-lower-right-restoration.md)
 - [Deferred listening checks](docs/audio-acceptance-queue.md)
 - [Star World upper-left cave accepted restoration](docs/star-world-upper-left-restoration.md)

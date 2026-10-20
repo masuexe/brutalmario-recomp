@@ -160,6 +160,11 @@ a complete manual run. Listening remains deferred during the silent window.
 The next investigation is the middle-right `$009` loading stall. The historical
 matrix above continues to describe the original ROM.
 
+The [middle-right isolation probes](star-world-middle-right-investigation.md)
+subsequently identify the absent `$2E` stream and missing graphics `$190/$193`
+as independent entry dependencies. A temporary song substitution is confined
+to diagnostic copies; no restored middle-right target is accepted yet.
+
 `tools/survey_star_hub.py prepare` writes 18 scripts under
 `local/probes/star-hub-survey/`: nine recipient routes and nine donor variants.
 Existing conflicting scripts are refused. Choose a fresh capture prefix:
