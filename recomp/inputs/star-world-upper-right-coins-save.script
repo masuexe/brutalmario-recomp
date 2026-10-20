@@ -1,0 +1,125 @@
+# Real DK pickups, upward pipe, goal tape and reset/File A reload.
+# Map/player/camera shortcuts and damage immunity; real Start pauses protect
+# large vertical relocations. Wait out the pause debounce before toggling.
+# No coin, sprite, exit, completion or SRAM state is written.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x1c8, Y=0x168.
+poke 1f11 0606
+poke 1f17 c8016801c8016801
+poke 1f1f 1c0016001c001600
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+forcepoke 1497 ff
+wait 90
+dump standing
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause1
+poke 1a 0001000f
+poke 1462 0001000f
+poke 94 c001800f
+poke 7b 0000
+press start 2
+wait 90
+dump coin1
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause2
+poke 1a 0000a00e
+poke 1462 0000a00e
+poke 94 4000200f
+poke 7b 0000
+press start 2
+wait 90
+dump coin2
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause3
+poke 1a 3000400d
+poke 1462 3000400d
+poke 94 b000c00d
+poke 7b 0000
+press start 2
+wait 90
+dump coin3
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause4
+poke 1a 0000800c
+poke 1462 0000800c
+poke 94 7000000d
+poke 7b 0000
+press start 2
+wait 90
+dump coin4
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause5
+poke 1a 5000e00a
+poke 1462 5000e00a
+poke 94 d000600b
+poke 7b 0000
+press start 2
+wait 90
+dump coin5
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pipe_pause
+poke 1a 8800200a
+poke 1462 8800200a
+poke 94 0801a00a
+poke 7b 0000
+press start 2
+wait 90
+dump pipe_below
+press up+b 90
+wait 240
+dump pipe_exit
+# Touch the existing goal tape with real right input.
+poke 94 60014001
+press right 60
+wait 960
+dump saved_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+poke 1f11 0606
+poke 1f17 c8016801c8016801
+poke 1f1f 1c0016001c001600
+poke 0100 0b
+wait 240
+dump reload_node
+press y 2
+wait 480
+dump reload_reentry
+quit

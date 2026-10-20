@@ -152,7 +152,7 @@ def restore_sprite(recipient, donor, out, config):
 
 
 def adapt_music(group, config):
-    """Extract one reviewed four-channel song from a donor's four-song group.
+    """Extract one reviewed song from a donor's four-song group.
 
     Only this song's command subset and single-pattern looping header are
     supported. Walk reachable tracks/subroutines; never relocate raw matches
@@ -160,23 +160,34 @@ def adapt_music(group, config):
     """
     source, destination = config['source_base'], config['destination_base']
     count = int.from_bytes(group[:2], 'little')
+    sequence_offset = config.get('sequence_offset', 0)
+    data_offset = config.get('source_data_offset', 64)
+    data_size = config['song_size'] - 64
     if (len(group) != count + 8 or group[2:4] != source.to_bytes(2, 'little') or
-            group[-4:] != bytes(4) or not 64 < config['song_size'] <= count):
+            group[-4:] != bytes(4) or data_size <= 0 or sequence_offset < 0 or
+            sequence_offset + 8 > data_offset or data_offset + data_size > count):
         raise ValueError('unexpected music upload group')
-    song = bytearray(group[4:4+config['song_size']])
-    if song[:2] != song[2:4] or song[4:8] != b'\xff\x00' + (source+2).to_bytes(2, 'little'):
+    sequence_source, data_source = source + sequence_offset, source + data_offset
+    song = bytearray(group[4+sequence_offset:12+sequence_offset] + bytes(56) +
+                     group[4+data_offset:4+data_offset+data_size])
+    if song[:2] != song[2:4] or song[4:8] != b'\xff\x00' + (sequence_source+2).to_bytes(2, 'little'):
         raise ValueError('unsupported music sequence header')
     relocations = [0, 2, 6]
 
     def offset(address, size=1):
-        result = address - source
-        if result < 0 or result + size > len(song):
+        if sequence_source <= address and address + size <= sequence_source + 8:
+            return address - sequence_source
+        if data_source <= address and address + size <= data_source + data_size:
+            return 64 + address - data_source
+        raise ValueError('music pointer escapes selected song')
+
+    def check_track_cursor(cursor, size=1):
+        if cursor < 64 or cursor + size > len(song):
             raise ValueError('music pointer escapes selected song')
-        return result
 
     pattern = offset(int.from_bytes(song[:2], 'little'), 16)
     lengths = {0xda: 1, 0xdb: 1, 0xe0: 1, 0xe2: 1, 0xe7: 1,
-               0xe9: 3, 0xef: 3, 0xf1: 3, 0xf2: 3}
+               0xe9: 3, 0xef: 3, 0xf0: 0, 0xf1: 3, 0xf2: 3}
     visited = set()
     pending = []
     for i in range(pattern, pattern+16, 2):
@@ -187,20 +198,20 @@ def adapt_music(group, config):
     while pending:
         cursor = pending.pop()
         while cursor not in visited:
-            offset(source + cursor)
+            check_track_cursor(cursor)
             visited.add(cursor)
             command = song[cursor]
             cursor += 1
             if command == 0:
                 break
             if command < 0x80:
-                offset(source + cursor)
+                check_track_cursor(cursor)
                 if song[cursor] < 0x80:
                     cursor += 1  # Optional note gate/volume after duration.
             elif command >= 0xda:
                 if command not in lengths:
                     raise ValueError('unsupported music command')
-                offset(source + cursor, lengths[command])
+                check_track_cursor(cursor, lengths[command])
                 if command == 0xe9:
                     pending.append(offset(int.from_bytes(song[cursor:cursor+2], 'little')))
                     relocations.append(cursor)
@@ -209,10 +220,7 @@ def adapt_music(group, config):
         raise ValueError('music pointer graph differs from reviewed relocations')
     for i in relocations:
         address = int.from_bytes(song[i:i+2], 'little')
-        offset(address)
-        song[i:i+2] = (address-source+destination).to_bytes(2, 'little')
-    # The other three song headers and their padding are unreachable here.
-    song[8:64] = bytes(56)
+        song[i:i+2] = (offset(address)+destination).to_bytes(2, 'little')
     return len(song).to_bytes(2, 'little') + destination.to_bytes(2, 'little') + song + bytes(4)
 
 

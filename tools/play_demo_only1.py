@@ -34,6 +34,9 @@ LEVELS = {
     'star-world-lower-right': {'name': 'Star World lower-right ice course (uncleared)', 'map': 6,
                                'x': 0x1c8, 'y': 0x1e8, 'level': 0x008,
                                'teleport': (6, 0x1c8, 0x1e8)},
+    'star-world-upper-right': {'name': 'Star World upper-right vertical course (uncleared)', 'map': 6,
+                               'x': 0x1c8, 'y': 0x168, 'level': 0x002,
+                               'teleport': (6, 0x1c8, 0x168)},
 }
 
 

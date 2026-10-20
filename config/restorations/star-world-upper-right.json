@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World upper-right restoration candidate",
+  "id": "star-world-upper-right",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "star-world-lower-right",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "92cb99a4c48baf9493af7d37f0eddb3305dd6ccf617d2c5d21cf7c15ddc51fd8"
+  },
+  "room": "002",
+  "entrance": {
+    "map": 6,
+    "x": 456,
+    "y": 360,
+    "translevel": 2,
+    "requires": "Fresh uncleared save; do not use completion practice flags."
+  },
+  "scope": "Music-only cumulative restoration of room 002: extract donor song 5D from its group, retaining all recipient graphics, level/sprite data, exits and runtime.",
+  "gfx_record": {
+    "address": "14AD48",
+    "before": "01801a00ad00ae0014000500130001000000fe00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1990656,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "id": "5D",
+    "source_address": "44E008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "f5ce96a8d0dbdd22d269fdeec23e3a83c073f90d664dca8abf93db40745bf893"
+    },
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 8,
+    "source_data_offset": 1606,
+    "song_size": 940,
+    "relocations": [
+      0,
+      2,
+      6,
+      76,
+      80,
+      84,
+      95,
+      99,
+      110,
+      114,
+      118,
+      125,
+      129,
+      140,
+      144,
+      148,
+      155,
+      159,
+      170,
+      174,
+      183,
+      232,
+      280,
+      924,
+      926,
+      928,
+      930,
+      932,
+      934
+    ],
+    "pointer_address": "0FE117",
+    "before": "000000",
+    "allocation": {
+      "offset": 1990656,
+      "size": 4096,
+      "fill": 0
+    },
+    "adapted": {
+      "size": 948,
+      "sha256": "f2cab1c9f90bbecb26f29c98291c155f59bca3c21723801be7d8976006018add"
+    }
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "c96a9f5c5abd01e7749c493f615c8a398365dba2ed9076a33523e3b35ec56c0a"
+  }
+}

@@ -173,3 +173,29 @@ class MusicMigrationTests(unittest.TestCase):
         group[4+2] = 0x71
         with self.assertRaisesRegex(ValueError, 'sequence header'):
             restoration.adapt_music(group, config)
+
+    def test_second_group_song_compacts_its_data_and_preserves_zero_operand_f0(self):
+        group, config = self.fixture()
+        group[4+0x50:4+0x57] = bytes.fromhex('f0da10187fb700')
+        expected = restoration.adapt_music(group, config)
+        body = bytearray(0x140)
+        body[8:16] = bytes.fromhex('30693069ff000a68')
+        body[0x100:0x140] = group[4+64:4+128]
+        body[0x105:0x107] = bytes.fromhex('1069')
+        body[0x130:0x132] = bytes.fromhex('0069')
+        config.update(sequence_offset=8, source_data_offset=0x100)
+        compact_group = bytes.fromhex('40010068') + body + bytes(4)
+        self.assertEqual(restoration.adapt_music(compact_group, config), expected)
+        self.assertEqual(expected[4+0x50:4+0x53], bytes.fromhex('f0da10'))
+
+    def test_compact_data_window_cannot_extend_past_the_upload(self):
+        group, config = self.fixture()
+        config['source_data_offset'] = 0x100
+        with self.assertRaisesRegex(ValueError, 'upload group'):
+            restoration.adapt_music(group, config)
+
+    def test_call_into_another_song_header_is_rejected(self):
+        group, config = self.fixture()
+        group[4+0x45:4+0x47] = bytes.fromhex('1068')
+        with self.assertRaisesRegex(ValueError, 'escapes selected song'):
+            restoration.adapt_music(group, config)

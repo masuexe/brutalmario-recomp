@@ -1,5 +1,13 @@
 # Manual playtest evidence
 
+Current candidate: [upper-right Star World](star-world-upper-right-restoration.md),
+room `$002`. Its missing `$5D` song is restored; automated entry, actual pipe,
+normal goal, five DK pickups, reset/save/re-entry and death checks pass.
+One user gameplay/visual pass is pending. Do not record this as user acceptance
+or an audio pass. Snow Star remains the accepted cumulative gameplay baseline.
+The user is testing without sound and will notify us when listening can resume;
+new music belongs in the [deferred queue](audio-acceptance-queue.md).
+
 On 2026-10-19 the user selected the lower-left course in the nine-star hub
 for the first restoration. They clarified that it becomes a Warp Star after
 clearing and that the course itself is the target, not a World 1 course after

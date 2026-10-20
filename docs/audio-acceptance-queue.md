@@ -11,6 +11,13 @@ under the existing authorization with this boundary recorded.
 | Target / item | Automated evidence | Human listening status |
 | --- | --- | --- |
 | Snow Star (`star-world-lower-right`), restored BGM `$54` and ordinary effects | Loaded adapted song bytes match exactly; native/reference late music captures are non-silent; normal/key exits accepted by the user. | Not separately itemized in the gameplay report; include in the later combined listening session. |
+| Upper-right course (`star-world-upper-right`), restored BGM `$5D` and ordinary effects | Loaded 940-byte song matches exactly after 1,200 active frames; native/reference late PCM is non-silent. Gameplay candidate, with automated pipe/goal/DK/reset/death checks. | Deferred until the user reports sound is available; no listening acceptance implied. |
+
+The upper-right SDL diagnostic reports output underruns in concurrent and
+isolated runs, as does the earlier Snow Star diagnostic. The two new native
+PCM captures are identical. Device continuity remains outside automated song
+acceptance; include actual output in the later listening check before drawing
+conclusions about audible behavior or a new content regression.
 
 Use the target's isolated launcher for a short sample when the user reports
 sound is available. Record which items they actually heard and their result;

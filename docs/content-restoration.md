@@ -241,6 +241,14 @@ remain byte-identical. Native song memory matches the adapted payload and
 native/reference audio stays non-silent. The user subsequently tested both
 normal and key exits without issues and authorized continuing. Snow Star is
 now the accepted cumulative gameplay baseline, `star-world-lower-right`.
-Audio was not separately itemized and remains in the listening queue. The
-next investigation is the upper-right star (`$002`, map 6 / `$01C8,$0168`),
-whose original loading samples request missing song `$5D`.
+Audio was not separately itemized and remains in the listening queue.
+
+The [upper-right candidate](star-world-upper-right-restoration.md) (`$002`,
+map 6 / `$01C8,$0168`) now restores missing song `$5D` from the second entry
+of a cheap_demo four-song group. Only the music pointer and its new RATS
+block change; graphics, layout, sprites, exits and runtime remain intact.
+Entry, real upward pipe/normal goal, five DK pickups and reset/save/re-entry,
+and death pass in both hosts. All 108 tests and 242 selected assertions pass;
+60 earlier full-WRAM/raw-framebuffer samples remain identical. Automated
+audio checks pass, with human listening deferred. One gameplay/visual pass
+is pending; Snow Star remains the accepted baseline until that report.

@@ -1,6 +1,6 @@
 # Brutal Mario Recomp
 
-A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current restoration:** the accepted cumulative gameplay baseline includes the lower-left course, upper-left cave and Snow Star; the user has tested Snow Star's normal and key exits successfully. Human listening checks are queued while the user is in a silent environment. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current restoration:** the upper-right Star World course (`$002`) now passes automated entry, pipe, normal-goal, DK-save/reload and death checks after restoring its missing song. One gameplay/visual pass is pending; Snow Star remains the accepted cumulative gameplay baseline. Human listening checks are queued while the user is in a silent environment. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 
@@ -16,7 +16,9 @@ python3 -m unittest discover -s tests -v
 The second tool verifies the supplied base and nine patches against `config/content-versions.json`, compares their image layouts and prepares isolated candidate copies under gitignored `local/content-versions/`. The two original target images remain separate. Donor preparation is not gameplay qualification; see the restoration roadmap for current limits.
 
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
-- [Snow Star lower-right cumulative candidate](docs/star-world-lower-right-restoration.md)
+- [Star World upper-right cumulative candidate](docs/star-world-upper-right-restoration.md)
+- [Snow Star lower-right accepted gameplay baseline](docs/star-world-lower-right-restoration.md)
+- [Deferred listening checks](docs/audio-acceptance-queue.md)
 - [Star World upper-left cave accepted restoration](docs/star-world-upper-left-restoration.md)
 - [Star World lower-left course restoration candidate](docs/star-world-1-restoration.md)
 - [Versions and input inventory](docs/versions.md)
