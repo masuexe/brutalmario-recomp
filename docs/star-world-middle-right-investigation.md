@@ -212,5 +212,13 @@ position or life poke. Reference and native both return to the hub in mode
 `$0E` at X `$010E`, Y `$012E` with lives dropped from 4 to 3, then a normal
 entry reaches room `$009` at X `$0070`, Y `$0CBF` with fuel `$0B` and the
 life still at 3. There is no pit on this course; the bottom of the shaft is
-a floor, and the gap at X `$0100` is the fuel block. This is not an accepted
-restoration.
+a floor, and the gap at X `$0100` is the fuel block.
+
+The five DK tiles are `$0030/$0B30`, `$00B0/$0A10`, `$0050/$0750`,
+`$00E0/$0510`, and `$0090/$0430`. A climb can pass the lower three and
+either upper coin, then still reach the finish height inside the initial
+fuel. It cannot pass both upper coins. They sit on opposite sides of the
+`$30/$31/$32` column, and the open band at Y `$0480`–`$04C0` is too short
+to change lanes before the next bar. No DK clear is qualified.
+
+This is not an accepted restoration.
