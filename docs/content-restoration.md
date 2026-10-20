@@ -269,5 +269,6 @@ Map16 intact, and the rocket renders. A ridden left-page climb now reaches
 the rocket finish at Mario Y `$02B0`, walks into the screen-2 door, and
 touches the `$09B` goal tape. The guest returns to the overworld with
 translevel `$09` flagged `$8C` in WRAM and SRAM, and that flag survives
-reset and File A load. The secret exit, DK coins, death, and the native
-build are still open. Listening remains deferred.
+reset and File A load. The same samples match on the recreated native build, and the launcher
+accepts this ROM. The secret exit, DK coins, and death are still open.
+Listening remains deferred.

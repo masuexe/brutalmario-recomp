@@ -197,6 +197,13 @@ touches goal-tape sprite `$7B`. The goal timer `$1493` runs, `$13CE` becomes
 flag `$1EA2` and both SRAM copies change from `$0C` to `$8C`. Reset, File A
 load, and the restored overworld position keep `$8C`.
 
-This is a reference clear of the normal exit only. DK coins, the secret
-height check, a death return, and the native build are still unqualified.
-The launcher still rejects this ROM until the scaffold is recreated.
+The same script on the recreated native build matches those samples: finish
+at X `$005A` Y `$02B0` with `$C2=1`, door into `$09B`, the block stop at
+X `$00F2`, the landing at X `$012A`, overworld mode `$0E` with `$13CE=1`,
+and `$1EA2`/SRAM `$8C` after reset and File A load. The scaffold identity
+and build receipt are the candidate ROM
+`b565937be20d4342602b895a36447382a6f3eeda8979c519210749332cecc284`.
+The launcher accepts that pair.
+
+DK coins, the secret height check, and a death return are still
+unqualified. This is not an accepted restoration.
