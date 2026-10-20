@@ -1,0 +1,47 @@
+# Diagnostic shortcuts through existing exits 005 -> 048 -> 051.
+# Position and damage-immunity cheats; no exit or progress flag edits.
+# Fresh-session input route shared by reference and native hosts.
+# No imported savestates. All waits are host-frame calls.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+dump active
+# Diagnostic only: follow existing screen exits without editing destinations.
+forcepoke 1497 ff
+poke 94 801c6001
+poke 88 0000
+poke 71 06
+wait 180
+dump next
+poke 94 80016001
+poke 88 0000
+poke 71 06
+wait 180
+dump room51
+poke 94 10004001
+press left 60
+wait 300
+dump side_exit
+quit

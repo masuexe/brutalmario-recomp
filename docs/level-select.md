@@ -97,6 +97,19 @@ The final command uses the ordinary saved game. The boss-door shortcut still
 hands control back at the top door in `$177`; press Up to enter the arena.
 Baby Yoshi Hill's opening pipe still leads to Vivian's Shop.
 
+The first restoration candidate has a separate launch path:
+
+```sh
+python3 tools/play_demo_only1.py --restoration star-world-1 --show-location
+```
+
+It defaults to the lower-left Star World course on a fresh uncleared save,
+using its own ROM, executable and practice directory. `--level star-world-1`
+without `--restoration` probes the original demoOnly1 entrance instead.
+Combining this named course with `--complete-all` is rejected because a
+completed node becomes a Warp Star. See
+[star-world-1-restoration.md](star-world-1-restoration.md) for scope and evidence.
+
 ## Session isolation and transfer behavior
 
 Every practice launch creates a new directory under

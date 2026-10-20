@@ -175,6 +175,14 @@ target files. Repeating preparation verifies existing copies and refuses to
 overwrite conflicting ROMs. Metadata reports live in
 `local/reports/content-versions.json`; original inputs remain untouched.
 
-This is the initial identity/readme/layout comparison. Per-course donor
-playability, the first pilot course, its complete dependency list and an actual
-restored ROM are still outstanding. No new course has been claimed restored.
+The initial identity/readme/layout comparison is complete. The user selected
+the lower-left course in the nine-star hub as the first pilot. Its entrance is
+demoOnly1 map 6 / `$0128,$01E8`, room `$005` in an uncleared save. A bounded
+[Star World candidate](star-world-1-restoration.md) now restores three missing
+graphics streams from cheap_demo, using IDs referenced only by that room.
+Opening/death/re-entry, normal goal, keyhole and resulting World 1 warp have
+automated evidence. This is an actual isolated ROM/native build. The user
+reports testing broadly matches the original, with minor issues to describe
+and repair later; they requested committing this checkpoint first. Individual
+full-course and sound coverage was not specified. Other courses and donor
+versions remain unqualified.

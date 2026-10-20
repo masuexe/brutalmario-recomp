@@ -1,5 +1,17 @@
 # Manual playtest evidence
 
+On 2026-10-19 the user selected the lower-left course in the nine-star hub
+for the first restoration. They clarified that it becomes a Warp Star after
+clearing and that the course itself is the target, not a World 1 course after
+the warp. An isolated [restoration candidate](star-world-1-restoration.md) is
+available with automated bounded checks. The user subsequently tested it and
+reported behavior broadly matching the original, with some minor issues.
+They requested committing and pushing the current checkpoint and deferring
+those issues until daytime. Symptoms and reproduction steps have not yet
+been supplied; do not mark this candidate defect-free or infer which
+individual branches, DK persistence or audio were exercised. Previous
+acceptances below apply to the original targets and earlier runtime checkpoints.
+
 Date: 2026-10-15. These observations are user-reported, rather than automated
 or independently reproduced by the agent.
 

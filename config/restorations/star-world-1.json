@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World 1 restoration candidate",
+  "id": "star-world-1",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "room": "005",
+  "entrance": {
+    "map": 6,
+    "x": 296,
+    "y": 488,
+    "translevel": 5,
+    "requires": "Fresh uncleared save; a cleared node becomes a Warp Star."
+  },
+  "scope": "Three missing ExGFX streams, remapped only in room 005. Gameplay qualification is recorded separately.",
+  "gfx_record": {
+    "address": "14ADA8",
+    "before": "01808108b2000901140002010301010100000001ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1966080,
+    "size": 8192,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "101",
+      "target_id": "FFD",
+      "record_offset": 14,
+      "source_address": "25D76C",
+      "compressed": {
+        "size": 3001,
+        "sha256": "3a51dd45f2df22d1f2490ca117070a68bfdab33cb03f734ad9e97c59e581a169"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "53b3c712f10a30c4f81baa000c4358ea7cebc9c10e3d423d0ed4124f7899fcbf"
+      }
+    },
+    {
+      "source_id": "102",
+      "target_id": "FFE",
+      "record_offset": 10,
+      "source_address": "25E32D",
+      "compressed": {
+        "size": 1256,
+        "sha256": "80972685027df5c12a4f76ca7a9da7d5d52365f19658651876fa78128a953178"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "769e19aaf4c26cddcba942c8d33e85a6c7db37a42da1d1bf328f738bbaeff1cc"
+      }
+    },
+    {
+      "source_id": "103",
+      "target_id": "FFF",
+      "record_offset": 12,
+      "source_address": "25E81D",
+      "compressed": {
+        "size": 2945,
+        "sha256": "0b8091ee82acc8a59b4f751ad7d2858fffdb9c71d2ff5f9d1a167a35ee333212"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "fc7ca9f7449b84657e6a9de55a71a270702a7a00cf23b9043f0bdcfc2e94d792"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "88da794a436f97fe86ff60c48b74a8d7160e1ae39d304c648804d80b6d760bb5"
+  }
+}

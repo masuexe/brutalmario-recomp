@@ -1,0 +1,45 @@
+# Restoration smoke: fresh uncleared save; ordinary controls, no power or collision cheats.
+# Only the initial map transfer is poked; subsequent movement and death use guest controls.
+# This is an opening/death/re-entry smoke, not an end-to-end clear.
+# Fresh-session input route shared by reference and native hosts.
+# No imported savestates. All waits are host-frame calls.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+wait 90
+dump standing
+press right+y 120
+dump run
+press right+y+b 90
+dump jump
+press right+y 120
+dump falling
+wait 300
+dump death_return
+press y 2
+until 0100 == 14 360
+wait 90
+dump reentry
+quit

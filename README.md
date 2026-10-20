@@ -1,6 +1,6 @@
 # Brutal Mario Recomp
 
-A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current priority:** compare supplied versions and restore one dependency-complete ordinary course into an isolated candidate. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current pilot:** an isolated candidate restores missing graphics for the lower-left Star World course in demoOnly1; user testing broadly matches the original, with minor issues awaiting follow-up. Routine AOT work uses automated qualification instead of a manual gate after every batch. Whole-game fidelity and content recovery remain incomplete.
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 
@@ -16,6 +16,7 @@ python3 -m unittest discover -s tests -v
 The second tool verifies the supplied base and nine patches against `config/content-versions.json`, compares their image layouts and prepares isolated candidate copies under gitignored `local/content-versions/`. The two original target images remain separate. Donor preparation is not gameplay qualification; see the restoration roadmap for current limits.
 
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
+- [Star World lower-left course restoration candidate](docs/star-world-1-restoration.md)
 - [Versions and input inventory](docs/versions.md)
 - [Source analysis](docs/source-analysis.md)
 - [Patching and compatibility](docs/compatibility.md)

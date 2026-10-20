@@ -28,6 +28,8 @@ BUILD = ROOT / 'local/build/demo-1-1'
 TARGET = 'BrutalMarioDemo11SNESRecomp'
 TITLE = 'Brutal Mario Demo 1-1'
 INPUT_MANIFEST = ROOT / 'config/inputs.json'
+TARGET_ID = 'demo-1-1'
+SEPARATE_ECHO = False
 
 
 def install_metrics():
@@ -66,7 +68,7 @@ def install_metrics():
         source += ('\n# M1 metrics: project-owned instrumentation, no guest changes.\n'
                    f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/m1_metrics.c"}")\n')
         cmake.write_text(source)
-    if TARGET == 'BrutalMarioDemoOnly1SNESRecomp' and '# demoOnly1 legacy audio default' not in source:
+    if SEPARATE_ECHO and '# demoOnly1 legacy audio default' not in source:
         source += ('\n# demoOnly1 legacy audio default (explicit environment override remains available).\n'
                    f'target_compile_definitions({TARGET} PRIVATE M1_SEPARATE_ECHO_DEFAULT=1)\n')
         cmake.write_text(source)
@@ -76,16 +78,19 @@ def analysis_identity():
     cfg = EXPERIMENT / 'recomp'
     files = sorted(cfg.glob('bank*.cfg')) + [cfg / 'symbols.toml']
     generated = EXPERIMENT / 'src/gen'
-    return {
+    result = {
         'generated_sources': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                               for p in sorted(generated.iterdir())
                               if p.suffix in ('.c', '.h')},
-        'generator': generator_identity('demo-only-1' if TARGET == 'BrutalMarioDemoOnly1SNESRecomp' else 'demo-1-1'),
+        'generator': generator_identity(TARGET_ID),
         'inputs': {p.name: hashlib.sha256(p.read_bytes()).hexdigest()
                    for p in files if p.is_file()},
         'program_manifest_sha256': hashlib.sha256(
             (EXPERIMENT / 'src/gen/program_manifest.json').read_bytes()).hexdigest(),
     }
+    if TARGET_ID == 'star-world-1':
+        result['rom_sha256'] = hashlib.sha256(ROM.read_bytes()).hexdigest()
+    return result
 
 
 def pins_check():
@@ -130,10 +135,10 @@ def run(command, *, log, cwd=ROOT, env=None, seconds=600, memory_gib=None):
 
 
 def main():
-    global BUILD, EXPERIMENT, ROM, TARGET, TITLE, INPUT_MANIFEST
+    global BUILD, EXPERIMENT, ROM, TARGET, TITLE, INPUT_MANIFEST, TARGET_ID, SEPARATE_ECHO
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('stage', choices=['check', 'scaffold', 'generate', 'build', 'reference', 'native'])
-    parser.add_argument('--target', choices=['demo-1-1', 'demo-only-1'], default='demo-1-1',
+    parser.add_argument('--target', choices=['demo-1-1', 'demo-only-1', 'star-world-1'], default='demo-1-1',
                         help='isolated ROM, scaffold, generated code, binary and captures')
     parser.add_argument('--capture', help='new capture name; refuses existing directories')
     parser.add_argument('--script', type=Path, help='alternate deterministic input script')
@@ -146,6 +151,8 @@ def main():
     parser.add_argument('--audio-device-rate', type=int, choices=[32000, 32040, 48000],
                         help='native --audio only: override the isolated SDL device rate')
     args = parser.parse_args()
+    TARGET_ID = args.target
+    SEPARATE_ECHO = args.target in ('demo-only-1', 'star-world-1')
     if args.target == 'demo-only-1':
         TARGET = 'BrutalMarioDemoOnly1SNESRecomp'
         TITLE = 'Brutal Mario Demo Only1'
@@ -153,6 +160,13 @@ def main():
         ROM = ROOT / 'local/roms/demo-only-1.sfc'
         INPUT_MANIFEST = ROOT / 'config/demo-only-1.json'
         BUILD = ROOT / 'local/build/demo-only-1'
+    elif args.target == 'star-world-1':
+        TARGET = 'BrutalMarioStarWorld1SNESRecomp'
+        TITLE = 'Brutal Mario Star World1'
+        EXPERIMENT = ROOT / 'local/experiments' / TARGET
+        ROM = ROOT / 'local/restoration/star-world-1/rom.sfc'
+        INPUT_MANIFEST = ROOT / 'config/restorations/star-world-1.json'
+        BUILD = ROOT / 'local/build/star-world-1'
     if args.audio_device_rate and (args.stage != 'native' or not args.audio):
         parser.error('--audio-device-rate requires native --audio')
     if args.audio:
@@ -167,7 +181,7 @@ def main():
     runtime_patches = patch_plan()
     generator_identity(args.target)
     if args.stage in ('build', 'native'):
-        if generator_identity(args.target) is not None:
+        if generator_identity(args.target) is not None or args.target == 'star-world-1':
             generation_receipt = EXPERIMENT / 'recomp/generation.json'
             if (not generation_receipt.is_file() or
                     json.loads(generation_receipt.read_text()) != analysis_identity()):
@@ -181,6 +195,8 @@ def main():
         if not receipt_path.is_file():
             raise ValueError('missing build receipt; run tools/m1.py build first')
         build_receipt = json.loads(receipt_path.read_text())
+        if args.target == 'star-world-1' and build_receipt.get('rom_sha256') != hashlib.sha256(ROM.read_bytes()).hexdigest():
+            raise ValueError('restoration ROM differs from its build receipt; regenerate and rebuild')
         binary_sha = hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest()
         if (build_receipt['runtime_patches'] != runtime_patches or
                 build_receipt['binary_sha256'] != binary_sha or
@@ -236,6 +252,7 @@ def main():
              '-DSNESRECOMP_FRAME_IMPL=LLE'], log=reports / 'native-configure.log')
         run(['cmake', '--build', BUILD, '--parallel', '2'], log=reports / 'native-build.log')
         (BUILD / 'm1-build.json').write_text(json.dumps({
+            'rom_sha256': hashlib.sha256(ROM.read_bytes()).hexdigest(),
             'binary_sha256': hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest(),
             'runtime_patches': runtime_patches,
             'audio_diagnostics': args.audio,
@@ -254,7 +271,7 @@ def main():
                        SNESREF_SCRIPT=str(script), SNESREF_DUMP_DIR=str(directory),
                        SNESREF_TRACE_FILE=str(directory / 'wram.jsonl'),
                        SNESREF_WAV=str(directory / 'audio.wav'))
-            if args.target == 'demo-only-1' and 'snes9x_echo_buffer_hack=' not in env.get('SNESREF_CORE_OPTIONS', ''):
+            if SEPARATE_ECHO and 'snes9x_echo_buffer_hack=' not in env.get('SNESREF_CORE_OPTIONS', ''):
                 env['SNESREF_CORE_OPTIONS'] = ';'.join(filter(None, [
                     env.get('SNESREF_CORE_OPTIONS'), 'snes9x_echo_buffer_hack=enabled']))
             command = [ROOT / 'local/build/snesref/snesref',
@@ -282,7 +299,7 @@ def main():
                 env.update(M1_AUDIO_WAV=str(directory / 'audio.wav'),
                            M1_AUDIO_REPORT=str(directory / 'audio-stats.json'),
                            SNESRECOMP_AUDIO_STATS=str(directory / 'audio-stats.txt'))
-            if args.target == 'demo-only-1':
+            if SEPARATE_ECHO:
                 env.setdefault('SNESRECOMP_SEPARATE_ECHO', '1')
             env.setdefault('SNESRECOMP_APU_MASTER_CLOCK', '1')
             if args.interpreter_only:

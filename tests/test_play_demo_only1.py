@@ -89,6 +89,39 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertNotIn('--config', command)
         self.assertFalse((self.root / 'local/play').exists())
 
+    def test_restoration_uses_its_own_rom_binary_config_and_fresh_save(self):
+        build = self.root / 'local/build/star-world-1'
+        build.mkdir(parents=True)
+        binary = build / 'BrutalMarioStarWorld1SNESRecomp'
+        binary.write_bytes(b'candidate executable')
+        rom = self.root / 'local/restoration/star-world-1/rom.sfc'
+        rom.parent.mkdir(parents=True)
+        rom.write_bytes(b'candidate ROM')
+        digest = hashlib.sha256(rom.read_bytes()).hexdigest()
+        manifest = self.root / 'config/restorations/star-world-1.json'
+        manifest.parent.mkdir()
+        manifest.write_text(json.dumps({'target': 'candidate', 'output': {
+            'size': len(rom.read_bytes()), 'sha256': digest}}))
+        (build / 'm1-build.json').write_text(json.dumps({
+            'rom_sha256': digest, 'runtime_patches': [],
+            'binary_sha256': hashlib.sha256(binary.read_bytes()).hexdigest()}))
+        chdir, execute, _ = self.invoke(['--restoration', 'star-world-1'])
+        directory = Path(chdir.call_args.args[0])
+        self.assertEqual(directory.parent, self.root / 'local/play/star-world-1/practice')
+        command = execute.call_args.args[1]
+        self.assertEqual(command[0], str(binary))
+        self.assertEqual(command[command.index('--rom')+1], str(rom))
+        script = (directory / 'input.script').read_text()
+        self.assertIn('poke 1f17 2801e8012801e801', script)
+        self.assertNotIn('poke 1ea2', script)
+        self.assertFalse((directory / 'ordinary.srm').exists())
+
+    def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
+        with self.assertRaises(SystemExit) as error:
+            self.invoke(['--level', 'star-world-1', '--complete-all'])
+        self.assertEqual(error.exception.code, 2)
+        self.assertFalse((self.root / 'local/play').exists())
+
     def test_windows_output_launch_and_sdl_fallback(self):
         with patch.object(play.windows_audio, 'available', return_value=True), \
                 patch.object(play.windows_audio, 'run', return_value=7) as native:

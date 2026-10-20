@@ -24,6 +24,9 @@ LEVELS = {
     'world1-castle': {'name': 'World 1 castle (Lemmy)', 'map': 0,
                       'x': 0x0a8, 'y': 0x1a8, 'level': 0x10e,
                       'teleport': (0, 0x0a8, 0x1a8)},
+    'star-world-1': {'name': 'Star World lower-left course (uncleared)', 'map': 6,
+                     'x': 0x128, 'y': 0x1e8, 'level': 0x005,
+                     'teleport': (6, 0x128, 0x1e8)},
 }
 
 
@@ -162,6 +165,8 @@ def practice_script(*, boss_door=False, air_swim=False, level=None, teleport=Non
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--restoration', choices=['star-world-1'],
+                        help='use the isolated restored ROM and build; original saves remain separate')
     destination = parser.add_mutually_exclusive_group()
     destination.add_argument('--boss-door', action='store_true',
                              help='start a fresh practice session at the pre-boss top door')
@@ -203,19 +208,32 @@ def main():
             args.teleport = validate_teleport(args.teleport)
         except ValueError as error:
             parser.error(str(error))
+    if args.restoration and not (args.boss_door or args.special or args.level or args.teleport is not None):
+        args.level = 'star-world-1'
+    if args.level == 'star-world-1' and args.complete_all:
+        parser.error('this course becomes a Warp Star after clearing; use a fresh uncleared practice session')
     rom = ROOT / 'local/roms/demo-only-1.sfc'
     build = ROOT / 'local/build/demo-only-1'
     binary = build / 'BrutalMarioDemoOnly1SNESRecomp'
-    manifest = json.loads((ROOT / 'config/demo-only-1.json').read_text())
+    manifest_path = ROOT / 'config/demo-only-1.json'
+    if args.restoration:
+        rom = ROOT / 'local/restoration/star-world-1/rom.sfc'
+        build = ROOT / 'local/build/star-world-1'
+        binary = build / 'BrutalMarioStarWorld1SNESRecomp'
+        manifest_path = ROOT / 'config/restorations/star-world-1.json'
+    manifest = json.loads(manifest_path.read_text())
     verify(rom.read_bytes(), manifest['output'], manifest['target'])
     receipt = json.loads((build / 'm1-build.json').read_text())
+    if args.restoration and receipt.get('rom_sha256') != manifest['output']['sha256']:
+        parser.error('restoration ROM differs from its build receipt; regenerate and rebuild')
     if (receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest() or
             receipt['runtime_patches'] != patch_plan()):
-        parser.error('binary differs from its current runtime receipt; rebuild demo-only-1 first')
+        parser.error('binary differs from its current runtime receipt; rebuild ' +
+                     (args.restoration or 'demo-only-1') + ' first')
     command = [str(binary), '--no-launcher', '--rom', str(rom)]
     if (args.boss_door or args.special or args.air_swim or args.level or
             args.teleport is not None or args.complete_all):
-        practice_root = ROOT / 'local/play/demo-only-1/practice'
+        practice_root = ROOT / 'local/play' / (args.restoration or 'demo-only-1') / 'practice'
         practice_root.mkdir(parents=True, exist_ok=True)
         directory = Path(tempfile.mkdtemp(prefix='session-', dir=practice_root))
         script = directory / 'input.script'
