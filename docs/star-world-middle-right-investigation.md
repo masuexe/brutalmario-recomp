@@ -83,3 +83,82 @@ collectibles, saving and death in both native/reference hosts, and run earlier
 route regressions. The temporary `$5D` substitution must not ship as a
 restoration. No new user playthrough or listening request is needed for this
 diagnostic checkpoint.
+
+## In-progress candidate after the diagnostic
+
+The uncommitted `star-world-middle-right` recipe now uses the real `$2E`
+intro/loop upload, ExGFX `$190/$193`, and custom sprites `$17` and `$28`.
+It is not an accepted restoration. The native scaffold still matches the
+previous ROM and must be recreated before a native run or launcher build.
+
+Room `$009`'s loaded screen-exit table has one destination: screen index 2,
+value `$049B`. The exit handler uses only bit 0 of the high byte as the level
+high bit, so the destination level is `$09B`. That room's graphics header is
+byte-identical and had the same two missing IDs. The recipe pins both room
+headers onto `$FFA/$FF9`. Rooms `$097` and `$098` still select the empty
+`$190` slot plus other missing IDs; they are not this exit and stay unchanged.
+
+Reference samples after the pin:
+
+| Check | Result |
+| --- | --- |
+| Room `$009` entry | Active, rocket slot `$28` alive, low Map16 unchanged from layout through graphics and later movement. |
+| Screen-2 loader into `$09B` | Reaches room `$09B` with low Map16 unchanged across layout, graphics and the later sample. Goal-tape sprite `$7B` is active. This poke sets the sublevel flag and pipe action; it is not a ridden-rocket clear. |
+| Visual samples | Room `$009` shows the fuel gauge and vertical shaft. Room `$09B` shows the goal tape, mushroom and dotted floor without the earlier striped object. A later rocket sample shows Mario riding the star. |
+
+Pause-relocating Mario onto the five `$002D/$002E` tiles does not qualify DK
+collection. The rocket overrides that position. Listening stays deferred.
+
+## Ridden climb, not a free walk
+
+Sprite `$28` in translevel `$09` is the rocket. While its fuel counter
+`$1594` is nonzero it climbs, copies Mario's X, and holds Mario one pixel
+higher each frame. Left and right change Mario's X by one pixel per frame.
+Fuel starts at `$0B` and drops once every 256 frames. At zero the rocket
+falls. The screen-2 exit `$049B` is selected from Mario's Y high byte, so it
+is only reachable at Y high `$02`. The rocket's own height check uses that
+same band, but it only changes the rocket mode; it does not load `$09B`.
+
+A straight climb at the spawn X hits a ceiling near Y `$0BB0`. Reference
+runs that steer around the bars reach about Y `$03D0` with fuel still left:
+
+| Steer after entry | Result |
+| --- | --- |
+| Hold right or stay at X `$50`–`$B2` | Stuck near Y `$0BB0`. |
+| Left to X `$2D`–`$40` | Passes that bar, then sticks near Y `$08D0`. |
+| From X `$30`, slide right to about X `$B9` before Y `$0900` | Passes `$08D0`, then sticks near Y `$06D0`. |
+| Slide left through that bar to about X `$3F` | Passes `$06D0` and the later bars, then sticks near Y `$03D0`. |
+| Slide to X `$E2` at that height | Also stops near Y `$03D0`. |
+
+No Map16 tile is stored at that stop. The
+[Sky Star page](https://brutalmario.fandom.com/wiki/Sky_Star) describes this
+course: ride the starship upward, dodge walls, and collect fuel blocks.
+There is no boss. The normal goal is the screen-2 exit `$049B` (room `$09B`).
+A clean left-page climb still stops near Y `$03D0`, short of Y high `$02`,
+so that exit is not reached by the routes above.
+
+## Secret fuel and the right-hand page
+
+The rocket's second height check is the secret case: X high `$01` and rocket
+Y below `$0450`. The wiki's secret is the same idea. Exhaust the fuel on a
+wall, fall, and the plus sprite `$17` at X `$0100`, Y `$0F90` refills
+`$1594` to `$0B`. Reference traces show that refill while Mario's Y is
+`$0F75`. Eleven fuel units then allow 2,816 frames of one-pixel climb, which
+ends at Mario Y `$0475`. The secret check needs Mario below `$0470`, so a
+perfect climb from this block is still a few pixels short unless another
+plus is collected on the way.
+
+Zigzag reference climbs on the right page, after that refill, do get past
+several ceilings:
+
+| Held direction | Clears | Then stops |
+| --- | --- | --- |
+| Right from X `$0102` | up to about Y `$0DA0` at X `$01D2` | that column |
+| Left before Y `$0DA0` | through it, down to about Y `$0B0A` at X `$011D` | the next bar |
+| Right again | through Y `$0B80`, down to about Y `$0A02` at X `$01D2` | Y `$08E0` |
+| Left, then a short right | through Y `$08E0` to X `$0192`, Y `$08B9` | Y `$07E0` if X stays `$0192` |
+
+Fuel was 4 at Y `$08B9` and 3 at the `$07E0` stop. Three units cannot reach
+`$0470` even with no further bounce. These routes are not a secret clear,
+a DK clear, or a save. The next pass has to thread the `$07E0` bar without
+losing the remaining fuel, and find whether a second plus exists above it.

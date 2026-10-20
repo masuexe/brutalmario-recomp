@@ -154,7 +154,7 @@ def restore_sprite(recipient, donor, out, config):
 def adapt_music(group, config):
     """Extract one reviewed song from a donor's four-song group.
 
-    Only this song's command subset and single-pattern looping header are
+    Only this song's reviewed command subset and intro/loop header are
     supported. Walk reachable tracks/subroutines; never relocate raw matches
     inside note parameters or unused songs.
     """
@@ -170,7 +170,10 @@ def adapt_music(group, config):
     sequence_source, data_source = source + sequence_offset, source + data_offset
     song = bytearray(group[4+sequence_offset:12+sequence_offset] + bytes(56) +
                      group[4+data_offset:4+data_offset+data_size])
-    if song[:2] != song[2:4] or song[4:8] != b'\xff\x00' + (sequence_source+2).to_bytes(2, 'little'):
+    patterns = sorted({int.from_bytes(song[i:i+2], 'little') for i in (0, 2)})
+    pattern_count = config.get('pattern_count', 1)
+    if (pattern_count not in (1, 2) or len(patterns) != pattern_count or
+            song[4:8] != b'\xff\x00' + (sequence_source+2).to_bytes(2, 'little')):
         raise ValueError('unsupported music sequence header')
     relocations = [0, 2, 6]
 
@@ -185,16 +188,17 @@ def adapt_music(group, config):
         if cursor < 64 or cursor + size > len(song):
             raise ValueError('music pointer escapes selected song')
 
-    pattern = offset(int.from_bytes(song[:2], 'little'), 16)
     lengths = {0xda: 1, 0xdb: 1, 0xe0: 1, 0xe2: 1, 0xe7: 1,
                0xe9: 3, 0xef: 3, 0xf0: 0, 0xf1: 3, 0xf2: 3}
     visited = set()
     pending = []
-    for i in range(pattern, pattern+16, 2):
-        address = int.from_bytes(song[i:i+2], 'little')
-        if address:
-            pending.append(offset(address))
-            relocations.append(i)
+    for address in patterns:
+        pattern = offset(address, 16)
+        for i in range(pattern, pattern+16, 2):
+            address = int.from_bytes(song[i:i+2], 'little')
+            if address:
+                pending.append(offset(address))
+                relocations.append(i)
     while pending:
         cursor = pending.pop()
         while cursor not in visited:
@@ -249,10 +253,13 @@ def make_candidate(recipient, donor, config):
     start, size = config['allocation']['offset'], config['allocation']['size']
     end = start + size
     check_allocation(recipient, start, size)
-    record = lorom(int(config['gfx_record']['address'], 16))
-    before = bytes.fromhex(config['gfx_record']['before'])
-    if recipient[record:record+len(before)] != before:
-        raise ValueError('room graphics configuration changed')
+    records = []
+    for item in [config['gfx_record']] + config.get('additional_gfx_records', []):
+        record = lorom(int(item['address'], 16))
+        before = bytes.fromhex(item['before'])
+        if recipient[record:record+len(before)] != before:
+            raise ValueError('room graphics configuration changed')
+        records.append(record)
     out, cursor, assets = bytearray(recipient), start, []
     for item in config['assets']:
         old_id, new_id = int(item['source_id'], 16), int(item['target_id'], 16)
@@ -272,8 +279,8 @@ def make_candidate(recipient, donor, config):
         destination_pointer = pointer_offset(new_id)
         if out[destination_pointer:destination_pointer+3] != b'\xff' * 3:
             raise ValueError('destination graphics slot is occupied or repeated')
-        word = record + item['record_offset']
-        if int.from_bytes(out[word:word+2], 'little') != old_id:
+        words = [record + item['record_offset'] for record in records]
+        if any(int.from_bytes(out[word:word+2], 'little') != old_id for word in words):
             raise ValueError('room does not select the expected source ID')
         stop = cursor + len(compressed) + 8
         if stop > end:
@@ -283,16 +290,20 @@ def make_candidate(recipient, donor, config):
                             (count ^ 0xffff).to_bytes(2, 'little') + compressed)
         address = ((cursor + 8) // 0x8000) << 16 | 0x8000 | ((cursor + 8) & 0x7fff)
         out[destination_pointer:destination_pointer+3] = address.to_bytes(3, 'little')
-        out[word:word+2] = new_id.to_bytes(2, 'little')
+        for word in words:
+            out[word:word+2] = new_id.to_bytes(2, 'little')
         check, stream = lz2(out, address)
         if check != decoded or stream != compressed:
             raise ValueError('relocated graphics differ from donor')
         assets.append(dict(item, destination_address=f'{address:06X}',
                            rats_offset=cursor, pointer_offset=destination_pointer,
-                           room_word_offset=word))
+                           room_word_offset=words[0],
+                           additional_room_word_offsets=words[1:]))
         cursor = stop
     if config.get('custom_sprite'):
         restore_sprite(recipient, donor, out, config['custom_sprite'])
+    for item in config.get('custom_sprites', []):
+        restore_sprite(recipient, donor, out, item)
     if config.get('music'):
         restore_music(donor, out, config['music'])
     verify(out, config['output'], config['target'])

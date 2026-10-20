@@ -199,3 +199,22 @@ class MusicMigrationTests(unittest.TestCase):
         group[4+0x45:4+0x47] = bytes.fromhex('1068')
         with self.assertRaisesRegex(ValueError, 'escapes selected song'):
             restoration.adapt_music(group, config)
+
+    def test_distinct_intro_and_loop_patterns_relocate_all_channels(self):
+        group, config = self.fixture()
+        body = bytearray(group[4:-4]) + bytearray(16)
+        body[2:4] = bytes.fromhex('8068')
+        body[0x80:0x82] = bytes.fromhex('5068')
+        config.update(song_size=144, pattern_count=2,
+                      relocations=[0, 2, 6, 0x45, 0x70, 0x80])
+        group = bytes.fromhex('90000068') + body + bytes(4)
+        result = restoration.adapt_music(group, config)
+        self.assertEqual(result[4:12], bytes.fromhex('70548054ff000254'))
+        self.assertEqual(result[4+0x70:4+0x72], bytes.fromhex('4054'))
+        self.assertEqual(result[4+0x80:4+0x82], bytes.fromhex('5054'))
+
+    def test_two_pattern_recipe_cannot_silently_collapse_to_one(self):
+        group, config = self.fixture()
+        config['pattern_count'] = 2
+        with self.assertRaisesRegex(ValueError, 'sequence header'):
+            restoration.adapt_music(group, config)

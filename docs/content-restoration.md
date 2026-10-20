@@ -259,10 +259,13 @@ remain unconfirmed. Continue with the middle-right loading stall (`$009`,
 map 6 / `$0198,$01A8`) under the existing automated-checkpoint workflow.
 
 The [middle-right dependency investigation](star-world-middle-right-investigation.md)
-now isolates missing ExGFX `$190/$193` and a null `$2E` music pointer.
+isolates missing ExGFX `$190/$193` and a null `$2E` music pointer.
 Graphics-only still stalls; an explicitly temporary existing-song substitution
 reaches active play but corrupts 4,863 low Map16 bytes; combining both keeps
-the sampled buffer intact. Twenty-five local assertions pass. These are
-reference diagnostics, not a new restored target or a manual acceptance gate.
-The next implementation must recover the actual song and qualify the course
-and shared-route regressions before offering a playable checkpoint.
+the sampled buffer intact. The in-progress candidate restores the real `$2E` intro/loop song, those two
+graphics streams, custom sprites `$17/$28`, and the same graphics on screen-2
+destination `$09B`. Reference entry and a diagnostic `$09B` load keep low
+Map16 intact, and the rocket renders. The Sky Star route is only partly
+mapped: the left page stops near Y `$03D0`, and the right-page secret refill
+reaches about Y `$07E0` with too little fuel for the secret height check.
+It is not yet a playable checkpoint. Listening remains deferred.

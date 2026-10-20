@@ -13,6 +13,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioStarWorldLowerRightSNESRecomp',
         'title': 'Brutal Mario Star World Lower Right',
     },
+    'star-world-middle-right': {
+        'binary': 'BrutalMarioStarWorldMiddleRightSNESRecomp',
+        'title': 'Brutal Mario Star World Middle Right',
+    },
     'star-world-upper-right': {
         'binary': 'BrutalMarioStarWorldUpperRightSNESRecomp',
         'title': 'Brutal Mario Star World Upper Right',
