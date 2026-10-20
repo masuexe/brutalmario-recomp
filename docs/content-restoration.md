@@ -265,8 +265,9 @@ reaches active play but corrupts 4,863 low Map16 bytes; combining both keeps
 the sampled buffer intact. The in-progress candidate restores the real `$2E` intro/loop song, those two
 graphics streams, custom sprites `$17/$28`, and the same graphics on screen-2
 destination `$09B`. Reference entry and a diagnostic `$09B` load keep low
-Map16 intact, and the rocket renders. The Sky Star route is only partly mapped: the left page stops near Y
-`$03D0`, and the best right-page secret sample reaches Mario Y `$0541`,
-short of the secret height check, with the other fuel blocks behind the
-corridor wall.
-It is not yet a playable checkpoint. Listening remains deferred.
+Map16 intact, and the rocket renders. A ridden left-page climb now reaches
+the rocket finish at Mario Y `$02B0`, walks into the screen-2 door, and
+touches the `$09B` goal tape. The guest returns to the overworld with
+translevel `$09` flagged `$8C` in WRAM and SRAM, and that flag survives
+reset and File A load. The secret exit, DK coins, death, and the native
+build are still open. Listening remains deferred.

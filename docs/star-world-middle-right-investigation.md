@@ -166,8 +166,8 @@ visible from that corridor, at X `$0050` / Y `$0640` and X `$0090` / Y `$0510`,
 but the left side of the corridor is walled at X `$012D`. Moving left to reach
 either plus stalls and spends the remaining fuel. A perfect no-hit climb from
 the bottom refill alone still ends a few pixels short of the check, and every
-real route hits at least one bar. No secret clear, DK clear, or save is
-qualified.
+real route hits at least one bar. No secret clear is qualified. The normal
+exit's save is recorded below.
 
 A later pass removed the long stall on the first right-page crossing. Holding
 right for 520 frames after the fall, then left, climbs the X `$012D` wall
@@ -177,5 +177,26 @@ gets to X `$01AD`, Y `$064B`, fuel 2. Stopping in that column bonks
 immediately; the open step is only while still moving right. Fuel is then
 gone by about Y `$05A0`. The left page at X `$0040` climbs cleanly, with no
 wall-hit flag, until the bar at Y `$08D0` (fuel 8 at Y `$096E`). Moving
-right of about X `$0060` hits an earlier wall near Y `$0950`. Neither page
-has a qualified exit.
+right of about X `$0060` hits an earlier wall near Y `$0950`.
+
+## Ridden normal exit
+
+Treating the rocket's ceiling check and Mario's own body tiles as solid
+finds a left-page line that stays inside the initial 2,816 climb frames.
+`recomp/inputs/star-world-middle-right-goal.script` flies that line from the
+entrance. It uses the same map shortcut as the entry script and no star
+invulnerability. The rocket's finish flag `$C2` becomes 1 at Mario
+X `$005A`, Y `$02B0`, still in room `$009`. Walking right along that
+platform reaches the door near X `$0142`: action `$71` becomes 5 and the
+screen exit loads room `$09B` at X `$0040`, Y `$0120`.
+
+In `$09B`, running right collects the mushroom and stops on the colored
+blocks at X `$00F2`. One rightward jump lands at X `$012A`. Continuing right
+touches goal-tape sprite `$7B`. The goal timer `$1493` runs, `$13CE` becomes
+1, and the guest returns to the overworld in mode `$0E`. Translevel `$09`'s
+flag `$1EA2` and both SRAM copies change from `$0C` to `$8C`. Reset, File A
+load, and the restored overworld position keep `$8C`.
+
+This is a reference clear of the normal exit only. DK coins, the secret
+height check, a death return, and the native build are still unqualified.
+The launcher still rejects this ROM until the scaffold is recreated.
