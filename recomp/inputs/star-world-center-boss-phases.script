@@ -1,0 +1,138 @@
+# Bounded entry, real end-star transfer, actual Boss door and first two Boss phases.
+# Map/player/camera shortcuts, damage immunity and a fixed player position during
+# blue-block pickup/drop attacks. No enemy, HP, hit-counter, goal or save writes.
+# This does not qualify a full traversal, victory, or an unassisted Boss fight.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map/player shortcuts are explicit below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x178, Y=0x1a8.
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+wait 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00100000
+poke 1462 00100000
+poke 94 80100001
+poke 7b 0000
+press start 2
+wait 12
+poke 94 90100001
+wait 6
+poke 94 a0100001
+wait 6
+poke 94 b0100001
+wait 6
+poke 94 c0100001
+wait 6
+poke 94 d0100001
+wait 6
+poke 94 e0100001
+wait 6
+poke 94 f0100001
+wait 6
+poke 94 00110001
+wait 6
+poke 94 10110001
+wait 6
+poke 94 20110001
+wait 6
+poke 94 30110001
+wait 6
+poke 94 40110001
+wait 6
+poke 94 50110001
+wait 6
+poke 94 60110001
+wait 6
+poke 94 70110001
+wait 6
+poke 94 80110001
+wait 6
+dump stars_loaded
+wait 240
+dump room77
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00040000
+poke 1462 00040000
+poke 94 9804e000
+poke 7b 0000
+press start 2
+wait 90
+dump boss_door_ready
+press up 4
+wait 240
+dump boss_room
+wait 600
+dump boss_later
+forcepoke 1497 ff
+forcepoke 94 a8002000
+press left 2
+press y 600
+wait 8
+dump hit1
+
+press y 120
+wait 8
+dump hitcycle1
+press y 120
+wait 8
+dump hitcycle2
+press y 120
+wait 8
+dump hitcycle3
+press y 120
+wait 8
+dump hitcycle4
+press y 120
+wait 8
+dump hitcycle5
+press y 120
+wait 8
+dump hitcycle6
+press y 120
+wait 8
+dump hitcycle7
+press y 120
+wait 8
+dump hitcycle8
+press y 120
+wait 8
+dump hitcycle9
+press y 120
+wait 8
+dump hitcycle10
+press y 120
+wait 8
+dump hitcycle11
+press y 120
+wait 8
+dump hitcycle12
+quit

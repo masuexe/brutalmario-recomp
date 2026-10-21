@@ -1,0 +1,90 @@
+# Five actual DK collisions using paused camera/position fixtures.
+# Short coordinate holds keep each collision fixture stable through pause cooldown.
+# No coin counter, DK bit, life, goal or SRAM writes. Saving is not qualified.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map/player shortcuts are explicit below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x178, Y=0x1a8.
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+wait 90
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause1
+poke 1a c0024000
+poke 1462 c0024000
+poke 94 4003c000
+poke 7b 0000
+press start 2
+pokefor 94 4003c000 90
+dump coin1
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause2
+poke 1a a0080000
+poke 1462 a0080000
+poke 94 20095000
+poke 7b 0000
+press start 2
+pokefor 94 20095000 90
+dump coin2
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause3
+poke 1a 200a2000
+poke 1462 200a2000
+poke 94 a00aa000
+poke 7b 0000
+press start 2
+pokefor 94 a00aa000 90
+dump coin3
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause4
+poke 1a f00a2000
+poke 1462 f00a2000
+poke 94 700ba000
+poke 7b 0000
+press start 2
+pokefor 94 700ba000 90
+dump coin4
+press start 2
+until 13d4 == 01 120
+wait 90
+dump pause5
+poke 1a 00114000
+poke 1462 00114000
+poke 94 9011c000
+poke 7b 0000
+press start 2
+pokefor 94 9011c000 90
+dump coin5
+quit

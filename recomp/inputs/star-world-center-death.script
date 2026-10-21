@@ -1,0 +1,39 @@
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map/player shortcuts are explicit below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x178, Y=0x1a8.
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+# Actual pit death and fresh re-entry; no life/death or map-result writes.
+wait 30
+poke 94 40030002
+wait 480
+dump death_return
+press y 2
+until 0100 == 14 480
+dump reentry
+quit

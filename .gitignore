@@ -6,3 +6,5 @@ __pycache__/
 *.smc
 *.sfc
 /.agents/*-handoff.md
+/snesref_audio.wav
+/snesref_trace.jsonl

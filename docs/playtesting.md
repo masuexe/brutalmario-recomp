@@ -14,15 +14,31 @@ acceptance. Middle-left (`$003`) is also automatically qualified: both
 hosts touch the goal tape and keep translevel `$03` flagged `$8C` after
 File A reload. That is not a new manual acceptance either.
 
+The [lower-inner 100-coin exit](star-world-lower-inner-restoration.md) is now
+automatically qualified with real pickups, save and File A reload. Its coin
+route uses explicit player/camera shortcuts. All eight surrounding courses
+are included in the [cumulative center candidate](star-world-center-restoration.md);
+the unfinished center Boss ending remains unqualified.
+
+On 2026-10-21 the user reported that powered Mario died instead of shrinking
+in `star-world-center`. The [recipe regression](center-damage-regression.md)
+was reproduced and repaired with real Koopa-contact checks in both hosts.
+The user also reported short cannon travel near the second DK coin and
+identified cheap_demo under ZSNES 1.51 as their comparison. Controlled legacy
+and native checks reproduce the same input distinction: releasing directional
+input and retaining B crosses the pit and collects the DK coin. See
+[the cannon evidence](center-cannon-flight.md). These are automated findings;
+the user has not supplied a subsequent manual acceptance of either report.
+
 Earlier accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
 room `$002`. The user confirmed normal entry and working SMB3 bricks, then
 explicitly chose to waive a complete manual run because the course takes too
 long. They agreed to stage acceptance using those observations plus the
 automated actual pipe, normal-goal, five-DK, reset/save/re-entry and death
 checks. Record this as bounded stage acceptance, not a full manual playthrough
-or sound pass. The user remains in a silent environment and will notify us
-when listening can resume; new music remains in the
-[deferred queue](audio-acceptance-queue.md).
+or sound pass. That earlier checkpoint took place during a silent window.
+Sound subsequently returned, as recorded above; individually unconfirmed
+tracks remain in the [optional listening queue](audio-acceptance-queue.md).
 
 On 2026-10-19 the user selected the lower-left course in the nine-star hub
 for the first restoration. They clarified that it becomes a Warp Star after

@@ -288,6 +288,9 @@ The [center damage regression](center-damage-regression.md) records a
 rolled-back recipe edit that made powered Mario die instead of shrinking;
 the [cannon comparison](center-cannon-flight.md) reproduces the directional-input
 distinction in ZSNES 1.51 and qualifies a controlled DK flight on both hosts.
+The [current cumulative center candidate](star-world-center-restoration.md)
+also includes all eight qualified surrounding courses. Its Boss ending is
+an explicit unresolved boundary, not a completed-clear acceptance.
 
 The upper-inner cave (`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
 Star ROM. Its recipe restores the six missing ExGFX streams and custom

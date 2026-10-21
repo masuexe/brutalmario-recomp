@@ -1,6 +1,6 @@
 # Brutal Mario Recomp
 
-A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current restoration:** the cumulative Sky Star restoration (`$009/$09B`) is stage-accepted after user playtesting, with normal audio reported. Its secret and all-five-DK routes remain unqualified. Restoration proceeds automatically through checked commits; human playtests are requested only for essential unresolved questions. Whole-game fidelity and content recovery remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current restoration:** eight surrounding Star World courses have qualified exits, now combined in the cumulative center candidate. The center has bounded graphics, cannon/DK, damage and Boss-phase checks; its unfinished donor Boss ending remains unqualified. Sky Star was manually accepted with normal audio; later checkpoints use automation. Restoration proceeds through checked commits, with human checks requested only for essential unresolved questions. Whole-game fidelity and content recovery remain incomplete.
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 
@@ -16,6 +16,10 @@ python3 -m unittest discover -s tests -v
 The second tool verifies the supplied base and nine patches against `config/content-versions.json`, compares their image layouts and prepares isolated candidate copies under gitignored `local/content-versions/`. The two original target images remain separate. Donor preparation is not gameplay qualification; see the restoration roadmap for current limits.
 
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
+- [Cumulative nine-star candidate and center completion boundary](docs/star-world-center-restoration.md)
+- [Lower-inner warp stars and the qualified 100-coin exit](docs/star-world-lower-inner-restoration.md)
+- [Center damage regression](docs/center-damage-regression.md)
+- [Special Warp Star cannon controls and ZSNES 1.51 comparison](docs/center-cannon-flight.md)
 - [Sky Star middle-right accepted stage and handoff policy](docs/star-world-middle-right-restoration.md)
 - [Star World upper-right accepted restoration](docs/star-world-upper-right-restoration.md)
 - [Star World middle-right dependency investigation](docs/star-world-middle-right-investigation.md)
