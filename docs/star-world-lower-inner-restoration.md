@@ -335,3 +335,29 @@ Also recorded: the donor's in-level music for this course is `$1E` (not `$24`,
 which is what the loading-frame sample showed), so the donor's `$1E` track is
 present in any donor capture taken in level. That is the cheapest target if
 single-song extraction is continued, because no forced playback is needed.
+
+### The donor group holding `$1E` is in ROM at `$3F:A004`
+
+Searching the donor ROM for the `$1E` sequence header bytes (`29 6B 29 6B FF 00
+02 68`) finds exactly one hit, at file offset `0x1FA00C` (LoROM `$3F:A00C`).
+The enclosing group header sits at file `0x1FA004`:
+
+```
+0x1FA004: F0 17 00 68          count 0x17F0 (6128), base 0x6800
+0x1FA008: 29 6B 29 6B FF 00 02 68   sequence 0
+0x1FA010: E4 6E F4 6E FF 00 0A 68   sequence 1
+0x1FA018: 65 78 75 78 FF 00 12 68   sequence 2
+```
+
+Count + 8 = 6136, exactly the `source_group.size` the existing music recipes
+pin, and the base `0x6800` is the runtime upload base found earlier. Sequences
+are 8-byte records at offsets 0, 8, 16, ... so a song's `sequence_offset` is
+`8 * k` in this group.
+
+Remaining step to build a payload: the song's `source_data_offset` and
+`song_size`, i.e. where its track data begins after the sequence table. Those
+can be derived from the pointers the sequence uses (the lowest address reached
+by the pattern block and `0xE9` loops bounds the data start), and the result can
+then be verified mechanically: install the payload, force the candidate to play
+`$1E`, and compare the captured ARAM `0x5400` image against the donor image at
+`0x6800` shifted by `-0x1400`.
