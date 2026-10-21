@@ -169,6 +169,34 @@ not checked against a patch receipt. Adding a third independent negative
 result narrows the completed-donor search but does not prove that no
 differently implemented program exists anywhere.
 
+### Community documentation of the unfinished boss
+
+Our binary and source findings say the Special Warp Star boss program stops
+after its phase-2 cycle. Public community documentation agrees, which matters
+because it turns "no completed donor was found locally" into "the author
+never finished this boss in any released demo".
+
+- The [boss listing](https://brutalmario.fandom.com/wiki/Boss) defines an
+  asterisk as *"that boss is still incomplete"* and lists the `★-9 Special
+  Warp Star` boss as `Giant Starman*`.
+- The [Special Warp Star](https://brutalmario.fandom.com/wiki/Special_Warp_Star)
+  article names `Giant Starman*` as that level's boss.
+- The one claim of a fully finished build,
+  [Demo 9.5](https://brutalmario.fandom.com/wiki/Hoaxes), is documented as a
+  hoax: an anonymous user invented the article and the accompanying video was
+  edited, not captured from a ROM.
+- [Boss Demo](https://brutalmario.fandom.com/wiki/Boss_Demo) is sometimes
+  suggested as a completed build, but it showcases the finished **7
+  Koopalings' Fusion Boss**, a different encounter, so it does not supply
+  this ending.
+
+Treat this as community documentation, not as an authority: it is external,
+unversioned wiki text and it was not used to change any ROM. It is consistent
+with the local audit of all twelve prepared images and with the archived
+`star.asm` sources, and it is the third independent line of evidence that no
+completed Giant Starman program is available to copy. It does not by itself
+prove that no unreleased or differently implemented program exists.
+
 Finishing this last acceptance item therefore needs either an explicit
 exception preserving the donor's unfinished ending, or a completed matching
 donor. Designing a new ending would be new content, beyond copying a
