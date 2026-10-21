@@ -264,3 +264,26 @@ Practical upshot: force a song by patching the level header's third byte, not by
 poking `$1DFB`, and validate by watching `$0DDA` rather than assuming the write
 landed. That mechanism is the next concrete step for song fidelity; it is not
 required for the accepted freeze fix.
+
+### Verified: forcing a song through the level header
+
+The header pointer captured at the music write is a real ROM address, and
+patching its music byte reliably changes the played song.
+
+- Course level header: **`$3A:B522`** (file offset `0x1D3522`), bytes
+  `40 60 41`, so header byte 2 is `music id + 1` and the course plays `$40`.
+- Patch byte 2 to `0x0D` in a probe ROM, enter the course: `$0DDA` becomes
+  `0x0C` with mode `$14`, i.e. the forced id actually plays.
+- The captured ARAM image at `0x5400` changes with it: `$40` gives
+  `67 54 77 54 FF 00 02 54`, `$0C` gives `C5 55 D5 55 FF 00 02 54`. The base
+  and the `base + 2` sequence pointer stay the same, so the capture is the
+  relocated song for the forced id.
+
+This is the reliable forcing mechanism the earlier `$1DFB` pokes lacked. It
+gives a general capability: force any installed id, then capture that song's
+relocated image. Probe ROM: `local/probes/lower-inner-music.sfc`.
+
+Still required before a donor song can be installed: the donor uses a different
+upload base, so its image must be captured on the donor side (same technique,
+after locating the donor's own level header) and its internal pointers rebased
+to `0x5400` before it can be written as a `music` payload.
