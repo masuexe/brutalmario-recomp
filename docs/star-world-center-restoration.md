@@ -86,6 +86,45 @@ corresponding boss donor has been identified. The local survey is
 treated as proof that another version cannot contain a differently
 identified program.
 
+The subsequent `tools/audit_star_boss_donors.py` search derives each version's
+SpriteTool table from its installed constructor, examines every type-1 slot,
+and scans every valid RATS block rather than relying on sprite `$24` or room
+`$079`. A candidate requires the known code hash or at least three reviewed
+markers: the hit-counter load/store, graphics slot `$1D4`, and the paired
+item/boss room initialization. Marker hits outside protected blocks are also
+reported; none were found in the nine inputs.
+
+| Prepared version | Installed type-1 records | Valid RATS blocks | Related programs found |
+| --- | --- | --- | --- |
+| demo-1-1 | 12 | 2,199 | 0 |
+| 7hero | 12 | 2,366 | 0 |
+| cheap-demo | 148 | 2,301 | 1: the unchanged `$24` program |
+| mazo | 3 | 2,305 | 0 |
+| ow | 1 | 2,229 | 0 |
+| demo6 | 141 | 1,833 | 0 |
+| demo7 | 137 | 1,884 | 0 |
+| demo8 | 148 | 2,268 | 1: the unchanged `$24` program |
+| demo-only-1 | 12 | 2,147 | 0 |
+
+Both newer supplied `star.asm` copies are 39,310 bytes and have SHA-256
+`ee1eb8ee79618c50c6866cbb32f78e33956b010135775b48575a1c9c813988d4`.
+They contain the same phase-2 cycle and no subsequent mode-3 handler. The
+19,321-byte data1 source is a different star program without this boss
+dispatcher. All three extracted sources match the corresponding entries in
+the original source ZIPs. This adds no completed matching donor. The
+fingerprint remains a heuristic: differently implemented code can evade it,
+and the inventory does not establish room correspondence or playability.
+
+Reproduce the read-only search after preparing the pinned version images:
+
+```sh
+python3 tools/audit_star_boss_donors.py
+```
+
+The report is `local/reports/center-alternate-program-audit.json` and records
+each input hash, derived table, candidate and archived source match. This
+research does not change the cumulative ROM or its accepted checks.
+
 Finishing this last acceptance item therefore needs either an explicit
 exception preserving the donor's unfinished ending, or a completed matching
 donor. Designing a new ending would be new content, beyond copying a
