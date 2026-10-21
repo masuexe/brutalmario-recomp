@@ -54,9 +54,10 @@ def sprite_table(rom):
     return constructor, body, table
 
 
-def audit_version(version):
-    rom = (ROOT / 'local/content-versions' / version['id'] / 'rom.sfc').read_bytes()
-    verify(rom, version['output'], version['id'])
+def audit_version(version, rom=None):
+    if rom is None:
+        rom = (ROOT / 'local/content-versions' / version['id'] / 'rom.sfc').read_bytes()
+        verify(rom, version['output'], version['id'])
     constructor, body, table = sprite_table(rom)
     blocks = rats_blocks(rom)
     starts = [start for start, _ in blocks]
@@ -147,6 +148,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path,
                         default=ROOT / 'local/reports/center-alternate-program-audit.json')
+    parser.add_argument('--extra', action='append', default=[], metavar='ID=PATH',
+                        help='also audit an unregistered ROM image; it is hashed but not '
+                             'verified against a pinned patch receipt')
     args = parser.parse_args()
     metadata = json.loads((ROOT / 'config/content-versions.json').read_text())
     versions = []
@@ -155,6 +159,21 @@ def main():
         versions.append(result)
         print(f"{result['id']}: {result['installed_type1_records']} installed records, "
               f"{result['valid_rats_blocks']} valid RATS blocks, "
+              f"{len(result['candidate_programs'])} candidate programs")
+    for spec in args.extra:
+        identifier, _, path = spec.partition('=')
+        if not identifier or not path:
+            raise SystemExit(f'malformed --extra (want ID=PATH): {spec}')
+        image = Path(path).read_bytes()
+        try:
+            result = audit_version({'id': identifier}, rom=image)
+        except ValueError as error:
+            result = {'id': identifier, 'rom_sha256': sha(image),
+                      'size': len(image), 'error': str(error),
+                      'candidate_programs': []}
+        result['unregistered'] = True
+        versions.append(result)
+        print(f"{result['id']} (unregistered): "
               f"{len(result['candidate_programs'])} candidate programs")
     sources, archives = audit_sources()
     report = {

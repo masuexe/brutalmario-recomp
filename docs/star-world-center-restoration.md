@@ -125,6 +125,50 @@ The report is `local/reports/center-alternate-program-audit.json` and records
 each input hash, derived table, candidate and archived source match. This
 research does not change the cumulative ROM or its accepted checks.
 
+### RetroAchievements donor images
+
+Three additional images were prepared after the table above was written and
+are stored under `local/content-versions/`. They are **not** registered in
+`config/content-versions.json`: the originating session verified each BPS
+patch checksum and the produced image hash before the patches were discarded,
+so this checkout can hash the images but cannot re-derive them. They are
+audited through the `--extra` option instead of a pinned receipt.
+
+| Image | SHA-256 | Installed type-1 records | Valid RATS blocks | Related programs |
+| --- | --- | --- | --- | --- |
+| `ra-mario-complete` | `508bafbf8619cad8…` | 148 | 2,306 | 1: the unchanged `$24` program |
+| `ra-luigi` | `0d6e09b2d1c107b7…` | 64 | 649 | 0 |
+| `ra-bowser-castle` | `6e95b6a7c77be912…` | 12 | 2,368 | 0 |
+
+`ra-mario-complete` carries the same 3,603-byte block, SHA
+`d9ac74c7c0f05ba26dcfff5c2a09da94dff42d57cafe25361c4343fdcd1f448f`, at
+physical offset `0xF0000` in slot `$24` — byte-identical to `cheap-demo` and
+`demo8`. It does not contain a completed boss program. `ra-luigi` uses an
+unrelated engine (2 MiB, no reviewed marker present) and `ra-bowser-castle`
+holds only the unpaired counter-store marker, so neither is a boss donor.
+
+Its boss room `$079` layer-1 stream is also byte-identical to `cheap-demo`
+(16 bytes, `80 50 73 40 10 07 00 01 08 04 00 78 40 60 13 FF`), so the room
+that needs a finished ending is unchanged. Six other rooms (`$077`, `$086`,
+`$0C0`, `$0FD`, `$108`, `$152`) differ between the two lineages, which reads
+as ordinary drift rather than a targeted ending hook; the streams were not
+decoded far enough to attribute individual objects.
+
+Reproduce, with the images present:
+
+```sh
+python3 tools/audit_star_boss_donors.py \
+  --output local/reports/center-alternate-program-audit.json \
+  --extra ra-mario-complete=local/content-versions/ra-mario-complete/rom.sfc \
+  --extra ra-luigi=local/content-versions/ra-luigi/rom.sfc \
+  --extra ra-bowser-castle=local/content-versions/ra-bowser-castle/rom.sfc
+```
+
+Unregistered entries are hashed but marked `"unregistered": true` and are
+not checked against a patch receipt. Adding a third independent negative
+result narrows the completed-donor search but does not prove that no
+differently implemented program exists anywhere.
+
 Finishing this last acceptance item therefore needs either an explicit
 exception preserving the donor's unfinished ending, or a completed matching
 donor. Designing a new ending would be new content, beyond copying a
