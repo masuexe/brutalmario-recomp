@@ -175,50 +175,50 @@
   ],
   "output": {
     "size": 4194304,
-    "sha256": "7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101"
+    "sha256": "359b4c3fb1b4c33d4ba73cc4f9e09db642e5864517aa5e9658a87e41e252cbb5"
   },
   "code_patches": [
     {
       "address": "3AB524",
       "before": "41",
-      "after": "1f",
-      "note": "Course BGM: Athletic Special room $176 (the 4th scene in the $134 -> $174 -> $175 -> $176 chain) plays $1E; the user identified that scene as having the same background as this course. Also aligns cap expiry."
+      "after": "61",
+      "note": "Course BGM: existing recipient song $60 corresponds to cheap_demo's actual room117 bank-local $21 sequence (group $3F8008, sequence 0). It is a revised arrangement of the same course tune; background matching is not music identity evidence."
     },
     {
       "address": "348084",
       "before": "a922",
-      "after": "a90d",
-      "note": "Cap pickup: donor hat.asm asked 0x22, which in demoOnly1 is other music. The game itself requests 0x0D when star power starts (01:C56A), which is the invincibility cue the user expects here."
+      "after": "a979",
+      "note": "Cap pickup: recipient song $79 has exactly the donor cap sequence's reachable note/instrument/loop graph. Donor $22 selects sequence 1 of the current four-song bank, not global custom song $22."
     },
     {
       "address": "3480C5",
       "before": "a922",
-      "after": "a90d",
-      "note": "Cap pickup: donor hat.asm asked 0x22, which in demoOnly1 is other music. The game itself requests 0x0D when star power starts (01:C56A), which is the invincibility cue the user expects here."
+      "after": "a979",
+      "note": "Cap pickup: use the existing matching cap tune at recipient song $79."
     },
     {
       "address": "348103",
       "before": "a922",
-      "after": "a90d",
-      "note": "Cap pickup: donor hat.asm asked 0x22, which in demoOnly1 is other music. The game itself requests 0x0D when star power starts (01:C56A), which is the invincibility cue the user expects here."
+      "after": "a979",
+      "note": "Cap pickup: use the existing matching cap tune at recipient song $79."
     },
     {
       "address": "3483A4",
       "before": "a921",
-      "after": "a961",
-      "note": "Cap expiry: donor hat.asm asked 0x21, which played donor music. Expiry should resume the course track, now 0x61."
+      "after": "a960",
+      "note": "Cap expiry: resume recipient course song $60 after the last active cap expires."
     },
     {
       "address": "348428",
       "before": "a921",
-      "after": "a961",
-      "note": "Cap expiry: donor hat.asm asked 0x21, which played donor music. Expiry should resume the course track, now 0x61."
+      "after": "a960",
+      "note": "Cap expiry: resume recipient course song $60 after the last active cap expires."
     },
     {
       "address": "348468",
       "before": "a921",
-      "after": "a961",
-      "note": "Cap expiry: donor hat.asm asked 0x21, which played donor music. Expiry should resume the course track, now 0x61."
+      "after": "a960",
+      "note": "Cap expiry: resume recipient course song $60 after the last active cap expires."
     }
   ]
 }

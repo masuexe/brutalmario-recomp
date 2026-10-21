@@ -21,6 +21,13 @@ are included in the [cumulative center candidate](star-world-center-restoration.
 its unfinished Giant Starman ending is an accepted exception, preserved as the
 donor left it, so no center clear is claimed.
 
+The user subsequently reported incorrect lower-inner music. The
+[music correction](lower-inner-music.md) selects existing course song `$60`
+and cap song `$79`, with all three expiry paths returning to `$60`.
+The cap song's reachable musical graph matches cheap_demo exactly; the course
+song is its existing revised arrangement. Automated pickup/expiry and save
+checks are separate from the pending human listening check on this build.
+
 On 2026-10-21 the user reported that powered Mario died instead of shrinking
 in `star-world-center`. The [recipe regression](center-damage-regression.md)
 was reproduced and repaired with real Koopa-contact checks in both hosts.

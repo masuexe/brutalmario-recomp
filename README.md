@@ -18,6 +18,7 @@ The second tool verifies the supplied base and nine patches against `config/cont
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
 - [Cumulative nine-star candidate and center completion boundary](docs/star-world-center-restoration.md)
 - [Lower-inner warp stars and the qualified 100-coin exit](docs/star-world-lower-inner-restoration.md)
+- [Lower-inner course/cap music mapping and listening check](docs/lower-inner-music.md)
 - [Center damage regression](docs/center-damage-regression.md)
 - [Special Warp Star cannon controls and ZSNES 1.51 comparison](docs/center-cannon-flight.md)
 - [Sky Star middle-right accepted stage and handoff policy](docs/star-world-middle-right-restoration.md)

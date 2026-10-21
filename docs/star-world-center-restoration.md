@@ -8,69 +8,47 @@ boss ending is an accepted exception, preserved as the donor left it (see
 that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
-`509d119fe3eb69bb151e87fae8faee6d1ea86c39cfb1f8a91cf1f6e8935f98bf`.
-Its base is the accepted lower-inner ROM
-`7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101`,
-which carries the corrected music ids (course track `$1E`, taken from the fourth
-Athletic Special scene, and cap expiry `$1E`). Earlier identities, in order, were
-`e0fb3837…` (original), `406ce1d0…` (interim alias), `5882080f…` (donor track
-transplant), `e1ce3009…` (`$61`, wrong scene) and now `509d119f…`; only the last
-one is current.
+`da880e47ec0aa81f06af8596e5b4c813bd3a934631041ffb9feba6a272a590b9`.
+Its base is lower-inner ROM
+`359b4c3fb1b4c33d4ba73cc4f9e09db642e5864517aa5e9658a87e41e252cbb5`.
+The [lower-inner music correction](lower-inner-music.md) changes seven music
+selection bytes relative to center `509d119f…`: course/expiry `$60`, caps `$79`.
+The music report records fresh checks for this identity; the broader center
+qualification described below was recorded on the preceding checkpoint.
 The earlier center-only baseline `6db0bb2e…` is retained in the damage and
 cannon reports as the identity originally tested there.
 
 ## Current checks
 
-Fresh native and reference runs on this exact candidate verify:
+Fresh native and reference runs on ROM `da880e47…` check all three cap
+pickups and natural expiry, then the assisted lower-inner 100-coin ending,
+overworld return, both SRAM copies and reset/File A reload. The audio
+captures cover the corrected existing songs; diagnostic ARAM checks confirm
+which payload is actually loaded. Human listening remains pending. See
+[the music report](lower-inner-music.md) and
+`local/reports/lower-inner-music-qualification.json` for exact scope and receipts.
 
-- Powered Mario takes a real Koopa hit, shrinks and continues with the same
-  life total. See [the damage regression](center-damage-regression.md).
-- Actual cannon contact, followed by B without directional input, crosses
-  the second-DK pit and collects the DK coin. The relevant native/reference
-  samples match. See [the legacy comparison](center-cannon-flight.md).
-- Five real DK collisions raise the count to 5, award the ordinary extra
-  life and set `$1F30=$20`. This uses paused position/camera fixtures and
-  does not qualify saving the center DK result.
-- The actual end-star transfer and existing doors reach room `$079`.
-  Real blue-block pickup/drop contacts raise the boss hit count to 4 and
-  enter phase 2. The attack fixture holds Mario's position and grants
-  damage immunity; it is not an unassisted fight or victory acceptance.
+The regular native executable SHA-256 is
+`7159f1a1d61ea642145cf8826c727fde1632cd204adf8c6862ad3ff66336848a`.
+Only seven selection bytes differ from the preceding ROM; no runtime code,
+geometry, coin, goal or save logic changed.
 
-The input scripts describe their shortcuts explicitly. They do not write
-coin totals, boss hit counts, completion results or SRAM. Their limited
-scopes are recorded in each script.
+### Historical broader checkpoint
 
-Capture prefixes on this ROM are `center-cumulative-hurt`,
-`center-cumulative-cannon`, `center-cumulative-coins` and
-`center-cumulative-boss`, each with `-reference` and `-native` suffixes.
+`local/reports/center-cumulative-qualification.json` pins preceding ROM
+`509d119fe3eb69bb151e87fae8faee6d1ea86c39cfb1f8a91cf1f6e8935f98bf`.
+It records 239 exact prior-route WRAM/framebuffer samples and bounded checks
+for powered damage, cannon/DK travel, five DK pickups, boss phases,
+death/re-entry and the lower-inner saved ending. The boss-phase fixture
+uses position/immunity shortcuts and does not qualify victory. The five-DK
+fixture does not qualify saving that center result. Separate upper-inner and
+lower-inner death/re-entry captures also remain historical evidence.
 
-All 239 previous native WRAM/framebuffer samples across nine routes remain
-exact on the cumulative candidate. The new lower-inner 100-coin exit and
-center death/re-entry also pass fresh runs on this identity: both SRAM
-copies retain the lower-inner `$8F` result after File A reload; a center pit
-death loses one life, returns to the hub and permits re-entry with that life
-total retained. Subsequent lower-inner and upper-inner pit checks also lose
-exactly one life, return to the hub and re-enter their respective courses
-with that life total retained. The scripts are
-`star-world-lower-inner-death.script` and
-`star-world-upper-inner-death.script`; capture prefixes are
-`center-cumulative-{lower-inner,upper-inner}-death`, with both host suffixes.
-These make 16 additional bounded host checks. Local reports
-retain receipts and assertions in
-`local/reports/center-cumulative-qualification.json`; neither ROMs nor
-captured states are distributed. The native executable SHA-256 is
-`92603cf80f1881074b6e7c334c145cb799030ffbc946b545ca153d9d3a74c481`; the
-static-audio twin is
-`61d7c14b266cf181a9c0812ce30672bbbad700d526ba84a759b6a6f42bdd6167`.
-
-The `tools/m1.py` capture timeout was raised from 180 s to 900 s in the same
-change: the lower-inner goal capture now needs about 324 s of wall clock on this
-host (about 77 fps under competing load) and previously exceeded the old limit.
-Everything was re-run on this candidate: all 16 bounded host captures pin ROM
-`e1ce3009…` and binary `c0430dba…`, the qualification probe prints PASS for the
-12 asserted host checks, and all nine regression routes report zero differences
-over the 239 WRAM/framebuffer samples. Earlier pairs (`e0fb3837…`/`590b76b5…`
-and `406ce1d0…`/`247f7299…`) are superseded, not additive.
+These broader results are not presented as fresh tests on the seven-byte
+music follow-up. Capture prefixes `center-cumulative-*` and the old build
+hashes belong to those earlier receipts. The historical 900-second capture
+limit accommodates the roughly five-minute native assisted 100-coin script;
+this limit was already in place before the music correction.
 
 ## Boss ending
 

@@ -11,11 +11,11 @@ the pickups. It does not claim an unassisted complete route or DK coverage.
 - Recipe: `config/restorations/star-world-lower-inner.json`.
 - Base ROM SHA-256:
   `394c59841ce22184b4f804f4ad518f83c26190178127a471364ab615069e0388`.
-- Candidate ROM SHA-256:
-  `cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3`.
-  The previous candidate was
-  `1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`; the
-  only difference is the interim song-slot alias described under the cap defect.
+- Current candidate ROM SHA-256:
+  `359b4c3fb1b4c33d4ba73cc4f9e09db642e5864517aa5e9658a87e41e252cbb5`.
+  The music correction changes seven selection bytes relative to `7e1f9430…`.
+  See [the current music report](lower-inner-music.md). Earlier identities and
+  listening experiments below are historical, not the current selection policy.
 - No runtime changes, new graphics, geometry replacement or global entrance
   branch edits are included.
 
@@ -46,7 +46,10 @@ is preserved locally and excluded from both the accepted middle-left
 recipe and this candidate. Restoring the missing actors already lets Mario
 pass the former `$0522` stop.
 
-## Qualification
+## Original gameplay qualification
+
+The original checkpoint below used ROM `1c35a893…`. Current music and saved-exit
+follow-up checks are documented separately in [the music report](lower-inner-music.md).
 
 `star-world-lower-inner-route.script` uses real controls after the initial
 map shortcut. Both hosts cross `$0522`, ride the warp stars and reach about
@@ -107,7 +110,16 @@ python3 tools/play_demo_only1.py --restoration star-world-lower-inner --show-loc
 Scaffold only when the target directory does not already exist. Practice
 launches use disposable uncleared saves so completion does not replace the
 course entrance with a Warp Star.
-## Known defect: cap pickup freezes the game
+## Historical music investigation (superseded)
+
+The following chronological notes contain rejected hypotheses and old builds.
+In particular, donor `$21/$22` requests select entries in the already uploaded
+four-song bank; they must not be treated as global song-file numbers. Neither
+background similarity nor the ordinary SMW invincibility request identifies the
+cap tune. Use [the current report](lower-inner-music.md) and its pinned graph
+comparison instead of the historical proposed fixes below.
+
+### Original defect: cap pickup freezes the game
 
 Reported 2026-10-21: in this course, eating a cap (hat) changes the music and
 the game freezes some time later.

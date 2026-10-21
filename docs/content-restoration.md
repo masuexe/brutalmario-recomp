@@ -324,3 +324,9 @@ fixture triggers the existing 100-coin exit and retains flag `$8F` in both
 SRAM copies after reset and File A load on both hosts. All 239 previous
 native WRAM/framebuffer samples remain exact. An unassisted complete route,
 DK coverage and death/re-entry are not qualified by this checkpoint.
+
+The subsequent [lower-inner music correction](lower-inner-music.md) uses
+existing recipient songs `$60` (course/expiry) and `$79` (caps). Donor
+`$21/$22` are local selections within an uploaded four-song bank, so global
+song numbers and matching backgrounds were insufficient evidence. Human
+listening on the corrected build remains pending.
