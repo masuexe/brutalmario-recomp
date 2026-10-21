@@ -238,3 +238,8 @@ python3 tools/play_demo_only1.py --restoration star-world-center --show-location
 
 Restart the command after rebuilding to replace an already-running older
 process. The practice launcher still creates a disposable uncleared save.
+
+Cascade check: the same freeze reproduction (`poke 1dfb 21`) on the centre
+candidate `5882080f…` also keeps running - full WRAM keeps changing over 600
+frames - so the inherited `$21` track survived the rebuild rather than only
+existing in the standalone lower-inner image.
