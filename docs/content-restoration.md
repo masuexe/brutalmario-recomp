@@ -283,14 +283,17 @@ and all-five-DK coverage remain unconfirmed.
 
 The center star (`$00A`, room `$079`) has no reachable victory store. Its
 phase-2 boss program never writes the level-end timer, and the donor sprite
-block is unchanged. That course stays unqualified.
+block is unchanged. That undefined ending is preserved as an accepted exception
+rather than patched; see [the center report](star-world-center-restoration.md).
+This does not upgrade any other unconfirmed item listed above.
 The [center damage regression](center-damage-regression.md) records a
 rolled-back recipe edit that made powered Mario die instead of shrinking;
 the [cannon comparison](center-cannon-flight.md) reproduces the directional-input
 distinction in ZSNES 1.51 and qualifies a controlled DK flight on both hosts.
 The [current cumulative center candidate](star-world-center-restoration.md)
 also includes all eight qualified surrounding courses. Its Boss ending is
-an explicit unresolved boundary, not a completed-clear acceptance.
+an accepted exception: the donor's unfinished ending is preserved as-is, no
+clear condition was authored, and no document may claim a center clear.
 
 The upper-inner cave (`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
 Star ROM. Its recipe restores the six missing ExGFX streams and custom

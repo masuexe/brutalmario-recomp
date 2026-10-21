@@ -41,8 +41,8 @@ second dragon coin, compared with cheap_demo. The subsequent
 [cannon-flight comparison](center-cannon-flight.md) reproduces the same
 directional-input distinction in ZSNES 1.51: releasing left/right and
 retaining B crosses the pit on both the legacy donor and this candidate.
-The damage rollback does not change cannon physics. The center boss clear
-remains unqualified.
+The damage rollback does not change cannon physics. The center boss ending is
+an accepted exception, preserved as-is; no center clear is claimed.
 
 Restart the practice command to load the corrected ROM and executable:
 

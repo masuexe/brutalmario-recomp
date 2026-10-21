@@ -197,11 +197,27 @@ with the local audit of all twelve prepared images and with the archived
 completed Giant Starman program is available to copy. It does not by itself
 prove that no unreleased or differently implemented program exists.
 
-Finishing this last acceptance item therefore needs either an explicit
-exception preserving the donor's unfinished ending, or a completed matching
-donor. Designing a new ending would be new content, beyond copying a
-verified playable donor. The overall restoration goal remains open while
-that boundary is unresolved.
+## Accepted exception: the unfinished boss ending
+
+**Decision (2026-10-21):** the center course ships with the donor's unfinished
+ending preserved as-is. This is an explicit, deliberately scoped exception,
+chosen to respect the original work. No new clear condition, goal trigger,
+boss-state write or save result was authored; the recipe still invents nothing.
+
+**Covered:** Mario can reach room `$079` and fight Giant Starman through its
+implemented phases (states 0, 1 and 2). The eight surrounding courses keep their
+qualified exits, and the center's graphics, cannon/DK, coin, damage and
+Boss-phase dependencies stay qualified.
+
+**Not covered:** a center victory, an overworld return, or a retained SRAM
+completion result from this course. No later document may claim a center clear.
+`$13CE` being set by the preceding room transfer is not such a claim.
+
+**Why an exception rather than another restoration attempt:** the donor program
+has no terminal victory state, all twelve prepared images agree, the archived
+`star.asm` sources agree, and community documentation marks the boss
+incomplete. Closing this differently would mean authoring new content, which is
+out of scope for a project that copies a verified playable donor.
 
 ## Launch
 

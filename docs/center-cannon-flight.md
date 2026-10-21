@@ -73,4 +73,5 @@ imports no savestate.
 The [powered-Mario damage fix](center-damage-regression.md) is separate.
 Restart the center practice command to obtain that repaired executable,
 then release left/right during the cannon flight and retain B for the DK
-route. The center boss ending remains unqualified.
+route. The center boss ending is an accepted exception: the donor's unfinished
+ending is preserved as-is and no clear condition was authored.
