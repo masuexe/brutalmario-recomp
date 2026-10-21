@@ -3,8 +3,9 @@
 The current center candidate includes all eight qualified surrounding hub
 courses, the center graphics/sprite/music dependencies, the powered-Mario
 damage rollback and the controlled cannon-flight qualification. The center
-boss ending remains unqualified; this is not a claim that all nine courses
-have completed-clear acceptance.
+boss ending is an accepted exception, preserved as the donor left it (see
+[below](#accepted-exception-the-unfinished-boss-ending)); this is not a claim
+that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
 `e0fb3837d227ca2fcacb389572fb6ac519b37a03d57b385e1dcb83aedf7f2e31`.
