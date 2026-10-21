@@ -361,3 +361,32 @@ by the pattern block and `0xE9` loops bounds the data start), and the result can
 then be verified mechanically: install the payload, force the candidate to play
 `$1E`, and compare the captured ARAM `0x5400` image against the donor image at
 `0x6800` shifted by `-0x1400`.
+
+### The last blocker: the reviewed music command subset
+
+The `$1E` group is located, but adapting it with the existing tool stops
+immediately. `tools/restore_star_world_1.py`'s `adapt_music` only walks the
+command subset it has reviewed:
+
+```
+lengths = {0xda:1, 0xdb:1, 0xe0:1, 0xe2:1, 0xe7:1,
+           0xe9:3, 0xef:3, 0xf0:0, 0xf1:3, 0xf2:3}
+```
+
+Walking the `$1E` sequence reaches **`0xDE`**, which is outside that subset, so
+`adapt_music` raises `unsupported music command`. The four songs the recipes
+already restore happened to stay inside the reviewed subset; this one does not.
+
+So finishing the real-song transplant needs one of two things, both larger than
+a data edit:
+
+1. **Extend `adapt_music`** with the missing commands and review the resulting
+   relocations for this song, then add the `music` block. This is a reviewed-tool
+   change, so it needs the same care as the existing pins.
+2. **Add a raw-payload path** that installs a captured image unchanged by
+   uploading it to the donor base (`0x6800`) instead of rebasing to `0x5400`.
+   That avoids pointer rewriting entirely but needs a new recipe mechanism and a
+   check that the candidate driver does not already use ARAM `0x6800`.
+
+Neither is required for the accepted freeze fix. This is recorded so the next
+attempt starts from the real constraint rather than re-deriving the group.
