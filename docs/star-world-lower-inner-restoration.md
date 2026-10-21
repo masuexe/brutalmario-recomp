@@ -174,3 +174,33 @@ restoration. Do not patch the sprite to skip its music request either.
 
 **Until then.** Grabbing a cap in this course freezes the game. The 100-coin
 exit fixture does not grab caps, which is why the qualification passed.
+
+**User acceptance (2026-10-21).** The user re-tested in game and reports: eating
+a cap switches the music, and when the cap expires the music returns to the
+course theme with no freeze. The interim alias is therefore confirmed to remove
+the crash while leaving the proper track restoration open.
+
+### Runtime SPC capture makes a faithful fix feasible
+
+The diagnostic core can now dump the full 64 KiB SPC/APU RAM at a chosen host
+frame (`BM_APURAM_FRAME`, `BM_APURAM_FILE`). A dump taken while this course's
+level theme is playing shows a complete, already-relocated song sequence at
+ARAM `0x5400`:
+
+```
+@0x5400: 67 54 77 54 FF 00 02 54 00 ...
+```
+
+That is the two pattern pointers, the `FF 00` marker and the `$5402` sequence
+pointer, i.e. the same base the music recipes write. Because the image in ARAM
+is fully relocated, songs can be compared across ROMs byte-for-byte without
+decoding either static format, and a donor song can be lifted as a payload with
+`destination_base` `0x5400` and installed through the existing `music` block
+with no relocation review.
+
+Concrete plan for the proper restoration: force the intended donor id to play,
+dump ARAM, take the sequence image at `0x5400`, and install it at `0FE063`
+(`$21`) and `0FE05A` (`$1E`). The same technique gives the cheap_demo-to-
+demoOnly1 id map for the wider wrong-music question: fingerprint the `0x5400`
+image per id in both lineages and match identical images, falling back to
+similarity for arrangements that changed between demos.

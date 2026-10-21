@@ -683,3 +683,13 @@ This is a real, user-visible defect in an otherwise qualified course. Until the
 songs `$21`, `$1E` and `$22` are restored from the donor, grabbing a cap in this
 course is unsafe. The 100-coin exit fixture never grabs caps, which is why the
 automated qualification passed.
+
+## Lower-inner cap freeze: fixed and confirmed by the user (2026-10-21)
+
+The reported cap-pickup freeze is mitigated in the shipped candidate and the
+user confirmed the result in game: eating a cap switches the music, and when the
+cap expires the music returns to the course theme with no freeze.
+
+The underlying song slots are still interim aliases, not the donor tracks. The
+proper per-song restoration is now tractable through runtime SPC capture; see
+[the lower-inner report](star-world-lower-inner-restoration.md).
