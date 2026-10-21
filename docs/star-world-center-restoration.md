@@ -63,8 +63,12 @@ captured states are distributed. The native executable SHA-256 is
 static-audio twin is
 `24b0fe43280e0251bbc9384ded4526b86019cb1200a5ff5a03293da9834665c6`.
 Both replaced `590b76b5…` when the lower-inner alias changed the base ROM.
-The 16 checks and 239 samples below were recorded against the previous
-candidate and must be re-run for these identities before they are cited again.
+Every bounded capture and every regression sample was then re-run on this
+candidate: all 16 bounded host captures pin ROM `406ce1d0…` and binary
+`247f7299…`, the qualification probe prints PASS for the 12 asserted host
+checks, and all nine regression routes report zero differences over the 239
+WRAM/framebuffer samples. The earlier `e0fb3837…`/`590b76b5…` evidence is
+superseded, not additive.
 
 ## Boss ending
 
