@@ -1,0 +1,71 @@
+# Powered Mario must shrink on real Koopa contact.
+# Map transfer and initial power fixture only; no collision, hurt, life or goal writes.
+# LOVE ANIMAL fireball diagnostic: leave the enemy-derived coin uncollected.
+# Player/map coordinates, Fire Mario, vertical speed and scrolling are adjusted.
+# Actual guest fireballs perform the kill; no enemy/load-record/flag/graphics edits.
+# Teleport to the existing sign trigger, then return through ordinary horizontal scrolling.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x128, Y=0x1e8.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+
+
+dump map
+press y 2
+until 0100 == 12 300
+dump loaded
+until 0100 == 13 300
+dump initialized
+until 0100 == 14 100
+wait 90
+poke 19 01
+dump big_before
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 8
+press right+y 4
+dump hit18
+press right+y 4
+dump hit19
+press right+y 4
+dump hit20
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+press right+y 4
+dump hit29
+wait 120
+dump after_hit
+quit

@@ -31,19 +31,21 @@ class RestorationSafetyTests(unittest.TestCase):
 
     def test_code_patch_replaces_the_pinned_site_and_rejects_a_mismatch(self):
         rom = bytearray(0x8000)
-        rom[0x7604:0x7606] = bytes.fromhex('8017')
+        # Synthetic byte site: this checks patch validation, not gameplay semantics.
+        rom[0x10:0x12] = bytes.fromhex('d006')
         apply_code_patches(rom, {'code_patches': [{
-            'address': '00F604', 'before': '8017', 'after': '8000'}]})
-        self.assertEqual(rom[0x7604:0x7606].hex(), '8000')
+            'address': '008010', 'before': 'd006', 'after': '8006'}]})
+        self.assertEqual(rom[0x10:0x12].hex(), '8006')
         with self.assertRaisesRegex(ValueError, 'code patch site changed'):
             apply_code_patches(rom, {'code_patches': [{
-                'address': '00F604', 'before': '8017', 'after': '8000'}]})
+                'address': '008010', 'before': 'd006', 'after': '8006'}]})
         with self.assertRaisesRegex(ValueError, 'instruction width'):
             apply_code_patches(bytearray(0x8000), {'code_patches': [{
-                'address': '00F604', 'before': '80', 'after': '8000'}]})
+                'address': '008010', 'before': '80', 'after': '8006'}]})
 
     def test_rom_mirrors_are_distinct_from_wram_banks(self):
         self.assertEqual(lorom(0xff8000), 0x3f8000)
+        self.assertEqual(lorom(0xf0aa50), 0x382a50)
         with self.assertRaises(ValueError):
             lorom(0x7f8000)
 

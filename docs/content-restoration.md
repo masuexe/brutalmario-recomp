@@ -283,8 +283,12 @@ and all-five-DK coverage remain unconfirmed.
 
 The center star (`$00A`, room `$079`) has no reachable victory store. Its
 phase-2 boss program never writes the level-end timer, and the donor sprite
-block is unchanged. That course stays unqualified. The upper-inner cave
-(`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
+block is unchanged. That course stays unqualified.
+The [center damage regression](center-damage-regression.md) records a
+rolled-back recipe edit that made powered Mario die instead of shrinking;
+the reported cannon-distance difference remains under investigation.
+
+The upper-inner cave (`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
 Star ROM. Its recipe restores the six missing ExGFX streams and custom
 sprites `$15`, `$45`, and `$50`. `star-world-upper-inner-goal.script` rides
 the coaster, stomps the Koopas, and touches the goal tape. Both hosts return

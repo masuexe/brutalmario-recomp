@@ -17,7 +17,7 @@
     "translevel": 10,
     "requires": "Fresh uncleared save; do not use completion practice flags."
   },
-  "scope": "Cumulative center course restoration: room00A graphics10F and missing shared custom sprite24, preserving recipient layout, music, exits and runtime. Fill the reviewed missing shared1D4 slot used by room078 and the imported sprite boss graphics loader; no code-immediate rewrites. Restore actual donor song16 from the common SPC upload for room079 loading; existing boss INIT song22 stays intact.",
+  "scope": "Cumulative center course restoration: room00A graphics10F and missing shared custom sprite24, preserving recipient layout, music, exits and runtime. Fill the reviewed missing shared1D4 slot used by room078 and the imported sprite boss graphics loader; no code-immediate rewrites. Restore actual donor song16 from the common SPC upload for room079 loading; existing boss INIT song22 stays intact. Preserve the original $00:F604 damage-to-shrink branch and $00:F61B death timer; the previous launch patch incorrectly made powered Mario fall into the death routine. Boss victory remains unqualified.",
   "gfx_record": {
     "address": "14AE48",
     "before": "018001050d00170014000f011300010000000105ffffffffffffffffffffffff"
@@ -167,23 +167,9 @@
       }
     ]
   },
-  "code_patches": [
-    {
-      "address": "00F604",
-      "before": "8017",
-      "after": "8000",
-      "note": "Big Mario's star launch branched over LDA #$90 / STA $7D. Fall through so the original upward speed runs."
-    },
-    {
-      "address": "00F61B",
-      "before": "a92e",
-      "after": "a930",
-      "note": "Use the original $1496 launch timer from the donor routine."
-    }
-  ],
   "output": {
     "size": 4194304,
-    "sha256": "11ceb7737b5eba5322b1612702210c4af7dc9714ccb80babe12853a1f8123106"
+    "sha256": "6db0bb2e6f905a04c03c4ed4b9ebd9674b4a9b5aef7ede533c8f8fc644296d92"
   },
   "music": {
     "id": "16",
