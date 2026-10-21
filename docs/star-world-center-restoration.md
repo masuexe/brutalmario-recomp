@@ -8,14 +8,12 @@ boss ending is an accepted exception, preserved as the donor left it (see
 that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
-`406ce1d04d87251c1a759917cff503b6462c2405ee0b7d0e78e96d84db644af7`.
+`5882080fdfcadaa496119bc7d5b872d19d239f5011241fa02ae853a6eb88bb0f`.
 Its base is the accepted lower-inner ROM
-`cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3`.
-The previous candidate was
-`e0fb3837d227ca2fcacb389572fb6ac519b37a03d57b385e1dcb83aedf7f2e31` on base
-`1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`; the only
-delta is the lower-inner interim song-slot alias that removes the cap-pickup
-freeze, so this candidate needs its captures re-run before it can be cited again.
+`82245b36097703ab35f43c6a88acb352fd9c7fec2be5a549e3060c4e6685de0b`,
+which carries the restored `$21` track. Earlier identities, in order, were
+`e0fb3837…` (original), `406ce1d0…` (interim alias) and now `5882080f…`
+(real donor track); only the last one is current.
 The earlier center-only baseline `6db0bb2e…` is retained in the damage and
 cannon reports as the identity originally tested there.
 
@@ -59,16 +57,14 @@ These make 16 additional bounded host checks. Local reports
 retain receipts and assertions in
 `local/reports/center-cumulative-qualification.json`; neither ROMs nor
 captured states are distributed. The native executable SHA-256 is
-`247f7299ca8077bb7d70bb4dd6ac155235a020ca66348aef935c49285bb4ebfa`; the
+`e7d76e05ba40a1fda74729f7509f5fd3cb59b0aa6f040141d9693606b94f7a7f`; the
 static-audio twin is
-`24b0fe43280e0251bbc9384ded4526b86019cb1200a5ff5a03293da9834665c6`.
-Both replaced `590b76b5…` when the lower-inner alias changed the base ROM.
-Every bounded capture and every regression sample was then re-run on this
-candidate: all 16 bounded host captures pin ROM `406ce1d0…` and binary
-`247f7299…`, the qualification probe prints PASS for the 12 asserted host
-checks, and all nine regression routes report zero differences over the 239
-WRAM/framebuffer samples. The earlier `e0fb3837…`/`590b76b5…` evidence is
-superseded, not additive.
+`35f49f1eec8bf18fdc03d2ef2ee713fe4e67652cad063eca9d03defc73f13f02`.
+Everything was re-run on this candidate: all 16 bounded host captures pin ROM
+`5882080f…` and binary `e7d76e05…`, the qualification probe prints PASS for the
+12 asserted host checks, and all nine regression routes report zero differences
+over the 239 WRAM/framebuffer samples. Earlier pairs (`e0fb3837…`/`590b76b5…`
+and `406ce1d0…`/`247f7299…`) are superseded, not additive.
 
 ## Boss ending
 

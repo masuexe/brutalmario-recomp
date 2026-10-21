@@ -188,7 +188,7 @@ def adapt_music(group, config):
         if cursor < 64 or cursor + size > len(song):
             raise ValueError('music pointer escapes selected song')
 
-    lengths = {0xda: 1, 0xdb: 1, 0xe0: 1, 0xe2: 1, 0xe7: 1,
+    lengths = {0xda: 1, 0xdb: 1, 0xde: 1, 0xdf: 1, 0xe0: 1, 0xe2: 1, 0xe7: 1,
                0xe9: 3, 0xef: 3, 0xf0: 0, 0xf1: 3, 0xf2: 3}
     visited = set()
     pending = []

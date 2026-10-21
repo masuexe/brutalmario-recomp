@@ -522,3 +522,37 @@ Path forward for `$21`, in preference order:
 2. Find the donor's compiled copy at runtime by making the donor play `$21`;
    donor-side forcing has not worked yet (header patches to `$07:8011` did not
    change `$0DDA`), so this needs another mechanism.
+
+## The real `$21` track is restored
+
+The interim alias on `0FE063` has been replaced by the actual donor song.
+
+**Locating it.** The donor's music driver keeps the active sequence pointer at
+ARAM `0x0040` and the active id at `0x0006`. Forcing `$21` and `$22` on the
+donor gives `0x6802` and `0x680A` there, i.e. group offsets 0 and 8, which is the
+id-to-sequence mapping that was missing. Searching the donor ROM for the `$21`
+sequence header (`5B 6D 6B 6D FF 00 02 68`) finds the group once, at file
+`0x148008` (LoROM `$29:8008`): count `0x17F0`, base `0x6800`, group SHA
+`c35603b8…`, the same 6,136-byte shape as the other groups.
+
+**Derived parameters.** `sequence_offset` 0, `source_data_offset` 0x40,
+`song_size` 1434, `pattern_count` 2, 40 relocations, payload 1,442 bytes SHA
+`85ecdad6…`, allocation `0x1E4000`, slot `0FE063`.
+
+**Verified end to end.**
+
+- Forcing `$21` on the rebuilt candidate gives `$0DDA = 0x21`, mode `$14`, and
+  ARAM `0x5400` reads `5B 59 6B 59 FF 00 02 54`, byte-identical to the adapted
+  song. The pattern pointers are `0x6D5B`/`0x6D6B` minus `0x1400`, exactly the
+  rebase the transplant applies.
+- The old freeze reproduction (`poke 1dfb 21`) now keeps running: full WRAM keeps
+  changing over 600 frames instead of freezing.
+- The 100-coin exit still qualifies on the new ROM: `$141C = 1` on the goal
+  animation and `$13CE = 1` on the overworld return.
+
+Candidate ROM is now
+`82245b36097703ab35f43c6a88acb352fd9c7fec2be5a549e3060c4e6685de0b`.
+
+`$1E` remains unimplementable: the donor ships no custom song for `1C`-`1F`, and
+the engine ignores that table slot anyway, so its alias is inert. The cap-expiry
+cue - the one that used to freeze - is now the genuine `ボロ` track.

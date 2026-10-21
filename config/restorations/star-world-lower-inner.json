@@ -175,20 +175,81 @@
   ],
   "output": {
     "size": 4194304,
-    "sha256": "cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3"
+    "sha256": "82245b36097703ab35f43c6a88acb352fd9c7fec2be5a549e3060c4e6685de0b"
   },
   "code_patches": [
-    {
-      "address": "0FE063",
-      "before": "000000",
-      "after": "15efee",
-      "note": "Interim: song table slots $21 and $1E have no entry in the demoOnly1 lineage, so the restored hat.asm freezes the game when the cap effects expire and it requests $21. Point both slots at $40, this course's own level theme, so the request resolves instead of hanging. This is not a faithful copy of the donor tracks; replace it once the donor songs are identified. Equal width, data only."
-    },
     {
       "address": "0FE05A",
       "before": "000000",
       "after": "15efee",
       "note": "Interim: song table slots $21 and $1E have no entry in the demoOnly1 lineage, so the restored hat.asm freezes the game when the cap effects expire and it requests $21. Point both slots at $40, this course's own level theme, so the request resolves instead of hanging. This is not a faithful copy of the donor tracks; replace it once the donor songs are identified. Equal width, data only."
     }
-  ]
+  ],
+  "music": {
+    "id": "21",
+    "source_address": "298008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "c35603b850733bae9b5a6e4bd2fc304ee629356433a44cd8e363f658faeb5207"
+    },
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 0,
+    "source_data_offset": 64,
+    "song_size": 1434,
+    "pattern_count": 2,
+    "relocations": [
+      0,
+      2,
+      6,
+      76,
+      105,
+      157,
+      228,
+      232,
+      238,
+      259,
+      263,
+      369,
+      457,
+      494,
+      548,
+      557,
+      566,
+      610,
+      823,
+      875,
+      895,
+      928,
+      954,
+      981,
+      1036,
+      1140,
+      1172,
+      1181,
+      1189,
+      1193,
+      1371,
+      1373,
+      1375,
+      1377,
+      1381,
+      1387,
+      1389,
+      1391,
+      1393,
+      1397
+    ],
+    "adapted": {
+      "size": 1442,
+      "sha256": "85ecdad6355b865052ce9150ce08b5d92a0353218158210e1e4ba21f6f5470c3"
+    },
+    "pointer_address": "0FE063",
+    "before": "000000",
+    "allocation": {
+      "offset": 1982464,
+      "size": 4096,
+      "fill": 0
+    }
+  }
 }
