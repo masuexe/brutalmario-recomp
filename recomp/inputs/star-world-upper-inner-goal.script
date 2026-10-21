@@ -1,0 +1,63 @@
+# Cave Star normal exit. Ride the coaster, stomp the Koopas, touch the tape.
+# Reference and native both return to the hub and keep the save.
+# The two counter pokes below cancel a one-frame native tick during the
+# tile poke, so both hosts enter the level on the same frame phase.
+# No hit-counter, boss-state, screen-exit, or level-end pokes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+
+# Practice map transfer: map 6, X=0x178, Y=0x188.
+poke 1f11 0606
+poke 1f17 7801880178018801
+poke 1f1f 1700180017001800
+poke 0014 8c
+poke 0013 6f
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 14 480
+until 95 == 01 400
+press b 10
+until 95 == 03 900
+press b 32
+until 95 == 04 900
+wait 40
+press b 12
+until 95 == 05 500
+wait 90
+press b 16
+until 95 == 08 700
+press b 8
+until 94 == d0 250
+press b 10
+until 95 == 0b 800
+wait 80
+press b 8
+until 95 == 0d 600
+press b 10
+until 94 == 20 700
+press b 16
+wait 700
+dump ow1
+wait 300
+dump ow2
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+quit

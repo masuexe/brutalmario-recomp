@@ -279,6 +279,18 @@ The user subsequently tested Sky Star without finding problems and reported
 that sound is available again and its audio is normal. The
 [middle-right restoration report](star-world-middle-right-restoration.md)
 records stage acceptance and the new cumulative baseline. Secret completion
-and all-five-DK coverage remain unconfirmed. Continue automatically with the
-center star (`$00A`, map 6 / `$0178,$01A8`), which lacks ExGFX `$10F` and
-custom sprite `$24`. A new manual gate is not required.
+and all-five-DK coverage remain unconfirmed.
+
+The center star (`$00A`, room `$079`) has no reachable victory store. Its
+phase-2 boss program never writes the level-end timer, and the donor sprite
+block is unchanged. That course stays unqualified. The upper-inner cave
+(`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
+Star ROM. Its recipe restores the six missing ExGFX streams and custom
+sprites `$15`, `$45`, and `$50`. `star-world-upper-inner-goal.script` rides
+the coaster, stomps the Koopas, and touches the goal tape. Both hosts return
+to the hub in mode `$0E` with `$13CE=1` and translevel `$07` flagged `$81`
+in WRAM and both SRAM copies; File A reload keeps `$81`. Two frame-counter
+pokes after the map tile poke keep native on the same phase as reference.
+Death and DK coverage are not part of this checkpoint. The stage is
+automatically qualified. Continue with the remaining hub courses, middle-left
+`$003` and lower-inner `$117`. A new manual gate is not required.

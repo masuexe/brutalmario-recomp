@@ -1,12 +1,16 @@
 # Manual playtest evidence
 
-Current cumulative baseline: [Sky Star / middle-right](star-world-middle-right-restoration.md),
+Last manually accepted baseline: [Sky Star / middle-right](star-world-middle-right-restoration.md),
 room `$009` with destination `$09B`. The user reports that another agent
 completed the work and their playtest found no problems. They also report
 that sound is available again and the heard audio is normal. This accepts
 the stage and current Sky Star sound; secret completion and all five DK
 coins were not itemized and remain unqualified. The user authorizes an
 automatic restoration loop, with targeted human checks only when essential.
+
+The upper-inner cave (`$007`) is automatically qualified on top of that
+baseline. Both hosts clear it and keep the save. It is not a new manual
+acceptance.
 
 Earlier accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
 room `$002`. The user confirmed normal entry and working SMB3 bricks, then

@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World upper-inner restoration candidate",
+  "id": "star-world-upper-inner",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "star-world-middle-right",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "b565937be20d4342602b895a36447382a6f3eeda8979c519210749332cecc284"
+  },
+  "room": "007",
+  "entrance": {
+    "map": 6,
+    "x": 376,
+    "y": 392,
+    "translevel": 7,
+    "requires": "Fresh uncleared save; do not use completion practice flags."
+  },
+  "scope": "Cumulative cave entrance on the accepted Sky Star ROM. Room 007 keeps its layout and remaps six null ExGFX pointers to donor streams. Also install donor custom sprites $15 (coaster), $45 (counter) and $50 (coaster Koopa). The normal goal and save match on reference and native.",
+  "gfx_record": {
+    "address": "14ADE8",
+    "before": "0180270108020702140026016c012a010000fe00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1843200,
+    "size": 10240,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "127",
+      "target_id": "FF0",
+      "record_offset": 2,
+      "source_address": "28CCE6",
+      "compressed": {
+        "size": 493,
+        "sha256": "c1d4e31271e44a3d280b4b37723ffdcce04d6de460f2f7ea77e0eb043970a9d6"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "82f7af1e0ab8e21ba299a1a9a8c185e2c1df0181b69de29a767fdc3243853490"
+      }
+    },
+    {
+      "source_id": "208",
+      "target_id": "FF1",
+      "record_offset": 4,
+      "source_address": "3DAECC",
+      "compressed": {
+        "size": 2976,
+        "sha256": "0ae4e40bcaa345690ba4923d3e263d77092cd7f09565fd53bb4635f73ce31a66"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "e7a2fa1737d987b0fc606567e166365c300f8a0328d1e9f0f111175119a9f233"
+      }
+    },
+    {
+      "source_id": "207",
+      "target_id": "FF2",
+      "record_offset": 6,
+      "source_address": "3DA48D",
+      "compressed": {
+        "size": 2615,
+        "sha256": "4caf12757cc87552e3a6722f5ddfff3708ee4da1ecfcd5324702a4207483e9b5"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "8c5856129178e266446db00ad6a92ae3623202bcbcc5908df8069619050c43eb"
+      }
+    },
+    {
+      "source_id": "126",
+      "target_id": "FF3",
+      "record_offset": 10,
+      "source_address": "28C7E5",
+      "compressed": {
+        "size": 1273,
+        "sha256": "9044e1931a047e34534bc438e2a459bd1e6c0b9c97a3226be6cc8ac2bf75f994"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "6bbafa66ea645cb5cdc03cdd3795561133e001bb03cb697fc1b11701b97035a0"
+      }
+    },
+    {
+      "source_id": "16C",
+      "target_id": "FF4",
+      "record_offset": 12,
+      "source_address": "30EC4E",
+      "compressed": {
+        "size": 1261,
+        "sha256": "3f580e47068d9c14e00dcea3668f8bce0acf3696408dff9d87b3e2055856e3ad"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "c875361ce556b4d0f1bc212cedb59c5b08196fce2d1d63c05152a53b320b6479"
+      }
+    },
+    {
+      "source_id": "12A",
+      "target_id": "FF5",
+      "record_offset": 14,
+      "source_address": "28DAEF",
+      "compressed": {
+        "size": 661,
+        "sha256": "73c5a74ba17e875415f02e8c13e0e64712690bc6157d8f3afedacf83dd318af8"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "9c02bc51f09a340efdc97c8733a00d69d00c2dcda44794fa9faff29dd622b896"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "e79d886f26506f5c46c2aa235948114c82d45d69d7ab838ca285290eb1596563"
+  },
+  "custom_sprites": [
+    {
+      "id": "15",
+      "rooms": [
+        7,
+        271
+      ],
+      "source_record_address": "10B2AD",
+      "destination_record_address": "10B1DA",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "013601863f13996417fd1037fd100000",
+      "source_address": "10FCEC",
+      "destination_address": "30FCEC",
+      "block": {
+        "size": 575,
+        "sha256": "ba0f1a7822e1364661942556b061d581692e2e9812e8f79314af29584c556036"
+      },
+      "shared_dependencies": [
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ]
+    },
+    {
+      "id": "45",
+      "rooms": [
+        7,
+        203,
+        278
+      ],
+      "source_record_address": "10B5AD",
+      "destination_record_address": "10B4DA",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "0128000032139964a28419a784190000",
+      "source_address": "198493",
+      "destination_address": "318493",
+      "block": {
+        "size": 321,
+        "sha256": "9c27bb7c02d9750100254dea792ced724a783dd886aa6ee8528cfeb86c39b821"
+      },
+      "shared_dependencies": [
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ]
+    },
+    {
+      "id": "50",
+      "rooms": [
+        7
+      ],
+      "source_record_address": "10B65D",
+      "destination_record_address": "10B58A",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "013600003d9319641ab91cc2b91c0000",
+      "source_address": "1CB8EF",
+      "destination_address": "33B8EF",
+      "block": {
+        "size": 806,
+        "sha256": "188cf800ac477190ba969e18ccd21d6932a7322e2cea14a7acda8d5cd4a68e9f"
+      },
+      "shared_dependencies": [
+        {
+          "address": "01802A",
+          "size": 128,
+          "sha256": "78146f61aca8e06a92e0e7066b81fb89deb5fba31d60692b6857fd416251bc9c"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01AA33",
+          "size": 64,
+          "sha256": "5fb77cc26f99b2baf79b08ce19196757d0b7d570d5b0544ad4cdf0c7108cd2d0"
+        },
+        {
+          "address": "01AB99",
+          "size": 64,
+          "sha256": "deb7c4f5b0ab2878d51446b71b7e5c2fbfbf6f2c9f209687aacf77973fdaaacd"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ]
+    }
+  ]
+}
