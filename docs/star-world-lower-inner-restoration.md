@@ -191,6 +191,14 @@ ARAM `0x5400`:
 @0x5400: 67 54 77 54 FF 00 02 54 00 ...
 ```
 
+A captured lower-inner image at `0x5400` reads `67 54 77 54 FF 00 02 54`:
+pattern pointers `$5467`/`$5477`, the `FF 00` marker and sequence pointer
+`$5402`, which is exactly `base + 2` as the music recipe format requires. That
+proves the capture is a genuine relocated song image rather than sample data. A
+full track walk still needs the precise pattern-header and loop semantics that
+`adapt_music` encodes, so lifting a donor song as a payload is the next step,
+not a finished capability.
+
 That is the two pattern pointers, the `FF 00` marker and the `$5402` sequence
 pointer, i.e. the same base the music recipes write. Because the image in ARAM
 is fully relocated, songs can be compared across ROMs byte-for-byte without
