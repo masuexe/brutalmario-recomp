@@ -575,3 +575,43 @@ group was located.
 Consequence for any future id sweep: budget one short run per id (~15 s) rather
 than a shared parameterised ROM, and read ARAM `0x0040` for the sequence
 pointer and `0x0006` for the active id.
+
+## Music ids corrected (supersedes the transplant above)
+
+User listening found the transplanted music wrong, and also that the course's own
+BGM was wrong. Both are id-space mistakes, not data problems.
+
+**Course BGM was the wrong song.** The user pointed at Athletic Special: find
+the room with the same background. Comparing headers,
+
+| Level | Header | byte0 | byte1 | music |
+| --- | --- | --- | --- | --- |
+| Athletic Special | `$3B:EEB1` | `40` | `60` | `61` |
+| lower-inner | `$3A:B522` | `40` | `60` | `40` (wrong) |
+
+both share `40 60`, so the correct track is **`$61`**. The recipe now patches the
+level header music byte `41` -> `62` (music id + 1) at `3AB524`.
+
+**The cap sprite requested donor ids.** Restored `hat.asm` asks `$22` on pickup
+and `$21` on expiry, which are cheap_demo's ids and mean different tracks here.
+Their donor meaning was not useful - donor `$21` is a World 8-1 track, which is
+exactly what the user heard after the transplant.
+
+Replaced both request ids with ones that are correct for this lineage:
+
+- pickup: `$22` -> `$0D`. The game itself requests `$0D` when star power starts
+  (`01:C56A`: `LDA #$FF / STA $1490 / LDA #$0D / STA $1DFB`), and the user
+  identified the wanted cue as the invincibility theme from Mario 64.
+  Patched at `348084`, `3480C5`, `348103` (`A9 22` -> `A9 0D`).
+- expiry: `$21` -> `$61`, the course track, so caps resume the level music.
+  Patched at `3483A4`, `348428`, `348468` (`A9 21` -> `A9 61`).
+
+The donor music transplant and the table aliases are gone: no `music` block, no
+`0FE05A`/`0FE063` patches. Everything now comes from the level header and the
+sprite's own request ids.
+
+Verified: `$0DDA = 0x61` after load; all six patch sites present; `poke 1dfb 0d`
+does not hang; the 100-coin exit still gives `$141C = 1` and `$13CE = 1`.
+
+Candidate ROM is now
+`1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218`.

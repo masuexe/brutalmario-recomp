@@ -8,12 +8,13 @@ boss ending is an accepted exception, preserved as the donor left it (see
 that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
-`5882080fdfcadaa496119bc7d5b872d19d239f5011241fa02ae853a6eb88bb0f`.
+`e1ce30096e6623085838a1d435adcdffd2e68bb18ac2702b0f58933be42f4f6d`.
 Its base is the accepted lower-inner ROM
-`82245b36097703ab35f43c6a88acb352fd9c7fec2be5a549e3060c4e6685de0b`,
-which carries the restored `$21` track. Earlier identities, in order, were
-`e0fb3837…` (original), `406ce1d0…` (interim alias) and now `5882080f…`
-(real donor track); only the last one is current.
+`1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218`,
+which carries the corrected music ids (course track `$61`, cap pickup `$0D`,
+cap expiry `$61`). Earlier identities, in order, were `e0fb3837…` (original),
+`406ce1d0…` (interim alias), `5882080f…` (donor track transplant, wrong music)
+and now `e1ce3009…`; only the last one is current.
 The earlier center-only baseline `6db0bb2e…` is retained in the damage and
 cannon reports as the identity originally tested there.
 
@@ -57,11 +58,11 @@ These make 16 additional bounded host checks. Local reports
 retain receipts and assertions in
 `local/reports/center-cumulative-qualification.json`; neither ROMs nor
 captured states are distributed. The native executable SHA-256 is
-`e7d76e05ba40a1fda74729f7509f5fd3cb59b0aa6f040141d9693606b94f7a7f`; the
+`c0430dba605ad5423a89468992753b9507e3e345f92a7e310d9979be3c01bfbb`; the
 static-audio twin is
-`35f49f1eec8bf18fdc03d2ef2ee713fe4e67652cad063eca9d03defc73f13f02`.
+`a371a607ed521289dbfb17ccc9776c61e08a215545a946e96c9fb1b607f237c6`.
 Everything was re-run on this candidate: all 16 bounded host captures pin ROM
-`5882080f…` and binary `e7d76e05…`, the qualification probe prints PASS for the
+`e1ce3009…` and binary `c0430dba…`, the qualification probe prints PASS for the
 12 asserted host checks, and all nine regression routes report zero differences
 over the 239 WRAM/framebuffer samples. Earlier pairs (`e0fb3837…`/`590b76b5…`
 and `406ce1d0…`/`247f7299…`) are superseded, not additive.
