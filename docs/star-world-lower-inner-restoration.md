@@ -118,9 +118,16 @@ the game freezes some time later.
 | Cap effects expire (flag drops below `$11`) | `$21` | `13A412` | **`000000` (no song installed)** |
 | 100-coin controller award | `$1E` | `0F6CE1` | **`000000` (no song installed)** |
 
-The song pointer table is three bytes per id, big-endian, at `$0F:E000`
-(confirmed against the four recipes that restore music). This recipe restores
-no music at all, so both ids it requests are empty in the recipient.
+The **recipient's** song pointer table is three bytes per id, big-endian, at
+`$0F:E000` (confirmed against the four recipes that restore music). This recipe
+restores no music at all, so both ids it requests are empty in the recipient.
+
+The donor does not use the same layout. Reading donor ids through that table
+returns payloads with a different destination base (`0x0410` for `$54`, against
+`0x5400` in the adapted recipient payload) and some entries are not valid LoROM
+addresses at all. Donor music is reached through the per-recipe `music` groups,
+not by id-to-id table comparison, so a cheap_demo-to-demoOnly1 id map cannot be
+built from the two tables as they stand.
 
 Requesting an empty id does not fail gracefully: the guest hangs waiting for
 the music engine. Minimal reproduction on `star-world-lower-inner`:
