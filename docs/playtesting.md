@@ -668,3 +668,18 @@ The silent window is closed: the user reports sound is available again, and on
 listening acceptance for the center cumulative candidate, not an itemized pass
 and not a retroactive acceptance of the earlier tracks. Remaining itemized
 listening stays deferred to the [audio acceptance queue](audio-acceptance-queue.md).
+
+## Lower-inner cap pickup freezes the game (2026-10-21)
+
+The user reported that in the course directly below the star hub, eating a cap
+changes the music and then the game freezes. Reproduced and traced: the restored
+`hat.asm` requests song `$21` when the cap effects expire, and that id has no
+entry in the recipient song table at `$0F:E000`, so the guest hangs waiting for
+the music engine. Poking `$1DFB=21` reproduces a hard freeze on the candidate and
+does not on `cheap_demo`. See
+[the lower-inner report](star-world-lower-inner-restoration.md).
+
+This is a real, user-visible defect in an otherwise qualified course. Until the
+songs `$21`, `$1E` and `$22` are restored from the donor, grabbing a cap in this
+course is unsafe. The 100-coin exit fixture never grabs caps, which is why the
+automated qualification passed.

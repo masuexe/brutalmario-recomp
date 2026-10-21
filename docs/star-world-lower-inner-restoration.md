@@ -104,3 +104,47 @@ python3 tools/play_demo_only1.py --restoration star-world-lower-inner --show-loc
 Scaffold only when the target directory does not already exist. Practice
 launches use disposable uncleared saves so completion does not replace the
 course entrance with a Warp Star.
+## Known defect: cap pickup freezes the game
+
+Reported 2026-10-21: in this course, eating a cap (hat) changes the music and
+the game freezes some time later.
+
+**Root cause.** The recipe restores custom slot `$30` (`hat.asm`: caps and
+100-coin controller), which requests music through `$1DFB`:
+
+| Trigger | Song id | Donor table entry | Recipient table entry |
+| --- | --- | --- | --- |
+| Cap picked up (sets `$7FFFD0/$7FFFD1/$7FFFD2 = $FF`) | `$22` | `30FEEC` | `13CCE2` - a *different* song |
+| Cap effects expire (flag drops below `$11`) | `$21` | `13A412` | **`000000` (no song installed)** |
+| 100-coin controller award | `$1E` | `0F6CE1` | **`000000` (no song installed)** |
+
+The song pointer table is three bytes per id, big-endian, at `$0F:E000`
+(confirmed against the four recipes that restore music). This recipe restores
+no music at all, so both ids it requests are empty in the recipient.
+
+Requesting an empty id does not fail gracefully: the guest hangs waiting for
+the music engine. Minimal reproduction on `star-world-lower-inner`:
+
+```
+enter the course, then   poke 1dfb 21
+```
+
+`$1DFB` stays `$21` and is never consumed, and full WRAM is byte-identical from
+30 frames after the poke through 600 frames, while the emulator keeps
+advancing. Control runs: the same poke on `cheap_demo`, where `$21` is
+installed, keeps running normally (5,141 bytes changed over the same window),
+and poking `$22` or `$1E` on the candidate does not hang.
+
+This matches the report exactly: the music changes on pickup (`$22`), then the
+game freezes when the caps expire and `$21` is requested.
+
+**Fix direction.** Restore the songs `hat.asm` depends on - `$21`, `$1E` and,
+for fidelity, `$22` - the same way the lower-right, middle-right, upper-right
+and center recipes restore their tracks: one `music` block per song with its
+own allocation, `pointer_address` (`0FE063` for `$21`, `0FE05A` for `$1E`,
+`0FE066` for `$22`) and reviewed relocations. Do not alias the empty slots to
+an existing track: that plays the wrong music and is not a faithful
+restoration. Do not patch the sprite to skip its music request either.
+
+**Until then.** Grabbing a cap in this course freezes the game. The 100-coin
+exit fixture does not grab caps, which is why the qualification passed.
