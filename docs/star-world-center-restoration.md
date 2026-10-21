@@ -8,9 +8,14 @@ boss ending is an accepted exception, preserved as the donor left it (see
 that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
-`e0fb3837d227ca2fcacb389572fb6ac519b37a03d57b385e1dcb83aedf7f2e31`.
+`406ce1d04d87251c1a759917cff503b6462c2405ee0b7d0e78e96d84db644af7`.
 Its base is the accepted lower-inner ROM
-`1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`.
+`cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3`.
+The previous candidate was
+`e0fb3837d227ca2fcacb389572fb6ac519b37a03d57b385e1dcb83aedf7f2e31` on base
+`1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`; the only
+delta is the lower-inner interim song-slot alias that removes the cap-pickup
+freeze, so this candidate needs its captures re-run before it can be cited again.
 The earlier center-only baseline `6db0bb2e…` is retained in the damage and
 cannon reports as the identity originally tested there.
 
@@ -54,7 +59,12 @@ These make 16 additional bounded host checks. Local reports
 retain receipts and assertions in
 `local/reports/center-cumulative-qualification.json`; neither ROMs nor
 captured states are distributed. The native executable SHA-256 is
-`590b76b55eaa8c35268ac0f9cbdb5f1e9bb68f0ae449363c07bf497bf7591ebe`.
+`247f7299ca8077bb7d70bb4dd6ac155235a020ca66348aef935c49285bb4ebfa`; the
+static-audio twin is
+`24b0fe43280e0251bbc9384ded4526b86019cb1200a5ff5a03293da9834665c6`.
+Both replaced `590b76b5…` when the lower-inner alias changed the base ROM.
+The 16 checks and 239 samples below were recorded against the previous
+candidate and must be re-run for these identities before they are cited again.
 
 ## Boss ending
 

@@ -175,6 +175,20 @@
   ],
   "output": {
     "size": 4194304,
-    "sha256": "1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9"
-  }
+    "sha256": "cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3"
+  },
+  "code_patches": [
+    {
+      "address": "0FE063",
+      "before": "000000",
+      "after": "15efee",
+      "note": "Interim: song table slots $21 and $1E have no entry in the demoOnly1 lineage, so the restored hat.asm freezes the game when the cap effects expire and it requests $21. Point both slots at $40, this course's own level theme, so the request resolves instead of hanging. This is not a faithful copy of the donor tracks; replace it once the donor songs are identified. Equal width, data only."
+    },
+    {
+      "address": "0FE05A",
+      "before": "000000",
+      "after": "15efee",
+      "note": "Interim: song table slots $21 and $1E have no entry in the demoOnly1 lineage, so the restored hat.asm freezes the game when the cap effects expire and it requests $21. Point both slots at $40, this course's own level theme, so the request resolves instead of hanging. This is not a faithful copy of the donor tracks; replace it once the donor songs are identified. Equal width, data only."
+    }
+  ]
 }

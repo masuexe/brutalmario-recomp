@@ -12,7 +12,10 @@ the pickups. It does not claim an unassisted complete route or DK coverage.
 - Base ROM SHA-256:
   `394c59841ce22184b4f804f4ad518f83c26190178127a471364ab615069e0388`.
 - Candidate ROM SHA-256:
-  `1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`.
+  `cb3e60179cf83af322ce8d0316e1f2248ef4c02b7bc2b8084cfb99a86f3a30f3`.
+  The previous candidate was
+  `1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9`; the
+  only difference is the interim song-slot alias described under the cap defect.
 - No runtime changes, new graphics, geometry replacement or global entrance
   branch edits are included.
 
@@ -152,11 +155,20 @@ and poking `$22` or `$1E` on the candidate does not hang.
 This matches the report exactly: the music changes on pickup (`$22`), then the
 game freezes when the caps expire and `$21` is requested.
 
-**Fix direction.** Restore the songs `hat.asm` depends on - `$21`, `$1E` and,
-for fidelity, `$22` - the same way the lower-right, middle-right, upper-right
-and center recipes restore their tracks: one `music` block per song with its
-own allocation, `pointer_address` (`0FE063` for `$21`, `0FE05A` for `$1E`,
-`0FE066` for `$22`) and reviewed relocations. Do not alias the empty slots to
+**Interim mitigation (applied).** The recipe now aliases both empty slots to the
+course's own level theme: `0FE063` (`$21`) and `0FE05A` (`$1E`) are set to the
+three-byte entry of `$40`, currently `15EFEE`, through equal-width
+`code_patches`. Re-running the reproduction keeps the game alive (`$1DFB`
+returns to zero, full WRAM keeps changing) instead of hanging, and the
+100-coin exit still qualifies. This removes the crash; it does **not** play the
+donor tracks, so it stays documented as an interim measure.
+
+**Proper fix direction.** Restore the songs `hat.asm` depends on - `$21`, `$1E`
+and, for fidelity, `$22` - the same way the lower-right, middle-right,
+upper-right and center recipes restore their tracks: one `music` block per song
+with its own allocation, `pointer_address` (`0FE063` for `$21`, `0FE05A` for
+`$1E`, `0FE066` for `$22`) and reviewed relocations. Do not leave the empty
+slots permanently aliased to
 an existing track: that plays the wrong music and is not a faithful
 restoration. Do not patch the sprite to skip its music request either.
 
