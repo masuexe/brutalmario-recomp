@@ -485,3 +485,40 @@ Consequences:
 Reverted again for safety: lower-inner `cb3e6017…`, centre `406ce1d0…`, the 16
 bounded checks and 239 samples still apply, and the tool/recipe changes were
 rolled back with the experiment.
+
+### Authoritative id-to-song mapping found in the reference data
+
+The donor hack ships its custom music as Addmusic text sources, and both
+dataset directories contain the same 75 files:
+
+```
+references/brutalmario-data/data1/custommusic/   (identical in data2)
+ids: 11 12 13 14 15 16 17 18 19 1A 1B 20 21 ... 5E 5F
+```
+
+Two facts follow directly:
+
+- **`1C`-`1F` have no source file.** That is why `$1E` behaves specially: the
+  donor never defines a custom song there, so the engine ignores the `0FE000`
+  entry for it. The `$1E` slot cannot be restored from donor content because
+  there is no donor content for it.
+- **`$21` is `21.txt`, titled `ボロ`** (`;#ボロ` in Shift-JIS), 2,105 bytes,
+  SHA-256 `8b6aa372…`. This is the cap-expiry cue the restored `hat.asm` asks
+  for, and it is a normal id, so the proven pipeline applies to it.
+
+Searching the donor ROM for the pointer table that maps these ids was not
+fruitful: exact 3-byte big-endian pointers to the known group addresses do not
+occur, neither endianness yields a valid group header for `$21`, and a strict
+scan requiring ids `1C`-`1F` to be empty and every other present id to be a
+valid distinct LoROM pointer returns zero candidates. So the donor's table uses
+a layout this tooling does not model, and it should not be re-searched the same
+way.
+
+Path forward for `$21`, in preference order:
+
+1. Assemble `custommusic/21.txt` with the standard Addmusic tool and install the
+   compiled song through the proven payload route (ordinary id, verified by the
+   `$0C` control experiment).
+2. Find the donor's compiled copy at runtime by making the donor play `$21`;
+   donor-side forcing has not worked yet (header patches to `$07:8011` did not
+   change `$0DDA`), so this needs another mechanism.
