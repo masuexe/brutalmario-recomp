@@ -249,6 +249,19 @@ def restore_music(donor, out, config):
     out[pointer:pointer+3] = address.to_bytes(3, 'big')
 
 
+def apply_code_patches(out, config):
+    """Replace reviewed instruction bytes. The width stays the same."""
+    for patch in config.get('code_patches', []):
+        offset = lorom(int(patch['address'], 16))
+        before = bytes.fromhex(patch['before'])
+        after = bytes.fromhex(patch['after'])
+        if len(before) != len(after) or not before:
+            raise ValueError('code patch must keep the instruction width')
+        if out[offset:offset+len(before)] != before:
+            raise ValueError('code patch site changed')
+        out[offset:offset+len(after)] = after
+
+
 def make_candidate(recipient, donor, config):
     start, size = config['allocation']['offset'], config['allocation']['size']
     end = start + size
@@ -263,13 +276,21 @@ def make_candidate(recipient, donor, config):
     out, cursor, assets = bytearray(recipient), start, []
     for item in config['assets']:
         old_id, new_id = int(item['source_id'], 16), int(item['target_id'], 16)
+        selected_rooms = []
         for room in range(512):
             header = lorom(0x14ad08) + room * 32
             if int.from_bytes(recipient[header:header+2], 'little') & 0x8000:
                 words = [int.from_bytes(recipient[header+i:header+i+2], 'little')
                          for i in range(2, 20, 2)]
                 if new_id in words:
-                    raise ValueError('destination graphics ID is selected by an existing room')
+                    selected_rooms.append(room)
+        shared = item.get('global_pointer', False)
+        if shared:
+            if (old_id != new_id or selected_rooms != item['rooms'] or
+                    'record_offset' in item):
+                raise ValueError('shared graphics have unexpected room dependencies or selection edits')
+        elif selected_rooms:
+            raise ValueError('destination graphics ID is selected by an existing room')
         source_pointer = int.from_bytes(donor[pointer_offset(old_id):pointer_offset(old_id)+3], 'little')
         if source_pointer != int(item['source_address'], 16):
             raise ValueError('donor graphics pointer changed')
@@ -279,7 +300,7 @@ def make_candidate(recipient, donor, config):
         destination_pointer = pointer_offset(new_id)
         if out[destination_pointer:destination_pointer+3] != b'\xff' * 3:
             raise ValueError('destination graphics slot is occupied or repeated')
-        words = [record + item['record_offset'] for record in records]
+        words = [] if shared else [record + item['record_offset'] for record in records]
         if any(int.from_bytes(out[word:word+2], 'little') != old_id for word in words):
             raise ValueError('room does not select the expected source ID')
         stop = cursor + len(compressed) + 8
@@ -297,8 +318,31 @@ def make_candidate(recipient, donor, config):
             raise ValueError('relocated graphics differ from donor')
         assets.append(dict(item, destination_address=f'{address:06X}',
                            rats_offset=cursor, pointer_offset=destination_pointer,
-                           room_word_offset=words[0],
+                           room_word_offset=words[0] if words else None,
                            additional_room_word_offsets=words[1:]))
+        cursor = stop
+    for item in config.get('level_data', []):
+        slot = lorom(int(item['table'], 16)) + int(item['room'], 16) * 3
+        donor_ptr = int.from_bytes(donor[slot:slot+3], 'little')
+        recip_ptr = int.from_bytes(recipient[slot:slot+3], 'little')
+        if donor_ptr != int(item['source_address'], 16):
+            raise ValueError('donor level pointer changed')
+        if recip_ptr != int(item['current_address'], 16):
+            raise ValueError('recipient level pointer changed')
+        raw = donor[lorom(donor_ptr):lorom(donor_ptr) + 0x8000]
+        term = raw.find(b'\xff')
+        if term < 0:
+            raise ValueError('level data has no terminator in its bank')
+        blob = raw[:term + 1]
+        verify(blob, item['data'], 'level data')
+        stop = cursor + len(blob) + 8
+        if stop > end:
+            raise ValueError('level data exceeds reserved allocation')
+        count = len(blob) - 1
+        out[cursor:stop] = (b'STAR' + count.to_bytes(2, 'little') +
+                            (count ^ 0xffff).to_bytes(2, 'little') + blob)
+        address = ((cursor + 8) // 0x8000) << 16 | 0x8000 | ((cursor + 8) & 0x7fff)
+        out[slot:slot+3] = address.to_bytes(3, 'little')
         cursor = stop
     if config.get('custom_sprite'):
         restore_sprite(recipient, donor, out, config['custom_sprite'])
@@ -306,6 +350,7 @@ def make_candidate(recipient, donor, config):
         restore_sprite(recipient, donor, out, item)
     if config.get('music'):
         restore_music(donor, out, config['music'])
+    apply_code_patches(out, config)
     verify(out, config['output'], config['target'])
     return bytes(out), assets
 

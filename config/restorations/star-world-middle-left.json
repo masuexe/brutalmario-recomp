@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World middle-left restoration candidate",
+  "id": "star-world-middle-left",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "star-world-upper-inner",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "e79d886f26506f5c46c2aa235948114c82d45d69d7ab838ca285290eb1596563"
+  },
+  "room": "003",
+  "entrance": {
+    "map": 6,
+    "x": 344,
+    "y": 424,
+    "translevel": 3,
+    "requires": "Fresh uncleared save; do not use completion practice flags."
+  },
+  "scope": "Water course on the Cave Star ROM. Room 003's layer-1 object stream in the recipient is a 19-byte stub, so Mario falls through empty water. Install the donor object stream and leave the sprite list in place. The normal goal tape is reached on both hosts: mode 0E at the hub, 13CE=1, translevel 03 flagged 8C in WRAM and both SRAM copies, and File A reload keeps 8C.",
+  "gfx_record": {
+    "address": "14AD68",
+    "before": "0180ac000d001700140006001300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2359296,
+    "size": 10240,
+    "fill": 0
+  },
+  "assets": [],
+  "level_data": [
+    {
+      "table": "05E000",
+      "room": "003",
+      "source_address": "608061",
+      "current_address": "50A880",
+      "data": {
+        "size": 9769,
+        "sha256": "6e7c68eeee9ffb5874376874505a16b59aa6165bae3e9684a572591003fb89b2"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "394c59841ce22184b4f804f4ad518f83c26190178127a471364ab615069e0388"
+  }
+}

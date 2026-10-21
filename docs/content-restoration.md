@@ -292,5 +292,16 @@ to the hub in mode `$0E` with `$13CE=1` and translevel `$07` flagged `$81`
 in WRAM and both SRAM copies; File A reload keeps `$81`. Two frame-counter
 pokes after the map tile poke keep native on the same phase as reference.
 Death and DK coverage are not part of this checkpoint. The stage is
-automatically qualified. Continue with the remaining hub courses, middle-left
-`$003` and lower-inner `$117`. A new manual gate is not required.
+automatically qualified.
+
+Middle-left (`$003`, map 6 / `$0158,$01A8`) had the same empty layer-1
+problem. `star-world-middle-left` installs the donor object stream on the
+cave ROM. `star-world-middle-left-goal.script` swims the water course and
+jumps into the goal tape at X `$0CA0`. Both hosts return to the hub in
+mode `$0E` at `$010E,$012E` with `$13CE=1` and translevel `$03` flagged
+`$8C` in WRAM. Both SRAM copies store `$8C` (`$0003` and `$01B0`), and
+File A reload keeps `$8C` with 4 lives. The overworld life total before
+reload is 5 on reference and 8 on native; the saved clear matches. Death
+and DK coverage are not part of this checkpoint. The stage is
+automatically qualified. Continue with lower-inner `$117`. A new manual
+gate is not required.

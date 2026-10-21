@@ -13,6 +13,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioStarWorldLowerRightSNESRecomp',
         'title': 'Brutal Mario Star World Lower Right',
     },
+    'star-world-center': {
+        'binary': 'BrutalMarioStarWorldCenterSNESRecomp',
+        'title': 'Brutal Mario Star World Center',
+    },
     'star-world-middle-right': {
         'binary': 'BrutalMarioStarWorldMiddleRightSNESRecomp',
         'title': 'Brutal Mario Star World Middle Right',
@@ -20,6 +24,10 @@ RESTORATIONS = {
     'star-world-upper-right': {
         'binary': 'BrutalMarioStarWorldUpperRightSNESRecomp',
         'title': 'Brutal Mario Star World Upper Right',
+    },
+    'star-world-middle-left': {
+        'binary': 'BrutalMarioStarWorldMiddleLeftSNESRecomp',
+        'title': 'Brutal Mario Star World Middle Left',
     },
     'star-world-upper-inner': {
         'binary': 'BrutalMarioStarWorldUpperInnerSNESRecomp',

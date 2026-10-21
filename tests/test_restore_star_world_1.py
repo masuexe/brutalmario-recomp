@@ -8,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
-from restore_star_world_1 import lorom, lz2, write_verified
+from restore_star_world_1 import apply_code_patches, lorom, lz2, write_verified
 import restore_star_world_1 as restoration
 from m1 import verify_scaffold_rom
 
@@ -28,6 +28,19 @@ class RestorationSafetyTests(unittest.TestCase):
         decoded, source = lz2(rom, 0x00fffe)
         self.assertEqual(decoded, b'\x01\x02')
         self.assertEqual(source, bytes.fromhex('010102ff'))
+
+    def test_code_patch_replaces_the_pinned_site_and_rejects_a_mismatch(self):
+        rom = bytearray(0x8000)
+        rom[0x7604:0x7606] = bytes.fromhex('8017')
+        apply_code_patches(rom, {'code_patches': [{
+            'address': '00F604', 'before': '8017', 'after': '8000'}]})
+        self.assertEqual(rom[0x7604:0x7606].hex(), '8000')
+        with self.assertRaisesRegex(ValueError, 'code patch site changed'):
+            apply_code_patches(rom, {'code_patches': [{
+                'address': '00F604', 'before': '8017', 'after': '8000'}]})
+        with self.assertRaisesRegex(ValueError, 'instruction width'):
+            apply_code_patches(bytearray(0x8000), {'code_patches': [{
+                'address': '00F604', 'before': '80', 'after': '8000'}]})
 
     def test_rom_mirrors_are_distinct_from_wram_banks(self):
         self.assertEqual(lorom(0xff8000), 0x3f8000)
@@ -88,6 +101,43 @@ class RestorationSafetyTests(unittest.TestCase):
         rom = b'STAR' + bytes.fromhex('0f00f0ff') + bytes(16)
         with self.assertRaisesRegex(ValueError, 'protected RATS'):
             restoration.check_allocation(rom, 8, 8)
+
+    def test_shared_missing_graphics_preserve_selectors_and_fill_the_original_slot(self):
+        recipient, donor, config = self.shared_graphics_fixture()
+        result, assets = restoration.make_candidate(recipient, donor, config)
+        record = lorom(0x14ad08)
+        self.assertEqual(result[record:record+32], recipient[record:record+32])
+        self.assertIsNone(assets[0]['room_word_offset'])
+        self.assertEqual(lz2(result, 0x00a008)[0], b'\x01\x02')
+
+    def test_shared_graphics_cannot_enable_an_unreviewed_room(self):
+        recipient, donor, config = self.shared_graphics_fixture()
+        config['assets'][0]['rooms'] = []
+        with self.assertRaisesRegex(ValueError, 'shared graphics'):
+            restoration.make_candidate(recipient, donor, config)
+
+    @staticmethod
+    def shared_graphics_fixture():
+        recipient = bytearray(0xa7000)
+        donor = bytearray(recipient)
+        pointer = restoration.pointer_offset(0x100)
+        record = lorom(0x14ad08)
+        recipient[pointer:pointer+3] = b'\xff' * 3
+        recipient[record:record+4] = bytes.fromhex('01800001')
+        donor[pointer:pointer+3] = bytes.fromhex('008100')
+        donor[0x100:0x104] = bytes.fromhex('010102ff')
+        expected = bytearray(recipient)
+        expected[pointer:pointer+3] = bytes.fromhex('08a000')
+        expected[0x2000:0x200c] = bytes.fromhex('535441520300fcff010102ff')
+        identity = lambda b: dict(size=len(b), sha256=hashlib.sha256(b).hexdigest())
+        config = dict(target='shared-graphics-fixture',
+                      gfx_record=dict(address='14AD08', before=recipient[record:record+32].hex()),
+                      allocation=dict(offset=0x2000, size=0x100),
+                      assets=[dict(source_id='100', target_id='100', global_pointer=True,
+                                   rooms=[0], source_address='008100',
+                                   compressed=identity(bytes.fromhex('010102ff')),
+                                   decoded=identity(b'\x01\x02'))], output=identity(expected))
+        return recipient, donor, config
 
     def test_old_embedded_rom_identity_is_rejected_even_with_new_generation(self):
         with tempfile.TemporaryDirectory() as directory:

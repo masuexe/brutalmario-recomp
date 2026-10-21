@@ -10,7 +10,9 @@ automatic restoration loop, with targeted human checks only when essential.
 
 The upper-inner cave (`$007`) is automatically qualified on top of that
 baseline. Both hosts clear it and keep the save. It is not a new manual
-acceptance.
+acceptance. Middle-left (`$003`) is also automatically qualified: both
+hosts touch the goal tape and keep translevel `$03` flagged `$8C` after
+File A reload. That is not a new manual acceptance either.
 
 Earlier accepted cumulative baseline: [upper-right Star World](star-world-upper-right-restoration.md),
 room `$002`. The user confirmed normal entry and working SMB3 bricks, then

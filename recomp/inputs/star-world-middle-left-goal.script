@@ -1,0 +1,543 @@
+# Middle-left normal clear. Same inputs on reference and native.
+# Map teleport is the only position poke. No hit counter, boss state, $71, or $1493 writes.
+# Both hosts return to mode $0E at $010E,$012E with $13CE=1 and translevel $03 flagged $8C.
+# File A reload keeps $8C in both SRAM copies ($0003 and $01B0).
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+
+# Practice map transfer: map 6, X=0x178, Y=0x188.
+poke 1f11 0606
+poke 1f17 5801a8015801a801
+poke 1f1f 15001a0015001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 14 480
+wait 200
+press right 900
+press b 8
+press right+b 10
+press right 16
+press b 6
+press right 24
+press b 6
+press right 24
+press b 6
+press right 24
+dump t0
+press b 6
+press right 24
+press b 6
+press right 24
+press b 6
+press right 24
+dump t1
+press b 6
+press right 24
+press b 6
+press right 24
+press b 6
+press right 24
+dump t2
+press b 6
+press right 24
+press b 6
+press right 24
+press b 6
+press right 24
+dump t3
+press b 6
+press right 24
+press b 6
+press right 24
+press b 6
+press right 24
+dump t4
+press right 24
+press down 50
+press down+right 20
+dump s0
+press down+right 20
+dump s1
+press down+right 20
+dump s2
+press right 40
+press right 80
+press right 60
+press b 12
+press right 30
+press b 8
+press right 30
+press right 30
+press b 6
+dump s0
+press right 30
+press b 6
+dump s1
+press right 30
+press b 6
+dump s2
+press right 30
+press b 6
+dump s3
+press right 30
+press b 6
+dump s4
+press right 30
+press b 6
+dump s5
+press right 30
+press b 6
+dump s6
+press right 30
+press b 6
+dump s7
+press right 36
+press b 4
+dump u0
+press right 36
+press b 4
+dump u1
+press right 36
+press b 4
+dump u2
+press down 40
+press right 30
+dump f0
+press right 30
+dump f1
+press b+right 28
+press right 40
+press down 16
+press right 28
+dump s0
+press right 28
+dump s1
+press right 28
+dump s2
+press right 28
+dump s3
+press right 28
+dump s4
+press right 28
+dump s5
+press right 28
+dump s6
+press right 28
+dump s7
+press right 40
+press b 12
+press right 24
+press b 8
+press right 36
+dump end
+press down 28
+dump low
+press right 24
+dump u0
+press right 24
+dump u1
+press right 24
+dump u2
+press right+y 12
+press b+right+y 28
+dump hop
+press right+y 20
+dump land
+press b+right 8
+press right 16
+dump h0
+press right 20
+dump r0
+press right 20
+dump r1
+press right 20
+dump r2
+press right 20
+dump r3
+press right 20
+dump r4
+press right 20
+dump r5
+press right 20
+dump r6
+press right 20
+dump r7
+press right 30
+dump s0
+press b 8
+dump b0
+press b 8
+dump b1
+press b 8
+dump b2
+press b 8
+dump b3
+press b 8
+dump b4
+press b 8
+dump b5
+press b 8
+press b 8
+dump top
+press right 20
+dump r0
+press right 20
+dump r1
+press right 20
+dump r2
+press right 20
+dump r3
+press right 20
+dump r4
+press right 20
+dump r5
+press right 20
+dump r6
+press right 20
+dump r7
+press right 28
+dump t0
+press right 28
+dump t1
+press right 28
+dump t2
+press right 28
+dump t3
+press right 28
+dump t4
+press right 28
+dump t5
+press right 28
+dump t6
+press right 28
+dump t7
+press b+right 10
+dump s0
+press b+right 10
+dump s1
+press b+right 10
+dump s2
+press right 16
+dump r0
+press right 16
+dump r1
+press right 16
+dump r2
+press right 16
+dump r3
+press b 3
+press right 12
+dump k0
+press b 3
+press right 12
+dump k1
+press b 3
+press right 12
+dump k2
+press b 3
+press right 12
+dump k3
+press b 3
+press right 12
+dump k4
+press b 3
+press right 12
+dump k5
+press b 3
+press right 12
+dump k6
+press b 3
+press right 12
+dump k7
+press b 3
+press right 12
+dump k8
+press b 3
+press right 12
+dump k9
+press b 3
+press right 12
+dump m0
+press b 3
+press right 12
+dump m1
+press b 3
+press right 12
+dump m2
+press b 3
+press right 12
+dump m3
+press b 3
+press right 12
+dump m4
+press b 3
+press right 12
+dump m5
+press b 3
+press right 12
+dump m6
+press b 3
+press right 12
+dump m7
+press b 3
+press right 12
+dump m8
+press b 3
+press right 12
+dump m9
+press b 3
+press right 12
+dump m10
+press b 3
+press right 12
+dump m11
+press b 3
+press right 12
+dump m12
+press down 16
+dump d0
+press down 16
+dump d1
+press down 16
+dump d2
+press down 16
+dump d3
+press b 2
+press right 10
+dump h0
+press b 2
+press right 10
+dump h1
+press b 2
+press right 10
+dump h2
+press b 2
+press right 10
+dump h3
+press b 2
+press right 10
+dump h4
+press b 2
+press right 10
+dump h5
+press b 2
+press right 10
+dump h6
+press down 4
+press right 8
+dump n0
+press down 4
+press right 8
+dump n1
+press down 4
+press right 8
+dump n2
+press down 4
+press right 8
+dump n3
+press right 16
+dump r0
+press b 3
+press right 12
+dump a0
+press b 3
+press right 12
+dump a1
+press b 3
+press right 12
+dump a2
+press b 3
+press right 12
+dump a3
+press b 3
+press right 12
+dump a4
+press b 3
+press right 12
+dump a5
+press b 3
+press right 12
+dump a6
+press b 3
+press right 12
+dump a7
+press b 3
+press right 12
+dump b0
+press b 3
+press right 12
+dump b1
+press b 3
+press right 12
+dump b2
+press b 3
+press right 12
+dump b3
+press b 3
+press right 12
+dump b4
+press b 3
+press right 12
+dump b5
+press b 3
+press right 12
+dump b6
+press b 3
+press right 12
+dump b7
+press b 3
+press right 12
+dump b8
+press b 3
+press right 12
+dump b9
+press b 3
+press right 12
+dump b10
+press b 3
+press right 12
+dump b11
+press b 3
+press right 12
+dump b12
+press b 3
+press right 12
+dump b13
+press b 3
+press right 12
+dump b14
+press b 3
+press right 12
+dump b15
+press b 3
+press right 12
+dump c0
+press b 3
+press right 12
+dump c1
+press b 3
+press right 12
+dump c2
+press down 12
+dump d0
+press down 12
+dump d1
+press down 12
+dump d2
+press down 12
+dump d3
+press down 12
+dump d4
+press down 12
+dump d5
+press right 16
+dump r0
+press right 16
+dump r1
+press right 16
+dump r2
+press right 16
+dump r3
+press right 16
+dump r4
+press right 16
+dump r5
+press right 16
+dump r6
+press right 16
+dump r7
+press right 16
+dump r8
+press right 16
+dump r9
+press right 16
+dump s0
+press right 16
+dump s1
+press right 16
+dump s2
+press right 16
+dump s3
+press right 16
+dump s4
+wait 8
+dump w0
+wait 8
+dump w1
+wait 8
+dump w2
+wait 8
+dump w3
+wait 8
+dump w4
+wait 8
+dump w5
+wait 8
+dump w6
+wait 8
+dump w7
+wait 8
+dump w8
+wait 8
+dump w9
+wait 8
+dump w10
+wait 8
+dump w11
+wait 8
+dump w12
+wait 8
+dump w13
+wait 8
+dump w14
+wait 8
+dump w15
+wait 8
+dump w16
+wait 8
+dump w17
+wait 8
+dump v0
+wait 8
+dump v1
+wait 8
+dump v2
+press b 14
+dump j
+wait 6
+dump a0
+wait 6
+dump a1
+wait 6
+dump a2
+wait 6
+dump a3
+wait 6
+dump a4
+wait 6
+dump a5
+wait 700
+dump ow1
+wait 300
+dump ow2
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+quit
