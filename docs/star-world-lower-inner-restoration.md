@@ -556,3 +556,22 @@ Candidate ROM is now
 `$1E` remains unimplementable: the donor ships no custom song for `1C`-`1F`, and
 the engine ignores that table slot anyway, so its alias is inert. The cap-expiry
 cue - the one that used to freeze - is now the genuine `ボロ` track.
+
+### Note: the parameterised force probe does not work
+
+Hoping to sweep every id cheaply, the music-set routine at `$0D:F138` was
+patched to read the requested id from a pokeable scratch byte (`LDA $1F00 /
+DEC A / STA $0DDA`) so one probe ROM could cover all ids. It does not work: the
+run ends with `song = 0x0E` and ARAM `0x0040 = 0x1558`, so the scratch byte was
+overwritten before the routine read it, or the routine runs at several points
+and an earlier one wins.
+
+The method that does work is one probe build per id with the id as an immediate
+(`LDA #imm / STA $0DDA`), calibrated because the observed `$0DDA` is one higher
+than the immediate: immediate `0x20` yielded `$0DDA = 0x21`. That reproduced the
+known mappings - `$21` -> `0x6802`, `$22` -> `0x680A` - and is how the `$21`
+group was located.
+
+Consequence for any future id sweep: budget one short run per id (~15 s) rather
+than a shared parameterised ROM, and read ARAM `0x0040` for the sequence
+pointer and `0x0006` for the active id.
