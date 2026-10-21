@@ -455,3 +455,33 @@ the accepted state: lower-inner `cb3e6017…`, centre unchanged at `406ce1d0…`
 the 16 bounded checks and 239 samples remain valid and nothing unplayable is
 left on disk. The derived parameters and the tool requirement stay documented
 above so the experiment can be resumed without redoing the derivation.
+
+### Control experiment settles it: the payload is right, `$1E` is special
+
+Installing the same derived payload at an ordinary id (`$0C`) and forcing that id
+works perfectly: `$0DDA = 0x0C`, mode `$14`, and ARAM `0x5400` reads
+`29 57 29 57 FF 00 02 54`, byte-identical to the derived song. So the group
+location, the command-length assumption, the relocation set and the payload
+envelope are all correct.
+
+`$1E` is the exception: forcing it on a build whose `0FE05A` slot points at the
+interim alias (which resolves to the `$40` image `67 54 77 54`) still yields
+`D9 58 E9 58 ...`. The engine ignores the table entry for that id entirely, so
+the earlier failure was never a payload bug.
+
+Consequences:
+
+- `$1E` (the 100-coin award cue) cannot be restored through the `0FE000` table
+  at all; the alias there is inert. It is also not a freeze risk - poking `$1E`
+  never hung, unlike `$21`.
+- `$21` **is** a normal id: aliasing it is what removed the freeze, and the user
+  confirmed the result in game. So `$21` is the one worth replacing with the
+  real donor track.
+- The remaining work for `$21` is purely locating its donor group, after which
+  the proven pipeline applies unchanged: derive `source_data_offset`/`song_size`
+  from its sequence pointers, build the payload, install at `0FE063`, and verify
+  by ARAM comparison.
+
+Reverted again for safety: lower-inner `cb3e6017…`, centre `406ce1d0…`, the 16
+bounded checks and 239 samples still apply, and the tool/recipe changes were
+rolled back with the experiment.
