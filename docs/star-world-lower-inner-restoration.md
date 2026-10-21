@@ -390,3 +390,36 @@ a data edit:
 
 Neither is required for the accepted freeze fix. This is recorded so the next
 attempt starts from the real constraint rather than re-deriving the group.
+
+### Ready-to-integrate parameters for the `$1E` transplant
+
+Derived and internally consistent (the walk lands exactly on the layout
+`adapt_music` expects, which is itself evidence the command lengths are right):
+
+| Field | Value |
+| --- | --- |
+| donor group (LoROM) | `$3F:A008` (file `0x1FA008`), group SHA `0f61b891…` |
+| `source_base` | `0x6800` (26624) |
+| `destination_base` | `0x5400` (21504) |
+| `sequence_offset` | `0` |
+| `source_data_offset` | `0x40` (64) |
+| `song_size` | `871` |
+| `pattern_count` | `1` |
+| relocations | 23 entries, computed by the same walk |
+| payload | 879 bytes, SHA `fcf1e6e4…` |
+| table slot | `0FE05A` (`$1E`) |
+
+Commands outside the reviewed set that this song needs are **`0xDE` and `0xDF`**,
+both walked as one-byte commands. Treating them as one byte is what makes the
+data pointers land inside `0x6840..0x6B15` and the data region start at exactly
+`0x40`; a wrong length would almost certainly desynchronise the walk and push
+pointers out of that window. That is strong but indirect evidence, so the
+transplant still has to be confirmed by the ARAM comparison rather than
+assumed.
+
+Integration therefore needs: add `0xde:1, 0xdf:1` to `adapt_music`'s table (no
+effect on the four songs already pinned, none of which use those commands), add
+the `music` block above with a free allocation, rebuild, then force the
+candidate to play `$1E` and compare ARAM `0x5400` against the donor image at
+`0x6800` shifted by `-0x1400`. Only when those match should the interim alias on
+`0FE05A` be replaced.
