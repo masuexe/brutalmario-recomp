@@ -423,3 +423,35 @@ the `music` block above with a free allocation, rebuild, then force the
 candidate to play `$1E` and compare ARAM `0x5400` against the donor image at
 `0x6800` shifted by `-0x1400`. Only when those match should the interim alias on
 `0FE05A` be replaced.
+
+### Installed the `$1E` payload - it builds correctly but does not play
+
+Integrated the derived parameters into the recipe and rebuilt:
+
+- added `0xDE`/`0xDF` as one-byte commands in `adapt_music`; the tool then
+  produced the same 879-byte payload independently derived by hand
+  (`fcf1e6e4…`), so the adaptation itself is bit-exact.
+- added the `music` block (group `$3F:A008`, `source_base 0x6800`,
+  `destination_base 0x5400`, `source_data_offset 0x40`, `song_size 871`,
+  23 relocations, allocation `0x1E4000`) and rebuilt to `0f2d5bd1…`.
+- the built ROM is internally consistent: slot `0FE05A` holds `3C C0 08`,
+  which resolves to `0x1E4008`, and that address holds `STAR` plus a payload
+  byte-identical to the derived one.
+
+But at runtime the song is never uploaded. Forcing the id with the level-header
+patch gives `$0DDA = 0x1E`, mode `$14`, yet ARAM `0x5400` shows
+`D9 58 E9 58 FF 00 02 54` instead of our `29 57 29 57 FF 00 02 54`, and
+searching all 64 KiB of ARAM finds no copy of our song at all. The request
+resolves; the payload is simply not loaded.
+
+Next experiment to separate the two remaining explanations: install the same
+payload at an ordinary id (for example `$0C`) and force that. If it plays, the
+payload format is fine and id `$1E` - or the `$1DFB` request path - is handled
+specially; if it does not play either, the payload envelope is wrong even though
+the bytes match.
+
+**Reverted for now.** The recipe, the tool change and the ROM all went back to
+the accepted state: lower-inner `cb3e6017…`, centre unchanged at `406ce1d0…`, so
+the 16 bounded checks and 239 samples remain valid and nothing unplayable is
+left on disk. The derived parameters and the tool requirement stay documented
+above so the experiment can be resumed without redoing the derivation.
