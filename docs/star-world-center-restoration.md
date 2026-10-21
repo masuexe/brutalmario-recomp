@@ -43,7 +43,13 @@ exact on the cumulative candidate. The new lower-inner 100-coin exit and
 center death/re-entry also pass fresh runs on this identity: both SRAM
 copies retain the lower-inner `$8F` result after File A reload; a center pit
 death loses one life, returns to the hub and permits re-entry with that life
-total retained. These are 12 additional bounded host checks. Local reports
+total retained. Subsequent lower-inner and upper-inner pit checks also lose
+exactly one life, return to the hub and re-enter their respective courses
+with that life total retained. The scripts are
+`star-world-lower-inner-death.script` and
+`star-world-upper-inner-death.script`; capture prefixes are
+`center-cumulative-{lower-inner,upper-inner}-death`, with both host suffixes.
+These make 16 additional bounded host checks. Local reports
 retain receipts and assertions in
 `local/reports/center-cumulative-qualification.json`; neither ROMs nor
 captured states are distributed. The native executable SHA-256 is

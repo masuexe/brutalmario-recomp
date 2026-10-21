@@ -81,8 +81,13 @@ lower-left, shop, bounded Athletic Special boss entry, upper-left, Snow
 Star, upper-right, Sky Star, Cave Star and the middle-left water clear.
 The boss-entry regression is not a complete boss-fight acceptance claim.
 
-Death/re-entry, all DK coins and an unassisted 100-coin route remain outside
-this checkpoint. The separate center-course damage regression and reported
+Death/re-entry was outside the original checkpoint above. A subsequent
+fresh-session check on cumulative center ROM `e0fb3837…` confirms a real pit
+death loses one life, returns to the map and permits re-entry into `$117`
+with that life total retained in both hosts. See
+`star-world-lower-inner-death.script` and captures
+`center-cumulative-lower-inner-death-{reference,native}`. All DK coins and
+an unassisted 100-coin route remain unqualified. The center damage regression and reported
 cannon-distance issue are tracked in
 [the center damage report](center-damage-regression.md).
 
