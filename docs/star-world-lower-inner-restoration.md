@@ -314,3 +314,24 @@ have byte 2 = `music id + 1` = `$25`, so the donor course plays `$24`). Patching
 both to `$21` did not change `$0DDA` in a 2500-frame capture - the dump still
 showed `$24` with mode `$0F` - so the donor-side forcing needs a later capture
 or a second header site before it can be trusted.
+
+### Why single-song transplant is harder than it looked
+
+Extracting the donor image at ARAM `0x6800` does not yield one song. The
+header-signature scan finds sequence headers at `0x6800`, `0x6808`, `0x6810`,
+`0x6818` - consecutive 8-byte records - so the donor uploads a **sequence
+table**, not a single relocated song. Walking from the first record also runs
+into non-song data (`0xDE` at offset 350) and the layout leaves no zero gap
+between the 8-byte header and the following bytes, unlike the candidate image
+at `0x5400`, which has the recipe's `8 + 56 zeros + data` shape.
+
+Consequently the donor's ARAM capture is not a drop-in payload even though the
+upload base and header relationship are now known. Turning it into one song
+requires the donor's own `sequence_offset` / `source_data_offset` pair for that
+id - the same per-song parameters the existing recipes already pin for `$54`,
+`$2E`, `$5D` and `$16` - and those were derived per song, not from a table.
+
+Also recorded: the donor's in-level music for this course is `$1E` (not `$24`,
+which is what the loading-frame sample showed), so the donor's `$1E` track is
+present in any donor capture taken in level. That is the cheapest target if
+single-song extraction is continued, because no forced playback is needed.
