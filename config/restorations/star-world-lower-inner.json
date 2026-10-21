@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Star World lower-inner restoration candidate",
+  "id": "star-world-lower-inner",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "star-world-middle-left",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "394c59841ce22184b4f804f4ad518f83c26190178127a471364ab615069e0388"
+  },
+  "room": "117",
+  "entrance": {
+    "map": 6,
+    "x": 376,
+    "y": 456,
+    "translevel": 59,
+    "requires": "Fresh uncleared save; do not use completion practice flags."
+  },
+  "scope": "Restore missing custom sprites $30 (100-coin controller and caps) and $37 (warp stars) on the accepted middle-left ROM. Room117 object and sprite streams are byte-identical to the donor; no global entrance branch changes. Both hosts pass the former wall using actual input. A separate player/camera-assisted route collects real coins, triggers the existing 100-coin exit, returns to the hub, and retains flag8F in both SRAM copies after reset and File A load. All 239 prior route WRAM/framebuffer samples remain exact. An unassisted full route and DK collection are not qualified.",
+  "gfx_record": {
+    "address": "14CFE8",
+    "before": "0180af01ae01b001140063011300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2019328,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "custom_sprites": [
+    {
+      "id": "30",
+      "rooms": [
+        60,
+        279
+      ],
+      "source_record_address": "10B45D",
+      "destination_record_address": "10B38A",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "017000003b931d440f801b24801b0000",
+      "source_address": "1B8000",
+      "destination_address": "348000",
+      "block": {
+        "size": 1680,
+        "sha256": "5b9aecb2fbbf9595dd36fd2c6dadde59c3dfd95cdfe799643659f4071297e279"
+      },
+      "shared_dependencies": [
+        {
+          "address": "27FAF4",
+          "size": 128,
+          "sha256": "6a8ba40a9629b26e1d9dd3af0482cb58bfcfc7b95d4642c86ec33f714eaa2bcb"
+        },
+        {
+          "address": "01802A",
+          "size": 128,
+          "sha256": "78146f61aca8e06a92e0e7066b81fb89deb5fba31d60692b6857fd416251bc9c"
+        },
+        {
+          "address": "01A7DC",
+          "size": 128,
+          "sha256": "c972ca4c2c2c95eb28b3bfa77a1db09a223e0617e3f64c045a8e927636defe4f"
+        },
+        {
+          "address": "01B7B3",
+          "size": 128,
+          "sha256": "7963ecd56f7c770af6dda09ba20eaa014c8b75c133fe8e9d451515ec5fd00045"
+        },
+        {
+          "address": "01ACF9",
+          "size": 128,
+          "sha256": "8308cd08987c9a1f515dce0d495b4134ebe7f2384f3652a0071221d199d82844"
+        },
+        {
+          "address": "0285BA",
+          "size": 128,
+          "sha256": "95527f39ba617058bdad85094bc3b97e8dbcb2aa9903ce5091892be92cac704c"
+        },
+        {
+          "address": "01801A",
+          "size": 128,
+          "sha256": "4701968584fdfb8f3c70444670998e07eb58bbcfd401886bcf35eb89b5a4956b"
+        }
+      ]
+    },
+    {
+      "id": "37",
+      "rooms": [
+        22,
+        240,
+        241,
+        242,
+        244,
+        279
+      ],
+      "source_record_address": "10B4CD",
+      "destination_record_address": "10B3FA",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "013610803f03196431ec21feec210000",
+      "source_address": "21EC22",
+      "destination_address": "36EC22",
+      "block": {
+        "size": 3428,
+        "sha256": "e4f31208d56db5c2bbdd4127112c954bc0b1a95b5dff5e2252e4526148d03e84"
+      },
+      "shared_dependencies": [
+        {
+          "address": "27FAF4",
+          "size": 128,
+          "sha256": "6a8ba40a9629b26e1d9dd3af0482cb58bfcfc7b95d4642c86ec33f714eaa2bcb"
+        },
+        {
+          "address": "01A7DC",
+          "size": 128,
+          "sha256": "c972ca4c2c2c95eb28b3bfa77a1db09a223e0617e3f64c045a8e927636defe4f"
+        },
+        {
+          "address": "01802A",
+          "size": 128,
+          "sha256": "78146f61aca8e06a92e0e7066b81fb89deb5fba31d60692b6857fd416251bc9c"
+        },
+        {
+          "address": "018022",
+          "size": 128,
+          "sha256": "98244c0c95c34eda649df66445fd2cf2549c07918b473bc9fa4aa998ce2f4f1b"
+        },
+        {
+          "address": "01801A",
+          "size": 128,
+          "sha256": "4701968584fdfb8f3c70444670998e07eb58bbcfd401886bcf35eb89b5a4956b"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 128,
+          "sha256": "da074568e01e0df34a40880e0b193541e0808a3a84f7cc9864f1e30f6f7ce2b2"
+        },
+        {
+          "address": "01B7B3",
+          "size": 128,
+          "sha256": "7963ecd56f7c770af6dda09ba20eaa014c8b75c133fe8e9d451515ec5fd00045"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 8,
+          "sha256": "591093b0da2c79d29ce7ad11c9876010766f9d830c3a27bb281124e37d6ca8d1"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 8,
+          "sha256": "af9a8d87b9371bf49626e29093aa430326239db1b411b63aaed6c4e55b5f7415"
+        },
+        {
+          "role": "recipient",
+          "address": "10AF8F",
+          "size": 128,
+          "sha256": "aeec2f78eaf913deea3944d91d29d7b02eccaa5da6f6978a72538818517eb54e"
+        },
+        {
+          "role": "donor",
+          "address": "10B059",
+          "size": 128,
+          "sha256": "d7a7e0a27b4c4bdb204359d503c31d96cd60a943c927208f4c1d1c348d34b552"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "1c35a893ec79fa369a68874b7743943c1e08532426d91bfa4ceca33e143df0e9"
+  }
+}

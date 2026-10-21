@@ -1,0 +1,945 @@
+# Actual 100-coin clear and SRAM reload with player/camera coordinate shortcuts.
+# No coin, life, controller, goal or save writes. Not an unassisted route.
+# Upper-inner entrance after restoring room 007 graphics.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+
+# Practice map transfer: map 6, X=0x178, Y=0x1c8.
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 14 480
+dump before_coins
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a c0004000
+poke 1462 c0004000
+poke 94 20019800
+poke 7b 000000
+press start 2
+pokefor 94 20019800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d0004000
+poke 1462 d0004000
+poke 94 30019800
+poke 7b 000000
+press start 2
+pokefor 94 30019800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a e0004000
+poke 1462 e0004000
+poke 94 40019800
+poke 7b 000000
+press start 2
+pokefor 94 40019800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d000c000
+poke 1462 d000c000
+poke 94 30017801
+poke 7b 000000
+press start 2
+pokefor 94 30017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a e000c000
+poke 1462 e000c000
+poke 94 40017801
+poke 7b 000000
+press start 2
+pokefor 94 40017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a f000c000
+poke 1462 f000c000
+poke 94 50017801
+poke 7b 000000
+press start 2
+pokefor 94 50017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 0001c000
+poke 1462 0001c000
+poke 94 60017801
+poke 7b 000000
+press start 2
+pokefor 94 60017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 1001c000
+poke 1462 1001c000
+poke 94 70017801
+poke 7b 000000
+press start 2
+pokefor 94 70017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 2001c000
+poke 1462 2001c000
+poke 94 80017801
+poke 7b 000000
+press start 2
+pokefor 94 80017801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 3001c000
+poke 1462 3001c000
+poke 94 90017801
+poke 7b 000000
+press start 2
+pokefor 94 90017801 90
+dump coin010
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a c0018000
+poke 1462 c0018000
+poke 94 2002d800
+poke 7b 000000
+press start 2
+pokefor 94 2002d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d0018000
+poke 1462 d0018000
+poke 94 3002d800
+poke 7b 000000
+press start 2
+pokefor 94 3002d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a e0018000
+poke 1462 e0018000
+poke 94 4002d800
+poke 7b 000000
+press start 2
+pokefor 94 4002d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a f0018000
+poke 1462 f0018000
+poke 94 5002d800
+poke 7b 000000
+press start 2
+pokefor 94 5002d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00028000
+poke 1462 00028000
+poke 94 6002d800
+poke 7b 000000
+press start 2
+pokefor 94 6002d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 2004c000
+poke 1462 2004c000
+poke 94 80045801
+poke 7b 000000
+press start 2
+pokefor 94 80045801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 3004c000
+poke 1462 3004c000
+poke 94 90045801
+poke 7b 000000
+press start 2
+pokefor 94 90045801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 4004c000
+poke 1462 4004c000
+poke 94 a0045801
+poke 7b 000000
+press start 2
+pokefor 94 a0045801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 70054000
+poke 1462 70054000
+poke 94 d0059800
+poke 7b 000000
+press start 2
+pokefor 94 d0059800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 80054000
+poke 1462 80054000
+poke 94 e0059800
+poke 7b 000000
+press start 2
+pokefor 94 e0059800 90
+dump coin020
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 20058000
+poke 1462 20058000
+poke 94 8005d800
+poke 7b 000000
+press start 2
+pokefor 94 8005d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 30058000
+poke 1462 30058000
+poke 94 9005d800
+poke 7b 000000
+press start 2
+pokefor 94 9005d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 70059000
+poke 1462 70059000
+poke 94 d005e800
+poke 7b 000000
+press start 2
+pokefor 94 d005e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 80059000
+poke 1462 80059000
+poke 94 e005e800
+poke 7b 000000
+press start 2
+pokefor 94 e005e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a b0057000
+poke 1462 b0057000
+poke 94 1006c800
+poke 7b 000000
+press start 2
+pokefor 94 1006c800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a c0057000
+poke 1462 c0057000
+poke 94 2006c800
+poke 7b 000000
+press start 2
+pokefor 94 2006c800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00067000
+poke 1462 00067000
+poke 94 6006c800
+poke 7b 000000
+press start 2
+pokefor 94 6006c800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 10067000
+poke 1462 10067000
+poke 94 7006c800
+poke 7b 000000
+press start 2
+pokefor 94 7006c800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 40069000
+poke 1462 40069000
+poke 94 a006e800
+poke 7b 000000
+press start 2
+pokefor 94 a006e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 50069000
+poke 1462 50069000
+poke 94 b006e800
+poke 7b 000000
+press start 2
+pokefor 94 b006e800 90
+dump coin030
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 9006a000
+poke 1462 9006a000
+poke 94 f006f800
+poke 7b 000000
+press start 2
+pokefor 94 f006f800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a a006a000
+poke 1462 a006a000
+poke 94 0007f800
+poke 7b 000000
+press start 2
+pokefor 94 0007f800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 5007c000
+poke 1462 5007c000
+poke 94 b0074801
+poke 7b 000000
+press start 2
+pokefor 94 b0074801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 6007c000
+poke 1462 6007c000
+poke 94 c0074801
+poke 7b 000000
+press start 2
+pokefor 94 c0074801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 7007c000
+poke 1462 7007c000
+poke 94 d0074801
+poke 7b 000000
+press start 2
+pokefor 94 d0074801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 200a2000
+poke 1462 200a2000
+poke 94 800a7800
+poke 7b 000000
+press start 2
+pokefor 94 800a7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 300a2000
+poke 1462 300a2000
+poke 94 900a7800
+poke 7b 000000
+press start 2
+pokefor 94 900a7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 400a2000
+poke 1462 400a2000
+poke 94 a00a7800
+poke 7b 000000
+press start 2
+pokefor 94 a00a7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 500a2000
+poke 1462 500a2000
+poke 94 b00a7800
+poke 7b 000000
+press start 2
+pokefor 94 b00a7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600a2000
+poke 1462 600a2000
+poke 94 c00a7800
+poke 7b 000000
+press start 2
+pokefor 94 c00a7800 90
+dump coin040
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 700a2000
+poke 1462 700a2000
+poke 94 d00a7800
+poke 7b 000000
+press start 2
+pokefor 94 d00a7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 400ac000
+poke 1462 400ac000
+poke 94 a00a5801
+poke 7b 000000
+press start 2
+pokefor 94 a00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 500ac000
+poke 1462 500ac000
+poke 94 b00a5801
+poke 7b 000000
+press start 2
+pokefor 94 b00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600ac000
+poke 1462 600ac000
+poke 94 c00a5801
+poke 7b 000000
+press start 2
+pokefor 94 c00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 700ac000
+poke 1462 700ac000
+poke 94 d00a5801
+poke 7b 000000
+press start 2
+pokefor 94 d00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 800ac000
+poke 1462 800ac000
+poke 94 e00a5801
+poke 7b 000000
+press start 2
+pokefor 94 e00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 900ac000
+poke 1462 900ac000
+poke 94 f00a5801
+poke 7b 000000
+press start 2
+pokefor 94 f00a5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b0000
+poke 1462 600b0000
+poke 94 c00b2800
+poke 7b 000000
+press start 2
+pokefor 94 c00b2800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b0000
+poke 1462 600b0000
+poke 94 c00b3800
+poke 7b 000000
+press start 2
+pokefor 94 c00b3800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b0000
+poke 1462 600b0000
+poke 94 c00b4800
+poke 7b 000000
+press start 2
+pokefor 94 c00b4800 90
+dump coin050
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b0000
+poke 1462 600b0000
+poke 94 c00b5800
+poke 7b 000000
+press start 2
+pokefor 94 c00b5800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b1000
+poke 1462 600b1000
+poke 94 c00b6800
+poke 7b 000000
+press start 2
+pokefor 94 c00b6800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600b2000
+poke 1462 600b2000
+poke 94 c00b7800
+poke 7b 000000
+press start 2
+pokefor 94 c00b7800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600ba000
+poke 1462 600ba000
+poke 94 c00bf800
+poke 7b 000000
+press start 2
+pokefor 94 c00bf800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600bb000
+poke 1462 600bb000
+poke 94 c00b0801
+poke 7b 000000
+press start 2
+pokefor 94 c00b0801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600bc000
+poke 1462 600bc000
+poke 94 c00b1801
+poke 7b 000000
+press start 2
+pokefor 94 c00b1801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a a00ac000
+poke 1462 a00ac000
+poke 94 000b5801
+poke 7b 000000
+press start 2
+pokefor 94 000b5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a b00ac000
+poke 1462 b00ac000
+poke 94 100b5801
+poke 7b 000000
+press start 2
+pokefor 94 100b5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a c00ac000
+poke 1462 c00ac000
+poke 94 200b5801
+poke 7b 000000
+press start 2
+pokefor 94 200b5801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d00ac000
+poke 1462 d00ac000
+poke 94 300b5801
+poke 7b 000000
+press start 2
+pokefor 94 300b5801 90
+dump coin060
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 100ec000
+poke 1462 100ec000
+poke 94 700e3801
+poke 7b 000000
+press start 2
+pokefor 94 700e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 200ec000
+poke 1462 200ec000
+poke 94 800e3801
+poke 7b 000000
+press start 2
+pokefor 94 800e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 300ec000
+poke 1462 300ec000
+poke 94 900e3801
+poke 7b 000000
+press start 2
+pokefor 94 900e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 400ec000
+poke 1462 400ec000
+poke 94 a00e3801
+poke 7b 000000
+press start 2
+pokefor 94 a00e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 500ec000
+poke 1462 500ec000
+poke 94 b00e3801
+poke 7b 000000
+press start 2
+pokefor 94 b00e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600ec000
+poke 1462 600ec000
+poke 94 c00e3801
+poke 7b 000000
+press start 2
+pokefor 94 c00e3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 200f1000
+poke 1462 200f1000
+poke 94 800f6800
+poke 7b 000000
+press start 2
+pokefor 94 800f6800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 300f1000
+poke 1462 300f1000
+poke 94 900f6800
+poke 7b 000000
+press start 2
+pokefor 94 900f6800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 400f1000
+poke 1462 400f1000
+poke 94 a00f6800
+poke 7b 000000
+press start 2
+pokefor 94 a00f6800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 500f1000
+poke 1462 500f1000
+poke 94 b00f6800
+poke 7b 000000
+press start 2
+pokefor 94 b00f6800 90
+dump coin070
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 600f1000
+poke 1462 600f1000
+poke 94 c00f6800
+poke 7b 000000
+press start 2
+pokefor 94 c00f6800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a e00ec000
+poke 1462 e00ec000
+poke 94 400f3801
+poke 7b 000000
+press start 2
+pokefor 94 400f3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a f00ec000
+poke 1462 f00ec000
+poke 94 500f3801
+poke 7b 000000
+press start 2
+pokefor 94 500f3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 000fc000
+poke 1462 000fc000
+poke 94 600f3801
+poke 7b 000000
+press start 2
+pokefor 94 600f3801 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00100000
+poke 1462 00100000
+poke 94 60102800
+poke 7b 000000
+press start 2
+pokefor 94 60102800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 10100000
+poke 1462 10100000
+poke 94 70102800
+poke 7b 000000
+press start 2
+pokefor 94 70102800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 60100000
+poke 1462 60100000
+poke 94 c0102800
+poke 7b 000000
+press start 2
+pokefor 94 c0102800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 70100000
+poke 1462 70100000
+poke 94 d0102800
+poke 7b 000000
+press start 2
+pokefor 94 d0102800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d00f0000
+poke 1462 d00f0000
+poke 94 30104800
+poke 7b 000000
+press start 2
+pokefor 94 30104800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a e00f0000
+poke 1462 e00f0000
+poke 94 40104800
+poke 7b 000000
+press start 2
+pokefor 94 40104800 90
+dump coin080
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 30100000
+poke 1462 30100000
+poke 94 90104800
+poke 7b 000000
+press start 2
+pokefor 94 90104800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 40100000
+poke 1462 40100000
+poke 94 a0104800
+poke 7b 000000
+press start 2
+pokefor 94 a0104800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 90100000
+poke 1462 90100000
+poke 94 f0104800
+poke 7b 000000
+press start 2
+pokefor 94 f0104800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a c0100000
+poke 1462 c0100000
+poke 94 20112800
+poke 7b 000000
+press start 2
+pokefor 94 20112800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a d0100000
+poke 1462 d0100000
+poke 94 30112800
+poke 7b 000000
+press start 2
+pokefor 94 30112800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00110000
+poke 1462 00110000
+poke 94 80112800
+poke 7b 000000
+press start 2
+pokefor 94 80112800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a a0100000
+poke 1462 a0100000
+poke 94 00114800
+poke 7b 000000
+press start 2
+pokefor 94 00114800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a f0100000
+poke 1462 f0100000
+poke 94 50114800
+poke 7b 000000
+press start 2
+pokefor 94 50114800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00110000
+poke 1462 00110000
+poke 94 60114800
+poke 7b 000000
+press start 2
+pokefor 94 60114800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00117000
+poke 1462 00117000
+poke 94 8011c800
+poke 7b 000000
+press start 2
+pokefor 94 8011c800 90
+dump coin090
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00118000
+poke 1462 00118000
+poke 94 7011d800
+poke 7b 000000
+press start 2
+pokefor 94 7011d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00118000
+poke 1462 00118000
+poke 94 8011d800
+poke 7b 000000
+press start 2
+pokefor 94 8011d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00118000
+poke 1462 00118000
+poke 94 9011d800
+poke 7b 000000
+press start 2
+pokefor 94 9011d800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00119000
+poke 1462 00119000
+poke 94 6011e800
+poke 7b 000000
+press start 2
+pokefor 94 6011e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00119000
+poke 1462 00119000
+poke 94 8011e800
+poke 7b 000000
+press start 2
+pokefor 94 8011e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 00119000
+poke 1462 00119000
+poke 94 a011e800
+poke 7b 000000
+press start 2
+pokefor 94 a011e800 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 0011a000
+poke 1462 0011a000
+poke 94 8011f800
+poke 7b 000000
+press start 2
+pokefor 94 8011f800 90
+dump coin097
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 0011b000
+poke 1462 0011b000
+poke 94 80110801
+poke 7b 000000
+press start 2
+pokefor 94 80110801 90
+dump coin098
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 0011c000
+poke 1462 0011c000
+poke 94 80111801
+poke 7b 000000
+press start 2
+pokefor 94 80111801 90
+dump coin099
+dump hundred_coins
+wait 160
+dump goal_animation
+wait 1640
+dump overworld
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+quit

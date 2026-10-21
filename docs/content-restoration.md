@@ -307,5 +307,13 @@ mode `$0E` at `$010E,$012E` with `$13CE=1` and translevel `$03` flagged
 File A reload keeps `$8C` with 4 lives. The overworld life total before
 reload is 5 on reference and 8 on native; the saved clear matches. Death
 and DK coverage are not part of this checkpoint. The stage is
-automatically qualified. Continue with lower-inner `$117`. A new manual
-gate is not required.
+automatically qualified. A new manual gate is not required.
+
+The [lower-inner restoration](star-world-lower-inner-restoration.md) now
+restores the missing warp-star actors and 100-coin controller in `$117`.
+The geometry and sprite placements already match cheap_demo. Actual-input
+movement passes the former wall; a separate player/camera-assisted pickup
+fixture triggers the existing 100-coin exit and retains flag `$8F` in both
+SRAM copies after reset and File A load on both hosts. All 239 previous
+native WRAM/framebuffer samples remain exact. An unassisted complete route,
+DK coverage and death/re-entry are not qualified by this checkpoint.

@@ -1,0 +1,124 @@
+# Real-input traversal past the former wall and through the warp-star chain.
+# Only the overworld entrance uses coordinate shortcuts; no coin/goal/actor writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 480
+wait 200
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 16
+wait 4
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+dump y19
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+dump y25
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+press b+right 30
+wait 2
+dump checkpoint
+press right+y 20
+press b+right+y 24
+dump jump
+wait 180
+dump landed
+press right+y 30
+dump onward
+quit

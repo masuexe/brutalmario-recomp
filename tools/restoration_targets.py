@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'star-world-lower-inner': {
+        'binary': 'BrutalMarioStarWorldLowerInnerSNESRecomp',
+        'title': 'Brutal Mario Star World Lower Inner',
+    },
     'star-world-1': {
         'binary': 'BrutalMarioStarWorld1SNESRecomp',
         'title': 'Brutal Mario Star World1',
