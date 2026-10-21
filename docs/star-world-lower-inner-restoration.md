@@ -129,6 +129,13 @@ addresses at all. Donor music is reached through the per-recipe `music` groups,
 not by id-to-id table comparison, so a cheap_demo-to-demoOnly1 id map cannot be
 built from the two tables as they stand.
 
+The `[count][base][body][0000]` wrapper is also specific to songs the recipes
+install. Only three recipient ids and one donor id pass that structural check,
+while the recipient actually has 98 installed ids, so the original songs in both
+ROMs use the hack's own layout. Matching a candidate song against the donor
+therefore needs that original format decoded, or a runtime SPC capture of the
+uploaded song, before any automatic map can be attempted.
+
 Requesting an empty id does not fail gracefully: the guest hangs waiting for
 the music engine. Minimal reproduction on `star-world-lower-inner`:
 
