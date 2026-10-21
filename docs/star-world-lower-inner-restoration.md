@@ -212,3 +212,25 @@ dump ARAM, take the sequence image at `0x5400`, and install it at `0FE063`
 demoOnly1 id map for the wider wrong-music question: fingerprint the `0x5400`
 image per id in both lineages and match identical images, falling back to
 similarity for arrangements that changed between demos.
+
+### SPC capture: what it does and does not yet give us
+
+Follow-up probing narrowed the claim above.
+
+- Poking `$1DFB` does **not** reliably force a song. On the candidate the
+  current-song byte `$0DDA` stays at `$40` after poking `$21`, `$1E` or `$22`;
+  on the donor a poke of `$21` leaves `$0DDA` at `$1E`. Forcing songs therefore
+  needs a different mechanism (for example patching the level's music id), not
+  a single `$1DFB` write.
+- The upload base is **not** shared. A donor capture taken in level with
+  `$0DDA=$1E` has nothing at ARAM `0x5400`, while the candidate has a valid
+  image there. The donor's sequence headers cluster around `0x298D` onward at
+  8-byte spacing, and the candidate also shows headers at `0x1486`/`0x1548`
+  besides `0x5400`. The two lineages do not upload songs to the same offset.
+- Consequence: byte-comparison of `0x5400` images is valid **only** for songs
+  the recipes install at `destination_base 0x5400`. Using it as a general
+  cross-lineage matcher requires first learning the donor driver's own upload
+  layout, which this round did not establish.
+
+Nothing here changes the shipped candidate: the interim alias stays, the cap
+freeze stays fixed, and the user's accepted behaviour is unaffected.
