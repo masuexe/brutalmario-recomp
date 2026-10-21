@@ -37,10 +37,12 @@ are `center-hurt-fix-entry-{reference,native}` and
 checks, not acceptance of a complete center-course clear.
 
 The user also reported insufficient cannon travel across the pit near the
-second dragon coin, compared with cheap_demo. That is a separate open
-issue. Do not reinterpret the damage branch as a launch control or claim
-that this rollback fixes cannon travel. The center boss clear also remains
-unqualified.
+second dragon coin, compared with cheap_demo. The subsequent
+[cannon-flight comparison](center-cannon-flight.md) reproduces the same
+directional-input distinction in ZSNES 1.51: releasing left/right and
+retaining B crosses the pit on both the legacy donor and this candidate.
+The damage rollback does not change cannon physics. The center boss clear
+remains unqualified.
 
 Restart the practice command to load the corrected ROM and executable:
 

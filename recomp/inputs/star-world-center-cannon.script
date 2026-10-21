@@ -1,0 +1,97 @@
+# Controlled cannon fixture near the second DK coin.
+# Player/map/camera setup only; actual cannon sets speed and duration.
+# Release directional input during the flight and keep B for the high arc.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map/player shortcuts are explicit below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x178, Y=0x1a8.
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+wait 90
+press start 2
+until 13d4 == 01 120
+wait 90
+poke 1a 80050000
+poke 1462 80050000
+poke 94 00061000
+poke 7b 000000
+press start 2
+pokefor 94 00061000 90
+poke 94 10061000
+wait 2
+dump load610
+poke 94 20061000
+wait 2
+dump load620
+poke 94 30061000
+wait 2
+dump load630
+poke 94 40061000
+wait 2
+dump load640
+poke 94 50061000
+wait 2
+dump load650
+poke 94 60061000
+wait 2
+dump load660
+poke 94 70061000
+wait 2
+dump load670
+poke 94 80061000
+wait 2
+dump load680
+poke 94 90061000
+wait 2
+dump load690
+poke 94 a0061000
+wait 2
+dump load6a0
+poke 94 b0061000
+wait 2
+dump load6b0
+poke 94 c0061000
+wait 2
+dump load6c0
+poke 94 d0061000
+wait 2
+dump load6d0
+poke 94 e0061000
+wait 2
+dump load6e0
+poke 94 f0061000
+wait 2
+dump load6f0
+poke 7b 000000
+poke 94 08072000
+dump cannon_contact
+press b 160
+dump crossed_pit
+wait 60
+dump landed
+quit

@@ -286,7 +286,8 @@ phase-2 boss program never writes the level-end timer, and the donor sprite
 block is unchanged. That course stays unqualified.
 The [center damage regression](center-damage-regression.md) records a
 rolled-back recipe edit that made powered Mario die instead of shrinking;
-the reported cannon-distance difference remains under investigation.
+the [cannon comparison](center-cannon-flight.md) reproduces the directional-input
+distinction in ZSNES 1.51 and qualifies a controlled DK flight on both hosts.
 
 The upper-inner cave (`$007`, map 6 / `$0178,$0188`) is the next cumulative candidate on the Sky
 Star ROM. Its recipe restores the six missing ExGFX streams and custom
