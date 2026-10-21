@@ -358,7 +358,7 @@ def main():
             'reference_core_options': env.get('SNESREF_CORE_OPTIONS', 'defaults'),
         }
         (directory / 'receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
-        run(command, log=directory / 'run.log', cwd=directory, env=env, seconds=180)
+        run(command, log=directory / 'run.log', cwd=directory, env=env, seconds=900)
         if args.interpreter_only and '[m1] aot_bridge_entries=0 ' not in (directory / 'run.log').read_text():
             raise RuntimeError('interpreter-only diagnostic still executed compiled bodies; reject comparison')
         print(f'Capture: {directory.relative_to(ROOT)}')

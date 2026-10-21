@@ -615,3 +615,31 @@ does not hang; the 100-coin exit still gives `$141C = 1` and `$13CE = 1`.
 
 Candidate ROM is now
 `1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218`.
+
+### Course BGM corrected to `$1E` (supersedes `$61` above)
+
+`$61` was still wrong: it is the FIRST Athletic Special scene. The user said the
+correct track is the **fourth warp scene**, whose background matches this course.
+
+Walking the known Athletic Special chain (`$134 -> $174 -> $175 -> $176 -> $177`)
+and dumping `$0DDA` at each stage gives:
+
+| Scene | Room | Music |
+| --- | --- | --- |
+| 1 | `$134` | `$61` |
+| 2 | `$174` | `$58` |
+| 3 | `$175` | `$60` |
+| **4** | **`$176` (star staircase)** | **`$1E`** |
+
+So the course track is **`$1E`**, and the level header music byte is now patched
+`41` -> `1F` at `3AB524`. The cap-expiry requests were moved from `$61` to `$1E`
+as well, so expiry resumes the corrected course track. The cap-pickup id was
+left alone this round: the user suspects the intended Mario 64 invincibility
+track may not exist in demoOnly1 at all, and asked to fix only the course music.
+
+`$1E` is one of the ids the driver handles internally (its `0FExxx` table entry
+is empty yet it plays), which is consistent with it being a built-in track rather
+than a custom one. It plays without hanging.
+
+Verified: `$0DDA = 0x1E` after load. Candidate ROM is now
+`7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101`.

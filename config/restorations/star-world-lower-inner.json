@@ -175,14 +175,14 @@
   ],
   "output": {
     "size": 4194304,
-    "sha256": "1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218"
+    "sha256": "7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101"
   },
   "code_patches": [
     {
       "address": "3AB524",
       "before": "41",
-      "after": "62",
-      "note": "Course BGM: same background as Athletic Special (headers 40 60 ..), which plays 0x61; lower-inner wrongly had 0x40."
+      "after": "1f",
+      "note": "Course BGM: Athletic Special room $176 (the 4th scene in the $134 -> $174 -> $175 -> $176 chain) plays $1E; the user identified that scene as having the same background as this course. Also aligns cap expiry."
     },
     {
       "address": "348084",

@@ -7,7 +7,7 @@
   "base_restoration": "star-world-lower-inner",
   "base_output": {
     "size": 4194304,
-    "sha256": "1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218"
+    "sha256": "7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101"
   },
   "room": "00A",
   "entrance": {
@@ -169,7 +169,7 @@
   },
   "output": {
     "size": 4194304,
-    "sha256": "e1ce30096e6623085838a1d435adcdffd2e68bb18ac2702b0f58933be42f4f6d"
+    "sha256": "509d119fe3eb69bb151e87fae8faee6d1ea86c39cfb1f8a91cf1f6e8935f98bf"
   },
   "music": {
     "id": "16",

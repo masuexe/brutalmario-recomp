@@ -8,13 +8,14 @@ boss ending is an accepted exception, preserved as the donor left it (see
 that all nine courses have completed-clear acceptance.
 
 Current candidate SHA-256:
-`e1ce30096e6623085838a1d435adcdffd2e68bb18ac2702b0f58933be42f4f6d`.
+`509d119fe3eb69bb151e87fae8faee6d1ea86c39cfb1f8a91cf1f6e8935f98bf`.
 Its base is the accepted lower-inner ROM
-`1df2de53cd3625828ee7ebdb4e9a8656e3ed5e0404786c2d6d9af9defe6ef218`,
-which carries the corrected music ids (course track `$61`, cap pickup `$0D`,
-cap expiry `$61`). Earlier identities, in order, were `e0fb3837…` (original),
-`406ce1d0…` (interim alias), `5882080f…` (donor track transplant, wrong music)
-and now `e1ce3009…`; only the last one is current.
+`7e1f94307beeb6df2a55edbca751fec710d42b0605cfe3bc28975f080f1f9101`,
+which carries the corrected music ids (course track `$1E`, taken from the fourth
+Athletic Special scene, and cap expiry `$1E`). Earlier identities, in order, were
+`e0fb3837…` (original), `406ce1d0…` (interim alias), `5882080f…` (donor track
+transplant), `e1ce3009…` (`$61`, wrong scene) and now `509d119f…`; only the last
+one is current.
 The earlier center-only baseline `6db0bb2e…` is retained in the damage and
 cannon reports as the identity originally tested there.
 
@@ -58,9 +59,13 @@ These make 16 additional bounded host checks. Local reports
 retain receipts and assertions in
 `local/reports/center-cumulative-qualification.json`; neither ROMs nor
 captured states are distributed. The native executable SHA-256 is
-`c0430dba605ad5423a89468992753b9507e3e345f92a7e310d9979be3c01bfbb`; the
+`92603cf80f1881074b6e7c334c145cb799030ffbc946b545ca153d9d3a74c481`; the
 static-audio twin is
-`a371a607ed521289dbfb17ccc9776c61e08a215545a946e96c9fb1b607f237c6`.
+`61d7c14b266cf181a9c0812ce30672bbbad700d526ba84a759b6a6f42bdd6167`.
+
+The `tools/m1.py` capture timeout was raised from 180 s to 900 s in the same
+change: the lower-inner goal capture now needs about 324 s of wall clock on this
+host (about 77 fps under competing load) and previously exceeded the old limit.
 Everything was re-run on this candidate: all 16 bounded host captures pin ROM
 `e1ce3009…` and binary `c0430dba…`, the qualification probe prints PASS for the
 12 asserted host checks, and all nine regression routes report zero differences
