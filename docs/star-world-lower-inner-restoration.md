@@ -287,3 +287,30 @@ Still required before a donor song can be installed: the donor uses a different
 upload base, so its image must be captured on the donor side (same technique,
 after locating the donor's own level header) and its internal pointers rebased
 to `0x5400` before it can be written as a `music` payload.
+
+### Donor upload base found: `0x6800`
+
+Scanning a donor capture for the sequence-header signature (`[pat][pat] FF 00
+[base+2]`) finds it at ARAM **`0x6800`**:
+
+```
+@0x6800: 29 6B 29 6B FF 00 02 68 E4 6E
+```
+
+`0x6802` is `base + 2`, exactly the same relationship the candidate shows at
+`0x5400`. That base equals the `source_base` (`0x6800` / 26624) that the four
+music recipes already use for donor groups, which ties the static recipe format
+to the runtime upload. The two lineages therefore share the song format and the
+header layout, and differ only in upload base: donor `0x6800`, candidate
+`0x5400`.
+
+Consequence: a donor song captured at `0x6800` can be turned into a candidate
+payload by rebasing its internal pointers by `0x5400 - 0x6800 = -0x1400` before
+writing it with `destination_base 0x5400`. No format conversion is needed, only
+the pointer walk plus a constant shift.
+
+Donor level-header candidates were located at `$5C:D885` and `$5C:D91B` (both
+have byte 2 = `music id + 1` = `$25`, so the donor course plays `$24`). Patching
+both to `$21` did not change `$0DDA` in a 2500-frame capture - the dump still
+showed `$24` with mode `$0F` - so the donor-side forcing needs a later capture
+or a second header site before it can be trusted.
