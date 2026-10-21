@@ -234,3 +234,33 @@ Follow-up probing narrowed the claim above.
 
 Nothing here changes the shipped candidate: the interim alias stays, the cap
 freeze stays fixed, and the user's accepted behaviour is unaffected.
+
+### Where the course music id comes from
+
+PC tracing pinned the mechanism without needing a song-table guess. During the
+level load, `$0D:F130` runs:
+
+```
+F130  A5 57     LDA $57
+F132  F0 04     BEQ +4
+F134  3A        DEC A
+F135  8D DA 0D  STA $0DDA
+F138  A5 59     LDA $59
+F13A  F0 04     BEQ +4
+F13C  3A        DEC A
+F13D  8D DA 0D  STA $0DDA
+F140  60        RTS
+```
+
+So `$0DDA` is `$59 - 1`, and `$59` is filled by the header parser at `$05:860F`
+(`SEP #$30 / LDA [$65],Y / STA $0A / ... / STA $59`), i.e. the **third byte of
+the level header** pointed to by the 24-bit `$65/$66/$67`. A capture taken on
+the frame `$0DDA` becomes `$40` shows that pointer as `$3A:B528` with
+`$0A=$01`, `$0B=$02`, `$59=$07`, so the parser is also invoked for headers other
+than the one that finally sets the music; identifying the exact level-header
+address for room `$117` needs another step.
+
+Practical upshot: force a song by patching the level header's third byte, not by
+poking `$1DFB`, and validate by watching `$0DDA` rather than assuming the write
+landed. That mechanism is the next concrete step for song fidelity; it is not
+required for the accepted freeze fix.
