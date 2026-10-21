@@ -18,7 +18,8 @@ The [lower-inner 100-coin exit](star-world-lower-inner-restoration.md) is now
 automatically qualified with real pickups, save and File A reload. Its coin
 route uses explicit player/camera shortcuts. All eight surrounding courses
 are included in the [cumulative center candidate](star-world-center-restoration.md);
-the unfinished center Boss ending remains unqualified.
+its unfinished Giant Starman ending is an accepted exception, preserved as the
+donor left it, so no center clear is claimed.
 
 On 2026-10-21 the user reported that powered Mario died instead of shrinking
 in `star-world-center`. The [recipe regression](center-damage-regression.md)
@@ -661,8 +662,9 @@ the regular executable matches its receipt with SHA-256
 Use `star-world-lower-right` as the cumulative gameplay baseline. No independent
 user hash or itemized listening result was supplied.
 
-The user is now in a silent environment and will notify us when sound becomes
-available. Continue gameplay/visual testing and automatic audio checks. Defer
-human listening to the [audio acceptance queue](audio-acceptance-queue.md);
-do not ask the user to verify sound during this window or infer an audible
-pass from silent gameplay.
+The silent window is closed: the user reports sound is available again, and on
+2026-10-21 they reported that the listening experience is fine when running
+`tools/play_demo_only1.py --restoration star-world-center`. That is a general
+listening acceptance for the center cumulative candidate, not an itemized pass
+and not a retroactive acceptance of the earlier tracks. Remaining itemized
+listening stays deferred to the [audio acceptance queue](audio-acceptance-queue.md).
