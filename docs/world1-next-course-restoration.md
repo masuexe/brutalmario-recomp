@@ -75,3 +75,13 @@ Accepted scope is exactly what was playtested: the course loads with correct
 terrain and graphics, Mario can move through it, and its music plays. Still NOT
 qualified: a complete World 1 route beyond 1-2, collectibles, death/re-entry in
 1-2 itself, and itemised audible checks of every effect.
+
+## Room 106 course accepted except music (2026-10-23)
+
+The user playtested the room 106 course on the `world1-next-course` build and
+reports no problems apart from wrong level music. They explicitly deferred the
+music fix, calling it a minor issue that does not affect play.
+
+Recorded acceptance therefore covers: terrain and graphics recovered, normal
+movement, and no crashes. Open for this course, besides music: its complete exit
+route, DK coins and collectibles, death/re-entry, and itemised audible checks.
