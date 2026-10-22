@@ -272,6 +272,24 @@ class MusicMigrationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'upload group'):
             restoration.adapt_music(group[:-1], config)
 
+    def test_two_byte_legacy_terminator_requires_explicit_review(self):
+        group, config = self.fixture()
+        expected = restoration.adapt_music(group, config)
+        legacy = group[:-2]
+        with self.assertRaisesRegex(ValueError, 'upload group'):
+            restoration.adapt_music(legacy, config)
+        config['source_trailer_size'] = 2
+        self.assertEqual(restoration.adapt_music(legacy, config), expected)
+        legacy[-1] = 1
+        with self.assertRaisesRegex(ValueError, 'upload group'):
+            restoration.adapt_music(legacy, config)
+
+    def test_unknown_music_terminator_width_is_rejected(self):
+        group, config = self.fixture()
+        config['source_trailer_size'] = 8
+        with self.assertRaisesRegex(ValueError, 'upload group'):
+            restoration.adapt_music(group + bytes(4), config)
+
     def test_unreviewed_sequence_layout_is_rejected(self):
         group, config = self.fixture()
         group[4+2] = 0x71

@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario World 1 next course graphics candidate",
+  "id": "world1-next-course",
+  "recipient": "demo-only-1",
+  "donor": "demo8",
+  "base_restoration": "world1-room106",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "faec11a6f1c12b6a1b667b4bdf6bb8b0169027bda7d19ec4445d7084b4e462fc"
+  },
+  "room": "010",
+  "entrance": {
+    "map": 0,
+    "x": 24,
+    "y": 440,
+    "translevel": 16,
+    "requires": "First-course normal exit reaches this node. Intended course numbering not established."
+  },
+  "scope": "Restore missing graphics 151 and 102 for room 010 without changing its matching donor layout, sprite list, music, collision, map directions, events or completion rules. Reuse one private relocated 151 stream in both original selector words. Restore missing song 2F from the live donor bank, exact reachable channel graphs; full course qualification pending. Restore source custom sprite 8D at both existing reviewed rooms 010/04A, retaining all bank-local offsets and low WRAM mirrors. Also bind the identical missing 102 graphics in existing dependent subroom 04A to the same private stream.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "0180810851011700140002011300010000005101ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2424832,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "151",
+      "target_id": "FBC",
+      "record_offset": 4,
+      "source_address": "30E0A3",
+      "compressed": {
+        "size": 2569,
+        "sha256": "8abaf002c091d3d0e871a87d8981d6cfdd3d9b14716f929bd5e7c8aec1f21858"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "e315be13b7b5add3e6ab76722f9265ba618ec4f913e46423fa79c76931aec5a2"
+      },
+      "record_addresses": [
+        "14AF08"
+      ]
+    },
+    {
+      "source_id": "102",
+      "target_id": "FBB",
+      "record_offset": 10,
+      "source_address": "25E32D",
+      "compressed": {
+        "size": 1256,
+        "sha256": "80972685027df5c12a4f76ca7a9da7d5d52365f19658651876fa78128a953178"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "769e19aaf4c26cddcba942c8d33e85a6c7db37a42da1d1bf328f738bbaeff1cc"
+      },
+      "record_addresses": [
+        "14AF08",
+        "14B648"
+      ]
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "14AF1A",
+      "before": "5101",
+      "after": "bc0f",
+      "role": "Graphics selector data: reuse private FBC for the second occurrence of source 151."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "f772fe6757107a18d0861b6f9c2a52898d33087713d5410f6049111e703e4ce5"
+  },
+  "music": {
+    "id": "2F",
+    "source_address": "298009",
+    "source_group": {
+      "size": 4486,
+      "sha256": "2ff26ddf63f49c65972d7b281dbe9b2bfb9ccd8968fed9d94c64aae739a4e967"
+    },
+    "source_base": 24576,
+    "destination_base": 21504,
+    "sequence_offset": 24,
+    "source_data_offset": 3753,
+    "source_trailer_size": 2,
+    "song_size": 787,
+    "pattern_count": 2,
+    "relocations": [
+      0,
+      2,
+      6,
+      122,
+      134,
+      169,
+      173,
+      206,
+      360,
+      519,
+      537,
+      541,
+      556,
+      572,
+      592,
+      608,
+      625,
+      629,
+      653,
+      657,
+      755,
+      757,
+      759,
+      761,
+      765,
+      771,
+      773,
+      775,
+      777,
+      781
+    ],
+    "pointer_address": "0FE08D",
+    "before": "000000",
+    "allocation": {
+      "offset": 2490368,
+      "size": 4096,
+      "fill": 0
+    },
+    "adapted": {
+      "size": 795,
+      "sha256": "806bf03001cf72a17920836b96fb0861d67551f9de00ec5f51eed2029ae22a7b"
+    }
+  },
+  "custom_sprite": {
+    "id": "8D",
+    "rooms": [
+      16,
+      74
+    ],
+    "source_address": "24C3F9",
+    "destination_address": "33C3F9",
+    "block": {
+      "size": 685,
+      "sha256": "b3f445ba48b07898e31222f3f746154ea5e6a931bb90eb6f5120803a2c901b04"
+    },
+    "source_record_address": "10BA2D",
+    "destination_record_address": "10B95A",
+    "source_record": "012200003b93915708c42427c4240000",
+    "before": "0000ffffffffffff218001218001ffff",
+    "shared_dependencies": [
+      {
+        "address": "27FAE4",
+        "size": 256,
+        "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+      },
+      {
+        "address": "01801A",
+        "size": 32,
+        "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+      },
+      {
+        "address": "01A7DC",
+        "size": 384,
+        "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+      },
+      {
+        "address": "01B7B3",
+        "size": 256,
+        "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+      },
+      {
+        "address": "02A9DE",
+        "size": 128,
+        "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+      },
+      {
+        "address": "07F7D2",
+        "size": 160,
+        "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+      }
+    ],
+    "versioned_dependencies": [
+      {
+        "role": "recipient",
+        "address": "0187A7",
+        "size": 4,
+        "sha256": "b80cfad55c01cf5eb70e7a181a6674dd8043a2fdd991eb43e31fa456215eacbb"
+      },
+      {
+        "role": "donor",
+        "address": "0187A7",
+        "size": 4,
+        "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+      }
+    ]
+  },
+  "additional_gfx_records": [
+    {
+      "address": "14B648",
+      "before": "0180150019001700140002011300010000007f00ffffffffffffffffffffffff"
+    }
+  ]
+}

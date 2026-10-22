@@ -1,0 +1,67 @@
+# Traversal invulnerability protects enemy contact but not the real pit death.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x018, Y=0x1b8.
+poke 1f11 0000
+poke 1f17 1800b8011800b801
+poke 1f1f 01001b0001001b00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+forcepoke 1497 ff
+poke 0f31 090909
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+dump run00
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+dump run01
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+press right+y+b 20
+press right+y 20
+dump falling
+wait 900
+dump death_map
+until 0100 == 0e 0
+press y 2
+wait 600
+dump reentry
+until 0100 == 14 0
+until16 010b == 0010 0
+quit

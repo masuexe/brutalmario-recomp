@@ -1,0 +1,65 @@
+# World 1 next course: room 010 resource candidate
+
+Date 2026-10-22. Isolated candidate descending from the accepted
+`world1-room106` base. Restores the graphics and music that room 010 needs so
+the first course's normal exit continues into a course Mario can actually walk
+in, instead of falling after the opening message.
+
+## Identity
+
+- Recipe `config/restorations/world1-next-course.json`.
+- Base ROM `faec11a6f1c12b6a1b667b4bdf6bb8b0169027bda7d19ec4445d7084b4e462fc`
+  (`world1-room106`, itself from the accepted `star-world-forest`).
+- Candidate ROM
+  `f772fe6757107a18d0861b6f9c2a52898d33087713d5410f6049111e703e4ce5`.
+- Binary `local/build/world1-next-course/BrutalMarioWorld1NextCourseSNESRecomp`,
+  SHA-256 `4a707c1a054f7badac68efd035112ea3026c48951e0cc7ddd924d53ce94f4d8c`.
+- Entrance map 0, `$018,$1B8`, translevel `0x10`, room `010`. Its intended
+  course number is NOT established; do not label it 1-2.
+- Launch: `python3 tools/play_demo_only1.py --restoration world1-next-course --show-location`.
+
+## What changed
+
+4,731 differing bytes, all inside reviewed regions:
+
+| Item | Detail |
+| --- | --- |
+| Graphics `151` -> private `FBC` | donor `demo8` stream at `30E0A3`, relocated to `0x250000` |
+| Graphics `102` -> private `FBB` | donor `demo8` stream at `25E32D`, same allocation |
+| Selector patch `14AF1A` | `5101` -> `bc0f`, second occurrence of source `151` reuses `FBC` |
+| Music `2F` | donor group at `298009`, 2-byte legacy trailer, `destination_base 0x5400`, pointer `0FE08D` |
+| Custom sprite `8D` | rooms `0x10` and `0x4A`, destination `33C3F9` |
+
+Missing graphics in the recipient were the real cause of the earlier failure:
+the level's terrain buffers were corrupted, so Mario fell immediately after the
+opening message. Restoring the graphics alone fixes terrain and movement.
+
+`adapt_music` gained a reviewed `source_trailer_size` option (2 or 4 bytes) because
+this donor group ends with a two-byte legacy terminator; unit tests cover both the
+accepted and rejected widths.
+
+## Qualification
+
+`python3 tools/qualify_world1_next_course.py` is a read-only assertion runner.
+Report: `local/reports/world1-next-course-qualification.json`. It verifies:
+
+- candidate, base and donor identities against their pins;
+- the diff footprint is confined to the reviewed regions; both protected graphics
+  payloads match their donor streams and both selectors resolve to the private ids;
+- **terrain**: at `entry600` and `ability_walk`, both Map16 buffers (`0xC800`,
+  `0x1C800`) match the donor byte-for-byte over the active area of nine screens
+  (`9 * 0x1B0` cells);
+- **entry**: reference, native and donor all sit in room `010` in mode `0x14`;
+- **death**: a real pit death sample exists and re-entry returns to room `010` on
+  both hosts;
+- **progression**: the first course (room `105`) reaches its goal tape, returns to
+  the map, and the normal exit then enters room `010` and Mario can walk there;
+- **subroom**: the existing subroom `04A` is still reachable on both hosts.
+
+## Limits
+
+- A complete World 1 route, collectibles and audible output remain unqualified.
+- Room `010`'s intended course numbering is unknown; it is not labelled 1-2.
+- Overworld connectivity beyond the first course is not claimed.
+- This is a bounded resource recovery plus playtest candidate, not a new
+  manually accepted baseline.

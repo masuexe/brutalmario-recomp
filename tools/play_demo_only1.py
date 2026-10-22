@@ -58,6 +58,9 @@ LEVELS = {
     'world1-room106': {'name': 'World 1 room 106 graphics candidate', 'map': 0,
                        'x': 0x058, 'y': 0x1d8, 'level': 0x106,
                        'teleport': (0, 0x058, 0x1d8)},
+    'world1-next-course': {'name': 'World 1 first-course normal-exit destination', 'map': 0,
+                          'x': 0x018, 'y': 0x1b8, 'level': 0x010,
+                          'teleport': (0, 0x018, 0x1b8)},
 }
 
 

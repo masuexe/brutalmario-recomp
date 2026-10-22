@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'world1-next-course': {
+        'binary': 'BrutalMarioWorld1NextCourseSNESRecomp',
+        'title': 'Brutal Mario World 1 Next Course',
+    },
     'world1-room106': {
         'binary': 'BrutalMarioWorld1Room106SNESRecomp',
         'title': 'Brutal Mario World 1 Room 106',

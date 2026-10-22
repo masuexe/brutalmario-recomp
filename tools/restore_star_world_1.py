@@ -162,11 +162,13 @@ def adapt_music(group, config):
     """
     source, destination = config['source_base'], config['destination_base']
     count = int.from_bytes(group[:2], 'little')
+    trailer_size = config.get('source_trailer_size', 4)
     sequence_offset = config.get('sequence_offset', 0)
     data_offset = config.get('source_data_offset', 64)
     data_size = config['song_size'] - 64
-    if (len(group) != count + 8 or group[2:4] != source.to_bytes(2, 'little') or
-            group[-4:] != bytes(4) or data_size <= 0 or sequence_offset < 0 or
+    if (trailer_size not in (2, 4) or len(group) != count + 4 + trailer_size or
+            group[2:4] != source.to_bytes(2, 'little') or
+            group[-trailer_size:] != bytes(trailer_size) or data_size <= 0 or sequence_offset < 0 or
             sequence_offset + 8 > data_offset or data_offset + data_size > count):
         raise ValueError('unexpected music upload group')
     sequence_source, data_source = source + sequence_offset, source + data_offset
