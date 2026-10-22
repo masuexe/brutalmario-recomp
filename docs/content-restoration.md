@@ -316,6 +316,13 @@ reload is 5 on reference and 8 on native; the saved clear matches. Death
 and DK coverage are not part of this checkpoint. The stage is
 automatically qualified. A new manual gate is not required.
 
+The subsequent [middle-left identity investigation](star-world-middle-left-identity.md)
+confirms that cheap_demo room `$003` duplicates World 1 water room `$120`:
+terrain and all 34 sprite placements match after normalizing record order.
+Its existing qualification therefore covers the copied donor water course,
+not a distinct original forest course. demo6/demo7 retain different forest
+data with 14 sprite records; that candidate still needs separate qualification.
+
 The [lower-inner restoration](star-world-lower-inner-restoration.md) now
 restores the missing warp-star actors and 100-coin controller in `$117`.
 The geometry and sprite placements already match cheap_demo. Actual-input

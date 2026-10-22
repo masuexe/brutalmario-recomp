@@ -7,6 +7,12 @@ boss ending is an accepted exception, preserved as the donor left it (see
 [below](#accepted-exception-the-unfinished-boss-ending)); this is not a claim
 that all nine courses have completed-clear acceptance.
 
+The [middle-left identity follow-up](star-world-middle-left-identity.md) also
+distinguishes playable donor reuse from distinct-course restoration: cheap_demo
+room `$003` duplicates its World 1 water course. The current candidate preserves
+that donor copy. A distinct forest course exists in demo6/demo7 but has not
+been transplanted or qualified here.
+
 Current candidate SHA-256:
 `da880e47ec0aa81f06af8596e5b4c813bd3a934631041ffb9feba6a272a590b9`.
 Its base is lower-inner ROM
