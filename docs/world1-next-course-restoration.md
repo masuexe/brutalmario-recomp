@@ -63,3 +63,15 @@ Report: `local/reports/world1-next-course-qualification.json`. It verifies:
 - Overworld connectivity beyond the first course is not claimed.
 - This is a bounded resource recovery plus playtest candidate, not a new
   manually accepted baseline.
+
+## User acceptance (2026-10-23)
+
+The user playtested this candidate and reports that the 1-2 course has no
+problems. That promotes the candidate from a bounded playtest target to a
+playtest-accepted checkpoint, and it also settles the earlier open point about
+numbering: the user identifies this course (room `010`) as **World 1-2**.
+
+Accepted scope is exactly what was playtested: the course loads with correct
+terrain and graphics, Mario can move through it, and its music plays. Still NOT
+qualified: a complete World 1 route beyond 1-2, collectibles, death/re-entry in
+1-2 itself, and itemised audible checks of every effect.
