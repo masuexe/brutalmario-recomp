@@ -37,4 +37,7 @@ wait 16
 dump shot_flight
 press right+b 30
 dump movement
+# The parrot course is dry in demo7/demo8; reject the old water-duplicate flag.
+until 85 == 00 0
+until 75 == 00 0
 quit

@@ -285,6 +285,12 @@
       "before": "bf00e012",
       "after": "22448041",
       "note": "Select the private ActsLike table only in room 003 modes 11-14; preserve incoming flags and accumulator width."
+    },
+    {
+      "address": "05DE03",
+      "before": "40",
+      "after": "00",
+      "note": "Room 003 layer settings: restore donor non-water flag. 05:DD12 sets $85 when bit 40 is present; the previous water duplicate left this bit enabled. demo7 and demo8 both store 00 here."
     }
   ],
   "level_data": [
@@ -463,6 +469,6 @@
   ],
   "output": {
     "size": 4194304,
-    "sha256": "94c48ebe9f1bda36739169493e394378b8e9f2023d92379aa82657b28961d551"
+    "sha256": "a246c9370f71e2ee1db990724222d877c96476ba3e3dd4ff98b2db160b0d4872"
   }
 }

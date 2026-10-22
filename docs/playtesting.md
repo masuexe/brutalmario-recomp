@@ -716,3 +716,15 @@ automated reference/native mechanics, projectile collision, both saved exits,
 portal and death/reentry checks. This is an automated checkpoint under the
 user's reduced-manual-check policy, not a reported new human playthrough or
 listening test. The preserved center target still contains the water course.
+
+## Forest Star retained water flag (2026-10-21)
+
+The user played the independent forest candidate without other reported issues,
+but noticed that Mario was still swimming. Original demo7 and demo8 have the
+room's water setting disabled; the first forest candidate retained the water
+duplicate's `$40` at `$05:DE03`. The preceding automated checks missed that
+state difference. The [forest follow-up](star-world-forest-restoration.md)
+clears this one bit and reruns all five forest routes on both hosts, explicitly
+checking global water flag `$85` and Mario's in-water state `$75` against the
+demo7 diagnostic. The correction has automated acceptance; no subsequent human
+retest has yet been reported.

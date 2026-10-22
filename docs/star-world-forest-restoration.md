@@ -6,6 +6,10 @@ water duplicate in this candidate only. The accepted `star-world-center`
 and `star-world-middle-left` targets remain available with their previous
 identities and content.
 
+The subsequent user playtest reported normal gameplay but exposed a retained
+water flag. That flag is corrected in the current identity below; the original
+automated checkpoint did not compare the donor's water state.
+
 ```sh
 python3 tools/play_demo_only1.py --restoration star-world-forest --show-location
 ```
@@ -44,6 +48,15 @@ The missing final music object in the recipient goal-room stream was material:
 without donor `40 60 5E`, entry attempts stock song `$02` and waits for SPC
 acknowledgement at `$0F:C347`. Copying the complete donor stream selects the
 existing recipient song `$5D` and the room loads normally.
+
+The room-settings byte at `$05:DE03` also needs to change from `$40` to `$00`.
+Both original demo7 and demo8 use `$00`. During level initialization,
+`$05:DD12` sets the global water flag `$85` when bit `$40` is present; Mario's
+in-water state `$75` then becomes active throughout the course. The water
+duplicate left that bit enabled despite the replaced terrain and graphics.
+The follow-up repair changes exactly this one ROM byte. Fresh reference and
+native checks require `$85=$75=0` during entry, shooting and B/right movement,
+matching a fresh unmodified-demo7 room diagnostic. Parrot flight is retained.
 
 Room `$003` has ten screens. Its usable screen-`$07` exit leads to `$04E`;
 the end-area key/keyhole supplies the secret exit. The old screen-`$0F`
@@ -94,7 +107,7 @@ overworld forcepoke byte `$7E:D7A5`: that fixture overlaps the level buffer
 and keeps `$03` there; the recipient correctly has air `$25`. The donor's
 same-number-room fixture is not a natural donor-map route qualification.
 
-Fresh baseline/candidate reference checks cover all eight other hub entrances
+The preceding `94c48ebe…` checkpoint's fresh baseline/candidate reference checks cover all eight other hub entrances
 with 77 semantic scene samples. Native checks additionally cover the
 lower-left, upper-left and center routes. Modes, rooms, lives and interactive
 positions agree within the probe bounds. The lookup shims add guest instruction cycles, so these are
@@ -110,6 +123,18 @@ graphics-record rejection. Local evidence is recorded in
 `forest-star-accepted-*` and `forest-qualified-regress-*`.
 The first four route captures predate comment cleanup only; captured receipt
 hashes and identical normalized commands are recorded separately.
+
+After the one-byte water correction, all five forest routes were rerun on
+reference and native hosts. Ordinary/secret saved flags remain `$8C/$8E`, the
+portal still transfers to World 1, two vine enemies are defeated by real shots,
+and death/reentry still succeeds. The new evidence is
+`local/reports/forest-water-flag-qualification.json`, with captures
+`forest-water-fix-{attack,normal,secret,death}-{reference,native}`,
+`forest-water-check-entry-{reference,native}` and
+`forest-water-fix-demo7-baseline`. The earlier eight-entrance comparisons are
+retained as preceding-checkpoint evidence; the exact one-byte diff is separately
+verified, and no other room setting or engine instruction changes.
+The checked-in entry route now fails immediately if either water flag is set.
 
 ## Music and remaining limits
 
@@ -129,10 +154,10 @@ The existing center Boss-ending exception remains unchanged.
 ## Identity and reproduction
 
 Candidate ROM SHA-256:
-`94c48ebe9f1bda36739169493e394378b8e9f2023d92379aa82657b28961d551`.
+`a246c9370f71e2ee1db990724222d877c96476ba3e3dd4ff98b2db160b0d4872`.
 
 Native executable: `local/build/star-world-forest/BrutalMarioForestStarSNESRecomp`,
-SHA-256 `f4f12cbbe9a8d71de2004a415cff818ce9300bdc7ac8dc8f27ad92b8153eadf7`.
+SHA-256 `8d9f00be7f7f8f52ec5524e8d39a01ac284f648ee67b4c8b8badf45caa89de65`.
 
 ```sh
 python3 tools/restore_star_world_1.py --target star-world-forest
