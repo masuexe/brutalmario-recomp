@@ -42,3 +42,31 @@ write `$1ECB` direction bits to make the route acceptance pass.
 The natural World 1 flow after clearing 1-1 is: map at the 1-2 node, enter 1-2.
 That is now playable. Reaching Yoshi's House is not part of that flow in this
 recipient, matching the original ROM.
+
+## 1-2 (room 010) route mechanics, from user guidance plus probes
+
+The user described the course: fly/float to the very end, enter a pipe, the next
+scene goes upward, then a second pipe is the exit. It is the fart-propulsion
+course, not the chase-Yoshi course.
+
+What the probes establish on the current candidate:
+
+- The course is about nine screens wide; the camera stops at `camX = 0x228`
+  around `x = 0x292` while the player is at `y = 0xC0`. There is a ceiling
+  obstruction at that point: at `y = 0xC0` the player cannot pass `x = 0x292`
+  no matter how the flight is driven (held B, mashed B, or an air-swim fixture).
+- Passing it requires being LOW. After dropping to about `y = 0x100` at
+  `x = 0x292`, holding right advances to `x = 0x2D4`, then to `x = 0x324`
+  (`camX = 0x2B9`) when swimming resumes.
+- Walking on the ground alone falls into a pit at `x = 0x17E` (death, map
+  return), so the course does require the flight ability.
+- Pressing down plus right at `x = 0x283` while high on the screen leads to a
+  pit death, not a pipe.
+
+So any traversal script has to fly over the pit at `x = 0x17E`, drop below the
+ceiling before `x = 0x292`, then continue. The `air-swim` fixture
+(`forcepoke 85 01`), which the 1-1 route already uses for assisted traversal, is
+the practical way to script it.
+
+Not yet established: the exact pipe coordinates, and whether entering the first
+pipe changes the room id or keeps room `010`.
