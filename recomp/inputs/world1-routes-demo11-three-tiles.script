@@ -1,0 +1,91 @@
+# Bounded World 1 route diagnostic. Fresh save; map transfer is a fixture.
+# Diagnostic only: restores three missing route cells in WRAM after each map load.
+# Diagnostic completion/direction flags only; not proof of actual exit events.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates. Fixture writes are explicit; waits count guest frames.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x048, Y=0x198.
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+dump selected
+press down 90
+wait 90
+dump down
+
+# Practice map transfer: map 0, X=0x048, Y=0x198.
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+press right 90
+wait 90
+dump right
+
+# Practice map transfer: map 0, X=0x048, Y=0x198.
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+press up 90
+wait 90
+dump up
+
+# Practice map transfer: map 0, X=0x048, Y=0x198.
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+press left 90
+wait 90
+dump left
+
+# Practice map transfer: map 0, X=0x048, Y=0x198.
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+poke 1ecb 8f
+poke ca84 20
+poke ca93 04
+poke ca95 04
+quit

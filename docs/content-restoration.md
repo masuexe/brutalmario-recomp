@@ -24,6 +24,13 @@ The first migration pilot should determine the recipient before a broad merge.
 
 ## Reduced manual checkpoints
 
+The current cumulative recipient is the accepted `star-world-forest` target
+on demoOnly1. Demo 1-1 remains separate and may supply selected additional
+content. The [World 1 route audit](world1-route-audit.md) reproduces its
+three-cell route restriction; preserve the recipient's map routes when
+investigating Demo 1-1 content migration. Actual normal-exit route integration
+remains pending.
+
 The user authorizes automatic commits and pushes for completed checkpoints
 once their required checks pass. Report the commit and verification results;
 unresolved failures must remain explicit rather than being marked accepted.
