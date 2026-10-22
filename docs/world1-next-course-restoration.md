@@ -85,3 +85,27 @@ music fix, calling it a minor issue that does not affect play.
 Recorded acceptance therefore covers: terrain and graphics recovered, normal
 movement, and no crashes. Open for this course, besides music: its complete exit
 route, DK coins and collectibles, death/re-entry, and itemised audible checks.
+
+## Room 106 course music corrected (2026-10-23)
+
+The user reported the room 106 course's level music as wrong and deferred the
+fix, then authorised using cheap_demo's music for the same level as the
+reference.
+
+`cheap_demo` plays music `0x22` in room `0x106` (read from the donor capture
+`world1-106-qualified-entry-cheap`, where `$0DDA = 0x22` for the whole course).
+The recipient played `0x25`. Room 106's level header sits at `$10:CD61`, so the
+music byte at `10CD63` is patched `0x26 -> 0x23` (id + 1).
+
+Verified: a fresh reference capture now reports `room=0x106 music=0x22`.
+
+Candidate identities after the patch: ROM
+`3a7fd69f58c541e73ffeffaad91f4ff1bbba48fdbba87d95b37b1d68195eda7c`, binary
+`7efb8fa11c57d83c779fa07889dda0cd5643eead8e4323f55b43383c818a2973`. All eight
+candidate-side qualifying captures were re-run
+against the new ROM and `tools/qualify_world1_next_course.py` passes again.
+
+Note: the intermediate `world1-room106` candidate still carries the old music,
+because the patch is applied in this cumulative head. Rebuilding that
+intermediate target from its own recipe will need the same one-byte patch
+(`10CD63`, `26 -> 23`) added there if it is ever promoted independently.

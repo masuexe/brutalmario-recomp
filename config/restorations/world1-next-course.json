@@ -70,11 +70,17 @@
       "before": "5101",
       "after": "bc0f",
       "role": "Graphics selector data: reuse private FBC for the second occurrence of source 151."
+    },
+    {
+      "address": "10CD63",
+      "before": "26",
+      "after": "23",
+      "role": "Level header music byte for room 106 course: cheap_demo plays 0x22 for the same level (user reference), the recipient played 0x25."
     }
   ],
   "output": {
     "size": 4194304,
-    "sha256": "f772fe6757107a18d0861b6f9c2a52898d33087713d5410f6049111e703e4ce5"
+    "sha256": "3a7fd69f58c541e73ffeffaad91f4ff1bbba48fdbba87d95b37b1d68195eda7c"
   },
   "music": {
     "id": "2F",
