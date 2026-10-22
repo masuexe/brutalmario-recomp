@@ -24,7 +24,8 @@ Fresh native and reference runs on ROM `da880e47…` check all three cap
 pickups and natural expiry, then the assisted lower-inner 100-coin ending,
 overworld return, both SRAM copies and reset/File A reload. The audio
 captures cover the corrected existing songs; diagnostic ARAM checks confirm
-which payload is actually loaded. Human listening remains pending. See
+which payload is actually loaded. The user confirmed the corrected music is
+completely normal on 2026-10-21, closing the scoped listening check. See
 [the music report](lower-inner-music.md) and
 `local/reports/lower-inner-music-qualification.json` for exact scope and receipts.
 

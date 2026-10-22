@@ -3,7 +3,8 @@
 The lower-inner star course now selects existing demoOnly1 song `$60`. All
 three caps select existing song `$79`; when the last active cap expires,
 the controller resumes `$60`. No song data or music driver is transplanted.
-Human listening on the corrected native build remains pending.
+The user confirmed on 2026-10-21 that the corrected music is completely normal.
+The scoped music correction is accepted.
 
 ## Why the earlier selections were wrong
 
@@ -96,7 +97,12 @@ comparison is diagnostic only; it is not waveform equivalence or a physical
 device-output check. Unprocessed listening excerpts and a provenance receipt
 are under `local/reports/lower-inner-music-listening/`.
 
-## Listening check
+## Accepted listening check
+
+After the correction in `ab2df63`, the user reported that the music is completely
+normal. This closes the requested course/cap/expiry music listening check.
+Individual cap variants were not itemized in that report; all three variants
+have the separate automated pickup/expiry evidence above.
 
 Restart the launcher so an older process cannot retain the previous ROM:
 

@@ -1,6 +1,6 @@
 # Manual playtest evidence
 
-Last manually accepted baseline: [Sky Star / middle-right](star-world-middle-right-restoration.md),
+Last full-stage manually accepted baseline: [Sky Star / middle-right](star-world-middle-right-restoration.md),
 room `$009` with destination `$09B`. The user reports that another agent
 completed the work and their playtest found no problems. They also report
 that sound is available again and the heard audio is normal. This accepts
@@ -25,8 +25,10 @@ The user subsequently reported incorrect lower-inner music. The
 [music correction](lower-inner-music.md) selects existing course song `$60`
 and cap song `$79`, with all three expiry paths returning to `$60`.
 The cap song's reachable musical graph matches cheap_demo exactly; the course
-song is its existing revised arrangement. Automated pickup/expiry and save
-checks are separate from the pending human listening check on this build.
+song is its existing revised arrangement. On 2026-10-21 the user confirmed that
+the corrected music is completely normal, accepting this scoped listening
+check. Individual cap variants were not itemized; all three variants have
+separate automated pickup/expiry checks, along with exit/save/reset evidence.
 
 On 2026-10-21 the user reported that powered Mario died instead of shrinking
 in `star-world-center`. The [recipe regression](center-damage-regression.md)

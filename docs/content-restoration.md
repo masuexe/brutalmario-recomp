@@ -328,5 +328,6 @@ DK coverage and death/re-entry are not qualified by this checkpoint.
 The subsequent [lower-inner music correction](lower-inner-music.md) uses
 existing recipient songs `$60` (course/expiry) and `$79` (caps). Donor
 `$21/$22` are local selections within an uploaded four-song bank, so global
-song numbers and matching backgrounds were insufficient evidence. Human
-listening on the corrected build remains pending.
+song numbers and matching backgrounds were insufficient evidence. On
+2026-10-21 the user confirmed that the corrected music is completely normal,
+closing the scoped listening check.
