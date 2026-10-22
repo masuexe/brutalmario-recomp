@@ -1,0 +1,468 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario independent Forest Star restoration candidate",
+  "id": "star-world-forest",
+  "recipient": "demo-only-1",
+  "donor": "demo8",
+  "base_restoration": "star-world-center",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "da880e47ec0aa81f06af8596e5b4c813bd3a934631041ffb9feba6a272a590b9"
+  },
+  "room": "003",
+  "entrance": {
+    "map": 6,
+    "x": 344,
+    "y": 424,
+    "translevel": 3,
+    "requires": "Fresh uncleared save; completion turns this course into a portal."
+  },
+  "scope": "Isolated forest replacement on the accepted cumulative ROM. The existing water-course candidate remains available. Room-scoped graphics and ActsLike lookup shims select cloned donor Map16 definitions only for active/loading room 003. Three custom sprites use previously unreferenced B2/B0/B1 slots.",
+  "gfx_record": {
+    "address": "14AD68",
+    "before": "0180ac000d001700140006001300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2369536,
+    "size": 12288,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "15D",
+      "target_id": "FC0",
+      "record_offset": 2,
+      "source_address": "31CC2F",
+      "compressed": {
+        "size": 1087,
+        "sha256": "7db69f1b9ea46f5b0b9ca6c1f69a0fe59fd46e5ced9933610412cd15eec095b3"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "734b721ee728cc51add179d8959321173e27873b64579a7f669810dbd7b4c239"
+      },
+      "record_addresses": [
+        "14AD68"
+      ]
+    },
+    {
+      "source_id": "14D",
+      "target_id": "FBF",
+      "record_offset": 6,
+      "record_addresses": [
+        "14B6C8"
+      ],
+      "source_address": "30C1EC",
+      "compressed": {
+        "size": 2777,
+        "sha256": "eaac1b7a9a9ed474ac98685b3814b37f8adf02e2654523b6738d128d6750bfec"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "6fd3e561afd5028518297c25dfc6fa2c4af81c3baedb628ee6166b2d057562c6"
+      }
+    },
+    {
+      "source_id": "14E",
+      "target_id": "FBE",
+      "record_offset": 4,
+      "record_addresses": [
+        "14B6C8"
+      ],
+      "source_address": "30CCCD",
+      "compressed": {
+        "size": 3031,
+        "sha256": "19e03433ec5aa63ac3c76d06e2b500acc20bd58d9ddc7227f4617f5575167fa0"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "6d9e274878199fdf9ce69430c9543d7796cff03bd92b3b7d03361b04a4bf4994"
+      }
+    }
+  ],
+  "raw_blocks": [
+    {
+      "name": "Forest Layer 2 RLE, including embedded FF bytes",
+      "source_address": "139F89",
+      "destination_address": "49E008",
+      "rats_address": "49E000",
+      "data": {
+        "size": 143,
+        "sha256": "919e768a7e14966775e8ce351718e409d22ebaa5ab42b4bbfeeb08ba6d2fe6cb"
+      }
+    },
+    {
+      "name": "Forest sprite list with isolated custom slots",
+      "source_address": "13A22A",
+      "destination_address": "49E108",
+      "rats_address": "49E100",
+      "data": {
+        "size": 44,
+        "sha256": "a20d8f48ab409d488c668db53d24c2f03ce9670834d2e1c9374cb75fa3ebd7b4"
+      },
+      "edits": [
+        {
+          "offset": 3,
+          "before": "0d",
+          "after": "b0"
+        },
+        {
+          "offset": 6,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 9,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 12,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 18,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 21,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 24,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 27,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 30,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 33,
+          "before": "47",
+          "after": "b2"
+        },
+        {
+          "offset": 36,
+          "before": "47",
+          "after": "b2"
+        }
+      ]
+    },
+    {
+      "name": "Forest custom palette",
+      "source_address": "13A020",
+      "destination_address": "49E208",
+      "rats_address": "49E200",
+      "data": {
+        "size": 514,
+        "sha256": "dcaf7f4b47a4266ae5e6c317e7e679d68ef7b2e7528a8bcc05f66b17d36e24bc"
+      }
+    },
+    {
+      "name": "Donor goal-room custom palette",
+      "source_address": "13A57D",
+      "destination_address": "49E608",
+      "rats_address": "49E600",
+      "data": {
+        "size": 514,
+        "sha256": "9c9d2ee7aced08d9f571a8a57e1943d897b3c1667c142316d7bb460dfe81c3b7"
+      }
+    },
+    {
+      "name": "Private complete donor Map16 bank, read only through scoped shims",
+      "source_address": "128000",
+      "destination_address": "448000",
+      "rats_address": "43FFF8",
+      "data": {
+        "size": 32768,
+        "sha256": "56c74d441c9201198f6d0cf6d8f836ffba6a3e311aaf4130548725684107edc3"
+      }
+    },
+    {
+      "name": "Room and mode scoped graphics/ActsLike lookup shims",
+      "destination_address": "418008",
+      "rats_address": "418000",
+      "bytes": "48ad0b01c90300d02aad000129ff00c91100901fc91500b01a68a8c900042244f5060848a50bc90012d005a90044850b68286b68a8c900045c44f5060848ad0b01c90300d017ad000129ff00c91100900cc91500b0076828bf00e0446b6828bf00e0126b",
+      "data": {
+        "size": 100,
+        "sha256": "07ad933c20c34dffb080011afbbfb906330a0430fc1494327407dbb1119eab29"
+      }
+    }
+  ],
+  "pre_asset_patches": [
+    {
+      "address": "05F003",
+      "before": "58",
+      "after": "0b",
+      "note": "Donor room 003 secondary header."
+    },
+    {
+      "address": "05F203",
+      "before": "f8",
+      "after": "05",
+      "note": "Donor room 003 secondary header."
+    },
+    {
+      "address": "05F403",
+      "before": "0a",
+      "after": "ea",
+      "note": "Donor room 003 secondary header."
+    },
+    {
+      "address": "05F603",
+      "before": "00",
+      "after": "00",
+      "note": "Donor room 003 secondary header."
+    },
+    {
+      "address": "14AD68",
+      "before": "0180ac000d001700140006001300010000007f00ffffffffffffffffffffffff",
+      "after": "01805d01b000170014009900b9009a0000007f00ffffffffffffffffffffffff",
+      "note": "Donor forest graphics selections, before isolated ExGFX remap."
+    },
+    {
+      "address": "14B6C8",
+      "before": "01804f014e014d01140002001300010000007f00ffffffffffffffffffffffff",
+      "after": "01804f014e014d01140002001300010000007f00ffffffffffffffffffffffff",
+      "note": "Complete donor goal-room graphics selection, retaining the verified identical standard GFX 1F stream."
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "05E609",
+      "before": "b9daff",
+      "after": "08e049",
+      "note": "Forest background pointer."
+    },
+    {
+      "address": "05EC06",
+      "before": "a6aa",
+      "after": "08e1",
+      "note": "Forest sprite pointer low word."
+    },
+    {
+      "address": "0EF103",
+      "before": "50",
+      "after": "49",
+      "note": "Forest sprite pointer bank."
+    },
+    {
+      "address": "0EF313",
+      "before": "00",
+      "after": "22",
+      "note": "Required Layer 2 background format/page flags."
+    },
+    {
+      "address": "0EF609",
+      "before": "9ca850",
+      "after": "08e249",
+      "note": "Forest custom palette pointer."
+    },
+    {
+      "address": "0EF6EA",
+      "before": "99ba51",
+      "after": "08e649",
+      "note": "Donor goal-room palette pointer."
+    },
+    {
+      "address": "06F540",
+      "before": "a8c90004",
+      "after": "5c088041",
+      "note": "Replay original TAY/CMP and select the private Map16 graphics bank only in room 003 modes 11-14; all other calls continue original code."
+    },
+    {
+      "address": "06F623",
+      "before": "bf00e012",
+      "after": "22448041",
+      "note": "Select the private ActsLike table only in room 003 modes 11-14; preserve incoming flags and accumulator width."
+    }
+  ],
+  "level_data": [
+    {
+      "table": "05E000",
+      "room": "003",
+      "source_address": "1398B8",
+      "current_address": "488008",
+      "data": {
+        "size": 1737,
+        "sha256": "7ee41e1e92cfbf65ffcd1198ce41353e71e48a82838c17f90b1be7b459b6a302"
+      }
+    },
+    {
+      "table": "05E000",
+      "room": "04E",
+      "source_address": "13A25E",
+      "current_address": "51B77D",
+      "data": {
+        "size": 34,
+        "sha256": "dfa334a6abd41fcac9141bff0216cd7172e7eef927fc28e80975090796b94009"
+      },
+      "note": "Copy the complete donor goal room, including its terminal 40605E music object. The recipient lacks that object and attempts a stock-song 02 upload that waits for SPC acknowledgement."
+    }
+  ],
+  "custom_sprites": [
+    {
+      "id": "B0",
+      "source_id": "0D",
+      "rooms": [],
+      "source_record_address": "10B22D",
+      "destination_record_address": "10BB8A",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "013600b73f0399448bab1095ab100000",
+      "source_address": "10AB02",
+      "destination_address": "3CAB02",
+      "block": {
+        "size": 633,
+        "sha256": "a6b960ab356d243bce88953b619764c48e37e12a102fa96fa3c51f5eec21eb3f"
+      },
+      "shared_dependencies": [
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 128,
+          "sha256": "da074568e01e0df34a40880e0b193541e0808a3a84f7cc9864f1e30f6f7ce2b2"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        },
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "b80cfad55c01cf5eb70e7a181a6674dd8043a2fdd991eb43e31fa456215eacbb"
+        }
+      ]
+    },
+    {
+      "id": "B1",
+      "source_id": "0E",
+      "rooms": [],
+      "source_record_address": "10B23D",
+      "destination_record_address": "10BB9A",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "013601063c1399645dca1062ca100000",
+      "source_address": "10CA4E",
+      "destination_address": "3CCA4E",
+      "block": {
+        "size": 509,
+        "sha256": "9c70feac8681ee214cb98402018e43140914d2d7ad7ca84dd86a4d5e3a54d4db"
+      },
+      "shared_dependencies": [
+        {
+          "address": "27FAF4",
+          "size": 128,
+          "sha256": "6a8ba40a9629b26e1d9dd3af0482cb58bfcfc7b95d4642c86ec33f714eaa2bcb"
+        },
+        {
+          "address": "01802A",
+          "size": 16,
+          "sha256": "64490d90f0bc9c577df23fd1abd88bcffd77b8b84064b52250855f6ac6917f9a"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        },
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "b80cfad55c01cf5eb70e7a181a6674dd8043a2fdd991eb43e31fa456215eacbb"
+        }
+      ]
+    },
+    {
+      "id": "B2",
+      "source_id": "47",
+      "rooms": [],
+      "source_record_address": "10B5CD",
+      "destination_record_address": "10BBAA",
+      "before": "0000ffffffffffff218001218001ffff",
+      "source_record": "0101000033010804008b1c528b1c0000",
+      "source_address": "1C8AF1",
+      "destination_address": "358AF1",
+      "block": {
+        "size": 609,
+        "sha256": "2b1ca5b856d80e72b42a7a35ab3530e6ba5b6b5e431cf693353fc582e79145e2"
+      },
+      "shared_dependencies": [
+        {
+          "address": "27FAF4",
+          "size": 128,
+          "sha256": "6a8ba40a9629b26e1d9dd3af0482cb58bfcfc7b95d4642c86ec33f714eaa2bcb"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01802A",
+          "size": 16,
+          "sha256": "64490d90f0bc9c577df23fd1abd88bcffd77b8b84064b52250855f6ac6917f9a"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        },
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "b80cfad55c01cf5eb70e7a181a6674dd8043a2fdd991eb43e31fa456215eacbb"
+        }
+      ]
+    }
+  ],
+  "additional_gfx_records": [
+    {
+      "address": "14B6C8",
+      "before": "01804f014e014d01140002001300010000007f00ffffffffffffffffffffffff"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "94c48ebe9f1bda36739169493e394378b8e9f2023d92379aa82657b28961d551"
+  }
+}

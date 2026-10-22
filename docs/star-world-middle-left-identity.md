@@ -83,5 +83,6 @@ Local evidence:
 - Converted diagnostic screenshots under `local/probes/middle-left-identity/`.
 
 No ROM, sprite, terrain, exit or restoration recipe is changed by this
-investigation. A distinct forest-course restoration needs the demo6/demo7
-candidate to be qualified separately.
+investigation. The subsequent [independent Forest Star restoration](star-world-forest-restoration.md)
+qualifies that course separately using demo8's retained forest data. It keeps
+the water restoration and cumulative center target as available baselines.

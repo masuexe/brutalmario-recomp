@@ -117,6 +117,7 @@ class PracticeLauncherTests(unittest.TestCase):
                 ('star-world-middle-right', 'BrutalMarioStarWorldMiddleRightSNESRecomp', '9801a8019801a801'),
                 ('star-world-upper-inner', 'BrutalMarioStarWorldUpperInnerSNESRecomp', '7801880178018801'),
                 ('star-world-middle-left', 'BrutalMarioStarWorldMiddleLeftSNESRecomp', '5801a8015801a801'),
+                ('star-world-forest', 'BrutalMarioForestStarSNESRecomp', '5801a8015801a801'),
                 ('star-world-lower-inner', 'BrutalMarioStarWorldLowerInnerSNESRecomp', '7801c8017801c801'),
                 ('star-world-center', 'BrutalMarioStarWorldCenterSNESRecomp', '7801a8017801a801')):
             with self.subTest(restoration=name):
@@ -144,7 +145,7 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertFalse((self.root / 'local/play').exists())
 
     def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
-        for name in ('star-world-1', 'star-world-upper-left', 'star-world-lower-right', 'star-world-upper-right', 'star-world-middle-right', 'star-world-upper-inner', 'star-world-middle-left', 'star-world-lower-inner', 'star-world-center'):
+        for name in ('star-world-1', 'star-world-upper-left', 'star-world-lower-right', 'star-world-upper-right', 'star-world-middle-right', 'star-world-upper-inner', 'star-world-middle-left', 'star-world-forest', 'star-world-lower-inner', 'star-world-center'):
             with self.subTest(restoration=name), self.assertRaises(SystemExit) as error:
                 self.invoke(['--level', name, '--complete-all'])
             self.assertEqual(error.exception.code, 2)

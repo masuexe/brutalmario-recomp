@@ -1,0 +1,182 @@
+# Forest candidate qualification: fresh save, map teleport and bounded position shortcuts.
+# No exit destination, key carried-state, completion, event or SRAM writes.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map, camera and player-position fixtures below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 6, X=0x158, Y=0x1a8.
+poke 1f11 0606
+poke 1f17 5801a8015801a801
+poke 1f1f 15001a0015001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+wait 600
+dump entry1200
+forcepoke 1497 ff
+forcepoke 0096 0000
+forcepoke 007d 00
+poke 0094 7000
+wait 3
+dump screen0
+poke 0094 7800
+wait 3
+poke 0094 8000
+wait 3
+poke 0094 8800
+wait 3
+poke 0094 9000
+wait 3
+poke 0094 9800
+wait 3
+poke 0094 a000
+wait 3
+poke 0094 a800
+wait 3
+poke 0094 b000
+wait 3
+poke 0094 b800
+wait 3
+poke 0094 c000
+wait 3
+poke 0094 c800
+wait 3
+poke 0094 d000
+wait 3
+poke 0094 d800
+wait 3
+poke 0094 e000
+wait 3
+poke 0094 e800
+wait 3
+poke 0094 f000
+wait 3
+poke 0094 f800
+wait 3
+poke 0094 0001
+wait 3
+poke 0094 0801
+wait 3
+poke 0094 1001
+wait 3
+poke 0094 1801
+wait 3
+poke 0094 2001
+wait 3
+poke 0094 2801
+wait 3
+poke 0094 3001
+wait 3
+poke 0094 3801
+wait 3
+poke 0094 4001
+wait 3
+poke 0094 4801
+wait 3
+poke 0094 5001
+wait 3
+poke 0094 5801
+wait 3
+poke 0094 6001
+wait 3
+poke 0094 6801
+wait 3
+poke 0094 7001
+wait 3
+dump screen1
+poke 0094 7801
+wait 3
+poke 0094 8001
+wait 3
+poke 0094 8801
+wait 3
+poke 0094 9001
+wait 3
+poke 0094 9801
+wait 3
+poke 0094 a001
+wait 3
+poke 0094 a801
+wait 3
+poke 0094 b001
+wait 3
+poke 0094 b801
+wait 3
+poke 0094 c001
+wait 3
+poke 0094 c801
+wait 3
+poke 0094 d001
+wait 3
+poke 0094 d801
+wait 3
+poke 0094 e001
+wait 3
+poke 0094 e801
+wait 3
+poke 0094 f001
+wait 3
+poke 0094 f801
+wait 3
+poke 0094 0002
+wait 3
+poke 0094 0802
+wait 3
+poke 0094 1002
+wait 3
+poke 0094 1802
+wait 3
+poke 0094 2002
+wait 3
+poke 0094 2802
+wait 3
+poke 0094 3002
+wait 3
+poke 0094 3802
+wait 3
+poke 0094 4002
+wait 3
+poke 0094 4802
+wait 3
+poke 0094 5002
+wait 3
+poke 0094 5802
+wait 3
+poke 0094 6002
+wait 3
+poke 0094 6802
+wait 3
+poke 0094 7002
+wait 3
+dump screen2
+poke 001c a000
+poke 1464 a000
+forcepoke 0096 1001
+press right 1
+wait 2
+dump enemies
+press r 1
+wait 2
+dump shot
+wait 20
+dump hit
+wait 40
+dump resolved
+quit

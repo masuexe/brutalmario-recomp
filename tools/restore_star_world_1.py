@@ -119,6 +119,8 @@ def restore_sprite(recipient, donor, out, config):
     destination = int(config['destination_address'], 16)
     if source & 0xffff != destination & 0xffff:
         raise ValueError('custom sprite relocation changes bank-local addresses')
+    if (destination >> 16 & 0x7f) >= 0x40:
+        raise ValueError('custom sprite data bank must retain low WRAM mirrors')
     size = config['block']['size']
     block = donor[lorom(source):lorom(source)+size]
     verify(block, config['block'], 'custom sprite code')
@@ -262,6 +264,41 @@ def apply_code_patches(out, config):
         out[offset:offset+len(after)] = after
 
 
+def restore_raw_blocks(donor, out, blocks):
+    """Install pinned binary streams, including backgrounds with embedded FF.
+
+    A full-bank clone may put its RATS header in the preceding bank. Both
+    ranges must be empty and unprotected, and physically contiguous.
+    """
+    for item in blocks:
+        if ('source_address' in item) == ('bytes' in item):
+            raise ValueError('raw block requires exactly one source')
+        if 'bytes' in item:
+            blob = bytearray.fromhex(item['bytes'])
+        else:
+            source = lorom(int(item['source_address'], 16))
+            blob = bytearray(donor[source:source+item['data']['size']])
+        verify(blob, item['data'], 'raw source block')
+        for patch in item.get('edits', []):
+            offset = patch['offset']
+            before, after = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
+            if (not before or len(before) != len(after) or offset < 0 or
+                    blob[offset:offset+len(before)] != before):
+                raise ValueError('raw block edit differs from reviewed bytes')
+            blob[offset:offset+len(before)] = after
+        if 'adapted' in item:
+            verify(blob, item['adapted'], 'adapted raw block')
+        start = lorom(int(item['destination_address'], 16))
+        header = lorom(int(item['rats_address'], 16))
+        if header + 8 != start or not 0 < len(blob) <= 0x8000:
+            raise ValueError('raw block has invalid RATS geometry')
+        check_allocation(out, header, 8)
+        check_allocation(out, start, len(blob))
+        count = len(blob)-1
+        out[header:start] = b'STAR'+count.to_bytes(2, 'little')+(count ^ 0xffff).to_bytes(2, 'little')
+        out[start:start+len(blob)] = blob
+
+
 def make_candidate(recipient, donor, config):
     start, size = config['allocation']['offset'], config['allocation']['size']
     end = start + size
@@ -274,6 +311,8 @@ def make_candidate(recipient, donor, config):
             raise ValueError('room graphics configuration changed')
         records.append(record)
     out, cursor, assets = bytearray(recipient), start, []
+    restore_raw_blocks(donor, out, config.get('raw_blocks', []))
+    apply_code_patches(out, {'code_patches': config.get('pre_asset_patches', [])})
     for item in config['assets']:
         old_id, new_id = int(item['source_id'], 16), int(item['target_id'], 16)
         selected_rooms = []
@@ -287,7 +326,7 @@ def make_candidate(recipient, donor, config):
         shared = item.get('global_pointer', False)
         if shared:
             if (old_id != new_id or selected_rooms != item['rooms'] or
-                    'record_offset' in item):
+                    'record_offset' in item or 'record_addresses' in item):
                 raise ValueError('shared graphics have unexpected room dependencies or selection edits')
         elif selected_rooms:
             raise ValueError('destination graphics ID is selected by an existing room')
@@ -300,7 +339,11 @@ def make_candidate(recipient, donor, config):
         destination_pointer = pointer_offset(new_id)
         if out[destination_pointer:destination_pointer+3] != b'\xff' * 3:
             raise ValueError('destination graphics slot is occupied or repeated')
-        words = [] if shared else [record + item['record_offset'] for record in records]
+        chosen = [lorom(int(address, 16)) for address in item.get('record_addresses', [])]
+        if 'record_addresses' in item and (not chosen or len(set(chosen)) != len(chosen) or
+                                            any(record not in records for record in chosen)):
+            raise ValueError('graphics asset selects an unreviewed room record')
+        words = [] if shared else [record + item['record_offset'] for record in (chosen or records)]
         if any(int.from_bytes(out[word:word+2], 'little') != old_id for word in words):
             raise ValueError('room does not select the expected source ID')
         stop = cursor + len(compressed) + 8

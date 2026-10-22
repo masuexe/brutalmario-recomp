@@ -16,6 +16,7 @@ python3 -m unittest discover -s tests -v
 The second tool verifies the supplied base and nine patches against `config/content-versions.json`, compares their image layouts and prepares isolated candidate copies under gitignored `local/content-versions/`. The two original target images remain separate. Donor preparation is not gameplay qualification; see the restoration roadmap for current limits.
 
 - [Content-restoration roadmap and reduced manual checkpoints](docs/content-restoration.md)
+- [Independent Forest Star candidate, mechanics and both exits](docs/star-world-forest-restoration.md)
 - [Cumulative nine-star candidate and center completion boundary](docs/star-world-center-restoration.md)
 - [Lower-inner warp stars and the qualified 100-coin exit](docs/star-world-lower-inner-restoration.md)
 - [Lower-inner course/cap music mapping and listening check](docs/lower-inner-music.md)

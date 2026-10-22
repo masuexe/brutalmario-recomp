@@ -1,0 +1,40 @@
+# Forest candidate qualification: fresh save, map teleport and bounded position shortcuts.
+# No exit destination, key carried-state, completion, event or SRAM writes.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; fixture writes are stated below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 6, X=0x158, Y=0x1a8.
+poke 1f11 0606
+poke 1f17 5801a8015801a801
+poke 1f1f 15001a0015001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+wait 600
+dump entry1200
+press r 1
+wait 2
+dump shot_spawn
+wait 16
+dump shot_flight
+press right+b 30
+dump movement
+quit

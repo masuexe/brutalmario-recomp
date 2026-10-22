@@ -702,3 +702,17 @@ cap expires the music returns to the course theme with no freeze.
 The underlying song slots are still interim aliases, not the donor tracks. The
 proper per-song restoration is now tractable through runtime SPC capture; see
 [the lower-inner report](star-world-lower-inner-restoration.md).
+
+## Lower-inner music listening accepted; independent Forest Star automated checkpoint
+
+The later [music correction](lower-inner-music.md) supersedes the interim-alias
+status above. Existing songs `$60/$79` replace those aliases, and the user
+confirmed that the music is completely normal on 2026-10-21.
+
+The user then authorized restoring the independent forest course instead of
+continuing with the repeated middle-left water course. The separate
+[`star-world-forest` candidate](star-world-forest-restoration.md) passes
+automated reference/native mechanics, projectile collision, both saved exits,
+portal and death/reentry checks. This is an automated checkpoint under the
+user's reduced-manual-check policy, not a reported new human playthrough or
+listening test. The preserved center target still contains the water course.

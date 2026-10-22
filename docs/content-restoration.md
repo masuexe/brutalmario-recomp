@@ -321,7 +321,14 @@ confirms that cheap_demo room `$003` duplicates World 1 water room `$120`:
 terrain and all 34 sprite placements match after normalizing record order.
 Its existing qualification therefore covers the copied donor water course,
 not a distinct original forest course. demo6/demo7 retain different forest
-data with 14 sprite records; that candidate still needs separate qualification.
+data with 14 sprite records. The subsequent
+[independent Forest Star candidate](star-world-forest-restoration.md) uses
+demo8's retained forest data and is separately qualified for parrot flight,
+projectile/enemy collision, both saved exits, Warp Star transfer and
+death/reentry on reference and native hosts. It is launched as
+`--restoration star-world-forest`; the water and center targets stay available.
+Its music uses the existing recipient arrangement and has not received a new
+manual listening acceptance.
 
 The [lower-inner restoration](star-world-lower-inner-restoration.md) now
 restores the missing warp-star actors and 100-coin controller in `$117`.

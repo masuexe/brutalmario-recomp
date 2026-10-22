@@ -97,6 +97,48 @@ class RestorationSafetyTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'bank-local'):
                 restoration.restore_sprite(b'', b'', bytearray(), config)
 
+    def test_sprite_code_cannot_move_its_data_bank_into_sram_space(self):
+        config = {'id': 'B0', 'rooms': [], 'source_address': '108B77',
+                  'destination_address': '708B77'}
+        with patch.object(restoration, 'sprite_rooms', return_value=[]):
+            with self.assertRaisesRegex(ValueError, 'WRAM mirrors'):
+                restoration.restore_sprite(b'', b'', bytearray(), config)
+
+    def test_raw_background_keeps_embedded_ff_and_rejects_a_conflicting_destination(self):
+        rom = bytearray(0x8000)
+        blob = bytes.fromhex('ff00ff001234ffff')
+        block = dict(source_address='008100', destination_address='008208',
+                     rats_address='008200', data=dict(size=len(blob),
+                         sha256=hashlib.sha256(blob).hexdigest()))
+        donor = bytearray(rom)
+        donor[0x100:0x100+len(blob)] = blob
+        restoration.restore_raw_blocks(donor, rom, [block])
+        self.assertEqual(rom[0x208:0x208+len(blob)], blob)
+        with self.assertRaisesRegex(ValueError, 'protected RATS|empty bank range'):
+            restoration.restore_raw_blocks(donor, rom, [block])
+
+    def test_private_bank_header_must_be_contiguous_and_protect_the_whole_clone(self):
+        blob = b'\x12' * 0x8000
+        block = dict(bytes=blob.hex(), destination_address='018000',
+                     rats_address='00FFF8', data=dict(size=len(blob),
+                         sha256=hashlib.sha256(blob).hexdigest()))
+        rom = bytearray(0x10000)
+        restoration.restore_raw_blocks(b'', rom, [block])
+        self.assertEqual(rom[0x8000:], blob)
+        self.assertEqual(rom[0x7ff8:0x8000], b'STAR\xff\x7f\x00\x80')
+        block['rats_address'] = '00FFF0'
+        with self.assertRaisesRegex(ValueError, 'RATS geometry'):
+            restoration.restore_raw_blocks(b'', bytearray(0x10000), [block])
+
+    def test_raw_sprite_remap_rejects_unexpected_source_records(self):
+        blob = bytes.fromhex('0049700dff')
+        block = dict(bytes=blob.hex(), destination_address='008208',
+                     rats_address='008200', data=dict(size=len(blob),
+                         sha256=hashlib.sha256(blob).hexdigest()),
+                     edits=[dict(offset=3, before='47', after='b0')])
+        with self.assertRaisesRegex(ValueError, 'reviewed bytes'):
+            restoration.restore_raw_blocks(b'', bytearray(0x8000), [block])
+
     def test_nonzero_or_protected_space_cannot_be_used_for_code(self):
         with self.assertRaisesRegex(ValueError, 'empty bank range'):
             restoration.check_allocation(b'occupied', 0, 8)
@@ -116,6 +158,16 @@ class RestorationSafetyTests(unittest.TestCase):
         recipient, donor, config = self.shared_graphics_fixture()
         config['assets'][0]['rooms'] = []
         with self.assertRaisesRegex(ValueError, 'shared graphics'):
+            restoration.make_candidate(recipient, donor, config)
+
+    def test_private_graphics_cannot_edit_an_unreviewed_room_record(self):
+        recipient, donor, config = self.shared_graphics_fixture()
+        recipient[restoration.pointer_offset(0x101):restoration.pointer_offset(0x101)+3] = b'\xff' * 3
+        asset = config['assets'][0]
+        asset.pop('global_pointer')
+        asset.pop('rooms')
+        asset.update(target_id='101', record_offset=2, record_addresses=['14AD28'])
+        with self.assertRaisesRegex(ValueError, 'unreviewed room record'):
             restoration.make_candidate(recipient, donor, config)
 
     @staticmethod

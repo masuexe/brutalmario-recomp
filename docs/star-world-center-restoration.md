@@ -10,8 +10,10 @@ that all nine courses have completed-clear acceptance.
 The [middle-left identity follow-up](star-world-middle-left-identity.md) also
 distinguishes playable donor reuse from distinct-course restoration: cheap_demo
 room `$003` duplicates its World 1 water course. The current candidate preserves
-that donor copy. A distinct forest course exists in demo6/demo7 but has not
-been transplanted or qualified here.
+that donor copy. The separately qualified
+[`star-world-forest` candidate](star-world-forest-restoration.md) replaces it
+with the independent forest course using demo8 data. The center target and
+the identities documented here remain unchanged.
 
 Current candidate SHA-256:
 `da880e47ec0aa81f06af8596e5b4c813bd3a934631041ffb9feba6a272a590b9`.
