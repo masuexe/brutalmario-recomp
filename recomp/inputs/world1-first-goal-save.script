@@ -1,0 +1,294 @@
+# Assisted 1-1 goal/save qualification: air-swim and invincibility fixtures.
+# Completion, event, goal and SRAM state are never written.
+# Ceiling air-swim from the level start toward the goal
+# pole. The goal tape (sprite slot 7 = 0x7B) loads when the camera crosses the
+# screen-0x11 boundary at camX = 0x10C0; the swim scrolls the camera there
+# organically so the real sprite generator runs. Dumps track progress.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x048, Y=0x198 (1-1 node, translevel $29).
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 480
+wait 220
+press right+y+b 25
+press right+y 40
+press right+y+b 25
+press right+y 40
+forcepoke 85 01
+forcepoke 1490 30
+poke 0f31 090909
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z0
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z1
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z2
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z3
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z4
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z5
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z6
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z7
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z8
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z9
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z10
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z11
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z12
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z13
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z14
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z15
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z16
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z17
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z18
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z19
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z21
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z22
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z23
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z24
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+press right+b 20
+press right 20
+dump z25
+# Wait until the goal tape sprite is loaded.
+until a5 == 7b 1800
+dump at_tape
+# Swim to the pole and descend to the ground.
+press right 60
+press down 250
+dump at_ground
+# Clear the air-swim fixture so Mario can walk and jump normally.
+forcepoke 85 00
+# Walk right to the ground edge at the pole (tape X = 0x11E0 over the pit).
+press right 40
+dump at_edge
+until 1493 != 00 0
+# Goal contact already occurred during the preceding walk; no goal flags written.
+forcepoke 1490 00
+wait 1500
+dump completed_map
+until 0100 == 0e 0
+until 1ecb == 8a 0
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 360
+dump reloaded
+until 0100 == 0e 0
+until 1ecb == 8a 0
+quit

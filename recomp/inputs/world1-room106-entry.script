@@ -1,0 +1,46 @@
+# Room 106 graphics qualification: fresh save, map-coordinate fixture.
+# No level geometry, collision, health, completion, goal or SRAM writes.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x058, Y=0x1d8.
+poke 1f11 0000
+poke 1f17 5800d8015800d801
+poke 1f1f 05001d0005001d00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump settled
+until 0100 == 14 0
+until 71 == 00 0
+press right+y 40
+dump walk
+until 71 == 00 0
+press b 12
+wait 12
+dump jump
+until 71 == 00 0
+wait 90
+dump landed
+until 71 == 00 0
+quit

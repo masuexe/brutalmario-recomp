@@ -55,6 +55,9 @@ LEVELS = {
     'star-world-upper-right': {'name': 'Star World upper-right vertical course (uncleared)', 'map': 6,
                                'x': 0x1c8, 'y': 0x168, 'level': 0x002,
                                'teleport': (6, 0x1c8, 0x168)},
+    'world1-room106': {'name': 'World 1 room 106 graphics candidate', 'map': 0,
+                       'x': 0x058, 'y': 0x1d8, 'level': 0x106,
+                       'teleport': (0, 0x058, 0x1d8)},
 }
 
 

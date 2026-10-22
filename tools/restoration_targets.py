@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'world1-room106': {
+        'binary': 'BrutalMarioWorld1Room106SNESRecomp',
+        'title': 'Brutal Mario World 1 Room 106',
+    },
     'star-world-forest': {
         'binary': 'BrutalMarioForestStarSNESRecomp',
         'title': 'Brutal Mario Forest Star',

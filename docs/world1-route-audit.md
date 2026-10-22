@@ -92,10 +92,13 @@ python3 tools/m1.py native --target star-world-forest \
 
 ## Remaining work
 
-The completion byte above is a diagnostic shortcut. Actual 1-1 goal contact,
-event processing, movement to 1-2 and Yoshi's House, and save/reload persistence
-remain unqualified by these probes. Preserve those as integration checks for
-any migration; do not label the complete World 1 route accepted yet.
+The completion byte above is a diagnostic shortcut. The original route probes
+do not qualify actual goal/event processing or save/reload persistence.
+Subsequent [room 106 recovery checks](world1-room106-restoration.md) verify
+real first-course goal contact, saved normal event/clear state, House entry
+and exit, and House-to-first-course movement on an isolated forest descendant.
+They also expose inherited wrong/stalled onward connectivity. Do not label
+the complete World 1 route accepted yet.
 
 The initial room inventory gives a bounded next investigation: room `$106`
 (the 1-2 candidate) has the same 160-byte Layer 1 payload in Demo 1-1,
@@ -105,6 +108,11 @@ gameplay diagnosis. Room `$105` also differs between Demo 1-1 and demoOnly1
 (7,102 versus 7,091 bytes in the inventoried object stream); those bytes and
 their sprite, block, ASM and audio dependencies still require interpretation
 before importing any supposed new content.
+
+The resource-only candidate now proves that restoring room `$106`'s missing
+`$1A2` graphics repairs active terrain-buffer corruption and ordinary movement.
+Its actual course number and complete exit route remain open; the tentative
+1-2 identification above is not confirmed.
 
 Continue with actual 1-1 goal/event integration on the accepted recipient,
 then the World 1 entrance/dependency survey, then an interpreted Demo 1-1

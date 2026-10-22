@@ -1,0 +1,45 @@
+# House entry/return through real movement. Map-coordinate fixture at start.
+# No completion, goal, event or SRAM writes.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x068, Y=0x198.
+poke 1f11 0000
+poke 1f17 6800980168009801
+poke 1f1f 0600190006001900
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump after_a
+press right+y 120
+press right+y+b 60
+wait 120
+dump moved
+until 0100 == 0e 0
+press left 100
+wait 180
+dump back_to_first
+until 0100 == 0e 0
+until 1f17 == 48 0
+until 1f19 == 98 0
+quit
