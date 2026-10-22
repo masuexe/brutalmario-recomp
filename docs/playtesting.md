@@ -726,5 +726,6 @@ duplicate's `$40` at `$05:DE03`. The preceding automated checks missed that
 state difference. The [forest follow-up](star-world-forest-restoration.md)
 clears this one bit and reruns all five forest routes on both hosts, explicitly
 checking global water flag `$85` and Mario's in-water state `$75` against the
-demo7 diagnostic. The correction has automated acceptance; no subsequent human
-retest has yet been reported.
+demo7 diagnostic. The user subsequently retested the correction and reported
+no remaining issue, accepting this scoped fix. No itemized route or new audio
+comparison was supplied.

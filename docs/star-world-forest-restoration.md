@@ -9,6 +9,9 @@ identities and content.
 The subsequent user playtest reported normal gameplay but exposed a retained
 water flag. That flag is corrected in the current identity below; the original
 automated checkpoint did not compare the donor's water state.
+The user subsequently retested the correction and reported no remaining issue,
+accepting the scoped fix. This does not expand the automated route coverage
+or establish a new donor-audio listening comparison.
 
 ```sh
 python3 tools/play_demo_only1.py --restoration star-world-forest --show-location
