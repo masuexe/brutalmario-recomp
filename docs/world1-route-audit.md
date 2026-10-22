@@ -71,6 +71,14 @@ Local captures are grouped under:
   with the three-cell WRAM diagnostic.
 
 Each capture has its ROM/script identity receipt and fresh save directory.
+Additional tracked-script replays are
+`local/captures/world1-tracked-route-demo11` (reference, three-cell diagnostic)
+and `local/captures/world1-tracked-route-forest` (native, completion fixture).
+Across all 11 captures, pinned ROM identities and 55 mode-`$0E` map samples
+were checked, including the right-route endpoint assertions. The final replay
+preceded an explanatory-comment clarification only; script commands did not
+change.
+
 Use a new capture name when replaying, for example:
 
 ```sh
@@ -97,3 +105,10 @@ gameplay diagnosis. Room `$105` also differs between Demo 1-1 and demoOnly1
 (7,102 versus 7,091 bytes in the inventoried object stream); those bytes and
 their sprite, block, ASM and audio dependencies still require interpretation
 before importing any supposed new content.
+
+Continue with actual 1-1 goal/event integration on the accepted recipient,
+then the World 1 entrance/dependency survey, then an interpreted Demo 1-1
+addition inventory. Let real goal and event code write progress during the
+integration check; the diagnostic completion-byte scripts cannot qualify it.
+Any production repair should use a separate descendant target so the accepted
+forest baseline remains available.
