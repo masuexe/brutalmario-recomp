@@ -16,6 +16,7 @@ CHECKS = [
     ('room0CB graphics', 'qualify_demo11_room0cb_gfx'),
     ('World 1 route parity', 'qualify_demo11_world1_routes'),
     ('engine flows', 'qualify_demo11_engine_flows'),
+    ('whole-line byte audit', 'audit_demo11_line'),
 ]
 
 
@@ -25,7 +26,9 @@ def main():
         try:
             module = __import__(module_name)
             sys.stdout.flush()
-            module.main()
+            status = module.main()
+            if status:
+                raise RuntimeError(f'check returned {status}')
             results.append((label, 'pass', ''))
         except Exception as error:  # noqa: BLE001 - the driver reports every failure
             detail = traceback.format_exc(limit=2).strip().splitlines()[-1]

@@ -505,3 +505,20 @@ failure rather than silently passing.
 | Not needed on this base | custom sprites 8D and 0B (native equivalents) |
 | Automated acceptance | 7/7 checks |
 | Open items | human playtest and audition; 1-1 scripted goal contact; room 010 pipe route |
+
+### Whole-line byte audit
+
+`tools/audit_demo11_line.py` compares the head ROM with the pinned Demo 1-1 input and
+asserts that **every** differing byte lies in a region the chain's recipes declare:
+allocations, graphics slots, room-record words, music slots and payloads, code patches
+and custom sprite blocks.
+
+| Measure | Value |
+| --- | --- |
+| Changed bytes vs Demo 1-1 input | 8,214 |
+| Declared region bytes | 15,878 |
+| Unexpected bytes | **0** |
+
+So the entire rebase touches nothing outside the reviewed recoveries - a single
+whole-line integrity guarantee rather than five per-target ones. The audit is now part
+of the acceptance driver, which reports **8/8 checks passed**.
