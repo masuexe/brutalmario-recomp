@@ -66,16 +66,35 @@ its data segment is re-laid-out with a zeroed gap), so a byte-identical
 reproduction of cheap's ARAM through the payload channel is not possible
 without knowing the source format the uploader consumes.
 
+## Update 2026-10-24 (third pass): uploader internals
+
+Instruction-tracing cheap after the `$1DFB=0x21` request (frames 2493-2560)
+and watching the copy-engine source pointer `$8A` shows:
+
+- the dominant copy loop is `$00B930..$00B991` (`LDA [$8A]` long-read,
+  `STA [$00],Y` long-write, bank carry at `$00B98A`), a generic mover;
+- right after the request it moves a series of small blocks whose source
+  pointers all sit in WRAM `$0A00-$0AFF` (an engine work buffer), then a
+  `$0010/$1000` alternating handshake (`$00EAD1` region) takes over - the
+  audio bytes reach the SPC through port handshaking, not one ROM block;
+- audio-relevant WAV gating: cheap renders **silent** without the
+  `snes9x_echo_buffer_hack=enabled` core option; with it the reference
+  segment shows rms ~642, zc ~1845, ~99.6% band mass at 440 Hz. exp6's
+  direct-copy audio (rms ~1782, bands spread over 440/880) is audibly a
+  different render, confirming the direct payload cannot reproduce cheap.
+
+Consequence: the remaining work is reversing the port-level upload protocol
+(WRAM-staged blocks plus the `$0010/$1000` handshake) - a multi-session
+effort with real regression surface, not a byte recipe yet.
+
 ## Next steps
 
-1. **Trace the cheap 0x21 uploader**: instruction-trace cheap around frame
-   2493+ (`$1DFB=0x21`) and record which ROM addresses the upload loop reads.
-   That read set is the true source format; feed it through the slot-7F
-   payload unchanged.
-2. Quantitative audio gates: cheap reference WAV (with
-   `snes9x_echo_buffer_hack=enabled`, else cheap renders silent) has
-   rms ~642, zc ~1845, band mass ~0.996 at 440 Hz; the candidate must match
-   closely before any user listening check.
+1. Trace the `$00EAD1` handshake loop and the WRAM `$0A00` staging area to
+   enumerate the full block list the SPC receives for song 21, then replay
+   that exact sequence through the slot-7F mechanism (or a small SNES-side
+   replay stub in a descendant target).
+2. Quantitative audio gates (cheap reference figures above) before any user
+   listening check.
 3. Do not reuse the demoOnly1 `fbc09f2` header-byte change; selection parity
    is not an audible match.
 
