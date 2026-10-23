@@ -222,3 +222,51 @@ That trims the remaining recovery list to:
 | graphics `12A` | room0CB | absent in both builds |
 
 Then the World 1 requalification (courses, saves, death handling) can start.
+
+## Progress: room 138 audio ported and the course clears (2026-10-23)
+
+`demo11-room138-audio` combines the two demoOnly1 audio steps because every pin is
+identical on the new base:
+
+| Item | Demo 1-1 |
+| --- | --- |
+| Room 138 header record at `5CFBE5` | `40 60 22` (music byte `0x22` -> global `21`, absent) |
+| Sample-bank selector site `0FCF7E` | `00` |
+| Private song slot `0FE17A` | `000000` (absent) |
+| Level streams L1/L2 | identical pointers `5CEBE5`/`5CFBEF` and identical bytes |
+
+So the payload is the same deterministic 1,147-byte adaptation of donor private song
+`7E`; only the allocation (`0x1A0000`) is new. Candidate
+`be5ff1d230a3bfefb072b6acf83e52a9599819daa913482cee72be6a1d6ac2bf`, 1,068 changed
+bytes.
+
+### Entry behaviour
+
+| Host | mode | music |
+| --- | --- | --- |
+| demo11-base | `0x12` Mario Start stall | `0x21` (missing) |
+| demo-only-1 (unrestored) | `0x12` | `0x21` |
+| **demo11-room138-audio** | **`0x14` gameplay** | **`0x7E`** |
+
+### The clear/save route passes on both hosts
+
+`recomp/inputs/world1-room138-clear-save.script` completes on reference and native:
+
+| Sample | reference | native |
+| --- | --- | --- |
+| goal tape touched (`$1493`) | `0xF0` | `0xF0` |
+| goal position | `(0x11D9, 0x110)` | `(0x11D8, 0x110)` |
+| map return after goal | mode `0x0E` | mode `0x0E` |
+| uncleared castle | room `0x10E` | room `0x10E` |
+| course reload / settled | room `0x138`, gameplay | same |
+
+### Custom sprite 0B is not ported
+
+Demo 1-1 spawns its own `0x0B` sprite during the route (slot 4, status `0x08`) and the
+course clears, so the definition is functionally present on the new base. Visual
+fidelity of that object therefore remains a playtest question, not an automatic one.
+
+`tools/qualify_demo11_room138_audio.py` pins the payload, slot, patches and footprint,
+requires the base to keep stalling on song `0x21`, requires gameplay with song `0x7E`,
+and requires the clear/save route on both hosts. Report:
+`local/reports/demo11-room138-audio-qualification.json`.

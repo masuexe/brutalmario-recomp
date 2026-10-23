@@ -1,0 +1,120 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room138 Audio",
+  "id": "demo11-room138-audio",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-room010-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "a72f0d363a7ec01d304b12ed245efcf7e5d3aec1cb2f4e7185f8c63ce5ef04aa"
+  },
+  "room": "138",
+  "entrance": {
+    "map": 0,
+    "x": 168,
+    "y": 472,
+    "translevel": 92,
+    "requires": "Uncleared practice entrance; the room120 normal clear selects this node."
+  },
+  "scope": "Port room 138 audio recovery onto the Demo 1-1 base: import donor private song 7E, retarget the room header music byte from missing global 21 (0x22) to private 7E (0x7F), and let private 7E inherit sample bank 2. Combines the demoOnly1 audio chain steps because all pins are identical.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1703936,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 8,
+    "source_data_offset": 1403,
+    "song_size": 1139,
+    "pattern_count": 2,
+    "relocations": [
+      0,
+      2,
+      6,
+      84,
+      95,
+      106,
+      117,
+      171,
+      182,
+      193,
+      204,
+      210,
+      230,
+      285,
+      289,
+      293,
+      297,
+      324,
+      332,
+      340,
+      372,
+      416,
+      424,
+      495,
+      557,
+      652,
+      664,
+      716,
+      728,
+      780,
+      799,
+      833,
+      1107,
+      1109,
+      1111,
+      1113,
+      1117,
+      1119,
+      1123,
+      1125,
+      1127,
+      1129,
+      1133,
+      1135
+    ],
+    "id": "7E",
+    "source_address": "298008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "c35603b850733bae9b5a6e4bd2fc304ee629356433a44cd8e363f658faeb5207"
+    },
+    "adapted": {
+      "size": 1147,
+      "sha256": "24ed531026b53c8d7d330373086e7383849c8c1710941677ab539905d82978e8"
+    },
+    "pointer_address": "0FE17A",
+    "before": "000000",
+    "allocation": {
+      "offset": 1703936,
+      "size": 4096,
+      "fill": 0
+    }
+  },
+  "code_patches": [
+    {
+      "address": "5CFBE5",
+      "before": "22",
+      "after": "7f",
+      "role": "Room 138 header music byte: request private 7E instead of the globally missing 21."
+    },
+    {
+      "address": "0FCF7E",
+      "before": "00",
+      "after": "02",
+      "role": "Private 7E inherits sample bank 2 selected by the original room 138 request for 21."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "be5ff1d230a3bfefb072b6acf83e52a9599819daa913482cee72be6a1d6ac2bf"
+  }
+}
