@@ -57,3 +57,35 @@ hosts still matches the donor terrain.
   checks.
 - The hidden room's purpose, and whether any exit really targets it, remain open.
 - Audible output is not claimed; room106 music stays deferred.
+
+## Visual check via a diagnostic pipe (2026-10-23)
+
+Room `$0CB` has no known entrance, so it was reached with a **diagnostic fixture**,
+not a gameplay route and not part of any recipe: on a throwaway copy of the
+candidate, the first room010 pipe destination byte (room 010 layer1, file
+`0x3246C4`) was changed `$4A -> $CB`, and the tracked two-pipe route then lands in
+room `$0CB` in mode `$14`.
+
+What the room is: an outdoor sky area with a flat gold-coin ground, a green pipe
+on the left, and a **message box that reads a debug greeting (`hi cSUB EIP`)**.
+Together with its two screens and four sprites this looks like a leftover
+**developer test room**, not a normal bonus room and not obviously a secret-exit
+destination. No exit from it was observed.
+
+The graphics recovery is visible in an A/B render of the same fixture:
+
+| Build | Framebuffer | Visible difference |
+| --- | --- | --- |
+| with `$12A` restored | 8,681 bytes differ from the negative | red `20` counter drawn above Mario |
+| without `$12A` (base) | reference | the counter area is blank |
+
+So `$12A` carries the drawn-number tiles used by the room's `$45` number sprite;
+without it that element disappears. Screenshots and dumps stay local under
+`local/captures/w1-cb-view` and `local/captures/w1-cb-nofix`.
+
+### Consequence for the secret-exit question
+
+A debug/test room is unlikely to be the target of a real secret exit. The earlier
+note that an exit record points at `$0CB` remains unreproduced, and this visual
+check does not support treating `$0CB` as a missing secret area. Do not invest in
+reaching it through gameplay until an exit is actually identified.
