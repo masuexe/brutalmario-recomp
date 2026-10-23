@@ -1,0 +1,38 @@
+# Room138 entry recovery: initial map coordinates only; no health, geometry,
+# music requests, goal, completion, event or SRAM fixtures.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x0A8, Y=0x1D8.
+poke 1f11 0000
+poke 1f17 a800d801a800d801
+poke 1f1f 0a001d000a001d00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump settled
+until 0100 == 14 0
+until 71 == 00 0
+wait 600
+dump late
+press right+y 120
+dump walk
+quit

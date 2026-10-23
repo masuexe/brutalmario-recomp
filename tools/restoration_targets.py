@@ -1,6 +1,14 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'world1-room138-audio': {
+        'binary': 'BrutalMarioWorld1Room138AudioSNESRecomp',
+        'title': 'Brutal Mario World1 Room138 Audio',
+    },
+    'world1-room138': {
+        'binary': 'BrutalMarioWorld1Room138SNESRecomp',
+        'title': 'Brutal Mario World1 Room138',
+    },
     'world1-next-course': {
         'binary': 'BrutalMarioWorld1NextCourseSNESRecomp',
         'title': 'Brutal Mario World 1 Next Course',

@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario World 1 room138 restoration candidate",
+  "id": "world1-room138",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "world1-next-course",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3a7fd69f58c541e73ffeffaad91f4ff1bbba48fdbba87d95b37b1d68195eda7c"
+  },
+  "room": "138",
+  "entrance": {
+    "map": 0,
+    "x": 168,
+    "y": 472,
+    "translevel": 92,
+    "requires": "Uncleared practice entrance; actual room120 normal clear selects this node."
+  },
+  "scope": "Intermediate sequence recovery for room138: relocate the exact second bank-local cheap_demo song into private global7E and change only the unique music-control object. The world1-room138-audio descendant is the usable leaf because private7E must also inherit sample bank2. Preserve absent global21, geometry/sprites, other selectors, map events and saves.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2627584,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 8,
+    "source_data_offset": 1403,
+    "song_size": 1139,
+    "pattern_count": 2,
+    "relocations": [
+      0,
+      2,
+      6,
+      84,
+      95,
+      106,
+      117,
+      171,
+      182,
+      193,
+      204,
+      210,
+      230,
+      285,
+      289,
+      293,
+      297,
+      324,
+      332,
+      340,
+      372,
+      416,
+      424,
+      495,
+      557,
+      652,
+      664,
+      716,
+      728,
+      780,
+      799,
+      833,
+      1107,
+      1109,
+      1111,
+      1113,
+      1117,
+      1119,
+      1123,
+      1125,
+      1127,
+      1129,
+      1133,
+      1135
+    ],
+    "id": "7E",
+    "source_address": "298008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "c35603b850733bae9b5a6e4bd2fc304ee629356433a44cd8e363f658faeb5207"
+    },
+    "adapted": {
+      "size": 1147,
+      "sha256": "24ed531026b53c8d7d330373086e7383849c8c1710941677ab539905d82978e8"
+    },
+    "pointer_address": "0FE17A",
+    "before": "000000",
+    "allocation": {
+      "offset": 2621440,
+      "size": 4096,
+      "fill": 0
+    }
+  },
+  "code_patches": [
+    {
+      "address": "5CFBE5",
+      "before": "22",
+      "after": "7f",
+      "role": "Parameter of room138 music-control object26; recipient handler subtracts one. Its unique Layer1 stream selects private song7E, preserving missing global21."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "f2f0913606c7661d43c0eaad9effae891333ee3fcc83a7abedfa715ded1c075d"
+  }
+}

@@ -84,3 +84,11 @@ pointer/header also match (`5CEBE5`, `1240249918`). These facts do not establish
 all dependencies. Diagnose the actual stall and version-local audio/code/data
 before selecting a repair. Do not copy cheap_demo music IDs into the recipient
 as an assumed song match. Room106's incorrect music remains deferred.
+
+## Later room138 recovery
+
+The [room138 music recovery](world1-room138-restoration.md) diagnoses the stall
+above and introduces the isolated `world1-room138-audio` candidate. Direct and
+natural entry now pass on native/reference, with donor terrain, an exact
+relocated source sequence and the original sample-bank dependency. Its whole
+course remains unqualified; this does not promote an entry check to a full pass.

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario World 1 room138 audio dependency candidate",
+  "id": "world1-room138-audio",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "world1-room138",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "f2f0913606c7661d43c0eaad9effae891333ee3fcc83a7abedfa715ded1c075d"
+  },
+  "room": "138",
+  "entrance": {
+    "map": 0,
+    "x": 168,
+    "y": 472,
+    "translevel": 92,
+    "requires": "Uncleared practice entrance; actual room120 normal clear selects this node."
+  },
+  "scope": "Complete the room138 private-song dependency by inheriting the original missing21 sample-bank2 selector for private7E. Inherits the exact transplanted donor sequence and room-specific music control; other song/sample selectors remain unchanged.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2627600,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "0FCF7E",
+      "before": "00",
+      "after": "02",
+      "role": "Private7E inherits sample bank2 selected by the original room138 request21; preserve original instrument/sample dependency."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "9cdd46b38ae238e83e6e3dad9e9440a4f85cc1db2e5b24678caed44fe285a000"
+  }
+}
