@@ -17,6 +17,7 @@ CHECKS = [
     ('World 1 route parity', 'qualify_demo11_world1_routes'),
     ('engine flows', 'qualify_demo11_engine_flows'),
     ('whole-line byte audit', 'audit_demo11_line'),
+    ('reachability audit', 'audit_demo11_reachability'),
 ]
 
 

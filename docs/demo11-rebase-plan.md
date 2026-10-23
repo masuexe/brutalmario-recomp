@@ -522,3 +522,31 @@ and custom sprite blocks.
 So the entire rebase touches nothing outside the reviewed recoveries - a single
 whole-line integrity guarantee rather than five per-target ones. The audit is now part
 of the acceptance driver, which reports **8/8 checks passed**.
+
+### Reachability audit: no unintended World 1 content loss on exercised routes
+
+The two builds differ in 22 level streams, so the rebase is only safe for World 1 if
+the rooms its routes reach are identical or intentionally newer. `tools/audit_demo11_
+reachability.py` collects the room every capture pinned to the head ROM actually
+entered and intersects that with the differing-room list.
+
+| Measure | Value |
+| --- | --- |
+| Captures pinned to the head | 27 |
+| Rooms exercised | 12 |
+| Differing rooms exercised | **0C5, 0C7, 105, 10E** |
+| Differing rooms never visited | 18 (005, 00C, 011, 025, 02A, 04F, 056, 08F, 102, 126, 168, 174, 176, 179, 17A, 182, 19B, 1C7) |
+
+The four exercised differences are all intended: `0C5` is the intro level, `0C7` is
+the overworld map, and `105`/`10E` are the newer 1-1 and castle this rebase was for.
+The rooms containing the *older* demoOnly1 versions - including `011`, `025`, `056`,
+`102` and `179` - were never entered by any qualified World 1 route, so no tested
+path loses content.
+
+Those 18 unvisited differences are the honest risk list: if a pipe or sublevel leads
+into one of them, the newer build's version loads instead. That is the same open
+question as the room 010 pipe route, and a playthrough closes it.
+
+The audit is wired into the acceptance driver as a drift guard: if a future capture
+exercises a differing room outside `{0C5, 0C7, 105, 10E}`, acceptance fails and forces
+a review. Driver now reports **9/9 checks passed**.
