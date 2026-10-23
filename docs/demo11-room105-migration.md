@@ -137,3 +137,27 @@ not a blind sweep.
 Next: build a natural-entry route (overworld walk from the session start to the 1-1
 node) plus a layout-aware traversal to the real goal, then qualify the migrated
 course on reference and native. Only then is the candidate acceptable.
+
+## Fourth pass: header mechanism and why the fixture cannot judge it (2026-10-23)
+
+The level header is a **custom five-byte record**, not the vanilla tables: a routine
+reads it through DP `$65` with `LDA [$65],Y`, stores fields into `$0A/$0B/$59/$5A/
+$5B/$3E`, then advances the pointer by five. The `$65` write-watch confirms the
+sequential walk (PC `$05:8616` plus a pointer-advance routine).
+
+| Room 105 header record | Bytes |
+| --- | --- |
+| Current head `$39C2C4` | `40 60 31` then `FF` (next block's RATS header follows) |
+| Demo 1-1 `$46D183` | `40 60 31 40 80 05` |
+
+So this build's record genuinely lacks the last two fields; migrating them needs the
+record relocated and the scan base found. This also explains why patching the vanilla
+`05:F000/F200/F400` tables changed the loaded terrain and music but not the spawn.
+
+**The fixture cannot judge the migration.** The pristine demoOnly1 enters at
+`x=0x10` and falls under the same teleport, so 'spawn mismatch' is a property of the
+fixture, not evidence against the migrated content - which already renders
+byte-identically to Demo 1-1.
+
+Practice entrance `demo11-room105` added (map0 `0x48,0x198`); the candidate stays
+unaccepted pending a human check of normal play.
