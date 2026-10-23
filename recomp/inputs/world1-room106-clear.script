@@ -1,0 +1,101 @@
+# Room106 chase-Yoshi clear: invulnerability and one X/velocity alignment
+# fixture near the final wall. Riding, level-script state, messages, goal timer,
+# completion, events and SRAM are never written. No imported state.
+# Repeated jump edges also dismiss the actual success message once it opens.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x058, Y=0x1d8.
+poke 1f11 0000
+poke 1f17 5800d8015800d801
+poke 1f1f 05001d0005001d00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump settled
+until 0100 == 14 0
+until 71 == 00 0
+forcepoke 1497 ff
+press right+y 100
+dump run00
+press right+y 100
+dump run01
+press right+y 100
+dump run02
+press right+y 100
+dump run03
+press right+y 100
+dump run04
+press right+y 100
+dump run05
+press right+y 100
+dump run06
+press right+y 100
+dump run07
+press right+y 100
+dump run08
+press right+y 100
+dump run09
+poke 94 800a
+poke 7b 00
+press b 12
+wait 26
+dump catch00
+press b 12
+wait 26
+dump catch01
+press b 12
+wait 26
+dump catch02
+press b 12
+wait 26
+dump catch03
+press b 12
+wait 26
+dump catch04
+press b 12
+wait 26
+dump catch05
+press b 12
+wait 26
+dump catch06
+press b 12
+wait 26
+dump catch07
+press b 12
+wait 26
+dump catch08
+press b 12
+wait 26
+dump catch09
+press b 12
+wait 26
+dump catch10
+press b 12
+wait 26
+dump catch11
+until 1fd06 == 01 0
+until 187a == 01 0
+dump goal
+wait 900
+dump completed_map
+until 0100 == 0e 0
+quit

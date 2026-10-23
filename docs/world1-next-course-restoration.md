@@ -151,3 +151,11 @@ Collectibles remain unqualified. Room106 music remains incorrect and deferred.
 
 See `world1-map-flow.md` for pipe locations and the camera/sprite-loading limits
 that made large vertical teleports unsuitable for the route probe.
+
+## Room106 chase flow follow-up
+
+The [room106 flow regression](world1-room106-flow.md) now verifies its actual
+Yoshi re-mount goal and normal exit, plus real enemy death and re-entry, on the
+current native build, reference host and cheap_demo. The normal exit selects
+map0 `(088,1F8)`. A separate reference/donor survey enters room120 there;
+its full course remains unqualified. No ROM changed. Music remains deferred.

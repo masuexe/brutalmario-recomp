@@ -5,6 +5,16 @@ accepted `star-world-forest` ROM and preserves that target. Entrance: map 0 /
 `$058,$1D8`, translevel `$2A`, room `$106`. Its intended course number is not
 established; do not call this a completed 1-2 restoration.
 
+## Current cumulative follow-up
+
+The later `world1-next-course` target includes this graphics recovery, and the
+user accepted room106 gameplay while deferring its incorrect music. Its
+[flow regression](world1-room106-flow.md) now verifies the chase-Yoshi normal
+clear and real death/re-entry on native, reference and cheap_demo. The historical
+integration limits below describe this original isolated checkpoint; the later
+1-2 two-pipe clear naturally reaches room106. Complete collectibles and this
+course's save/reload remain unqualified.
+
 ## Failure and correction
 
 Both original recipients select extended graphics `$1A2` in room `$106` but
