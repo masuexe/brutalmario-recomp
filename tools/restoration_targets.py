@@ -65,4 +65,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioWorld1Room0CbGraphicsSNESRecomp',
         'title': 'Brutal Mario World1 Room0CB Graphics',
     },
+    'demo11-extra-graphics': {
+        'binary': 'BrutalMarioDemo11ExtraGraphicsSNESRecomp',
+        'title': 'Brutal Mario Demo11 Extra Graphics',
+    },
 }

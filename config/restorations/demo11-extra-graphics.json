@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Extra Graphics",
+  "id": "demo11-extra-graphics",
+  "recipient": "demo-only-1",
+  "donor": "demo-1-1",
+  "base_restoration": "world1-room0cb-gfx",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "e66b05983af43412b87eb248b675645cf3baeb42e12875255d5ac1353dc0bb84"
+  },
+  "scope": "Import the extended graphics resources 29E, 29F, 2A0 and 2A2 that the Demo 1-1 versions of World 1-1 and the castle select, into empty recipient slots. No room in the recipient references them yet, so gameplay is unchanged.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1626112,
+    "size": 9949,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "29E",
+      "target_id": "29E",
+      "global_pointer": true,
+      "rooms": [],
+      "source_address": "239B8D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "3e259f8fecceaeedc26055a1ff95344100c1fb33420b81cbf2bd761dacd7456c"
+      },
+      "compressed": {
+        "size": 1597,
+        "sha256": "f07f8d4ed60efd3e5fe43ea5bb873ab41fc66fdd05821e856e77699f8d41b904"
+      }
+    },
+    {
+      "source_id": "29F",
+      "target_id": "29F",
+      "global_pointer": true,
+      "rooms": [],
+      "source_address": "23A1D2",
+      "decoded": {
+        "size": 4096,
+        "sha256": "db1781076c32c6452eec296c05f514e0d54c7d0713be3c67666a15acfbd7cd50"
+      },
+      "compressed": {
+        "size": 2757,
+        "sha256": "8d3e532faf3dcfcad0572561ca4b1557ab7a685a721026abf1529382bfb35cdd"
+      }
+    },
+    {
+      "source_id": "2A0",
+      "target_id": "2A0",
+      "global_pointer": true,
+      "rooms": [],
+      "source_address": "23AC9F",
+      "decoded": {
+        "size": 4096,
+        "sha256": "5c6fe90e0989e3a3de77ea5f1fd1cdae044de6211de37d3ed310c9ca70d33f76"
+      },
+      "compressed": {
+        "size": 2639,
+        "sha256": "51d45064a50f5a97a6960d0590153fb83cec4eb6ac922c6f274ad66e20dbe9ce"
+      }
+    },
+    {
+      "source_id": "2A2",
+      "target_id": "2A2",
+      "global_pointer": true,
+      "rooms": [],
+      "source_address": "23BD6E",
+      "decoded": {
+        "size": 4096,
+        "sha256": "719af338c2dfd743a2a93f1cd4267355e491a85dcbc78e430b2cead412ba9df3"
+      },
+      "compressed": {
+        "size": 2924,
+        "sha256": "e9b20e69671eedc106e4520bef7a4430c2f30dbadd7e28ff94ed6b7d95848d73"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "b8da320e34e8f1614dd7b3a69716f04ee693ad757e14f7bdb7ea97bd94d28e39"
+  }
+}
