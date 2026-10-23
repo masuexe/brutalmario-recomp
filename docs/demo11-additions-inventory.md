@@ -200,3 +200,30 @@ qualifications were built on.
 
 Open question before importing room `168`: whether any recipient map node actually
 selects level `168`. If nothing references it, the import would be inert content.
+
+## Reachability check for the missing level 168 (2026-10-23)
+
+Level `168` has translevel `0x8C` (`0x168 - 0xDC`). The recipient's World 1 map page
+table (loaded at `$7ED000`, indexed by the documented 16x16 page formula) does not
+contain `0x8C`, so no World 1 node selects that level.
+
+Attempts to sample the other submaps failed: teleporting with `poke 1f11` for
+submaps 1-4 produces byte-identical map RAM (`C800-D000` hash `3fb1ecc7`, page table
+hash `2f1aac6a`) to the initial map0 state, both when poked after the map loads and
+when poked from a fresh session. The practice teleport therefore cannot switch
+submaps, so the remaining submaps cannot be sampled this way.
+
+This matters because it bounds what the migration can achieve: without a map node,
+importing level `168` would add content that nothing in the recipient reaches.
+
+## Strategic conclusion
+
+Demo 1-1's additional content is tied to Demo 1-1's overworld. The recipient's own
+map and content set are internally consistent, so 'selective recovery' without map
+integration can only import inert resources. Any further step needs an explicit
+decision about migrating map nodes and routes, which is a much larger and riskier
+change than resource recovery and would alter the overworld the World 1
+qualifications were built on.
+
+Open, deliberately not attempted: importing level `168`, importing the five
+Demo 1-1-only music slots without a selecting room, and any overworld migration.
