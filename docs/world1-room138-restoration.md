@@ -175,3 +175,18 @@ difference, so score is deliberately excluded from the equal-counter check.
 
 This bounds collectible behaviour to the traversed path: off-route custom blocks
 and hidden collectibles are still unaudited.
+
+## Custom sprite dependency (2026-10-23)
+
+The user playtested this candidate and reported the course works but its custom
+tile sprite is missing, leaving a strange object falling at the start.
+
+Room `$138` places custom sprite `$0B`; the recipient's record slot is empty
+(`0000ffffffffffff218001218001ffff`) while cheap_demo keeps a real record and
+code block. A settled sample confirms the symptom numerically: the sprite status
+byte stays `00` where the donor has `08`.
+
+Fixed in the descendant target `world1-room138-sprite`, which relocates the
+781-byte donor block `$10:D377` to `$3F:D377` and installs the 16-byte record at
+`$10:B13A`. See [world1-room138-sprite.md](world1-room138-sprite.md) for the
+recipe, identity and qualification. The audio leaf identity above is preserved.

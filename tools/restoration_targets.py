@@ -57,4 +57,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioStarWorldUpperInnerSNESRecomp',
         'title': 'Brutal Mario Star World Upper Inner',
     },
+    'world1-room138-sprite': {
+        'binary': 'BrutalMarioWorld1Room138SpriteSNESRecomp',
+        'title': 'Brutal Mario World1 Room138 Sprite',
+    },
 }

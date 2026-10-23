@@ -67,6 +67,9 @@ LEVELS = {
     'world1-room138-audio': {'name': 'World 1 room 138 with donor song and sample bank', 'map': 0,
                              'x': 0x0a8, 'y': 0x1d8, 'level': 0x138,
                              'teleport': (0, 0x0a8, 0x1d8)},
+    'world1-room138-sprite': {'name': 'World 1 room 138 with restored custom sprite', 'map': 0,
+                              'x': 0x0a8, 'y': 0x1d8, 'level': 0x138,
+                              'teleport': (0, 0x0a8, 0x1d8)},
 }
 
 
