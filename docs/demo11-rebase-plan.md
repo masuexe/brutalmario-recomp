@@ -597,3 +597,47 @@ acceptance driver now reports **10/10 checks passed**.
 
 Limits: the route is assisted (labelled fixtures), and the map-cursor step to the next
 course is not part of it.
+
+## Playtest feedback: 1-1 accepted, 1-2 and room138 need custom sprites
+
+The user played the Demo 1-1 line: **World 1-1 is fully playable**, so the rebase's
+primary objective is accepted. They also reported that **1-2 and room 138 are missing
+custom sprites**, and asked whether earlier Demo 1-1 recomp work can be reused.
+
+### Investigating the missing sprites
+
+Same-route captures on both lines were compared to locate the difference:
+
+| Course | Slots active on the demoOnly1 line | Slots active on the Demo 1-1 line |
+| --- | --- | --- |
+| 1-2 (room `010`) | ids `FF`, `02`, `00`, `01` | ids `02`, `00` |
+| room 138 | ids `00`, `01` in more slots | ids `00`, different positions |
+
+So the demoOnly1 line does show extra active sprite slots in both courses. A first
+experimental port of the reviewed custom sprite `8D` (the one demoOnly1 restores for
+room 010 and its sublevel) was built onto the Demo 1-1 line:
+
+| Item | Value |
+| --- | --- |
+| Rooms selecting `8D` on Demo 1-1 | `[16, 74]` - exactly the reviewed set |
+| Destination block | `0x34C3F9`, same bank-local address as the donor copy |
+| Record slot on Demo 1-1 | `28c974f0…`, pinned as the new `before` |
+| Candidate ROM | `b52d9141399bc5d4653a83fc2ab200bc8136f2022abd90213b7b6bd68b83145e` |
+
+**It changed nothing observable**: replaying the 1-2 route on the new candidate leaves
+the sprite slots byte-identical to the unported case. So either the missing object is
+not `8D`, or Demo 1-1's engine does not consume this record table the way demoOnly1's
+does. The experiment is kept as a reviewed candidate (`demo11-sprite-8d`) but is not
+promoted to the head.
+
+### Reusing earlier Demo 1-1 recomp work
+
+There is already a prebuilt native build for the Demo 1-1 ROM at
+`local/build/demo-1-1/BrutalMarioDemo11SNESRecomp`, from earlier project work. It
+builds the **same ROM** (`314496f6…`) but has a different binary hash because its
+generated sources came from an older generator revision. The toolchain regenerates
+per-ROM code deterministically, so that is not duplicated manual work - but it does
+mean the older binary cannot simply be substituted for the new line's builds. Earlier
+*content* work for Demo 1-1 (`demo11-extra-graphics`, the `demo11-room105` migration
+attempt) lives on the demoOnly1 base and cannot be reused directly: a portability audit
+measured only 14 of 25 pinned patch sites still agreeing on Demo 1-1.
