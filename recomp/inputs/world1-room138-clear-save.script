@@ -1,0 +1,410 @@
+# Assisted room138 progression: air swimming/invulnerability and final landing
+# alignment. Real tape, normal clear, onward castle entry and File A reload.
+# No health, goal, completion, exit, event or SRAM values are injected.
+# Room138 entry recovery: initial map coordinates only; no health, geometry,
+# music requests, goal, completion, event or SRAM fixtures.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x0A8, Y=0x1D8.
+poke 1f11 0000
+poke 1f17 a800d801a800d801
+poke 1f1f 0a001d000a001d00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump settled
+until 0100 == 14 0
+until 71 == 00 0
+forcepoke 1497 ff
+forcepoke 85 01
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly010
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly020
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly030
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly040
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly050
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly060
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly070
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly080
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly090
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly100
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly110
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly120
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly130
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly140
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly150
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+press b+right 12
+press right 12
+dump fly160
+# Final position alignment over the real goal platform; no goal/progress writes.
+forcepoke 85 00
+poke 94 00118000
+poke 7b 00
+poke 7d 00
+press right 180
+until 1493 != 00 180
+dump goal
+wait 900
+dump completed_map
+until 0100 == 0e 0
+until 1efe == 8f 0
+# Follow the actual map destination before resetting; no extra teleport.
+press y 2
+wait 600
+dump castle_entry
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+# Re-entry fixture selects the previously cleared course, preserving save flags.
+poke 1f11 0000
+poke 1f17 a800d801a800d801
+poke 1f1f 0a001d000a001d00
+poke 0100 0b
+wait 240
+dump reload_node
+press y 2
+wait 600
+dump reload_course
+until 0100 == 14 0
+until16 010b == 0138 0
+quit

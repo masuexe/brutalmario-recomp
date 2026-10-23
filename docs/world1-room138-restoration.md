@@ -92,9 +92,37 @@ Inputs are `recomp/inputs/world1-room138-entry.script` and
 negative-baseline PC trace remain in ignored `local/probes/world1-survey/`.
 The qualifier pins identities and checks complete dumps and terminal logs.
 
+## Assisted flow, clear persistence and real death
+
+`python3 tools/qualify_world1_room138_flow.py` passes for the pinned candidate
+and donor identities. Inputs are `recomp/inputs/world1-room138-clear-save.script`
+and `world1-room138-death.script`; captures are
+`world1-138-flow-qualified-{reference,native,cheap}` and
+`world1-138-death-qualified-{reference,native,cheap}`. Report:
+`local/reports/world1-room138-flow-qualification.json`.
+
+The flow route is explicitly assisted: air swimming, invulnerability and one
+final landing alignment bypass obstacles and combat. Under those fixtures the
+guest still reaches and triggers the REAL goal tape (`$1493` set by the game),
+returns to the map normally clear at map0 `(0A8,1A8)` with `$1EFE=8F` and no
+life lost, naturally enters the onward castle room `$10E` node, and keeps the
+clear across console reset and File A reload, including saved-course re-entry.
+The death route uses only the initial map transfer: a real enemy hazard kills
+Mario (`$71=09`), costs exactly one life, returns to the map with the course
+still uncleared, and allows re-entry. All three hosts (final reference, final
+native, original cheap_demo) pass every check, and the loaded Map16 terrain
+still matches the donor at the settled and two in-flight samples.
+
+No standard `$02D/$02E` DK tiles exist in the main room, so a standard DK
+pickup route is not applicable to this course.
+
 ## Remaining scope
 
-Room138 is now enterable and has the recovered sequence and required sample
-selection. Its complete course, exits, DK pickups, death/re-entry and audible
-output remain unqualified. Continue those checks before calling the entire
-course restored. Room106's incorrect music remains explicitly deferred.
+Room138 is enterable with the recovered sequence and sample selection, an
+assisted whole-course progression, real normal clear, onward castle entry,
+File A persistence, and real death/re-entry qualified. Still open: a secret
+exit (room `$0CB` exit record exists but its actual entry is unproven in both
+candidate and donor), any custom-block/collectible behavior beyond the main
+path, donor-side castle entry and save persistence, and audible output.
+Do not call the whole stage restored until those are resolved or explicitly
+bounded. Room106's incorrect music remains explicitly deferred.

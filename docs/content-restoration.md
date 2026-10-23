@@ -35,8 +35,10 @@ entry, five DK pickups, normal clear and recipient File A persistence. Its
 normal exit selects room138. The new isolated
 [`world1-room138-audio` candidate](world1-room138-restoration.md) repairs its
 missing-song Mario Start stall and preserves the original sample dependency;
-entry, movement and the earlier clear/save route are automatically checked.
-Room138 full-course qualification is next. Full onward connectivity and
+entry, movement, assisted whole-course progression with a real tape clear,
+onward castle entry, File A persistence, and real death/re-entry are
+automatically checked on reference, native and cheap_demo. Room138's secret
+exit and audible output stay open. Full onward connectivity and
 selective Demo 1-1 recovery remain incomplete.
 
 Content recovery now takes priority over increasing the AOT variant count.
