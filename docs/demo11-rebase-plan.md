@@ -371,3 +371,26 @@ played from the launcher; 22 entrances total, 120 tests pass.
 Human playtest and audition on the new line: 1-1 native layout, 1-2 entry and pipes,
 room 138 custom object appearance, and the restored songs (`2F` for 1-2, private `7E`
 for room 138).
+
+### Native parity for the eight transferable routes
+
+All eight passing routes were then replayed on the **native recomp host** and compared
+with the reference host: 198 sampled tags across the routes.
+
+| Route | Samples | Mode/room sequence |
+| --- | ---: | --- |
+| room 106 entry | 10 | identical |
+| room 106 clear | 31 | identical |
+| room 106 death | 11 | identical |
+| room 010 death | 11 | identical |
+| room 010 subroom | 8 | identical |
+| room 120 coins/save | 59 | identical |
+| room 138 death | 10 | identical |
+| room 138 natural entry | 58 | identical |
+
+Level mode and room agree at every sampled tag, and the final goal-tape, map-state,
+event and submap bytes agree on all eight routes. Player positions drift on the long
+assisted routes because input timing differs between hosts, so positions are excluded
+from the parity claim deliberately. Report:
+`local/reports/demo11-world1-route-parity.json`; tool:
+`tools/qualify_demo11_world1_routes.py`.
