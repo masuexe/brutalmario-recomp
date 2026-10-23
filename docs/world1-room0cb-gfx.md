@@ -89,3 +89,51 @@ A debug/test room is unlikely to be the target of a real secret exit. The earlie
 note that an exit record points at `$0CB` remains unreproduced, and this visual
 check does not support treating `$0CB` as a missing secret area. Do not invest in
 reaching it through gameplay until an exit is actually identified.
+
+## Correction: room 0CB is a real course (2026-10-23, user)
+
+The user corrected the earlier reading of the diagnostic screenshots. `$0CB` is
+**not** a leftover test room:
+
+- it is a proper course whose clear condition is to **ride Yoshi and eat 20
+  dolphin sprites**;
+- the message-box text is **Japanese forced through a non-Japanese encoding**, so
+  it renders as mojibake; it is game text, not developer debug output.
+
+The visual section above therefore stands only for *what the room looks like*; its
+interpretation as a test room is withdrawn and must not be repeated.
+
+The drawn `20` in the A/B render is consistent with a course objective counter
+(target 20 dolphin sprites) rather than a debug number, and `$12A` carries the
+number-sprite tiles that draw it.
+
+Consequence: the secret-exit question is open again. Room `$0CB` being a real
+course makes a hidden entrance plausible after all, so the unreproduced exit
+record is worth re-investigating instead of being dismissed.
+
+## Entrance lead: pipes whose destination is 0CB (2026-10-23)
+
+The room's clear script was recovered from the donor data: `levelasm/dolphin.asm`
+stores the coin count at level start, then every coin gained decrements a counter
+initialised to `0x14` (20); when it reaches zero the code writes `$1493 = 0xFF`
+and requests music `0x0B`. That matches the user's description: ride Yoshi, eat 20
+dolphin sprites, and the course clears without a goal tape.
+
+A scan of every level's Layer 1 stream for the pipe encoding found around room
+010's known pipe (`04 00 <dest> 40 60 30 FF`) turned up four levels that contain a
+pipe whose destination byte is `$CB`:
+
+| Level | L1 offset |
+| --- | --- |
+| `083` | `0x427` |
+| `08B` | `0x504` |
+| `11A` | `0x6EB` |
+| **`138`** | **`0xFFA`** |
+
+Room `$138` itself contains a pipe to `$0CB`, which is consistent with a hidden
+(secret) entrance inside the course we just finished. The other three levels are
+additional candidate entrances.
+
+Next concrete step: determine the on-screen position of the room `$138` pipe at
+layer1 offset `0xFFA` and script a real entry into `$0CB`, then qualify the
+dolphin clear (20 coin gains -> `$1493`) instead of the diagnostic pipe patch.
