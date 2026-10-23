@@ -189,3 +189,36 @@ and requires the unfixed base to still show the Mario Start stall. Report:
 
 Still missing for a full course pass: custom sprite `8D` (the route needs its
 ability). Audible acceptance stays with the user.
+
+## Progress: custom sprite 8D is not needed on Demo 1-1 (2026-10-23)
+
+The demoOnly1 line restores custom sprite `8D` because room 010's route needs its
+ability. Demo 1-1 stores different data at the same record slot (`28c974f0…` instead
+of the default `0000ffffffffffff218001218001ffff`), so the id resolves differently
+there. Rather than reverse-engineer that table, the decisive test was behavioural:
+run the 8D-dependent route unconverted on the Demo 1-1 line (`demo11-room010-music`,
+which already has the graphics and music ports).
+
+| Host | Result |
+| --- | --- |
+| reference | **route passed**: gameplay `0x14`, room `0x010`, all four ability samples |
+| native | **route passed** |
+
+Positions agree within one pixel between hosts: spawn `(0x10,0x14E)/(0x10,0x14F)`,
+walk `(0x4F,0x160)` both, flight `(0x10,0x13D)/(0x10,0x13E)`, land `(0x74,0x160)`
+both.
+
+So Demo 1-1 already provides whatever ability room 010's route exercises, and
+**porting custom sprite 8D is unnecessary** - the largest expected cost of the rebase
+disappears. The route's own `until` conditions (`mode 0x14`, room `0x010`, `$71`
+returning to 0) all satisfied, and `m1` reported the capture passed on both hosts.
+
+That trims the remaining recovery list to:
+
+| Remaining | Affects | Why |
+| --- | --- | --- |
+| song `21` transplant | room138 | slot absent in both builds |
+| custom sprite `0B` | room138 | demoOnly1 restores it; check whether Demo 1-1 needs to |
+| graphics `12A` | room0CB | absent in both builds |
+
+Then the World 1 requalification (courses, saves, death handling) can start.
