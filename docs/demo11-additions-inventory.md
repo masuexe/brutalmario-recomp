@@ -105,3 +105,41 @@ pointers, which is relocation rather than different music.
 
 Do not migrate by copying whole level streams. Each pilot needs its own dependency
 closure and an isolated descendant target.
+
+## Screen counts: Demo 1-1's World 1 courses are larger
+
+The first layer1 byte encodes the horizontal screen count as `(byte & 0x1F) + 1`,
+the same convention the earlier room documents use (room 105 -> 20, room 138 ->
+19). Applying it to the differing rooms gives:
+
+| Room | Demo 1-1 screens | demoOnly1 screens |
+| --- | ---: | ---: |
+| `00C` | 25 | 12 |
+| `011` | 6 | 10 |
+| `025` | 5 | 1 |
+| `04F` | 12 | 2 |
+| `056` | 10 | 7 |
+| `0C5` | 2 | 1 |
+| `102` | 2 | 11 |
+| **`105` (1-1)** | **24** | **20** |
+| **`10E` (castle)** | **23** | **13** |
+| `168` | 5 | 4 |
+| `179` | 1 | 3 |
+
+The two World 1 rooms that matter for the current recipient are therefore
+**larger in Demo 1-1**: 1-1 gains four screens and the castle gains ten, which is
+the strongest evidence yet that Demo 1-1 carries additional course content rather
+than only relocation.
+
+Caveat: room 105 gains four screens while its measured layer1 data grows by only
+11 bytes, so the extra screens are sparsely populated; the castle gains ten
+screens together with 1,601 bytes. That asymmetry is a hint about authoring order
+and should be checked before treating either as finished content.
+
+## Recommended first pilot
+
+**Room `105` (World 1-1)**, not the castle: it is the course the user actually
+plays first, its difference is smaller and better understood (same layer1 prefix
+style, four extra sparse screens, 15 extra placed sprites), and its dependency set
+is already the subject of existing qualifications. The castle is the larger prize
+but a ten-screen extension with new graphics ids is a much bigger closure.
