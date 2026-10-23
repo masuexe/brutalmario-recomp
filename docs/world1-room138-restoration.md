@@ -152,3 +152,26 @@ were copied.
 
 The persistence experiment remains a local prototype under
 `local/captures/world1-138-donor-persist` and is not acceptance evidence.
+
+## Route counters match the donor (2026-10-23)
+
+The assisted flow captures were compared field by field across the final
+reference, final native and original cheap_demo runs. Along the whole route
+(`settled`, `fly010`..`fly160`, `goal`, `completed_map`) these values are equal on
+all three hosts:
+
+| Counter | WRAM |
+| --- | --- |
+| coins | `$0DBF` |
+| lives | `$0DBE` |
+| clear byte | `$1EFE` |
+| `$1420`, `$1422` | DK/collectible counters |
+
+`tools/qualify_world1_room138_flow.py` now asserts this for every route sample.
+
+The only post-clear difference is the score byte `$0F34` (132 on the recipient
+hosts, 137 on the donor). That is the clear-bonus timing, not a collectible
+difference, so score is deliberately excluded from the equal-counter check.
+
+This bounds collectible behaviour to the traversed path: off-route custom blocks
+and hidden collectibles are still unaudited.

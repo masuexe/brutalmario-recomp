@@ -112,6 +112,15 @@ def main():
             states[route, host] = s
             captures[directory.name] = receipt
 
+    counters = {'coins': 0x0dbf, 'lives': 0x0dbe, 'clear': 0x1efe, '1420': 0x1420, '1422': 0x1422}
+    route_tags = ['settled'] + [f'fly{i:03}' for i in range(10, 161, 10)] + \
+        ['goal', 'completed_map']
+    reached = []
+    for tag in route_tags:
+        values = {host: tuple(states['flow', host][tag][address] for address in counters.values())
+                  for host in ('reference', 'native', 'cheap')}
+        require(len(set(values.values())) == 1, 'collectible counters differ: ' + tag)
+        reached.append(tag)
     cells = 19 * 0x1b0
     for host in ('reference', 'native'):
         for tag in ('settled', 'fly080', 'fly160'):
@@ -138,6 +147,7 @@ def main():
                            'real tape, normal clear and map0(0A8,1A8)',
                            'recipient natural room10E entry and File A clear persistence',
                            'donor natural room10E entry with clear 8F at a settled sample',
+                           'route counters (coins, lives, clear, 1420/1422) equal on all three hosts',
                            'three-host hazard death and room138 re-entry'],
               'standard_DK_cells_in_main_room': 0,
               'donor_castle_samples': {'early_mode': states['flow', 'cheap']['castle_entry'][0x100],
@@ -148,6 +158,8 @@ def main():
                          'Donor clear persistence is NOT comparable: the donor reference build keeps only',
                          '0x800 SRAM and reloads with 1EFE=00, so recipient persistence is qualified on',
                          'its own expectations rather than against the donor.',
+                         'Route counters match the donor, but off-route custom blocks and',
+                         'collectibles are not audited, and the clear-bonus score is excluded.',
                          'Audible output and room106 music correction remain outside scope.']}
     output = ROOT / 'local/reports/world1-room138-flow-qualification.json'
     output.write_text(json.dumps(report, indent=2) + '\n')
