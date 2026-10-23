@@ -186,3 +186,30 @@ blind sweeps.
 Because terrain, sprite placement, headers and music all match Demo 1-1 exactly, the
 remaining gap is verification, not content: a human playthrough of the migrated
 course is now the cheapest decisive check.
+
+## Sixth pass: the newer 1-1 needs custom sprite behaviour too (2026-10-23)
+
+Running one identical scripted route on both builds exposes a real behavioural
+difference that terrain comparison cannot see:
+
+| Phase | Migrated | Demo 1-1 |
+| --- | --- | --- |
+| after landing at `x≈0xD24` | walks flat at `y=0x00C0` | **bounces** (`y` cycles `0x4F -> 0x72 -> 0x89 -> 0xC7 -> 0x91`) |
+| later | stops at `x=0xDB5`, falls | keeps advancing to `x=0xE24` |
+
+The bounce means the newer layout places a bouncing sprite (spring/trampoline
+class) that the migrated build does not reproduce. The placed sprite ids are
+identical (the list is byte-for-byte Demo 1-1's), so the difference is the
+**custom sprite definition those ids resolve to** - exactly the version-local id
+hazard the repository agreement warns about.
+
+Room `105` uses these non-trivial sprite ids: `10 4C 4F 6D 75 76 7B 8E 91 92 9F AB
+B9 BD DA`. At least one of them must behave differently between the builds.
+
+So the 1-1 migration needs a third dependency class beyond graphics and level data:
+the custom sprite code those ids resolve to. Locating Demo 1-1's own custom sprite
+table is the next step; the cheap_demo table address used earlier does not apply to
+this build.
+
+Because the goal tape lies inside the bouncing section, goal contact cannot be
+scripted until that sprite behaviour is migrated.
