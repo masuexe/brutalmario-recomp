@@ -474,3 +474,34 @@ the boss door reaches room `0x100`, and the Lemmy route reaches room `0x08C`. Re
 
 Scope limit: reference host only, and this is behaviour transfer of pre-existing
 engine routes, not a qualification of restored content.
+
+## One-command acceptance for the Demo 1-1 line
+
+`tools/check_demo11_line.py` runs every acceptance check in sequence and prints a
+summary. Verified now:
+
+| Check | Result |
+| --- | --- |
+| room 106 graphics | pass |
+| room 010 graphics (construction) | pass |
+| room 010 music | pass |
+| room 138 audio | pass |
+| room 0CB graphics | pass |
+| World 1 route parity | pass |
+| engine flows | pass |
+
+Drift guard: every check re-verifies the head ROM `9155c1eb…`, its native binary and
+the pinned capture receipts, so any accidental change to the line surfaces as a
+failure rather than silently passing.
+
+## Demo 1-1 line status
+
+| Item | Value |
+| --- | --- |
+| Head target | `demo11-room0cb-gfx` |
+| ROM SHA-256 | `9155c1eb291c784c3804c277cbd29bca3c734772e85862a1c6bfb47537fb1499` |
+| Chain | `demo11-base` -> `demo11-room106` -> `demo11-room010-gfx` -> `demo11-room010-music` -> `demo11-room138-audio` -> `demo11-room0cb-gfx` |
+| Recoveries ported | 1A2, 151/102, song 2F, private song 7E + sample-bank selector, 12A |
+| Not needed on this base | custom sprites 8D and 0B (native equivalents) |
+| Automated acceptance | 7/7 checks |
+| Open items | human playtest and audition; 1-1 scripted goal contact; room 010 pipe route |
