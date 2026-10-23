@@ -143,3 +143,60 @@ plays first, its difference is smaller and better understood (same layer1 prefix
 style, four extra sparse screens, 15 extra placed sprites), and its dependency set
 is already the subject of existing qualifications. The castle is the larger prize
 but a ten-screen extension with new graphics ids is a much bigger closure.
+
+## Classification: rewrites, one relocation, and one missing level
+
+Similarity of the two layer1 streams was measured with an order-preserving diff
+(`difflib` matching blocks) over the 22 differing rooms, and every substantially
+different room was then cross-matched against all other rooms to catch relocated
+content.
+
+| Room | Demo 1-1 bytes | demoOnly1 bytes | In-order match | Class |
+| --- | ---: | ---: | ---: | --- |
+| `005` | 8,996 | 8,996 | 100.0% | near-identical |
+| `02A` | 866 | 866 | 100.0% | near-identical |
+| `176` | 5,885 | 5,885 | 100.0% | near-identical |
+| `17A` | 98 | 98 | 100.0% | near-identical |
+| `19B` | 5 | 5 | 100.0% | near-identical |
+| `1C7` | 5 | 5 | 100.0% | near-identical |
+| `0C7` | 5,707 | 5,686 | 99.6% | near-identical |
+| `182` | 178 | 178 | 99.4% | near-identical |
+| `174` | 827 | 827 | 99.3% | near-identical |
+| `126` | 963 | 953 | 97.9% | near-identical |
+| `08F` | 323 | 316 | 97.8% | near-identical |
+| `10E` (castle) | 13,777 | 12,176 | 35.5% | **rewritten** |
+| `0C5` | 23 | 545 | 30.4% | rewritten |
+| `00C` | 23 | 6,704 | 26.1% | rewritten |
+| `102` | 54 | 243 | 25.9% | rewritten |
+| `105` (1-1) | 7,101 | 7,090 | 12.3% | **rewritten** |
+| `056` | 353 | 184 | 8.2% | rewritten |
+| `011` | 376 | 252 | 5.1% | rewritten |
+| `179` | 281 | 98 | 2.5% | rewritten |
+| `025` | 996 | 1,566 | 2.6% | rewritten |
+| `168` | 3,286 | 17 | 0.2% | **missing in demoOnly1** |
+| `04F` / `00C` | 6,704 | 6,704 | 100% cross-match | **relocated pair** |
+
+### What the numbers mean
+
+- **Only one relocation exists**: Demo 1-1's room `04F` is demoOnly1's room `00C`
+  byte for byte. Every other difference is content authored independently in each
+  version.
+- **1-1 and the castle are rewrites, not extensions.** Their layouts diverge from
+  the first object, so replacing the recipient's 1-1 or castle with Demo 1-1's
+  version would substitute a *different course*, not recover lost content. That is
+  a product decision, not a restoration step.
+- **Room `168` is the one genuine missing level**: demoOnly1 holds a 17-byte stub
+  and 2 sprites where Demo 1-1 has a 3,286-byte, 5-screen level with 47 sprites.
+- The eleven near-identical rooms differ by small, local edits - the kind a
+  version bump produces.
+
+### Consequence for the migration plan
+
+"Selective recovery of Demo 1-1 additions" should mean importing content that
+demoOnly1 does **not** have (room `168`, the graphics resources already imported,
+the five music slots), not overwriting demoOnly1's own course versions with Demo
+1-1 rewrites. Replacing 1-1's layout would discard the version the current World 1
+qualifications were built on.
+
+Open question before importing room `168`: whether any recipient map node actually
+selects level `168`. If nothing references it, the import would be inert content.
