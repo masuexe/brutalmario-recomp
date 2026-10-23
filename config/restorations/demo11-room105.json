@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room105",
+  "id": "demo11-room105",
+  "recipient": "demo-only-1",
+  "donor": "demo-1-1",
+  "base_restoration": "demo11-extra-graphics",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "b8da320e34e8f1614dd7b3a69716f04ee693ad757e14f7bdb7ea97bd94d28e39"
+  },
+  "room": "105",
+  "entrance": {
+    "map": 0,
+    "x": 72,
+    "y": 408,
+    "translevel": 41,
+    "requires": "World 1-1 node; the recipient map entry unchanged."
+  },
+  "scope": "Replace World 1-1 layer1 and sprite data with the newer Demo 1-1 versions and select the matching extended graphics record. Content replacement, not a dependency recovery.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1814528,
+    "size": 7252,
+    "fill": 0
+  },
+  "assets": [],
+  "raw_blocks": [
+    {
+      "source_address": "46B5CC",
+      "data": {
+        "size": 7102,
+        "sha256": "2585d6c0a93e86ac6d7701d91dbd199843dd005eef7d21674a29df18432fbd6c"
+      },
+      "destination_address": "37B008",
+      "rats_address": "37B000"
+    },
+    {
+      "source_address": "46D4D2",
+      "data": {
+        "size": 134,
+        "sha256": "d6409f320c4937181415e6ea32a249a23acd648ba7ebbfbdf1028bb8a2fa7611"
+      },
+      "destination_address": "37CBCE",
+      "rats_address": "37CBC6"
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "05E30F",
+      "before": "15a739",
+      "after": "08b037"
+    },
+    {
+      "address": "05EE0A",
+      "before": "10c6",
+      "after": "cecb"
+    },
+    {
+      "address": "0EF205",
+      "before": "39",
+      "after": "37"
+    },
+    {
+      "address": "14CDA8",
+      "before": "01808108b2001700140020001300010000007f00ffffffffffffffffffffffff",
+      "after": "01808108b200170014002000a0029f0200009e02ffffffffffffffffffffffff"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "a45225b136606ca3a9e33d361d5496490b1fb41c022cadb46e06034887414dd2"
+  }
+}
