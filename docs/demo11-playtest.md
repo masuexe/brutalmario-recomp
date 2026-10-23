@@ -65,6 +65,9 @@ report it so the cause can be pinned.
 
 ## Not defects (known limitations)
 
+- In 1-1 the newer layout has a gap about 220 pixels from the start: walking right and
+  jumping on a fixed rhythm falls in at `x≈0xDE` and loses a life. Expect to need the
+  course's own mechanics there; that is the newer design, not a defect.
 - The assisted route scripts for the *old* 1-1 layout cannot be reused: their goal
   positions assume demoOnly1's course.
 - Scripted 1-1 goal detection is blocked because this hack remaps sprite identity and

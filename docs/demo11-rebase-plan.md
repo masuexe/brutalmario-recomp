@@ -550,3 +550,15 @@ question as the room 010 pipe route, and a playthrough closes it.
 The audit is wired into the acceptance driver as a drift guard: if a future capture
 exercises a differing room outside `{0C5, 0C7, 105, 10E}`, acceptance fails and forces
 a review. Driver now reports **9/9 checks passed**.
+
+### 1-1 start-gap probe
+
+Walking right from the fixture spawn with a fixed jump rhythm on the Demo 1-1 line falls
+into a gap at about `x=0xDE` (roughly 220 px from the start) and costs a life; the
+respawn repeats the same outcome. This is the newer course design asking for its own
+mechanics, not a regression: the old layout has a comparable gap slightly further on
+(`x≈0xFB`). It also explains why blind scripted traversal cannot reach the goal - the
+route needs per-section timing that a fixed press rhythm cannot express.
+
+Recorded in the playtest checklist so the first human playthrough is not surprised by
+it.
