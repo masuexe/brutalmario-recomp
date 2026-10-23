@@ -18,6 +18,7 @@ CHECKS = [
     ('engine flows', 'qualify_demo11_engine_flows'),
     ('whole-line byte audit', 'audit_demo11_line'),
     ('reachability audit', 'audit_demo11_reachability'),
+    ('World 1-1 goal/clear', 'qualify_demo11_world1_1'),
 ]
 
 

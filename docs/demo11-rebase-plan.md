@@ -562,3 +562,38 @@ route needs per-section timing that a fixed press rhythm cannot express.
 
 Recorded in the playtest checklist so the first human playthrough is not surprised by
 it.
+
+## World 1-1 goal reached and cleared on the Demo 1-1 line (2026-10-23)
+
+The gap recorded earlier - that scripted goal contact seemed blocked - is closed by a
+behavioural search rather than static decoding.
+
+**Where the goal actually is.** The newer 1-1 puts its goal tape on the end platform at
+the level's **far right**, around `x=0x16DC` on ground `y=0x140` - not mid-course. The
+earlier estimate came from decoding the sprite-list record `53 D6 7B` as if it were the
+tape, but this hack remaps sprite identity and placement between level data and runtime,
+so that decode was misleading.
+
+**How it was found.** Flying to the level's far end (`x=0x17E8`) and descending lands
+safely on the end platform. Walking left from there turns `$1493` from `0x00` into
+`0xE8`, `0xD8`, `0xC9`, ... - the tape animation - and the game then performs the clear.
+
+**Route and result.** `recomp/inputs/demo11-world1-1-goal.script` flies there with
+labelled air-swim and invulnerability fixtures, disables them, and walks into the tape.
+On both hosts:
+
+| Sample | mode | room | position | `$1493` | `$1ECB` | `$13CE` |
+| --- | --- | --- | --- | --- | --- | --- |
+| at end | `0x14` | `0x105` | `(0x17E8,0x140)` | 0 | `0x0A` | 0 |
+| goal contact | `0x14` | `0x105` | `(0x16EF,0x140)` | `0xC9` | `0x0A` | 0 |
+| completed map | `0x0E` | `0x105` | `(0x0D,0x11E)` | 0 | **`0x8A`** | **`0x01`** |
+
+Reference and native agree at every sampled state, and `$1ECB = 0x8A` is exactly the
+map event the demoOnly1 line's accepted 1-1 route produced, so the newer layout clears
+to the same overworld state.
+
+`tools/qualify_demo11_world1_1.py` rechecks this from the pinned captures. The
+acceptance driver now reports **10/10 checks passed**.
+
+Limits: the route is assisted (labelled fixtures), and the map-cursor step to the next
+course is not part of it.
