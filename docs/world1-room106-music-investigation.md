@@ -87,12 +87,28 @@ Consequence: the remaining work is reversing the port-level upload protocol
 (WRAM-staged blocks plus the `$0010/$1000` handshake) - a multi-session
 effort with real regression surface, not a byte recipe yet.
 
+## Update 2026-10-24 (fourth pass): the bank-14 song directory
+
+cheap's built-in songs are indexed by a directory at SNES `$148008`
+(RATS-guarded, entries are 3-byte little-endian ROM pointers):
+song 21 -> `$28983D` (data runs to the next entry `$28A34C`, about 2.8 KB).
+demo11's copy of this directory is empty (all `FF`), which is why its `0x21`
+request does nothing while `0x49` works through demo11's own stack.
+
+Experiment 9 filled directory entry 21 with a relocated copy of the cheap
+data (free space `$34A008`) plus the override. Result: the engine **does**
+read the directory and starts the upload, then hangs at
+`$0FC347/$0FC34A` - the APU-port acknowledgement wait, the same loop room138
+stalled in when its song-21 slot was empty. So the SNES side is now correct
+and the **SPC side rejects the data**: the cheap block needs its companion
+structures (sample directory/banks, possibly contiguous neighbours in the
+`$28xxxx` region) to satisfy the uploader's full conversation.
+
 ## Next steps
 
-1. Trace the `$00EAD1` handshake loop and the WRAM `$0A00` staging area to
-   enumerate the full block list the SPC receives for song 21, then replay
-   that exact sequence through the slot-7F mechanism (or a small SNES-side
-   replay stub in a descendant target).
+1. Enumerate the full dependency closure the cheap uploader reads for song
+   21 (watch `$8A/$8B/$8C` jointly in one run, or read the SPC-side reject
+   point), then install that closure together in one descendant target.
 2. Quantitative audio gates (cheap reference figures above) before any user
    listening check.
 3. Do not reuse the demoOnly1 `fbc09f2` header-byte change; selection parity
