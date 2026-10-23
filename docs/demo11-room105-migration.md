@@ -101,3 +101,39 @@ Next: compare the entrance data the two builds use for the 1-1 node (and how the
 loaded level start screen is chosen) before deciding whether the entrance must be
 migrated too. Until then this candidate is **not accepted**: the player does not
 start where the course expects.
+
+## Third pass: the spawn difference was a fixture artefact (2026-10-23)
+
+After the header tables were migrated, the level matched Demo 1-1's terrain exactly
+but the player still spawned at `(0x10,0x00C0)` instead of `(0x40,0x0160)`. Three
+checks settled why.
+
+1. **Header bytes are not the cause.** All eight header tables at indices `0xBC`
+   (the loader's `_E` at entry), `0x29` (translevel) and `0x105` are now identical
+   between the migrated build and Demo 1-1.
+2. **The pristine demoOnly1 does the same thing.** Running the identical map-teleport
+   script on the untouched demoOnly1 ROM gives `(0x10,0x0160)` at entry and then
+   `y=0x02A4` while falling - it never stands on the ground either. So the teleport
+   fixture does not reproduce a normal level entrance and its spawn point cannot be
+   compared with Demo 1-1's.
+3. **Normal entry needs real map navigation.** A fresh session starts on the map at
+   `(0x138,0x108)`, not at the 1-1 node `(0x48,0x198)`; reaching 1-1 requires the
+   overworld walk, which the current scripts do not model.
+
+### What this means for the candidate
+
+The migrated content itself is in place: both Map16 buffers equal Demo 1-1's on
+reference and native, the music cue matches, the level stays in gameplay, and the
+header bytes match at every index the loader uses. What is missing is a
+**natural-entry qualification route** for the new layout - the accepted 1-1 route was
+written against the old layout and against the teleport fixture, so it cannot
+qualify the migrated course.
+
+Attempts to drive the new layout with the swim fixture are recorded locally
+(`w105-fly`, `w105-hop`, `w105-walk`): any `B` press pins Mario to the ceiling and
+walking alone dies in a pit at `x=0xFB`, so a real route needs per-section control,
+not a blind sweep.
+
+Next: build a natural-entry route (overworld walk from the session start to the 1-1
+node) plus a layout-aware traversal to the real goal, then qualify the migrated
+course on reference and native. Only then is the candidate acceptable.
