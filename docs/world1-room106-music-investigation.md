@@ -36,18 +36,47 @@ header-byte fix (commit `fbc09f2`, selection byte only) still sounded wrong.
    `$0DDA`/playback unchanged. The room-106 `0x49` request does not pass
    through those bytes.
 
+## Update 2026-10-24 (second session): selection solved, uploader is the wall
+
+Disassembly (trace-driven) of `$009728-$00973B` closed the selection path:
+`LDA $0DDA` feeds `STA $1DFB`, with a dead `CMP #$40` and an override
+`LDA #$16` behind `$0D9B == $C1` (never true on this line; verified across
+all demo11-line captures). A four-byte patch now steers room106 anywhere:
+
+- `$00972C`: `40 -> 49` (bind the comparison to the room106 request)
+- `$00972D`: `EA EA -> F0 07` (BEQ to the override when the request is 0x49)
+- `$009737`: override immediate (target request value)
+- plus a filled target slot
+
+Verified with the reference runner: requests `0x21` and `0x7F` both take
+effect (`$0DDA` mirrors them). Experiments on the ignored
+`demo11-room106-music` target:
+
+| Exp | Slot/shape | Result |
+| --- | --- | --- |
+| 6 | slot 7F, payload `[len][base]+raw 1276B` | data lands at ARAM 5400 verbatim; directory not rebuilt; audible but quantitatively unlike cheap (band profile differs) |
+| 7 | slot 21 (0x21 request) | same direct-copy behaviour; the built-in 0x21 path does not interpret the cheap loader script |
+| 8 | slot 7F, 2F-shaped head+zeros+data | silent; the group head pointing at `1f1f...` parses to nothing |
+
+Key structural facts learned: the driver's per-channel pointers live at
+ARAM `$30-$3C` (cheap: `$685A..$6A23`; demo11 2F: `$548D..$5640` - the same
+layout shifted by the payload base); the uploader **rewrites payload bytes
+after upload** (2F's ROM head pointers `$56F3/$5703` become `$5651` in ARAM,
+its data segment is re-laid-out with a zeroed gap), so a byte-identical
+reproduction of cheap's ARAM through the payload channel is not possible
+without knowing the source format the uploader consumes.
+
 ## Next steps
 
-1. Trace upstream of the `$1DFB=0x49` write (watch PC `$009738`; the value
-   `0x49` was loaded around trace PC `$0096E8-$0096F8` at frame 2455 in
-   `d11-trace4.csv`) to find where `0x49` is selected - likely a per-level
-   or per-translevel music table byte in demo11's engine.
-2. Once the request can be steered to `0x21`, fill the song-21 slot (payload
-   mechanism already proven by the room-138/room-010 private slots).
-3. The 9 KB sample/sequence region upload must be reproduced; verify by
-   comparing the resulting ARAM against `cheap-aram.bin` (`4600-$6B00`
-   plus the `$003E0` directory), not by selection bytes alone.
-4. Do not reuse the demoOnly1 `fbc09f2` header-byte change; selection parity
+1. **Trace the cheap 0x21 uploader**: instruction-trace cheap around frame
+   2493+ (`$1DFB=0x21`) and record which ROM addresses the upload loop reads.
+   That read set is the true source format; feed it through the slot-7F
+   payload unchanged.
+2. Quantitative audio gates: cheap reference WAV (with
+   `snes9x_echo_buffer_hack=enabled`, else cheap renders silent) has
+   rms ~642, zc ~1845, band mass ~0.996 at 440 Hz; the candidate must match
+   closely before any user listening check.
+3. Do not reuse the demoOnly1 `fbc09f2` header-byte change; selection parity
    is not an audible match.
 
 Captures: `d11-route-*` (accepted route work) unchanged; this investigation
