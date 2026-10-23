@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room0Cb Graphics",
+  "id": "demo11-room0cb-gfx",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-room138-audio",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "be5ff1d230a3bfefb072b6acf83e52a9599819daa913482cee72be6a1d6ac2bf"
+  },
+  "room": "0CB",
+  "scope": "Port the shared extended graphics 12A (selected by rooms 000, 007, 0CB, 100 and 116 on this base) onto the Demo 1-1 line. Only the graphics slot pointer is written; room records already select the id.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1085440,
+    "size": 669,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "12A",
+      "target_id": "12A",
+      "global_pointer": true,
+      "rooms": [
+        0,
+        7,
+        203,
+        256,
+        278
+      ],
+      "source_address": "28DAEF",
+      "decoded": {
+        "size": 4096,
+        "sha256": "9c02bc51f09a340efdc97c8733a00d69d00c2dcda44794fa9faff29dd622b896"
+      },
+      "compressed": {
+        "size": 661,
+        "sha256": "73c5a74ba17e875415f02e8c13e0e64712690bc6157d8f3afedacf83dd318af8"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "9155c1eb291c784c3804c277cbd29bca3c734772e85862a1c6bfb47537fb1499"
+  }
+}

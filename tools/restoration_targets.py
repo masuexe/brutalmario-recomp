@@ -93,4 +93,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11Room138AudioSNESRecomp',
         'title': 'Brutal Mario Demo11 Room138 Audio',
     },
+    'demo11-room0cb-gfx': {
+        'binary': 'BrutalMarioDemo11Room0CbGraphicsSNESRecomp',
+        'title': 'Brutal Mario Demo11 Room0Cb Graphics',
+    },
 }

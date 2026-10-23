@@ -270,3 +270,50 @@ fidelity of that object therefore remains a playtest question, not an automatic 
 requires the base to keep stalling on song `0x21`, requires gameplay with song `0x7E`,
 and requires the clear/save route on both hosts. Report:
 `local/reports/demo11-room138-audio-qualification.json`.
+
+## Progress: room 0CB shared graphics 12A ported - recovery list complete (2026-10-23)
+
+`demo11-room0cb-gfx` ports the shared extended graphics `12A`. On the new base the id
+is selected by **five** rooms, not four: `000`, `007`, `0CB`, `100`, `116` - room `007`
+is the extra one, so installing the stream also fixes that room's rendering.
+
+| Item | Value |
+| --- | --- |
+| Donor stream (cheap_demo `12A`) | pointer `28DAEF`, 661 compressed bytes |
+| Base slot | empty (`FFFFFF`) |
+| Allocation | file `0x109000`, 669 bytes |
+| Candidate ROM | `9155c1eb291c784c3804c277cbd29bca3c734772e85862a1c6bfb47537fb1499` |
+| Changed bytes | 503 |
+
+### Verification
+
+Structural: the slot was empty, the relocated stream decompresses to the donor image,
+the room list selecting `12A` is exactly `[0, 7, 203, 256, 278]`, and every changed
+byte lies inside the allocation or the slot.
+
+Regression on the new head (room 0CB cannot be entered yet, so its rendered
+appearance stays unverified):
+
+| Check | Ancestor | New head |
+| --- | --- | --- |
+| room 138 goal `$1493` | `F0` at `(0x11D9,0x110)` | identical |
+| room 138 map return | mode `0x0E` at `(0x46,0x12E)` | identical |
+| room 010 ability landing | `(0x74,0x160)` | identical |
+
+WRAM `0x100`-`0x1FF` is byte-identical in both regressions, so the shared graphics
+installation changes nothing else that these routes exercise.
+
+### The recovery list is complete
+
+| Recovery | Target | Status |
+| --- | --- | --- |
+| room 106 graphics `1A2` | `demo11-room106` | qualified (terrain 0 diff, 4,738 before) |
+| room 010 graphics `151`/`102` | `demo11-room010-gfx` | construction-level |
+| room 010 song `2F` | `demo11-room010-music` | qualified (mode `0x14`, playfield 0.81 % of donor) |
+| room 138 private song `7E` | `demo11-room138-audio` | qualified (clear/save passes on both hosts) |
+| room 0CB graphics `12A` | `demo11-room0cb-gfx` | qualified (structural + regression) |
+| room 010 sprite `8D` | - | not needed on this base |
+| room 138 sprite `0B` | - | not needed on this base |
+
+New head: **`demo11-room0cb-gfx`** (`9155c1eb`). The next phase is the World 1
+requalification on this line, then the user playtest and audition.
