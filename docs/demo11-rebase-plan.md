@@ -394,3 +394,25 @@ assisted routes because input timing differs between hosts, so positions are exc
 from the parity claim deliberately. Report:
 `local/reports/demo11-world1-route-parity.json`; tool:
 `tools/qualify_demo11_world1_routes.py`.
+
+### 1-1 goal scripting hit a sprite-identity wall (2026-10-23)
+
+Attempts to script a goal contact on the Demo 1-1 line did not succeed, and the
+reason is now clear: the sprite numbers seen at runtime do not match the room's
+static sprite list.
+
+- Both the demo11 content ROM and the head ROM carry the **same** room `105` sprite
+  list (header `0x10`, 44 records, pointer `46D4D2`), ending in `53 D6 7B`.
+- Slow traversals scroll the camera well past that record's screen (cam `0x0EEF`,
+  `0x12A4`) while the active sprite slots hold ids `13/14/15/16`, `1E/20`, `25/26/27/28`
+  - none of which appear in the static list.
+- No slot ever held `0x7B`, and a fast ceiling flight to cam `0x144B` also never
+  spawned it.
+
+So this hack resolves level sprite ids into different runtime numbers (its custom
+sprite layer), meaning the demoOnly1 route's `until a5 == 7B` goal trigger cannot be
+reused by reading the level data statically. Identifying the goal at runtime needs
+either a spawn-time trace of the generator or a user playthrough that reaches it.
+
+Recorded as an open verification gap, not a defect: the level itself is unaffected and
+1-1 remains native on this base.
