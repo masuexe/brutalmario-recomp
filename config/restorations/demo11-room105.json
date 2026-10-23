@@ -17,7 +17,7 @@
     "translevel": 41,
     "requires": "World 1-1 node; the recipient map entry unchanged."
   },
-  "scope": "Replace World 1-1 layer1 and sprite data with the newer Demo 1-1 versions and select the matching extended graphics record. Content replacement, not a dependency recovery.",
+  "scope": "Replace World 1-1 with the newer Demo 1-1 version: layer1, sprite list, room graphics record and the three differing vanilla header tables for the room.",
   "gfx_record": {
     "address": "14D408",
     "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
@@ -68,10 +68,25 @@
       "address": "14CDA8",
       "before": "01808108b2001700140020001300010000007f00ffffffffffffffffffffffff",
       "after": "01808108b200170014002000a0029f0200009e02ffffffffffffffffffffffff"
+    },
+    {
+      "address": "05F105",
+      "before": "5b",
+      "after": "56"
+    },
+    {
+      "address": "05F305",
+      "before": "00",
+      "after": "04"
+    },
+    {
+      "address": "05F505",
+      "before": "7a",
+      "after": "9a"
     }
   ],
   "output": {
     "size": 4194304,
-    "sha256": "a45225b136606ca3a9e33d361d5496490b1fb41c022cadb46e06034887414dd2"
+    "sha256": "081489e5cd7f8cd43c78bf15635373ed90e305ab1f4b89cd464f1fc1e5bb7c5c"
   }
 }

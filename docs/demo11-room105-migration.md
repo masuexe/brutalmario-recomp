@@ -57,3 +57,47 @@ selection), neither of which this attempt migrated.
 - The failed candidate stays as reproducible evidence; do not promote it.
 - Next: identify how the recipient stores the six-byte header and the entrance start
   position for room `105`, migrate those too, then re-run this comparison.
+
+## Second attempt: header tables found and migrated (2026-10-23)
+
+The first attempt failed because only the level's data streams were migrated. The
+real level header lives in the vanilla tables indexed by level number, at
+`$05:F000 + level`, `$05:F200 + level`, `$05:F400 + level` and friends. For room
+`105` three bytes differ between the builds:
+
+| Table | Current head | Demo 1-1 |
+| --- | --- | --- |
+| `$05:F000 + 105` | `5B` | `56` |
+| `$05:F200 + 105` | `00` | `04` |
+| `$05:F400 + 105` | `7A` | `9A` |
+
+Those three one-byte patches were added to `demo11-room105` alongside the layer1,
+sprite and graphics-record migration. New candidate
+`081489e5cd7f8cd43c78bf15635373ed90e305ab1f4b89cd464f1fc1e5bb7c5c`.
+
+### Result: terrain now matches exactly, spawn still differs
+
+| Check | Reference | Native |
+| --- | --- | --- |
+| stays in gameplay (mode `0x14`) | yes | yes |
+| music cue | `0x30` (same as Demo 1-1) | `0x30` |
+| both Map16 buffers vs Demo 1-1 | **0 differing bytes of 8,640 each** | **same** |
+| sprite status/number differences | 1 byte each (`$14D0`, `$1622`) | same |
+| player spawn | `(0x10, 0x00C0)` | Demo 1-1: `(0x40, 0x0160)` |
+
+So the newer layout, graphics and music are genuinely in place - the level renders
+byte-identically to Demo 1-1 - but the player still spawns at a different point and
+drops instead of standing on the ground.
+
+### Remaining suspect: the map entrance, not the level
+
+The header byte fields that select the start position (`$F000` low nibble for Y,
+`$F200` low bits for X, per the level-loader code) are now identical to Demo 1-1,
+yet the spawn differs. That points at the **map-node entrance data**, which this
+target does not migrate: the recipient map for World 1 may store a different start
+entrance or screen for its 1-1 node than Demo 1-1 does.
+
+Next: compare the entrance data the two builds use for the 1-1 node (and how the
+loaded level start screen is chosen) before deciding whether the entrance must be
+migrated too. Until then this candidate is **not accepted**: the player does not
+start where the course expects.
