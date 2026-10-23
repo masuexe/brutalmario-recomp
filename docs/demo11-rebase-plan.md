@@ -454,3 +454,23 @@ been exercised there. Six original-engine routes were run:
 
 The two `turbo` routes are documented as needing the native host (the reference host
 must run them without that line), so they are replayed on the native build instead.
+
+#### Follow-up: the two turbo routes pass on the reference host
+
+Both scripts begin with `turbo on`, a native-host-only command. Running them on the
+reference host therefore uses the same tracked script with that one line removed, and
+the receipts pin that exact derivation:
+
+| Route | Result |
+| --- | --- |
+| boss door | **pass** - 3,064 frames, final mode `0x14` in the boss room `0x100` |
+| Lemmy mask | **pass** - reaches room `0x08C` in gameplay |
+
+`tools/qualify_demo11_engine_flows.py` rechecks all six routes from the pinned
+captures: boss death returns to the map, the damage phases reach the `0x0B`/`0x0C`/
+`0x0D` death sequence, repeated death loses coins 3/2/1, the shop opens and exits,
+the boss door reaches room `0x100`, and the Lemmy route reaches room `0x08C`. Report:
+`local/reports/demo11-engine-flows.json`.
+
+Scope limit: reference host only, and this is behaviour transfer of pre-existing
+engine routes, not a qualification of restored content.
