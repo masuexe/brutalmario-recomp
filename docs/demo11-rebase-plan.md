@@ -416,3 +416,23 @@ either a spawn-time trace of the generator or a user playthrough that reaches it
 
 Recorded as an open verification gap, not a defect: the level itself is unaffected and
 1-1 remains native on this base.
+
+#### Follow-up: the runtime sprite source is not the list we can read (2026-10-23)
+
+More probes narrowed the gap but did not close it:
+
+- At gameplay the DP values `$CE/$CF/$D0 = D2 D4 46`, i.e. pointer `0x46D4D2`, and
+  `$1692` (sprite memory) is `0x10`, which matches that list's header byte `0x10`.
+  So the pointer does point at the list we parsed.
+- That list holds 44 three-byte records (`51C00A 013074 011002 … 53D67B`), yet the
+  sprites actually placed during play have ids `13/14/15/16` and positions
+  `(0xAE9,0x13B)`, `(0xAE0,0x0F0)`, `(0x0A00,0x140)` - ids absent from the list.
+- Three coordinate decodings (`[y][x]`, `[x][y]`, and `[x][y]` with 16-pixel y) were
+  tested against four live sprites and none matched within 32 px.
+
+Conclusion: this hack remaps both sprite identity and placement between level data
+and runtime, and the remapped position does not follow the standard SMW encoding.
+Scripted identification of the goal therefore needs a generator-level trace that the
+current diagnostic core does not expose, or a user playthrough that reaches the tape.
+
+Deferred, not blocking: the level itself is native and unaffected.
