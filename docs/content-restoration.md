@@ -428,8 +428,8 @@ custom sprites `8D`/`0B` were then ported, advancing the chain through
 route-enable cells around the 1-1 map node that original Demo 1-1 zeroes; the
 real clear event now walks the player to the 1-2 node and the normal entry
 button opens room `$010` on both hosts. Head is `demo11-world1-route`
-(`5265a7bd…`), acceptance **12/12**. The user's natural playthrough of the
-repaired progression is the final pending acceptance.
+(`5265a7bd…`), acceptance **12/12**. The user playtested and confirmed the
+map route is fixed on 2026-10-24, accepting this repair.
 
 The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
 rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence

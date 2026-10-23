@@ -52,13 +52,19 @@ binary, script and both capture receipts, audits every fixture write in the
 script, and asserts the candidate differs from the base at exactly the three
 reviewed offsets.
 
+## Acceptance
+
+On 2026-10-24 the user playtested the repaired build and confirmed the map
+route is fixed: the natural 1-1 clear walks to the next node and progression
+works. The repair is accepted; `demo11-world1-route` is the accepted head of
+the Demo 1-1 line.
+
 ## Remaining scope
 
 - Onward travel beyond 1-2 (the rest of the World 1 map graph) was not part of
   this checkpoint; the launcher's practice entrances still cover it.
 - The right-path enable byte (`0x67A63 -> 20`) restores demoOnly1 parity but
   the Yoshi's House node to the right was not separately entered in this run.
-- The user's natural playthrough is the final acceptance for this repair.
 
 ## Accepted base at repair time (preserved)
 
