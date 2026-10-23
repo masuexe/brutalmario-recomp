@@ -317,3 +317,57 @@ installation changes nothing else that these routes exercise.
 
 New head: **`demo11-room0cb-gfx`** (`9155c1eb`). The next phase is the World 1
 requalification on this line, then the user playtest and audition.
+
+## World 1 requalification on the Demo 1-1 line (2026-10-23)
+
+Head `demo11-room0cb-gfx` (`9155c1eb`). Twelve existing World 1 routes were run on the
+reference host; the existing scripts were written for the demoOnly1 line, so this
+measures transfer, not fresh coverage.
+
+| Route | Result |
+| --- | --- |
+| room 106 entry | pass |
+| room 106 clear | pass |
+| room 106 death | pass |
+| room 010 death | pass |
+| room 010 subroom | pass |
+| room 120 coins/save | pass |
+| room 138 death | pass |
+| room 138 natural entry | pass |
+| room 138 clear/save | pass (from the audio qualification) |
+| room 010 full two-pipes route | **fails at the first pipe** |
+| 1-1 first-goal route | **fails: written for the old layout** |
+| 1-1 house return | **fails: depends on the old 1-1 route** |
+
+### The two-pipes failure is Demo 1-1's own behaviour
+
+On the new head the assisted route reaches the screen-8 pipe (`x=0x0898`, camera
+`0x0800`), presses Up, and nothing happens: the player stays in room `0x010` and
+settles on the ground. The same failure appears on the **minimal**
+`demo11-room010-music` target (same `y=0x00E5` at `first_pipe`, no transition), so it
+predates the later ports and is not a restoration regression.
+
+The room's data cannot explain it either: both builds have identical room 010 L1
+(961 bytes, pointer `64C308`), L2, sprite list, level header (`$64C6C5 = 40 60 30`),
+and identical Map16 buffers at the pipe screen. What does differ is version-level
+table content - for example the secondary-exit tables `$05:F800` and `$05:FA00`
+differ in 7 and 3 entries respectively - so a route scripted for demoOnly1 does not
+transfer to the newer build. This is content difference, not a port defect.
+
+### 1-1 is native and healthy
+
+Entry on the new head places Mario at `(0x40, 0x160)` and walking moves him to
+`(0x69, 0x160)`, matching the Demo 1-1 baseline exactly. The old goal route is
+obsolete because it was tuned to demoOnly1's older layout (its goal tape sat where the
+new layout has none).
+
+### Practice entrances added
+
+`demo11-world1-1`, `demo11-world1-2` and `demo11-world1-138` let the Demo 1-1 line be
+played from the launcher; 22 entrances total, 120 tests pass.
+
+### Next
+
+Human playtest and audition on the new line: 1-1 native layout, 1-2 entry and pipes,
+room 138 custom object appearance, and the restored songs (`2F` for 1-2, private `7E`
+for room 138).
