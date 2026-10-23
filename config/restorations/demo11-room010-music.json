@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room010 Music",
+  "id": "demo11-room010-music",
+  "recipient": "demo-1-1",
+  "donor": "demo8",
+  "base_restoration": "demo11-room010-gfx",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "51558275e653bb380c27cdf1cf0ef77f27e33e107bf96dab8ed78fc42e428291"
+  },
+  "room": "010",
+  "entrance": {
+    "map": 0,
+    "x": 24,
+    "y": 440,
+    "translevel": 16,
+    "requires": "First-course normal exit reaches this node."
+  },
+  "scope": "Port the room 010 missing song 2F (upload group) onto the Demo 1-1 base. Graphics were ported in the ancestor; custom sprite 8D is still missing.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1691648,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "id": "2F",
+    "source_address": "298009",
+    "source_group": {
+      "size": 4486,
+      "sha256": "2ff26ddf63f49c65972d7b281dbe9b2bfb9ccd8968fed9d94c64aae739a4e967"
+    },
+    "source_base": 24576,
+    "destination_base": 21504,
+    "sequence_offset": 24,
+    "source_data_offset": 3753,
+    "source_trailer_size": 2,
+    "song_size": 787,
+    "pattern_count": 2,
+    "relocations": [
+      0,
+      2,
+      6,
+      122,
+      134,
+      169,
+      173,
+      206,
+      360,
+      519,
+      537,
+      541,
+      556,
+      572,
+      592,
+      608,
+      625,
+      629,
+      653,
+      657,
+      755,
+      757,
+      759,
+      761,
+      765,
+      771,
+      773,
+      775,
+      777,
+      781
+    ],
+    "pointer_address": "0FE08D",
+    "before": "000000",
+    "allocation": {
+      "offset": 1691648,
+      "size": 4096,
+      "fill": 0
+    },
+    "adapted": {
+      "size": 795,
+      "sha256": "806bf03001cf72a17920836b96fb0861d67551f9de00ec5f51eed2029ae22a7b"
+    }
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "a72f0d363a7ec01d304b12ed245efcf7e5d3aec1cb2f4e7185f8c63ce5ef04aa"
+  }
+}

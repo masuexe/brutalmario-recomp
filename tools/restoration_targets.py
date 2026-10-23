@@ -85,4 +85,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11Room010GraphicsSNESRecomp',
         'title': 'Brutal Mario Demo11 Room010 Graphics',
     },
+    'demo11-room010-music': {
+        'binary': 'BrutalMarioDemo11Room010MusicSNESRecomp',
+        'title': 'Brutal Mario Demo11 Room010 Music',
+    },
 }

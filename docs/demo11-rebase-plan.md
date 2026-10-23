@@ -139,3 +139,53 @@ tileset on this base.
 
 Captures (tracked script `recomp/inputs/world1-room010-terrain.script`):
 `d11-010-terrain-base`, `-ref`, `-native`, `-donor` in `local/captures/`.
+
+## Progress: room 010 music ported, gameplay reached (2026-10-23)
+
+`demo11-room010-music` ports the missing song `2F` upload group from demo8 onto the
+already-ported graphics. The payload is fully deterministic (same donor group, same
+`source_base` 0x6000 and `destination_base` 0x5400), so the adapted 795-byte payload
+hashes the same as on the demoOnly1 line; only the allocation (`0x19D000`) and the
+sound slot are new. Candidate
+`a72f0d363a7ec01d304b12ed245efcf7e5d3aec1cb2f4e7185f8c63ce5ef04aa`, 715 changed bytes.
+
+### Behaviour now matches the donor
+
+| Target | mode at entry | song |
+| --- | --- | --- |
+| demo11-base (no fixes) | `0x12` - stuck in Mario Start | `2F` |
+| demo11-room010-gfx | `0x12` | `2F` |
+| **demo11-room010-music (reference)** | **`0x14` gameplay** | `2F` |
+| **demo11-room010-music (native)** | **`0x14`** | `2F` |
+| demo8 donor | `0x14` | `24` |
+
+Rendered frames (converted locally to `local/frames/room010-*.png`):
+
+- Unfixed base: a black screen reading `MARIO START !`.
+- Donor and both restored hosts: the same grass course with hills, a question block,
+  Koopa and Mario - visually the same layout.
+- The only visible difference from the donor is the status bar text (`MARIO LV1`
+  versus `MARIO`), which is the versions' own HUD, not a restoration artefact.
+
+Measured over the playfield (rows 48-223, 180,224 bytes):
+
+| Comparison | Differing bytes | Share |
+| --- | --- | --- |
+| donor vs reference | 1,461 | **0.81 %** |
+| donor vs native | 35,358 | 19.62 % |
+| donor vs unfixed base | 117,618 | 65.26 % |
+
+The reference frame is within 1 % of the donor, which together with the pin-equal
+decompressed graphics confirms the 151/102 rendering. The native host differs from
+the reference by 18.92 %, a known host-rendering difference (HDMA gradient and sprite
+timing), so the qualifier deliberately compares only the reference frame with the
+donor and records native pixel parity as not verified.
+
+`tools/qualify_demo11_room010_music.py` pins the payload, the empty slot, the
+protected payload, the pointer and the changed-byte footprint, requires mode `0x14`
+and song `2F` on both hosts, requires the reference playfield within 2 % of the donor,
+and requires the unfixed base to still show the Mario Start stall. Report:
+`local/reports/demo11-room010-music-qualification.json`.
+
+Still missing for a full course pass: custom sprite `8D` (the route needs its
+ability). Audible acceptance stays with the user.
