@@ -99,3 +99,43 @@ demoOnly1 qualification (which allowed 2 px). Report:
 
 Scope limit: entry and movement only. Complete route, death and save behaviour are not
 re-qualified on this base yet, and World 1 as a whole is not qualified on Demo 1-1.
+
+## Progress: room 010 graphics ported as a construction-level descendant (2026-10-23)
+
+`demo11-room010-gfx` ports extended graphics `151` (used twice) and `102` for room
+010 onto the Demo 1-1 line. Room 010's record and the additional record at `14B648`
+are byte-identical between the builds, and slots `FBB`/`FBC` were free. Candidate
+`51558275e653bb380c27cdf1cf0ef77f27e33e107bf96dab8ed78fc42e428291`, 3,338 changed
+bytes.
+
+### Methodological correction found while verifying it
+
+Comparing Map16 terrain does **not** detect this graphics defect: the untouched demo11
+base, this port and the demo8 donor all load the same tiles (0 differing bytes).
+Room 106 is different - its recovery *is* terrain-sensitive, confirmed by capturing
+the unfixed base:
+
+| Room 106 capture | mode | player y | terrain diff vs donor |
+| --- | --- | --- | --- |
+| demo11-base (unfixed) | `0x14` | `0x0442` (falling) | **4,738** bytes |
+| demo11-room106 (ported) | `0x14` | `0x0160` (standing) | **0** |
+
+So the room 106 acceptance stands, while room 010's graphics are a rendered-tileset
+fix that the terrain metric cannot see.
+
+### What actually blocks room 010 on the new base
+
+With graphics ported, the level still sits in **mode `0x12` (Mario Start)** instead
+of reaching gameplay `0x14` - on the base and on this target alike. The donor reaches
+`0x14`, and the demoOnly1 line reaches `0x14` only once music `2F` and sprite `8D` are
+restored. So the next dependency is **music `2F`**, not the graphics.
+
+`tools/qualify_demo11_room010_gfx.py` therefore checks construction and invariants
+rather than claiming a course result: slots were empty, all three selectors point at
+the relocated streams, decompression matches the donor images, changed bytes stay
+inside the reviewed regions, the port does not change the level mode, and the donor
+capture still reaches gameplay. The report records `not_verified`: the rendered
+tileset on this base.
+
+Captures (tracked script `recomp/inputs/world1-room010-terrain.script`):
+`d11-010-terrain-base`, `-ref`, `-native`, `-donor` in `local/captures/`.

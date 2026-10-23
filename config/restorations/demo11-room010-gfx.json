@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room010 Graphics",
+  "id": "demo11-room010-gfx",
+  "recipient": "demo-1-1",
+  "donor": "demo8",
+  "base_restoration": "demo11-room106",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "864dc3ef3f06576e55f5d7f1c9f0ae90ee4679ede1d815f2f764996bd06e343c"
+  },
+  "room": "010",
+  "entrance": {
+    "map": 0,
+    "x": 24,
+    "y": 440,
+    "translevel": 16,
+    "requires": "First-course normal exit reaches this node. Intended course numbering not established."
+  },
+  "scope": "Port only the missing graphics 151 and 102 of room 010 onto the Demo 1-1 base. Music 2F, custom sprite 8D and all other behaviour are left for later descendants.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "0180810851011700140002011300010000005101ffffffffffffffffffffffff"
+  },
+  "additional_gfx_records": [
+    {
+      "address": "14B648",
+      "before": "0180150019001700140002011300010000007f00ffffffffffffffffffffffff"
+    }
+  ],
+  "allocation": {
+    "offset": 1687552,
+    "size": 3841,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "151",
+      "target_id": "FBC",
+      "record_offset": 4,
+      "source_address": "30E0A3",
+      "record_addresses": [
+        "14AF08"
+      ],
+      "decoded": {
+        "size": 4096,
+        "sha256": "e315be13b7b5add3e6ab76722f9265ba618ec4f913e46423fa79c76931aec5a2"
+      },
+      "compressed": {
+        "size": 2569,
+        "sha256": "8abaf002c091d3d0e871a87d8981d6cfdd3d9b14716f929bd5e7c8aec1f21858"
+      }
+    },
+    {
+      "source_id": "102",
+      "target_id": "FBB",
+      "record_offset": 10,
+      "source_address": "25E32D",
+      "record_addresses": [
+        "14AF08",
+        "14B648"
+      ],
+      "decoded": {
+        "size": 4096,
+        "sha256": "769e19aaf4c26cddcba942c8d33e85a6c7db37a42da1d1bf328f738bbaeff1cc"
+      },
+      "compressed": {
+        "size": 1256,
+        "sha256": "80972685027df5c12a4f76ca7a9da7d5d52365f19658651876fa78128a953178"
+      }
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "14AF1A",
+      "before": "5101",
+      "after": "bc0f",
+      "role": "Do not reuse the private FBC stream for the second 151 occurrence in room 010 record."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "51558275e653bb380c27cdf1cf0ef77f27e33e107bf96dab8ed78fc42e428291"
+  }
+}

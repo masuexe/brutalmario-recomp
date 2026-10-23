@@ -1,0 +1,23 @@
+# Minimal coordinate fixture used only to compare room 010 terrain after the
+# graphics port. No custom-sprite ability is exercised or required.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0000
+poke 1f17 1800b8011800b801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+press y 2
+wait 480
+dump entered
+wait 240
+dump settled
+quit
