@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room106",
+  "id": "demo11-room106",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-base",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32"
+  },
+  "room": "106",
+  "entrance": {
+    "map": 0,
+    "x": 88,
+    "y": 472,
+    "translevel": 42,
+    "requires": "Fresh save; coordinate fixture. Course number is not established."
+  },
+  "scope": "Port the room 106 missing graphics 1A2 recovery onto the Demo 1-1 base. Both builds lack the resource; geometry, sprites, music and overworld are untouched.",
+  "gfx_record": {
+    "address": "14CDC8",
+    "before": "0180a20019001700140084001300a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1671168,
+    "size": 3146,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1A2",
+      "target_id": "FBD",
+      "record_offset": 14,
+      "source_address": "35F39D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "8e9a9c981f3e4a4bde876484d32570e521a905306aab0471b09b209958f4b393"
+      },
+      "compressed": {
+        "size": 3138,
+        "sha256": "a92bc315ebefdf041f5624d6c1f55340e89e3e288afbf6f30671b9cb72ed493a"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "864dc3ef3f06576e55f5d7f1c9f0ae90ee4679ede1d815f2f764996bd06e343c"
+  }
+}

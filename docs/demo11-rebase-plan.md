@@ -63,3 +63,39 @@ none of them needs sprite-mechanism reverse-engineering.
   are outside the World 1 scope; evaluate before any wider switch.
 - **Rollback stays available**: `tools/backup_state.py` snapshot
   `local/backups/pre-room105-migration-20261023-051544` plus `docs/rollback.md`.
+
+## Progress: room 106 graphics recovery ported (2026-10-23)
+
+`demo11-room106` is the first recovery on the new base, descended from `demo11-base`.
+The port was nearly mechanical because Demo 1-1 needs the same fix and its room data
+already matched:
+
+| Check | Result |
+| --- | --- |
+| Room 106 graphics record on Demo 1-1 | `0180a20019001700140084001300a20100007f00…`, **identical** to demoOnly1's |
+| Selected extended graphics | `1A2` at word 6 (record offset 14), same as demoOnly1 |
+| Free extended-graphics slots on Demo 1-1 | `F00`-`FFF`, so `FBD` was free |
+| Donor `1A2` stream (cheap_demo) | pointer `35F39D`, 3,138 compressed bytes |
+| Candidate ROM | `864dc3ef3f06576e55f5d7f1c9f0ae90ee4679ede1d815f2f764996bd06e343c` |
+| Changed bytes | 2,590 - the same count as the original demoOnly1 recovery |
+
+Location: allocation file `0x198000`, relocated pointer slot `FBD`, record word 6.
+
+### Verification
+
+`tools/qualify_demo11_room106.py` checks the pinned identities, the empty destination
+slot on the base, the record selector, decompression equality, the protected payload,
+the changed-byte footprint, the native build identity, and both captures. Terrain is
+compared against cheap_demo over **11 screens** in both Map16 buffers:
+
+| Host | settled | walk | jump | landed |
+| --- | --- | --- | --- | --- |
+| reference | 0 differing bytes | 0 | 0 | 0 |
+| native | 0 | 0 | 0 | 0 |
+
+Position deltas are 0 as well, so the recovery is at least as tight as the original
+demoOnly1 qualification (which allowed 2 px). Report:
+`local/reports/demo11-room106-qualification.json`.
+
+Scope limit: entry and movement only. Complete route, death and save behaviour are not
+re-qualified on this base yet, and World 1 as a whole is not qualified on Demo 1-1.
