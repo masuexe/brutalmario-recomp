@@ -50,11 +50,24 @@ byte is inside the two reviewed regions. Captures
 sample the sprite status array (`$14C8..$14D4`) and sprite numbers
 (`$161A..$1626`) match the donor, as does the terrain on both hosts.
 
+## Whole-course evidence moved to this leaf
+
+The flow, death and natural-route captures were re-run on this candidate as
+`world1-138-sprite-{flow,death,natural}-qualified-{reference,native}`, and
+`tools/qualify_world1_room138_flow.py` now targets this leaf. It passes:
+assisted continuous movement through the late course, the real goal tape, the
+normal clear at map0 `(0A8,1A8)`, recipient castle entry and File A
+persistence, donor castle entry with clear `8F`, three-host death and
+re-entry, equal route counters on all three hosts, and donor-matching terrain.
+
+The music payload and song selection are untouched by this target: they come
+from the verified `world1-room138-audio` base, and this candidate changes only
+the two reviewed sprite regions.
+
 ## Limits
 
-- Entry and movement scope only. The flow, clear, natural-route and death
-  captures remain pinned to the `world1-room138-audio` leaf and have not been
-  re-run on this candidate.
 - The sprite's in-level behaviour beyond initialisation is not individually
-  audited; the user's playtest is the deciding check for how it looks.
+  audited; the user played the course and reported the custom sprite works.
+- Off-route custom blocks and hidden collectibles are not audited.
+- The `$0CB` secret exit remains unproven in both candidate and donor.
 - Audible output is not claimed, and room106's music stays deferred.

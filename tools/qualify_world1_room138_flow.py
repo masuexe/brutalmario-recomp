@@ -31,14 +31,14 @@ def main():
         DONOR.write_text(content)
         print(DONOR.relative_to(ROOT))
         return
-    cfg = json.loads((ROOT / 'config/restorations/world1-room138-audio.json').read_text())
-    candidate = (ROOT / 'local/restoration/world1-room138-audio/rom.sfc').read_bytes()
+    cfg = json.loads((ROOT / 'config/restorations/world1-room138-sprite.json').read_text())
+    candidate = (ROOT / 'local/restoration/world1-room138-sprite/rom.sfc').read_bytes()
     donor = (ROOT / 'local/content-versions/cheap-demo/rom.sfc').read_bytes()
     versions = json.loads((ROOT / 'config/content-versions.json').read_text())['versions']
     verify(candidate, cfg['output'], 'candidate')
     verify(donor, next(v['output'] for v in versions if v['id'] == 'cheap-demo'), 'cheap_demo')
-    build = json.loads((ROOT / 'local/build/world1-room138-audio/m1-build.json').read_text())
-    binary = ROOT / 'local/build/world1-room138-audio/BrutalMarioWorld1Room138AudioSNESRecomp'
+    build = json.loads((ROOT / 'local/build/world1-room138-sprite/m1-build.json').read_text())
+    binary = ROOT / 'local/build/world1-room138-sprite/BrutalMarioWorld1Room138SpriteSNESRecomp'
     require(sha(binary.read_bytes()) == build['binary_sha256'] and build['rom_sha256'] == sha(candidate),
             'native build identity differs')
     captures, states = {}, {}
@@ -54,7 +54,9 @@ def main():
                 require(address in allowed and len(bytes.fromhex(parts[-1])) <= allowed[address],
                         'review new fixture write: ' + line)
         for host in ('reference', 'native', 'cheap'):
-            directory = ROOT / 'local/captures' / f'world1-138-{route}-qualified-{host}'
+            name = (f'world1-138-{route}-qualified-cheap' if host == 'cheap'
+                    else f'world1-138-sprite-{route}-qualified-{host}')
+            directory = ROOT / 'local/captures' / name
             receipt = json.loads((directory / 'receipt.json').read_text())
             expected_route = donor_route().encode() if route == 'flow' and host == 'cheap' else script.read_bytes()
             require(receipt['rom_sha256'] == sha(donor if host == 'cheap' else candidate), 'capture ROM differs')
