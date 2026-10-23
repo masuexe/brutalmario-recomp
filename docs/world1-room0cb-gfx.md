@@ -137,3 +137,22 @@ additional candidate entrances.
 Next concrete step: determine the on-screen position of the room `$138` pipe at
 layer1 offset `0xFFA` and script a real entry into `$0CB`, then qualify the
 dolphin clear (20 coin gains -> `$1493`) instead of the diagnostic pipe patch.
+
+## Withdrawn: the pipe-to-0CB lead was a false positive (2026-10-23)
+
+The user states that room `$138` ("Invincible Barrier") has exactly one exit, so
+it should not contain a second pipe. Re-running the scan with the **complete**
+room010 pipe signature `04 00 <dest> 40 60 30 FF` shows the earlier four hits were
+loose matches: only two levels match the full signature, both with destination
+`$4A`:
+
+| Level | destination | offset |
+| --- | --- | --- |
+| `010` | `4A` | `0x3BA` |
+| `017` | `4A` | `0x46BA` |
+
+So room `$138` contains **no** pipe to `$0CB`; the list `083 / 08B / 11A / 138` is
+withdrawn and must not be reused. Room `$0CB`'s entrance is still unidentified.
+
+The lesson is recorded deliberately: a two-byte prefix plus a coincidental tail is
+not evidence of a pipe. Only the full object signature, or a runtime entry, counts.
