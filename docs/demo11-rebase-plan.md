@@ -690,3 +690,37 @@ the slot parity with the demoOnly1 line. Report:
 Provisional head for the sprite-fixed line: **`demo11-sprite0b`** (`584117d2…`). The
 wider acceptance suite still pins the previous head and must be re-run against this one
 before the line is declared accepted again.
+
+## Accepted: Demo 1-1 line with restored sprites (2026-10-24)
+
+The user played the sprite-fixed candidate and reported **no problems** in 1-1, 1-2 and
+room 138. The line is therefore accepted at:
+
+| Item | Value |
+| --- | --- |
+| Head target | `demo11-sprite0b` |
+| ROM SHA-256 | `584117d2755465d2ad2ac644c0f10a59f3412b25eafd946ffc7178cfb17eabfe` |
+| Chain | `demo11-base` -> `demo11-room106` -> `demo11-room010-gfx` -> `demo11-room010-music` -> `demo11-room138-audio` -> `demo11-room0cb-gfx` -> `demo11-sprite8d` -> `demo11-sprite0b` |
+
+### Acceptance after the sprite ports
+
+`tools/check_demo11_line.py` now reports **11/11**:
+
+- the five recoveries, each with its pinned qualifier;
+- World 1 route parity for the eight transferable demoOnly1-era routes;
+- six original engine flows;
+- the whole-line byte audit against the pinned Demo 1-1 input: 9,665 changed bytes,
+  all inside the chain's 16,603 declared region bytes, zero unexpected;
+- the reachability audit: only `0C5`, `0C7`, `105` and `10E` (intended differences)
+  were exercised, and any future capture entering another differing room fails;
+- World 1-1 goal and clear, re-captured on this head on both hosts: goal tape at
+  `(0x16EF,0x140)`, map state `0x8A`, event `0x01`, identical across hosts;
+- the new custom sprite ports: both record slots in the Demo 1-1 table, both blocks
+  equal to the donor copies, and the sprite slots matching the demoOnly1 line on 1-2
+  and room 138.
+
+### What changed since the previous acceptance
+
+The only additions are the two custom sprite records and code blocks; the whole-line
+byte audit confirms nothing else moved. The previously accepted behaviours (1-1 playable,
+8 route parities, 6 engine flows, reachability) still hold on the new head.

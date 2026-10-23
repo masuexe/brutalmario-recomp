@@ -13,8 +13,8 @@ from prepare_rom import verify
 from qualify_world1_next_course import require, sha, word
 
 ROOT = Path(REPO_ROOT)
-HEAD = 'demo11-room0cb-gfx'
-BINARY = 'BrutalMarioDemo11Room0CbGraphicsSNESRecomp'
+HEAD = 'demo11-sprite0b'
+BINARY = 'BrutalMarioDemo11Sprite0BSNESRecomp'
 SCRIPT = 'recomp/inputs/demo11-world1-1-goal.script'
 
 
@@ -30,7 +30,7 @@ def main():
     report = {'scope': __doc__.strip(), 'head': HEAD, 'candidate_rom_sha256': sha(candidate),
               'binary_sha256': build['binary_sha256'], 'hosts': {}, 'captures': {}}
     states = {}
-    for host, name in (('reference', 'd11-11-goal-ref'), ('native', 'd11-11-goal-native')):
+    for host, name in (('reference', 'd11s0b-11-goal-ref'), ('native', 'd11s0b-11-goal-native')):
         directory = ROOT / 'local/captures' / name
         receipt = json.loads((directory / 'receipt.json').read_text())
         require(receipt['rom_sha256'] == sha(candidate), 'capture ROM differs: ' + host)
