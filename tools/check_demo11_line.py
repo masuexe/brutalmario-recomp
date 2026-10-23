@@ -20,6 +20,7 @@ CHECKS = [
     ('reachability audit', 'audit_demo11_reachability'),
     ('World 1-1 goal/clear', 'qualify_demo11_world1_1'),
     ('sprite ports 8D/0B', 'qualify_demo11_sprites'),
+    ('World 1 route repair', 'qualify_demo11_world1_route'),
 ]
 
 

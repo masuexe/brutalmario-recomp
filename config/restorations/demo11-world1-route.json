@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 World1 Route",
+  "id": "demo11-world1-route",
+  "recipient": "demo-1-1",
+  "donor": "demo-only-1",
+  "base_restoration": "demo11-sprite0b",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "584117d2755465d2ad2ac644c0f10a59f3412b25eafd946ffc7178cfb17eabfe"
+  },
+  "room": "105",
+  "scope": "Restore the three zeroed route-enable cells around the World 1-1 map node in the route table mirrored at WRAM $CA00 (physical base 0x679DF). Original Demo 1-1 leaves them zero so the cleared 1-1 node has no outgoing path; demoOnly1 sets 20/04/04 at the same table slot. Three equal-width byte edits only; no tile, node, event or save data is touched.",
+  "gfx_record": {
+    "address": "14CDA8",
+    "before": "01808108b200170014002000a0029f0200009e02ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3087824,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "0CFA63",
+      "before": "00",
+      "after": "20"
+    },
+    {
+      "address": "0CFA72",
+      "before": "00",
+      "after": "04"
+    },
+    {
+      "address": "0CFA74",
+      "before": "00",
+      "after": "04"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "5265a7bd3f1ee818683287c5429c67d903c4d90a41d8c09cefc53a965d2f1057"
+  }
+}

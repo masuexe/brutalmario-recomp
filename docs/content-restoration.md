@@ -417,10 +417,19 @@ Verification is consolidated in `tools/check_demo11_line.py`, which currently re
   `0x01` on both hosts, the same overworld event the demoOnly1 line produced.
 
 Deferred: the user's playtest and listening acceptance (checklist in
-[demo11-playtest.md](demo11-playtest.md)); the scripted room 010 pipe route, which
+[demo11-playtest.md](demo11-playtest.md)); and the scripted room 010 pipe route, which
 fails on this base because version-level tables differ (room data is identical), and
-therefore needs a real playthrough to decide; and the map-cursor step from a 1-1 clear
-to the next course, which the qualification route does not cover.
+therefore needs a real playthrough to decide. The former map-cursor gap is closed:
+
+The user playtested 1-1, 1-2 (full natural clear) and room 138 on 2026-10-24, and
+custom sprites `8D`/`0B` were then ported, advancing the chain through
+`demo11-sprite8d` -> `demo11-sprite0b` (11/11). The subsequent
+[World 1 route repair](world1-overworld-route-repair.md) restores the three
+route-enable cells around the 1-1 map node that original Demo 1-1 zeroes; the
+real clear event now walks the player to the 1-2 node and the normal entry
+button opens room `$010` on both hosts. Head is `demo11-world1-route`
+(`5265a7bd…`), acceptance **12/12**. The user's natural playthrough of the
+repaired progression is the final pending acceptance.
 
 The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
 rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence

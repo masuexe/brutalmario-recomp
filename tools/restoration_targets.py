@@ -105,4 +105,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11Sprite0BSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprite0B',
     },
+    'demo11-world1-route': {
+        'binary': 'BrutalMarioDemo11World1RouteSNESRecomp',
+        'title': 'Brutal Mario Demo11 World1 Route',
+    },
 }

@@ -15,7 +15,7 @@ from prepare_rom import verify
 from restore_star_world_1 import lz2, lorom
 
 ROOT = Path(REPO_ROOT)
-HEAD = 'demo11-sprite0b'
+HEAD = 'demo11-world1-route'
 
 
 def main():
