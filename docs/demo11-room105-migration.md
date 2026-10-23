@@ -241,3 +241,24 @@ custom sprite storage and porting the definitions used by the newer layout - a
 substantially larger job than the graphics import, with no guarantee of parity.
 Migrating level data alone can produce a course that looks right and still plays
 differently.
+
+## Eighth pass: the migrated 1-1 is functionally incomplete (2026-10-23)
+
+With the air-swim fixture cleared so normal jumping applies, the migrated course does
+allow real progress: the player crosses the goal-area pit that killed the swim-only
+attempts and advances from `x=0xD24` to `x=0xF92` (about 62% of the 24-screen level).
+
+But it then **hard-stalls**: at `(x=0xF92, y=0x00E0)` none of `Up`, `B+Up`, `Right+B`
+or repeated jumps moves the player at all, and the goal is never reached.
+
+Demo 1-1 does not stall there because its custom sprite behaviour bounces Mario over
+that section. So the missing sprite code is not cosmetic: **without it the newer 1-1
+cannot be completed**.
+
+### Consequence
+
+The layout migration alone produces a course that looks right, plays partly, and
+cannot be finished. Completing it requires Demo 1-1's custom sprite definitions for
+the ids the newer layout uses, and those are not stored in the mechanism this
+project's restoration tooling understands (no 16-byte record table exists in Demo
+1-1), so they must be reverse-engineered first.
