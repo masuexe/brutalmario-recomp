@@ -59,10 +59,29 @@ route is fixed: the natural 1-1 clear walks to the next node and progression
 works. The repair is accepted; `demo11-world1-route` is the accepted head of
 the Demo 1-1 line.
 
+## Post-acceptance World 1 connectivity census
+
+After the user's acceptance, a bounded census (`local/captures/d11-w1-census`,
+`d11-n106-survey`, `d11-node12-survey`; map-transfer fixtures only, natural
+direction presses) mapped the usable World 1 graph on the accepted head:
+
+| Node | Reachable neighbours |
+| --- | --- |
+| 1-1 `(0x48,0x198)` | left -> 1-2, up -> `(0x18,0x178)` |
+| 1-2 `(0x18,0x1B8)` | up -> 1-1, down -> room120 node |
+| room120 `(0x58,0x1D8)` | left -> 1-2, down -> room106 node |
+| room106 `(0x88,0x1F8)` | right -> room138 node, up -> `(0x68,0x1B8)` |
+| room138 `(0xA8,0x1D8)` | up -> castle, down -> room106 node |
+| castle `(0xA8,0x1A8)` | down -> room138, right -> `(0xE8,0x1A8)`, up -> `(0xA8,0x158)` |
+
+The main chain 1-1 -> 1-2 -> 120 -> 106/138 -> castle is fully connected with
+no further zeroed route cells. Unexplored side nodes (`(0x18,0x178)`,
+`(0x68,0x1B8)`, `(0xE8,0x1A8)`, `(0xA8,0x158)`) were not entered in this
+census; entering a node and reading `$10B` remains the only reliable course
+identification.
+
 ## Remaining scope
 
-- Onward travel beyond 1-2 (the rest of the World 1 map graph) was not part of
-  this checkpoint; the launcher's practice entrances still cover it.
 - The right-path enable byte (`0x67A63 -> 20`) restores demoOnly1 parity but
   the Yoshi's House node to the right was not separately entered in this run.
 
