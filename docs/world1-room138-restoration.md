@@ -126,3 +126,29 @@ candidate and donor), any custom-block/collectible behavior beyond the main
 path, donor-side castle entry and save persistence, and audible output.
 Do not call the whole stage restored until those are resolved or explicitly
 bounded. Room106's incorrect music remains explicitly deferred.
+
+## Donor-side castle entry and save persistence (2026-10-23)
+
+The earlier flow qualification skipped the donor's castle sample because its
+`castle_entry` dump lands mid-load (mode `0x11`). A settled sample was added
+instead of guessing.
+
+- Input `recomp/inputs/world1-room138-donor-castle.script` (the tracked clear
+  route truncated after the real goal, with an extra `castle_settled` sample).
+- Capture `local/captures/world1-138-donor-castle-qualified` pins the cheap_demo
+  manifest ROM and the script hash; `castle_settled` is mode `0x14`, room `0x10E`,
+  `$1EFE = 0x8F`, position `(0x0A8,0x1A8)`.
+- `tools/qualify_world1_room138_flow.py` now asserts that sample, so donor castle
+  entry is qualified rather than open.
+
+Donor save persistence is a different matter and is **not comparable**. Running
+the full clear route on the donor through `reset` and File A yields
+`file_reload` in mode `0x0A` with `$1EFE = 0x00`, and the re-entry fixtures then
+load rooms `0x0C5`/`0x14B`, not `0x138`. The donor reference build keeps only
+`0x800` bytes of SRAM (the recipient keeps `0x8000`), so it does not retain the
+clear the way the recipient does. Recipient persistence is therefore qualified
+against its own expectations, not against donor behaviour, and no donor flags
+were copied.
+
+The persistence experiment remains a local prototype under
+`local/captures/world1-138-donor-persist` and is not acceptance evidence.

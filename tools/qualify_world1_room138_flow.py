@@ -118,6 +118,17 @@ def main():
             for base_address in (0xc800, 0x1c800):
                 require(states['flow', host][tag][base_address:base_address+cells] ==
                         states['flow', 'cheap'][tag][base_address:base_address+cells], 'donor terrain differs')
+    donor_castle_script = ROOT / 'recomp/inputs/world1-room138-donor-castle.script'
+    donor_castle_dir = ROOT / 'local/captures/world1-138-donor-castle-qualified'
+    donor_castle_receipt = json.loads((donor_castle_dir / 'receipt.json').read_text())
+    require(donor_castle_receipt['rom_sha256'] == sha(donor), 'donor castle capture ROM differs')
+    require(donor_castle_receipt.get('route_sha256', donor_castle_receipt.get('script_sha256')) ==
+            sha(donor_castle_script.read_bytes()), 'donor castle route differs')
+    donor_castle = (donor_castle_dir / 'castle_settled.wram.bin').read_bytes()
+    require(len(donor_castle) == 0x20000, 'incomplete donor castle WRAM')
+    require(donor_castle[0x100] == 0x14 and word(donor_castle, 0x10b) == 0x10e and
+            donor_castle[0x1efe] == 0x8f, 'donor castle entry differs')
+    captures[donor_castle_dir.name] = donor_castle_receipt
     initial = states['flow', 'reference']['settled']
     require(all(initial[0xc800+i] + 256 * initial[0x1c800+i] not in (0x2d, 0x2e)
                 for i in range(cells)), 'standard DK pickup route is needed')
@@ -126,12 +137,17 @@ def main():
               'verified': ['assisted continuous movement through late room138',
                            'real tape, normal clear and map0(0A8,1A8)',
                            'recipient natural room10E entry and File A clear persistence',
+                           'donor natural room10E entry with clear 8F at a settled sample',
                            'three-host hazard death and room138 re-entry'],
               'standard_DK_cells_in_main_room': 0,
-              'donor_castle_sample_mode': states['flow', 'cheap']['castle_entry'][0x100],
+              'donor_castle_samples': {'early_mode': states['flow', 'cheap']['castle_entry'][0x100],
+                                      'settled_mode': donor_castle[0x100],
+                                      'settled_room': f'{word(donor_castle, 0x10b):03X}'},
               'limits': ['No unassisted run or every-enemy behavior qualification.',
                          'Room0CB exit record exists; actual entry remains unproven in candidate and donor.',
-                         'Donor castle entry and save persistence are not qualified.',
+                         'Donor clear persistence is NOT comparable: the donor reference build keeps only',
+                         '0x800 SRAM and reloads with 1EFE=00, so recipient persistence is qualified on',
+                         'its own expectations rather than against the donor.',
                          'Audible output and room106 music correction remain outside scope.']}
     output = ROOT / 'local/reports/world1-room138-flow-qualification.json'
     output.write_text(json.dumps(report, indent=2) + '\n')
