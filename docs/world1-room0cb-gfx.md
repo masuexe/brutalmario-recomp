@@ -156,3 +156,23 @@ withdrawn and must not be reused. Room `$0CB`'s entrance is still unidentified.
 
 The lesson is recorded deliberately: a two-byte prefix plus a coincidental tail is
 not evidence of a pipe. Only the full object signature, or a runtime entry, counts.
+
+## Identification: room 0CB is World 3's Dolphin Roast (2026-10-23)
+
+Source: [Dolphin Barbecue on the Brutal Mario wiki](https://brutalmario.fandom.com/wiki/Dolphin_Barbecue)
+(fetched through the Fandom API because the page itself is Cloudflare-gated).
+
+- Name: **Dolphin Roast** (page title "Dolphin Barbecue").
+- **World 3: Bay**, first level; previous *Morton the NEET*, next *Deep Sea Research*.
+- **No secret exit.**
+- Gimmick: ride Yoshi and eat dolphins; the counter above Mario counts them, and
+  feeding 20 clears the stage - matching `levelasm/dolphin.asm` exactly.
+- The green pipe at the end is part of the level's own route, not a hidden entry.
+- Graphics: Yoshi's Island sky/flower-garden sets; the counter digits come from
+  Donkey Kong Country 2 - which is exactly the `$12A` element the A/B render
+  showed appearing after the recovery.
+
+So room `$0CB` is an ordinary overworld course in World 3. Its entrance is a map
+node reached later in the game, not a hidden exit inside World 1. The graphics
+recovery above is therefore a legitimate forward-looking fix, but this room cannot
+be entered from the current World 1 scope, and it is not a World 1 gap.
