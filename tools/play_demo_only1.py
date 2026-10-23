@@ -70,6 +70,9 @@ LEVELS = {
     'world1-room138-sprite': {'name': 'World 1 room 138 with restored custom sprite', 'map': 0,
                               'x': 0x0a8, 'y': 0x1d8, 'level': 0x138,
                               'teleport': (0, 0x0a8, 0x1d8)},
+    'demo11-room105': {'name': 'World 1-1 on the Demo 1-1 layout (experimental)', 'map': 0,
+                       'x': 0x048, 'y': 0x198, 'level': 0x105,
+                       'teleport': (0, 0x048, 0x198)},
 }
 
 
@@ -300,10 +303,7 @@ def main():
             print(f"Practice level: {LEVELS[args.level]['name']}. Use the normal level-entry button.", flush=True)
         if args.teleport is not None:
             map_id, x, y = args.teleport
-            print(f'Map {map_id}, X={x:#05x}, Y={y:#05x    'demo11-room105': {'name': 'World 1-1 on the Demo 1-1 layout (experimental)', 'map': 0,
-                       'x': 0x048, 'y': 0x198, 'level': 0x105,
-                       'teleport': (0, 0x048, 0x198)},
-}. Use the normal level-entry button.', flush=True)
+            print(f'Map {map_id}, X={x:#05x}, Y={y:#05x}. Use the normal level-entry button.', flush=True)
         if args.complete_all:
             print('All levels + DK coins complete: ON (fresh practice save).', flush=True)
         if args.level == 'world1-castle' and args.complete_all:

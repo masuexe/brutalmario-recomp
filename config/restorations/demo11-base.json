@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Base",
+  "id": "demo11-base",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "room": "000",
+  "scope": "Root of the Demo 1-1 restoration line. Identical to the pinned Demo 1-1 input; later targets port the World 1 dependency recoveries onto this base so the newer World 1-1 and castle are used natively.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1671168,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "output": {
+    "size": 4194304,
+    "sha256": "314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32"
+  }
+}
