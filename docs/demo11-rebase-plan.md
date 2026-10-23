@@ -641,3 +641,52 @@ mean the older binary cannot simply be substituted for the new line's builds. Ea
 *content* work for Demo 1-1 (`demo11-extra-graphics`, the `demo11-room105` migration
 attempt) lives on the demoOnly1 base and cannot be reused directly: a portability audit
 measured only 14 of 25 pinned patch sites still agreeing on Demo 1-1.
+
+## Custom sprites 8D and 0B are restored on the Demo 1-1 line
+
+The user confirmed the missing sprites are exactly the two demoOnly1 restores - `8D`
+for 1-2 and `0B` for room 138 - and that on the new base they appear as a strange
+object falling at the start of the course.
+
+### Why the first attempt did nothing
+
+Demo 1-1 keeps its custom sprite records in a **different table** from demoOnly1:
+
+| Build | Record table (default-record cluster) |
+| --- | --- |
+| demoOnly1 | file `0x8308A` (`0x10B08A`) |
+| Demo 1-1 | file `0x188272` (**`0x31:8272`**) |
+
+The first 8D attempt wrote to demoOnly1's address and therefore changed nothing - the
+replayed 1-2 frame was byte-identical. Scanning for the big default-record cluster in
+each ROM located Demo 1-1's table, where ids `0B` and `8D` are both the default record
+and the only non-default entries are `0A 43 98 9A A3 A4 A7 A8 F0-F3`.
+
+### The port
+
+| Target | Record slot | Code block | Rooms | Candidate |
+| --- | --- | --- | --- | --- |
+| `demo11-sprite8d` | `0x31:8B42` (id `8D`) | `0x34C3F9`, 685 bytes from cheap_demo | `[16, 74]` | `84d53d4e…` |
+| `demo11-sprite0b` | `0x31:8322` (id `0B`) | `0x33D377`, 781 bytes from cheap_demo | `[15, 130, 154, 312]` | `584117d2…` |
+
+Both destination slots were the default record, both room sets match the reviewed
+dependency sets exactly, and the shared dependency bytes already matched cheap_demo on
+this base.
+
+### Verified effect
+
+| Check | Before the port | After the port |
+| --- | --- | --- |
+| 1-2 entry frame vs demoOnly1 | 790 differing playfield bytes (a grey object floats by Mario) | **270** - the object is gone |
+| 1-2 sprite slots | slot with id `01` vanished by `entry600` | **matches demoOnly1 exactly** at `entry180`, `entry600`, `ability_walk` |
+| room 138 sprite slots | slot with id `01` missing | **matches demoOnly1** at `entry600` and `fly150` |
+| room 138 goal slot | - | id `01` present again alongside the goal tape |
+
+`tools/qualify_demo11_sprites.py` rechecks the table address, the default-to-installed
+record transition, the block equality, the room dependencies, the build identities and
+the slot parity with the demoOnly1 line. Report:
+`local/reports/demo11-sprite-ports.json`.
+
+Provisional head for the sprite-fixed line: **`demo11-sprite0b`** (`584117d2…`). The
+wider acceptance suite still pins the previous head and must be re-run against this one
+before the line is declared accepted again.

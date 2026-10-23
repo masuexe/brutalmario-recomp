@@ -97,8 +97,12 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11Room0CbGraphicsSNESRecomp',
         'title': 'Brutal Mario Demo11 Room0Cb Graphics',
     },
-    'demo11-sprite-8d': {
+    'demo11-sprite8d': {
         'binary': 'BrutalMarioDemo11Sprite8DSNESRecomp',
-        'title': 'Brutal Mario Demo11 Sprite 8D',
+        'title': 'Brutal Mario Demo11 Sprite8D',
+    },
+    'demo11-sprite0b': {
+        'binary': 'BrutalMarioDemo11Sprite0BSNESRecomp',
+        'title': 'Brutal Mario Demo11 Sprite0B',
     },
 }
