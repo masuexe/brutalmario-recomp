@@ -30,8 +30,11 @@ The current cumulative checkpoint is
 explicitly deferred. Automatic coverage now includes the assisted 1-2
 room010 -> room04A -> room161 clear and onward room106 entry, plus
 [room106's chase-Yoshi clear and real death/re-entry](world1-room106-flow.md).
-Its normal exit selects the room120 node, which is the next course to survey.
-Full onward connectivity and selective Demo 1-1 recovery remain incomplete.
+The [room120 cave regression](world1-room120-regression.md) now covers natural
+entry, five DK pickups, normal clear and recipient File A persistence. Its
+normal exit selects room138, which stalls at Mario Start in the candidate while
+cheap_demo enters normally; that is the next recovery target. Full onward
+connectivity and selective Demo 1-1 recovery remain incomplete.
 
 Content recovery now takes priority over increasing the AOT variant count.
 The existing interpreter fallback lets investigation proceed without first

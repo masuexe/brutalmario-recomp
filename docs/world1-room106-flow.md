@@ -65,3 +65,11 @@ reference and cheap_demo enter room120, translevel44, in mode14 at `(0016,0150)`
 Captures: `local/captures/world1-after-106-entry-{reference,cheap}`. This is the
 next course to survey; its full traversal, exit and native route are not yet
 qualified. Do not infer a full World 1 pass from these samples.
+
+## Later room120 qualification
+
+The [room120 cave regression](world1-room120-regression.md) supersedes the
+entry-only limit above for the listed boundaries: natural entry on native,
+reference and cheap_demo; five real DK pickups; normal clear; candidate reset
+and File A persistence. Its next node enters room138, where the candidate
+stalls in Mario Start and cheap_demo does not. Full World 1 remains incomplete.

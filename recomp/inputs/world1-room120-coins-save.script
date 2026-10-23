@@ -1,0 +1,209 @@
+# Assisted room106 clear -> natural room120 entry -> five real DK pickups,
+# swimming to the real tape, normal clear, console reset and File A re-entry.
+# Coordinate/invulnerability fixtures do not write coins, saved flags, goals,
+# riding, messages, level-script state, event data or SRAM.
+# Room106 chase-Yoshi clear: invulnerability and one X/velocity alignment
+# fixture near the final wall. Riding, level-script state, messages, goal timer,
+# completion, events and SRAM are never written. No imported state.
+# Repeated jump edges also dismiss the actual success message once it opens.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x058, Y=0x1d8.
+poke 1f11 0000
+poke 1f17 5800d8015800d801
+poke 1f1f 05001d0005001d00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+press a 2
+wait 240
+dump settled
+until 0100 == 14 0
+until 71 == 00 0
+forcepoke 1497 ff
+press right+y 100
+dump run00
+press right+y 100
+dump run01
+press right+y 100
+dump run02
+press right+y 100
+dump run03
+press right+y 100
+dump run04
+press right+y 100
+dump run05
+press right+y 100
+dump run06
+press right+y 100
+dump run07
+press right+y 100
+dump run08
+press right+y 100
+dump run09
+poke 94 800a
+poke 7b 00
+press b 12
+wait 26
+dump catch00
+press b 12
+wait 26
+dump catch01
+press b 12
+wait 26
+dump catch02
+press b 12
+wait 26
+dump catch03
+press b 12
+wait 26
+dump catch04
+press b 12
+wait 26
+dump catch05
+press b 12
+wait 26
+dump catch06
+press b 12
+wait 26
+dump catch07
+press b 12
+wait 26
+dump catch08
+press b 12
+wait 26
+dump catch09
+press b 12
+wait 26
+dump catch10
+press b 12
+wait 26
+dump catch11
+until 1fd06 == 01 0
+until 187a == 01 0
+dump goal
+wait 900
+dump completed_map
+until 0100 == 0e 0
+press y 2
+wait 600
+dump cave_entry
+until16 010b == 0120 0
+poke 94 48024001
+poke 7b 00
+poke 7d 00
+wait 6
+dump coin1
+poke 94 08058000
+poke 7b 00
+poke 7d 00
+wait 6
+dump coin2
+poke 94 28062001
+poke 7b 00
+poke 7d 00
+wait 6
+dump coin3
+poke 94 a8098000
+poke 7b 00
+poke 7d 00
+wait 6
+dump coin4
+poke 94 180b4001
+poke 7b 00
+poke 7d 00
+wait 6
+dump coin5
+press right+b 12
+press right 18
+dump swim00
+press right+b 12
+press right 18
+dump swim01
+press right+b 12
+press right 18
+dump swim02
+press right+b 12
+press right 18
+dump swim03
+press right+b 12
+press right 18
+dump swim04
+press right+b 12
+press right 18
+dump swim05
+press right+b 12
+press right 18
+dump swim06
+press right+b 12
+press right 18
+dump swim07
+press right+b 12
+press right 18
+dump swim08
+press right+b 12
+press right 18
+dump swim09
+press right+b 12
+press right 18
+dump swim10
+press right+b 12
+press right 18
+dump swim11
+press right+b 12
+press right 18
+dump swim12
+press right+b 12
+press right 18
+dump swim13
+press right+b 12
+press right 18
+dump swim14
+press right+b 12
+press right 18
+dump swim15
+wait 180
+dump below_tape
+press right 150
+dump cave_goal
+wait 900
+dump cave_completed_map
+until 0100 == 0e 0
+until 1ee6 == 8b 0
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+# Map-coordinate fixture only; no saved flags or counters are written.
+poke 1f11 0000
+poke 1f17 8800f8018800f801
+poke 1f1f 08001f0008001f00
+poke 0100 0b
+wait 240
+dump reload_node
+press y 2
+wait 600
+dump reload_cave
+until 0100 == 14 0
+until16 010b == 0120 0
+quit
