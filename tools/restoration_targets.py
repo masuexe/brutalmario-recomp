@@ -61,4 +61,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioWorld1Room138SpriteSNESRecomp',
         'title': 'Brutal Mario World1 Room138 Sprite',
     },
+    'world1-room0cb-gfx': {
+        'binary': 'BrutalMarioWorld1Room0CbGraphicsSNESRecomp',
+        'title': 'Brutal Mario World1 Room0CB Graphics',
+    },
 }

@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario World 1 room0CB graphics dependency candidate",
+  "id": "world1-room0cb-gfx",
+  "recipient": "demo-only-1",
+  "donor": "cheap-demo",
+  "base_restoration": "world1-room138-sprite",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "fe8ff01841960d911dd15415193b3cb7197032504be1855b5741a59dc9fd2890"
+  },
+  "room": "0CB",
+  "scope": "Restore the missing extended graphics 12A that rooms 000, 0CB, 100 and 116 select. The recipient slot is empty, so the shared donor stream is relocated and only the table pointer is written.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1605632,
+    "size": 669,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "12A",
+      "target_id": "12A",
+      "global_pointer": true,
+      "rooms": [
+        0,
+        203,
+        256,
+        278
+      ],
+      "source_address": "28DAEF",
+      "decoded": {
+        "size": 4096,
+        "sha256": "9c02bc51f09a340efdc97c8733a00d69d00c2dcda44794fa9faff29dd622b896"
+      },
+      "compressed": {
+        "size": 661,
+        "sha256": "73c5a74ba17e875415f02e8c13e0e64712690bc6157d8f3afedacf83dd318af8"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "e66b05983af43412b87eb248b675645cf3baeb42e12875255d5ac1353dc0bb84"
+  }
+}
