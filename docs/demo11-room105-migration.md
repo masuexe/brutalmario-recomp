@@ -161,3 +161,28 @@ byte-identically to Demo 1-1.
 
 Practice entrance `demo11-room105` added (map0 `0x48,0x198`); the candidate stays
 unaccepted pending a human check of normal play.
+
+## Fifth pass: goal located, route still not reaching it (2026-10-23)
+
+The migrated room105 sprite list is byte-identical to Demo 1-1's (134 bytes, 44
+records), so object placement is not in question. Parsing it locates the goal tape:
+the last record before the terminator is `53 D6 7B`, i.e. sprite `$7B` on
+**screen 13**, level x around `0xD60`.
+
+Scripted attempts to touch it (all with the air-swim and invulnerability fixtures):
+
+| Attempt | Result |
+| --- | --- |
+| fly at ceiling to `x=0x111B`, sink, sweep | never below `y=0x0030` near the goal |
+| descend at `x=0xD3A` (`y=0x00C0`), walk right | climbed to `y=0xFFB7`, no contact |
+| descend earlier at `x=0xCC5`, walk right | stalled near `x=0xCAD` |
+| descend at `x=0xDB0` | fell to `y=0x0295` and died |
+
+The fixture makes altitude control unreliable: any `B` press drives Mario to the
+ceiling, and descending at the wrong column drops into the pit that surrounds the
+goal area. A real route needs per-section control derived from the tile layout, not
+blind sweeps.
+
+Because terrain, sprite placement, headers and music all match Demo 1-1 exactly, the
+remaining gap is verification, not content: a human playthrough of the migrated
+course is now the cheapest decisive check.
