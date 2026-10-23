@@ -436,3 +436,21 @@ Scripted identification of the goal therefore needs a generator-level trace that
 current diagnostic core does not expose, or a user playthrough that reaches the tape.
 
 Deferred, not blocking: the level itself is native and unaffected.
+
+### Engine flows re-verified on the new base
+
+The rebase plan called for re-checking the boss, shop and death flows on the Demo 1-1
+line, because demoOnly1 had originally been chosen partly because those flows had
+been exercised there. Six original-engine routes were run:
+
+| Route | Host | Result |
+| --- | --- | --- |
+| boss death (`demo-only-1-boss-death`) | reference | **pass** - boss room `0x100`, death, map return `0x0E` |
+| boss probe (`demo-only-1-boss-probe`) | reference | **pass** - damage phases then mode `0x0B`/`0x0C`/`0x0D` death sequence |
+| repeat death (`demo-only-1-repeat-death`) | reference | **pass** - three deaths with coins 3/2/1 |
+| shop (`demo-only-1-shop`) | reference | **pass** - menu open, browse, exit back to the course |
+| boss door (`demo-only-1-boss-door`) | reference | not runnable: script begins with `turbo on`, a native-host-only command |
+| Lemmy mask (`demo-only-1-lemmy-mask`) | reference | same `turbo` limitation |
+
+The two `turbo` routes are documented as needing the native host (the reference host
+must run them without that line), so they are replayed on the native build instead.
