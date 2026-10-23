@@ -11,7 +11,7 @@ first. Official chronology and a latest complete release are not established.
 ### Current objective (2026-10-22)
 
 Continue from the accepted demoOnly1-based cumulative restoration, currently
-`star-world-forest`. Restore playable World 1 routes and broken courses, then
+`world1-next-course` (descending from `star-world-forest`). Restore playable World 1 routes and broken courses, then
 selectively recover Demo 1-1 additions after identifying their object, sprite,
 block, ASM and audio dependencies. Preserve accepted Star World content and
 working recipient map routes/events in separate, reproducible descendant
@@ -22,11 +22,13 @@ environment constraint. The full cross-version recovery remains incomplete.
 
 This supersedes the earlier work priority of finishing the nine-star hub.
 
-The first World 1 follow-up is the isolated
-[`world1-room106` graphics candidate](world1-room106-restoration.md). Its
-missing resource, ordinary movement and selected World 1/forest regressions
-are automatically checked. Complete course exits and onward map connectivity
-remain open; `star-world-forest` stays the accepted base.
+The current cumulative checkpoint is
+[`world1-next-course`](world1-next-course-restoration.md), which includes the
+[`room106 graphics recovery`](world1-room106-restoration.md). The user accepted
+1-2 gameplay and room106 gameplay; room106 music remains incorrect and was
+explicitly deferred. Current work extends automatic coverage of the 1-2
+room010 -> room04A -> exit route. Full onward connectivity and selective
+Demo 1-1 content recovery remain incomplete.
 
 Content recovery now takes priority over increasing the AOT variant count.
 The existing interpreter fallback lets investigation proceed without first

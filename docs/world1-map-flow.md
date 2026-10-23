@@ -68,5 +68,35 @@ ceiling before `x = 0x292`, then continue. The `air-swim` fixture
 (`forcepoke 85 01`), which the 1-1 route already uses for assisted traversal, is
 the practical way to script it.
 
-Not yet established: the exact pipe coordinates, and whether entering the first
-pipe changes the room id or keeps room `010`.
+The following qualification supersedes the earlier pipe-location uncertainty.
+
+## Two-pipe route and actual normal exit
+
+The first pipe is downward-facing, at room010 screen08, columns09/0A,
+row0E (`137/138`). An assisted placement near `(0898,00F0)`, an upward launch,
+and **Up** enter it normally and reach room `04A`. Pressing Down is the wrong
+entry direction.
+
+Room04A is a 13-screen vertical course. Its extra-bit custom sprite `8D` near
+`Y=09F0` follows the player's X coordinate. Actual contact sets `$14AF=1`,
+which removes the controller's `Y>=00C0` clamp and enables automatic propulsion.
+This explains why simply moving Mario below the top pipe without collecting
+that item fails. Large instantaneous vertical teleports also bypass sprite
+loading and can trigger the camera-relative death boundary; incremental
+position fixtures keep the actual camera and sprite loading active.
+
+The top pipe, columns07/08, row08, leads to room `161`, a two-screen exit
+scene. Walking right touches the real goal. After the clear animation, the
+recipient returns to map0 at `(058,1D8)`, sets course10's normal-clear state
+`$1EB2: 0C -> 8C`, and entering the selected node reaches room `106`.
+The demo8 donor follows the same room/goal/node sequence, with its own original
+direction bits (`$1EB2: 00 -> 84`). Do not copy those direction bits into the
+recipient to make the bytes identical.
+
+Reproduce with `recomp/inputs/world1-next-course-two-pipes.script` and run
+`python3 tools/qualify_world1_two_pipes.py`. This is an **assisted boundary
+regression**, using position, upward-launch, water and invulnerability fixtures.
+It skips traversal obstacles. The power-up, pipe transitions, goal and clear
+are game-generated; no exit tables, ability state, goal timer, event or
+completion flags are written. It does not establish unassisted traversal or
+collectibles. See the next-course restoration document for pinned identities.

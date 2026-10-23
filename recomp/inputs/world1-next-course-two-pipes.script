@@ -1,0 +1,179 @@
+# Assisted 1-2 route: room010 -> room04A -> room161 -> real goal -> next course.
+# Fresh session, no imported state. Map/position, upward launch, air-swim and
+# invulnerability fixtures skip traversal obstacles. This does not prove an
+# unassisted full-course route. Sprite power-up, both pipe entries, goal contact
+# and completion/event writes are performed by the game, not injected.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x018, Y=0x1b8.
+poke 1f11 0000
+poke 1f17 1800b8011800b801
+poke 1f1f 01001b0001001b00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+wait 180
+dump entry180
+wait 420
+dump entry600
+# Position below the downward-facing screen-08 pipe, then enter with Up.
+poke 1497 ff
+poke 94 9808f000
+poke 7b 00
+poke 7d c0
+poke 1a 0008
+poke 1462 0008
+forcepoke 85 01
+press up 8
+dump first_pipe
+wait 100
+dump first_transition
+wait 400
+dump upward_entry
+until 0100 == 14 0
+until16 010b == 004a 0
+forcepoke 1497 ff
+poke 96 600c
+poke 7d 00
+wait 20
+poke 96 200c
+poke 7d 00
+wait 20
+poke 96 e00b
+poke 7d 00
+wait 20
+poke 96 a00b
+poke 7d 00
+wait 20
+poke 96 600b
+poke 7d 00
+wait 20
+poke 96 200b
+poke 7d 00
+wait 20
+poke 96 e00a
+poke 7d 00
+wait 20
+poke 96 a00a
+poke 7d 00
+wait 20
+poke 96 600a
+poke 7d 00
+wait 20
+poke 96 200a
+poke 7d 00
+wait 20
+poke 96 e009
+poke 7d 00
+wait 20
+until 14af == 01 0
+dump powerup
+poke 96 a009
+wait 20
+poke 96 6009
+wait 20
+poke 96 2009
+wait 20
+poke 96 e008
+wait 20
+poke 96 a008
+wait 20
+poke 96 6008
+wait 20
+poke 96 2008
+wait 20
+poke 96 e007
+wait 20
+poke 96 a007
+wait 20
+poke 96 6007
+wait 20
+poke 96 2007
+wait 20
+poke 96 e006
+wait 20
+poke 96 a006
+wait 20
+poke 96 6006
+wait 20
+poke 96 2006
+wait 20
+poke 96 e005
+wait 20
+poke 96 a005
+wait 20
+poke 96 6005
+wait 20
+poke 96 2005
+wait 20
+poke 96 e004
+wait 20
+poke 96 a004
+wait 20
+poke 96 6004
+wait 20
+poke 96 2004
+wait 20
+poke 96 e003
+wait 20
+poke 96 a003
+wait 20
+poke 96 6003
+wait 20
+poke 96 2003
+wait 20
+poke 96 e002
+wait 20
+poke 96 a002
+wait 20
+poke 96 6002
+wait 20
+poke 96 2002
+wait 20
+poke 96 e001
+wait 20
+poke 96 a001
+wait 20
+poke 96 6001
+wait 20
+poke 96 2001
+wait 20
+poke 96 e000
+wait 20
+poke 96 a000
+wait 20
+dump below_top_pipe
+press up 120
+wait 420
+dump exit_room
+until 0100 == 14 0
+until16 010b == 0161 0
+wait 300
+dump exit_wait
+forcepoke 85 00
+press right 600
+dump goal_contact
+wait 900
+dump completed_map
+until 0100 == 0e 0
+until 13ce == 01 0
+# Follow the map destination selected by the real clear; no second teleport.
+press y 2
+wait 600
+dump next_course_entry
+until 0100 == 14 0
+until16 010b == 0106 0
+quit

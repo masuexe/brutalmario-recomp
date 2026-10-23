@@ -188,9 +188,9 @@ def main():
         'captures': captures,
         'limits': [
             'A complete World 1 route, collectibles and audible output remain unqualified.',
-            'Intended course numbering for room 010 is not established; it is not labelled 1-2.',
+            'The user identifies room010 as 1-2 and accepted its gameplay; this runner covers the listed boundaries only.',
             'Overworld normal-exit connectivity beyond the first course is not claimed.',
-            'This is a bounded resource-recovery candidate pending user playtesting.'],
+            'Room106 gameplay is accepted except for incorrect music, which the user deferred.'],
     }
     output = ROOT / 'local/reports/world1-next-course-qualification.json'
     output.write_text(json.dumps(report, indent=2) + '\n')
