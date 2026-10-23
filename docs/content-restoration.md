@@ -385,3 +385,43 @@ existing recipient songs `$60` (course/expiry) and `$79` (caps). Donor
 song numbers and matching backgrounds were insufficient evidence. On
 2026-10-21 the user confirmed that the corrected music is completely normal,
 closing the scoped listening check.
+
+## Demo 1-1 rebase (2026-10-23)
+
+The user chose to change the restoration base from demoOnly1 to Demo 1-1 rather than
+reverse-engineer Demo 1-1's custom sprite mechanism. The newer 1-1 and castle are
+native on that base, so the World 1-1 layout migration attempt (which stalled because
+the newer course needs its own sprite behaviour) became unnecessary.
+
+New chain: `demo11-base` -> `demo11-room106` -> `demo11-room010-gfx` ->
+`demo11-room010-music` -> `demo11-room138-audio` -> `demo11-room0cb-gfx` (head,
+`9155c1eb…`). Recoveries ported: room 106 graphics `1A2`, room 010 graphics
+`151`/`102`, room 010 song `2F`, room 138 private song `7E` with its sample-bank
+selector, and the shared graphics `12A`. Custom sprites `8D` and `0B` are **not**
+ported; Demo 1-1 supplies working equivalents.
+
+Verification is consolidated in `tools/check_demo11_line.py`, which currently reports
+**10/10**:
+
+- the five recoveries, each with its own pinned qualifier;
+- World 1 route parity (eight demoOnly1-era routes replayed on both hosts);
+- six original engine flows (boss death and phases, repeated death, shop, boss door,
+  Lemmy mask);
+- a whole-line byte audit: 8,214 changed bytes against the pinned Demo 1-1 input, all
+  inside the chain's 15,878 declared region bytes, zero unexpected;
+- a reachability audit: only the intended differing rooms (`0C5` intro, `0C7` map,
+  `105` newer 1-1, `10E` newer castle) were ever entered, and any future capture that
+  enters another differing room fails acceptance;
+- World 1-1 goal and clear: the newer course places its goal on the far-right end
+  platform (`x≈0x16DC`, `y=0x140`); touching it produces map state `0x8A` and event
+  `0x01` on both hosts, the same overworld event the demoOnly1 line produced.
+
+Deferred: the user's playtest and listening acceptance (checklist in
+[demo11-playtest.md](demo11-playtest.md)); the scripted room 010 pipe route, which
+fails on this base because version-level tables differ (room data is identical), and
+therefore needs a real playthrough to decide; and the map-cursor step from a 1-1 clear
+to the next course, which the qualification route does not cover.
+
+The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
+rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence
+and risk list, is [demo11-rebase-plan.md](demo11-rebase-plan.md).
