@@ -213,3 +213,31 @@ this build.
 
 Because the goal tape lies inside the bouncing section, goal contact cannot be
 scripted until that sprite behaviour is migrated.
+
+## Seventh pass: sprite slots differ even though the lists match (2026-10-23)
+
+Comparing the same scripted frames on both builds:
+
+| Frame | Demo 1-1 active sprites | Migrated active sprites |
+| --- | --- | --- |
+| `fall3` | slots 7,8,9 = `19`,`1B`,`1A` | slot 9 = `1A` only |
+| `walk02` | `19`,`1B` | `19`,`1B`,`1A` |
+| `walk06` | `19`, slot 9 = `1C` | `19`,`1B`,`1A`, slot 6 = `1C` |
+
+Map16 terrain at those frames is effectively identical (3 edge cells differ), so the
+divergence is entirely in sprite behaviour: the same placed ids spawn at different
+times and act differently, which is what produces Demo 1-1's bounce and the migrated
+build's flat walk.
+
+That means the remaining dependency is broader than one sprite: the custom sprite
+set those ids resolve to differs between the builds, and the 16-byte record table we
+restore for other courses is not the mechanism Demo 1-1 uses (a byte-pattern scan
+finds no equivalent table there).
+
+### Honest cost assessment
+
+Completing the 1-1 layout migration therefore needs reverse-engineering Demo 1-1's
+custom sprite storage and porting the definitions used by the newer layout - a
+substantially larger job than the graphics import, with no guarantee of parity.
+Migrating level data alone can produce a course that looks right and still plays
+differently.
