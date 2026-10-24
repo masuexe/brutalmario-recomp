@@ -1,0 +1,28 @@
+# Upper-inner BGM check: enter the course and stop while the course track plays.
+# Clean-session input route shared by reference and native hosts.
+# The map transfer is a practice fixture; the route stops before later events.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+poke 1f11 0606
+poke 1f17 7801880178018801
+poke 1f1f 1700180017001800
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 14 480
+dump active
+wait 60
+dump playing
+quit

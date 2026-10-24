@@ -1,5 +1,11 @@
 # Brutal Mario Cross-Version Music ID Mapping Reference
 
+> Applied to the Star World courses on 2026-10-25. See
+> [Demo 1-1 Star World course BGM](demo11-star-bgm.md). The recipient star data
+> still stored legacy BGM numbers; six course music parameters now use the
+> new-family IDs below. Forest Star keeps the demoOnly1-line substitute because
+> vanilla BGM 02 has no upload in demo 1-1.
+
 This document defines the custom music ID mapping between Carol's **Legacy Demo Family**
 (`cheap_demo`, `7hero`, `mazo`, `ow`, `demo7`, `demo8`) and the **New Demo Family**
 (`demoOnly1` and `demo 1-1`).

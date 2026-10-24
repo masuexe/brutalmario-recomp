@@ -633,3 +633,29 @@ Integrated checks pass **25/25**; the byte audit is unchanged (22 recipes,
 105,084 changed bytes inside 139,275 declared region bytes, zero unexpected).
 The sky secret, the remaining Star World course routes, DK/death coverage and
 the broader restoration remain open.
+
+
+### Demo 1-1 Star World course BGM (2026-10-25)
+
+The user asked to correct the Star World course music with the Brutal Mario
+wiki. The [Star World BGM report](demo11-star-bgm.md) records the finding and
+the repair.
+
+The recipient star data came from the legacy demo family and still stored
+legacy BGM numbers. The wiki Star Road table gives the songs; the
+[music mapping table](music-mapping.md) gives the new-family slot IDs. Six
+one-byte level-data music parameters move to the intended slots: Grassland 38,
+Bay 49, Cave 51, Plains 32, Sky 58 and Special Warp 7A. Snow already requested
+the restored Jingle Bells slot 54, and Valley already requested 60 with its cap
+cue 79.
+
+Forest Star keeps the accepted demoOnly1-line substitute. The wiki lists
+vanilla BGM 02, but demo 1-1 has no custom upload for it, and a request of 02
+stalls the level load.
+
+Both hosts request the intended slot on every course. The native build shows the
+intended `$0DDA` in the loaded course, and its APU RAM holds the matching
+upload body. Integrated checks pass **26/26**; the byte audit rebuilds 23
+recipes with 105,090 changed bytes inside 139,297 declared region bytes, zero
+unexpected. The hub map BGM, the Star-9 boss cue 98, other worlds and the
+remaining route/death coverage stay open.

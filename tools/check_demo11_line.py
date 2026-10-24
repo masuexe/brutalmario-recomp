@@ -34,6 +34,7 @@ CHECKS = [
     ('Forest Star course port', 'qualify_demo11_star_forest'),
     ('node-scoped music dispatch', 'qualify_demo11_node_music'),
     ('lower-left course route', 'qualify_demo11_star1_route'),
+    ('Star World course BGM', 'qualify_demo11_star_bgm'),
 ]
 
 

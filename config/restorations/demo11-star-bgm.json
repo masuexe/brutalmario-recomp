@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "demo11-star-bgm",
+  "target": "Brutal Mario Demo11 Star World BGM",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-node-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "77a4b7a970125db9c6b53d0619f6f9441c47538bd938bce6a8ee7c862de7240a"
+  },
+  "room": "star world",
+  "scope": "Correct the Star World course BGM selections to the new-family song IDs. The recipient map data is imported from the legacy demo family and still stores legacy BGM numbers (4A, 28, 24, 5D, 2E, 30), which select the wrong new-family slots. The wiki Star Road table, each star page and config/music-mapping.json give the intended songs. Six one-byte music-object parameters change: Grassland 38, Bay 49, Cave 51, Plains 32, Sky 58, Special Warp 7A. Snow already requests 54 (line-restored Jingle Bells) and Valley keeps 60 with its cap cue 79. Forest Star keeps the accepted demoOnly1-line substitute track: the wiki documents vanilla BGM 02, but demo 1-1 has no custom upload for it and requesting 02 stalls level load.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2419456,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "raw_blocks": [],
+  "code_patches": [
+    {
+      "address": "3DA32B",
+      "before": "4b",
+      "after": "39",
+      "role": "Grassland Star course song: legacy BGM 4A -> new-family 38"
+    },
+    {
+      "address": "58FBF1",
+      "before": "29",
+      "after": "4a",
+      "role": "Bay Star course song: legacy BGM 28 -> new-family 49"
+    },
+    {
+      "address": "198491",
+      "before": "25",
+      "after": "52",
+      "role": "Cave Star course song: legacy BGM 24 -> new-family 51"
+    },
+    {
+      "address": "1EEC26",
+      "before": "5e",
+      "after": "33",
+      "role": "Plains Star course song: legacy BGM 5D -> new-family 32"
+    },
+    {
+      "address": "5D9FBC",
+      "before": "2f",
+      "after": "59",
+      "role": "Sky Star course song: legacy BGM 2E -> new-family 58"
+    },
+    {
+      "address": "6D8EA6",
+      "before": "31",
+      "after": "7b",
+      "role": "Special Warp Star course song: legacy BGM 30 -> new-family 7A"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "8939c2ace216af9f6b8c9de365ea8b2614cc8a686b0692e86fec98608afc36c0"
+  }
+}

@@ -130,6 +130,9 @@ LEVELS = {
     'demo11-node-music': {'name': 'Star World middle-left with exact map-node music dispatch', 'map': 6,
                           'x': 0x158, 'y': 0x1a8, 'level': 0x003,
                           'teleport': (6, 0x158, 0x1a8)},
+    'demo11-star-bgm': {'name': 'Star World lower-left Grassland Star with corrected BGM',
+                        'map': 6, 'x': 0x128, 'y': 0x1e8, 'level': 0x005,
+                        'teleport': (6, 0x128, 0x1e8)},
 }
 
 
