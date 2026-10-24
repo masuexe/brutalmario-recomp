@@ -76,6 +76,9 @@ inside 139,297 declared region bytes, zero unexpected.
   flag.
 - The entry coaster position is host-phase sensitive; the check compares the
   semantic state, not the exact coaster pixel.
+- The parsed level data places a second goal sprite at X=`$1250` and a second
+  goal point at X=`$1240`; the low finish path stalls at about X=`$1026`. See
+  [the secret-layout note](star-world-secret-layouts.md).
 - An unassisted full traversal and listening acceptance are not claimed. The
   save flag and SRAM constants are recipient-local.
 
