@@ -152,6 +152,19 @@ left wall the up, down and B strokes do not move Mario. The page `0B` switch
 did not trigger on this path. Probes: `bay-swim-left.script`,
 `bay-swim-jump.script`, `bay-swim-up.script`, `bay-swim-dive.script`.
 
+Mechanism found in the sprite code: sprite `$7A` is the floating water
+platform, and touching it is the water switch. Its RATS block is at
+`$34:8B77` (file offset `0x1A0B77`, 1320 bytes). The init code at
+`0x1A0B9F` sets `$7F:FFD0` and `$7F:FFD2` to `$0CB0`. The switch handler
+at `0x1A0CD0` sets the target `$7F:FFD2/$FFD3` to the sprite Y and marks the
+sprite touched (`$151C,X`). The animation code at `0x1A0F00` steps the
+current level `$7F:FFD0` toward the target.
+
+The runtime platform positions move with the water level; the static sprite
+data positions are spawn markers. The two working contacts match the runtime
+platform positions: the platform near (`$0020`,`$0C90`) sets `$0C90`, and
+the platform near (`$0100`,`$0C30`) sets `$0C30`.
+
 Paused camera sweeps from the bottom die when the camera moves far from the
 player (offscreen rule). The useful coverage is the earlier sweep set:
 camera Y from `$0C00` to `$0019`. Landing on the solid switch at
