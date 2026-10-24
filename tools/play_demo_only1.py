@@ -88,6 +88,9 @@ LEVELS = {
     'demo11-room106-music': {'name': 'World 1-1 on the room106-music Demo 1-1 line', 'map': 0,
                              'x': 0x048, 'y': 0x198, 'level': 0x105,
                              'teleport': (0, 0x048, 0x198)},
+    'demo11-castle-sprite06': {'name': 'World 1-1 on the castle-sprite06 Demo 1-1 line', 'map': 0,
+                               'x': 0x048, 'y': 0x198, 'level': 0x105,
+                               'teleport': (0, 0x048, 0x198)},
 }
 
 
