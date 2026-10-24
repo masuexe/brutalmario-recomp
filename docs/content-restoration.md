@@ -460,6 +460,12 @@ followed; the user then directed work to the Star World convergence: the
 terrain (acceptance **15/15**). The remaining Star World graphics follow as one shared-pointer batch
 (`demo11-star-gfx-batch`, acceptance **16/16**): sixteen streams covering
 upper-left/snow/sky/center/upper-inner/lower-inner, with upper-left (room
-`$004`) verified rendering on both hosts and the other five rooms keeping
-their documented music-request stalls (songs `54`/`2E` family) as the next
-open item.
+`$004`) verified rendering on both hosts. The follow-up music recovery
+(`demo11-star-music`) ports the accepted song 54 and 2E sequences: snow and
+sky pass the Mario Start loader with audible tracks on both hosts (the
+practice save carries clear flags, so those nodes play the Warp Star branch
+after load), upper-inner and lower-inner load with their native song slots,
+and the center node behaves the same way. A sprite-slot audit finds no empty
+custom-sprite records in any of the nine Star World rooms. Remaining open:
+per-course traversal, enemies, platforms and clear behaviour - the same
+per-course qualification depth the demoOnly1 line applied.
