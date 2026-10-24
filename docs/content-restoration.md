@@ -659,3 +659,28 @@ upload body. Integrated checks pass **26/26**; the byte audit rebuilds 23
 recipes with 105,090 changed bytes inside 139,297 declared region bytes, zero
 unexpected. The hub map BGM, the Star-9 boss cue 98, other worlds and the
 remaining route/death coverage stay open.
+
+
+### Demo 1-1 upper-left Bay Star route acceptance (2026-10-25)
+
+The [upper-left route report](demo11-star-upper-left-route.md) records the next
+qualification checkpoint. No ROM changed; the head stays `demo11-star-bgm`.
+
+The tracked upper-left scripts pass on reference and native: entry and ordinary
+controls, the low-Map16 graphics guard, real B presses that swim upward, a real
+platform contact that changes the water target from `$0CB0` to `$0C90`, five
+real DK coins with the coin-5 saved bit, the screen-8 pipe to the real goal
+room `$048` and save flag `$85`, console-reset reload, the alternate-pipe side
+exit through `$051`, and a real death/re-entry.
+
+Fresh demoOnly1-line captures match in every semantic field; the native build
+matches the reference exactly. Integrated checks pass **27/27**; the byte audit
+is unchanged (23 recipes, 105,090 changed bytes inside 139,297 declared region
+bytes, zero unexpected).
+
+The Bay keyhole secret exit is not covered. The wiki route is: touch the top
+switch, let the water rise, lower it two levels, then take the key to the
+keyhole. The Sky Star secret route is user-verified and deferred; the
+[investigation report](demo11-sky-secret.md) records the mechanics and the
+user facts. Remaining Star World routes, the unassisted Bay ascent, DK/death
+coverage, the center Boss exception and the broader restoration stay open.

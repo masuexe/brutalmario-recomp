@@ -35,6 +35,7 @@ CHECKS = [
     ('node-scoped music dispatch', 'qualify_demo11_node_music'),
     ('lower-left course route', 'qualify_demo11_star1_route'),
     ('Star World course BGM', 'qualify_demo11_star_bgm'),
+    ('upper-left Bay Star route', 'qualify_demo11_star_upper_left_route'),
 ]
 
 
