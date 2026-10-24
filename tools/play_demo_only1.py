@@ -112,6 +112,9 @@ LEVELS = {
     'demo11-star-sprites-safe': {'name': 'Star World lower-inner with repaired sprite pointers', 'map': 6,
                                   'x': 0x178, 'y': 0x1c8, 'level': 0x117,
                                   'teleport': (6, 0x178, 0x1c8)},
+    'demo11-lower-inner-music': {'name': 'Star World lower-inner with course and cap music repaired', 'map': 6,
+                                 'x': 0x178, 'y': 0x1c8, 'level': 0x117,
+                                 'teleport': (6, 0x178, 0x1c8)},
 }
 
 

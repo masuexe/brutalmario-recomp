@@ -145,4 +145,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11StarSpritesSafeSNESRecomp',
         'title': 'Brutal Mario Demo11 Star Sprites Safe',
     },
+    'demo11-lower-inner-music': {
+        'binary': 'BrutalMarioDemo11LowerInnerMusicSNESRecomp',
+        'title': 'Brutal Mario Demo11 Lower Inner Music',
+    },
 }

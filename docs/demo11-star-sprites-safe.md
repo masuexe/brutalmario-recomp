@@ -1,9 +1,10 @@
 # Demo 1-1 Star World sprite allocation repair
 
-Date: 2026-10-24. Current automatically qualified target:
+Date: 2026-10-24. Automatically qualified sprite milestone:
 `demo11-star-sprites-safe`, ROM SHA-256
 `11ad648a7885ea7c4792dd818229debead6adf3d238ffaea03f182d41e565887`.
-It descends from the intact `demo11-star-music-2` ROM
+The [cap-music follow-up](demo11-lower-inner-music.md) is the newer cumulative head.
+This sprite milestone descends from the intact `demo11-star-music-2` ROM
 (`314839039ab602c612b92fdd252c506f01a22ccdcc415d1e09c177f019fc741d`),
 bypassing the superseded `demo11-star-sprites` artifact. No new user playtest
 acceptance is implied.

@@ -6,6 +6,9 @@ the controller resumes `$60`. No song data or music driver is transplanted.
 The user confirmed on 2026-10-21 that the corrected music is completely normal.
 The scoped music correction is accepted.
 
+This report describes the demoOnly1 line. The later Demo 1-1 regression and
+its corrected launch target are documented in [the Demo 1-1 follow-up](demo11-lower-inner-music.md).
+
 ## Why the earlier selections were wrong
 
 In an unmodified cheap_demo room `$117` capture, the donor uploads a four-song

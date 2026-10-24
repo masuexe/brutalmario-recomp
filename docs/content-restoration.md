@@ -497,3 +497,23 @@ room `$000` on both safe hosts and the intact parent reference; center entry
 mapping is the next concrete investigation. Per-sprite interactions, other
 full routes, DK/death coverage and scoped listening remain open. No new human
 acceptance or center clear is claimed.
+
+
+### Demo 1-1 lower-inner cap music follow-up (2026-10-24)
+
+The user reproduced the cap-expiry freeze and reaffirmed course song `$60`
+and cap song `$79`. The [lower-inner music descendant](demo11-lower-inner-music.md)
+ports the previously accepted selection adaptation onto the safe Demo 1-1
+controller at `$3A:8000`. The parent requests absent global `$21` at expiry;
+complete WRAM freezes on both hosts. Exactly seven selection bytes now select
+`$60` for the course and final expiry and `$79` for all three pickups.
+
+Current cumulative head is **`demo11-lower-inner-music`** (`10f8af33…`).
+All three cap effects activate and expire naturally on both corrected hosts,
+which keep advancing afterward. Native SPC snapshots match the actual `$79`
+and `$60` payloads; those complete uploads are identical to the earlier
+user-confirmed demoOnly1 correction. The warp-star route remains qualified
+as a segment on both hosts. Whole-line recipe replay now covers 17 targets,
+zero unexpected bytes, and integrated checks pass **20/20**. No new human
+listening acceptance or full-course clear is inferred. Center entry mapping
+and the remaining broader restoration scope stay open.

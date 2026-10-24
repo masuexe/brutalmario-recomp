@@ -1,0 +1,97 @@
+# Bounded lower-inner music regression, not a natural cap-block route.
+# After the overworld shortcut, each test cap is initialized in free slot 0
+# with the source cap-block fields. Its subtype is set after initialization.
+# Player placement/finite holds cause real collision. The existing controller
+# decrements each effect naturally. No cap timer, music queue, goal or SRAM writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 480
+wait 200
+dump course_music
+press start 2
+until 13d4 == 01 120
+wait 60
+poke 94 10003001
+poke 7b 0000
+poke 9e 70
+poke 1ab9e 30
+poke 1ab10 88
+poke e4 10
+poke 14e0 00
+poke d8 10
+poke 14d4 01
+poke 1504 00
+poke 14c8 01
+press start 2
+wait 2
+poke 1504 00
+dump invisible_initialized
+pokefor 94 10003001 90
+dump invisible_active
+wait 960
+dump invisible_expired
+wait 180
+dump invisible_resumed
+press start 2
+until 13d4 == 01 120
+wait 60
+poke 94 10003001
+poke 7b 0000
+poke 9e 70
+poke 1ab9e 30
+poke 1ab10 88
+poke e4 10
+poke 14e0 00
+poke d8 10
+poke 14d4 01
+poke 1504 00
+poke 14c8 01
+press start 2
+wait 2
+poke 1504 01
+dump metal_initialized
+pokefor 94 10003001 90
+dump metal_active
+wait 960
+dump metal_expired
+wait 180
+dump metal_resumed
+press start 2
+until 13d4 == 01 120
+wait 60
+poke 94 10003001
+poke 7b 0000
+poke 9e 70
+poke 1ab9e 30
+poke 1ab10 88
+poke e4 10
+poke 14e0 00
+poke d8 10
+poke 14d4 01
+poke 1504 00
+poke 14c8 01
+press start 2
+wait 2
+poke 1504 02
+dump wing_initialized
+pokefor 94 10003001 90
+dump wing_active
+wait 960
+dump wing_expired
+wait 180
+dump wing_resumed
+quit

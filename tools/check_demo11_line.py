@@ -28,6 +28,7 @@ CHECKS = [
     ('Star music 54/2E', 'qualify_demo11_star_music'),
     ('historical Star entry samples', 'qualify_demo11_star_sprites'),
     ('safe Star sprites and routes', 'qualify_demo11_star_sprites_safe'),
+    ('lower-inner cap expiry/music', 'qualify_demo11_lower_inner_music'),
 ]
 
 

@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Lower Inner Music",
+  "id": "demo11-lower-inner-music",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-sprites-safe",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "11ad648a7885ea7c4792dd818229debead6adf3d238ffaea03f182d41e565887"
+  },
+  "room": "117",
+  "scope": "Port the user-confirmed lower-inner course/cap/expiry music selections onto the safe Demo 1-1 line. Change only seven selection bytes: course 60, all three cap pickups 79, all three final-expiry requests 60. The restored donor controller otherwise requests the bank-local 22/21 ids; absent global song 21 freezes the recipient at expiry. No song payload, driver, cap timer, geometry, placement, completion or save changes.",
+  "gfx_record": {
+    "address": "14AD08",
+    "before": "01800700280117001400290113002a0100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2031616,
+    "size": 1,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "3AB524",
+      "before": "41",
+      "after": "61",
+      "note": "Room 117 header: select user-confirmed course song 60 (encoded song+1)."
+    },
+    {
+      "address": "3A8084",
+      "before": "a922",
+      "after": "a979",
+      "note": "Cap pickup: select user-confirmed existing song 79 instead of donor bank-local 22."
+    },
+    {
+      "address": "3A80C5",
+      "before": "a922",
+      "after": "a979",
+      "note": "Cap pickup: select user-confirmed existing song 79 instead of donor bank-local 22."
+    },
+    {
+      "address": "3A8103",
+      "before": "a922",
+      "after": "a979",
+      "note": "Cap pickup: select user-confirmed existing song 79 instead of donor bank-local 22."
+    },
+    {
+      "address": "3A83A4",
+      "before": "a921",
+      "after": "a960",
+      "note": "Final cap expiry: resume course song 60 instead of absent donor bank-local 21."
+    },
+    {
+      "address": "3A8428",
+      "before": "a921",
+      "after": "a960",
+      "note": "Final cap expiry: resume course song 60 instead of absent donor bank-local 21."
+    },
+    {
+      "address": "3A8468",
+      "before": "a921",
+      "after": "a960",
+      "note": "Final cap expiry: resume course song 60 instead of absent donor bank-local 21."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "10f8af337eafbfe2c42454087723587c4f8f41455dabe7517152272be37ce909"
+  }
+}
