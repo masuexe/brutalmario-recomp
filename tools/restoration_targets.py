@@ -117,4 +117,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11CastleSprite06SNESRecomp',
         'title': 'Brutal Mario Demo11 Castle Sprite06',
     },
+    'demo11-yoshihouse-sprite': {
+        'binary': 'BrutalMarioDemo11YoshiHouseSpriteSNESRecomp',
+        'title': 'Brutal Mario Demo11 Yoshi House Sprite',
+    },
 }
