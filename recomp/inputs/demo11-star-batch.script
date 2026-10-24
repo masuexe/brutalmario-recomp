@@ -1,0 +1,72 @@
+# Six Star World rooms entry verification on the batch-gfx candidate.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+# Node s004 at map 6 (0x128,0x168).
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s004
+# Node s008 at map 6 (0x1c8,0x1e8).
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s008
+# Node s009 at map 6 (0x198,0x1a8).
+poke 1f11 0606
+poke 1f17 9801a8019801a801
+poke 1f1f 19001a0019001a00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s009
+# Node s00A at map 6 (0x178,0x1a8).
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s00A
+# Node s007 at map 6 (0x178,0x188).
+poke 1f11 0606
+poke 1f17 7801880178018801
+poke 1f1f 1700180017001800
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s007
+# Node s117 at map 6 (0x178,0x1c8).
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s117
+quit

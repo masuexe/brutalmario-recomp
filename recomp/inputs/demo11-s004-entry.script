@@ -1,0 +1,21 @@
+# s004 entry on native.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 900
+wait 200
+dump s004
+quit

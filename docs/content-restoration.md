@@ -457,5 +457,9 @@ followed; the user then directed work to the Star World convergence: the
 [Star World lower-left graphics recovery](star-world-1-restoration.md) shape
 (renumbered ids FFD/FFE/FFF) now ports onto the Demo 1-1 line as
 `demo11-star1-gfx`, with both hosts entering room `$005` and rendering the
-terrain (acceptance **15/15**). The remaining eight Star World rooms carry
-the same missing-graphics pattern and follow in the established order.
+terrain (acceptance **15/15**). The remaining Star World graphics follow as one shared-pointer batch
+(`demo11-star-gfx-batch`, acceptance **16/16**): sixteen streams covering
+upper-left/snow/sky/center/upper-inner/lower-inner, with upper-left (room
+`$004`) verified rendering on both hosts and the other five rooms keeping
+their documented music-request stalls (songs `54`/`2E` family) as the next
+open item.

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CHAIN = ['demo11-base', 'demo11-room106', 'demo11-room010-gfx',
          'demo11-room010-music', 'demo11-room138-audio', 'demo11-room0cb-gfx',
          'demo11-sprite8d', 'demo11-sprite0b', 'demo11-world1-route', 'demo11-room106-music',
-         'demo11-castle-sprite06', 'demo11-yoshihouse-sprite', 'demo11-star1-gfx']
+         'demo11-castle-sprite06', 'demo11-yoshihouse-sprite', 'demo11-star1-gfx', 'demo11-star-gfx-batch']
 HEAD = CHAIN[-1]
 
 
