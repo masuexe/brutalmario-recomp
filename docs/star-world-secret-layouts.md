@@ -57,9 +57,11 @@ uses the extra bits for the secret exit. The second sprite is therefore the
 secret exit goal, not a duplicate.
 
 A teleport probe to X=`$1250`, Y=`$01E0` fell to Y=`$032B` and did not clear.
-The nearby sprites were the race display and one rival. The area below the
-pitch may be a hidden section. The probe is
-`local/probes/cave-secret-tape.script`.
+The nearby sprites were the race display and one rival. A survey at Y=`$0320`
+from X=`$1100` to X=`$1400` found no floor: the player falls, dies at about
+X=`$1480`, and returns to the hub. The lower area is a pit, not a hidden
+section. Probes: `local/probes/cave-secret-tape.script` and
+`local/probes/cave-lower-survey.script`.
 
 ## Bay Star: room `$004`
 
