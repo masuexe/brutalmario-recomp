@@ -191,6 +191,13 @@ More probes did not resolve the other switches:
 - Probe scripts: `bay-sprite-contact.script`, `bay-held-sweep.script`,
   `bay-ceiling-sweep.script`.
 
+## Bay Star: user verification
+
+The user play-tested Bay Star. They collected all Dragon Coins and reached the
+normal exit. The key is in the upper-right question block at the start. The
+keyhole is next to the normal-exit pipe. The user considers the Bay Star test
+passed. Automated secret testing stays stopped.
+
 ## Plains Star: room `$002`
 
 The parsed sprite IDs are `$02` once, `$05` four times, `$09` once,

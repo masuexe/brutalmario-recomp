@@ -678,12 +678,14 @@ matches the reference exactly. Integrated checks pass **27/27**; the byte audit
 is unchanged (23 recipes, 105,090 changed bytes inside 139,297 declared region
 bytes, zero unexpected).
 
-The Bay keyhole secret exit is not covered. The wiki route is: touch the top
-switch, let the water rise, lower it two levels, then take the key to the
-keyhole. The Sky Star secret route is user-verified and deferred; the
-[investigation report](demo11-sky-secret.md) records the mechanics and the
-user facts. Remaining Star World routes, the unassisted Bay ascent, DK/death
-coverage, the center Boss exception and the broader restoration stay open.
+The Bay keyhole secret exit is user-verified. The user play-tested the
+course: all Dragon Coins are collectable, the normal exit is reachable, the key
+comes from the upper-right question block at the start, and the keyhole sits
+next to the normal-exit pipe. The user considers the Bay Star test passed. With
+this, all four remaining Star World secret exits are user-verified: Sky, Cave,
+Plains and Bay. Remaining open items are the unassisted traversals, Dragon Coin
+and death coverage where missing, the center Boss exception and the broader
+restoration.
 
 
 ### Community walkthrough and route references (2026-10-25)

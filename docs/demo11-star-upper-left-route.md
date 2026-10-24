@@ -74,9 +74,11 @@ bytes inside 139,297 declared region bytes, zero unexpected.
 
 - The scripts use labelled coordinate shortcuts and damage immunity. The coins,
   water switch, pipes, goal and deaths are real guest actions.
-- The **bay keyhole secret exit is not covered** here. The recorded wiki route
-  is: touch the top switch, let the water rise to the top, lower the water two
-  levels, then take the key to the keyhole. A later checkpoint can qualify it.
+- The **Bay keyhole secret exit is user-verified**. The user play-tested the
+  course: all Dragon Coins are collectable, the normal exit is reachable, and
+  the keyhole sits next to the normal-exit pipe. The key comes from the upper
+  right question block at the start. The user considers the Bay Star test
+  passed. Automated secret testing stays stopped.
 - An unassisted full ascent is not claimed. The vertical cave still needs a
   full route pass.
 - The save flag constants are recipient-local. The demoOnly1 line uses the same
