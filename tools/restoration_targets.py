@@ -157,4 +157,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11StarVisualsFlameSNESRecomp',
         'title': 'Brutal Mario Demo11 Star Visuals Flame',
     },
+    'demo11-center-route': {
+        'binary': 'BrutalMarioDemo11CenterRouteSNESRecomp',
+        'title': 'Brutal Mario Demo11 Center Route',
+    },
 }

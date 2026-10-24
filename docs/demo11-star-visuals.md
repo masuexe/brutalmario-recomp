@@ -137,8 +137,10 @@ to the intermediate ROM and are not presented as final-head evidence.
 Scripts label their map/player shortcuts, damage immunity and pipe-action
 fixture. Sky normal completion uses actual flight and tape inputs after the
 map shortcut. Secret-room inspection is not a full lower-left secret clear.
-Sky secret completion, all DK/death coverage, center-node mapping and the
-broader restoration remain open. No new listening acceptance is requested.
+Sky secret completion, all DK/death coverage and the broader restoration
+remain open. The [center-route follow-up](demo11-center-route.md) now qualifies
+the center-node route and special-warp-star display. No new listening
+acceptance is requested.
 
 ```sh
 python3 tools/restore_star_world_1.py --target demo11-star-visuals-flame

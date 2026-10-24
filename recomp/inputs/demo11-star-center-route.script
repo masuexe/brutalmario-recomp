@@ -1,0 +1,30 @@
+# Bounded center-route fixture: map-coordinate shortcut to the lower-inner node,
+# then real Up input, a second sample of the center display, and Y entry.
+# The map/player pokes below are an explicit teleport shortcut. No route, tile,
+# level-selection, completion, event or save writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 300
+dump lower_node
+press up 16
+dump moving_up
+wait 120
+dump center_arrival
+wait 30
+dump center_anim
+press y 2
+wait 300
+dump entry_attempt
+quit

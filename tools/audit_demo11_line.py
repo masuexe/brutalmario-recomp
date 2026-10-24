@@ -14,7 +14,7 @@ from prepare_rom import verify
 from restore_star_world_1 import lorom, make_candidate, pointer_offset
 
 ROOT = Path(__file__).resolve().parents[1]
-HEAD = 'demo11-star-visuals-flame'
+HEAD = 'demo11-center-route'
 
 
 def recipe_chain(head):

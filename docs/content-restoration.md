@@ -539,5 +539,27 @@ and palette, Santa fly-in/secret reward, sky normal clear/save/reload and the
 accepted cap-expiry regression pass on reference and native. Integrated checks
 pass **21/21**; all 19 recipes reproduce with zero unexpected changed bytes.
 The new visual milestone is automatically qualified, not a new user acceptance.
-The sky secret, other full-course/DK/death coverage, center entry mapping and
+The sky secret, other full-course/DK/death coverage and the broader restoration
+remain open.
+
+
+### Demo 1-1 center warp-star route (2026-10-24)
+
+The user reported that the route from the lower-inner node to the center special
+warp star is damaged and that the center star display stays dark. The
+[center route report](demo11-center-route.md) records the repair.
+
+Current cumulative head is **`demo11-center-route`** (`917eb515…`), through
+`demo11-star-visuals-flame`. Demo 1-1 stores the center map cell empty: map16
+tile `$00` and level assignment `$00`. The recipe restores the donor pair
+`$5A/$0A`, re-encodes the recipient level map as a private literal-only stream,
+and moves only the loader pointer. No other decoded map byte changes.
+
+Both hosts reach the center node with real Up input, show the animated
+special-warp-star display, and load room `$00A` with translevel `$00A`. A
+demoOnly1 control matches the route bytes, and its loaded center-course frame is
+byte-identical. Integrated checks pass **22/22**; the byte audit rebuilds 20
+recipes with 64,137 changed bytes inside 90,919 declared region bytes, zero
+unexpected. The center course keeps its accepted unfinished boss ending. The
+assisted course exit, other full-course/DK/death coverage, the sky secret and
 the broader restoration remain open.

@@ -30,6 +30,7 @@ CHECKS = [
     ('safe Star sprites and routes', 'qualify_demo11_star_sprites_safe'),
     ('lower-inner cap expiry/music', 'qualify_demo11_lower_inner_music'),
     ('Star palette, fuel, flame, Santa', 'qualify_demo11_star_visuals'),
+    ('center warp-star route/display', 'qualify_demo11_center_route'),
 ]
 
 
