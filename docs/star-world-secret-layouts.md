@@ -75,6 +75,34 @@ The parsed sprite IDs are `$02` once, `$05` four times, `$09` once,
 Coin area in the `d11-ur-coins-save-ref` capture. They are candidates for the
 distinct brick that holds the P-Switch.
 
+## Cave race state
+
+The race state lives in two long-memory bytes.
+
+| Address | Role |
+| --- | --- |
+| `$7FFD01` | Race flag. It is 0 outside the course and 1 during the race. |
+| `$7FFD02` | Race counter. The tracked normal route shows 6, 5, 4, 3, 2, 1 in order. |
+
+The initializer at physical `0x16BEF8` writes `$7FFD01=1` and
+`$7FFD02=$14`. A second writer at `0x176F5A` writes `$7FFD02=6` and
+`$7FFD01=1`.
+
+Sprite `$45` is the race display. Its RATS block is at `$34:8493`. The code
+reads `$7FFD01`, copies Mario X and Y to itself, and draws the `$7FFD02`
+digit. It also uses the long tables at `$7FFFA2` and `$7FFFA3`. The display
+sprite is not the gate itself.
+
+Runtime samples from the tracked normal route show the counter at 1 at the
+normal goal, and the normal clear flag `$81`. The second goal sprite at
+X=`$1250` did not open. The low path still stalls at about X=`$1026`.
+
+Next probe: trace writes to `$7FFFA2` and `$7FFFA3`, and find which code
+toggles the Map16 tiles at the finish. Then test the gate condition. The probe
+scripts are `local/probes/cave-stomp-probe.script`,
+`local/probes/cave-race-survey.script` and
+`local/probes/cave-spam-race.script`.
+
 ## Limits
 
 - The parser is a diagnostic probe. It does not prove runtime behavior.
