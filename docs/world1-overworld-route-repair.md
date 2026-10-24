@@ -86,12 +86,16 @@ user-supplied context:
 | `(0xE8,0x1A8)` | Warp Star position, defective | even with the completion cheat it enters internal room `$113` and stalls black |
 | `(0xA8,0x158)` | Warp Star position, defective | same stall in room `$113` |
 
-Room `$113` itself selects missing extended graphics `15A/158/159`
-(available in cheap_demo), but the stall is better read as the locked
-Warp-Star fallback the user described ("no warp star unlocked -> wrong
-level") than as a course to restore. Repairing the two defective stars
-means locating their intended destinations and event gates; it is recorded
-as open side content and does not affect the main chain.
+Room `$113` selects missing extended graphics `15A/158/159` (present in
+cheap_demo; one of the ids is shared with other rooms, so the restore
+needs the shared-slot review). The user clarified that in the original
+**7hero demo these fallback levels are enterable** - the black stall is a
+real missing-resource defect on this line, not a fixture artifact - while
+by design they should not be reachable before the Warp Stars unlock.
+Restoring the two defective stars therefore has two parts: the resource
+fix (donor cheap_demo or 7hero, to be compared) and the intended
+destination/event gating. Both are recorded as open side content and do
+not affect the main chain.
 
 ## Remaining scope
 
