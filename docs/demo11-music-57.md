@@ -27,6 +27,8 @@ same rules as `adapt_music`.
 
 - Sequence slot 0 reproduces the reviewed Snow Star 0x54 relocation list
   exactly. That validates the method and the group layout.
+- The tracked helper `tools/derive_legacy_song.py` reproduces both reviewed
+  payloads. See the [legacy layout note](legacy-music-layout.md).
 - Slot 3 has the relocation list below. The four sequences are the consecutive
   legacy ids `54`-`57`, so slot 3 is `57`.
 
