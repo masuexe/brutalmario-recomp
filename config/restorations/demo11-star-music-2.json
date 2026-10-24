@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Star Music 2",
+  "id": "demo11-star-music-2",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "d08a9fa9cc173a1aae8869a3a83367a7da5f484676ca453a929c9b30c39b9f87"
+  },
+  "room": "002",
+  "scope": "Restore the upper-right course song: room \\$002 requests song 5D whose slot is empty on this line, stalling the Mario Start loader. Port the reviewed adapted sequence from the demoOnly1 line's accepted star-world-upper-right recovery - identical donor group, relocations and adapted hash - into a fresh allocation with the empty slot repointed.",
+  "gfx_record": {
+    "address": "14AD08",
+    "before": "01800700280117001400290113002a0100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1724416,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "id": "5D",
+    "source_address": "44E008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "f5ce96a8d0dbdd22d269fdeec23e3a83c073f90d664dca8abf93db40745bf893"
+    },
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 8,
+    "source_data_offset": 1606,
+    "song_size": 940,
+    "relocations": [
+      0,
+      2,
+      6,
+      76,
+      80,
+      84,
+      95,
+      99,
+      110,
+      114,
+      118,
+      125,
+      129,
+      140,
+      144,
+      148,
+      155,
+      159,
+      170,
+      174,
+      183,
+      232,
+      280,
+      924,
+      926,
+      928,
+      930,
+      932,
+      934
+    ],
+    "pointer_address": "0FE117",
+    "before": "000000",
+    "allocation": {
+      "offset": 1724416,
+      "size": 4096,
+      "fill": 0
+    },
+    "adapted": {
+      "size": 948,
+      "sha256": "f2cab1c9f90bbecb26f29c98291c155f59bca3c21723801be7d8976006018add"
+    }
+  },
+  "code_patches": [],
+  "output": {
+    "size": 4194304,
+    "sha256": "314839039ab602c612b92fdd252c506f01a22ccdcc415d1e09c177f019fc741d"
+  }
+}

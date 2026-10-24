@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Star Sprites",
+  "id": "demo11-star-sprites",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-music-2",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "314839039ab602c612b92fdd252c506f01a22ccdcc415d1e09c177f019fc741d"
+  },
+  "room": "005",
+  "scope": "Restore the eleven Star World custom sprites whose record slots hold the default empty record on the Demo 1-1 line (rooms 004/007/008/009/00A/117): port each cheap_demo pixi block with its 16-byte record, rebasing the two entry-pointer bank bytes to the relocated block. The bank-local destination rule is relaxed only where the source block's low address has no free bank slot (sid 24/37/30); those blocks contain no absolute self-pointers, verified by scan. Fixes the falling-tile spawns the user reported.",
+  "gfx_record": {
+    "address": "14AD08",
+    "before": "01800700280117001400290113002a0100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1769472,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "custom_sprites": [
+    {
+      "sid": "7A",
+      "source_address": "248B77",
+      "destination_address": "2B8B77",
+      "block": {
+        "size": 1320,
+        "sha256": "4c0f25b5ae55c150cecc97351251727768e9de8b4fe54e9f76e1be43c1ef1794"
+      },
+      "source_record_address": "10B8FD",
+      "source_record": "012200003b931957868b2bb48b2b0000",
+      "destination_record_address": "318A12",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "57",
+      "source_address": "1EFC95",
+      "destination_address": "29FC95",
+      "block": {
+        "size": 767,
+        "sha256": "94f57be9e255e0c11244f716016f290aaa113c1e93a549141f7655e8d8e693ea"
+      },
+      "source_record_address": "10B6CD",
+      "source_record": "0136802a04000000a4fc29bafc290000",
+      "destination_record_address": "3187E2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "58",
+      "source_address": "20FC89",
+      "destination_address": "2AFC89",
+      "block": {
+        "size": 614,
+        "sha256": "e1a1887016d84f256244d9759fbf21f5f9158c162e08e087a76c2631804caebe"
+      },
+      "source_record_address": "10B6DD",
+      "source_record": "013600003883110098fc2ac3fc2a0000",
+      "destination_record_address": "3187F2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "17",
+      "source_address": "10CD68",
+      "destination_address": "3ECD68",
+      "block": {
+        "size": 265,
+        "sha256": "e1c5978e04ec251b4d7d5a9d28dd723385ecc1bc115d35d42783615377321070"
+      },
+      "source_record_address": "10B2CD",
+      "source_record": "013601063d93196477cd3e7ccd3e0000",
+      "destination_record_address": "3183E2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "28",
+      "source_address": "20A261",
+      "destination_address": "2BA261",
+      "block": {
+        "size": 5160,
+        "sha256": "983dca5ba8c6fc00c2c43bafc9bf60f9ad452780a3037b194b6d57ad15aefbe8"
+      },
+      "source_record_address": "10B3DD",
+      "source_record": "012800073f01194470a22b0ca32b0000",
+      "destination_record_address": "3184F2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "24",
+      "source_address": "1E8000",
+      "destination_address": "3EE000",
+      "block": {
+        "size": 3603,
+        "sha256": "d9ac74c7c0f05ba26dcfff5c2a09da94dff42d57cafe25361c4343fdcd1f448f"
+      },
+      "source_record_address": "10B39D",
+      "source_record": "017000003b931d440f803e84803e0000",
+      "destination_record_address": "3184B2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "15",
+      "source_address": "10FCEC",
+      "destination_address": "31FCEC",
+      "block": {
+        "size": 575,
+        "sha256": "ba0f1a7822e1364661942556b061d581692e2e9812e8f79314af29584c556036"
+      },
+      "source_record_address": "10B2AD",
+      "source_record": "013601863f13996417fd3137fd310000",
+      "destination_record_address": "3183C2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "45",
+      "source_address": "198493",
+      "destination_address": "2B8493",
+      "block": {
+        "size": 321,
+        "sha256": "9c27bb7c02d9750100254dea792ced724a783dd886aa6ee8528cfeb86c39b821"
+      },
+      "source_record_address": "10B5AD",
+      "source_record": "0128000032139964a2842ba7842b0000",
+      "destination_record_address": "3186C2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "50",
+      "source_address": "1CB8EF",
+      "destination_address": "29B8EF",
+      "block": {
+        "size": 806,
+        "sha256": "188cf800ac477190ba969e18ccd21d6932a7322e2cea14a7acda8d5cd4a68e9f"
+      },
+      "source_record_address": "10B65D",
+      "source_record": "013600003d9319641ab929c2b9290000",
+      "destination_record_address": "318772",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "37",
+      "source_address": "21EC22",
+      "destination_address": "3EC000",
+      "block": {
+        "size": 3428,
+        "sha256": "e4f31208d56db5c2bbdd4127112c954bc0b1a95b5dff5e2252e4526148d03e84"
+      },
+      "source_record_address": "10B4CD",
+      "source_record": "013610803f03196431ec3efeec3e0000",
+      "destination_record_address": "3185E2",
+      "before": "0000ffffffffffff218001218001ffff"
+    },
+    {
+      "sid": "30",
+      "source_address": "1B8000",
+      "destination_address": "2AB000",
+      "block": {
+        "size": 1680,
+        "sha256": "5b9aecb2fbbf9595dd36fd2c6dadde59c3dfd95cdfe799643659f4071297e279"
+      },
+      "source_record_address": "10B45D",
+      "source_record": "017000003b931d440f802a24802a0000",
+      "destination_record_address": "318572",
+      "before": "0000ffffffffffff218001218001ffff"
+    }
+  ],
+  "code_patches": [],
+  "output": {
+    "size": 4194304,
+    "sha256": "0deb4cb24ae43600b5737b70a336e67d560bc465cb013c53bf4d859018c559e6"
+  }
+}

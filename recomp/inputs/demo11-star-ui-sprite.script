@@ -1,0 +1,23 @@
+# uinner sprite-alive check on the star-sprites candidate.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801880178018801
+poke 1f1f 1700180017001800
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 300
+dump u0
+wait 300
+dump u1
+quit
