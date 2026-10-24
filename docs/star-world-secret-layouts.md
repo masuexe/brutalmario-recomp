@@ -78,6 +78,17 @@ The probe scripts are `local/probes/bay-switch-probe.script` and
 `local/probes/bay-switch-scan.script`. The remaining switch placements need a
 new probe that follows the wiki pages with real swimming input.
 
+More probes did not resolve the other switches:
+
+- Holding Mario at each decoded sprite position (ids `$0A`, `$0B`, `$0E`,
+  `$2C`, `$2F`, `$62`, `$7A`) did not change the water target. The sprites are
+  not the switches.
+- Held-position sweeps at Y=`$0080` and Y=`$0400` drop Mario into water or
+  crush him in solid tiles. The mode changes to `$0B`/`$0C` and the probes
+  stop. A safe scan needs real swimming input and the current water level.
+- Probe scripts: `bay-sprite-contact.script`, `bay-held-sweep.script`,
+  `bay-ceiling-sweep.script`.
+
 ## Plains Star: room `$002`
 
 The parsed sprite IDs are `$02` once, `$05` four times, `$09` once,
