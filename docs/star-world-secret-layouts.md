@@ -91,6 +91,16 @@ The probe scripts are `local/probes/bay-switch-probe.script` and
 `local/probes/bay-switch-scan.script`. The remaining switch placements need a
 new probe that follows the wiki pages with real swimming input.
 
+Frame images help locate the switches. The capture dumps include
+`.fb.bmp` frames. Convert them with `ffmpeg -i frame.fb.bmp -vf scale=512:448:flags=neighbor frame.png`
+and inspect the result. The crystal switches are visible as rainbow diamond
+objects. One sits near the page `0B` bottom-left region (the known
+(`$0020`,`$0C80`) tile). A second crystal is visible in the page `06` view
+taken from (`$00A0`,`$0580`). That view puts the crystal at about
+(`$0131`,`$0611`), but pokes at (`$0120`,`$0600`), (`$0140`,`$0620`),
+(`$0100`,`$05F0`), (`$01B0`,`$0620`) and (`$01C0`,`$0610`) did not change
+the water target. The screen estimate needs the exact camera position.
+
 More probes did not resolve the other switches:
 
 - Holding Mario at each decoded sprite position (ids `$0A`, `$0B`, `$0E`,
