@@ -10,7 +10,7 @@
     "sha256": "4328e78c27bd9d063c3b6d0e9ba02f5c79c3209d529e310d2230994672b59177"
   },
   "room": "104",
-  "scope": "Restore Yoshi's House (room $104) custom sprite A2 (mark_sub): demo11's record slot is the default empty record so both spawns abort. Port demo6's 464-byte pixi block with its RATS header (473 bytes total) and the 16-byte record; the engine rebases the two entry pointers to the new bank. The donor's RATS complement byte is adapted to this engine's convention (0xFE30 -> 0xFE2F, count^0xFFFF) via a reviewed local donor shim (demo6-ratsfix.sfc); the relocated block carries the fixed header.",
+  "scope": "Restore Yoshi's House (room $104) custom sprite A2 (mark_sub): demo11's record slot is the default empty record so both spawns abort. Port demo6's 464-byte pixi block with its RATS header (473 bytes total) and the 16-byte record; the engine rebases the two entry pointers to the new bank. The donor's RATS complement byte is adapted to this engine's convention (0xFE30 -> 0xFE2F, count^0xFFFF) via a reviewed local donor shim (demo6-ratsfix.sfc); the relocated block carries the fixed header. NOTE: the 7hero house stream (the intact layout) uses a different object encoding; byte-level header adaptations do not make it loadable (stalls at Mario Start), so the stub stays and full restoration requires an object-level transcription plus four missing custom sprites. The ported A2 (falling marker block) behaviour is itself the record-gap artifact the user identified - the intact house does not contain it.",
   "gfx_record": {
     "address": "14AF08",
     "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"

@@ -18,8 +18,13 @@ capture of either restoration line.
 non-interactive (`$1686=0x99` disables Mario contact), draws a single 8x8
 tile (`$88`), and has three modes driven by `$1528,x`: stand still, fall at
 `$28/frame`, or fall at `$B0/frame`, destroying itself once it reaches a
-depth threshold (`$14D4`/`$D8` checks). In the house the two spawns are the
-"falling block" presentation pieces, not gameplay.
+depth threshold (`$14D4`/`$D8` checks).
+
+**User correction (binding):** the falling-tile behaviour is itself the
+*record-gap artifact*, not the author's intent - the intact house (7hero)
+contains **no A2 at all** (its placements are `8A/8B/8C/B9`). The two A2
+spawns in the Demo 1-1 stub are leftover/incomplete state, and the faithful
+target is the 7hero house layout.
 
 ## What the candidate ports
 
@@ -42,16 +47,20 @@ depth threshold (`$14D4`/`$D8` checks). In the house the two spawns are the
 
 ## Open dependencies (blocking full restoration)
 
-- **The 7hero house stream is not portable yet.** 7hero's room `$104` is the
-  intact house (renders fully: green roof, YOSH! sign, sprites alive) and its
-  41-byte object stream ports via the level-data primitive, but the stream
-  requests four custom sprites (`8A/8B/8C/B9` runtime) whose records exist
-  **only in 7hero's own sprite system** - their 16-byte-format slots are empty
-  in demo6/7/cheap/demo8, so the loader stalls at Mario Start (mode `$12`)
-  even with the music byte adapted back to this line's request.
+- **The 7hero house stream is not byte-portable.** Its 41-byte object stream
+  uses a different object encoding from this line's stub (``05/1d/78/2f...``
+  command space versus the stub's ``d7/d6...``). Experiments (captures
+  `d11-yh-entry{5,7,A,B}-ref`): porting the stream raw, with the music byte
+  adapted, with the secondary-header field adapted, and with the room-104
+  sprite placement list emptied, all still stall at Mario Start (mode `$12`).
+  Full restoration therefore needs an **object-level transcription** of the
+  house into this line's encoding plus four missing custom sprites
+  (`8A/8B/8C/B9`), whose records exist only in 7hero's own sprite system.
 - With the stub, the room stays black and silent exactly as the accepted head
   does (both ROMs rms 0.0 at the house); the candidate changes nothing
-  observable until the house stream can follow.
+  observable until the transcription exists.
+- Given the user's correction, the ported A2 record/block is retained only as
+  groundwork; it is not part of the faithful layout.
 
 ## Verification
 
