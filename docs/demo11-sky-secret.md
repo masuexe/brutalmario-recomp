@@ -48,21 +48,33 @@ Every ceiling bounce that burns frames without climbing spends that slack. One
 test reached Y `$0C71` with fuel `5`; that line wasted about `850` pixels.
 A clean line must pass each bar without a stall.
 
-## Open questions and next actions
+## User verification and status
 
-1. Confirm whether the right-page climb can collect a second refill. The two
-   visible plus sprites in the left page sit at X `$0050`/Y `$0640` and
-   X `$0090`/Y `$0510`. A second refill removes the 89-pixel budget limit.
-2. Build a stall-free steering line from the fall refill to the secret band.
-   The tracked goal script is a good base for the left page; the secret line
-   runs on the right page.
-3. Record what the secret finish does after it fires. A forced-fire diagnostic
-   set `$C2=1` mid-air but did not return to the map. The next sample must
-   follow the real trigger and read the room, mode and flag changes.
+On 2026-10-25 the user verified this route in play. The user reports that the
+course can be completed, and gives these facts:
 
-Expected result from the wiki: the secret exit turns the course into a Warp
-Star and sets the sky slot to its secret value. The sky slot is `$1EA2`; the
-normal clear writes `$8C` on the accepted middle-right checkpoint.
+- The right page has no fuel blocks.
+- A right-page ascent line with almost no bar hits is necessary to clear.
+- After the ascent there is a key and a keyhole.
+- Inserting the key into the keyhole unlocks the Warp Star.
+
+The user asked to stop the automated route search. This document changes no
+ROM. Automated route qualification and the secret-clear capture stay deferred.
+The route is user-verified; it is not machine-qualified yet.
+
+## Forced-fire diagnostic result
+
+A diagnostic patch relaxed the secret X check. The run set `$C2=1` on the
+left-page crossing but did not return to the map. The secret finish needs the
+right-page key area, not only the Y band.
+
+## Diagnostic notes kept for later
+
+- An infinite-fuel patch (NOP on the fuel decrement at `$38B3E5`) lets a probe
+  climb without a time limit. An alternating left-page line reaches the normal
+  finish. A direct position poke to the bottom did not settle in the level.
+- One full fuel load gives 89 pixels of slack above the required climb. A
+  machine route needs near-zero ceiling bounces.
 
 ## Reproduction
 
