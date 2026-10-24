@@ -720,3 +720,28 @@ find the backward-animated brick near the top right, take its P-Switch, go
 down, press the switch to convert the bricks, and fall to the key and keyhole.
 Remaining Star World routes, the secret exits, unassisted traversals, the
 center Boss exception and the broader restoration stay open.
+
+
+### Demo 1-1 lower-right Snow Star route acceptance (2026-10-25)
+
+The [lower-right route report](demo11-star-lower-right-route.md) records the
+next qualification checkpoint. No ROM changed; the head stays
+`demo11-star-bgm`.
+
+The tracked lower-right scripts pass on reference and native: entry and
+ordinary controls with the low-Map16 guard, the loaded ice Ptooie (`$57`) and
+penguin (`$58`) sprites, five real DK coins with counter and DK-bit checks,
+the real end wall into room `$026`, the three-symbol goal-point match and the
+real goal sphere, normal clear flag `$8A` with console-reset reload, the real
+Santa reward key/keyhole secret with flag `$8B` and the map-0 Warp Star, and a
+real death/re-entry.
+
+The reference requests the restored Snow Star slot `54`. Native and reference
+match on every route state field, and the demoOnly1 line matches except for
+pre-entry menu samples. Integrated checks pass **29/29**; the byte audit is
+unchanged (23 recipes, 105,090 changed bytes inside 139,297 declared region
+bytes, zero unexpected).
+
+Unassisted full traversal and listening acceptance are not claimed. The
+remaining Star World routes, the unassisted traversals, the center Boss
+exception and the broader restoration stay open.
