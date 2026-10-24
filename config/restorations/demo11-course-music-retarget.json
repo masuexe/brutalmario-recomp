@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Course Music Retarget",
+  "id": "demo11-course-music-retarget",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-bgm",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "8939c2ace216af9f6b8c9de365ea8b2614cc8a686b0692e86fec98608afc36c0"
+  },
+  "scope": "Retarget the course music bytes of 17 stalled Demo 1-1 levels from legacy-family BGM ids to the verified new-family equivalents, so their null slots no longer stall the SPC upload. The mapping comes from config/music-mapping.json. No new song data is installed.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2031616,
+    "size": 32,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "719BF9",
+      "before": "3c",
+      "after": "9d",
+      "role": "Room 00D course music: legacy BGM 3B -> new-family 9C."
+    },
+    {
+      "address": "67FA40",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 015 course music: legacy BGM 47 -> new-family 6B."
+    },
+    {
+      "address": "1EE7B2",
+      "before": "37",
+      "after": "62",
+      "role": "Room 01A course music: legacy BGM 36 -> new-family 61."
+    },
+    {
+      "address": "5A8AE3",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 021 course music: legacy BGM 47 -> new-family 6B."
+    },
+    {
+      "address": "6AE9DD",
+      "before": "3f",
+      "after": "8e",
+      "role": "Room 108 course music: legacy BGM 3E -> new-family 8D."
+    },
+    {
+      "address": "79A00F",
+      "before": "44",
+      "after": "5a",
+      "role": "Room 110 course music: legacy BGM 43 -> new-family 59."
+    },
+    {
+      "address": "16DA24",
+      "before": "37",
+      "after": "62",
+      "role": "Room 118 course music: legacy BGM 36 -> new-family 61."
+    },
+    {
+      "address": "58A5DC",
+      "before": "43",
+      "after": "72",
+      "role": "Room 124 course music: legacy BGM 42 -> new-family 71."
+    },
+    {
+      "address": "5CA70C",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 129 course music: legacy BGM 47 -> new-family 6B."
+    },
+    {
+      "address": "7BE817",
+      "before": "43",
+      "after": "72",
+      "role": "Room 12A course music: legacy BGM 42 -> new-family 71."
+    },
+    {
+      "address": "10F035",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 12E course music: legacy BGM 47 -> new-family 6B."
+    },
+    {
+      "address": "1FF505",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 130 course music: legacy BGM 47 -> new-family 6B."
+    },
+    {
+      "address": "5D8E10",
+      "before": "44",
+      "after": "5a",
+      "role": "Room 131 course music: legacy BGM 43 -> new-family 59."
+    },
+    {
+      "address": "62D766",
+      "before": "44",
+      "after": "5a",
+      "role": "Room 132 course music: legacy BGM 43 -> new-family 59."
+    },
+    {
+      "address": "578E9A",
+      "before": "37",
+      "after": "62",
+      "role": "Room 13E course music: legacy BGM 36 -> new-family 61."
+    },
+    {
+      "address": "5CD942",
+      "before": "44",
+      "after": "5a",
+      "role": "Room 14B course music: legacy BGM 43 -> new-family 59."
+    },
+    {
+      "address": "5CDC64",
+      "before": "44",
+      "after": "5a",
+      "role": "Room 14C course music: legacy BGM 43 -> new-family 59."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "f2b4d3ad640680897e609a172123bad665b8c4a2e951f78b469db67fe0c8b464"
+  }
+}

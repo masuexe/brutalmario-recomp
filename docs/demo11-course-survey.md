@@ -57,6 +57,30 @@ The pilot also confirms the override reaches the intended level: the room echo
 matches the translevel for these entries. Translevel `001` is the first
 candidate for a dependency investigation.
 
+## Full-range result (translevels 001-0C0)
+
+192 probes ran on the reference host:
+
+| Result | Count | Meaning |
+| --- | ---: | --- |
+| Playable `14` | 70 | Level reached gameplay |
+| Mario Start stall `12` | 78 | A music slot is null |
+| Mode `0E` | 34 | Returned to the map; likely unused or empty rooms |
+| Mode `0D` | 7 | Death or invalid entry |
+| Mode `17` | 2 | Unexpected state |
+| Mode `0B` | 1 | Unexpected state |
+
+All 42 stalls sampled before the range widened requested a null music slot. The
+unique stalled songs are `02`, `03`, `05`, `06`, `21`, `2C`, `36`,
+`3B`, `3C`, `3E`, `3F`, `42`, `43`, `44`, `45`, `46`, `47`,
+`53`, `55`, `56`, `57` and `5B`. Six have verified new-family mappings,
+two are legacy-exclusive and the rest are unmapped.
+
+The first fix candidate is
+`[demo11-course-music-retarget](demo11-course-music-retarget.md)`. It retargets
+17 rooms to existing new-family slots and lets seven sampled levels reach
+gameplay. It is a candidate, not the current head.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

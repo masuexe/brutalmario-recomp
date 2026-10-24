@@ -824,3 +824,28 @@ region bytes, zero unexpected).
 The normal exit is qualified. The secret exit stays user-verified and
 deferred. The remaining secret branches, unassisted traversals, the center
 Boss exception and the broader restoration stay open.
+
+
+### Demo 1-1 course loading survey and music retarget candidate (2026-10-26)
+
+The user chose a full-game course survey for the next phase. The
+[survey](demo11-course-survey.md) enters each translevel from the Star World
+map 6 node with a bounded overworld tile level override, using a fresh save and
+the reference host.
+
+The `001`-`0C0` run found 70 playable entries, 78 Mario Start stalls, 34
+empty or returning rooms and 10 unexpected states. Every sampled stall requests
+a null music slot, so the SPC upload never completes. The recipient stores the
+request as a `40 60 <song+1>` record in the level data.
+
+The [retarget candidate](demo11-course-music-retarget.md) changes 17 rooms to
+the verified new-family music ids from `config/music-mapping.json`. Seven
+sampled translevels reach gameplay on the candidate while the head stalls. The
+candidate is registered, qualified and in the suite, but it is not the current
+head and has no native build yet. The suite now reports **33/33**; the head
+byte audit is unchanged.
+
+The remaining stalled songs need donor restoration: the legacy-exclusive
+`53` and `57`, and the unmapped slots `02`, `03`, `05`, `06`, `21`,
+`2C`, `3C`, `3F`, `44`, `45`, `46`, `55`, `56` and `5B`.
+

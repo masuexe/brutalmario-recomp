@@ -173,4 +173,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11StarWorldBgmSNESRecomp',
         'title': 'Brutal Mario Demo11 Star World BGM',
     },
+    'demo11-course-music-retarget': {
+        'binary': 'BrutalMarioDemo11CourseMusicRetargetSNESRecomp',
+        'title': 'Brutal Mario Demo11 Course Music Retarget',
+    },
 }

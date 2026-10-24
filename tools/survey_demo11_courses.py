@@ -65,18 +65,18 @@ def prepare(first, last):
     print(f'Prepared {total} scripts in {PROBE_DIR.relative_to(ROOT)}')
 
 
-def capture_name(translevel):
-    return f'{CAPTURE_PREFIX}{translevel:03X}'
+def capture_name(prefix, translevel):
+    return f'{prefix}{translevel:03X}'
 
 
-def run(first, last):
+def run(first, last, target=TARGET, prefix=CAPTURE_PREFIX):
     failures = []
     for translevel in range(first, last + 1):
         script = PROBE_DIR / f'course-{translevel:03X}.script'
         if not script.exists():
             failures.append((f'{translevel:03X}', 'missing script'))
             continue
-        name = capture_name(translevel)
+        name = capture_name(prefix, translevel)
         directory = ROOT / 'local/captures' / name
         if (directory / 'entry600.wram.bin').exists():
             print(f'{translevel:03X} already captured')
@@ -85,7 +85,7 @@ def run(first, last):
             import shutil
             shutil.rmtree(directory)
         command = [sys.executable, str(ROOT / 'tools/m1.py'), 'reference',
-                   '--target', TARGET, '--script', str(script), '--capture', name]
+                   '--target', target, '--script', str(script), '--capture', name]
         try:
             subprocess.run(command, cwd=ROOT, check=True,
                            stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
@@ -115,10 +115,10 @@ def sample(directory, tag):
             'lives_minus_one': body[0x0dbe]}
 
 
-def report(first, last):
+def report(first, last, target=TARGET, prefix=CAPTURE_PREFIX, report_path=REPORT):
     entries = []
     for translevel in range(first, last + 1):
-        directory = ROOT / 'local/captures' / capture_name(translevel)
+        directory = ROOT / 'local/captures' / capture_name(prefix, translevel)
         entry = {'translevel': f'{translevel:03X}',
                  'capture': str(directory.relative_to(ROOT))}
         if not directory.exists():
@@ -142,11 +142,11 @@ def report(first, last):
         late = entry.get('samples', {}).get('entry600') or {}
         print(f"{entry['translevel']} {entry['result']:20s} "
               f"room={late.get('room', '-')} mode={late.get('mode', '-')}")
-    REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps({'target': TARGET, 'host': 'reference',
-                                  'first': f'{first:03X}', 'last': f'{last:03X}',
-                                  'entries': entries}, indent=2) + '\n')
-    print(f'Report: {REPORT.relative_to(ROOT)}')
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text(json.dumps({'target': target, 'host': 'reference',
+                                       'first': f'{first:03X}', 'last': f'{last:03X}',
+                                       'entries': entries}, indent=2) + '\n')
+    print(f'Report: {report_path.relative_to(ROOT)}')
 
 
 def main():
@@ -154,13 +154,16 @@ def main():
     parser.add_argument('action', choices=['prepare', 'run', 'report'])
     parser.add_argument('--first', type=lambda text: int(text, 0), default=0x001)
     parser.add_argument('--last', type=lambda text: int(text, 0), default=0x020)
+    parser.add_argument('--target', default=TARGET)
+    parser.add_argument('--prefix', default=CAPTURE_PREFIX)
+    parser.add_argument('--report', type=Path, default=REPORT)
     args = parser.parse_args()
     if args.action == 'prepare':
         prepare(args.first, args.last)
     elif args.action == 'run':
-        raise SystemExit(run(args.first, args.last))
+        raise SystemExit(run(args.first, args.last, args.target, args.prefix))
     else:
-        report(args.first, args.last)
+        report(args.first, args.last, args.target, args.prefix, args.report)
 
 
 if __name__ == '__main__':
