@@ -86,7 +86,7 @@ music fix, calling it a minor issue that does not affect play.
 
 Recorded acceptance therefore covers: terrain and graphics recovered, normal
 movement, and no crashes. Open for this course, besides music: its complete exit
-route, DK coins and collectibles, death/re-entry, and itemised audible checks.
+route, Dragon Coins and collectibles, death/re-entry, and itemised audible checks.
 
 ## Room 106 numeric music selection attempt (2026-10-23)
 

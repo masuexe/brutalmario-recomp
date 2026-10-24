@@ -53,10 +53,10 @@ Each collision increments both `$1420/$1422` to 1 through 5. The fifth sets
 saved bit `$1F37=08` and grants one life. From the fifth coin, real swimming
 loads the goal tape at `0CA0` and reaches it. `$1493` becomes nonzero, then the
 normal clear returns to map0 `(0A8,1D8)` with `$1EE6: 0B -> 8B`, retaining the
-DK bit and the extra life. All three hosts pass these checks.
+Dragon Coin bit and the extra life. All three hosts pass these checks.
 
 On the candidate reference and native hosts, console reset, actual File A load
-and map re-entry preserve the clear/DK state; room120 contains no remaining
+and map re-entry preserve the clear/Dragon Coin state; room120 contains no remaining
 standard coin tiles. The donor's attempted full route did not restore the same
 state after reset (capture `world1-120-qualified-cheap`); no donor persistence
 claim is made. That failed extended donor attempt is not accepted evidence for

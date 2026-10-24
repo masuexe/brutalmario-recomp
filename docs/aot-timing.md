@@ -130,7 +130,7 @@ The user's subjective star-music concern remains deferred at their request.
 On 2026-10-16, the user confirmed normal play in Demo 1-1's Entry course and
 normal Baby Yoshi behavior in the underground Entry area reached through its
 pipe. Together with the automated checks, the current instruction-timing
-regression checkpoint passes for those covered flows. DK coin collection was
+regression checkpoint passes for those covered flows. Dragon Coin collection was
 not tested and remains a follow-up item rather than a blocker for this bounded
 checkpoint. See [playtesting.md](playtesting.md) for the report's scope.
 
@@ -165,7 +165,7 @@ M1/X1 addressing coverage and increases the frontier to 50 eligible variants.
 The measurements above describe the preceding 49-variant checkpoint.
 
 The 50-variant follow-up subsequently passed user testing, including normal
-DK coin pickup, closing the collectible pickup item left open above. See
+Dragon Coin pickup, closing the collectible pickup item left open above. See
 [playtesting.md](playtesting.md) for the later report.
 
 The [WRAM-store expansion](aot-wram.md) extends the opt-in model with guarded

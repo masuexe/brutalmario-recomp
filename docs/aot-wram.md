@@ -3,7 +3,7 @@
 Date: 2026-10-16. This round extends the restricted instruction-bus model to
 WRAM stores and promotes two Demo 1-1 leaves, increasing the compiled frontier
 from **50 to 52 eligible variants**. The preceding 50-variant build passed user
-testing, including DK coin pickup. demoOnly1 remains isolated.
+testing, including Dragon Coin pickup. demoOnly1 remains isolated.
 
 ## Selected functions and scope
 
@@ -109,7 +109,7 @@ On 2026-10-16, following the requested map movement, Entry loading,
 pipe/underground and map-return checks, the user reported no issues with the
 52-variant build. Together with the automated checks, this passes the bounded
 regression checkpoint. No exact session duration or executable hash was
-supplied. DK coin pickup was explicitly confirmed on the preceding
+supplied. Dragon Coin pickup was explicitly confirmed on the preceding
 [50-variant build](aot-indexed.md); no new collectible failure was reported.
 See [playtesting.md](playtesting.md) for the manual evidence and scope.
 

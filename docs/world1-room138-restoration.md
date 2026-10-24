@@ -80,7 +80,7 @@ collision, map-event or save data was changed. No audio driver was transplanted.
   the earlier position/invulnerability fixtures; no exit, goal, event or
   completion values are injected.
 - The room120 five-coin/normal-clear/File A reset regression passes on the new
-  native build, retaining clear 8B and DK bit 08 and re-entering room120.
+  native build, retaining clear 8B and Dragon Coin bit 08 and re-entering room120.
 - Existing restorer and practice-launcher suites pass: 32 and 18 tests.
 
 Inputs are `recomp/inputs/world1-room138-entry.script` and

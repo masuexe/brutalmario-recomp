@@ -85,9 +85,9 @@ not reopened, and physical output is not newly qualified.
 
 On 2026-10-16, following the requested map movement, level-entry and
 pipe/underground return checks, the user reported no issues with the new build
-and explicitly confirmed normal DK coin pickup. Together with the automated
+and explicitly confirmed normal Dragon Coin pickup. Together with the automated
 checks, this passes the 50-variant build's bounded regression checkpoint.
-The DK coin pickup follow-up is closed. Save/reload persistence and whole-port
+The Dragon Coin pickup follow-up is closed. Save/reload persistence and whole-port
 fidelity are not established by this report. See [playtesting.md](playtesting.md)
 for the manual evidence and its scope.
 

@@ -1,7 +1,7 @@
 # demoOnly1 all-completion practice cheat
 
 Date: 2026-10-17. The [practice launcher](../tools/play_demo_only1.py) now offers
-an optional **all levels + DK coins** completion cheat, compatible with map
+an optional **all levels + Dragon Coins** completion cheat, compatible with map
 teleport, named destinations, the boss-door shortcut and air swimming.
 
 ```sh
@@ -83,17 +83,17 @@ bounds and session isolation.
 Native and reference runs both complete the following sequence with the new
 cheat: Star World at map 6 / `$0178,$01A8` -> Warp Star -> Special at map 5 /
 `$0118,$0128` -> Warp Star -> the original Star World position. All samples
-remain in overworld mode `$0E`, with all DK bits retained. Without completion
+remain in overworld mode `$0E`, with all Dragon Coin bits retained. Without completion
 flags, the same initial node does not take the intended warp and instead
 starts a gameplay entry. This is a tested progression-unlock effect.
 
 The native boss practice route also reaches `$177` and enters active gameplay
-in `$178` with all DK bits retained and air swimming enabled. This is an entry
+in `$178` with all Dragon Coin bits retained and air swimming enabled. This is an entry
 check, not a new fight/victory acceptance.
 
 Both cores enter Baby Yoshi Hill (`$126`) and return to its map entrance after
 a diagnostic death with every level-status byte still `$9F`, every event byte
-`$FF`, all DK bits set and counter 96. The misidentified map 0 node was separately checked without the cheat; its
+`$FF`, all Dragon Coin bits set and counter 96. The misidentified map 0 node was separately checked without the cheat; its
 loading stall belongs only to that node.
 
 A real interactive launcher smoke test toggles `c`, chooses custom Star World

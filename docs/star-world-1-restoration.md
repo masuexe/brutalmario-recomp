@@ -36,7 +36,7 @@ Observed branches, following the existing screen exits:
 The normal and secret exits have different results. A normal goal alone did
 not activate this Warp Star in the probes. Goal/keyhole probes use coordinate
 shortcuts and a damage-immunity cheat; they do not edit destinations, the
-key's carried state, completion flags, events or DK bits. The game itself
+key's carried state, completion flags, events or Dragon Coin bits. The game itself
 picks up the key, completes the exit and performs the map transfer. These
 are transition checks, not an unassisted end-to-end playthrough.
 
@@ -169,9 +169,9 @@ both pipe branches, screen `$0E`, normal/secret goals, sound, DK persistence
 or an unassisted complete traversal. No complete-game restoration is claimed.
 
 The subsequent automated [save closeout](star-hub-survey.md) finds no loaded
-DK placement in this course's four examined rooms in either version, so DK
-pickup is not applicable to this path. It verifies actual normal-clear SRAM
+Dragon Coin placement in this course's four examined rooms in either version, so
+Dragon Coin pickup is not applicable to this path. It verifies actual normal-clear SRAM
 progress through native cold restart and console reset/File A reload; it
-does not qualify preservation of a nonzero DK bit. The missing console-reset
+does not qualify preservation of a nonzero Dragon Coin bit. The missing console-reset
 callback found during that check is fixed in the project build glue. Existing
 opening/death/re-entry pictures and WRAM remain identical after that fix.

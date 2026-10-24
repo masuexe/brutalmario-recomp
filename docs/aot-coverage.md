@@ -151,7 +151,7 @@ and fidelity goals remain open.
 The next [indexed table-read expansion](aot-indexed.md) promotes `$04F87C`
 and reaches 50 eligible variants, with 903,250 fewer interpreted opcodes than
 the accepted 49-variant route. Its automated regression evidence and passed manual
-checkpoint, including normal DK coin pickup, are recorded separately.
+checkpoint, including normal Dragon Coin pickup, are recorded separately.
 
 The subsequent [WRAM-store expansion](aot-wram.md) adds two bounded memory
 leaves and reaches 52 eligible variants. Its full-route capture removes

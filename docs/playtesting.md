@@ -4,8 +4,8 @@ Last full-stage manually accepted baseline: [Sky Star / middle-right](star-world
 room `$009` with destination `$09B`. The user reports that another agent
 completed the work and their playtest found no problems. They also report
 that sound is available again and the heard audio is normal. This accepts
-the stage and current Sky Star sound; secret completion and all five DK
-coins were not itemized and remain unqualified. The user authorizes an
+the stage and current Sky Star sound; secret completion and all five Dragon
+Coins were not itemized and remain unqualified. The user authorizes an
 automatic restoration loop, with targeted human checks only when essential.
 
 The upper-inner cave (`$007`) is automatically qualified on top of that
@@ -33,10 +33,10 @@ separate automated pickup/expiry checks, along with exit/save/reset evidence.
 On 2026-10-21 the user reported that powered Mario died instead of shrinking
 in `star-world-center`. The [recipe regression](center-damage-regression.md)
 was reproduced and repaired with real Koopa-contact checks in both hosts.
-The user also reported short cannon travel near the second DK coin and
+The user also reported short cannon travel near the second Dragon Coin and
 identified cheap_demo under ZSNES 1.51 as their comparison. Controlled legacy
 and native checks reproduce the same input distinction: releasing directional
-input and retaining B crosses the pit and collects the DK coin. See
+input and retaining B crosses the pit and collects the Dragon Coin. See
 [the cannon evidence](center-cannon-flight.md). These are automated findings;
 the user has not supplied a subsequent manual acceptance of either report.
 
@@ -44,7 +44,7 @@ Earlier accepted cumulative baseline: [upper-right Star World](star-world-upper-
 room `$002`. The user confirmed normal entry and working SMB3 bricks, then
 explicitly chose to waive a complete manual run because the course takes too
 long. They agreed to stage acceptance using those observations plus the
-automated actual pipe, normal-goal, five-DK, reset/save/re-entry and death
+automated actual pipe, normal-goal, five-Dragon-Coin, reset/save/re-entry and death
 checks. Record this as bounded stage acceptance, not a full manual playthrough
 or sound pass. That earlier checkpoint took place during a silent window.
 Sound subsequently returned, as recorded above; individually unconfirmed
@@ -66,12 +66,12 @@ uncollected enemy-derived coin unloads, clearing the original enemy's load
 record. A stomped Koopa does not respawn in the tested route. The user then
 reproduced the explained behavior and considers this report resolved without
 a gameplay change. This does not close other unspecified issues or qualify
-every individual branch, DK persistence or audio. Previous
+every individual branch, Dragon Coin persistence or audio. Previous
 acceptances below apply to the original targets and earlier runtime checkpoints.
 
 The subsequent [automated save/hub checkpoint](star-hub-survey.md) checks
 actual normal-clear SRAM persistence and fixes a native console-reset hook.
-No loaded DK placement was found in the first course's examined dependency
+No loaded Dragon Coin placement was found in the first course's examined dependency
 path in either version, so a collectible pickup was not fabricated. Nine
 uncleared hub entrances were surveyed, and the upper-left vertical cave is
 selected for the next restoration. These are automated observations, not a
@@ -184,13 +184,13 @@ Manual confirmation of this 49-variant executable is recorded below.
 On 2026-10-16, after the instruction-timing rebuild, the user reported no
 issues in Demo 1-1's Entry course itself. They also entered the underground
 Entry area through its pipe and confirmed that the Baby Yoshi mechanic
-worked normally. The user had not obtained the DK coin, so its collection
+worked normally. The user had not obtained the Dragon Coin, so its collection
 behavior remains explicitly untested. No exact session duration or new
 explicit listening/death-return report was supplied.
 
 Combined with the automated differential and replay checks, this passes the
 current AOT instruction-timing regression checkpoint for the covered Entry
-and underground Baby Yoshi flows. DK coin collection remains a follow-up
+and underground Baby Yoshi flows. Dragon Coin collection remains a follow-up
 coverage item; it does not block this bounded checkpoint. This report does
 not establish a full level clear, complete collectible/persistence coverage,
 or whole-port fidelity.
@@ -201,9 +201,9 @@ matched-device audio regression checks.
 
 On 2026-10-16, in response to the requested checks of map movement, level entry,
 and the pipe/underground return route, the user reported no issues with the new
-build. They also explicitly confirmed that the DK coin could be collected
+build. They also explicitly confirmed that the Dragon Coin could be collected
 normally. This passes the 50-variant build's manual regression checkpoint and
-closes the previously outstanding DK coin pickup item. The report does not
+closes the previously outstanding Dragon Coin pickup item. The report does not
 separately establish collectible persistence after saving/reloading, a full
 level clear, or whole-port fidelity; no exact duration or executable hash was
 supplied.
@@ -213,7 +213,7 @@ executable. Automated differential, replay and matched-device audio checks
 are recorded separately. On 2026-10-16, in response to the requested map
 movement, Entry loading, pipe/underground and map-return checks, the user
 reported no issues. This passes the new build's bounded manual regression
-checkpoint. No exact duration, executable hash or new separate DK coin pickup
+checkpoint. No exact duration, executable hash or new separate Dragon Coin pickup
 report was supplied; the previous pickup confirmation remains recorded above.
 
 On 2026-10-16, the user requested arbitrary map-position teleport, specifically
@@ -227,7 +227,7 @@ matching reference loading observations, rather than native-only regressions.
 
 The user confirmed that arbitrary map teleport works, but identified the old
 World 1 castle preset as a World 6 level. They requested a separate all-levels
-and DK-coin completion cheat to unlock Warp Stars. Their lower-left castle /
+and Dragon Coin completion cheat to unlock Warp Stars. Their lower-left castle /
 raised-ground / animated-skull landmark was used to correct the preset to map
 0, X=$0018, Y=$01B8. The [completion option](completion-cheat.md) has automated
 Warp Star, ordinary-level return and isolated-launcher checks; user acceptance
@@ -627,7 +627,7 @@ and reported that custom sprites load normally and the damaged regions seen
 in the original no longer occur. They accepted this stage. This supersedes
 the pending manual cave milestone; it does not independently itemize sound,
 full ascent, every branch or completion. Existing bounded automated evidence
-covers water/platform interactions, five real DK pickups, save/reload,
+covers water/platform interactions, five real Dragon Coin pickups, save/reload,
 examined exits and death/re-entry, with 99 project tests passing.
 
 Accepted workspace ROM SHA-256:
@@ -644,7 +644,7 @@ The original Demo 1-1 and demoOnly1 baselines remain separate.
 The [Snow Star cumulative candidate](star-world-lower-right-restoration.md)
 restores the missing `$54` song that stalls MARIO START, ExGFX `$1B3` and
 ice Ptooie `$57`, retaining the accepted upper-left and lower-left repairs.
-All 105 project tests and 191 selected local assertions pass. Actual DK
+All 105 project tests and 191 selected local assertions pass. Actual Dragon Coin
 pickups/save/reload, timed slot/goal and key/keyhole exits, Warp Star,
 death/re-entry and sampled enemies pass bounded native/reference checks.
 The 36 earlier route samples retain exact full-WRAM/raw-framebuffer matches.

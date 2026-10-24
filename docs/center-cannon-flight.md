@@ -1,4 +1,4 @@
-# Special Warp Star: cannon flight near the second DK coin
+# Special Warp Star: cannon flight near the second Dragon Coin
 
 The reported short flight is reproducible when directional input continues
 after the cannon's forced-speed interval. Releasing left/right and retaining
@@ -55,7 +55,7 @@ controller byte during playback.
 | ZSNES input after launch | Observed `$15` | Result |
 | --- | --- | --- |
 | B + Y + right | `$C1` | Horizontal speed decays; Mario falls and enters death action 9 |
-| B alone | `$80` | Horizontal momentum persists in the air; Mario reaches the far bank, retains 4 lives-minus-one and collects the DK coin |
+| B alone | `$80` | Horizontal momentum persists in the air; Mario reaches the far bank, retains 4 lives-minus-one and collects the Dragon Coin |
 
 The two movie logs contain 161 and 194 matching-input samples respectively.
 Windows process samples can straddle a guest frame, so they are not

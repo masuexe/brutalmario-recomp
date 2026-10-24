@@ -92,7 +92,7 @@ fresh-session check on cumulative center ROM `e0fb3837…` confirms a real pit
 death loses one life, returns to the map and permits re-entry into `$117`
 with that life total retained in both hosts. See
 `star-world-lower-inner-death.script` and captures
-`center-cumulative-lower-inner-death-{reference,native}`. All DK coins and
+`center-cumulative-lower-inner-death-{reference,native}`. All Dragon Coins and
 an unassisted 100-coin route remain unqualified. The center damage regression and reported
 cannon-distance issue are tracked in
 [the center damage report](center-damage-regression.md).
