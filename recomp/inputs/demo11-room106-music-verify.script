@@ -1,0 +1,21 @@
+# Room106-only music verification: enter the room106 node (0x58,0x1D8).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0000
+poke 1f17 5800d8015800d801
+poke 1f1f 05001d0005001d00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 480
+wait 600
+dump room106_settled
+quit

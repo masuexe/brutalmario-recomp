@@ -152,28 +152,51 @@ All experiments stayed on local/ignored targets; the accepted head
 `demo11-world1-route` and its 12/12 acceptance are untouched.
 
 
+## Correction (2026-10-24): node/room names were swapped
+
+The user's playtest caught a mislabelling that runs through this document
+and earlier surveys: the map node `(0x88,0x1F8)` actually loads internal
+room `$0120` (its 0x49 request is the CORRECT music the user confirmed),
+and the node `(0x58,0x1D8)` loads internal room `$0106` - the course whose
+music needed fixing (baseline request 0x25). Earlier text calling
+`(0x88,0x1F8)` "the room106 node" followed the swapped label; the
+`$10B`-bound experiment even fired on stale `$10B` values. Trust
+`$1F17/$10B` in captures, not the prose labels.
+
 ## Resolution (2026-10-24, user audition)
 
 The user auditioned the generated library (138 trimmed WAVs under
 `local/probes/world1-survey/106-music-diagnostic/audition-trimmed/`, built
 from the 102-slot demo11 song table plus the 49 adapted cheap group songs)
 and identified **demo11 native slot `0x33`** as the correct room106 music
-(`d11-song33`). The fix is therefore three equal-width bytes on the
-descendant target `demo11-room106-music` (ROM SHA-256
-`a47defdea2e0d898bdd98e59d3ec9db15f665d9fc900d7edc75cb3b344aa2362`):
+(`d11-song33`); the playtest further confirmed room120's music (0x49) is
+correct as-is. The first value-bound patch was rejected by the playtest
+(it transiently captured room120's request), and a `$10B`-bound variant
+failed because `$10B` still holds the previous room at dispatch time.
 
-| Address | Before | After | Role |
-| --- | --- | --- | --- |
-| `$00972C` | `40` | `49` | bind the branch to the room106 request |
-| `$00972D/2E` | `EA EA` | `F0 07` | BEQ to the override |
-| `$009737` | `16` | `33` | override requests native slot 33 |
+The final fix is **thirteen equal-width bytes** on the descendant target
+`demo11-room106-music` (ROM SHA-256
+`22229d65d3930181` prefix; see the recipe for the full digest). The
+level-default BGM dispatch now checks the persistent map-node X coordinate:
 
-`tools/qualify_demo11_room106_music.py` pins both hosts: `$0DDA=0x33`,
-the reference audio reproduces the auditioned track bit-for-bit in RMS and
-zero-crossing features, the native ARAM shows an uploaded track playing,
-and exactly the reviewed bytes differ from the accepted route head.
-`tools/check_demo11_line.py` reports **13/13**; the whole-line byte audit
-still shows zero unexpected bytes. Launch:
+```
+$00972B: LDY $1F17      ; current node X (set at map exit, stable in level)
+$00972E: CPY #$58       ; the room106 node (0x58,0x1D8)
+$009730: BNE +6         ; any other node passes its original request through
+$009732: LDA #$33       ; room106 requests native slot 33
+$009734: NOP x4
+$009738: STA $1DFB      (unchanged)
+```
+
+`tools/qualify_demo11_room106_music.py` pins, on reference and native:
+room106 node selects `$0DDA=0x33` with `$10B=$0106`; the room120 node keeps
+`$0DDA=0x49` with `$10B=$0120`; the solo-room106 reference audio matches
+the auditioned track within 5% RMS / 10% zero-crossing; the native ARAM
+shows an uploaded track playing; and exactly the reviewed thirteen bytes
+differ from the accepted route head. `tools/check_demo11_line.py` reports
+**13/13**; the whole-line byte audit shows zero unexpected bytes. Inputs:
+`recomp/inputs/demo11-room106-music-{verify,both}.script`; captures
+`d11-106only-ref`, `d11-music-both-{ref,native}`. Launch:
 `python3 tools/play_demo_only1.py --restoration demo11-room106-music`.
 Final acceptance: the user's listening check on the native build.
 

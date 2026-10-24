@@ -431,9 +431,11 @@ button opens room `$010` on both hosts. Head is `demo11-world1-route`
 (`5265a7bd…`), acceptance 12/12 at that point; the user playtested and
 confirmed the map route is fixed on 2026-10-24. The subsequent
 [room106 music fix](world1-room106-music-investigation.md) steers the
-room106 level-default request to native slot `0x33`, chosen by the user
-through a generated audition library; head is now `demo11-room106-music`
-(`a47defde…`), acceptance **13/13**.
+room106 course's level-default request (node `(0x58,0x1D8)`, internal room
+`$0106`) to native slot `0x33`, chosen by the user through a generated
+audition library, while the room120 course (node `(0x88,0x1F8)`) keeps its
+user-confirmed original `0x49` music; head is now `demo11-room106-music`
+(`22229d65…`), acceptance **13/13**.
 
 The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
 rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence

@@ -10,7 +10,7 @@
     "sha256": "5265a7bd3f1ee818683287c5429c67d903c4d90a41d8c09cefc53a965d2f1057"
   },
   "room": "106",
-  "scope": "Fix room106 music: the level-default request (0x49) is compared to itself and routed to the override, which now requests native slot 0x33 - the track the user identified as the correct room106 music (audition d11-song33). Three equal-width bytes; no data, table or engine changes.",
+  "scope": "Fix the room106 course music (map node (0x58,0x1D8), internally room $0106): the level-default BGM dispatch now checks the persistent map-node X coordinate $1F17 and requests native slot 0x33 only for node X=$58. The neighbouring node (0x88,0x1F8) - internally room $120 - keeps its original 0x49 request (user-confirmed correct), and every other course passes its request through unchanged. Thirteen equal-width bytes; no data or engine transplant.",
   "gfx_record": {
     "address": "14AF08",
     "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
@@ -23,26 +23,14 @@
   "assets": [],
   "code_patches": [
     {
-      "address": "00972C",
-      "before": "40",
-      "after": "49",
-      "role": "CMP #$40 -> CMP #$49 (bind the branch to the room106 request)"
-    },
-    {
-      "address": "00972D",
-      "before": "eaea",
-      "after": "f007",
-      "role": "NOP NOP -> BEQ $009736"
-    },
-    {
-      "address": "009737",
-      "before": "16",
-      "after": "33",
-      "role": "override immediate 0x16 -> request native slot 33"
+      "address": "00972B",
+      "before": "c940eaeaac9b0dc0c1d002a916",
+      "after": "ac171fc058d006a933eaeaeaea",
+      "role": "node-bound dispatch: LDY $1F17 / CPY #$58 / BNE passthrough / LDA #$33 for the room106 node"
     }
   ],
   "output": {
     "size": 4194304,
-    "sha256": "a47defdea2e0d898bdd98e59d3ec9db15f665d9fc900d7edc75cb3b344aa2362"
+    "sha256": "22229d65d3930181d8f20f11567e389e10b2e9fb60f823d71ccd43f1267c8f1f"
   }
 }
