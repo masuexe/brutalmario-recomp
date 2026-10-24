@@ -33,6 +33,7 @@ CHECKS = [
     ('center warp-star route/display', 'qualify_demo11_center_route'),
     ('Forest Star course port', 'qualify_demo11_star_forest'),
     ('node-scoped music dispatch', 'qualify_demo11_node_music'),
+    ('lower-left course route', 'qualify_demo11_star1_route'),
 ]
 
 

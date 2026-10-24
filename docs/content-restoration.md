@@ -614,3 +614,22 @@ inside 139,275 declared region bytes, zero unexpected. The room106 song choice
 is unchanged, and no new listening acceptance is requested. The center Boss
 ending, the sky secret, other full-course/DK/death coverage and the broader
 restoration remain open.
+
+
+### Demo 1-1 lower-left Star World route acceptance (2026-10-24)
+
+The systematic Star World route acceptance starts with the lower-left course.
+The [lower-left route report](demo11-star1-route.md) records it. No ROM changed;
+this is a qualification checkpoint on `demo11-node-music` (`77a4b7a9…`).
+
+The tracked `star-world-1-*.script` routes pass on reference and native: entry
+and ordinary movement, a real fall/death/re-entry, the real normal goal with
+save `$89` in WRAM and both SRAM copies plus console-reset reload, the real
+keyhole secret exit with save `$8B` and the World 1 Warp Star, and the
+`$048`→`$051` side exit. Fresh demoOnly1-line captures match in every semantic
+field; only moving positions differ, within animation tolerance.
+
+Integrated checks pass **25/25**; the byte audit is unchanged (22 recipes,
+105,084 changed bytes inside 139,275 declared region bytes, zero unexpected).
+The sky secret, the remaining Star World course routes, DK/death coverage and
+the broader restoration remain open.
