@@ -74,6 +74,18 @@ def pointer_offset(gfx):
     return lorom(0x148008) + (gfx - 0x100) * 3
 
 
+def graphics_pointer(rom, gfx):
+    """Resolve the three verified LM graphics table formats; destinations stay extended."""
+    if 0 <= gfx < 0x32:
+        return sum(rom[lorom(address) + gfx] << shift for address, shift in
+                   ((0x00B992, 0), (0x00B9C4, 8), (0x00B9F6, 16)))
+    if 0x80 <= gfx < 0x100:
+        offset = lorom(0x0FF600) + (gfx - 0x80) * 3
+    else:
+        offset = pointer_offset(gfx)
+    return int.from_bytes(rom[offset:offset+3], 'little')
+
+
 def check_allocation(recipient, start, size):
     end = start + size
     if (end > len(recipient) or start // 0x8000 != (end - 1) // 0x8000 or
@@ -332,7 +344,7 @@ def make_candidate(recipient, donor, config):
                 raise ValueError('shared graphics have unexpected room dependencies or selection edits')
         elif selected_rooms:
             raise ValueError('destination graphics ID is selected by an existing room')
-        source_pointer = int.from_bytes(donor[pointer_offset(old_id):pointer_offset(old_id)+3], 'little')
+        source_pointer = graphics_pointer(donor, old_id)
         if source_pointer != int(item['source_address'], 16):
             raise ValueError('donor graphics pointer changed')
         decoded, compressed = lz2(donor, source_pointer)

@@ -1,0 +1,129 @@
+# Five actual DK pickups, natural end-wall transfer, timed slot jumps, real goal and reload.
+# Coordinate/immunity shortcuts; no exit, sprite, slot-result, DK, goal or SRAM writes.
+# Fresh ice-course entry and ordinary controls; damage immunity only.
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x1c8, Y=0x1e8.
+poke 0109 00
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 360
+dump layout
+until 0100 == 13 360
+dump graphics
+until 0100 == 14 360
+dump active
+forcepoke 1497 ff
+wait 30
+dump standing
+poke 94 c0059000
+poke 7b 0000
+wait 6
+dump coin1
+poke 94 e008b000
+poke 7b 0000
+wait 6
+dump coin2
+poke 94 6008d000
+poke 7b 0000
+wait 6
+dump coin3
+poke 94 600a1000
+poke 7b 0000
+wait 6
+dump coin4
+poke 94 e00d9000
+poke 7b 0000
+wait 6
+dump coin5
+poke 7d 00
+pokefor 94 c00ed000 180
+dump end_ready
+press right+y 90
+wait 300
+dump destination
+poke 94 38004001
+poke 7b 0000
+until 160b == 34 300
+press b 12
+wait 30
+dump slot1
+poke 94 68004001
+poke 7b 0000
+until 160a == 34 300
+press b 12
+wait 30
+dump slot2
+poke 94 98004001
+poke 7b 0000
+until 1609 == 34 300
+press b 12
+dump slots_stopped
+wait 4
+dump santa00
+wait 4
+dump santa01
+wait 4
+dump santa02
+wait 4
+dump santa03
+wait 4
+dump santa04
+wait 4
+dump santa05
+wait 4
+dump santa06
+wait 4
+dump santa07
+wait 4
+dump santa08
+wait 4
+dump santa09
+wait 4
+dump santa10
+wait 4
+dump santa11
+wait 4
+dump santa12
+wait 4
+dump santa13
+wait 4
+dump santa14
+wait 4
+dump santa15
+wait 4
+dump santa16
+wait 4
+dump santa17
+wait 4
+dump santa18
+wait 4
+dump santa19
+wait 4
+dump santa20
+wait 4
+dump santa21
+wait 4
+dump santa22
+wait 4
+dump santa23
+quit

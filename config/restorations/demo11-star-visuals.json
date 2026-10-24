@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "id": "demo11-star-visuals",
+  "target": "Brutal Mario Demo11 Star Visuals",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-lower-inner-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "10f8af337eafbfe2c42454087723587c4f8f41455dabe7517152272be37ce909"
+  },
+  "room": "054",
+  "scope": "Recover the original lower-left secret-room B2 artwork through a room-scoped graphics ID; restore missing Santa/slots sprite09; append a room009-only NMI upload of the existing fuel HUD cells while retaining the recipient status-bar routine. The tail-flame OAM correction is applied in the separate demo11-star-visuals-flame descendant.",
+  "gfx_record": {
+    "address": "14B788",
+    "before": "01808108b2001700140002001300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2035712,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "0B2",
+      "target_id": "FF8",
+      "source_address": "56BE42",
+      "record_offset": 4,
+      "compressed": {
+        "size": 3052,
+        "sha256": "9a982f0b204160e5787695e6dd3a3dfca73279aab7b4715a3fc22335b9c52f7d"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "dfc3cf5a4867d28aaa21929dd7e9c92da9c7b5777771f1b234364bedfa57937b"
+      }
+    }
+  ],
+  "raw_blocks": [
+    {
+      "name": "Room009-only fuel HUD NMI shim",
+      "bytes": "2294821008c22048ad0b01c90900d032ad000129ff00c91400d027a928508d1621a900188d1043a9e0ff8d1243a97f108d1443e2209c15219c1643a9028d0b42c22068286b",
+      "rats_address": "3EA000",
+      "destination_address": "3EA008",
+      "data": {
+        "size": 69,
+        "sha256": "5816b67479748d2852636b3a2bed5624fa654c617ed8a2d6072f4d5e62181359"
+      }
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "008DE1",
+      "before": "22948210",
+      "after": "2208a03e",
+      "note": "Keep existing status-bar DMA in all rooms; append the sixteen-cell fuel display only in active room009."
+    }
+  ],
+  "custom_sprites": [
+    {
+      "id": "09",
+      "rooms": [
+        38
+      ],
+      "source_address": "14F25C",
+      "destination_address": "37F25C",
+      "block": {
+        "size": 2654,
+        "sha256": "02205973c1f99996cc7080c8998ad7a1614d7be0969ef3087caca47396903f29"
+      },
+      "source_record_address": "10B1ED",
+      "source_record": "01360000f8a2a9456bf214aef2140000",
+      "destination_record_address": "318302",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "01ACF9",
+          "size": 64,
+          "sha256": "9174428e507c2689e3e4aca04aa29470f820a3cfb8361bc63a25f5bd1a2a818b"
+        },
+        {
+          "address": "27FAF4",
+          "size": 64,
+          "sha256": "548de359f10c837945db8457eab6999b4413ea137f9e24d79503f67961100518"
+        },
+        {
+          "address": "01801A",
+          "size": 64,
+          "sha256": "44eb8d68e9230a123a1d444a15ae7286d9cc538d3d7f610e46161b8a8edecd56"
+        },
+        {
+          "address": "018022",
+          "size": 64,
+          "sha256": "d8b9e6cf448bb7e28a0ed79906878dab878860fea9d6415b6f202d34a6aab378"
+        },
+        {
+          "address": "01802A",
+          "size": 64,
+          "sha256": "9eef050506ebff6ee8d2cbe124e38c1eeac6bc235c76470b9f82b5cdad19c813"
+        },
+        {
+          "address": "0285BA",
+          "size": 64,
+          "sha256": "dcf01a93254a3e32f29e265c7620555488c48c09ca4e56688553acaebcb35a57"
+        },
+        {
+          "address": "028086",
+          "size": 64,
+          "sha256": "8cb93eaf1862fa5326030f449c7503035a0a9214e08d6a869861f2a52a0c7dd2"
+        },
+        {
+          "address": "01B7B3",
+          "size": 64,
+          "sha256": "467e38b7fa0cda8b38471f7d3ba771b3b134393a33f620436b0f0bdb56abc3d7"
+        },
+        {
+          "address": "02A9DE",
+          "size": 64,
+          "sha256": "d90072aaeaaa6a7707e0eb38dd687de5e177f104d6ff56300b28f709a4762929"
+        },
+        {
+          "address": "03B664",
+          "size": 64,
+          "sha256": "34cfc5dcf9c04719d82a89ff080e0e138da9701365e0d6899946b39ff971d10a"
+        },
+        {
+          "address": "03B72B",
+          "size": 64,
+          "sha256": "929edd44b2bdc22bb0fa91874a0beb80b125a19570a442a52b054ef5c5af8858"
+        },
+        {
+          "address": "07F7D2",
+          "size": 64,
+          "sha256": "3aa46a09e6b6e77cdad8ffd755c8a61f338f012ebc08ab618d8810df670ccd33"
+        },
+        {
+          "address": "2E8DF0",
+          "size": 64,
+          "sha256": "0b4c37425cbae9b6751c4c13325e6a58369d4d71ad64da06682d4c0b8f332821"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 64,
+          "sha256": "d839b694f15b5c215d94ee84059fdba7d5fab5381cc7263cf82344acd7903c80"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 64,
+          "sha256": "1db8c8b0b20891d4d9861974f8633b35df34a92a2ec49d4bad71bc36380750e1"
+        },
+        {
+          "role": "recipient",
+          "address": "108294",
+          "size": 72,
+          "sha256": "c0e7c3b7f08826c7895f10ae56397203bc308ad977a8b640e7c8c453b56f8f3e"
+        },
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "5e7eacb99b530707cc2e68016afb6eaede56ba0e671ca184ff48578b0ee740d6"
+  }
+}

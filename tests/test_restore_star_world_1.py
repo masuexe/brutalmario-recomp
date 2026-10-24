@@ -14,6 +14,18 @@ from m1 import verify_scaffold_rom
 
 
 class RestorationSafetyTests(unittest.TestCase):
+    def test_graphics_source_tables_resolve_small_extended_and_standard_ids(self):
+        rom = bytearray(0xb0000)
+        offset = lorom(0x0ff600) + (0xb2 - 0x80) * 3
+        rom[offset:offset+3] = bytes.fromhex('42be56')
+        for address, value in ((0xb992, 0x46), (0xb9c4, 0xec), (0xb9f6, 0x0b)):
+            rom[lorom(address) + 1] = value
+        self.assertEqual(restoration.graphics_pointer(rom, 0xb2), 0x56be42)
+        self.assertEqual(restoration.graphics_pointer(rom, 1), 0x0bec46)
+        for unused in (0x32, 0x7f, -1, 0x1000):
+            with self.assertRaises(ValueError):
+                restoration.graphics_pointer(rom, unused)
+
     def test_overflow_is_rejected_before_a_write_outside_the_graphics_buffer(self):
         with self.assertRaisesRegex(ValueError, 'exceeds'):
             lz2(bytes.fromhex('e7ff00ff'), 0x008000, limit=100)

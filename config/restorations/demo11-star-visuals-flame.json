@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "id": "demo11-star-visuals-flame",
+  "target": "Brutal Mario Demo11 Star Visuals Flame",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-visuals",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "5e7eacb99b530707cc2e68016afb6eaede56ba0e671ca184ff48578b0ee740d6"
+  },
+  "room": "009",
+  "scope": "Repair the source rocket renderer OAM gap: fourteen body tiles leave Y at the next free entry, but four redundant INYs skip it before the two flame tiles. The second flame then falls outside the sixteen entries finalized as 16x16, rendering its lower/right area as 8x8. Replace only those four INYs with NOPs; keep the existing sixteen-tile finalizer and all graphics, physics and other actor branches.",
+  "gfx_record": {
+    "address": "14AE28",
+    "before": "0180010590011700140093011300010000007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2040064,
+    "size": 1,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "38B5E0",
+      "before": "c8c8c8c8",
+      "after": "eaeaeaea",
+      "note": "Place both tail-flame tiles directly after the fourteen body tiles so both receive the existing 16x16 OAM size finalization."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "9f4add87fc2fe4efe2ebc96bc4509853f082656bb418c6ba26c170ef8f2768d1"
+  }
+}

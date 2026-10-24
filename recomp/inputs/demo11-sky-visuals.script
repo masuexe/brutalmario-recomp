@@ -1,0 +1,41 @@
+# Bounded entrance survey: disposable uncleared save; map coordinate shortcut.
+# Clean-session input route shared by reference and native hosts.
+# No imported savestates; map/player shortcuts are explicit below.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice map transfer: map 6, X=0x198, Y=0x1a8.
+poke 0109 00
+poke 1f11 0606
+poke 1f17 9801a8019801a801
+poke 1f1f 19001a0019001a00
+poke 0100 0b
+wait 240
+dump selected
+press y 2
+until 0100 == 12 480
+dump layout
+until 0100 == 13 480
+dump graphics
+until 0100 == 14 480
+dump active
+forcepoke 1497 ff
+wait 180
+dump standing
+press right+y 60
+dump walk
+press b+right+y 60
+dump jump
+wait 180
+dump later
+quit

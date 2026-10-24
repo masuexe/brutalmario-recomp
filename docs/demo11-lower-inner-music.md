@@ -5,9 +5,11 @@ expires and confirmed the intended selections: course `$60`, caps `$79`.
 This is the same donor bank-local music dependency already corrected on the
 demoOnly1 line; the safe Demo 1-1 sprite port had retained the donor's requests.
 
-Current automatically qualified cumulative target: `demo11-lower-inner-music`.
+User-tested cap-music checkpoint: `demo11-lower-inner-music`.
 ROM SHA-256:
 `10f8af337eafbfe2c42454087723587c4f8f41455dabe7517152272be37ce909`.
+The user tested this checkpoint and reported no issues before requesting the
+[Star World visual follow-up](demo11-star-visuals.md), which is the newer cumulative head.
 Parent `demo11-star-sprites-safe` remains intact at
 `11ad648a7885ea7c4792dd818229debead6adf3d238ffaea03f182d41e565887`.
 

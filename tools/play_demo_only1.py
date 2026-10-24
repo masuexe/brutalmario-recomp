@@ -115,6 +115,12 @@ LEVELS = {
     'demo11-lower-inner-music': {'name': 'Star World lower-inner with course and cap music repaired', 'map': 6,
                                  'x': 0x178, 'y': 0x1c8, 'level': 0x117,
                                  'teleport': (6, 0x178, 0x1c8)},
+    'demo11-star-visuals': {'name': 'Star World sky course with visual recoveries', 'map': 6,
+                          'x': 0x198, 'y': 0x1a8, 'level': 0x009,
+                          'teleport': (6, 0x198, 0x1a8)},
+    'demo11-star-visuals-flame': {'name': 'Star World sky course with complete flame tiles', 'map': 6,
+                                'x': 0x198, 'y': 0x1a8, 'level': 0x009,
+                                'teleport': (6, 0x198, 0x1a8)},
 }
 
 

@@ -517,3 +517,27 @@ as a segment on both hosts. Whole-line recipe replay now covers 17 targets,
 zero unexpected bytes, and integrated checks pass **20/20**. No new human
 listening acceptance or full-course clear is inferred. Center entry mapping
 and the remaining broader restoration scope stay open.
+
+
+### Star World visual follow-up (2026-10-24)
+
+The user tested `demo11-lower-inner-music` and reported no issues, accepting
+that cap-expiry/music checkpoint. They then requested lower-left secret-room
+colors, the sky fuel gauge and flame's right corner, and Snow Star Santa.
+The [visual recovery report](demo11-star-visuals.md) records all four fixes.
+
+Current cumulative head is **`demo11-star-visuals-flame`** (`9f4add87…`), through
+`demo11-star-visuals`. The secret room's palette was already correct; its
+version-local `$B2` artwork differed. A private graphic restores its intended
+appearance. A room009-only NMI addition displays the existing fuel buffer,
+and four removed OAM increments restore the second flame tile's 16x16 size.
+The missing `$09` record now supports real slot-game Santa/reindeer generation
+and the real keyhole clear on both hosts.
+
+Both flame animations, dynamic fuel depletion, loaded secret-room graphics
+and palette, Santa fly-in/secret reward, sky normal clear/save/reload and the
+accepted cap-expiry regression pass on reference and native. Integrated checks
+pass **21/21**; all 19 recipes reproduce with zero unexpected changed bytes.
+The new visual milestone is automatically qualified, not a new user acceptance.
+The sky secret, other full-course/DK/death coverage, center entry mapping and
+the broader restoration remain open.
