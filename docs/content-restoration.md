@@ -780,17 +780,17 @@ next qualification checkpoint. No ROM changed; the head stays
 `demo11-star-bgm`.
 
 The tracked upper-inner scripts pass on reference and native: entry with the
-race counter at 1 and 3, the coaster finish with `$13CE=1` and race counter 1,
+player X high byte at 1 and 3, the coaster finish with `$13CE=1`,
 the normal clear flag `$1EA9=$81` with `SRAM[7]/[$1B4]=$81`, File A reload,
 the low-Map16 guard, and real pit/death/re-entry. The reference requests the
 wiki-correct Cave Star slot `51`.
 
-The goal and death samples match exactly between hosts. The entry race has a
-one-frame host phase difference, so the check compares mode, room and race
-counter there. Fresh demoOnly1-line captures match every route sample.
+The goal and death samples match exactly between hosts. The entry coaster has
+a one-frame host phase difference, so the check compares mode, room and player
+X high byte there. Fresh demoOnly1-line captures match every route sample.
 Integrated checks pass **31/31**; the byte audit is unchanged (23 recipes,
 105,090 changed bytes inside 139,297 declared region bytes, zero unexpected).
 
-The 1st-place secret branch is not covered; the wiki route needs 1st place in
-the race counter. The remaining secret branches, unassisted traversals, the
+The secret branch is not covered; the Japanese wiki route needs every Koopa
+defeated so the goal block turns off. The remaining secret branches, unassisted traversals, the
 center Boss exception and the broader restoration stay open.

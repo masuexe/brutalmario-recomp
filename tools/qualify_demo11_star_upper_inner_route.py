@@ -2,7 +2,7 @@
 """Qualify the Star World upper-inner Cave Star routes on the Demo 1-1 line.
 
 The tracked upper-inner scripts cover the DKC2-style roller-coaster course on
-the current head: entry and the race position counter, the real coaster finish
+the current head: entry and the coaster progress, the real coaster finish
 with the normal-clear save and File A reload, and a real pit/death/re-entry.
 Reference and native runs must match fresh demoOnly1-line captures under the
 same scripts.
@@ -27,7 +27,6 @@ ROUTES = {
     'death': 'star-world-upper-inner-death.script',
 }
 HUB_FLAG = 0x1EA9
-RANK = 0x95
 GOAL_ACTIVE = 0x13CE
 SRAM_FLAG = 7
 SRAM_FLAG_MIRROR = 0x1B4
@@ -48,7 +47,7 @@ def state(capture_name, tag):
     body = blob(capture_name, tag)
     return dict(mode=body[0x100], room=word(body, 0x10B), x=word(body, 0x94),
                 y=word(body, 0x96), lives=body[0x0DBE], flag=body[HUB_FLAG],
-                coins=body[0x0DBF], rank=body[RANK], goal=body[GOAL_ACTIVE])
+                coins=body[0x0DBF], xhigh=body[0x95], goal=body[GOAL_ACTIVE])
 
 
 def music_requests(capture_name):
@@ -68,19 +67,19 @@ def check_route(host, route, script, native):
         active = state(name, 'active')
         require(active['mode'] == 0x14 and active['room'] == 0x007 and active['lives'] == 4,
                 'entry state differs: ' + host)
-        require(state(name, 'entry180')['rank'] == 1,
-                'race counter did not reach 1: ' + host)
-        require(state(name, 'entry600')['rank'] == 3,
-                'race counter did not reach 3: ' + host)
+        require(state(name, 'entry180')['xhigh'] == 1,
+                'coaster progress did not reach X high 1: ' + host)
+        require(state(name, 'entry600')['xhigh'] == 3,
+                'coaster progress did not reach X high 3: ' + host)
         if not native:
             sequence = music_requests(name)
             require(CAVE_SLOT in sequence, 'Cave Star slot 51 is not requested: ' + str(sequence))
     if route == 'goal':
         ow1 = state(name, 'ow1')
-        require(ow1['mode'] == 0x0D and ow1['room'] == 0x007 and ow1['goal'] == 1 and
-                ow1['rank'] == 1, 'coaster finish transition differs: ' + host)
+        require(ow1['mode'] == 0x0D and ow1['room'] == 0x007 and ow1['goal'] == 1,
+                'coaster finish transition differs: ' + host)
         ow2 = state(name, 'ow2')
-        require(ow2['mode'] == 0x0E and ow2['flag'] == 0x81 and ow2['rank'] == 1,
+        require(ow2['mode'] == 0x0E and ow2['flag'] == 0x81,
                 'normal clear state differs: ' + host)
         reloaded = state(name, 'file_reload')
         require(reloaded['mode'] == 0x0E and reloaded['flag'] == 0x81,
@@ -116,7 +115,7 @@ def compare_route(a, b, route, strict):
             if strict:
                 require(value == other,
                         f'sample differs: {route}/{sample}/{field}: {value} != {other}')
-            elif field in ('mode', 'room', 'rank', 'flag', 'goal', 'lives'):
+            elif field in ('mode', 'room', 'xhigh', 'flag', 'goal', 'lives'):
                 require(value == other,
                         f'sample differs: {route}/{sample}/{field}: {value} != {other}')
 
@@ -151,9 +150,9 @@ def main():
                                 'https://brutalmario.fandom.com/wiki/Music',
                                 'https://wikiwiki.jp/kitikumario/',
                                 'docs/walkthrough-reference.md'],
-                  limits=['The scripts use labelled map/player shortcuts, race-counter waits and, in the goal script, two phase counters to align both hosts; the coaster ride, finish, save, reload and deaths are real guest actions.',
-                          'The normal clear is qualified. The 1st-place secret branch is not covered; the wiki route needs 1st place in the race position counter.',
-                          'The entry race positions differ by one frame between hosts (entry180 has a one-pixel offset; entry600 has a different race height). The check compares mode, room and race counter, not the exact coaster pixel.',
+                  limits=['The scripts use labelled map/player shortcuts, player-X waits and, in the goal script, two phase counters to align both hosts; the coaster ride, finish, save, reload and deaths are real guest actions.',
+                          'The normal clear is qualified. The secret branch is not covered; the Japanese wiki route requires defeating every Koopa so the goal block turns off, and the race-counter storage was not identified in this checkpoint.',
+                          'The entry coaster positions differ by one frame between hosts (entry180 has a one-pixel offset; entry600 has a different coaster height). The check compares mode, room and player X high byte, not the exact coaster pixel.',
                           'An unassisted full traversal is not claimed. The save flag and SRAM constants are recipient-local.'])
     output = ROOT / 'local/reports/demo11-star-upper-inner-route.json'
     output.write_text(json.dumps(report, indent=2) + '\n')
