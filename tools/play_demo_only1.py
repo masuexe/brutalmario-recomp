@@ -103,6 +103,12 @@ LEVELS = {
     'demo11-star-music': {'name': 'Star World upper-left on the star-music Demo 1-1 line', 'map': 6,
                           'x': 0x128, 'y': 0x168, 'level': 0x004,
                           'teleport': (6, 0x128, 0x168)},
+    'demo11-star-music-2': {'name': 'Star World upper-right on the star-music-2 Demo 1-1 line', 'map': 6,
+                            'x': 0x1c8, 'y': 0x168, 'level': 0x002,
+                            'teleport': (6, 0x1c8, 0x168)},
+    'demo11-star-sprites': {'name': 'Star World upper-right on the star-sprites Demo 1-1 line', 'map': 6,
+                            'x': 0x1c8, 'y': 0x168, 'level': 0x002,
+                            'teleport': (6, 0x1c8, 0x168)},
 }
 
 
