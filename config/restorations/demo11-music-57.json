@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Music 57",
+  "id": "demo11-music-57",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-bgm",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "8939c2ace216af9f6b8c9de365ea8b2614cc8a686b0692e86fec98608afc36c0"
+  },
+  "scope": "Port legacy-family song 0x57 (KingBonbie VS MechaBonbie, Rescue Yoshi) from the reviewed cheap-demo four-song upload group into the Demo 1-1 base. The recipient slot 0x57 is null, so translevel 001 stalls at Mario Start.",
+  "gfx_record": {
+    "address": "14D408",
+    "before": "0180c400b00017001400c000130001000000c500ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1728512,
+    "size": 4096,
+    "fill": 0
+  },
+  "assets": [],
+  "music": {
+    "id": "57",
+    "source_address": "44A008",
+    "source_group": {
+      "size": 6136,
+      "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+    },
+    "source_base": 26624,
+    "destination_base": 21504,
+    "sequence_offset": 24,
+    "source_data_offset": 64,
+    "song_size": 3926,
+    "pattern_count": 1,
+    "relocations": [
+      0,
+      2,
+      6,
+      3630,
+      3654,
+      3685,
+      3689,
+      3693,
+      3697,
+      3729,
+      3733,
+      3741,
+      3910,
+      3912,
+      3914,
+      3916
+    ],
+    "pointer_address": "0FE105",
+    "before": "000000",
+    "allocation": {
+      "offset": 1728512,
+      "size": 4096,
+      "fill": 0
+    },
+    "adapted": {
+      "size": 3934,
+      "sha256": "1d293f8e6439ee80b2fecbfddf08be7a9d1b75a9db0aaf2e3fff04a59b9bba48"
+    }
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "35ff420f04a1cf05195f697191f6dfffb29fb34c429b1a62feaedcc7c371a4c4"
+  }
+}

@@ -177,4 +177,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11CourseMusicRetargetSNESRecomp',
         'title': 'Brutal Mario Demo11 Course Music Retarget',
     },
+    'demo11-music-57': {
+        'binary': 'BrutalMarioDemo11Music57SNESRecomp',
+        'title': 'Brutal Mario Demo11 Music 57',
+    },
 }

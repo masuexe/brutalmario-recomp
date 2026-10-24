@@ -42,6 +42,7 @@ CHECKS = [
     ('upper-inner Cave Star route', 'qualify_demo11_star_upper_inner_route'),
     ('middle-right Sky Star route', 'qualify_demo11_star_middle_right_route'),
     ('course music retarget', 'qualify_demo11_course_music_retarget'),
+    ('song 0x57 restoration', 'qualify_demo11_music_57'),
 ]
 
 

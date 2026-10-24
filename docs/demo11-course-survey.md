@@ -115,10 +115,10 @@ supplied version has a non-null pointer `A1 94 D2` for this slot: cheap-demo,
 demo6, demo7, demo8, 7hero, mazo, ow and the three ra versions. Demo 1-1 and
 demoOnly1 have the null slot.
 
-Next step: port slot `$57` with the reviewed music recipe workflow
-(`tools/restore_star_world_1.py`, `adapt_music`), like the room 010 and room
-138 music recoveries. The donor song data must be located in the donor's
-upload group layout first.
+The [song 0x57 candidate](demo11-music-57.md) now installs the reviewed
+donor song and removes the stall. Translevel `001` reaches gameplay on the
+candidate and matches native on the sampled fields. The candidate is not the
+head yet.
 
 ## Next steps
 

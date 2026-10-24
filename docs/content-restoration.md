@@ -841,11 +841,16 @@ request as a `40 60 <song+1>` record in the level data.
 The [retarget candidate](demo11-course-music-retarget.md) changes 17 rooms to
 the verified new-family music ids from `config/music-mapping.json`. Seven
 sampled translevels reach gameplay on the candidate while the head stalls. The
-candidate is registered, qualified and in the suite, but it is not the current
-head and has no native build yet. The suite now reports **33/33**; the head
-byte audit is unchanged.
+candidate is registered, qualified, in the suite, and has a native build. It is
+not the current head.
 
-The remaining stalled songs need donor restoration: the legacy-exclusive
-`53` and `57`, and the unmapped slots `02`, `03`, `05`, `06`, `21`,
-`2C`, `3C`, `3F`, `44`, `45`, `46`, `55`, `56` and `5B`.
+The [song 0x57 candidate](demo11-music-57.md) ports the legacy KingBonbie VS
+MechaBonbie song from the reviewed cheap-demo four-song group. Translevel `001`
+stalls on the head and reaches gameplay on the candidate. The reference and
+native captures match on the sampled fields. An audible match is not claimed.
+
+The suite now reports **34/34**; the head byte audit is unchanged. The remaining
+stalled songs still need donor restoration: the legacy-exclusive `53` and
+`57`, and the unmapped slots `02`, `03`, `05`, `06`, `21`, `2C`,
+`3C`, `3F`, `44`, `45`, `46`, `55`, `56` and `5B`.
 
