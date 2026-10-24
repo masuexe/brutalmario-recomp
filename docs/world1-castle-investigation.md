@@ -83,13 +83,29 @@ camera at 0, four checkpoints): exactly one custom-06 slot, status `$08`,
 small creature sprite standing there. `tools/check_demo11_line.py` reports
 **14/14** with the new check included.
 
-## Remaining observations, out of scope for completion
+## Closing the two open observations (2026-10-24, third pass)
 
-- The opening pits (`x≈$82/$9C`, one ~36 px gap in the k00 view) were never
-  re-tested for jumpability; the first survey's ground walk died there but
-  never jumped. The user's unfinished-course note makes this moot.
-- The end door at `x≈$10EA` was never entered; where it leads is unknown.
-- The `d11-castle-*` fixture captures all carry labelled fixtures
-  (air-swim/invulnerability/position pokes); no goal, event or completion
-  values were written anywhere in this work. The accepted
-  `demo11-room106-music` head is preserved unchanged as the base.
+**The "end door" does not exist.** A pixel scan for the blue-framed door
+across every castle framebuffer found nothing; the blue frames in
+`d11-castle-end3` are the map UI after death. What exists:
+
+- the playable course ends around `x=$16C1` (an invisible clamp: flight
+  stops there; teleports deeper land Mario in a bottomless fall);
+- the tile structure at world `x≈$1B40-$1B60` rows 9-13 (tiles
+  `877/878/87C/87D/838/84C`) is beyond that clamp and is **non-solid
+  backdrop** - Mario falls through at every height;
+- the earlier audit's "blue-framed door at `$10EA`" was a misread of a
+  framebuffer (likely the death-map screen).
+
+**The opening gap is original unfinished content, not a defect.** Real
+jump attempts die identically in cheap_demo and this line: platform at
+`x=$60/$61` -> fall at `x=$C4-$C7` (high route) or fall at `$9B` below the
+checker blocks (low route). Donor and recipient behave byte-for-byte the
+same, so there is nothing to restore - the author never finished the
+crossing, consistent with the "restore as-is, completion not required"
+directive.
+
+Both observations are closed; no castle content remains actionable except
+the Warp-Star fallback rooms documented elsewhere. All probes used labelled
+fixtures; no goal, event or completion values were written. The accepted
+head is unchanged.
