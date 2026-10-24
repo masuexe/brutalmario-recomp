@@ -14,7 +14,7 @@ from prepare_rom import verify
 from restore_star_world_1 import lorom, make_candidate, pointer_offset
 
 ROOT = Path(__file__).resolve().parents[1]
-HEAD = 'demo11-center-route'
+HEAD = 'demo11-star-forest'
 
 
 def recipe_chain(head):
@@ -62,6 +62,9 @@ def allowed_regions(cfg):
     for block in cfg.get('raw_blocks', []):
         start = lorom(int(block['rats_address'], 16))
         regions |= set(range(start, start + 8 + block['data']['size']))
+    for item in cfg.get('level_data', []):
+        offset = lorom(int(item['table'], 16)) + int(item['room'], 16) * 3
+        regions |= set(range(offset, offset + 3))
     return regions
 
 

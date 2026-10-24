@@ -563,3 +563,30 @@ recipes with 64,137 changed bytes inside 90,919 declared region bytes, zero
 unexpected. The center course keeps its accepted unfinished boss ending. The
 assisted course exit, other full-course/DK/death coverage, the sky secret and
 the broader restoration remain open.
+
+
+### Demo 1-1 middle-left Forest Star (2026-10-24)
+
+The user accepted the center warp-star checkpoint and asked to restore the map-6
+middle-left course to the old build's Forest Star. The
+[forest port report](demo11-star-forest.md) records the change.
+
+Current cumulative head is **`demo11-star-forest`** (`4a4928f1…`), through
+`demo11-center-route`. Demo 1-1 stores the short terrain stub in room `$003`.
+The recipe installs the accepted demoOnly1 forest donor data: room `$003`
+Layer 1 and Layer 2, sprite list and palettes, goal room `$04E`, three
+isolated ExGFX streams, the parrot/projectile/vine sprite blocks and a
+room-scoped private Map16 bank with scoped lookup shims. Recipient sites are
+re-derived: the private bank moves to `$41:8000`, the shims to `$49:E908`,
+the sprite records to the Demo 1-1 table at `$31:8D72`, and the hooks point
+to the new shims. The room settings byte `$05:DE03` returns to the dry value
+`$00`.
+
+Reference and native runs qualify entry, live parrot and projectile, both vine
+enemies defeated by real shots, the normal goal room `$04E` with save `$8C`,
+the secret save `$8E` and portal, and death/re-entry. Fresh demoOnly1-line
+captures have identical route values, and the loaded course buffers are
+byte-identical. Integrated checks pass **23/23**; the byte audit rebuilds 21
+recipes with 105,056 changed bytes inside 139,242 declared region bytes, zero
+unexpected. The center Boss ending, the sky secret, other full-course/DK/death
+coverage and the broader restoration remain open.
