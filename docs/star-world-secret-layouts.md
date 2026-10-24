@@ -146,6 +146,12 @@ A wider palette scan also finds crystals at (`$00`,`$0240`), (`$00`,`$0340`),
 did not change the water target. Two of them dropped Mario into the water and
 he drowned. These left-wall crystals are edge artifacts or decorations.
 
+Real-input swimming from the spawn moves Mario left along the surface from
+X=`$01A0` to about X=`$000D`, but the water target does not change. At the
+left wall the up, down and B strokes do not move Mario. The page `0B` switch
+did not trigger on this path. Probes: `bay-swim-left.script`,
+`bay-swim-jump.script`, `bay-swim-up.script`, `bay-swim-dive.script`.
+
 Paused camera sweeps from the bottom die when the camera moves far from the
 player (offscreen rule). The useful coverage is the earlier sweep set:
 camera Y from `$0C00` to `$0019`. Landing on the solid switch at
