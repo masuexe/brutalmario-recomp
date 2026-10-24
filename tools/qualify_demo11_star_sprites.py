@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Qualify the Star World custom-sprite recovery on the Demo 1-1 line.
+"""Check frozen entry evidence for the superseded Star World sprite artifact.
 
 Eleven custom-sprite record slots (7A 57 58 17 28 24 15 45 50 37 30) held the
 default empty record, so the placements in rooms 004/007/008/009/00A/117
 spawned as falling tiles - the record-gap artifact. Each cheap_demo pixi
-block ports with its 16-byte record, the two entry-pointer bank bytes rebased
-to the relocated block. Upper-inner and snow must show the record's runtime
-numbers alive in their sprite tables on both hosts.
+block was copied with its 16-byte record. Later review found seven occupied
+destinations and three out-of-block entry pointers. These samples only establish
+bounded entry observations on the historical ROM; use the safe qualifier for
+the replacement. Upper-inner and snow show runtime numbers alive on both hosts.
 """
 import json
 from pathlib import Path
@@ -64,14 +65,15 @@ def main():
         'candidate_rom_sha256': sha(candidate),
         'base_rom_sha256': sha(base),
         'binary_sha256': build['binary_sha256'],
-        'pins': cfg['custom_sprites'],
-        'captures': {'uinner': {'reference': 'local/captures/d11-sprites-ui-ref',
+        'pins': cfg['sprite_ports'],
+        'captures': {'uinner': {'reference': 'local/captures/d11-sprites-ui-reference',
                                 'native': 'local/captures/d11-sprites-ui-native'},
-                     'snow': {'reference': 'local/captures/d11-sprites-snow-ref'}},
+                     'snow': {'reference': 'local/captures/d11-sprites-snow-reference',
+                              'native': 'local/captures/d11-sprites-snow-native'}},
         'verified': ['eleven record slots filled with the cheap_demo records, pointer banks rebased',
                      'upper-inner shows three custom sprites alive on both hosts (numbers 36/28/36)',
-                     'snow shows the restored sprite alive on reference (number 07)',
-                     'the three bank-local exceptions (24/37/30) carry a no-self-pointer scan note'],
+                     'snow shows the restored sprite alive on both hosts (number 07)',
+                     'historical entries 24/37/30 are displaced incorrectly; superseded by the safe sibling'],
         'limits': ['Per-course traversal, enemy behaviour and clear flow for the nine Star World '
                    'rooms remain open; sprite-by-sprite behaviour parity is not claimed.'],
     }

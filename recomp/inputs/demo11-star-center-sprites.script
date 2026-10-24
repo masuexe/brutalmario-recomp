@@ -1,0 +1,30 @@
+# Fresh-save center entry with an explicit overworld-coordinate shortcut.
+# Damage immunity after entry bounds the observation; no actor/goal/clear writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+dump entered
+forcepoke 1497 ff
+wait 180
+dump standing
+press right+y 60
+dump walk
+press b+right+y 60
+dump jump
+wait 180
+dump later
+quit

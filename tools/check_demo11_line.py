@@ -26,7 +26,8 @@ CHECKS = [
     ('Star1 graphics', 'qualify_demo11_star1_gfx'),
     ('Star batch graphics', 'qualify_demo11_star_gfx_batch'),
     ('Star music 54/2E', 'qualify_demo11_star_music'),
-    ('Star sprites', 'qualify_demo11_star_sprites'),
+    ('historical Star entry samples', 'qualify_demo11_star_sprites'),
+    ('safe Star sprites and routes', 'qualify_demo11_star_sprites_safe'),
 ]
 
 

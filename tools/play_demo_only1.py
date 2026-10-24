@@ -106,9 +106,12 @@ LEVELS = {
     'demo11-star-music-2': {'name': 'Star World upper-right on the star-music-2 Demo 1-1 line', 'map': 6,
                             'x': 0x1c8, 'y': 0x168, 'level': 0x002,
                             'teleport': (6, 0x1c8, 0x168)},
-    'demo11-star-sprites': {'name': 'Star World upper-right on the star-sprites Demo 1-1 line', 'map': 6,
+    'demo11-star-sprites': {'name': 'Historical unsafe Star sprite artifact (superseded)', 'map': 6,
                             'x': 0x1c8, 'y': 0x168, 'level': 0x002,
                             'teleport': (6, 0x1c8, 0x168)},
+    'demo11-star-sprites-safe': {'name': 'Star World lower-inner with repaired sprite pointers', 'map': 6,
+                                  'x': 0x178, 'y': 0x1c8, 'level': 0x117,
+                                  'teleport': (6, 0x178, 0x1c8)},
 }
 
 

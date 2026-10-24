@@ -21,159 +21,117 @@
     "fill": 0
   },
   "assets": [],
-  "music": {
-    "id": "54",
-    "source_address": "44A008",
-    "source_group": {
-      "size": 6136,
-      "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
-    },
-    "source_base": 26624,
-    "destination_base": 21504,
-    "song_size": 700,
-    "relocations": [
-      0,
-      2,
-      6,
-      87,
-      123,
-      162,
-      214,
-      268,
-      283,
-      296,
-      320,
-      349,
-      411,
-      447,
-      488,
-      540,
-      684,
-      686,
-      688,
-      690
-    ],
-    "pointer_address": "0FE0FC",
-    "before": "000000",
-    "allocation": {
-      "offset": 1716224,
-      "size": 4096,
-      "fill": 0
-    },
-    "adapted": {
-      "size": 708,
-      "sha256": "bc134773a4c4068a20d51f1704433199ae78135f7af6c84c28ef2a0a75c176bd"
-    }
-  },
   "code_patches": [],
   "output": {
     "size": 4194304,
     "sha256": "d08a9fa9cc173a1aae8869a3a83367a7da5f484676ca453a929c9b30c39b9f87"
   },
-  "music_54": {
-    "id": "54",
-    "source_address": "44A008",
-    "source_group": {
-      "size": 6136,
-      "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+  "music_tracks": [
+    {
+      "id": "54",
+      "source_address": "44A008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+      },
+      "source_base": 26624,
+      "destination_base": 21504,
+      "song_size": 700,
+      "relocations": [
+        0,
+        2,
+        6,
+        87,
+        123,
+        162,
+        214,
+        268,
+        283,
+        296,
+        320,
+        349,
+        411,
+        447,
+        488,
+        540,
+        684,
+        686,
+        688,
+        690
+      ],
+      "pointer_address": "0FE0FC",
+      "before": "000000",
+      "allocation": {
+        "offset": 1716224,
+        "size": 4096,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 708,
+        "sha256": "bc134773a4c4068a20d51f1704433199ae78135f7af6c84c28ef2a0a75c176bd"
+      }
     },
-    "source_base": 26624,
-    "destination_base": 21504,
-    "song_size": 700,
-    "relocations": [
-      0,
-      2,
-      6,
-      87,
-      123,
-      162,
-      214,
-      268,
-      283,
-      296,
-      320,
-      349,
-      411,
-      447,
-      488,
-      540,
-      684,
-      686,
-      688,
-      690
-    ],
-    "pointer_address": "0FE0FC",
-    "before": "000000",
-    "allocation": {
-      "offset": 1716224,
-      "size": 4096,
-      "fill": 0
-    },
-    "adapted": {
-      "size": 708,
-      "sha256": "bc134773a4c4068a20d51f1704433199ae78135f7af6c84c28ef2a0a75c176bd"
+    {
+      "id": "2E",
+      "source_address": "29E008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "7cb5e81e41e116ad0258b2cfce654e256f0a7dd2f313e2af8d61b9b709da2ac4"
+      },
+      "source_base": 26624,
+      "destination_base": 21504,
+      "sequence_offset": 16,
+      "source_data_offset": 3714,
+      "song_size": 981,
+      "pattern_count": 2,
+      "relocations": [
+        0,
+        2,
+        6,
+        98,
+        109,
+        126,
+        161,
+        193,
+        211,
+        239,
+        257,
+        285,
+        302,
+        328,
+        341,
+        369,
+        378,
+        392,
+        424,
+        450,
+        463,
+        487,
+        611,
+        615,
+        619,
+        949,
+        951,
+        953,
+        955,
+        961,
+        965,
+        967,
+        969,
+        971,
+        977
+      ],
+      "pointer_address": "0FE08A",
+      "before": "000000",
+      "allocation": {
+        "offset": 1740800,
+        "size": 4096,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 989,
+        "sha256": "9ca7520d1bbe63da4bbea53ebd148fb1e99df376f83ba2385caf22869585b7a7"
+      }
     }
-  },
-  "music_2E": {
-    "id": "2E",
-    "source_address": "29E008",
-    "source_group": {
-      "size": 6136,
-      "sha256": "7cb5e81e41e116ad0258b2cfce654e256f0a7dd2f313e2af8d61b9b709da2ac4"
-    },
-    "source_base": 26624,
-    "destination_base": 21504,
-    "sequence_offset": 16,
-    "source_data_offset": 3714,
-    "song_size": 981,
-    "pattern_count": 2,
-    "relocations": [
-      0,
-      2,
-      6,
-      98,
-      109,
-      126,
-      161,
-      193,
-      211,
-      239,
-      257,
-      285,
-      302,
-      328,
-      341,
-      369,
-      378,
-      392,
-      424,
-      450,
-      463,
-      487,
-      611,
-      615,
-      619,
-      949,
-      951,
-      953,
-      955,
-      961,
-      965,
-      967,
-      969,
-      971,
-      977
-    ],
-    "pointer_address": "0FE08A",
-    "before": "000000",
-    "allocation": {
-      "offset": 1740800,
-      "size": 4096,
-      "fill": 0
-    },
-    "adapted": {
-      "size": 989,
-      "sha256": "9ca7520d1bbe63da4bbea53ebd148fb1e99df376f83ba2385caf22869585b7a7"
-    }
-  }
+  ]
 }

@@ -1,0 +1,163 @@
+# Six independent fresh-save entries; reset between rooms.
+# Overworld coordinate shortcuts only. No actor, completion or damage writes.
+# cave
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 2801680128016801
+poke 1f1f 1200160012001600
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump cave_entry
+wait 120
+dump cave_later
+reset
+# snow
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump snow_entry
+wait 120
+dump snow_later
+reset
+# sky
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 9801a8019801a801
+poke 1f1f 19001a0019001a00
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump sky_entry
+wait 120
+dump sky_later
+reset
+# center
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801a8017801a801
+poke 1f1f 17001a0017001a00
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump center_entry
+wait 120
+dump center_later
+reset
+# coaster
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801880178018801
+poke 1f1f 1700180017001800
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump coaster_entry
+wait 120
+dump coaster_later
+reset
+# caps
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump caps_entry
+wait 120
+dump caps_later
+reset
+# upperright
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 c8016801c8016801
+poke 1f1f 1c0016001c001600
+poke 0100 0b
+wait 300
+press y 5
+until 0100 == 14 900
+wait 30
+dump upperright_entry
+wait 120
+dump upperright_later
+quit

@@ -465,7 +465,35 @@ upper-left/snow/sky/center/upper-inner/lower-inner, with upper-left (room
 sky pass the Mario Start loader with audible tracks on both hosts (the
 practice save carries clear flags, so those nodes play the Warp Star branch
 after load), upper-inner and lower-inner load with their native song slots,
-and the center node behaves the same way. A sprite-slot audit finds no empty
-custom-sprite records in any of the nine Star World rooms. Remaining open:
+and the center node behaves the same way. The first sprite-slot audit incorrectly treated default records as populated;
+the later sprite recovery and allocation correction below supersede that finding. Remaining open:
 per-course traversal, enemies, platforms and clear behaviour - the same
 per-course qualification depth the demoOnly1 line applied.
+
+
+### Safe Star World sprite checkpoint (2026-10-24)
+
+The subsequent `demo11-star-music-2` restores upper-right song `$5D`. The
+`demo11-star-sprites` artifact then attempted eleven sprite ports, but review
+found seven allocations overwriting occupied recipient data and three entry
+pointer pairs outside their moved blocks. Its frozen **18/18** checks did not
+cover those defects, and its whole-line audit stopped two targets earlier.
+The historical ROM and captures remain intact for diagnosis.
+
+Current cumulative head is **`demo11-star-sprites-safe`**, derived directly
+from the intact `demo11-star-music-2` parent. All eleven sprite blocks use
+checked empty allocations with unchanged low addresses and adapted entry
+banks. The [safe sprite report](demo11-star-sprites-safe.md) records the
+correction, identities and evidence. The music and historical sprite recipes
+now reproduce their existing ROMs exactly. The ancestry-derived audit also
+rebuilds all 16 safe-chain recipes; 58,498 changed bytes against Demo 1-1 lie
+inside declared regions, zero unexpected. Integrated checks pass **19/19**.
+
+Both hosts exercise six course entries, the upper-inner real tape clear with
+both SRAM copies and reset/File A persistence, and lower-inner actual-input
+warp-star progression matching the qualified demoOnly1 predecessor within
+8 pixels. This does not qualify all nine courses. The center map node loads
+room `$000` on both safe hosts and the intact parent reference; center entry
+mapping is the next concrete investigation. Per-sprite interactions, other
+full routes, DK/death coverage and scoped listening remain open. No new human
+acceptance or center clear is claimed.

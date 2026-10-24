@@ -395,6 +395,8 @@ def make_candidate(recipient, donor, config):
         restore_sprite(recipient, donor, out, item)
     if config.get('music'):
         restore_music(donor, out, config['music'])
+    for music in config.get('music_tracks', []):
+        restore_music(donor, out, music)
     apply_code_patches(out, config)
     verify(out, config['output'], config['target'])
     return bytes(out), assets

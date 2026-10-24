@@ -141,4 +141,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11StarSpritesSNESRecomp',
         'title': 'Brutal Mario Demo11 Star Sprites',
     },
+    'demo11-star-sprites-safe': {
+        'binary': 'BrutalMarioDemo11StarSpritesSafeSNESRecomp',
+        'title': 'Brutal Mario Demo11 Star Sprites Safe',
+    },
 }
