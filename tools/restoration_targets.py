@@ -129,4 +129,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11StarGraphicsBatchSNESRecomp',
         'title': 'Brutal Mario Demo11 Star Graphics Batch',
     },
+    'demo11-star-music': {
+        'binary': 'BrutalMarioDemo11StarMusicSNESRecomp',
+        'title': 'Brutal Mario Demo11 Star Music',
+    },
 }

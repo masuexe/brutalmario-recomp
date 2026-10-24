@@ -25,6 +25,7 @@ CHECKS = [
     ('castle sprite 06', 'qualify_demo11_castle_sprite06'),
     ('Star1 graphics', 'qualify_demo11_star1_gfx'),
     ('Star batch graphics', 'qualify_demo11_star_gfx_batch'),
+    ('Star music 54/2E', 'qualify_demo11_star_music'),
 ]
 
 

@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CHAIN = ['demo11-base', 'demo11-room106', 'demo11-room010-gfx',
          'demo11-room010-music', 'demo11-room138-audio', 'demo11-room0cb-gfx',
          'demo11-sprite8d', 'demo11-sprite0b', 'demo11-world1-route', 'demo11-room106-music',
-         'demo11-castle-sprite06', 'demo11-yoshihouse-sprite', 'demo11-star1-gfx', 'demo11-star-gfx-batch']
+         'demo11-castle-sprite06', 'demo11-yoshihouse-sprite', 'demo11-star1-gfx', 'demo11-star-gfx-batch', 'demo11-star-music']
 HEAD = CHAIN[-1]
 
 
@@ -48,6 +48,13 @@ def allowed_regions(cfg):
         regions |= set(range(allocation['offset'], allocation['offset'] + allocation['size']))
         offset = lorom(int(music['pointer_address'], 16))
         regions |= set(range(offset, offset + 3))
+    for key in ('music_54', 'music_2E'):
+        music = cfg.get(key)
+        if music:
+            allocation = music['allocation']
+            regions |= set(range(allocation['offset'], allocation['offset'] + allocation['size']))
+            offset = lorom(int(music['pointer_address'], 16))
+            regions |= set(range(offset, offset + 3))
     sprite = cfg.get('custom_sprite')
     if sprite:
         start = lorom(int(sprite['destination_address'], 16))

@@ -1,0 +1,22 @@
+# Snow: verify music plays after the fix (Warp Star branch also plays the course cue first).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 c801e801c801e801
+poke 1f1f 1c001e001c001e00
+poke 0100 0b
+wait 300
+press y 5
+wait 1200
+dump w0
+wait 600
+dump w1
+quit
