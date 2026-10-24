@@ -43,9 +43,10 @@ Consulting these walkthroughs helps agents:
    touching goal tapes, collecting coins, passing screen pipes) must be verified.
 3. **Check for Inverted or Unconventional Mechanics**:
    Carol frequently inverted standard Super Mario World conventions (e.g. carrying a
-   moving keyhole into a static key, jumping into a suicide pit to reach a warp, or
-   stepping on seals to freeze water). Do not assume a level is impossible or buggy
-   without checking the community walkthrough first.
+   moving keyhole into a static key, jumping into a suicide pit to reach a warp,
+   hitting 3 Bob-ombs on a roulette slot machine, or searching for an animated brick
+   containing a P-Switch). Do not assume a level is impossible or buggy without checking
+   the community walkthrough first.
 4. **Fuel and Time Budget Calculations**:
    In vertical or flight levels (such as Sky Star), the fuel/time budget is often tightly
    tuned. Verify mathematical feasibility (e.g. climb speed vs fuel consumption) before
@@ -177,11 +178,11 @@ Each course features unique custom sprites, ASM mechanics, and secret exit requi
 | **Forest Star**<br>*(森林のスター)* | `$003` | Forest labyrinth; replaced by Lively Water in Demo 7.5. | Standard exit. | Hidden pipe / alternate branch. |
 | **Bay Star**<br>*(入江のスター)* | `$004` | SM64 water-level switches (`$7E:FFD0`) and water currents. | Screen-8 pipe to goal room `$048`. | Hit top water switch, let water rise to max level, lower it 2 levels, grab key and reach keyhole. Unlocks Warp Star. |
 | **Cave Star**<br>*(洞窟のスター)* | `$002` / `$007` | DKC2 roller coaster track with Skull Cart; racing position counter against Koopas. | Reach end of roller coaster track. | Achieve **1st place rank** (position counter = 1) across the race to unlock the secret exit branch. |
-| **Plains Star**<br>*(高原のスター)* | `$005` / `$009` | Entire level enclosed in breakable SMB3-style brick blocks. | Break out and reach goal. | Use Cape Mario spin-jump / flight to dig through hidden brick clusters to reach the secret keyhole. |
+| **Plains Star**<br>*(高原のスター)* | `$002` / `$005` | Entire level enclosed in breakable SMB3-style brick blocks. | Break out and reach goal tape. | Locate the single brick with a **distinctly different animation/flashing effect** near the upper-right (past the 4th Dragon Coin and 3 Koopas); hit it to reveal a **P-Switch**, then press it to turn the bricks into coins and access the secret key and keyhole below. |
 | **Sky Star**<br>*(天空のスター)* | `$006` / `$007` | Vertical rocket climb; tight fuel budget (89-pixel slack). Right page has no fuel blocks. | Standard rocket ceiling finish (`Y in 0x400..0x44F`, `X high 0`). | Near-clean right-page ascent (`X high 1`) with remaining fuel; key and keyhole sit directly above to unlock Warp Star. |
-| **Snow Star**<br>*(雪原のスター)* | `$008` | Seal cave / Santa Claus gift dodging; ? Goal Point blocks. | Match ? Goal Point block. | Stomp seal sprite to freeze water surface, access upper icy alcove containing secret key / Santa reward. |
+| **Snow Star**<br>*(雪原のスター)* | `$008` | Winter cavern with seals, icicles, and a final 3-block roulette / slot machine. | Match regular items / goal points on the final roulette blocks. | Hit **3 Bob-ombs (`ボム兵`)** on the final 3-block roulette / slot machine to trigger the secret exit. |
 | **Valley Star**<br>*(クッパの谷のスター)* | `$117` | Super Mario 64 Cap power-ups (Wing, Metal, Vanish) & Kirby Dream Course aesthetics. | Standard exit. | Collect all **100 coins** in the level (SM64 100-coin star mechanic) to spawn/unlock the secret key exit. |
-| **Special Warp Star**<br>*(スペシャルスター)* | `$00A` | Central hub course; custom boss rush. | Defeat boss sequence. | Transforms node into Warp Star to the Special Zone upon completion. |
+| **Special Warp Star**<br>*(スペシャルスター)* | `$00A` / `$079` | Central hub course; custom boss encounter (sprite `$24`). | **Unfinished** by author Carol. | **Route unknown / Unfinished.** The boss program in donor ROMs implements phases 0, 1, and 2 without a terminal victory state or exit destination (accepted donor exception; see `star-world-center-restoration.md`). |
 
 ---
 
