@@ -85,23 +85,39 @@ The race state lives in two long-memory bytes.
 | `$7FFD02` | Race counter. The tracked normal route shows 6, 5, 4, 3, 2, 1 in order. |
 
 The initializer at physical `0x16BEF8` writes `$7FFD01=1` and
-`$7FFD02=$14`. A second writer at `0x176F5A` writes `$7FFD02=6` and
-`$7FFD01=1`.
+`$7FFD02=$14`.
 
 Sprite `$45` is the race display. Its RATS block is at `$34:8493`. The code
 reads `$7FFD01`, copies Mario X and Y to itself, and draws the `$7FFD02`
 digit. It also uses the long tables at `$7FFFA2` and `$7FFFA3`. The display
 sprite is not the gate itself.
 
-Runtime samples from the tracked normal route show the counter at 1 at the
-normal goal, and the normal clear flag `$81`. The second goal sprite at
-X=`$1250` did not open. The low path still stalls at about X=`$1026`.
+Code sites that change the race state:
 
-Next probe: trace writes to `$7FFFA2` and `$7FFFA3`, and find which code
-toggles the Map16 tiles at the finish. Then test the gate condition. The probe
-scripts are `local/probes/cave-stomp-probe.script`,
-`local/probes/cave-race-survey.script` and
-`local/probes/cave-spam-race.script`.
+- `0x176F5A`: sets `$7FFD02=6` and `$7FFD01=1` at race start. When
+  `$7FFD02==1`, it also sets the ON/OFF state `$14AF=1`.
+- `0x176FA9`, `0x176FD7`, `0x177005`, `0x177033` and `0x177061`:
+  five copied rival handlers. Each handler sets one long byte
+  (`$7FFA00`, `$7FFA10`, `$7FFA20`, `$7FFA30` or `$7FFA40`) to 2 and
+  decrements `$7FFD02` when its rival reaches the finish test.
+- `0x16BF0B`: compares the coin counter `$0DBF` with `$7FFC01`. When the
+  counter changes, it records the new value and decrements `$7FFD02`. When
+  `$7FFD02` becomes 0, it sets the level end timer `$1493=$FF`.
+
+Runtime samples show the counter at 6, 5, 4, 3, 2, 1 as the zone resets
+happen. The ON/OFF state `$14AF` becomes 1 when the counter is 1. The tracked
+normal route reaches 1 before the normal goal and still clears with `$81`.
+The second goal sprite at X=`$1250` stays closed. The low path stalls at
+X=`$1026`. The ON/OFF state at the finish is 1, not 0. A probe that sets
+`$14AF` to 0 and back did not change the loaded Map16 buffer
+(`local/probes/cave-onoff-probe.script`). The finish wall is not a visible
+ON/OFF block in the loaded screens.
+
+Next probe: test whether the finish gate is an ON/OFF block that needs state 0,
+and whether `$7FFD02` can reach 0. Probe scripts:
+`local/probes/cave-stomp-probe.script`, `cave-race-survey.script` and
+`cave-spam-race.script`; the code dumps are `cave-stomp-probe-ref` and
+`cave-race-survey-ref`.
 
 ## Limits
 
