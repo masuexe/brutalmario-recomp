@@ -127,6 +127,9 @@ LEVELS = {
     'demo11-star-forest': {'name': 'Star World middle-left Forest Star (uncleared)', 'map': 6,
                            'x': 0x158, 'y': 0x1a8, 'level': 0x003,
                            'teleport': (6, 0x158, 0x1a8)},
+    'demo11-node-music': {'name': 'Star World middle-left with exact map-node music dispatch', 'map': 6,
+                          'x': 0x158, 'y': 0x1a8, 'level': 0x003,
+                          'teleport': (6, 0x158, 0x1a8)},
 }
 
 

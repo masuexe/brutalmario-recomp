@@ -205,3 +205,19 @@ head of the Demo 1-1 line.
 
 The deeper format-transplant route (cheap song-21 raw stream, differing SPC
 drivers) remains documented above for reference but is no longer needed.
+
+
+## Correction (2026-10-24): low-byte collision with the Star World middle-left node
+
+The thirteen-byte dispatch above runs with 8-bit index registers. `LDY $1F17`
+loaded only the low byte of the map-node X word, and `CPY #$58` matched every
+node whose X low byte is `$58`. The Star World middle-left Forest Star node is
+at X `$0158`, so it also selected slot `0x33`. That hid the forest donor track
+`0x5D`. The Forest Star port then exposed the leak.
+
+The descendant target
+[`demo11-node-music`](demo11-node-music.md) returns the dispatch to the exact
+word `$1F17 == #$0058` through a private shim. The room106 node keeps slot
+`0x33`, the room120 node keeps `0x49`, and every other node passes its
+original request. The user-accepted room106 choice above is unchanged. The
+frozen `demo11-room106-music` target and its captures stay intact.

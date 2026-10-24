@@ -32,6 +32,7 @@ CHECKS = [
     ('Star palette, fuel, flame, Santa', 'qualify_demo11_star_visuals'),
     ('center warp-star route/display', 'qualify_demo11_center_route'),
     ('Forest Star course port', 'qualify_demo11_star_forest'),
+    ('node-scoped music dispatch', 'qualify_demo11_node_music'),
 ]
 
 

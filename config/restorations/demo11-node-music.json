@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "demo11-node-music",
+  "target": "Brutal Mario Demo11 Node Music Scope",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-star-forest",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "4a4928f1603e8a209d198b31785234c12158d4f204f577d7b1758cc165082246"
+  },
+  "room": "106",
+  "scope": "Scope the accepted room106 BGM dispatch to the exact map-node X word. The accepted demo11-room106-music patch compared only the 8-bit low byte at $1F17, so the Star World middle-left node (X=$0158) also selected slot 0x33 and masked the forest donor track 0x5D. The dispatch relocates to a private shim that compares the full word $1F17 against #$0058, keeps the room106 node on slot 0x33 and passes every other node its original $0DDA request. The room120 node keeps 0x49.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2419200,
+    "size": 33,
+    "fill": 0
+  },
+  "assets": [],
+  "raw_blocks": [
+    {
+      "name": "Exact map-node BGM dispatch shim",
+      "destination_address": "49EA08",
+      "rats_address": "49EA00",
+      "bytes": "c220ad171fc95800e220f007adda0d5c389700a9335c389700",
+      "data": {
+        "size": 25,
+        "sha256": "6fd6386ffcaab6e4de51792fb8f77a9be289275b111a86672755ea44406c78a5"
+      }
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "00972B",
+      "before": "ac171fc058d006a933eaeaeaea",
+      "after": "5c08ea49eaeaeaeaeaeaeaeaea",
+      "role": "relocate the node-bound BGM dispatch to the exact-word shim"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "77a4b7a970125db9c6b53d0619f6f9441c47538bd938bce6a8ee7c862de7240a"
+  }
+}

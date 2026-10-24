@@ -590,3 +590,27 @@ byte-identical. Integrated checks pass **23/23**; the byte audit rebuilds 21
 recipes with 105,056 changed bytes inside 139,242 declared region bytes, zero
 unexpected. The center Boss ending, the sky secret, other full-course/DK/death
 coverage and the broader restoration remain open.
+
+
+### Demo 1-1 exact map-node BGM dispatch (2026-10-24)
+
+The forest checkpoint's music trace showed the middle-left node playing slot
+`0x33` instead of the forest donor track `0x5D`. The accepted room106 music
+fix had compared only the 8-bit low byte of map-node X `$1F17`; the middle-left
+node at X `$0158` also matched `$58`. The
+[dispatch report](demo11-node-music.md) records the correction.
+
+Current cumulative head is **`demo11-node-music`** (`77a4b7a9…`), through
+`demo11-star-forest`. A private shim compares the full map-node X word against
+`#$0058` and returns to the original dispatch. Only 38 bytes change: the
+relocated jump and a 25-byte shim in a checked empty block. The room106 node
+keeps its user-auditioned slot `0x33`; the room120 node keeps `0x49`; the
+forest node now requests `0x5D` and its native ARAM matches the accepted
+demoOnly1-line forest payload.
+
+Both hosts pass the forest entry/movement and both room nodes. Integrated checks
+pass **24/24**; the byte audit rebuilds 22 recipes with 105,084 changed bytes
+inside 139,275 declared region bytes, zero unexpected. The room106 song choice
+is unchanged, and no new listening acceptance is requested. The center Boss
+ending, the sky secret, other full-course/DK/death coverage and the broader
+restoration remain open.

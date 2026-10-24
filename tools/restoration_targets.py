@@ -165,4 +165,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11ForestStarSNESRecomp',
         'title': 'Brutal Mario Demo11 Forest Star',
     },
+    'demo11-node-music': {
+        'binary': 'BrutalMarioDemo11NodeMusicSNESRecomp',
+        'title': 'Brutal Mario Demo11 Node Music',
+    },
 }
