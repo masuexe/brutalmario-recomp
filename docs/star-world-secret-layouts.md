@@ -99,6 +99,14 @@ Camera calibration for the frame images: the two little-endian words at
 tile appears at screen (32,128) in the probe frame, which matches the camera
 value `(0, $0C00)` and the world tile (`$20`,`$C80`).
 
+A camera sweep can capture any page while the player stays at a safe bottom
+position: pause, poke the camera words, unpause for four frames, and dump.
+The camera springs back about `$20`-`$2D` per unpause, so the view is close to
+the target. The sweep frames are `bay-camera-sweep2-ref` and
+`bay-camera-sweep3-ref`. They cover camera Y from `$0C00` up to `$0019`.
+The upper frames show a crystal at world (`$00`,`$330`-`$350`). Contact
+probes there did not change the water target.
+
 A frame-color detector can find the rainbow crystal tiles. Read the BMP frame
 as 24-bit pixels (bottom-up rows), classify the diamond pixels (pink
 `r>180,g<70`, green `g>180,r<70`, dark purple `55<r<120,g<40,b>110`), and
