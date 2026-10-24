@@ -91,6 +91,18 @@ LEVELS = {
     'demo11-castle-sprite06': {'name': 'World 1-1 on the castle-sprite06 Demo 1-1 line', 'map': 0,
                                'x': 0x048, 'y': 0x198, 'level': 0x105,
                                'teleport': (0, 0x048, 0x198)},
+    'demo11-yoshihouse-sprite': {'name': 'World 1-1 on the yoshihouse-sprite Demo 1-1 line', 'map': 0,
+                                 'x': 0x048, 'y': 0x198, 'level': 0x105,
+                                 'teleport': (0, 0x048, 0x198)},
+    'demo11-star1-gfx': {'name': 'Star World lower-left on the Demo 1-1 line', 'map': 6,
+                         'x': 0x128, 'y': 0x1e8, 'level': 0x005,
+                         'teleport': (6, 0x128, 0x1e8)},
+    'demo11-star-gfx-batch': {'name': 'Star World upper-left on the Demo 1-1 line', 'map': 6,
+                              'x': 0x128, 'y': 0x168, 'level': 0x004,
+                              'teleport': (6, 0x128, 0x168)},
+    'demo11-star-music': {'name': 'Star World upper-left on the star-music Demo 1-1 line', 'map': 6,
+                          'x': 0x128, 'y': 0x168, 'level': 0x004,
+                          'teleport': (6, 0x128, 0x168)},
 }
 
 
