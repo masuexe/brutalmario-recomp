@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Castle Sprite06",
+  "id": "demo11-castle-sprite06",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-room106-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "22229d65d3930181d8f20f11567e389e10b2e9fb60f823d71ccd43f1267c8f1f"
+  },
+  "room": "10E",
+  "scope": "Port custom sprite 06 onto the Demo 1-1 line. The castle room 10E entry list places this lineage-shared custom sprite (room 6E places it identically in every supplied version) at level x 0xB0, but the Demo 1-1 record table at 0x31:8272 holds the default record at id 06, so the spawn aborts silently at the record-enable gate. The reviewed cheap_demo code block is copied and its record adapted; F0 and every other castle entry are untouched.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1716071,
+    "size": 270,
+    "fill": 0
+  },
+  "assets": [],
+  "custom_sprite": {
+    "id": "06",
+    "rooms": [
+      110,
+      270
+    ],
+    "source_address": "10A92F",
+    "destination_address": "34A92F",
+    "block": {
+      "size": 270,
+      "sha256": "c100c8b5326598068a2162750dafe24d4dfaa7b0c520221bbbf216758fa23bdb"
+    },
+    "source_record_address": "10B1BD",
+    "destination_record_address": "3182D2",
+    "source_record": "01360080360319003ea9104da9100000",
+    "before": "0000ffffffffffff218001218001ffff",
+    "shared_dependencies": [
+      {
+        "address": "27FAE4",
+        "size": 256,
+        "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+      },
+      {
+        "address": "01801A",
+        "size": 32,
+        "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+      },
+      {
+        "address": "01B7B3",
+        "size": 256,
+        "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+      }
+    ]
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "4328e78c27bd9d063c3b6d0e9ba02f5c79c3209d529e310d2230994672b59177"
+  }
+}

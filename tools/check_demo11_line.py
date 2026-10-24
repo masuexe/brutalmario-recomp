@@ -22,6 +22,7 @@ CHECKS = [
     ('sprite ports 8D/0B', 'qualify_demo11_sprites'),
     ('World 1 route repair', 'qualify_demo11_world1_route'),
     ('room106 music fix', 'qualify_demo11_room106_music'),
+    ('castle sprite 06', 'qualify_demo11_castle_sprite06'),
 ]
 
 

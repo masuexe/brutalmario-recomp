@@ -440,3 +440,13 @@ user-confirmed original `0x49` music; head is now `demo11-room106-music`
 The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
 rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence
 and risk list, is [demo11-rebase-plan.md](demo11-rebase-plan.md).
+
+The subsequent [castle sprite-06 repair](world1-castle-investigation.md) corrects the
+castle survey - the "missing F0 sprite" was a runtime-table misreading; F0 spawns and
+renders natively at level x `$360` - and restores the actually missing lineage-shared
+custom sprite `06` at the castle opening (`x=$B0`) from cheap_demo's block (byte-identical
+in demo8), the same record-port pattern as `8D`/`0B`. Head is now
+`demo11-castle-sprite06` (`4328e78c...`), acceptance **14/14**. The user clarified the
+newer castle is most likely author-unfinished: restore-as-much-as-possible is the goal,
+and course completion/boss integration is explicitly not required. The far-right door
+(x `$10EA`) is recorded as an unentered observation.
