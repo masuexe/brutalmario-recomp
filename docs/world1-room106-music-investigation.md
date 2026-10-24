@@ -150,3 +150,32 @@ pick a replacement acceptable for room106.
 
 All experiments stayed on local/ignored targets; the accepted head
 `demo11-world1-route` and its 12/12 acceptance are untouched.
+
+
+## Resolution (2026-10-24, user audition)
+
+The user auditioned the generated library (138 trimmed WAVs under
+`local/probes/world1-survey/106-music-diagnostic/audition-trimmed/`, built
+from the 102-slot demo11 song table plus the 49 adapted cheap group songs)
+and identified **demo11 native slot `0x33`** as the correct room106 music
+(`d11-song33`). The fix is therefore three equal-width bytes on the
+descendant target `demo11-room106-music` (ROM SHA-256
+`a47defdea2e0d898bdd98e59d3ec9db15f665d9fc900d7edc75cb3b344aa2362`):
+
+| Address | Before | After | Role |
+| --- | --- | --- | --- |
+| `$00972C` | `40` | `49` | bind the branch to the room106 request |
+| `$00972D/2E` | `EA EA` | `F0 07` | BEQ to the override |
+| `$009737` | `16` | `33` | override requests native slot 33 |
+
+`tools/qualify_demo11_room106_music.py` pins both hosts: `$0DDA=0x33`,
+the reference audio reproduces the auditioned track bit-for-bit in RMS and
+zero-crossing features, the native ARAM shows an uploaded track playing,
+and exactly the reviewed bytes differ from the accepted route head.
+`tools/check_demo11_line.py` reports **13/13**; the whole-line byte audit
+still shows zero unexpected bytes. Launch:
+`python3 tools/play_demo_only1.py --restoration demo11-room106-music`.
+Final acceptance: the user's listening check on the native build.
+
+The deeper format-transplant route (cheap song-21 raw stream, differing SPC
+drivers) remains documented above for reference but is no longer needed.

@@ -109,4 +109,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11World1RouteSNESRecomp',
         'title': 'Brutal Mario Demo11 World1 Route',
     },
+    'demo11-room106-music': {
+        'binary': 'BrutalMarioDemo11Room106MusicSNESRecomp',
+        'title': 'Brutal Mario Demo11 Room106 Music',
+    },
 }

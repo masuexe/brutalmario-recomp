@@ -428,8 +428,12 @@ custom sprites `8D`/`0B` were then ported, advancing the chain through
 route-enable cells around the 1-1 map node that original Demo 1-1 zeroes; the
 real clear event now walks the player to the 1-2 node and the normal entry
 button opens room `$010` on both hosts. Head is `demo11-world1-route`
-(`5265a7bd…`), acceptance **12/12**. The user playtested and confirmed the
-map route is fixed on 2026-10-24, accepting this repair.
+(`5265a7bd…`), acceptance 12/12 at that point; the user playtested and
+confirmed the map route is fixed on 2026-10-24. The subsequent
+[room106 music fix](world1-room106-music-investigation.md) steers the
+room106 level-default request to native slot `0x33`, chosen by the user
+through a generated audition library; head is now `demo11-room106-music`
+(`a47defde…`), acceptance **13/13**.
 
 The demoOnly1 line remains available and untouched; `docs/rollback.md` documents both
 rollback routes and the pre-rebase snapshot. The full rebase plan, with the evidence

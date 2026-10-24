@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Room106 Music",
+  "id": "demo11-room106-music",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-world1-route",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "5265a7bd3f1ee818683287c5429c67d903c4d90a41d8c09cefc53a965d2f1057"
+  },
+  "room": "106",
+  "scope": "Fix room106 music: the level-default request (0x49) is compared to itself and routed to the override, which now requests native slot 0x33 - the track the user identified as the correct room106 music (audition d11-song33). Three equal-width bytes; no data, table or engine changes.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3087824,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "00972C",
+      "before": "40",
+      "after": "49",
+      "role": "CMP #$40 -> CMP #$49 (bind the branch to the room106 request)"
+    },
+    {
+      "address": "00972D",
+      "before": "eaea",
+      "after": "f007",
+      "role": "NOP NOP -> BEQ $009736"
+    },
+    {
+      "address": "009737",
+      "before": "16",
+      "after": "33",
+      "role": "override immediate 0x16 -> request native slot 33"
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "a47defdea2e0d898bdd98e59d3ec9db15f665d9fc900d7edc75cb3b344aa2362"
+  }
+}
