@@ -108,6 +108,12 @@ The parsed sprite IDs are `$02` once, `$05` four times, `$09` once,
 Coin area in the `d11-ur-coins-save-ref` capture. They are candidates for the
 distinct brick that holds the P-Switch.
 
+A teleport probe placed Mario on each `$77` position. The sprite did not
+change and no P-Switch sprite appeared. Mario fell to a platform at about
+Y=`$0F80`, so the `$77` sprites sit above the reachable floor. A real jump
+probe from that floor is the next step. The probe is
+`local/probes/plains-brick-probe.script`.
+
 ## Cave race state
 
 The race state lives in two long-memory bytes.
