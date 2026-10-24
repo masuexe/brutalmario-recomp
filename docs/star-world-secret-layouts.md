@@ -91,6 +91,27 @@ The probe scripts are `local/probes/bay-switch-probe.script` and
 `local/probes/bay-switch-scan.script`. The remaining switch placements need a
 new probe that follows the wiki pages with real swimming input.
 
+Camera calibration for the frame images: the two little-endian words at
+`$7E:001A` and `$7E:001C` are the camera X and Y. The known page `0B` switch
+tile appears at screen (32,128) in the probe frame, which matches the camera
+value `(0, $0C00)` and the world tile (`$20`,`$C80`).
+
+A frame-color detector can find the rainbow crystal tiles. Read the BMP frame
+as 24-bit pixels (bottom-up rows), classify the diamond pixels (pink
+`r>180,g<70`, green `g>180,r<70`, dark purple `55<r<120,g<40,b>110`), and
+accept a 16x16 tile with at least four pixels of pink and four of green. Add
+the camera value to the tile screen position to get the world position.
+Calibration against the known switch gives the cluster (`$20`,`$C80`-`$C96`).
+Other clusters are (`$30`,`$B3D`-`$B44`), (`$110`,`$A2F`-`$A35`) and
+(`$FE`-`$106`,`$C22`-`$C3E`).
+
+Contact probes with plain position pokes and 60-frame waits changed the water
+target only for the known (`$20`,`$C70`-`$C80`) switch. The other clusters did
+not change it. They are likely decorations or need a different interaction.
+The probe scripts are `local/probes/bay-switch-grid.script` and
+`local/probes/bay-crystal-probe3.script`;
+the detector is `local/probes/switch-detect3.py`.
+
 Frame images help locate the switches. The capture dumps include
 `.fb.bmp` frames. Convert them with `ffmpeg -i frame.fb.bmp -vf scale=512:448:flags=neighbor frame.png`
 and inspect the result. The crystal switches are visible as rainbow diamond
