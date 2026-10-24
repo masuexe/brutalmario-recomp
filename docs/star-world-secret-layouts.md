@@ -61,11 +61,22 @@ The level is 13 screens long. The screen exits are:
 
 This agrees with the wiki route: the screen-8 pipe leads to goal room `$048`.
 The parsed sprite IDs are `$0A` once, `$0B` four times, `$0E` once,
-`$2C` once, `$2F` twice, `$62` twice and `$7A` eleven times. The
-`$7A` sprites are the water platforms. A survey capture
-(`bay-secret-survey2-ref`) also shows a `$7A` sprite with vanilla slot
-`$7A`. That pair is a candidate water-level switch. The switch placements are
-not resolved yet.
+`$2C` once, `$2F` twice, `$62` twice and `$7A` eleven times. The level is
+vertical, so the sprite data X and Y values are swapped. The decoded `$7A`
+placements are the water platforms.
+
+Runtime water probes:
+
+- Poking Mario to X=`$0020`, Y=`$0C80` on the page `0B` area sets the water
+target from `$0CB0` to `$0C90`. The water level animates through `$0CA6` and
+`$0C9C` before it settles. The switch is a map tile, not a `$7A` sprite.
+- Poking Mario to each decoded `$7A` position did not change the water target.
+- Forced pokes into deep water cause drowning deaths (mode `$0B` or `$0C`)
+even with damage immunity. The scan is bounded below Y=`$06D0`.
+
+The probe scripts are `local/probes/bay-switch-probe.script` and
+`local/probes/bay-switch-scan.script`. The remaining switch placements need a
+new probe that follows the wiki pages with real swimming input.
 
 ## Plains Star: room `$002`
 
