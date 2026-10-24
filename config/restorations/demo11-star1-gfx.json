@@ -1,0 +1,72 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Star1 Graphics",
+  "id": "demo11-star1-gfx",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-castle-sprite06",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "4328e78c27bd9d063c3b6d0e9ba02f5c79c3209d529e310d2230994672b59177"
+  },
+  "room": "005",
+  "scope": "Restore the three missing extended graphics streams for Star World lower-left (room $005) on the Demo 1-1 line - the same recovery the demoOnly1 line accepted as its first Star World pilot. Streams install as new ids FFD/FFE/FFF (slots empty, no other room selects them) with the room-005 record words retargeted, matching the accepted star-world-1 recipe shape.",
+  "gfx_record": {
+    "address": "14ADA8",
+    "before": "01808108b2000901140002010301010100000001ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1769472,
+    "size": 7424,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "101",
+      "target_id": "FFD",
+      "record_offset": 14,
+      "source_address": "25D76C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "53b3c712f10a30c4f81baa000c4358ea7cebc9c10e3d423d0ed4124f7899fcbf"
+      },
+      "compressed": {
+        "size": 3001,
+        "sha256": "3a51dd45f2df22d1f2490ca117070a68bfdab33cb03f734ad9e97c59e581a169"
+      }
+    },
+    {
+      "source_id": "102",
+      "target_id": "FFE",
+      "record_offset": 10,
+      "source_address": "25E32D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "769e19aaf4c26cddcba942c8d33e85a6c7db37a42da1d1bf328f738bbaeff1cc"
+      },
+      "compressed": {
+        "size": 1256,
+        "sha256": "80972685027df5c12a4f76ca7a9da7d5d52365f19658651876fa78128a953178"
+      }
+    },
+    {
+      "source_id": "103",
+      "target_id": "FFF",
+      "record_offset": 12,
+      "source_address": "25E81D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "fc7ca9f7449b84657e6a9de55a71a270702a7a00cf23b9043f0bdcfc2e94d792"
+      },
+      "compressed": {
+        "size": 2945,
+        "sha256": "0b8091ee82acc8a59b4f751ad7d2858fffdb9c71d2ff5f9d1a167a35ee333212"
+      }
+    }
+  ],
+  "code_patches": [],
+  "output": {
+    "size": 4194304,
+    "sha256": "ad5333043a0b26fb70c065966631f588b1c8d2a0c337bbca7c004914356596d0"
+  }
+}

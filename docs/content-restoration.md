@@ -450,3 +450,12 @@ in demo8), the same record-port pattern as `8D`/`0B`. Head is now
 newer castle is most likely author-unfinished: restore-as-much-as-possible is the goal,
 and course completion/boss integration is explicitly not required. The far-right door
 (x `$10EA`) is recorded as an unentered observation.
+
+The
+[castle sprite 06 port](world1-castle-audit.md) and the room106-music head
+followed; the user then directed work to the Star World convergence: the
+[Star World lower-left graphics recovery](star-world-1-restoration.md) shape
+(renumbered ids FFD/FFE/FFF) now ports onto the Demo 1-1 line as
+`demo11-star1-gfx`, with both hosts entering room `$005` and rendering the
+terrain (acceptance **15/15**). The remaining eight Star World rooms carry
+the same missing-graphics pattern and follow in the established order.

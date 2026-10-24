@@ -121,4 +121,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11YoshiHouseSpriteSNESRecomp',
         'title': 'Brutal Mario Demo11 Yoshi House Sprite',
     },
+    'demo11-star1-gfx': {
+        'binary': 'BrutalMarioDemo11Star1GraphicsSNESRecomp',
+        'title': 'Brutal Mario Demo11 Star1 Graphics',
+    },
 }
