@@ -40,6 +40,7 @@ CHECKS = [
     ('lower-right Snow Star route', 'qualify_demo11_star_lower_right_route'),
     ('lower-inner Valley Star route', 'qualify_demo11_star_lower_inner_route'),
     ('upper-inner Cave Star route', 'qualify_demo11_star_upper_inner_route'),
+    ('middle-right Sky Star route', 'qualify_demo11_star_middle_right_route'),
 ]
 
 

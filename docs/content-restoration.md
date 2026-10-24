@@ -796,3 +796,26 @@ defeated so the goal block turns off. The [secret-layout note](star-world-secret
 records the parsed second goal sprite at X=`$1250` and the low-path stall at
 X=`$1026`. The remaining secret branches, unassisted traversals, the center
 Boss exception and the broader restoration stay open.
+
+
+### Demo 1-1 middle-right Sky Star route acceptance (2026-10-25)
+
+The [middle-right route report](demo11-star-middle-right-route.md) records the
+next qualification checkpoint. No ROM changed; the head stays
+`demo11-star-bgm`.
+
+The tracked middle-right scripts pass on reference and native: entry with the
+rocket fuel load `$0B` and the low-Map16 guard, the fuel consumption, the real
+rocket finish with coins 4 and fuel 0, the top door and goal room `$09B`, the
+normal clear flag `$1EAB=$8C` with `SRAM[9]/[$1B6]=$8C` and File A reload,
+and real fall/death/re-entry. The reference requests the wiki-correct Sky Star
+slot `58`.
+
+Native and reference match on every route field, and fresh demoOnly1-line
+captures match every route sample. Integrated checks pass **32/32**; the byte
+audit is unchanged (23 recipes, 105,090 changed bytes inside 139,297 declared
+region bytes, zero unexpected).
+
+The normal exit is qualified. The secret exit stays user-verified and
+deferred. The remaining secret branches, unassisted traversals, the center
+Boss exception and the broader restoration stay open.
