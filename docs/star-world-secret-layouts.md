@@ -48,7 +48,18 @@ The Koopa racers are sprite `$50` at `$0080`, `$0430`, `$0670`,
 The runtime samples agree with the data. The tracked goal route clears at the
 first goal sprite. The low path stalls at about X=`$1026` and then falls into
 a pit. A spam-jump probe stomps the late Koopa but does not reach the second
-goal sprite at `$1250`. The second goal sprite is the likely secret exit.
+goal sprite at `$1250`.
+
+The raw sprite entries show the variant. The first goal sprite `$7B` has
+byte 0 `$F0` (extra bits 0, screen bit 0). The second goal sprite `$7B` has
+byte 0 `$F6` (extra bits 3, screen bit 1). Vanilla goal-tape sprite `$7B`
+uses the extra bits for the secret exit. The second sprite is therefore the
+secret exit goal, not a duplicate.
+
+A teleport probe to X=`$1250`, Y=`$01E0` fell to Y=`$032B` and did not clear.
+The nearby sprites were the race display and one rival. The area below the
+pitch may be a hidden section. The probe is
+`local/probes/cave-secret-tape.script`.
 
 ## Bay Star: room `$004`
 
