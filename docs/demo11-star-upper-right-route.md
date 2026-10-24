@@ -68,10 +68,12 @@ suite passes **28/28**. The whole-line byte audit is unchanged: 23 recipes,
 
 - The scripts use labelled coordinate shortcuts and damage immunity. The coins,
   pipe, goal tape and deaths are real guest actions.
-- The **Plains Star keyhole secret exit is not covered** here. The recorded
-  wiki route is: find the backward-animated brick near the top right, take its
-  P-Switch, go down the level, press the switch to convert the bricks, and fall
-  to the key and keyhole.
+- The **Plains Star keyhole secret exit is user-verified**. The user completed
+  the hidden-exit verification in play. Automated secret testing stopped at
+  the user's request; this checkpoint does not claim the secret route. The
+  recorded wiki route is: find the backward-animated brick near the top right,
+  take its P-Switch, go down the level, press the switch to convert the bricks,
+  and fall to the key and keyhole.
 - An unassisted full traversal is not claimed. The long brick course needs a
   separate route pass.
 - The save flag constants are recipient-local. The demoOnly1 line uses the same

@@ -715,9 +715,11 @@ positions. Integrated checks pass **28/28**; the byte audit is unchanged
 (23 recipes, 105,090 changed bytes inside 139,297 declared region bytes, zero
 unexpected).
 
-The Plains Star keyhole secret exit is not covered. The recorded wiki route is:
-find the backward-animated brick near the top right, take its P-Switch, go
-down, press the switch to convert the bricks, and fall to the key and keyhole.
+The Plains Star keyhole secret exit is user-verified. The user completed the
+hidden-exit verification in play. Automated secret testing stopped at the
+user's request. The recorded wiki route is: find the backward-animated brick
+near the top right, take its P-Switch, go down, press the switch to convert
+the bricks, and fall to the key and keyhole.
 Remaining Star World routes, the secret exits, unassisted traversals, the
 center Boss exception and the broader restoration stay open.
 

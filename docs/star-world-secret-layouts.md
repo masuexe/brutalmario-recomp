@@ -133,6 +133,14 @@ taken from (`$00A0`,`$0580`). That view puts the crystal at about
 (`$0100`,`$05F0`), (`$01B0`,`$0620`) and (`$01C0`,`$0610`) did not change
 the water target. The screen estimate needs the exact camera position.
 
+Switch interaction mechanism (new): the usable switches are solid crystal
+platforms. Landing on the crystal at (`$0100`,`$0C30`) set the water target to
+`$0C30`, which is the crystal height. The known switch at
+(`$0020`,`$0C80`) sets `$0C90`. The crystals at (`$0030`,`$0B40`),
+(`$0110`,`$0A30`) and (`$0000`,`$0330`) are not solid and did not trigger on
+fall-through. Probes: `local/probes/bay-one-tA30.script` and
+`local/probes/bay-crystal-variants.script`.
+
 More probes did not resolve the other switches:
 
 - Holding Mario at each decoded sprite position (ids `$0A`, `$0B`, `$0E`,
@@ -151,6 +159,9 @@ The parsed sprite IDs are `$02` once, `$05` four times, `$09` once,
 `$80` once and `$DB` once. The `$77` sprites sit near the fourth Dragon
 Coin area in the `d11-ur-coins-save-ref` capture. They are candidates for the
 distinct brick that holds the P-Switch.
+
+The user completed the hidden-exit verification in play. Automated secret
+testing stopped at the user's request.
 
 A teleport probe placed Mario on each `$77` position. The sprite did not
 change and no P-Switch sprite appeared. Mario fell to a platform at about
