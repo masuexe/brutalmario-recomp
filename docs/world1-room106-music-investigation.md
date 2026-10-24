@@ -116,3 +116,37 @@ structures (sample directory/banks, possibly contiguous neighbours in the
 
 Captures: `d11-route-*` (accepted route work) unchanged; this investigation
 used fresh `106-music-diagnostic` files only.
+
+
+## Update 2026-10-24 (fifth pass): the adaptation pipeline and the library census
+
+The room138 adaptation is now reproducible end to end by an automatic
+calibrator (graph walk derived from `local/probes/derive-21.py`): it derives
+`source_data_offset`/`song_size`/`relocations` for any song in the 16
+"four-song group" blocks (`0x148008..`, `0x1F8008..`, `0x220008..` series,
+46 of 64 songs derive cleanly), builds a slot-7F payload, and plays it
+audibly on the reference host. Group payloads must live below bank `0x40` -
+a `0x40:xxxx` slot pointer silently fails.
+
+A library census against cheap's room106 playback found **no match**:
+- cheap's actual sequence/samples fill ARAM `$6800-$6B00` within ~60 frames
+  of level entry (the `$0DDA` request only switches to it);
+- the song is cheap's `song 21`, stored as an **independent RATS block of
+  raw command-stream format** (`$289835` RATS, data `$28983D`, ~2.8 KB)
+  pointed to by the bank-14 directory - a *different format* from the
+  four-song groups;
+- the two builds' **SPC driver images differ** (85-95% byte identity), so
+  demo11's SPC cannot parse that format - consistent with the
+  `$0FC347` acknowledgement hang;
+- pitch-contour correlation across all 46 playable library songs peaks at
+  0.407 (not the same tune).
+
+Two viable finish lines: (a) transcribe the song-21 command stream into
+the four-song-group format and install it through the proven slot pipeline
+(multi-session format reverse engineering), or (b) let the user audition
+the 46-song candidate library (WAVs and ready ROMs preserved under
+`local/probes/world1-survey/106-music-diagnostic/candidate-library/`) and
+pick a replacement acceptable for room106.
+
+All experiments stayed on local/ignored targets; the accepted head
+`demo11-world1-route` and its 12/12 acceptance are untouched.
