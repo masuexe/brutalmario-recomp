@@ -63,6 +63,17 @@ BASE_MAPPINGS = [
         "wiki_source": "Bay Star",
     },
     {
+        "legacy_id": "0x29",
+        "demo_only1_id": None,
+        "demo11_id": "0xB0",
+        "title": "Megalomania",
+        "origin_game": "Live A Live",
+        "levels": ["Lemmy Koopa Boss (Room 6E / Lemmy the Hikikomori)"],
+        "verification_status": "verified_graph_match",
+        "notes": "Boss theme from Live A Live. In cheap_demo used as BGM $29 in room 6E. Temporarily omitted in demoOnly1 (which substituted Frog For Whom the Bell Tolls), and reinstated in demo 1-1 at slot $B0 (2,067 bytes upload).",
+        "wiki_source": "Lemmy the Hikikomori",
+    },
+    {
         "legacy_id": "0x2E",
         "demo_only1_id": "0x58",
         "demo11_id": "0x58",
@@ -314,7 +325,7 @@ NEW_FAMILY_ADDITIONS = [
     {"slot": "0xAB", "title": "Bowser Battle", "origin_game": "Super Mario RPG", "introduced_in": "demoOnly1", "notes": "Chandelier battle theme."},
     {"slot": "0xAE", "title": "Battle With Magus", "origin_game": "Chrono Trigger", "introduced_in": "demoOnly1", "notes": "Decisive Magus duel."},
     {"slot": "0xAF", "title": "The Sun Rises", "origin_game": "Okami", "introduced_in": "demoOnly1", "notes": "Okami climax battle."},
-    {"slot": "0xB0", "title": "Megalomania", "origin_game": "Live A Live", "introduced_in": "demo 1-1", "notes": "Re-added in demo 1-1 for Lemmy's Castle boss duel (2,067 bytes)."},
+    {"slot": "0xB0", "title": "Megalomania", "origin_game": "Live A Live", "introduced_in": "demo 1-1", "notes": "Re-added in demo 1-1 for Lemmy's Castle boss duel, restoring cheap_demo legacy BGM $29 (2,067 bytes)."},
     {"slot": "0xB8", "title": "The Credits Concerto", "origin_game": "Donkey Kong Country", "introduced_in": "demoOnly1", "notes": "DKC end credits medley."},
 ]
 
@@ -355,8 +366,10 @@ def resolve_music_id(source_id: int | str, from_family: str = "legacy", to_versi
                 elif to_version == "demoOnly1":
                     return item["demo_only1_id"]
         else:  # from new family
-            target_id = item["demo11_id"] if to_version == "demo1-1" else item["demo_only1_id"]
-            curr_id = item["demo11_id"] if from_family == "demo1-1" else item["demo_only1_id"]
+            if from_family == "demoOnly1":
+                curr_id = item["demo_only1_id"]
+            else:  # 'new' or 'demo1-1'
+                curr_id = item["demo11_id"] or item["demo_only1_id"]
             if curr_id and curr_id.upper() == source_hex.upper():
                 return item["legacy_id"]
     return None

@@ -24,6 +24,7 @@ This document defines the custom music ID mapping between Carol's **Legacy Demo 
 | **`$24`** | `$51` | **`$51`** | **Fear Factory** | Donkey Kong Country | Cave Star, Castle Crush, Skull Coaster | verified graph match |
 | **`$27`** | `$8E` | **`$8E`** | **Castle Pandemonium** | Final Fantasy II | Finish! Bowser Keep (Crash/Burn) | verified graph match |
 | **`$28`** | `$49` | **`$49`** | **Podol / Boundaries** | Romancing SaGa 3 | Bay Star, Frozen Cave (pre-clear), Deep Sea Research (+1 more) | verified graph match |
+| **`$29`** | *(none)* | **`$B0`** | **Megalomania** | Live A Live | Lemmy Koopa Boss (Room 6E / Lemmy the Hikikomori) | verified graph match |
 | **`$2E`** | `$58` | **`$58`** | **Grape Garden** | Kirby's Adventure | Sky Star, Athletic Special (part 3), Battleship Halberd (+3 more) | verified graph match |
 | **`$30`** | `$7A` | **`$7A`** | **Slide** | Super Mario 64 | End of Special Zone, Special Warp Star | verified graph match |
 | **`$33`** | `$AC` | **`$AC`** | **Last Battle** | Romancing SaGa 2 | Seven Koopalings Boss, Wily's Revenge | verified graph match |
@@ -79,7 +80,7 @@ These tracks were ported and introduced in Carol's new engine line (`demoOnly1` 
 | **`$AB`** | **Bowser Battle** | Super Mario RPG | demoOnly1 | Chandelier battle theme. |
 | **`$AE`** | **Battle With Magus** | Chrono Trigger | demoOnly1 | Decisive Magus duel. |
 | **`$AF`** | **The Sun Rises** | Okami | demoOnly1 | Okami climax battle. |
-| **`$B0`** | **Megalomania** | Live A Live | demo 1-1 | Re-added in demo 1-1 for Lemmy's Castle boss duel (2,067 bytes). |
+| **`$B0`** | **Megalomania** | Live A Live | demo 1-1 | Re-added in demo 1-1 for Lemmy's Castle boss duel, restoring cheap_demo legacy BGM $29 (2,067 bytes). |
 | **`$B8`** | **The Credits Concerto** | Donkey Kong Country | demoOnly1 | DKC end credits medley. |
 
 ## Legacy Family Exclusive / Unported Tracks
