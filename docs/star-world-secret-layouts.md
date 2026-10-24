@@ -165,6 +165,15 @@ data positions are spawn markers. The two working contacts match the runtime
 platform positions: the platform near (`$0020`,`$0C90`) sets `$0C90`, and
 the platform near (`$0100`,`$0C30`) sets `$0C30`.
 
+Runtime `$7A` platform survey: the platforms are loaded near the player and
+only about three exist at once. The observed heights are `$0C90`, `$0C30`,
+`$0B40`, `$0A30`, `$09F0` and `$0900`. Plain-poke landings trigger the
+chain `$0C90` then `$0C30`. Pokes at the higher platforms fall through,
+because each platform is loaded and moved only near its own section. A
+next-step probe must read the `$7A` positions from the sprite table after each
+water change, then land on the loaded platform. Probes:
+`local/probes/bay-chain.script`, `local/probes/bay-chain2.script`.
+
 Paused camera sweeps from the bottom die when the camera moves far from the
 player (offscreen rule). The useful coverage is the earlier sweep set:
 camera Y from `$0C00` to `$0019`. Landing on the solid switch at
