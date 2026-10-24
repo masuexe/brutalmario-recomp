@@ -69,11 +69,13 @@ inside 139,297 declared region bytes, zero unexpected.
 
 - The scripts use labelled map/player shortcuts and player-X waits. The
   coaster ride, finish, save, reload and deaths are real guest actions.
-- The **secret branch is not covered**. The Japanese wiki route needs every
-  Koopa defeated so the goal block turns off. This checkpoint did not identify
-  the race-position counter address or the secret goal. A probe that walks past
-  the normal finish falls into a pit and returns by death, without a secret
-  flag.
+- The **secret branch is user-verified**. The user play-tested the course and
+  opened the hidden exit, which unlocked the Warp Star. Automated secret
+  testing stopped at the user's request. This checkpoint does not claim the
+  secret route.
+- Probes found the second goal tape variant at X=`$1250` (extra bits 3) and
+  the race-state bytes at `$7FFD01`/`$7FFD02`. The low area below the finish
+  pit has no floor.
 - The entry coaster position is host-phase sensitive; the check compares the
   semantic state, not the exact coaster pixel.
 - The parsed level data places a second goal sprite at X=`$1250` and a second

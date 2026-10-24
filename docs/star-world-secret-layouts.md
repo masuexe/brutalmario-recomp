@@ -56,6 +56,9 @@ byte 0 `$F6` (extra bits 3, screen bit 1). Vanilla goal-tape sprite `$7B`
 uses the extra bits for the secret exit. The second sprite is therefore the
 secret exit goal, not a duplicate.
 
+The user play-tested the course and opened the hidden exit; it unlocked the
+Warp Star. Automated secret testing stopped at the user's request.
+
 A teleport probe to X=`$1250`, Y=`$01E0` fell to Y=`$032B` and did not clear.
 The nearby sprites were the race display and one rival. A survey at Y=`$0320`
 from X=`$1100` to X=`$1400` found no floor: the player falls, dies at about

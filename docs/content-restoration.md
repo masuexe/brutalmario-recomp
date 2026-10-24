@@ -791,8 +791,9 @@ X high byte there. Fresh demoOnly1-line captures match every route sample.
 Integrated checks pass **31/31**; the byte audit is unchanged (23 recipes,
 105,090 changed bytes inside 139,297 declared region bytes, zero unexpected).
 
-The secret branch is not covered; the Japanese wiki route needs every Koopa
-defeated so the goal block turns off. The [secret-layout note](star-world-secret-layouts.md)
+The secret branch is user-verified. The user play-tested the course and
+opened the hidden exit, which unlocked the Warp Star. Automated secret testing
+stopped at the user's request. The [secret-layout note](star-world-secret-layouts.md)
 records the parsed second goal sprite at X=`$1250` and the low-path stall at
 X=`$1026`. The remaining secret branches, unassisted traversals, the center
 Boss exception and the broader restoration stay open.
