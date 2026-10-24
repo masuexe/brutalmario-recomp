@@ -69,12 +69,16 @@ The reference capture reaches gameplay at entry 240, requests `57` at frame
 reloads. That fall is not a music defect and is not claimed as a course
 completion. An audible match is not claimed.
 
+The second level that requests slot `57`, translevel `0A5` (room `181`), also
+stalls on the head. On the candidate it stays in gameplay at entry 240 and
+entry 600.
+
 ## Limits
 
 - The song identity relies on the reviewed group layout and the consecutive
   sequence order. It does not use audio comparison.
-- Only translevel `001` is exercised. Other levels that request slot `57` are
-  not covered.
+- The survey covers translevel `001` and the second slot-`57` level `0A5`.
+  Other possible requests of slot `57` are not covered.
 - The candidate is not accepted as the head yet.
 
 ## Next steps

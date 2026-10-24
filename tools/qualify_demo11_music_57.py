@@ -25,6 +25,7 @@ ROOT = Path(ROOT)
 HEAD = 'demo11-star-bgm'
 TARGET = 'demo11-music-57'
 LEVEL = '001'
+OTHER = '0A5'
 
 
 def sample_state(capture_directory, tag):
@@ -85,6 +86,15 @@ def main():
                     'native and reference differ: ' + tag)
         else:
             require(reference_state == native_state, 'native and reference differ: ' + tag)
+
+    other_head = sample_state(ROOT / 'local/captures' / ('d11-survey-' + OTHER), 'entry600')
+    other_reference = ROOT / 'local/captures' / ('d11-music57-survey-' + OTHER)
+    require(other_head['mode'] == 0x12, 'second head level no longer stalls')
+    for tag in ('entry240', 'entry600'):
+        require(sample_state(other_reference, tag)['mode'] == 0x14,
+                'second level does not stay in gameplay: ' + tag)
+    receipt = json.loads((other_reference / 'receipt.json').read_text())
+    require(receipt['rom_sha256'] == sha(candidate), 'second capture ROM differs')
 
     build = json.loads((ROOT / 'local/build' / TARGET / 'm1-build.json').read_text())
     binary = ROOT / 'local/build' / TARGET / RESTORATIONS[TARGET]['binary']
