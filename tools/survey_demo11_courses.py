@@ -78,7 +78,8 @@ def run(first, last, target=TARGET, prefix=CAPTURE_PREFIX):
             continue
         name = capture_name(prefix, translevel)
         directory = ROOT / 'local/captures' / name
-        if (directory / 'entry600.wram.bin').exists():
+        complete = directory / 'entry600.wram.bin'
+        if complete.exists() and complete.stat().st_size == 0x20000:
             print(f'{translevel:03X} already captured')
             continue
         if directory.exists():
@@ -107,6 +108,8 @@ def sample(directory, tag):
     if not path.exists():
         return None
     body = path.read_bytes()
+    if len(body) != 0x20000:
+        return None
     return {'mode': f'{body[0x100]:02X}',
             'room': f'{int.from_bytes(body[0x10b:0x10d], "little"):03X}',
             'translevel': f'{body[0x13bf]:02X}',
@@ -116,6 +119,7 @@ def sample(directory, tag):
 
 
 def report(first, last, target=TARGET, prefix=CAPTURE_PREFIX, report_path=REPORT):
+    report_path = report_path.resolve()
     entries = []
     for translevel in range(first, last + 1):
         directory = ROOT / 'local/captures' / capture_name(prefix, translevel)

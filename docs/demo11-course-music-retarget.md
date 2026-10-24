@@ -54,6 +54,20 @@ The other ten retargeted translevels still return to the map or die after the
 music fix (`0E`, `0D`, `0C` or `17`). They need separate follow-up work and
 are not claimed here.
 
+## Full-range candidate survey
+
+The candidate reran all 192 probes with the same method:
+
+| Result | Head | Candidate |
+| --- | ---: | ---: |
+| Playable `14` | 70 | 77 |
+| Mario Start stall `12` | 78 | 61 |
+| Return or death | 44 | 54 |
+
+Seven translevels move from stall to gameplay. The other retargeted levels now
+return to the map or die, so they need separate work. The 61 remaining stalls
+request 20 unique songs. Song `02` blocks 32 of them, and song `05` blocks 3.
+
 ## Native build
 
 | Item | Value |

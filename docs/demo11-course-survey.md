@@ -81,6 +81,27 @@ The first fix candidate is
 17 rooms to existing new-family slots and lets seven sampled levels reach
 gameplay. It is a candidate, not the current head.
 
+## Candidate full-range result
+
+The candidate survey reran all 192 probes with the same method:
+
+| Result | Head | Candidate |
+| --- | ---: | ---: |
+| Playable `14` | 70 | 77 |
+| Mario Start stall `12` | 78 | 61 |
+| Mode `0E` | 34 | 41 |
+| Mode `0D` / `0C` | 7 | 9 |
+| Mode `17` | 2 | 3 |
+| Mode `0B` | 1 | 1 |
+
+Seven translevels change from stall to gameplay: `015`, `021`, `03C`,
+`048`, `04E`, `054` and `056`. The other retargeted levels now return to
+the map or die, so they need separate work.
+
+61 stalls remain. They request 20 unique songs: `02` blocks 32 of them, and
+`05` blocks 3. The rest are one or two levels each. Song `02` is the first
+target for the donor song restoration.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows
