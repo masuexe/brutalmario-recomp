@@ -14,11 +14,11 @@ the recipient and cheap_demo have **zero loaded standard DK/dragon-coin tiles**
 object loader at `$0D:B2CA..B335` supplies these tiles when an uncollected
 coin object exists. The examined rooms do not provide that pickup case.
 
-Record DK pickup/persistence as **not applicable to the loaded course path**,
+Record Dragon Coin pickup/persistence as **not applicable to the loaded course path**,
 not as a passed pickup test. No coin or collection bit was fabricated. This
-does not qualify nonzero DK-bit persistence, a dynamically created collectible
+does not qualify nonzero Dragon Coin bit persistence, a dynamically created collectible
 elsewhere, or the other Star World courses. Room `$004`, for example, has
-ten standard coin tiles in its donor capture, representing five two-tile coins.
+ten standard coin tiles in its donor capture, representing five two-tile Dragon Coins.
 
 Actual first-course progress was tested instead. The script follows the
 existing `$005` screen `$1C` exit into `$048`, interacts with the real goal
@@ -153,7 +153,7 @@ coverage is tracked separately during the current silent test window.
 
 The subsequent [upper-right repair](star-world-upper-right-restoration.md)
 resolves `$002`'s loading stall by restoring missing song `$5D`. It requires
-no graphics or sprite import. Entry, actual pipe/normal goal, five DK pickups,
+no graphics or sprite import. Entry, actual pipe/normal goal, five Dragon Coin pickups,
 save/reset/re-entry and death pass bounded native/reference checks. The user
 confirmed normal entry and SMB3 bricks and accepted the stage while waiving
 a complete manual run. Listening remains deferred during the silent window.
