@@ -75,10 +75,23 @@ direction presses) mapped the usable World 1 graph on the accepted head:
 | castle `(0xA8,0x1A8)` | down -> room138, right -> `(0xE8,0x1A8)`, up -> `(0xA8,0x158)` |
 
 The main chain 1-1 -> 1-2 -> 120 -> 106/138 -> castle is fully connected with
-no further zeroed route cells. Unexplored side nodes (`(0x18,0x178)`,
-`(0x68,0x1B8)`, `(0xE8,0x1A8)`, `(0xA8,0x158)`) were not entered in this
-census; entering a node and reading `$10B` remains the only reliable course
-identification.
+no further zeroed route cells. The later side-node census (captures `d11-side-nodes2/3`,
+`d11-side-complete`, on head `demo11-room106-music`) classified them with
+user-supplied context:
+
+| Node | Identity | Evidence |
+| --- | --- | --- |
+| `(0x18,0x178)` | transport pipe | pressing Y moves the player to `(0x148,0x0A8)` |
+| `(0x68,0x1B8)` | Warp Star to Star World | with the completion cheat it warps to submap 6 node `(0x128,0x1E8)` |
+| `(0xE8,0x1A8)` | Warp Star position, defective | even with the completion cheat it enters internal room `$113` and stalls black |
+| `(0xA8,0x158)` | Warp Star position, defective | same stall in room `$113` |
+
+Room `$113` itself selects missing extended graphics `15A/158/159`
+(available in cheap_demo), but the stall is better read as the locked
+Warp-Star fallback the user described ("no warp star unlocked -> wrong
+level") than as a course to restore. Repairing the two defective stars
+means locating their intended destinations and event gates; it is recorded
+as open side content and does not affect the main chain.
 
 ## Remaining scope
 
