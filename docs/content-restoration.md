@@ -31,7 +31,7 @@ explicitly deferred. Automatic coverage now includes the assisted 1-2
 room010 -> room04A -> room161 clear and onward room106 entry, plus
 [room106's chase-Yoshi clear and real death/re-entry](world1-room106-flow.md).
 The [room120 cave regression](world1-room120-regression.md) now covers natural
-entry, five DK pickups, normal clear and recipient File A persistence. Its
+entry, five Dragon Coin pickups, normal clear and recipient File A persistence. Its
 normal exit selects room138. The new isolated
 [`world1-room138-audio` candidate](world1-room138-restoration.md) repairs its
 missing-song Mario Start stall and preserves the original sample dependency;
@@ -243,12 +243,12 @@ Individual full-course and sound coverage was not specified. Other courses
 and donor versions remain unqualified.
 
 The [first-course closeout and nine-star survey](star-hub-survey.md) found no
-loaded DK placement in the first course's four examined rooms in either
+loaded Dragon Coin placement in the first course's four examined rooms in either
 version; pickup is not applicable to that path, rather than a fabricated pass.
 Actual normal-clear progress survives saving, native cold restart and console
 reset/File A reload. This uncovered and fixed a missing native hardware-reset
 callback. The 20 unchanged-entry scene samples remain byte-identical; all 92
-tests pass. Nonzero DK persistence is still unqualified by this course.
+tests pass. Nonzero Dragon Coin persistence is still unqualified by this course.
 
 All nine uncleared hub entrances now have bounded original/native/donor
 observations. The [upper-left cave candidate](star-world-upper-left-restoration.md)
@@ -289,7 +289,7 @@ The [upper-right candidate](star-world-upper-right-restoration.md) (`$002`,
 map 6 / `$01C8,$0168`) now restores missing song `$5D` from the second entry
 of a cheap_demo four-song group. Only the music pointer and its new RATS
 block change; graphics, layout, sprites, exits and runtime remain intact.
-Entry, real upward pipe/normal goal, five DK pickups and reset/save/re-entry,
+Entry, real upward pipe/normal goal, five Dragon Coin pickups and reset/save/re-entry,
 and death pass in both hosts. All 108 tests and 242 selected assertions pass;
 60 earlier full-WRAM/raw-framebuffer samples remain identical. Automated
 audio data checks pass, with human listening deferred. The user confirmed
@@ -313,13 +313,13 @@ touches the `$09B` goal tape. The guest returns to the overworld with
 translevel `$09` flagged `$8C` in WRAM and SRAM, and that flag survives
 reset and File A load. The same samples match on the recreated native build, and the launcher
 accepts this ROM. A time-over in both hosts drops one life, returns to the
-hub, and allows a fresh entry. The two upper DK coins are on opposite sides
+hub, and allows a fresh entry. The two upper Dragon Coins are on opposite sides
 of a wall and do not both fit one climb. The secret exit remains open.
 The user subsequently tested Sky Star without finding problems and reported
 that sound is available again and its audio is normal. The
 [middle-right restoration report](star-world-middle-right-restoration.md)
 records stage acceptance and the new cumulative baseline. Secret completion
-and all-five-DK coverage remain unconfirmed.
+and all-five-Dragon-Coin coverage remain unconfirmed.
 
 The center star (`$00A`, room `$079`) has no reachable victory store. Its
 phase-2 boss program never writes the level-end timer, and the donor sprite
@@ -495,7 +495,7 @@ warp-star progression matching the qualified demoOnly1 predecessor within
 8 pixels. This does not qualify all nine courses. The center map node loads
 room `$000` on both safe hosts and the intact parent reference; center entry
 mapping is the next concrete investigation. Per-sprite interactions, other
-full routes, DK/death coverage and scoped listening remain open. No new human
+full routes, Dragon Coin/death coverage and scoped listening remain open. No new human
 acceptance or center clear is claimed.
 
 
@@ -539,7 +539,7 @@ and palette, Santa fly-in/secret reward, sky normal clear/save/reload and the
 accepted cap-expiry regression pass on reference and native. Integrated checks
 pass **21/21**; all 19 recipes reproduce with zero unexpected changed bytes.
 The new visual milestone is automatically qualified, not a new user acceptance.
-The sky secret, other full-course/DK/death coverage and the broader restoration
+The sky secret, other full-course/Dragon Coin/death coverage and the broader restoration
 remain open.
 
 
@@ -561,7 +561,7 @@ demoOnly1 control matches the route bytes, and its loaded center-course frame is
 byte-identical. Integrated checks pass **22/22**; the byte audit rebuilds 20
 recipes with 64,137 changed bytes inside 90,919 declared region bytes, zero
 unexpected. The center course keeps its accepted unfinished boss ending. The
-assisted course exit, other full-course/DK/death coverage, the sky secret and
+assisted course exit, other full-course/Dragon Coin/death coverage, the sky secret and
 the broader restoration remain open.
 
 
@@ -612,7 +612,7 @@ Both hosts pass the forest entry/movement and both room nodes. Integrated checks
 pass **24/24**; the byte audit rebuilds 22 recipes with 105,084 changed bytes
 inside 139,275 declared region bytes, zero unexpected. The room106 song choice
 is unchanged, and no new listening acceptance is requested. The center Boss
-ending, the sky secret, other full-course/DK/death coverage and the broader
+ending, the sky secret, other full-course/Dragon Coin/death coverage and the broader
 restoration remain open.
 
 
@@ -631,7 +631,7 @@ field; only moving positions differ, within animation tolerance.
 
 Integrated checks pass **25/25**; the byte audit is unchanged (22 recipes,
 105,084 changed bytes inside 139,275 declared region bytes, zero unexpected).
-The sky secret, the remaining Star World course routes, DK/death coverage and
+The sky secret, the remaining Star World course routes, Dragon Coin/death coverage and
 the broader restoration remain open.
 
 
@@ -669,7 +669,7 @@ qualification checkpoint. No ROM changed; the head stays `demo11-star-bgm`.
 The tracked upper-left scripts pass on reference and native: entry and ordinary
 controls, the low-Map16 graphics guard, real B presses that swim upward, a real
 platform contact that changes the water target from `$0CB0` to `$0C90`, five
-real DK coins with the coin-5 saved bit, the screen-8 pipe to the real goal
+real Dragon Coins with the coin-5 saved bit, the screen-8 pipe to the real goal
 room `$048` and save flag `$85`, console-reset reload, the alternate-pipe side
 exit through `$051`, and a real death/re-entry.
 
@@ -703,7 +703,7 @@ next qualification checkpoint. No ROM changed; the head stays
 `demo11-star-bgm`.
 
 The tracked upper-right scripts pass on reference and native: entry and
-ordinary controls, the low-Map16 graphics guard, five real DK coins with the
+ordinary controls, the low-Map16 graphics guard, five real Dragon Coins with the
 coin-5 saved bit, the real upward pipe to goal room `$048` and save flag
 `$86` with console-reset reload, and a real death/re-entry. The reference
 requests the wiki-correct Plains Star slot `32`; the old legacy `5D` request
@@ -730,7 +730,7 @@ next qualification checkpoint. No ROM changed; the head stays
 
 The tracked lower-right scripts pass on reference and native: entry and
 ordinary controls with the low-Map16 guard, the loaded ice Ptooie (`$57`) and
-penguin (`$58`) sprites, five real DK coins with counter and DK-bit checks,
+penguin (`$58`) sprites, five real Dragon Coins with counter and completion-bit checks,
 the real end wall into room `$026`, the three-symbol goal-point match and the
 real goal sphere, normal clear flag `$8A` with console-reset reload, the real
 Santa reward key/keyhole secret with flag `$8B` and the map-0 Warp Star, and a
@@ -745,3 +745,29 @@ bytes, zero unexpected).
 Unassisted full traversal and listening acceptance are not claimed. The
 remaining Star World routes, the unassisted traversals, the center Boss
 exception and the broader restoration stay open.
+
+
+### Demo 1-1 lower-inner Valley Star route acceptance (2026-10-25)
+
+The [lower-inner route report](demo11-star-lower-inner-route.md) records the
+next qualification checkpoint. No ROM changed; the head stays
+`demo11-star-bgm`.
+
+The tracked lower-inner scripts pass on reference and native: a real-input
+traversal past the former `$0522` wall and through the warp-star chain, the
+real 100-coin controller with coin rollover, the extra life, the ending timer
+and `$141C=1`, the overworld return with flag `$1EDD=$8F` and
+`SRAM[$3B]/[$1E8]=$8F`, console-reset File A reload, and a real
+pit/death/re-entry. The restored custom slots `$30` (caps and 100-coin
+controller) and `$37` (warp-star movement) are exercised; the cap music stays
+pinned by the separate lower-inner music qualifier.
+
+Native and reference differ only in traversal position phase (at most 3
+pixels in X and 2 in Y); goal and death samples match exactly. Fresh
+demoOnly1-line captures match every route sample. Integrated checks pass
+**30/30**; the byte audit is unchanged (23 recipes, 105,090 changed bytes
+inside 139,297 declared region bytes, zero unexpected).
+
+An unassisted 100-coin route is not claimed. The remaining Star World routes,
+the own-route traversals, the center Boss exception and the broader
+restoration stay open.

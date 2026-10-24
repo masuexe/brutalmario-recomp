@@ -38,6 +38,7 @@ CHECKS = [
     ('upper-left Bay Star route', 'qualify_demo11_star_upper_left_route'),
     ('upper-right Plains Star route', 'qualify_demo11_star_upper_right_route'),
     ('lower-right Snow Star route', 'qualify_demo11_star_lower_right_route'),
+    ('lower-inner Valley Star route', 'qualify_demo11_star_lower_inner_route'),
 ]
 
 
