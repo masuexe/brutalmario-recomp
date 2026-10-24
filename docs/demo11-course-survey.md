@@ -57,6 +57,24 @@ The pilot also confirms the override reaches the intended level: the room echo
 matches the translevel for these entries. Translevel `001` is the first
 candidate for a dependency investigation.
 
+## First broken course: translevel 001
+
+Translevel `001` stops at mode `12` (Mario Start). The reference capture shows
+the last music request `$57`. The recipient song table entry at
+`$0F:E000 + $57*3` is `00 00 00`, so the uploader waits for a null pointer.
+This is the same failure shape as the Snow Star song fix.
+
+The music mapping names slot `$57` **KingBonbie VS MechaBonbie** from
+Super Momotarou Dentetsu DX, used in the **Rescue Yoshi** level. Every other
+supplied version has a non-null pointer `A1 94 D2` for this slot: cheap-demo,
+demo6, demo7, demo8, 7hero, mazo, ow and the three ra versions. Demo 1-1 and
+demoOnly1 have the null slot.
+
+Next step: port slot `$57` with the reviewed music recipe workflow
+(`tools/restore_star_world_1.py`, `adapt_music`), like the room 010 and room
+138 music recoveries. The donor song data must be located in the donor's
+upload group layout first.
+
 ## Next steps
 
 1. Run the survey over the wider translevel range and record the full table.
