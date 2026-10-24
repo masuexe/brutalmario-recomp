@@ -186,12 +186,39 @@ Each course features unique custom sprites, ASM mechanics, and secret exit requi
 | **Grassland Star**<br>*(草原のスター)* | `$001` / `$002` | Intro demo stage; Koopa graphics replacement in 2nd half. | Standard goal tape. | Jump into the pit marked with the **"SUICIDE"** signpost; warps to hidden descent room where key and keyhole await at the bottom. |
 | **Forest Star**<br>*(森林のスター)* | `$003` | Forest labyrinth; replaced by Lively Water in Demo 7.5. | Standard exit. | Hidden pipe / alternate branch. |
 | **Bay Star**<br>*(入江のスター)* | `$004` | SM64 water-level switches (`$7E:FFD0`) and water currents. | Screen-8 pipe to goal room `$048`. | Hit top water switch, let water rise to max level, lower it 2 levels, grab key and reach keyhole. Unlocks Warp Star. |
-| **Cave Star**<br>*(洞窟のスター)* | `$002` / `$007` | DKC2 roller coaster track with Skull Cart; racing position counter against Koopas. | Reach end of roller coaster track. | Achieve **1st place rank** (position counter = 1) across the race to unlock the secret exit branch. |
+| **Cave Star**<br>*(洞窟のスター)* | `$002` / `$007` | DKC2 roller coaster track with Skull Cart; racing position counter against Koopas. | Reach end of roller coaster track. | Defeat **all Koopas** along the coaster; the block in front of the goal turns off and reveals the secret goal (the race counter ends at 1). |
 | **Plains Star**<br>*(高原のスター)* | `$002` / `$005` | Entire level enclosed in breakable SMB3-style brick blocks. | Break out and reach goal tape. | Locate the single brick with a **distinctly different animation/flashing effect** near the upper-right (past the 4th Dragon Coin and 3 Koopas); hit it to reveal a **P-Switch**, then press it to turn the bricks into coins and access the secret key and keyhole below. |
 | **Sky Star**<br>*(天空のスター)* | `$006` / `$007` | Vertical rocket climb; tight fuel budget (89-pixel slack). Right page has no fuel blocks. | Standard rocket ceiling finish (`Y in 0x400..0x44F`, `X high 0`). | Near-clean right-page ascent (`X high 1`) with remaining fuel; key and keyhole sit directly above to unlock Warp Star. |
 | **Snow Star**<br>*(雪原のスター)* | `$008` | Winter cavern with seals, icicles, and a final 3-block roulette / slot machine. | Match regular items / goal points on the final roulette blocks. | Hit **3 Bob-ombs (`ボム兵`)** on the final 3-block roulette / slot machine to trigger the secret exit. |
 | **Valley Star**<br>*(クッパの谷のスター)* | `$117` | Super Mario 64 Cap power-ups (Wing, Metal, Vanish) & Kirby Dream Course aesthetics. | Standard exit. | Collect all **100 coins** in the level (SM64 100-coin star mechanic) to spawn/unlock the secret key exit. |
 | **Special Warp Star**<br>*(スペシャルスター)* | `$00A` / `$079` | Central hub course; custom boss encounter (sprite `$24`). | **Unfinished** by author Carol. | **Route unknown / Unfinished.** The boss program in donor ROMs implements phases 0, 1, and 2 without a terminal victory state or exit destination (accepted donor exception; see `star-world-center-restoration.md`). |
+
+### Japanese wiki walkthrough details (fetched 2026-10-25)
+
+Source: [WikiWiki Kitiku Mario map guide](https://wikiwiki.jp/kitikumario/) pages
+`マップ攻略/入江のスター` and `マップ攻略/洞窟のスター`. These details explain
+the intended mechanics behind the table rows above.
+
+**Bay Star secret route.** The water-level switches (crystal-like sprites)
+raise or lower the water surface to the switch height. The full route is:
+
+1. Touch the switch on page `0B`, then return to the start point.
+2. Hit the block at the upper right to get the key.
+3. Carry the key to the pipe on page `06`. A vine grows from the block above
+   that pipe. Before using it, hit the rotating block (`クルクルブロック`)
+   above the vine.
+4. Climb the vine with the key and touch the switch near the ceiling. The water
+   rises to near the ceiling.
+5. Go back down to the pipe and place the key at the coin row at the pipe's
+   upper right.
+6. Return to page `08` and touch the switch to the right of the spring while
+   Super Mario or higher. The water starts to drop.
+7. Hurry back, take the placed key, and go to the lower right.
+8. At the keyhole, wait for the water to drop, then break the blocks to reach
+   the secret goal.
+
+**Cave Star secret route.** Beat every Koopa on the coaster course. The block
+in front of the goal then turns off and the secret goal becomes reachable.
 
 ---
 
