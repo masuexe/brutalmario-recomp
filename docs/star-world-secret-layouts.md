@@ -141,6 +141,11 @@ platforms. Landing on the crystal at (`$0100`,`$0C30`) set the water target to
 fall-through. Probes: `local/probes/bay-one-tA30.script` and
 `local/probes/bay-crystal-variants.script`.
 
+A wider palette scan also finds crystals at (`$00`,`$0240`), (`$00`,`$0340`),
+(`$00`,`$0B40`) and (`$00`,`$0C40`). Landing tests at (`$08`, each height)
+did not change the water target. Two of them dropped Mario into the water and
+he drowned. These left-wall crystals are edge artifacts or decorations.
+
 More probes did not resolve the other switches:
 
 - Holding Mario at each decoded sprite position (ids `$0A`, `$0B`, `$0E`,
