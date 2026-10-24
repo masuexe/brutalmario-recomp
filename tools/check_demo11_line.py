@@ -36,6 +36,7 @@ CHECKS = [
     ('lower-left course route', 'qualify_demo11_star1_route'),
     ('Star World course BGM', 'qualify_demo11_star_bgm'),
     ('upper-left Bay Star route', 'qualify_demo11_star_upper_left_route'),
+    ('upper-right Plains Star route', 'qualify_demo11_star_upper_right_route'),
 ]
 
 

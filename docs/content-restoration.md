@@ -694,3 +694,29 @@ in [walkthrough reference](walkthrough-reference.md). Consult the English Brutal
 Wiki (https://brutalmario.fandom.com/) and the Japanese Kitiku Mario Wiki
 (https://wikiwiki.jp/kitikumario/) when investigating stage progression, custom gimmicks,
 and secret exits.
+
+
+### Demo 1-1 upper-right Plains Star route acceptance (2026-10-25)
+
+The [upper-right route report](demo11-star-upper-right-route.md) records the
+next qualification checkpoint. No ROM changed; the head stays
+`demo11-star-bgm`.
+
+The tracked upper-right scripts pass on reference and native: entry and
+ordinary controls, the low-Map16 graphics guard, five real DK coins with the
+coin-5 saved bit, the real upward pipe to goal room `$048` and save flag
+`$86` with console-reset reload, and a real death/re-entry. The reference
+requests the wiki-correct Plains Star slot `32`; the old legacy `5D` request
+is absent.
+
+Native and reference match on every checked field; only the entry jump phase
+differs by 16 pixels. Fresh demoOnly1-line captures match on the route
+positions. Integrated checks pass **28/28**; the byte audit is unchanged
+(23 recipes, 105,090 changed bytes inside 139,297 declared region bytes, zero
+unexpected).
+
+The Plains Star keyhole secret exit is not covered. The recorded wiki route is:
+find the backward-animated brick near the top right, take its P-Switch, go
+down, press the switch to convert the bricks, and fall to the key and keyhole.
+Remaining Star World routes, the secret exits, unassisted traversals, the
+center Boss exception and the broader restoration stay open.
