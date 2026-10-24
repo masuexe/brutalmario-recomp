@@ -54,13 +54,26 @@ The other ten retargeted translevels still return to the map or die after the
 music fix (`0E`, `0D`, `0C` or `17`). They need separate follow-up work and
 are not claimed here.
 
+## Native build
+
+| Item | Value |
+| --- | --- |
+| Binary | `local/build/demo11-course-music-retarget/BrutalMarioDemo11CourseMusicRetargetSNESRecomp` |
+| Binary SHA-256 | `fd302e1c570edcb4d0f9ae73046c69a76572f5f07d63ce2468c3120e98cbbf3e` |
+
+Seven native captures ran on the candidate. For each fixed translevel the
+native and reference samples match exactly on mode, room, X, Y, lives and
+translevel, and both captures pin the candidate ROM identity. The qualifier
+checks these native captures, the native build identity and the reference
+samples.
+
 ## State
 
 - The candidate is built at `local/restoration/demo11-course-music-retarget`
   and registered in `tools/restoration_targets.py`.
 - The suite now runs the new qualifier: **33/33**.
-- The current head stays `demo11-star-bgm`; the candidate is not accepted and
-  has no native build yet.
+- The current head stays `demo11-star-bgm`; the candidate is built and has a
+  native build, but it is not accepted yet.
 - The whole-line byte audit for the head is unchanged.
 
 ## Next steps

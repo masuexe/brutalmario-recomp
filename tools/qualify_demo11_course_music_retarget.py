@@ -17,6 +17,7 @@ from pathlib import Path
 from m1 import ROOT
 from qualify_demo11_lower_inner_music import capture
 from qualify_world1_next_course import require, sha, word
+from restoration_targets import RESTORATIONS
 
 ROOT = Path(ROOT)
 HEAD = 'demo11-star-bgm'
@@ -52,11 +53,36 @@ def main():
         require(word(candidate_state, 0x10b) == word(head_state, 0x10b),
                 'candidate room differs: ' + translevel)
 
+    for translevel in FIXED:
+        reference = ROOT / 'local/captures' / ('d11-retarget-survey-' + translevel)
+        native = ROOT / 'local/captures' / ('d11-retarget-native-' + translevel)
+        for sample in ('entry240', 'entry600'):
+            require((native / (sample + '.wram.bin')).exists(),
+                    'missing native sample: ' + translevel + '/' + sample)
+            require(sample_state(native, sample) == sample_state(reference, sample),
+                    'native and reference differ: ' + translevel + '/' + sample)
+        for directory in (reference, native):
+            receipt = json.loads((directory / 'receipt.json').read_text())
+            require(receipt['rom_sha256'] == sha(candidate), 'capture ROM differs: ' + directory.name)
+
+    registry = RESTORATIONS[TARGET]
+    build = json.loads((ROOT / 'local/build' / TARGET / 'm1-build.json').read_text())
+    binary = ROOT / 'local/build' / TARGET / registry['binary']
+    require(build['rom_sha256'] == sha(candidate) and
+            build['binary_sha256'] == sha(binary.read_bytes()),
+            'candidate build identity differs')
+
     build = json.loads((ROOT / 'local/build' / HEAD / 'm1-build.json').read_text())
     binary = ROOT / 'local/build' / HEAD / 'BrutalMarioDemo11StarWorldBgmSNESRecomp'
     require(build['rom_sha256'] == sha(head) and
             build['binary_sha256'] == sha(binary.read_bytes()), 'head build identity differs')
     print('Course music retarget checks passed: ' + TARGET)
+
+
+def sample_state(capture_directory, tag):
+    body = (capture_directory / (tag + '.wram.bin')).read_bytes()
+    return dict(mode=body[0x100], room=word(body, 0x10b), x=word(body, 0x94),
+                y=word(body, 0x96), lives=body[0x0DBE], translevel=body[0x13BF])
 
 
 def lorom(address):
