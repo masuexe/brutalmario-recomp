@@ -198,7 +198,10 @@ differ from the accepted route head. `tools/check_demo11_line.py` reports
 `recomp/inputs/demo11-room106-music-{verify,both}.script`; captures
 `d11-106only-ref`, `d11-music-both-{ref,native}`. Launch:
 `python3 tools/play_demo_only1.py --restoration demo11-room106-music`.
-Final acceptance: the user's listening check on the native build.
+Final acceptance: on 2026-10-24 the user playtested the native build and
+confirmed both courses correct - room106 plays the auditioned track and
+room120 keeps its original music. `demo11-room106-music` is the accepted
+head of the Demo 1-1 line.
 
 The deeper format-transplant route (cheap song-21 raw stream, differing SPC
 drivers) remains documented above for reference but is no longer needed.
