@@ -27,6 +27,10 @@
   ID alone does not establish that the underlying content matches. For custom
   music mapping between the legacy donor family (cheap_demo, 7hero, etc.) and
   the recipient baseline (demo 1-1 / demoOnly1), consult `docs/music-mapping.md`.
+- When investigating course layouts, clearing routes, secret exits, boss mechanics,
+  and intended game gimmicks for testing scripts, consult `docs/walkthrough-reference.md`
+  and the community walkthroughs (https://brutalmario.fandom.com/ and
+  https://wikiwiki.jp/kitikumario/).
 
 ## Verification and acceptance
 

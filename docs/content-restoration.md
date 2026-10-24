@@ -684,3 +684,13 @@ keyhole. The Sky Star secret route is user-verified and deferred; the
 [investigation report](demo11-sky-secret.md) records the mechanics and the
 user facts. Remaining Star World routes, the unassisted Bay ascent, DK/death
 coverage, the center Boss exception and the broader restoration stay open.
+
+
+### Community walkthrough and route references (2026-10-25)
+
+To aid automated route construction and avoid treating intended level puzzles as
+emulation defects, community walkthrough resources and stage mechanics are documented
+in [walkthrough reference](walkthrough-reference.md). Consult the English Brutal Mario
+Wiki (https://brutalmario.fandom.com/) and the Japanese Kitiku Mario Wiki
+(https://wikiwiki.jp/kitikumario/) when investigating stage progression, custom gimmicks,
+and secret exits.
