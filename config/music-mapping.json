@@ -1,0 +1,627 @@
+{
+  "schema": 1,
+  "legacy_family": [
+    "cheap_demo",
+    "7hero",
+    "mazo",
+    "ow",
+    "demo7",
+    "demo8"
+  ],
+  "new_family": [
+    "demoOnly1",
+    "demo-1-1"
+  ],
+  "description": "Cross-version custom music ID mapping table between Carol's legacy demo family and new demo family.",
+  "mappings": [
+    {
+      "legacy_id": "0x24",
+      "demo_only1_id": "0x51",
+      "demo11_id": "0x51",
+      "title": "Fear Factory",
+      "origin_game": "Donkey Kong Country",
+      "levels": [
+        "Cave Star",
+        "Castle Crush",
+        "Skull Coaster"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Fast industrial mine theme. Verified present in demoOnly1 and demo1-1 slot $51 (2,656 bytes upload).",
+      "wiki_source": "Cave Star"
+    },
+    {
+      "legacy_id": "0x27",
+      "demo_only1_id": "0x8E",
+      "demo11_id": "0x8E",
+      "title": "Castle Pandemonium",
+      "origin_game": "Final Fantasy II",
+      "levels": [
+        "Finish! Bowser Keep (Crash/Burn)"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Plays during the Crash and Burn segment in Bowser's Keep. Verified present in demo1-1 slot $8E (766 bytes).",
+      "wiki_source": "Finish! Bowser Keep"
+    },
+    {
+      "legacy_id": "0x28",
+      "demo_only1_id": "0x49",
+      "demo11_id": "0x49",
+      "title": "Podol / Boundaries",
+      "origin_game": "Romancing SaGa 3",
+      "levels": [
+        "Bay Star",
+        "Frozen Cave (pre-clear)",
+        "Deep Sea Research",
+        "Ocean Palace"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Plays in Bay Star and un-cleared Frozen Cave. Confirmed by user playtests. Verified present in demo1-1 slot $49 (609 bytes).",
+      "wiki_source": "Bay Star"
+    },
+    {
+      "legacy_id": "0x2E",
+      "demo_only1_id": "0x58",
+      "demo11_id": "0x58",
+      "title": "Grape Garden",
+      "origin_game": "Kirby's Adventure",
+      "levels": [
+        "Sky Star",
+        "Athletic Special (part 3)",
+        "Battleship Halberd",
+        "Dolphin Barbecue",
+        "The Future of UFOs",
+        "Twin Lifts"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Used across multiple sky and flying stages. Verified present in demo1-1 slot $58 (1,010 bytes).",
+      "wiki_source": "Sky Star"
+    },
+    {
+      "legacy_id": "0x30",
+      "demo_only1_id": "0x7A",
+      "demo11_id": "0x7A",
+      "title": "Slide",
+      "origin_game": "Super Mario 64",
+      "levels": [
+        "End of Special Zone",
+        "Special Warp Star"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Slider track from Super Mario 64. Verified present in demo1-1 slot $7A (2,370 bytes).",
+      "wiki_source": "End of Special Zone"
+    },
+    {
+      "legacy_id": "0x33",
+      "demo_only1_id": "0xAC",
+      "demo11_id": "0xAC",
+      "title": "Last Battle",
+      "origin_game": "Romancing SaGa 2",
+      "levels": [
+        "Seven Koopalings Boss",
+        "Wily's Revenge"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Seven Heroes battle theme. In cheap_demo selectable as BGM 32/33; mapped to $AC in new family (2,318 bytes).",
+      "wiki_source": "Finish! Bowser Keep"
+    },
+    {
+      "legacy_id": "0x36",
+      "demo_only1_id": "0x61",
+      "demo11_id": "0x61",
+      "title": "Rainbow Resort",
+      "origin_game": "Kirby's Adventure",
+      "levels": [
+        "Mario's Attack",
+        "Athletic Special (parts 1-2)",
+        "Ludwig's Castle"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Kirby night sky theme. Verified present in demo1-1 slot $61 (806 bytes).",
+      "wiki_source": "Mario's Attack"
+    },
+    {
+      "legacy_id": "0x38",
+      "demo_only1_id": "0xA4",
+      "demo11_id": "0xA4",
+      "title": "The Decisive Battle",
+      "origin_game": "Final Fantasy VI",
+      "levels": [
+        "Naval Piranha Boss",
+        "Ocean Palace Boss",
+        "Finish! Bowser Keep (Naval Piranha)"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Boss battle theme. Verified present in demo1-1 slot $A4 (1,645 bytes).",
+      "wiki_source": "Finish! Bowser Keep"
+    },
+    {
+      "legacy_id": "0x39",
+      "demo_only1_id": "0x98",
+      "demo11_id": "0x98",
+      "title": "Go! Go! Kids!",
+      "origin_game": "Treasure Hunter G",
+      "levels": [
+        "Twinbee Special (Dangling Ghost Boss)",
+        "Morton the NEET Boss",
+        "Special Warp Star Boss",
+        "Haunt-idiot Mansion"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Whimsical boss theme. Verified present in demo1-1 slot $98 (2,057 bytes).",
+      "wiki_source": "Twinbee Special"
+    },
+    {
+      "legacy_id": "0x3A",
+      "demo_only1_id": "0xA2",
+      "demo11_id": "0xA2",
+      "title": "The Flame and the Arrow",
+      "origin_game": "Treasure of the Rudras",
+      "levels": [
+        "Two-Face Moon Boss",
+        "Wendy the Gal Boss",
+        "Finish! Bowser Keep (Two-Face Moon)"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Rudra boss theme. Verified present in demo1-1 slot $A2 (2,000 bytes).",
+      "wiki_source": "Finish! Bowser Keep"
+    },
+    {
+      "legacy_id": "0x3B",
+      "demo_only1_id": "0x9C",
+      "demo11_id": "0x9C",
+      "title": "Irwin on Reflection",
+      "origin_game": "Legend of Mana",
+      "levels": [
+        "Baby Bowser Boss",
+        "Toad Boss (End of Special Zone)",
+        "Mirror Fort"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Legend of Mana boss track. Verified present in demo1-1 slot $9C (1,801 bytes).",
+      "wiki_source": "End of Special Zone"
+    },
+    {
+      "legacy_id": "0x3E",
+      "demo_only1_id": null,
+      "demo11_id": "0x8D",
+      "title": "Koopa's Road",
+      "origin_game": "Super Mario 64",
+      "levels": [
+        "Finish! Bowser Keep (SMB3 Castle)"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Excluded from demoOnly1 (which had NSMB Castle at $8D), but reinstated in demo 1-1 at slot $8D (2,280 bytes).",
+      "wiki_source": "Music"
+    },
+    {
+      "legacy_id": "0x40",
+      "demo_only1_id": "0x60",
+      "demo11_id": "0x60",
+      "title": "Iceberg Ocean",
+      "origin_game": "Kirby's Dream Course",
+      "levels": [
+        "Valley Star",
+        "Athletic Special (part 4)",
+        "What Matches a Key?",
+        "Mario's Item Theft",
+        "Northern Resort"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Star World lower-inner theme. 12/16 channel graphs match donor group. Verified in demo1-1 slot $60 (1,196 bytes).",
+      "wiki_source": "Valley Star"
+    },
+    {
+      "legacy_id": "0x41",
+      "demo_only1_id": "0x79",
+      "demo11_id": "0x79",
+      "title": "Cap Theme",
+      "origin_game": "Super Mario 64",
+      "levels": [
+        "Valley Star (Cap item power-up)"
+      ],
+      "verification_status": "verified_byte_identical",
+      "notes": "Mario 64 cap music. 16/16 channel graphs match donor group. Verified in demo1-1 slot $79 (416 bytes).",
+      "wiki_source": "Valley Star"
+    },
+    {
+      "legacy_id": "0x42",
+      "demo_only1_id": "0x71",
+      "demo11_id": "0x71",
+      "title": "A Child's Fantasy Realm",
+      "origin_game": "Pop'n Twinbee: Rainbow Bell Adventures",
+      "levels": [
+        "Twinbee Special",
+        "Gachapoko Land"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Twinbee level theme. Verified present in demo1-1 slot $71 (1,328 bytes).",
+      "wiki_source": "Twinbee Special"
+    },
+    {
+      "legacy_id": "0x43",
+      "demo_only1_id": "0x59",
+      "demo11_id": "0x59",
+      "title": "Aboard the Hilda Garde",
+      "origin_game": "Final Fantasy IX",
+      "levels": [
+        "Milky Way Wishes",
+        "Night Galaxy Train",
+        "Really Big Jump"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Airship theme from FF9. Verified present in demo1-1 slot $59 (3,048 bytes).",
+      "wiki_source": "Milky Way Wishes"
+    },
+    {
+      "legacy_id": "0x47",
+      "demo_only1_id": null,
+      "demo11_id": "0x6B",
+      "title": "Leonid's Castle",
+      "origin_game": "Romancing SaGa 3",
+      "levels": [
+        "Gourmet Boo",
+        "Koindozer Forest",
+        "A Remote Shack",
+        "Fear of Monday",
+        "Ocean Palace",
+        "The Cursed Mansion",
+        "Titanic"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Omitted in demoOnly1, reinstated in demo 1-1 at slot $6B (604 bytes upload).",
+      "wiki_source": "Music"
+    },
+    {
+      "legacy_id": "0x4A",
+      "demo_only1_id": "0x38",
+      "demo11_id": "0x38",
+      "title": "Town Where the West Wind Blows",
+      "origin_game": "Wild Arms 2",
+      "levels": [
+        "Baby Yoshi Hill",
+        "Grassland Star"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Western acoustic guitar theme. Verified present in demo1-1 slot $38 (1,237 bytes).",
+      "wiki_source": "Baby Yoshi Hill"
+    },
+    {
+      "legacy_id": "0x4B",
+      "demo_only1_id": "0xB9",
+      "demo11_id": "0xB9",
+      "title": "To Far Away Times",
+      "origin_game": "Chrono Trigger",
+      "levels": [
+        "Unused / Ending sequences"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Chrono Trigger ending theme. Verified present in demo1-1 slot $B9 (2,090 bytes).",
+      "wiki_source": "Music"
+    },
+    {
+      "legacy_id": "0x58",
+      "demo_only1_id": "0xA0",
+      "demo11_id": "0xA0",
+      "title": "Boss Theme",
+      "origin_game": "Super Nazo Puyo: Rulue's Roux",
+      "levels": [
+        "Finish! Bowser Keep (Section 1)",
+        "Fort of Gravity"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Fast-paced Puyo boss track. Verified present in demo1-1 slot $A0 (2,668 bytes).",
+      "wiki_source": "Finish! Bowser Keep"
+    },
+    {
+      "legacy_id": "0x59",
+      "demo_only1_id": "0x39",
+      "demo11_id": "0x39",
+      "title": "Hometown Domina",
+      "origin_game": "Legend of Mana",
+      "levels": [
+        "Unused in cheap_demo, present in demoOnly line"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Town music from Legend of Mana. Verified present in demo1-1 slot $39 (1,703 bytes).",
+      "wiki_source": "Music"
+    },
+    {
+      "legacy_id": "0x5D",
+      "demo_only1_id": "0x32",
+      "demo11_id": "0x32",
+      "title": "Freiluftmusik",
+      "origin_game": "SaGa Frontier 2",
+      "levels": [
+        "Plains Star",
+        "Chomp Chomp Panic 1",
+        "Fishing Spree"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Open-air acoustic melody. Verified present in demo1-1 slot $32 (942 bytes).",
+      "wiki_source": "Plains Star"
+    },
+    {
+      "legacy_id": "0x61",
+      "demo_only1_id": "0xA5",
+      "demo11_id": "0xA5",
+      "title": "The Fierce Battle",
+      "origin_game": "Final Fantasy VI",
+      "levels": [
+        "Athletic Special (Part 5 / Final section)"
+      ],
+      "verification_status": "verified_graph_match",
+      "notes": "Atma Weapon / Fierce Battle theme. Verified present in demo1-1 slot $A5 (2,881 bytes).",
+      "wiki_source": "Athletic Special"
+    }
+  ],
+  "new_family_additions": [
+    {
+      "slot": "0x2A",
+      "title": "Prophecy",
+      "origin_game": "Secret of Mana",
+      "introduced_in": "demoOnly1",
+      "notes": "Added in demoOnly1 custom music list."
+    },
+    {
+      "slot": "0x52",
+      "title": "Stickerbrush Symphony",
+      "origin_game": "Donkey Kong Country 2",
+      "introduced_in": "demoOnly1",
+      "notes": "Bramble theme ported by Carol."
+    },
+    {
+      "slot": "0x5A",
+      "title": "The Moon",
+      "origin_game": "DuckTales",
+      "introduced_in": "demoOnly1",
+      "notes": "Famous 8-bit arrangement."
+    },
+    {
+      "slot": "0x62",
+      "title": "Cold Man's Stage",
+      "origin_game": "Mega Man & Bass",
+      "introduced_in": "demoOnly1",
+      "notes": "Rockman & Forte icy stage theme."
+    },
+    {
+      "slot": "0x68",
+      "title": "Last Dungeon",
+      "origin_game": "Romancing SaGa 2",
+      "introduced_in": "demoOnly1",
+      "notes": "Used in Bowser's Keep Yoshi coins room and Mammon Machine."
+    },
+    {
+      "slot": "0x69",
+      "title": "Ghost House",
+      "origin_game": "New Super Mario Bros.",
+      "introduced_in": "demo 1-1",
+      "notes": "Used in Horror House / Ghost Forest (1,009 bytes)."
+    },
+    {
+      "slot": "0x6A",
+      "title": "Krook's March",
+      "origin_game": "Donkey Kong Country 2",
+      "introduced_in": "demo 1-1",
+      "notes": "DKC2 castle / march theme (4,172 bytes)."
+    },
+    {
+      "slot": "0x6B",
+      "title": "Leonid's Castle",
+      "origin_game": "Romancing SaGa 3",
+      "introduced_in": "demo 1-1",
+      "notes": "Re-added in demo 1-1 replacing legacy $47 (604 bytes)."
+    },
+    {
+      "slot": "0x72",
+      "title": "Taking Over the Halberd",
+      "origin_game": "Kirby Super Star",
+      "introduced_in": "demoOnly1",
+      "notes": "Revenge of Meta Knight airship theme."
+    },
+    {
+      "slot": "0x73",
+      "title": "Magic Man's Stage",
+      "origin_game": "Mega Man & Bass",
+      "introduced_in": "demoOnly1",
+      "notes": "Rockman & Forte theme."
+    },
+    {
+      "slot": "0x86",
+      "title": "Boss / Action Track",
+      "origin_game": "Custom Port",
+      "introduced_in": "demo 1-1",
+      "notes": "New slot allocated in demo 1-1 table."
+    },
+    {
+      "slot": "0x88",
+      "title": "Save Hut",
+      "origin_game": "Kirby Super Star",
+      "introduced_in": "demoOnly1",
+      "notes": "Used in Lemmy's Castle orb room."
+    },
+    {
+      "slot": "0x8D",
+      "title": "Koopa's Road",
+      "origin_game": "Super Mario 64",
+      "introduced_in": "demo 1-1",
+      "notes": "Replaces demoOnly1 NSMB Castle; restores SM64 Koopa Road (2,280 bytes)."
+    },
+    {
+      "slot": "0x8F",
+      "title": "Thema",
+      "origin_game": "SaGa Frontier 2",
+      "introduced_in": "demoOnly1",
+      "notes": "Main theme arrangement."
+    },
+    {
+      "slot": "0x90",
+      "title": "Sad Freedom",
+      "origin_game": "Treasure Hunter G",
+      "introduced_in": "demoOnly1",
+      "notes": "Sad emotional melody."
+    },
+    {
+      "slot": "0x91",
+      "title": "The Galaxy Reactor",
+      "origin_game": "Super Mario Galaxy",
+      "introduced_in": "demoOnly1",
+      "notes": "SMG Bowser final galaxy arrangement."
+    },
+    {
+      "slot": "0x92",
+      "title": "Undersea Palace",
+      "origin_game": "Chrono Trigger",
+      "introduced_in": "demoOnly1",
+      "notes": "Ocean Palace theme."
+    },
+    {
+      "slot": "0x93",
+      "title": "One of Them Is Hope",
+      "origin_game": "Secret of Mana",
+      "introduced_in": "demoOnly1",
+      "notes": "Sanctuary theme."
+    },
+    {
+      "slot": "0x94",
+      "title": "The Savior of Those on Earth",
+      "origin_game": "Lufia II",
+      "introduced_in": "demoOnly1",
+      "notes": "Estpolis II boss battle."
+    },
+    {
+      "slot": "0x99",
+      "title": "Final Fight",
+      "origin_game": "SNK vs. Capcom: Chaos",
+      "introduced_in": "demoOnly1",
+      "notes": "Fighting game boss theme."
+    },
+    {
+      "slot": "0x9A",
+      "title": "Gangplank Galleon",
+      "origin_game": "Donkey Kong Country",
+      "introduced_in": "demoOnly1",
+      "notes": "King K. Rool boss battle."
+    },
+    {
+      "slot": "0x9D",
+      "title": "Masked Dedede's Theme",
+      "origin_game": "Kirby Super Star Ultra",
+      "introduced_in": "demoOnly1",
+      "notes": "Revenge of the King arena."
+    },
+    {
+      "slot": "0xA6",
+      "title": "Maybe I'm a Lion",
+      "origin_game": "Final Fantasy VIII",
+      "introduced_in": "demoOnly1",
+      "notes": "Griever / Ultimecia battle."
+    },
+    {
+      "slot": "0xA7",
+      "title": "High Tension Wire",
+      "origin_game": "Trials of Mana (Seiken Densetsu 3)",
+      "introduced_in": "demoOnly1",
+      "notes": "Fast battle theme."
+    },
+    {
+      "slot": "0xA8",
+      "title": "Nuclear Fusion",
+      "origin_game": "Trials of Mana (Seiken Densetsu 3)",
+      "introduced_in": "demoOnly1",
+      "notes": "God-beast battle."
+    },
+    {
+      "slot": "0xAB",
+      "title": "Bowser Battle",
+      "origin_game": "Super Mario RPG",
+      "introduced_in": "demoOnly1",
+      "notes": "Chandelier battle theme."
+    },
+    {
+      "slot": "0xAE",
+      "title": "Battle With Magus",
+      "origin_game": "Chrono Trigger",
+      "introduced_in": "demoOnly1",
+      "notes": "Decisive Magus duel."
+    },
+    {
+      "slot": "0xAF",
+      "title": "The Sun Rises",
+      "origin_game": "Okami",
+      "introduced_in": "demoOnly1",
+      "notes": "Okami climax battle."
+    },
+    {
+      "slot": "0xB0",
+      "title": "Megalomania",
+      "origin_game": "Live A Live",
+      "introduced_in": "demo 1-1",
+      "notes": "Re-added in demo 1-1 for Lemmy's Castle boss duel (2,067 bytes)."
+    },
+    {
+      "slot": "0xB8",
+      "title": "The Credits Concerto",
+      "origin_game": "Donkey Kong Country",
+      "introduced_in": "demoOnly1",
+      "notes": "DKC end credits medley."
+    }
+  ],
+  "legacy_family_exclusive": [
+    {
+      "legacy_id": "0x31",
+      "title": "Go Red Team! Go White Team! Rah Rah Rah!",
+      "origin_game": "Treasure Hunter G",
+      "levels": [
+        "Switch Palaces (Blue, Green, Red, Yellow)"
+      ],
+      "notes": "Standard palace track in legacy family; in demoOnly family, standard SMW palace track is used."
+    },
+    {
+      "legacy_id": "0x53",
+      "title": "Haunted Chase",
+      "origin_game": "Donkey Kong Country 2",
+      "levels": [
+        "Airborne Cemetery",
+        "Ghost Special",
+        "Abode of Larry"
+      ],
+      "notes": "Ghost rope climbing theme from DKC2; present in cheap_demo bank."
+    },
+    {
+      "legacy_id": "0x54",
+      "title": "Jingle Bells",
+      "origin_game": "James Lord Pierpont",
+      "levels": [
+        "Snow Star"
+      ],
+      "notes": "Holiday theme used in Snow Star. Does not exist in demoOnly1."
+    },
+    {
+      "legacy_id": "0x57",
+      "title": "KingBonbie VS MechaBonbie",
+      "origin_game": "Super Momotarou Dentetsu DX",
+      "levels": [
+        "Rescue Yoshi"
+      ],
+      "notes": "Mecha Bonbie battle theme; legacy family only."
+    },
+    {
+      "legacy_id": "0x5A",
+      "title": "Akuma's Theme",
+      "origin_game": "Street Fighter Alpha 2",
+      "levels": [
+        "Unused in cheap_demo"
+      ],
+      "notes": "Present in cheap_demo bank; omitted in demoOnly1."
+    },
+    {
+      "legacy_id": "0x5C",
+      "title": "Mi\u00dfgestalt",
+      "origin_game": "SaGa Frontier 2",
+      "levels": [
+        "Unused in cheap_demo"
+      ],
+      "notes": "Present in cheap_demo bank; omitted in demoOnly1."
+    }
+  ]
+}

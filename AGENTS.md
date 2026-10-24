@@ -24,7 +24,9 @@
   bounded allocations, and explicit patches. Do not silently replace recipient
   layouts, map events, or engine behavior with donor behavior.
 - Numeric music, graphics, sprite, and room IDs are version-local. Matching an
-  ID alone does not establish that the underlying content matches.
+  ID alone does not establish that the underlying content matches. For custom
+  music mapping between the legacy donor family (cheap_demo, 7hero, etc.) and
+  the recipient baseline (demo 1-1 / demoOnly1), consult `docs/music-mapping.md`.
 
 ## Verification and acceptance
 
