@@ -47,9 +47,9 @@ geometry, coin, goal or save logic changed.
 `local/reports/center-cumulative-qualification.json` pins preceding ROM
 `509d119fe3eb69bb151e87fae8faee6d1ea86c39cfb1f8a91cf1f6e8935f98bf`.
 It records 239 exact prior-route WRAM/framebuffer samples and bounded checks
-for powered damage, cannon/DK travel, five DK pickups, boss phases,
+for powered damage, cannon travel, five Dragon Coin pickups, boss phases,
 death/re-entry and the lower-inner saved ending. The boss-phase fixture
-uses position/immunity shortcuts and does not qualify victory. The five-DK
+uses position/immunity shortcuts and does not qualify victory. The five-Dragon-Coin
 fixture does not qualify saving that center result. Separate upper-inner and
 lower-inner death/re-entry captures also remain historical evidence.
 

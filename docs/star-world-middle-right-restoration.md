@@ -4,7 +4,7 @@ Date: 2026-10-20. The user reports that the Sky Star playtest found no
 problems, sound is available again, and the heard audio is normal. This
 accepts the current stage and makes `star-world-middle-right` the cumulative
 baseline for subsequent restoration. The report does not itemize a secret
-clear or all five DK coins; those remain unqualified.
+clear or all five Dragon Coins; those remain unqualified.
 
 ```sh
 python3 tools/play_demo_only1.py --restoration star-world-middle-right --show-location
@@ -62,7 +62,7 @@ tests; recording this acceptance does not claim a newly rerun suite.
 The [investigation log](star-world-middle-right-investigation.md) preserves
 the measured route limitations. A bottom refill followed by the measured
 clean climb ends at Mario Y `$0477`, short of the secret finish condition
-below `$0470`; the secret exit is not qualified. The two upper DK coins lie
+below `$0470`; the secret exit is not qualified. The two upper Dragon Coins lie
 on opposite sides of a wall and the examined single-climb routes cannot
 collect both. Five-coin completion and its saved bit are not qualified here.
 These findings are not a reason to alter original fuel, terrain or exit rules

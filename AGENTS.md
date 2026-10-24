@@ -31,6 +31,10 @@
   and intended game gimmicks for testing scripts, consult `docs/walkthrough-reference.md`
   and the community walkthroughs (https://brutalmario.fandom.com/ and
   https://wikiwiki.jp/kitikumario/).
+- Collectibles terminology: Super Mario World courses contain **5 Dragon Coins**
+  (ドラゴンコイン / Yoshi Coins) that grant a life and set the saved flag at `$1F2F`,
+  whereas **DK Coins** (from Donkey Kong Country) appear at most once per course.
+  Do not refer to the 5 Dragon Coins as "DK coins".
 
 ## Verification and acceptance
 

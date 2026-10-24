@@ -25,7 +25,7 @@ course normally.
 The tracked scripts are
 `recomp/inputs/star-world-upper-left-{entry,water,coins-save,side-exit,death}.script`.
 They poke map and player coordinates and damage immunity as labelled fixtures.
-They do not write coin counters, DK bits, water state, completion, exit
+They do not write coin counters, Dragon Coin bits, water state, completion, exit
 destinations or SRAM.
 
 | Route | Reference and native result |
@@ -35,12 +35,12 @@ destinations or SRAM.
 | Missing-graphics guard | low Map16 buffer `$C800..$DFFF` is byte-identical from layout to active; the old corruption is gone |
 | Swimming | five real B presses move the player up from Y `$0CB0` to `$0CA4` |
 | Water switch | platform contact changes the water target at `$7E:FFD0` from `$0CB0` to `$0C90` and the water settles there |
-| Five DK coins | real coin collisions at `$0180/$0BBF`, `$0020/$0B85`, `$0010/$0B68`, `$0040/$0B4A` and `$01D0/$0B20` |
-| Coin 5 | lives `4→5` and the saved DK bit `$1F2F=$08` |
+| Five Dragon Coins | real coin collisions at `$0180/$0BBF`, `$0020/$0B85`, `$0010/$0B68`, `$0040/$0B4A` and `$01D0/$0B20` |
+| Coin 5 | lives `4→5` and the saved Dragon Coin bit `$1F2F=$08` |
 | Screen-8 pipe | loads the real goal room `$048` at `$0028/$0140` |
 | Real goal tape | returns to the map in mode `$0E` |
 | Normal-clear save | hub flag `$1EA6=$85`, second flag `$1EA9=$03`, `SRAM[4]=$85`, `SRAM[7]=$03` |
-| Console reset reload | File A load keeps `$85`, `$03` and the DK bit; re-entry loads room `$004` again |
+| Console reset reload | File A load keeps `$85`, `$03` and the Dragon Coin bit; re-entry loads room `$004` again |
 | Side exit | alternate pipe loads `$048`, then `$051`; leaving the `$051` edge returns to the hub in mode `$0E` at `$000D/$011E` without a life lost |
 | Death | a real fall returns to the hub in mode `$0E` at `$010E/$012E` with lives `4→3`; re-entry loads room `$004` with lives 3 |
 
@@ -52,7 +52,7 @@ water-switch behavior.
 
 Fresh demoOnly1-line captures on the `star-world-upper-left` target use the
 same scripts and match the new line in every semantic field: mode, room, X, Y,
-lives, hub flags, DK bit, SRAM flag bytes and the water target. Only the
+lives, hub flags, Dragon Coin bit, SRAM flag bytes and the water target. Only the
 `selected` menu sample keeps a different leftover room byte, which is not part
 of the route.
 

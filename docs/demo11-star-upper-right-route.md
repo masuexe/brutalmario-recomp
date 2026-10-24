@@ -26,7 +26,7 @@ course normally.
 The tracked scripts are
 `recomp/inputs/star-world-upper-right-{entry,coins-save,death}.script`. They
 use map, player and camera shortcuts and damage immunity as labelled fixtures.
-They do not write coin counters, DK bits, enemy state, exit destinations,
+They do not write coin counters, Dragon Coin bits, enemy state, exit destinations,
 completion flags or SRAM.
 
 | Route | Reference and native result |
@@ -35,12 +35,12 @@ completion flags or SRAM.
 | Low Map16 guard | buffer `$C800..$DFFF` is byte-identical from layout to active |
 | Ordinary controls | walk reaches X `$00B6`; jump and later samples stay active at X `$00D2` |
 | Course music | reference requests slot `32`; the legacy `5D` request is absent |
-| Five DK coins | real collisions at `$01C0/$0F90`, `$0040/$0F30`, `$00B0/$0DE0`, `$0070/$0D10` and `$00D0/$0B70` |
-| Coin 5 | lives `4→5` and the saved DK bit `$1F2F=$20` |
+| Five Dragon Coins | real collisions at `$01C0/$0F90`, `$0040/$0F30`, `$00B0/$0DE0`, `$0070/$0D10` and `$00D0/$0B70` |
+| Coin 5 | lives `4→5` and the saved Dragon Coin bit `$1F2F=$20` |
 | Upward pipe | from `$0108/$0AB0` enters the real goal room `$048` at `$0028/$0140` |
 | Real goal tape | returns to the map in mode `$0E` |
 | Normal-clear save | hub flag `$1EA4=$86`; `SRAM[2]=$86` and `SRAM[$01AF]=$86` |
-| Console reset reload | File A load keeps `$86` and the DK bit; re-entry loads room `$002` |
+| Console reset reload | File A load keeps `$86` and the Dragon Coin bit; re-entry loads room `$002` |
 | Death | a real fall returns to the hub in mode `$0E` at `$010E/$012E` with lives `4→3`; re-entry loads room `$002` with lives 3 |
 
 ## Host and line parity

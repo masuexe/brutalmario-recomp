@@ -2,8 +2,8 @@
 """Qualify the Star World lower-right Snow Star routes on the Demo 1-1 line.
 
 The tracked lower-right scripts cover the ice cave on the current head: entry
-and ordinary controls, the loaded ice Ptooie and penguin sprites, five real DK
-coins with the real end-wall transfer and known goal-point match plus save and
+and ordinary controls, the loaded ice Ptooie and penguin sprites, five real
+Dragon Coins with the real end-wall transfer and known goal-point match plus save and
 console-reset reload, the real Santa reward key/keyhole secret exit, and a real
 fall/death/re-entry. Reference and native runs must match fresh demoOnly1-line
 captures under the same scripts.
@@ -30,13 +30,13 @@ ROUTES = {
     'death': 'star-world-lower-right-death.script',
 }
 CLEAR_FLAG = 0x1EAA
-DK_SAVED = 0x1F30
+DRAGON_COIN_SAVED = 0x1F30
 COUNTERS = (0x1420, 0x1422)
 KEY_HELD = 0x1470
 CUSTOM_ID = 0x1AB9E
 SRAM_FLAG = 8
 SRAM_FLAG_MIRROR = 0x1B5
-SRAM_DK = 0x7D1
+SRAM_DRAGON_COIN = 0x7D1
 SRAM_CHECKSUM = 0x7DC
 SNOW_SLOT = 0x54
 PRE_ENTRY = {'title', 'files', 'intro', 'selected'}
@@ -59,7 +59,7 @@ def state(capture_name, tag):
     body = blob(capture_name, tag)
     return dict(mode=body[0x100], room=word(body, 0x10B), x=word(body, 0x94),
                 y=word(body, 0x96), life=body[0x0DBE], clear=body[CLEAR_FLAG],
-                dk=body[DK_SAVED], counts=tuple(body[address] for address in COUNTERS),
+                dk=body[DRAGON_COIN_SAVED], counts=tuple(body[address] for address in COUNTERS),
                 map=body[0x1F11], mapxy=body[0x1F17:0x1F1B].hex(),
                 key=body[KEY_HELD])
 
@@ -110,7 +110,7 @@ def check_route(host, route, script, native):
                     'real coin counter differs: ' + host + '/%d' % number)
         coin5 = state(name, 'coin5')
         require(coin5['counts'] == (5, 5) and coin5['dk'] == 0x80 and coin5['life'] == 5,
-                'coin 5 DK/1-up result differs: ' + host)
+                'coin 5 Dragon Coin/1-up result differs: ' + host)
         require(state(name, 'destination')['mode'] == 0x14 and
                 state(name, 'destination')['room'] == 0x026,
                 'end-wall transfer differs: ' + host)
@@ -131,9 +131,9 @@ def check_route(host, route, script, native):
             saved_ram = blob(name, sample, 'sram.bin')
             require(saved_ram[SRAM_FLAG] == 0x8A and saved_ram[SRAM_FLAG_MIRROR] == 0x8A,
                     'saved SRAM flag differs: ' + host + '/' + sample)
-            require(saved_ram[SRAM_DK] == 0x80 and
+            require(saved_ram[SRAM_DRAGON_COIN] == 0x80 and
                     saved_ram[SRAM_CHECKSUM:SRAM_CHECKSUM + 2] == bytes.fromhex('da59'),
-                    'saved SRAM DK/checksum differs: ' + host + '/' + sample)
+                    'saved SRAM Dragon Coin/checksum differs: ' + host + '/' + sample)
     if route == 'secret':
         require(state(name, 'key_held')['key'] == 1, 'the key is not carried: ' + host)
         secret = state(name, 'secret_map')
@@ -144,7 +144,7 @@ def check_route(host, route, script, native):
                 'Warp Star destination differs: ' + host)
         saved_ram = blob(name, 'secret_map', 'sram.bin')
         require(saved_ram[SRAM_FLAG] == 0x8B and saved_ram[SRAM_FLAG_MIRROR] == 0x8B and
-                saved_ram[SRAM_DK] == 0x80, 'secret SRAM differs: ' + host)
+                saved_ram[SRAM_DRAGON_COIN] == 0x80, 'secret SRAM differs: ' + host)
     if route == 'death':
         require(state(name, 'death_return')['mode'] == 0x0E and
                 state(name, 'death_return')['life'] == 3, 'death return differs: ' + host)
@@ -193,7 +193,7 @@ def main():
                   limits=['The scripts use labelled coordinate shortcuts and damage immunity; the coins, end-wall transfer, slots, goal sphere, Santa reward, keyhole and deaths are real guest actions.',
                           'The normal clear is qualified. The user previously accepted normal and key exits on the demoOnly1 line; this run re-qualifies both on the Demo 1-1 head.',
                           'An unassisted full traversal and listening acceptance are not claimed.',
-                          'The save flag, DK bit and SRAM constants are recipient-local. The demoOnly1 line matches them on these scripts.'])
+                          'The save flag, Dragon Coin bit and SRAM constants are recipient-local. The demoOnly1 line matches them on these scripts.'])
     output = ROOT / 'local/reports/demo11-star-lower-right-route.json'
     output.write_text(json.dumps(report, indent=2) + '\n')
     print('Lower-right Snow Star route checks passed: ' + str(output.relative_to(ROOT)))

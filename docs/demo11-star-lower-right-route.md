@@ -26,7 +26,7 @@ course normally.
 The tracked scripts are
 `recomp/inputs/star-world-lower-right-{entry,enemies,coins-save,secret,death}.script`.
 They use map/player coordinate shortcuts and damage immunity as labelled
-fixtures. They do not write counters, DK bits, slot results, goal flags, exit
+fixtures. They do not write counters, Dragon Coin bits, slot results, goal flags, exit
 destinations, key state or SRAM.
 
 | Route | Reference and native result |
@@ -37,12 +37,12 @@ destinations, key state or SRAM.
 | Course music | reference requests the restored Snow Star slot `54` |
 | Ice Ptooie | `plants_loaded` has custom sprite `$57` with `$C2` values 0 and 1 (enemy and generated projectile) |
 | Penguin | `penguins_loaded` has custom sprite `$58` |
-| Five DK coins | real collisions raise both counters from 1 to 5; coin 5 sets `$1F30=$80` and grants one life |
+| Five Dragon Coins | real collisions raise both counters from 1 to 5; coin 5 sets `$1F30=$80` and grants one life |
 | End-wall transfer | the real end wall loads room `$026` in mode `$14` |
 | Goal-point match | three custom-slot-9 sprites stop with `tile=$8C`; the real goal sphere sprite `$4A` appears |
 | Normal clear | mode `$0E`, flag `$1EAA=$8A`, lives 5 |
-| Normal save | `SRAM[8]=$8A` and `SRAM[$01B5]=$8A`; DK `$07D1=$80`; checksum bytes `$07DC..$07DD=$DA59` |
-| Console reset reload | File A load and re-entry keep `$8A` and the DK bit |
+| Normal save | `SRAM[8]=$8A` and `SRAM[$01B5]=$8A`; Dragon Coin `$07D1=$80`; checksum bytes `$07DC..$07DD=$DA59` |
+| Console reset reload | File A load and re-entry keep `$8A` and the Dragon Coin bit |
 | Secret reward | Santa's reward exposes the real key; `$1470=1` while Mario carries it |
 | Keyhole secret | flag `$1EAA=$8B`; `SRAM[8]=$8B`; the resulting Warp Star reaches map 0 at `$0128,$0048` |
 | Death | real fall returns to the hub in mode `$0E` with lives `4→3`; re-entry loads room `$008` with lives 3 |
@@ -54,7 +54,7 @@ and the Santa reward visuals.
 ## Host and line parity
 
 The native build matches the reference capture on every route state field:
-mode, room, X, Y, lives, clear flag, DK bit, DK counters, map and map position,
+mode, room, X, Y, lives, clear flag, Dragon Coin bit, coin counters, map and map position,
 and carried key. Both hosts satisfy the sprite assertions above.
 
 Fresh demoOnly1-line captures on the `star-world-lower-right` target use the
@@ -80,7 +80,7 @@ inside 139,297 declared region bytes, zero unexpected.
   are real guest actions.
 - An unassisted full traversal is not claimed. Listening acceptance is not
   claimed; the audio evidence is the restored slot selection only.
-- The save flag, DK bit and SRAM constants are recipient-local. The demoOnly1
+- The save flag, Dragon Coin bit and SRAM constants are recipient-local. The demoOnly1
   line matches them on these scripts.
 - Shared sprite `$57` is used by other rooms; this check accepts only the
   Snow Star route.

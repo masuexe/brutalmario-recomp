@@ -66,20 +66,20 @@ checkpoint does not qualify those courses as playable.
 
 The three tracked scripts under `recomp/inputs/` use disposable fresh saves.
 They use map/player/camera shortcuts and, where stated, damage immunity.
-They never write coin counters, DK bits, enemy states, exits, goal flags or
+They never write coin counters, Dragon Coin bits, enemy states, exits, goal flags or
 SRAM. No imported savestate is used.
 
 | Script | Bounded result in native and reference hosts |
 | --- | --- |
 | `star-world-upper-right-entry.script` | Active room `$002`; intact low Map16 through graphics loading; ordinary walk/jump input; remains active at later samples. |
-| `star-world-upper-right-coins-save.script` | Five actual DK collisions; real up/jump input enters the existing downward-facing pipe into `$048`; real right input touches its goal tape; guest-generated clear/DK save survives console reset, File A load and re-entry. |
+| `star-world-upper-right-coins-save.script` | Five actual Dragon Coin collisions; real up/jump input enters the existing downward-facing pipe into `$048`; real right input touches its goal tape; guest-generated clear/Dragon Coin save survives console reset, File A load and re-entry. |
 | `star-world-upper-right-death.script` | A fall loses one life, returns to the hub and permits a fresh entry. |
 
-Five DK coins increment both counters from 1 through 5, set `$1F2F=$20`
+Five Dragon Coins increment both counters from 1 through 5, set `$1F2F=$20`
 and award one life. Normal completion changes slot `$02` from `$06` to
 `$86`. Actual SRAM contains `$07D0=$20`, with checksum `$5A3A`; both clear
-and DK progress survive reset/reload. Re-entering `$002` has no remaining
-standard DK tiles. File loading resets the life count in both hosts;
+and Dragon Coin progress survive reset/reload. Re-entering `$002` has no remaining
+standard Dragon Coin tiles. File loading resets the life count in both hosts;
 life persistence is not claimed.
 
 The original exit on vertical screen `$0A` points to `$048`. The pipe test

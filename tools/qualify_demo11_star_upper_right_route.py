@@ -2,7 +2,7 @@
 """Qualify the Star World upper-right Plains Star routes on the Demo 1-1 line.
 
 The tracked upper-right scripts cover the brick maze on the current head:
-entry and ordinary controls, five real DK coins with the real upward pipe and
+entry and ordinary controls, five real Dragon Coins with the real upward pipe and
 goal tape plus save and console-reset reload, and a real fall/death/re-entry.
 Reference and native runs must match fresh demoOnly1-line captures under the
 same scripts.
@@ -26,7 +26,7 @@ ROUTES = {
     'death': 'star-world-upper-right-death.script',
 }
 HUB_FLAG = 0x1EA4
-DK_SAVED = 0x1F2F
+DRAGON_COIN_SAVED = 0x1F2F
 PLAINS_SLOT = 0x32
 LEGACY_SLOT = 0x5D
 POSITION_TOLERANCE = {('entry', 'jump'): ('y', 16), ('entry', 'later'): ('y', 16)}
@@ -75,7 +75,7 @@ def state(directory, tag):
     require(len(body) == 0x20000, 'incomplete WRAM: ' + tag)
     return dict(mode=body[0x100], room=word(body, 0x10B), x=word(body, 0x94),
                 y=word(body, 0x96), lives=body[0x0DBE], flag=body[HUB_FLAG],
-                dk=body[DK_SAVED], sram={2: saved[2], 0x1AF: saved[0x1AF]})
+                dk=body[DRAGON_COIN_SAVED], sram={2: saved[2], 0x1AF: saved[0x1AF]})
 
 
 def music_requests(capture_name):

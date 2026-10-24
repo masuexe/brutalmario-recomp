@@ -94,13 +94,13 @@ scrolling rather than treating missed diagnostic spawns as a missing asset.
 
 The tracked scripts use fresh disposable saves, player-coordinate shortcuts
 and damage immunity. They do not write slot results, enemy states, exit
-mappings, goal flags, DK counters/bitsets or SRAM.
+mappings, goal flags, Dragon Coin counters/bitsets or SRAM.
 
 | Script under `recomp/inputs/` | Bounded result |
 | --- | --- |
 | `star-world-lower-right-entry.script` | Loading reaches active room `$008`; low Map16 data survives graphics initialization; Mario stands and ordinary movement works. |
 | `star-world-lower-right-enemies.script` | Gradual camera scrolling loads ice Ptooies (`$57`, including their generated `$C2=1` projectiles) and existing penguins (`$58`). |
-| `star-world-lower-right-coins-save.script` | Five real DK collisions increment counters 1 through 5 and grant one life. Real right input crosses the end wall into `$026`; timed real jumps stop all three slots on the goal-point result. The generated `$4A` sphere is touched, and the guest clears/saves the course. Console reset, File A load and re-entry preserve the clear/DK bit, with no remaining DK tiles. |
+| `star-world-lower-right-coins-save.script` | Five real Dragon Coin collisions increment counters 1 through 5 and grant one life. Real right input crosses the end wall into `$026`; timed real jumps stop all three slots on the goal-point result. The generated `$4A` sphere is touched, and the guest clears/saves the course. Console reset, File A load and re-entry preserve the clear/Dragon Coin bit, with no remaining coin tiles. |
 | `star-world-lower-right-secret.script` | Another timed match triggers Santa's hidden reward, reveals a real key/keyhole, and lets Mario carry the key into it. The resulting Warp Star reaches map 0 / `$0128,$0048`. |
 | `star-world-lower-right-death.script` | Falling loses one life, returns to the hub and allows entry into `$008` again. |
 

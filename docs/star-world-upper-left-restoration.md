@@ -75,7 +75,7 @@ They do not qualify an unassisted ascent through the entire cave.
 | --- | --- |
 | `star-world-upper-left-entry.script` | Coherent cave, no low Map16 corruption during graphics initialization, ordinary controls and active level. |
 | `star-world-upper-left-water.script` | Actual B presses swim; contact with a real platform changes the water target from `$0CB0` to `$0C90`, and the controller reaches that target. Native, restored reference and same-number donor probe agree on these sampled states. |
-| `star-world-upper-left-coins-save.script` | Five real DK/dragon-coin collisions increment counters from 1 to 5; the fifth sets saved bit `$1F2F=$08` and grants one life. Screen `$08`'s actual pipe enters `$048`; its real goal returns to the map and saves slot `$04=$85`. Console reset, File A load and re-entry preserve the clear/DK bit, with no remaining coin tiles. |
+| `star-world-upper-left-coins-save.script` | Five real Dragon Coin collisions increment counters from 1 to 5; the fifth sets saved bit `$1F2F=$08` and grants one life. Screen `$08`'s actual pipe enters `$048`; its real goal returns to the map and saves slot `$04=$85`. Console reset, File A load and re-entry preserve the clear/Dragon Coin bit, with no remaining coin tiles. |
 | `star-world-upper-left-side-exit.script` | Screen `$06`'s alternate pipe enters `$048`; the existing side-pipe transition reaches `$051`, whose edge returns to the hub without a life lost. |
 | `star-world-upper-left-death.script` | A fall loses one life, returns to map mode `$0E` and permits fresh entry into `$004`. |
 

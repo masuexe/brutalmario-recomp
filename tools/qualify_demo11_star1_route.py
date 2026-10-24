@@ -6,7 +6,7 @@ existing route scripts on the current head: entry, ordinary movement, a real
 fall/death/re-entry, the real normal goal plus save and console-reset reload,
 and the real keyhole secret exit with its World 1 Warp Star. The scripts poke
 map coordinates, player coordinates and damage immunity as labelled fixtures;
-they do not edit destinations, completion flags, events, DK bits or SRAM.
+they do not edit destinations, completion flags, events, Dragon Coin bits or SRAM.
 Reference and native runs must match fresh demoOnly1-line captures under the
 same scripts.
 """
@@ -180,7 +180,7 @@ def main():
                   captures=captures,
                   results=dict(reference=reference, native=native_states, donor=donor),
                   limits=['The scripts use labelled map/player coordinate shortcuts and damage immunity; the goal and keyhole interactions are real guest actions.',
-                          'This is the same bounded boundary the demoOnly1 line accepted: no unassisted full traversal, no DK persistence claim and no audio claim.',
+                          'This is the same bounded boundary the demoOnly1 line accepted: no unassisted full traversal, no Dragon Coin persistence claim and no audio claim.',
                           'The course graphics recovery remains pinned by the earlier Star1 graphics qualifier.'])
     output = ROOT / 'local/reports/demo11-star1-route.json'
     output.write_text(json.dumps(report, indent=2) + '\n')

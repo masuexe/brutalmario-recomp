@@ -3,7 +3,7 @@
 
 The tracked upper-left scripts cover the vertical water cave on the current
 head: entry and ordinary controls, real swimming and a water-level switch,
-five real DK coins with the screen-8 pipe and the real goal tape, the alternate
+five real Dragon Coins with the screen-8 pipe and the real goal tape, the alternate
 pipe side exit, and a real fall/death/re-entry. Reference and native runs must
 match fresh demoOnly1-line captures under the same scripts.
 
@@ -30,7 +30,7 @@ ROUTES = {
 WATER_TARGET = 0x1FFD0
 HUB_FLAG = 0x1EA6
 HUB_SECOND = 0x1EA9
-DK_SAVED = 0x1F2F
+DRAGON_COIN_SAVED = 0x1F2F
 EXPECTED = {
     'entry': {
         'selected': dict(mode=0x0E, room=0x0C5),
@@ -84,7 +84,7 @@ def state(directory, tag):
     require(len(body) == 0x20000, 'incomplete WRAM: ' + tag)
     return dict(mode=body[0x100], room=word(body, 0x10B), x=word(body, 0x94),
                 y=word(body, 0x96), lives=body[0x0DBE], flag=body[HUB_FLAG],
-                second=body[HUB_SECOND], dk=body[DK_SAVED],
+                second=body[HUB_SECOND], dk=body[DRAGON_COIN_SAVED],
                 water=word(body, WATER_TARGET), sram={4: saved[4], 7: saved[7]})
 
 

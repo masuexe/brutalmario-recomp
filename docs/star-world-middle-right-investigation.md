@@ -217,7 +217,7 @@ and build receipt are the candidate ROM
 `b565937be20d4342602b895a36447382a6f3eeda8979c519210749332cecc284`.
 The launcher accepts that pair.
 
-DK coins and the secret height check are still unqualified. A time-over
+Dragon Coins and the secret height check are still unqualified. A time-over
 is qualified: the course timer starts at 300, and
 `recomp/inputs/star-world-middle-right-death.script` waits it out with no
 position or life poke. Reference and native both return to the hub in mode
@@ -226,11 +226,11 @@ entry reaches room `$009` at X `$0070`, Y `$0CBF` with fuel `$0B` and the
 life still at 3. There is no pit on this course; the bottom of the shaft is
 a floor, and the gap at X `$0100` is the fuel block.
 
-The five DK tiles are `$0030/$0B30`, `$00B0/$0A10`, `$0050/$0750`,
+The five Dragon Coin tiles are `$0030/$0B30`, `$00B0/$0A10`, `$0050/$0750`,
 `$00E0/$0510`, and `$0090/$0430`. A climb can pass the lower three and
 either upper coin, then still reach the finish height inside the initial
 fuel. It cannot pass both upper coins. They sit on opposite sides of the
 `$30/$31/$32` column, and the open band at Y `$0480`–`$04C0` is too short
-to change lanes before the next bar. No DK clear is qualified.
+to change lanes before the next bar. No Dragon Coin clear is qualified.
 
 This is not an accepted restoration.

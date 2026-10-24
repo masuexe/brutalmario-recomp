@@ -22,7 +22,7 @@ Enter the course normally. Completion turns the node into the existing portal.
 
 The tracked scripts are `recomp/inputs/star-world-1-{entry,goal,save,secret,side-exit}.script`.
 They poke map coordinates, player coordinates and damage immunity as labelled
-fixtures. They do not edit exit destinations, completion flags, events, DK bits,
+fixtures. They do not edit exit destinations, completion flags, events, Dragon Coin bits,
 the key carried state or SRAM. The goal tape, key pickup, keyhole and map
 transfers are real guest actions.
 
@@ -70,7 +70,7 @@ bytes inside 139,275 declared region bytes, zero unexpected.
 - The scripts use labelled map/player coordinate shortcuts and damage immunity.
   This is the same bounded boundary the demoOnly1 line accepted: it is not an
   unassisted full traversal.
-- No loaded DK placement exists in the four examined rooms, so DK persistence is
+- No loaded Dragon Coin placement exists in the four examined rooms, so Dragon Coin persistence is
   not applicable to this path. No audio acceptance is inferred.
 - The course graphics recovery is pinned by the earlier Star1 graphics
   qualifier; this check adds the route behaviour.

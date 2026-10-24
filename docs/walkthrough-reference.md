@@ -51,6 +51,15 @@ Consulting these walkthroughs helps agents:
    In vertical or flight levels (such as Sky Star), the fuel/time budget is often tightly
    tuned. Verify mathematical feasibility (e.g. climb speed vs fuel consumption) before
    running exhaustive input searches.
+5. **Collectibles Terminology (Dragon Coins vs. DK Coins)**:
+   - **Dragon Coins (ドラゴンコイン / Yoshi Coins)**: The standard collectible coins inherited
+     from *Super Mario World*. Exactly **5 Dragon Coins** are placed throughout a course.
+     Collecting all 5 awards an extra life and sets the course's completion bit in SRAM (`$1F2F`).
+   - **DK Coins (DKコイン / Cranky's Video Game Hero Coins)**: Large collectible coins originating
+     from *Donkey Kong Country*. At most **1 DK Coin** exists per stage in games that feature them.
+   - *Note*: Historical project documentation occasionally conflated the 5 Dragon Coins as
+     "5 DK coins" or referred to the `$1F2F` flag as the "DK bit". Always use the correct term:
+     courses contain **5 Dragon Coins**.
 
 ---
 
