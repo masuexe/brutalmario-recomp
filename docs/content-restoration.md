@@ -1137,3 +1137,9 @@ The [second free sprite batch](demo11-sprites-free-two.md) ports seven more
 custom records: `0x03`, `0x1D`, `0x2F`, `0x41`, `0x59`, `0x84` and `0x85`.
 Chain end `demo11-sprites-free-two` (ROM `01bbcefa...`). Suite
 **71/71**; audit zero unexpected.
+
+The [blocked sprite batch one](demo11-sprites-blocked-one.md) ports twelve
+placed custom sprites with thirteen reviewed graphics relocations. Rooms
+`0x8F`, `0x95`, `0xB0` and `0x1D` change and keep an identical HUD.
+Chain end `demo11-sprites-blocked-one` (ROM `c4799ec8...`). Suite
+**72/72**; audit zero unexpected.

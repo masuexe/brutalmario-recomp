@@ -80,6 +80,7 @@ CHECKS = [
     ('fire projectile sprite', 'qualify_demo11_sprites_fireball'),
     ('snow projectile sprite', 'qualify_demo11_sprites_snowflake'),
     ('remaining free sprites 2', 'qualify_demo11_sprites_free_two'),
+    ('blocked sprites batch 1', 'qualify_demo11_sprites_blocked_one'),
 ]
 
 
