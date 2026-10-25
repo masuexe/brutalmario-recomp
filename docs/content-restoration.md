@@ -1078,3 +1078,9 @@ Ordinary corridor HUD controls, startup pictures and the fuel regression also pa
 The integrated suite passes 61/61 checks, and all 122 unit tests pass.
 The candidate byte audit reports zero unexpected changes.
 The head remains `demo11-fix-batch-p`; this checkpoint does not promote the restoration chain or qualify a full boss fight.
+
+The [CC sprite batch](demo11-cc-sprites.md) ports custom sprites `0x63` and `0x65`
+from cheap-demo onto `demo11-hp-bars`. Room `0xCC` now keeps both
+custom sprites active while the HP HUD region stays byte-identical. Chain end
+`demo11-sprites-cc` (ROM `8d9330de...`, native `e5e1a3e9...`).
+Suite **62/62**; audit zero unexpected.
