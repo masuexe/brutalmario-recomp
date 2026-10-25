@@ -198,5 +198,12 @@ RESTORATIONS = {
     'demo11-fix-batch-d': {
         'binary': 'BrutalMarioDemo11FixBatchDSNESRecomp',
         'title': 'Brutal Mario Demo11 Fix Batch D',
+    },    'demo11-fix-batch-e': {
+        'binary': 'BrutalMarioDemo11FixBatchESNESRecomp',
+        'title': 'Brutal Mario Demo11 Fix Batch E',
+    },
+    'demo11-fix-batch-f': {
+        'binary': 'BrutalMarioDemo11FixBatchFSNESRecomp',
+        'title': 'Brutal Mario Demo11 Fix Batch F',
     },
 }

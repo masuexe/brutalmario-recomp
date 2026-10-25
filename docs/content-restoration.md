@@ -867,6 +867,10 @@ stalled translevels now reach and keep gameplay on reference and native:
 
 The [music batch C and fix batch D candidates](demo11-course-batch-c.md) add
 songs `55`-`57` and five more graphics IDs. They fix `04B`, `0A5`, `00E`,
-`01F` and `06D`. The suite now reports **37/37**; the candidates are not
-accepted as the head.
+`01F` and `06D`.
+
+The [graphics fix batches E and F](demo11-course-batch-e.md) add sixteen more
+graphics IDs for rooms `0x15C`, `0x15D` and `0x144`. They fix `080`, `081` and
+`068`. The suite now reports **38/38**; the candidates are not accepted as the
+head.
 
