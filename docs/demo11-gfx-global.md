@@ -105,6 +105,18 @@ number), not the internal translevel byte. The gained levels map as follows:
 | `083` | `0x15F` |
 | `069` | `0x145` |
 
+## Further user acceptances
+
+- Level `0x109` (translevel `02D`) is correct.
+- Level `0x15F` (translevel `083`) is correct. The middle boss
+  room black screen was a null music slot; see
+  [the boss music retarget](demo11-boss-music-fix.md).
+- Level `0x145` (translevel `069`) is normal, but the user reports that
+  its custom sprite has no code. The runtime shows only sprite `01` falling from
+  x=0; porting the donor record for `01` had no effect, so this needs more
+  evidence.
+- The user deferred the course music quality and the switch music event.
+
 ## Limits
 
 - Entry and short idle gameplay are the automated claims.

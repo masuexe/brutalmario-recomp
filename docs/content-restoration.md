@@ -999,3 +999,14 @@ fine on `demo11-sprite-final`.
 The user confirmed that room `0x116` (translevel `03A`) completes normally on
 `demo11-sprite-final`. The custom object with the red counter behaves as
 intended.
+
+The user confirmed levels `0x109` and `0x15F` on the global graphics
+chain. The middle boss room of `0x15F` stayed black because its room
+`0x0BC` requested the null legacy music slot `0x2D`. The
+[boss music retarget](demo11-boss-music-fix.md) moves that one parameter to the
+working slot `0x1E`, so the room now loads. The user deferred music
+quality work. The [level sprite batch](demo11-level-sprites.md) ports six more
+custom sprite records and drops the 7hero C2 record, which crashes level `094`.
+Chain end `demo11-boss-music-retarget` (ROM `69ea041f...`, native
+`a2d42daf...`). The suite reports **56/56** and the audit has zero
+unexpected bytes.

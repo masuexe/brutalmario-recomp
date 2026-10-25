@@ -9,7 +9,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGETS = ['demo11-gfx-global13']
+TARGETS = ['demo11-boss-music-retarget']
 THRESHOLDS = {
     'total_free': 500000,
     'aligned_free': 60000,

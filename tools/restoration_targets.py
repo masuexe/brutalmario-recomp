@@ -1,6 +1,16 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-boss-music-retarget': {
+        'binary': 'BrutalMarioDemo11BossMusicRetargetSNESRecomp',
+        'title': 'Brutal Mario Demo11 Boss Music Retarget',
+    },
+
+    'demo11-sprites-level1': {
+        'binary': 'BrutalMarioDemo11SpritesLevel1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Sprites Level 1',
+    },
+
     'demo11-gfx-global13': {
         'binary': 'BrutalMarioDemo11GfxGlobal13SNESRecomp',
         'title': 'Brutal Mario Demo11 Gfx Global 13',

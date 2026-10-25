@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Boss Music Retarget",
+  "id": "demo11-boss-music-retarget",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-level1",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "8f6ade317c14d872ba2d45ced2ce97a6cbbe3f4538e83b93bda0d1aada46fd66"
+  },
+  "scope": "Retarget the boss room 0BC music object from the null legacy slot 2D to the working main-level slot 1E, so the middle boss door no longer stalls.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2103296,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "51936A",
+      "before": "2e",
+      "after": "1f",
+      "role": "Room 0BC boss music: legacy slot 2D (null) -> working slot 1E (main level 15F song)."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "69ea041faa64f83407865b885331fa5704c882530883e1d8b7a1bfa5b2949b0f"
+  }
+}

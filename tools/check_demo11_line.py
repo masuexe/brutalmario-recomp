@@ -63,6 +63,8 @@ CHECKS = [
     ('final sprite full survey', 'qualify_demo11_sprite_final_range'),
     ('global graphics batches', 'qualify_demo11_gfx_global'),
     ('global graphics full survey', 'qualify_demo11_gfx_global_range'),
+    ('level custom sprites', 'qualify_demo11_sprites_level'),
+    ('boss room music retarget', 'qualify_demo11_boss_music'),
 ]
 
 
