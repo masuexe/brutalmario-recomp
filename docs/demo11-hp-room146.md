@@ -23,7 +23,7 @@ Its other conditions and the DMA upload stay the same.
 
 - Base: `demo11-hp-room128`
 - ROM: `616074b46151499792991d0728f0e10b88f3dc06896dac0a74c7e7e09b36f8f7`
-- Native binary: `b0e7a2a4a4a0d0b4a2a4a4a0d0b4a2a4a4a0d0b4a2a4a4a0d0b4a2a4a4a0`
+- Native binary: `a831eeebd523a4422f263c7d4e5a3b28a4339a77ed7ed6855d3c94cb5bcefbd0`
 
 ## Evidence
 
@@ -34,7 +34,7 @@ VRAM word `$5028` receives the row characters; the attribute bytes stay
 unchanged because the DMA writes `VMDATAL` only.
 
 - `tools/qualify_demo11_hp_room146.py` passes.
-- Whole-line audit: 889,099 changed bytes, zero unexpected.
+- Whole-line audit: 889,105 changed bytes, zero unexpected.
 - Suite **64/64**; space budget passes.
 
 ## Limits
