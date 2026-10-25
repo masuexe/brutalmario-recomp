@@ -18,8 +18,13 @@ level shows dark lightning frames and mosaic frames after about 20 seconds.
 | lightning with mosaic | 64.1 | 0.083 |
 | mosaic only | 74.9 | 0.083 |
 
-The native host shows the same pattern as the reference host. The effect starts
-well after level entry, so a short visit can miss it.
+The native host shows the same pattern as the reference host. A 70-second
+standing capture has mosaic in 13 of 42 samples (about 31 percent). The mosaic
+periods last about two to three seconds and repeat every few seconds.
+
+Screenshots: `local/captures/storm-046-long/normal.png` and
+`local/captures/storm-046-long/mosaic.png`. The mosaic frames render in 8 by 8
+blocks, so the striped background looks coarse.
 
 Captures: `local/captures/storm-046-ref` and `storm-046-nat`. Script:
 `local/probes/storm-046.script`. The analysis tool is
