@@ -78,6 +78,7 @@ CHECKS = [
     ('remaining free sprites', 'qualify_demo11_sprites_remaining_free'),
     ('room CF HP bar', 'qualify_demo11_hp_roomcf'),
     ('fire projectile sprite', 'qualify_demo11_sprites_fireball'),
+    ('snow projectile sprite', 'qualify_demo11_sprites_snowflake'),
 ]
 
 

@@ -1127,3 +1127,8 @@ The [fire projectile batch](demo11-sprites-fireball.md) ports custom sprite
 fireball and its path matches cheap-demo. Chain end
 `demo11-sprites-fireball` (ROM `ee09118e...`). Suite **69/69**;
 audit zero unexpected.
+
+The [snow projectile batch](demo11-sprites-snowflake.md) ports custom sprite
+`0x5A` with one graphics relocation. The dragon spawn code can spawn
+it beside the fire projectile. Chain end `demo11-sprites-snowflake`
+(ROM `81d752be...`). Suite **70/70**; audit zero unexpected.

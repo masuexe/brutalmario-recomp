@@ -1,6 +1,11 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-sprites-snowflake': {
+        'binary': 'BrutalMarioDemo11SpritesSnowflakeSNESRecomp',
+        'title': 'Brutal Mario Demo11 Sprites Snowflake',
+    },
+
     'demo11-sprites-fireball': {
         'binary': 'BrutalMarioDemo11SpritesFireballSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprites Fireball',

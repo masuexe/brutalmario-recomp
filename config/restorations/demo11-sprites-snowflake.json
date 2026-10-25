@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Sprites Snowflake",
+  "id": "demo11-sprites-snowflake",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-fireball",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "ee09118e197d956e57e9726a861e79ee9d151f4d7d0129adf80f13e00948a143"
+  },
+  "scope": "Port custom sprite 0x5A, the snow projectile that the CC boss spawns at run time.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2129168,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "relocations": [
+    {
+      "source_offset": 1057498,
+      "destination_offset": 3012608,
+      "size": 1581,
+      "sha256": "3c2673b33500490534a3b699d1ebd6f4e257adb4bab2d97dad2a78686ddefb79",
+      "pointer_offset": 655605,
+      "pointer_before": "e2a220",
+      "pointer_after": "08f85b",
+      "zero_source": true
+    }
+  ],
+  "custom_sprites": [
+    {
+      "id": "5A",
+      "rooms": [
+        28
+      ],
+      "source_address": "1CA65B",
+      "destination_address": "20A65B",
+      "allocation": {
+        "offset": 1058395,
+        "size": 433
+      },
+      "block": {
+        "size": 433,
+        "sha256": "7d05e07b5fb4c14464366710775efba7d72869f0d2ba2e7c8495a329182e79d8"
+      },
+      "source_record_address": "10B6FD",
+      "destination_record_address": "318812",
+      "source_record": "013600003f8399646aa61c7fa61c0000",
+      "record_after": "013600003f8399646aa6207fa6200000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "81d752be8a956fe7b60aa0903ede948447ba0714f6e0ab0166870d84c2af9e1a"
+  }
+}
