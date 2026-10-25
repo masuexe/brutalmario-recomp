@@ -60,6 +60,7 @@ CHECKS = [
     ('sprite window relocations', 'qualify_demo11_sprite_windows'),
     ('final custom sprite', 'qualify_demo11_sprite_final'),
     ('space budget', 'check_space_budget'),
+    ('final sprite full survey', 'qualify_demo11_sprite_final_range'),
 ]
 
 

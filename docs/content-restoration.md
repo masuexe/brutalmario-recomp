@@ -978,3 +978,11 @@ blocks and ports the last missing custom sprite. All 25 missing custom sprites
 of the World 2 to World 8 level rooms are now ported. Chain end
 `demo11-sprite-final` (ROM `bb93ddc0...`, native `804a2fee...`).
 The suite reports **51/51** and includes a space budget guard.
+
+The final sprite chain survey reports 255 loads, zero stalls and 216 playable
+translevels. Translevels `022` and `04E` now return a death mode after
+600 idle frames because the ported custom sprites are active; the user must
+confirm this behaviour change. The whole-line audit reproduces the chain with
+zero unexpected bytes and the suite reports **52/52**. The
+[expansion research](demo11-expansion-research.md) records the community
+answers for content beyond 4 MB.

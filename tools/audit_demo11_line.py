@@ -55,6 +55,15 @@ def allowed_regions(cfg):
         regions |= set(range(allocation['offset'], allocation['offset'] + allocation['size']))
         offset = lorom(int(music['pointer_address'], 16))
         regions |= set(range(offset, offset + 3))
+    for item in cfg.get('relocations', []):
+        size = item['size']
+        regions |= set(range(item['destination_offset'], item['destination_offset'] + size))
+        slot = item.get('pointer_offset')
+        if slot is not None:
+            length = len(bytes.fromhex(item['pointer_before']))
+            regions |= set(range(slot, slot + length))
+        if item.get('zero_source', True):
+            regions |= set(range(item['source_offset'], item['source_offset'] + size))
     for sprite in ([cfg['custom_sprite']] if cfg.get('custom_sprite') else []) + cfg.get('custom_sprites', []):
         start = lorom(int(sprite['destination_address'], 16))
         regions |= set(range(start, start + sprite['block']['size']))

@@ -139,6 +139,28 @@ Chain end `demo11-sprite-final`:
 All 25 missing custom sprites of the World 2 to World 8 level rooms are now
 ported: 19 in the first batch, 5 in the window batch and 1 in the final batch.
 
+## Full-range survey on the final chain
+
+The survey on `demo11-sprite-final` reports 255 loads, zero Mario Start
+stalls and **216 playable** translevels (graphics chain: 218). Two translevels
+changed: `022` and `04E` now return a death mode after 600 idle
+frames. The ported custom sprites are active in those levels, so an idle Mario
+now dies. This is a behaviour change that the user must confirm.
+
+Qualifier: `tools/qualify_demo11_sprite_final_range.py`; suite **52/52**.
+The whole-line audit for `demo11-sprite-final` reproduces the chain with
+486,263 changed bytes and zero unexpected bytes.
+
+## Open item: room 11D
+
+The user reports that room `11D` still shows a strange falling object. The
+record for sprite `3A` is installed in the chain and the block hash matches,
+but dense early frames of the level show no behaviour difference after the
+port. A test build that also ports the runtime sprite records `01`, `02` and
+`03` shows no difference in room `11D` or four other levels, so those
+records appear inert. The falling object needs a user description or a
+targeted runtime trace before the next change.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must
