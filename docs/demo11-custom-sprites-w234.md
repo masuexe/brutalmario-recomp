@@ -62,6 +62,41 @@ the ported code runs. The intended look needs a user check.
   `tools/qualify_demo11_sprites_w234.py`.
 - The native build identity is checked when the build exists.
 
+## The six remaining sprites: allocation analysis
+
+A sprite code block must keep the low 16 bits of its address. The record
+only changes the bank byte, and the code uses bank-relative jumps. The
+destination therefore needs a free range at one fixed offset inside a bank
+below `0x40`.
+
+The six remaining IDs have no such free range in the current chain:
+
+| ID | Offset in bank | Size | Free banks in the base ROM | Blocker in the chain |
+| --- | --- | ---: | --- | --- |
+| `3A` | `280A` | 1051 | `34 38 39 3C 3F` | star gfx batch, fix batch B, upper inner |
+| `05` | `7118` | 1086 | `36 37 38 39 3A 3D 3E 3F` | star gfx batch, world 8a, sprite batch |
+| `29` | `1B40` | 2843 | `35 3F` | star gfx batch |
+| `90` | `4A7C` | 4133 | `33 34 36 37 38 39 3A 3D 3E 3F` | room 010 gfx, star gfx batch |
+| `34` | `6BCC` | 4285 | `36 37 38 39 3A 3D 3E 3F` | star gfx batch, sprite batch |
+| `04` | `6DE3` | 821 | `34 36 37 38 39 3A 3D 3E 3F` | fix batch E, star gfx batch |
+
+Three sprite windows overlap each other in banks `34` and `37`:
+`26` at `693D`, `08` at `6D08` and `04` at `6DE3`.
+The current chain has only two such banks free, so it can hold two of the
+three. This is the reason `04` is not in the batch.
+
+### Two ways forward
+
+1. Add a reviewed relocation step. Move the graphics blocks of the star
+   graphics batch and the fix batches to other free ranges, then update their
+   pointer slots and zero the old ranges. The freed ranges then take the six
+   sprite blocks.
+2. Rebuild the chain from the base with one global allocator. Reserve the six
+   aligned windows first, then place the graphics and music batches.
+
+Option 1 is the smaller change. The base ROM is the only constraint on the
+free banks, and it has enough free ranges in banks `38` to `3F`.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must
