@@ -73,6 +73,33 @@ On 2026-10-26 the user played room `0x49` through the big door of level
 sprite are all normal now. This confirms the empty room graphics slots were
 the cause of the earlier wrong palette and damaged level.
 
+## Boss room music: slot A9
+
+The user specified slot `0xA9` as the correct music for room `0xBC`.
+The recipe `demo11-boss-room-music-a9` changes the room music object
+parameter from `0x1F` (placeholder slot `0x1E`) to `0xAA`, so the loader
+requests slot `0xA9`. Slot `0xA9` is present in the ROM.
+
+- ROM: `1a56f3fc8b7188cb1f91cae0e6e2e7f0a4a60139c32c81bfa6b4ba4e6b8a8bdf`
+- Native binary: `d0a29d30f5f7f0f7c8d15dd9a3a8af58a723c112348a59d23fb3911a25ddaca0`
+- The door sweep capture `bossmusic-a9` samples `$0DDA = A9` in
+  Mario Start and in gameplay.
+- Suite **60/60**; whole-line audit 886,768 changed bytes, zero unexpected.
+
+## Boss health bar: open
+
+Room `0xBC` places two sprites in the recipient sprite table: IDs
+`0x2B` and `0x29`. Both records are custom in the current chain, but
+runtime captures show no sprite spawn in room `0xBC` - not at the entry
+screen, not on screen 1, and not with a fixture that places a vanilla sprite in
+the room list. The boss visuals of the room come from tiles. The boss health bar
+belongs to the boss sprite code, so it does not appear while no boss spawns.
+
+The boss spawn path is not restored. Candidate causes: the sprite list index,
+a secondary entrance record, or boss content that still needs the later boss
+migration. The user must report whether the bar appears after walking to the
+boss trigger.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room

@@ -1045,3 +1045,11 @@ that carries Mario to a death. The user must confirm both. The suite reports
 The user confirmed room `0x49` on `demo11-gfx-boss76`: music,
 level layout and the custom sprite are normal. This accepts the subroom
 graphics recovery for that room.
+
+The user specified slot `0xA9` as the correct music for room `0xBC`. The
+`demo11-boss-room-music-a9` recipe sets the one-byte room music parameter,
+and the capture confirms `$0DDA = A9`. The room still has no boss health bar:
+the room places sprites `0x2B` and `0x29`, but runtime captures show no
+sprite spawn. The boss spawn path stays open. Chain end
+`demo11-boss-room-music-a9` (ROM `1a56f3fc...`, native `d0a29d30...`).
+The suite reports **60/60**.

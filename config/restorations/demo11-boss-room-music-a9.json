@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Boss Room Music A9",
+  "id": "demo11-boss-room-music-a9",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss76",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "d6e78605b9d69c9534d2584134291c3b1c8c6d31ac744bf16e1ec534e25a325e"
+  },
+  "scope": "Set the room 0BC music object to the user-specified slot A9 (parameter AA).",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2106096,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "51936A",
+      "before": "1f",
+      "after": "aa",
+      "role": "Room 0BC boss music: placeholder slot 1E -> user-specified slot A9."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "1a56f3fc8b7188cb1f91cae0e6e2e7f0a4a60139c32c81bfa6b4ba4e6b8a8bdf"
+  }
+}

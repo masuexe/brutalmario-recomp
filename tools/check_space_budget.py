@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGETS = ['demo11-gfx-boss76']
+TARGETS = ['demo11-boss-room-music-a9']
 THRESHOLDS = {
     'total_free': 300000,
     'aligned_free': 80000,
