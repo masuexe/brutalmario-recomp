@@ -36,7 +36,7 @@ This order is authoritative for donor selection. The newest demos are
 | ow | `ow` | |
 | mazo | `mazo` | |
 | 7hero | `7hero` | |
-| boss | not identified | Possibly `ra-bowser-castle`; not confirmed |
+| boss | external file | The user identifies `Super Kitiku (Brutal) Mario - Boss Demo by Carol [2009-06-16]` as the boss demo. The file is outside the pinned set and its accuracy is not guaranteed. SHA-256 `337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd`. |
 | demoOnly1 | `demo-only-1` | |
 | 1-1 | `demo-1-1` | Recipient base |
 

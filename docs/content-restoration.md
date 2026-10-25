@@ -884,6 +884,11 @@ graphics IDs for the remaining graphics-only stalls. They fix `027`, `03A`,
 The [music batch J and graphics batches K1-M](demo11-course-batch-j.md) add five
 more legacy songs as raw slices and 21 more graphics IDs. They fix twelve
 stalled translevels: `00D`, `01A`, `02C`, `034`, `03C`, `048`, `04E`, `055`,
-`056`, `062`, `06F` and `070`. The suite now reports **41/41**; the candidates
-are not accepted as the head.
+`056`, `062`, `06F` and `070`.
+
+The [music batch N and graphics batches O1/O2](demo11-course-batch-n.md)
+resolve the low-id blocker. Audio comparison shows the engine plays its own
+built-in song for those ids; the payload only satisfies the upload handshake.
+All 39 remaining chain stalls now reach gameplay. The suite reports **42/42**;
+the candidates are not accepted as the head.
 

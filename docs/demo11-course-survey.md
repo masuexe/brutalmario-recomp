@@ -160,6 +160,11 @@ five more legacy songs and 21 graphics IDs. They fix `00D`, `01A`, `02C`,
 `034`, `03C`, `048`, `04E`, `055`, `056`, `062`, `06F` and
 `070`.
 
+The [music batch N and graphics batches O1/O2](demo11-course-batch-n.md)
+resolve the low-id blocker. The engine plays its own built-in song for those
+ids; a valid payload only satisfies the upload handshake. All 39 remaining
+chain stalls now reach gameplay.
+
 Report: `local/reports/demo11-course-survey-chain-i.json`.
 
 ## First broken course: translevel 001

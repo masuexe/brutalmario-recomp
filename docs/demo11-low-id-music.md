@@ -50,8 +50,15 @@ vanilla song data or a real but wrong song.
 3. The user can supply a reference recording or a ROM variant that has these
    songs.
 
-## Decision needed
+## Resolution
 
-Do we install a real but wrong placeholder song to make about 30 levels
-playable now, or do we keep these levels stalled until the correct vanilla
-data is found?
+Two probe payloads were installed at the same slot and the reference captures
+had byte-identical audio. The engine plays its own built-in song for these ids
+and ignores the payload content. A valid payload only satisfies the upload
+handshake.
+
+The user permitted a placeholder. The result is better than a placeholder: the
+music is the engine's built-in track. Music batch N installs the handshake
+payloads and all 39 remaining chain stalls reach gameplay.
+
+See [the batch N note](demo11-course-batch-n.md).

@@ -234,5 +234,17 @@ RESTORATIONS = {
     'demo11-fix-batch-m': {
         'binary': 'BrutalMarioDemo11FixBatchMSNESRecomp',
         'title': 'Brutal Mario Demo11 Fix Batch M',
+    },    'demo11-music-batch-n': {
+        'binary': 'BrutalMarioDemo11MusicBatchNSNESRecomp',
+        'title': 'Brutal Mario Demo11 Music Batch N',
+    },
+    'demo11-fix-batch-o1': {
+        'binary': 'BrutalMarioDemo11FixBatchO1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Fix Batch O1',
+    },
+    'demo11-fix-batch-o2': {
+        'binary': 'BrutalMarioDemo11FixBatchO2SNESRecomp',
+        'title': 'Brutal Mario Demo11 Fix Batch O2',
     },
 }
+
