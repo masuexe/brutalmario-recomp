@@ -119,8 +119,17 @@ Observed results:
 - Pointing room `0x083` at the room `0xBC` list spawns nothing, so the
   sprite index is not the translevel byte alone.
 
-The boss graphics of the room are tiles. The boss health bar is drawn by the
-boss sprite code, so it cannot appear while no boss spawns.
+The user reports that the boss attacks (lightning, spit ball, thrown hat) work
+in ordinary play on `demo11-boss-room-music-a9`, so the boss does spawn for
+the user. Automated captures on the same chain, with the reference host, the
+native host, and with the user's latest practice SRAM, still show no sprite in
+room `0xBC`. The boss graphics of the room are tiles. The boss health
+bar is drawn by the boss sprite code.
+
+cheap-demo shows the health bar immediately on room entry, and its room `0xBC`
+sprite list bytes and record table entries equal the current chain. Therefore a
+data difference in the room list is unlikely. The open question is which runtime
+state the real play has that the headless captures lack.
 
 Next checks: the room list header semantics (the first byte is `0x00` here),
 the secondary entrance record, and whether the intended boss belongs to a newer

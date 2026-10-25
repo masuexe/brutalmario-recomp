@@ -1053,3 +1053,10 @@ the room places sprites `0x2B` and `0x29`, but runtime captures show no
 sprite spawn. The boss spawn path stays open. Chain end
 `demo11-boss-room-music-a9` (ROM `1a56f3fc...`, native `d0a29d30...`).
 The suite reports **60/60**.
+
+The user reports that the room `0xBC` boss attacks work in ordinary play,
+while headless captures on the same chain do not spawn the boss. cheap-demo
+shows the health bar immediately, and its room list bytes and records equal the
+chain. A runtime state difference is the remaining suspect. The user should
+provide the save or savestate of a working fight, or confirm the exact entry
+path.
