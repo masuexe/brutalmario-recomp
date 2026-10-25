@@ -1,0 +1,174 @@
+# HP display check: map-position and map-node fixtures; normal corridor movement and door input.
+# No sprite, HP, HUD, completion or SRAM writes. Not an unassisted course clear.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 83
+press y 2
+wait 240
+press right 40
+press right 40
+press right 40
+press right 40
+press right 40
+press right 40
+press right 40
+press right 40
+press up 2
+press left 4
+wait 4
+dump s00
+press up 2
+press left 4
+wait 4
+dump s01
+press up 2
+press left 4
+wait 4
+dump s02
+press up 2
+press left 4
+wait 4
+dump s03
+press up 2
+press left 4
+wait 4
+dump s04
+press up 2
+press left 4
+wait 4
+dump s05
+press up 2
+press left 4
+wait 4
+dump s06
+press up 2
+press left 4
+wait 4
+dump s07
+press up 2
+press left 4
+wait 4
+dump s08
+press up 2
+press left 4
+wait 4
+dump s09
+press up 2
+press left 4
+wait 4
+dump s10
+press up 2
+press left 4
+wait 4
+dump s11
+press up 2
+press left 4
+wait 4
+dump s12
+press up 2
+press left 4
+wait 4
+dump s13
+press up 2
+press left 4
+wait 4
+dump s14
+press up 2
+press left 4
+wait 4
+dump s15
+press up 2
+press left 4
+wait 4
+dump s16
+press up 2
+press left 4
+wait 4
+dump s17
+press up 2
+press left 4
+wait 4
+dump s18
+press up 2
+press left 4
+wait 4
+dump s19
+press up 2
+press left 4
+wait 4
+dump s20
+press up 2
+press left 4
+wait 4
+dump s21
+press up 2
+press left 4
+wait 4
+dump s22
+press up 2
+press left 4
+wait 4
+dump s23
+press up 2
+press left 4
+wait 4
+dump s24
+press up 2
+press left 4
+wait 4
+dump s25
+press up 2
+press left 4
+wait 4
+dump s26
+press up 2
+press left 4
+wait 4
+dump s27
+press up 2
+press left 4
+wait 4
+dump s28
+press up 2
+press left 4
+wait 4
+dump s29
+press up 2
+press left 4
+wait 4
+dump s30
+press up 2
+press left 4
+wait 4
+dump s31
+press up 2
+press left 4
+wait 4
+dump s32
+press up 2
+press left 4
+wait 4
+dump s33
+wait 120
+dump active
+wait 120
+dump later
+quit

@@ -1,0 +1,38 @@
+# Original cheap-demo room-BC reference with map, player and explicit room-exit fixtures.
+# Numeric overworld index 83 has different room contents in this version.
+# No sprite, HP, HUD, completion or SRAM writes.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 83
+press y 2
+wait 240
+dump corridor
+# Diagnostic room-exit and player-position fixture. No HP/HUD writes.
+poke 94 80004001
+poke 19b8 bc
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump active
+wait 120
+dump later
+quit

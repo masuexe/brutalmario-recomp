@@ -1060,3 +1060,21 @@ shows the health bar immediately, and its room list bytes and records equal the
 chain. A runtime state difference is the remaining suspect. The user should
 provide the save or savestate of a working fight, or confirm the exact entry
 path.
+
+
+### Boss and Mario HP display repair
+
+The user reports missing HP bars in rooms `0xBC` and `0xCC`.
+The [HP upload investigation](demo11-hp-bars.md) supersedes the earlier claim that the boss does not spawn.
+That claim came from probes which misread `$161A,x` as a sprite number and rejected its valid zero index.
+The actual boss runs, and both rooms fill their HP character buffers.
+Demo 1-1 omits the legacy HUD upload for these characters.
+
+The isolated `demo11-hp-bars` descendant appends the upload only in active rooms `0xBC` and `0xCC`.
+It retains the existing recipient HUD and the accepted room009 fuel upload.
+Reference, native and interpreter captures show both displays.
+A vanilla Koopa contact fixture exercises real Mario damage and the subsequent HP display update.
+Ordinary corridor HUD controls, startup pictures and the fuel regression also pass.
+The integrated suite passes 61/61 checks, and all 122 unit tests pass.
+The candidate byte audit reports zero unexpected changes.
+The head remains `demo11-fix-batch-p`; this checkpoint does not promote the restoration chain or qualify a full boss fight.

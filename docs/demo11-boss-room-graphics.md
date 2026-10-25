@@ -86,75 +86,22 @@ requests slot `0xA9`. Slot `0xA9` is present in the ROM.
   Mario Start and in gameplay.
 - Suite **60/60**; whole-line audit 886,768 changed bytes, zero unexpected.
 
-## Boss health bar: open
+## Boss health bar: diagnosis superseded
 
-Room `0xBC` places two sprites in the recipient sprite table: IDs
-`0x2B` and `0x29`. Both records are custom in the current chain, but
-runtime captures show no sprite spawn in room `0xBC` - not at the entry
-screen, not on screen 1, and not with a fixture that places a vanilla sprite in
-the room list. The boss visuals of the room come from tiles. The boss health bar
-belongs to the boss sprite code, so it does not appear while no boss spawns.
+The [HP upload repair](demo11-hp-bars.md) supersedes the earlier spawn diagnosis.
+The old probes read `$161A,x`, the sprite-list index, as a sprite number.
+They rejected index zero, which belongs to the actual boss in this room.
+The correct custom ID table, `$7F:AB9E,x`, shows active sprite `0x2B`.
 
-The boss spawn path is not restored. Candidate causes: the sprite list index,
-a secondary entrance record, or boss content that still needs the later boss
-migration. The user must report whether the bar appears after walking to the
-boss trigger.
+The preserved reference capture `bossmusic-a9/s42` already contains that boss.
+It also contains the complete BOSS label and gauge at `$7F:FFE0..FFEF`.
+The missing step is the HUD upload, which Demo 1-1 removed from the legacy path.
+Room `0xCC` has the same defect for Mario's HP display.
 
-## Boss spawn investigation: 2026-10-26
-
-The room sprite list entry for room `0xBC` is
-`00 19 70 2B 3D 70 29 FF`. Under the variable-length record format
-(a record with flag bit 3 carries one extra byte) the list places **sprite `0x2B`**
-with parameter `0x3D`. The chain installs the cheap-demo record and code block
-for sprite `0x2B`, so the data to spawn it exists.
-
-Observed results:
-
-- Runtime captures of room `0xBC` show only the scroll-control pseudo
-  sprite `0x01` during Mario Start and no sprite in gameplay.
-- Walking right, forcing Mario to screen 1, and idling up to 600 frames do not
-  spawn any sprite.
-- A fixture that places a vanilla sprite in the room list also spawns nothing.
-- A fixture with default records for `0x2B` and `0x29` spawns nothing.
-- Pointing room `0x083` at the room `0xBC` list spawns nothing, so the
-  sprite index is not the translevel byte alone.
-
-The user reports that the boss attacks (lightning, spit ball, thrown hat) work
-in ordinary play on `demo11-boss-room-music-a9`, so the boss does spawn for
-the user. Automated captures on the same chain, with the reference host, the
-native host, and with the user's latest practice SRAM, still show no sprite in
-room `0xBC`. The boss graphics of the room are tiles. The boss health
-bar is drawn by the boss sprite code.
-
-cheap-demo shows the health bar immediately on room entry, and its room `0xBC`
-sprite list bytes and record table entries equal the current chain. Therefore a
-data difference in the room list is unlikely. The open question is which runtime
-state the real play has that the headless captures lack.
-
-Next checks: the room list header semantics (the first byte is `0x00` here),
-the secondary entrance record, and whether the intended boss belongs to a newer
-demo lineage.
-
-## Door geometry and capture attempts: 2026-10-26
-
-A sweep that presses Up while walking right enters the only door of the
-corridor at about x=322. A sweep from the right wall enters the same door at
-about x=365. The room echo is `0xBC` and the music request is `0xA9`.
-A longer left sweep to x=322 also enters `0xBC`.
-
-Captures that enter `0xBC` show these results:
-
-- Reference host, fresh SRAM: no sprite spawns in gameplay.
-- Native host, fresh SRAM: no sprite spawns in gameplay.
-- Native host with the user's latest practice SRAM: no sprite spawns.
-- The screenshots show the room tiles and the boss picture as tiles.
-
-The user reports that the boss and its lightning, spit and hat attacks work in
-ordinary play, and that cheap-demo shows the health bar immediately after room
-entry. The room sprite list bytes, the room pointer entries and the record
-format equal the chain, so the remaining difference is not in those data.
-The next evidence to request is a savestate of a working fight or a screenshot
-of the cheap-demo room entry.
+The isolated `demo11-hp-bars` descendant restores this upload only in active rooms
+`0xBC` and `0xCC`, after the accepted recipient and fuel HUD routine.
+The new checks cover both rooms, actual Mario damage, ordinary HUD restoration,
+and the existing fuel display. No working-fight save is required for this diagnosis.
 
 ## Direct room entry: 2026-10-26
 
@@ -172,6 +119,5 @@ by another path. The map table location is not yet found.
 
 ## Limits
 
-- The scripted route cannot reach the big door of level `0x109`. The room
-  `0x49` fix needs the user playtest.
+- The user has accepted room `0x49`; the earlier scripted entry limitation does not reopen that acceptance.
 - Entry frames qualify rendering and load, not a complete boss fight.

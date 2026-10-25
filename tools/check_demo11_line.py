@@ -69,6 +69,7 @@ CHECKS = [
     ('boss room graphics', 'qualify_demo11_gfx_boss'),
     ('boss chain survey', 'qualify_demo11_gfx_boss_range'),
     ('boss room music A9', 'qualify_demo11_boss_music_a9'),
+    ('boss/Mario HP bars', 'qualify_demo11_hp_bars'),
 ]
 
 

@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 HP Bars",
+  "id": "demo11-hp-bars",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-boss-room-music-a9",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "1a56f3fc8b7188cb1f91cae0e6e2e7f0a4a60139c32c81bfa6b4ba4e6b8a8bdf"
+  },
+  "scope": "Append the existing legacy HP characters to the HUD only in active rooms 0BC and 0CC. Preserve the recipient HUD and the room009 fuel upload.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2040064,
+    "size": 91,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "008DE1",
+      "before": "2208a03e",
+      "after": "2208a13e",
+      "role": "Chain the accepted recipient/fuel shim, then append HP cells only for active rooms BC/CC with the legacy HUD flag set."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "1f505ebc9f3d27b7c3fe995c3b788499c4a61cde74b2b6e451b9d34dfa9607d9"
+  },
+  "raw_blocks": [
+    {
+      "name": "Room BC/CC HP HUD upload after the existing recipient/fuel shim",
+      "rats_address": "3EA100",
+      "destination_address": "3EA108",
+      "bytes": "2208a03e08c22048ad0b01c9bc00f005c9cc00d03bad000129ff00c91400d030afdfff7f29ff00f027a928508d1621a900188d1043a9e0ff8d1243a97f108d1443e2209c15219c1643a9028d0b42c22068286b",
+      "data": {
+        "size": 83,
+        "sha256": "976d40f6e27ba04b6b2728b428830f3d76b808d01dbbb133445bd689c04bf255"
+      }
+    }
+  ],
+  "source_dma": {
+    "version": "cheap-demo",
+    "address": "349E57",
+    "size": 37,
+    "sha256": "8ed5ae79fc8b16c862364156d57bbbddc24b07547d86f99d312443e3f1348918",
+    "adaptation": "Use SEP #$20 instead of SEP #$30 to retain the caller index width; restore A/P before RTL."
+  }
+}

@@ -1,0 +1,63 @@
+# HP upload and real damage check. Map, player, room-exit and vanilla Koopa spawn fixtures.
+# The guest collision/HP code handles damage; no HP, HUD, completion or SRAM writes.
+# This qualifies display and damage updates, not a natural boss route or course clear.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 83
+press y 2
+wait 240
+dump corridor
+# Diagnostic room-exit and player-position fixture. No HP/HUD writes.
+poke 94 80004001
+poke 19b8 cc
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump active
+wait 120
+dump later
+# Diagnostic vanilla Koopa contact fixture in an unused sprite slot.
+# No health/counter/display bytes are written.
+poke 9e 00
+poke e4 08
+poke 14e0 00
+poke d8 30
+poke 14d4 01
+poke b6 00
+poke aa 00
+poke 1662 00
+poke 1656 00
+poke 167a 00
+poke 14c8 08
+wait 30
+dump contact
+wait 90
+dump settled
+# Diagnostic exit back to the recipient corridor, with no HUD/HP reset writes.
+poke 94 80004001
+poke 19b8 5f
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 180
+dump returned
+quit
