@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Fix Batch P",
+  "id": "demo11-fix-batch-p",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-fix-batch-o2",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "8bd3a8d440ea0cffff17003e85f2657af6788a1d7169cdbd8e4b0277957fc0cc"
+  },
+  "scope": "Port the last two extended graphics IDs that the restored rooms reference. This completes the graphics references of every previously broken room.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1790800,
+    "size": 4321,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "226",
+      "target_id": "226",
+      "source_address": "38AA28",
+      "decoded": {
+        "size": 4096,
+        "sha256": "f5914d4a3f64699082733a11a400f3b38ce854d5eaf297038edca4b1fa056287"
+      },
+      "compressed": {
+        "size": 2394,
+        "sha256": "4fdd1b952a8c148afdebb5a9a3dfb9d429dda030db0fce007b553e48afc51924"
+      },
+      "global_pointer": true,
+      "rooms": [
+        297
+      ]
+    },
+    {
+      "source_id": "1AC",
+      "target_id": "1AC",
+      "source_address": "2E9B70",
+      "decoded": {
+        "size": 4096,
+        "sha256": "458befbd2037a7b7bf20e9321a39bebc207d697d5a5ac6e01653c357f7e9a34e"
+      },
+      "compressed": {
+        "size": 1655,
+        "sha256": "c6f07d4f507cced4dd161b5ee39acc82fe3a3b229d7d26528def3f0374966be1"
+      },
+      "global_pointer": true,
+      "rooms": [
+        304
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "48891cf75b570e4118f8646f7f216d50505d047edc40341b3d0dccdc8cc3022c"
+  }
+}

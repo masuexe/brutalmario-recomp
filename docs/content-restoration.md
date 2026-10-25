@@ -895,6 +895,14 @@ The final chain survey reports 207 playable entries and **zero stalls** across
 all 255 translevels (head: 70 playable and 78 stalls). The remaining 48 entries
 are 46 no-input deaths and 2 Yoshi's House returns. The
 [full-range survey qualifier](demo11-course-survey.md) checks both survey
-reports. The suite reports **43/43**; the candidates are not accepted as the
-head.
+reports.
+
+The [graphics batch P](demo11-course-batch-p.md) ports the last two extended
+graphics IDs that the restored rooms reference. No room that stalled on the head
+has an empty graphics slot anymore. The whole-line audit passes with zero
+unexpected bytes. The suite reports **44/44**; the candidates are not accepted
+as the head.
+
+The [head promotion plan](demo11-head-promotion.md) promotes
+`demo11-fix-batch-p` after the user playtest.
 

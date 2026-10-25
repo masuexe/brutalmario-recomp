@@ -219,15 +219,15 @@ receipts and the result classes. The suite now reports **43/43**.
 
 ## Remaining graphics references
 
-The chain end still leaves some extended graphics slots empty. The base Demo
-1-1 ROM has 190 unique empty slots across 111 room headers, so empty slots are
-normal in this game. The chain end has 90 unique empty slots across 55 room
-headers.
+The chain end leaves some extended graphics slots empty. The base Demo 1-1 ROM
+has 190 unique empty slots across 111 room headers, so empty slots are normal in
+this game. The [graphics batch P](demo11-course-batch-p.md) reduces the chain
+end to 88 unique empty slots across 53 room headers.
 
-All those rooms load and reach gameplay. The engine uses its fallback graphics.
-Visual correctness for those rooms is not claimed.
-
-The graphics batches J-M, N and O explain the reduction from 190 to 90.
+No room that stalled on the head has an empty slot anymore. The 53 remaining
+rooms are original Demo 1-1 content. All those rooms load and reach gameplay.
+The engine uses its fallback graphics. Visual correctness for those rooms is not
+claimed.
 
 ## First broken course: translevel 001
 
