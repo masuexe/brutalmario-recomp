@@ -1166,3 +1166,10 @@ wrong cheap-demo ports: sprite `0x42` in room `0x8F` and sprite
 records for these IDs. Room `0x8F` now matches the pristine demo 1-1 frame.
 The full-range survey finds 231 playable translevels. Chain end
 `demo11-sprites-native-records` (ROM `63389cab...`). Suite **76/76**.
+
+The [demoOnly1 room 0x8F boss port](demo11-room8f-boss-port.md) installs the
+new boss record and code block. The demoOnly1 record table is at file
+`0x8308A` and the block is at file `0x13C862`. Two graphics
+assets move to free the bank window. Room `0x8F` now matches the
+demoOnly1 frame. Chain end `demo11-sprites-room8f-boss`
+(ROM `23f8ab7f...`). Suite **77/77**.
