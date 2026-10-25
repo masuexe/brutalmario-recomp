@@ -169,6 +169,12 @@ allocated window). The record exists in `demo11-sprite-windows` and
 `demo11-sprite-final`. The user retested on the final chain and reported
 **11D is fine**.
 
+## User acceptance: room 116
+
+The user played room `0x116` (translevel `03A`) on
+`demo11-sprite-final` and reported that it completes normally. The custom
+object with the red counter now behaves as intended.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must
