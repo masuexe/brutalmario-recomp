@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 6",
+  "id": "demo11-gfx-boss6",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss5",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "33799b32cd52886799be0b474ef2f8c5bf6ad668ad7b2f81a7fb5847c65b38f0"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 6.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2482688,
+    "size": 7614,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "13E",
+      "target_id": "13E",
+      "source_address": "2DAF51",
+      "decoded": {
+        "size": 4096,
+        "sha256": "c173a4906bfafec7cc6f81a3c6a5cf7d43a06186ec13183c25d2de3be5264fe9"
+      },
+      "compressed": {
+        "size": 1157,
+        "sha256": "bb6a2bbc0104bfb06fb248e705f8a853194202b86edf0ad31664cc150baeb7eb"
+      },
+      "global_pointer": true,
+      "rooms": [
+        138
+      ]
+    },
+    {
+      "source_id": "145",
+      "target_id": "145",
+      "source_address": "2DFB48",
+      "decoded": {
+        "size": 4096,
+        "sha256": "d6f1d1a3f0c44e1c49b9b232dc4d8a5ca51d0dacb0583e28ae0aebdbcbf1fad9"
+      },
+      "compressed": {
+        "size": 3112,
+        "sha256": "45f5229d5a869e69df04dc23ec8388e53d15bab031f21c8f6b45f6d4efb59ba2"
+      },
+      "global_pointer": true,
+      "rooms": [
+        139
+      ]
+    },
+    {
+      "source_id": "146",
+      "target_id": "146",
+      "source_address": "2E9B70",
+      "decoded": {
+        "size": 4096,
+        "sha256": "28a8ac436fcbd6b777f753d83febc2131086e2e943c553cb2ef0383015acb5e1"
+      },
+      "compressed": {
+        "size": 3065,
+        "sha256": "0a0e02f1e682cf6472f839e0a16686db98c58d19916a51948342ba3ca6805faa"
+      },
+      "global_pointer": true,
+      "rooms": [
+        139
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "5b5fef103154d7d59c7316f2d26c95c6a38d4f9c9082df626227a658f68d8e6d"
+  }
+}

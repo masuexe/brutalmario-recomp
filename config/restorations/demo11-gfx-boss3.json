@@ -1,0 +1,116 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 3",
+  "id": "demo11-gfx-boss3",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss2",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "1551aafb8f1f13077753d7794c1cc1f3f2d63c313bcbaf08894549b302b8025a"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 3.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2981888,
+    "size": 8530,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "124",
+      "target_id": "124",
+      "source_address": "28B72D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "0a057582f07bef6b061224eff6018a918f28baba22a8b7570e3717fc6b127ff3"
+      },
+      "compressed": {
+        "size": 1658,
+        "sha256": "7605dd44b7966d908aa71f6a3ca6d7d935239488c4c4c5d76dccc144c8e49fe0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        133
+      ]
+    },
+    {
+      "source_id": "125",
+      "target_id": "125",
+      "source_address": "28BDAF",
+      "decoded": {
+        "size": 4096,
+        "sha256": "416d5d4877dd43b4111c82401a5d9fb50134650d0e44f1351a438f011d9348e1"
+      },
+      "compressed": {
+        "size": 2606,
+        "sha256": "3616fc41e3313eb228ce1a692c20c03c53e45c3f015ce5b490e83951ca3921a1"
+      },
+      "global_pointer": true,
+      "rooms": [
+        133
+      ]
+    },
+    {
+      "source_id": "128",
+      "target_id": "128",
+      "source_address": "28CEDB",
+      "decoded": {
+        "size": 4096,
+        "sha256": "a37b19c90f6de8faa684d1f33597030ea45b0df736f764b1a67d1bc5811682c1"
+      },
+      "compressed": {
+        "size": 849,
+        "sha256": "915cba620184836a6efda88e69b28c1b7aabc373f7386393535453b4824b026a"
+      },
+      "global_pointer": true,
+      "rooms": [
+        0,
+        256
+      ]
+    },
+    {
+      "source_id": "129",
+      "target_id": "129",
+      "source_address": "28D234",
+      "decoded": {
+        "size": 4096,
+        "sha256": "162c852785cb1643c78e0cac385c6b7f7eb02910597ef20a5f90447f9648f541"
+      },
+      "compressed": {
+        "size": 2227,
+        "sha256": "8d2c59b94b081c50e3bec5d540a577770fe871192f0c1e50ab5ab913cd54e5c1"
+      },
+      "global_pointer": true,
+      "rooms": [
+        0,
+        256
+      ]
+    },
+    {
+      "source_id": "12B",
+      "target_id": "12B",
+      "source_address": "28DD8C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "ca35e09f03db553f015958c6e891665b345b2ca404c7ea44a2077a0a5b3cafa6"
+      },
+      "compressed": {
+        "size": 894,
+        "sha256": "31a3e66e182ce87509681094d2aef8179688581a00d5a685ad2b1829b6e9f96b"
+      },
+      "global_pointer": true,
+      "rooms": [
+        40,
+        45
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "4aa10dea97d4e149f3fc3df6fc94972fdd6a5eba65b67cb2686bc479b85e2a59"
+  }
+}

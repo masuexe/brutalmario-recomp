@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 13",
+  "id": "demo11-gfx-boss13",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss12",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "a683d61c86388b1abbc5d5f6f67f93d30ecf7e5a586be0cf360b478eb6f1dd5a"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 13.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2952704,
+    "size": 5951,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "17C",
+      "target_id": "17C",
+      "source_address": "31DF46",
+      "decoded": {
+        "size": 4096,
+        "sha256": "4a02a14aed7ee003f31a256dd6dc20e2c6687da8aa3857e6b4eabd71b3fe5539"
+      },
+      "compressed": {
+        "size": 1449,
+        "sha256": "58e97d4e2683c9498262016c725411c95f826e2a90d7c21dfef209bf1f4d5cf0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        64,
+        130
+      ]
+    },
+    {
+      "source_id": "17F",
+      "target_id": "17F",
+      "source_address": "31F361",
+      "decoded": {
+        "size": 4096,
+        "sha256": "1116c19f7dd5e8cd78a5bce5b9ef6cd9bfd465482196d3304d4b8ed21a618dae"
+      },
+      "compressed": {
+        "size": 1967,
+        "sha256": "6021db3efd307cd92d22becef7d504321971471f66d5f01e552bc104aaf53cb5"
+      },
+      "global_pointer": true,
+      "rooms": [
+        59
+      ]
+    },
+    {
+      "source_id": "180",
+      "target_id": "180",
+      "source_address": "32E5D0",
+      "decoded": {
+        "size": 4096,
+        "sha256": "3aaad422c6921b9e8c9bb4775837ff088a5e1c363f7a41cba5bc6afae0dad032"
+      },
+      "compressed": {
+        "size": 2255,
+        "sha256": "bcf7cead1d1b8f55d6e3595cabf4538794583b258e34afbba20d18bb07374d57"
+      },
+      "global_pointer": true,
+      "rooms": [
+        156
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "8138f55d2d0a98b8040a33a7c7e1f078c8721a1ffde86b6786d40c6b2f4708e8"
+  }
+}

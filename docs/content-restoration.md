@@ -1025,3 +1025,12 @@ ports record `0x48` from cheap-demo; the runtime effect needs a user playtest
 through the door. Chain end `demo11-sprite-room49` (ROM `ce129957...`,
 native `2e357a96...`). The suite reports **57/57**; the audit has zero
 unexpected bytes.
+
+The [boss room graphics batch](demo11-boss-room-graphics.md) covers the 95
+remaining rooms with empty extended graphics slots (159 IDs) and ports custom
+sprite `0x2B` for room `0x0BC`. The middle boss room of level
+`0x15F` now loads with correct tiles. The batch also fills the room `0x49`
+graphics (`0x160`, `0x16E`, `0x16F`), which the user reported as a wrong
+palette and a damaged level. Chain end `demo11-gfx-boss76` (ROM `d6e78605...`,
+native `63ddcb2f...`). The suite reports **58/58** and the audit has zero
+unexpected bytes. The space floor is now 300,000 free bytes.

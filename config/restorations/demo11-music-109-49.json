@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Music 109 49",
+  "id": "demo11-music-109-49",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprite-room49",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "ce129957bde37fd0d4d0044a67fca2565013bb04f32151f0866a44d9bb9c96a2"
+  },
+  "scope": "Retarget the course music of level 109 to slot 49 and of room 049 to slot 6B, as the user specified.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2103296,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "769D43",
+      "before": "29",
+      "after": "4a",
+      "role": "Room 109 course music: slot 28 -> 49."
+    },
+    {
+      "address": "17AE2D",
+      "before": "48",
+      "after": "6c",
+      "role": "Room 049 boss music: slot 47 -> 6B."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "6af852cb5c9b0515f297309f8d7f989ebe7b8876cc067fd8f6fcd5954b96026c"
+  }
+}

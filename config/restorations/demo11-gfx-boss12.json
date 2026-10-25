@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 12",
+  "id": "demo11-gfx-boss12",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss11",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "0946bcc3573fb60376e07ed7479fcd39af6465e452c2a310a9007169291b5ea6"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 12.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2810624,
+    "size": 7217,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "178",
+      "target_id": "178",
+      "source_address": "31C415",
+      "decoded": {
+        "size": 4096,
+        "sha256": "01eb26dd8ba9dbb58d979c8be27d1cdf77206653d2c8f454658a6a5fd6fd3e86"
+      },
+      "compressed": {
+        "size": 939,
+        "sha256": "d55e0d382d5d2e9b93e8d56d90561d7c5e2b92123abbd885be26264313e5577b"
+      },
+      "global_pointer": true,
+      "rooms": [
+        124
+      ]
+    },
+    {
+      "source_id": "179",
+      "target_id": "179",
+      "source_address": "31C7C8",
+      "decoded": {
+        "size": 4096,
+        "sha256": "b5326e777ffc1a5b2a1eba668d67548fe316d69bc12ac52fa09ce20875d3d7a2"
+      },
+      "compressed": {
+        "size": 3051,
+        "sha256": "1741de7fa45b0a5307f833417995ba1f25903319b871958f270eb83cb92ff4b7"
+      },
+      "global_pointer": true,
+      "rooms": [
+        124
+      ]
+    },
+    {
+      "source_id": "17A",
+      "target_id": "17A",
+      "source_address": "31D3BB",
+      "decoded": {
+        "size": 4096,
+        "sha256": "8c0924ed55948179e52cc08047dfd2765967bf92bfaee4f3d7fd8e3dac69554b"
+      },
+      "compressed": {
+        "size": 1675,
+        "sha256": "f078efe2a6bf9c3ffc05aa4ac99c2ebf8bdd2a6df29aabee85ef4cb2f90b12e5"
+      },
+      "global_pointer": true,
+      "rooms": [
+        124
+      ]
+    },
+    {
+      "source_id": "17B",
+      "target_id": "17B",
+      "source_address": "31DA4E",
+      "decoded": {
+        "size": 4096,
+        "sha256": "586966ac5ce51af62f82f50c3b4dc836539b9fa66bda76f49193a2eea914ea12"
+      },
+      "compressed": {
+        "size": 1264,
+        "sha256": "413e5ff630338e4f6169eb6ee9efe13369681e6b38c130dffa13c9859157737a"
+      },
+      "global_pointer": true,
+      "rooms": [
+        105,
+        116
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "a683d61c86388b1abbc5d5f6f67f93d30ecf7e5a586be0cf360b478eb6f1dd5a"
+  }
+}

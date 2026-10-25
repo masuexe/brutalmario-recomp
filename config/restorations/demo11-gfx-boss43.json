@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 43",
+  "id": "demo11-gfx-boss43",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss42",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "a3774b5b40431be05df40841b25cfb207667fb3aac62f3b1a9cacdbe3e8c48f1"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 43.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2438656,
+    "size": 2963,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1ED",
+      "target_id": "1ED",
+      "source_address": "3BCCBF",
+      "decoded": {
+        "size": 4096,
+        "sha256": "fe67f3aa070def15c2beca8706c1e34acc3b0ba4fb502d9197c05e31842471c9"
+      },
+      "compressed": {
+        "size": 2699,
+        "sha256": "810553c19dc40afbb75591a7ae3cc6e257ad5953c277fcab7c5677dc642d30eb"
+      },
+      "global_pointer": true,
+      "rooms": [
+        240
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "49f1a31c31873cd42738799e6311a7165d57f077866a0dbbbb857cd60b562591"
+  }
+}

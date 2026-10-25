@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 24",
+  "id": "demo11-gfx-boss24",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss23",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "aa231442bbd249495b4a5421bb58531195c0d9d2bf511a8eefa82f88b0095a73"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 24.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3726848,
+    "size": 5684,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1BB",
+      "target_id": "1BB",
+      "source_address": "37B35B",
+      "decoded": {
+        "size": 4096,
+        "sha256": "6ac26c589cfe2d27cbf9b4ad68cfaa39986c69219addb8bd634bb48ec2a83b43"
+      },
+      "compressed": {
+        "size": 2682,
+        "sha256": "238428c5b73043d87cecccec6909d869932efbca6e90396f1457513190a27fb0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        186
+      ]
+    },
+    {
+      "source_id": "1BC",
+      "target_id": "1BC",
+      "source_address": "37BDDD",
+      "decoded": {
+        "size": 4096,
+        "sha256": "142d3873b1217fc5aff8ffa002e0bdf2df390225cf5bf6f598c738decff359c8"
+      },
+      "compressed": {
+        "size": 2730,
+        "sha256": "368398f41513fcf9d181e38c42f97e9600ecf1c23ed5351c8f4105a600fd5d29"
+      },
+      "global_pointer": true,
+      "rooms": [
+        186
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "eb72e51f310b2a2e7283bb9502b9faaf02413da4438599530994c06afa46329a"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Boss 9",
+  "id": "demo11-gfx-boss9",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-gfx-boss8",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "2ca8cb5dc55b6c9c655c5fe1d0d56950465ec7c3b243daa6955d41709bb7e97c"
+  },
+  "scope": "Port the missing extended graphics of the remaining subrooms, group 9.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2287616,
+    "size": 5386,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "16D",
+      "target_id": "16D",
+      "source_address": "30F143",
+      "decoded": {
+        "size": 4096,
+        "sha256": "f4fd302a993fc5a44d7969b8fb399a7896f0a22991f2247e70c697c84955dec2"
+      },
+      "compressed": {
+        "size": 2063,
+        "sha256": "64a22874e101992b643bb0344e566e0963534695cd819fab6636493e38fdf2b2"
+      },
+      "global_pointer": true,
+      "rooms": [
+        137
+      ]
+    },
+    {
+      "source_id": "16E",
+      "target_id": "16E",
+      "source_address": "30F95A",
+      "decoded": {
+        "size": 4096,
+        "sha256": "a4be11f314ad46a395d3f68d846c857649a72a6c92cab9a0996bf6c23e6330e1"
+      },
+      "compressed": {
+        "size": 1737,
+        "sha256": "7d54556698140eb8b216515c7f028fa05bad7fa1c02a6ff72cd0c9c6643f99e5"
+      },
+      "global_pointer": true,
+      "rooms": [
+        58,
+        85,
+        153,
+        196
+      ]
+    },
+    {
+      "source_id": "16F",
+      "target_id": "16F",
+      "source_address": "31802B",
+      "decoded": {
+        "size": 4096,
+        "sha256": "c9da2e8e5b8fb0aa73a930801328e1f025be77030b8cb1b0ffb5005d2d6649dc"
+      },
+      "compressed": {
+        "size": 1306,
+        "sha256": "26a9330973ebb6f3eb61ddc51e8e317c549e8242aa368f52e1c9d3b3852bd116"
+      },
+      "global_pointer": true,
+      "rooms": [
+        58,
+        85,
+        153,
+        196
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "14c8ad5821d449bf71fae1961791fdecdfc40fe0cb629774e09a5fde20f2f054"
+  }
+}

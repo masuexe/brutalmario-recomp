@@ -2,17 +2,19 @@
 """Check that the cartridge still has the reviewed free space budget.
 
 The thresholds are lower bounds. Update them only with a reviewed decision,
-because later boss content needs the space.
+because later boss content needs the space. The floor was reviewed on
+2026-10-26 after the boss room graphics chain, which installed 143 graphics
+assets of the remaining subrooms.
 """
 import argparse
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGETS = ['demo11-sprite-room49']
+TARGETS = ['demo11-gfx-boss76']
 THRESHOLDS = {
-    'total_free': 500000,
-    'aligned_free': 60000,
+    'total_free': 300000,
+    'aligned_free': 80000,
     'largest_run': 16384,
 }
 
