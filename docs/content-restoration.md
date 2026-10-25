@@ -972,3 +972,9 @@ end is `demo11-sprite-windows` (ROM `9bfbde5d...`, native
 `cdd44455...`). The suite reports **49/49**. One sprite (`34`) remains.
 The [space plan](demo11-space-expansion.md) records the measured cartridge
 budget and the options for later boss content.
+
+The [final sprite batch](demo11-custom-sprites-w234.md) moves two graphics
+blocks and ports the last missing custom sprite. All 25 missing custom sprites
+of the World 2 to World 8 level rooms are now ported. Chain end
+`demo11-sprite-final` (ROM `bb93ddc0...`, native `804a2fee...`).
+The suite reports **51/51** and includes a space budget guard.

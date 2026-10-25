@@ -25,8 +25,8 @@ Source: `local/probes/capacity-audit.py` on `demo11-sprite-windows`.
 | Zero bytes in the pinned base ROM | 1,366,994 |
 | Bytes in RATS blocks added by this line | 641,650 |
 | Changed bytes against the base | 482,104 |
-| Zero bytes left in the chain end | 825,150 |
-| Free bytes inside one bank below `0x40` | about 90,359 |
+| Zero bytes left in the chain end | 820,765 |
+| Free bytes inside one bank below `0x40` | 135,284 |
 | Largest contiguous free run | 21,275 |
 
 The base figure counts every zero run of 256 bytes or more, so it is an upper
@@ -49,6 +49,10 @@ Two bosses therefore need roughly 40 KB to 160 KB. The remaining space covers
 this range with margin. The real constraint is not total size but the aligned
 window for sprite code: the last five sprite ports needed 16 graphics block
 relocations to free five windows.
+
+The suite now runs `tools/check_space_budget.py`. The guard fails when
+the total free bytes fall below 500,000, the aligned free bytes below
+60,000 or the largest run below 16,384.
 
 ## Options
 

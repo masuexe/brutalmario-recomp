@@ -122,6 +122,23 @@ Chain end `demo11-sprite-windows`:
 Affected levels `041`, `039`, `01E` and `054` load and stay in
 gameplay. Level `0x123` still loads after the change.
 
+## Final batch: the last missing sprite
+
+Sprite `34` needs a window in a bank where two graphics blocks of the
+fix batch E (graphics `24C` and `24F`, both used by room `15D`) live.
+The final batch moves those two blocks to other free ranges and points their
+graphics slots to the new addresses. Room `15D` then renders byte-identical
+in all 8 sampled frames. The released window in bank `3E` takes sprite `34`.
+
+Chain end `demo11-sprite-final`:
+
+- ROM `bb93ddc05dfbb3d0f1b0fb99fe83239a6fa058669a2706112c4e659b55c737f3`
+- native binary `804a2fee1ef3102863fa957aad62cfe2c4917cd6ebc610350ce2223316bf2f6b`
+- qualifier `tools/qualify_demo11_sprite_final.py`; suite **51/51**
+
+All 25 missing custom sprites of the World 2 to World 8 level rooms are now
+ported: 19 in the first batch, 5 in the window batch and 1 in the final batch.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must
