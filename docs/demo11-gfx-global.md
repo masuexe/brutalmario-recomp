@@ -93,6 +93,18 @@ The user played level `0x023` on `demo11-gfx-global13`. The image is
 correct, and the third question block gives a bomb instead of the vanilla
 item. The user considers this the custom sprite behaviour working.
 
+## Playtest commands for the regained levels
+
+The launcher option `--level-id` takes the Lunar Magic level number (the room
+number), not the internal translevel byte. The gained levels map as follows:
+
+| Translevel | Lunar Magic level |
+| --- | --- |
+| `023` | `0x023` |
+| `02D` | `0x109` |
+| `083` | `0x15F` |
+| `069` | `0x145` |
+
 ## Limits
 
 - Entry and short idle gameplay are the automated claims.
