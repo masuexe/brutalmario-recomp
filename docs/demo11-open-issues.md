@@ -9,18 +9,25 @@ The user reports that this level has a thunder effect that triggers a mosaic
 effect. The candidate chain plays the level, but the user does not see the
 mosaic effect.
 
-Evidence so far:
+Test result: the effect is present in both hosts. A 21-second capture of the
+level shows dark lightning frames and mosaic frames after about 20 seconds.
 
-- The level stream for room `0x122` is byte-identical in Demo 1-1, cheap-demo,
-  7hero and most other versions (276 bytes).
-- The room header lists the same graphics IDs in all versions:
-  `30F`, `19`, `17`, `14`, `6`, `13`, `1`, `0`, `30E`.
-- The graphics batch O1 ports `30F` and `30E` from 7hero.
-- Entry screenshots show the striped storm background and the normal HUD.
+| Frame | Mean brightness | Edge ratio |
+| --- | ---: | ---: |
+| normal | 75.6 | 0.43 |
+| lightning with mosaic | 64.1 | 0.083 |
+| mosaic only | 74.9 | 0.083 |
 
-The effect may come from a level-specific sprite or from an engine path that
-the recomp host does not cover. This needs a reference and native comparison
-at the moment of a lightning strike.
+The native host shows the same pattern as the reference host. The effect starts
+well after level entry, so a short visit can miss it.
+
+Captures: `local/captures/storm-046-ref` and `storm-046-nat`. Script:
+`local/probes/storm-046.script`. The analysis tool is
+`local/probes/storm-metrics.py`.
+
+The level stream for room `0x122` is byte-identical in most versions, and the
+room header lists the same graphics IDs. The graphics batch O1 ports `30F` and
+`30E` from 7hero.
 
 ## Level 122 (translevel 046): Dragon Coin glitch
 
