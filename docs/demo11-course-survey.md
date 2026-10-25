@@ -140,6 +140,23 @@ The [graphics fix batches H and I](demo11-course-batch-h.md) port sixteen more
 graphics IDs. They fix `027`, `03A`, `040`, `051` and `066`, and reach
 gameplay on `018` and `01B`.
 
+## Chain-end survey
+
+The full survey also ran on the candidate chain end (`demo11-fix-batch-i`).
+
+| Result | Head | Chain end |
+| --- | ---: | ---: |
+| Playable `14` | 70 | 97 |
+| Mario Start stall `12` | 78 | 51 |
+| Mode `0E` (returns to map) | 34 | 31 |
+| Death or other modes | 10 | 13 |
+
+The chain improves 22 reviewed translevels and removes 27 stalls in total. The
+51 remaining stalls need the low ids (`02`, `03`, `05`, `06`, `1A`),
+song `6D`, or graphics that are not ported yet.
+
+Report: `local/reports/demo11-course-survey-chain-i.json`.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows
