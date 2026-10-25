@@ -1,0 +1,191 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Music Batch G",
+  "id": "demo11-music-batch-g",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-fix-batch-f",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "f656e5e7bce6313db1ae9c44d7f3d9f19c1213b325ff10079f0f858bd5823c2b"
+  },
+  "scope": "Install legacy songs 0x3C, 0x3F, 0x46, 0x47, 0x53 and 0x5B as raw group slices. The raw form keeps the source base and needs no pointer relocation, so songs with unreviewed commands are installable.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 14976,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "music_tracks": [
+    {
+      "id": "3C",
+      "raw": true,
+      "source_address": "2AE008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "74071c5d40c25b3c733a8b58060bb6d6a1f671356d3b2d3f295ef07b079080bb"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 0,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE0B4",
+      "before": "000000",
+      "allocation": {
+        "offset": 2014448,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "77f9ab86c7dbcb54bc51aa8f77c5c34cc92ea9233391685ae7f7023ac54a8056"
+      }
+    },
+    {
+      "id": "3F",
+      "raw": true,
+      "source_address": "2AE008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "74071c5d40c25b3c733a8b58060bb6d6a1f671356d3b2d3f295ef07b079080bb"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 24,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE0BD",
+      "before": "000000",
+      "allocation": {
+        "offset": 2022640,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "c29066fe21c534eb961e1f1a9d5f21f18d50cc02956812fc385b56f8a042ec04"
+      }
+    },
+    {
+      "id": "46",
+      "raw": true,
+      "source_address": "3FA008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "0f61b8916ee4168490f15bb1f95ca4a70be4ae66a87fd3ccf81fa4b2851a64ef"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 16,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE0D2",
+      "before": "000000",
+      "allocation": {
+        "offset": 2097152,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "63603219fbad5db7fd1b6ba24527b16f7f60291c4d1da89bd3931eee8b4ba93b"
+      }
+    },
+    {
+      "id": "47",
+      "raw": true,
+      "source_address": "3FA008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "0f61b8916ee4168490f15bb1f95ca4a70be4ae66a87fd3ccf81fa4b2851a64ef"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 24,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE0D5",
+      "before": "000000",
+      "allocation": {
+        "offset": 2119608,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "5281fce7e255e47729c93c246db7bfa04b9d2c9376078c08b89c526c05c1020f"
+      }
+    },
+    {
+      "id": "53",
+      "raw": true,
+      "source_address": "448008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "ef90102d48360c375758a2d0a5b6076e1f73d221a55fc25010829c114455c72b"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 24,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE0F9",
+      "before": "000000",
+      "allocation": {
+        "offset": 2178664,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "afb9673ee9d038e6a9d728ac5223a681c62c1a80d3123a51c58e1b42d6a66481"
+      }
+    },
+    {
+      "id": "5B",
+      "raw": true,
+      "source_address": "44C008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "1106ad2d58b2fc6bfabeee573ac6564cc4c4a4599c3ccb30b2fdeae9e6488a86"
+      },
+      "source_base": 26624,
+      "destination_base": 26624,
+      "sequence_offset": 24,
+      "source_data_offset": 64,
+      "song_size": 6128,
+      "pattern_count": 0,
+      "relocations": [],
+      "pointer_address": "0FE111",
+      "before": "000000",
+      "allocation": {
+        "offset": 2195456,
+        "size": 8192,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 6136,
+        "sha256": "f9142d94d13b0913e3964aa5eca7c8a84e56226d9318d9c970bc5b278402294b"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "04d91e3d206c2b68b34fd9bfaedd402eb0dec74012775d67f9899494d65ca368"
+  }
+}

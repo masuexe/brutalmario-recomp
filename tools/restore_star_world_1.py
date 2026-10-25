@@ -244,11 +244,33 @@ def adapt_music(group, config):
     return len(song).to_bytes(2, 'little') + destination.to_bytes(2, 'little') + song + bytes(4)
 
 
+def raw_group_song(group, slot):
+    """Build a song payload that keeps the group data at its own base.
+
+    The donor group already stores a sequence header for each slot and a data
+    area at source base + 64. When the destination base equals the source
+    base, the pointers need no relocation. The payload keeps the data area
+    unchanged. This bypasses the command-graph walk for songs that use
+    commands outside the reviewed adapt_music subset.
+    """
+    count = int.from_bytes(group[:2], 'little')
+    base = int.from_bytes(group[2:4], 'little')
+    if len(group) != count + 8 or slot not in (0, 1, 2, 3):
+        raise ValueError('unexpected raw music group')
+    sequence = group[4 + 8 * slot:12 + 8 * slot]
+    data = group[4 + 64:4 + count]
+    song = sequence + bytes(56) + data
+    return len(song).to_bytes(2, 'little') + base.to_bytes(2, 'little') + song + bytes(4)
+
+
 def restore_music(donor, out, config):
     source = lorom(int(config['source_address'], 16))
     group = donor[source:source+config['source_group']['size']]
     verify(group, config['source_group'], 'donor music group')
-    payload = adapt_music(group, config)
+    if config.get('raw'):
+        payload = raw_group_song(group, config['sequence_offset'] // 8)
+    else:
+        payload = adapt_music(group, config)
     verify(payload, config['adapted'], 'adapted music')
     start, size = config['allocation']['offset'], config['allocation']['size']
     check_allocation(out, start, size)

@@ -636,5 +636,18 @@
       ],
       "notes": "Present in cheap_demo bank; omitted in demoOnly1."
     }
-  ]
+  ],
+  "development_order": [
+    "demo6",
+    "demo6.5",
+    "demo7",
+    "demo7.5 (cheap_demo)",
+    "ow",
+    "mazo",
+    "7hero",
+    "boss",
+    "demoOnly1",
+    "1-1"
+  ],
+  "development_order_note": "User-supplied relative order, oldest to newest. cheap_demo is demo 7.5. Local mapping: demoOnly1 = demo-only-1, 1-1 = demo-1-1. demo6.5 and boss are not identified in the local set; demo8, ra-luigi and ra-mario-complete are outside the stated order."
 }

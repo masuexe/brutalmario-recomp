@@ -18,10 +18,35 @@ This document defines the custom music ID mapping between Carol's **Legacy Demo 
 
 ## Version Chronology and Engine Architecture
 
-| Family | ROM Releases | Release Date | Music Engine Architecture |
-| :--- | :--- | :--- | :--- |
-| **Legacy Family (Old)** | `demo7`, `demo8`, `cheap_demo`, `7hero`, `mazo`, `ow` | ~2008–2011 | Shared 110-entry pointer table at `$0FE000` + multi-song bank group uploads (`$3F:8008`, etc. into ARAM `$6800`). |
-| **New Family (Modern)** | `demoOnly1` (2012), `demo 1-1` (2015) | 2012, 2015 | Overhauled global pointer table at `$0FE000` uploading individual custom songs directly to ARAM `$5400`. `demo 1-1` re-adds several unreleased tracks. |
+The user supplied the development order of the demos, from oldest to newest:
+
+```
+demo6 -> demo6.5 -> demo7 -> demo7.5 (cheap_demo) -> ow -> mazo -> 7hero -> boss -> demoOnly1 -> 1-1
+```
+
+This order is authoritative for donor selection. The newest demos are
+`demoOnly1` and `1-1`. The local directory names map as follows:
+
+| Order | Local directory | Note |
+| --- | --- | --- |
+| demo6 | `demo6` | |
+| demo6.5 | not identified | The local set has no separate directory for this label |
+| demo7 | `demo7` | |
+| demo7.5 | `cheap_demo` | The user states cheap_demo is demo 7.5 |
+| ow | `ow` | |
+| mazo | `mazo` | |
+| 7hero | `7hero` | |
+| boss | not identified | Possibly `ra-bowser-castle`; not confirmed |
+| demoOnly1 | `demo-only-1` | |
+| 1-1 | `demo-1-1` | Recipient base |
+
+The local set also has `demo8`, `ra-luigi` and `ra-mario-complete`. The user
+order does not name them, so their position is unconfirmed.
+
+| Family | ROM Releases | Music Engine Architecture |
+| :--- | :--- | :--- |
+| **Legacy Family (Old)** | `demo6` through `7hero` and later legacy labels | Shared 110-entry pointer table at `$0FE000` + multi-song bank group uploads (`$3F:8008`, etc. into ARAM `$6800`). |
+| **New Family (Modern)** | `demoOnly1`, `1-1` | Overhauled global pointer table at `$0FE000` uploading individual custom songs directly to ARAM `$5400`. `1-1` re-adds several unreleased tracks. |
 
 ## Core Cross-Version Mapping Table
 
