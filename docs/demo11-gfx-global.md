@@ -117,6 +117,12 @@ number), not the internal translevel byte. The gained levels map as follows:
   evidence.
 - The user deferred the course music quality and the switch music event.
 
+- Level `0x145` (translevel `069`) is normal. The user reports that its
+  custom sprite has no code; see the open note below.
+- The user reports that the big door of level `0x109` leads to room `0x49`,
+  whose custom sprite probably has no code. Sprite `0x48` is now ported in
+  [the room 049 batch](demo11-room49-sprite.md).
+
 ## Limits
 
 - Entry and short idle gameplay are the automated claims.

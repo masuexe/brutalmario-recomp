@@ -1010,3 +1010,13 @@ custom sprite records and drops the 7hero C2 record, which crashes level `094`.
 Chain end `demo11-boss-music-retarget` (ROM `69ea041f...`, native
 `a2d42daf...`). The suite reports **56/56** and the audit has zero
 unexpected bytes.
+
+The user confirmed level `0x145` is normal but reports that its custom sprite
+has no code. The runtime shows only sprite `01` falling from x=0, and porting the
+donor record for `01` had no effect, so this stays open. The user also reports
+that the big door of level `0x109` leads to room `0x49`, whose custom
+sprite probably has no code. The [room 049 sprite batch](demo11-room49-sprite.md)
+ports record `0x48` from cheap-demo; the runtime effect needs a user playtest
+through the door. Chain end `demo11-sprite-room49` (ROM `ce129957...`,
+native `2e357a96...`). The suite reports **57/57**; the audit has zero
+unexpected bytes.
