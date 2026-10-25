@@ -1148,3 +1148,9 @@ The [blocked sprite batch two](demo11-sprites-blocked-two.md) ports ten more
 custom sprites with ten reviewed graphics relocations. Room `0xAC` changes
 its gameplay field. Chain end `demo11-sprites-blocked-two` (ROM
 `e99b8733...`). Suite **73/73**; audit zero unexpected.
+
+The [blocked sprite batch three](demo11-sprites-blocked-three.md) ports four
+custom sprites with four relocations. Rooms `0x3B`, `0x2C` and `0x7B`
+change and keep an identical HUD. The free-space review floor moves from
+300,000 to 290,000 bytes. Chain end `demo11-sprites-blocked-three`
+(ROM `9ec9c6a0...`). Suite **74/74**; audit zero unexpected.

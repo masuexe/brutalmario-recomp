@@ -82,6 +82,7 @@ CHECKS = [
     ('remaining free sprites 2', 'qualify_demo11_sprites_free_two'),
     ('blocked sprites batch 1', 'qualify_demo11_sprites_blocked_one'),
     ('blocked sprites batch 2', 'qualify_demo11_sprites_blocked_two'),
+    ('blocked sprites batch 3', 'qualify_demo11_sprites_blocked_three'),
 ]
 
 
