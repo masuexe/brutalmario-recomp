@@ -87,6 +87,12 @@ others deserve a user check:
 | `088`/`089`/`097` | `0E` | 125-283 | short rooms, likely unused |
 | `024`/`052`/`059`/`077`/`07B`/`08A`/`0AD`/`0BE`/`0EC`/`0FC`/`0FF` | `0B`/`0E` | 6-24 | unused rooms |
 
+## User acceptance: level 0x023
+
+The user played level `0x023` on `demo11-gfx-global13`. The image is
+correct, and the third question block gives a bomb instead of the vanilla
+item. The user considers this the custom sprite behaviour working.
+
 ## Limits
 
 - Entry and short idle gameplay are the automated claims.
