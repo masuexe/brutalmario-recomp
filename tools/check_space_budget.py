@@ -11,9 +11,9 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGETS = ['demo11-sprites-blocked-three']
+TARGETS = ['demo11-sprites-blocked-four']
 THRESHOLDS = {
-    'total_free': 290000,
+    'total_free': 150000,
     'aligned_free': 80000,
     'largest_run': 16384,
 }

@@ -1154,3 +1154,8 @@ custom sprites with four relocations. Rooms `0x3B`, `0x2C` and `0x7B`
 change and keep an identical HUD. The free-space review floor moves from
 300,000 to 290,000 bytes. Chain end `demo11-sprites-blocked-three`
 (ROM `9ec9c6a0...`). Suite **74/74**; audit zero unexpected.
+
+The [blocked sprite batch four](demo11-sprites-blocked-four.md) ports sprites
+`0x1B` and `0x0C` and adds sprite-block rebanking to the planner.
+Chain end `demo11-sprites-blocked-four` (ROM `7f20e474...`). Suite
+**75/75**; audit zero unexpected. The free-space review floor is now 150,000 bytes.

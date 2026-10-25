@@ -1,6 +1,11 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-sprites-blocked-four': {
+        'binary': 'BrutalMarioDemo11SpritesBlockedFourSNESRecomp',
+        'title': 'Brutal Mario Demo11 Sprites Blocked Four',
+    },
+
     'demo11-sprites-blocked-three': {
         'binary': 'BrutalMarioDemo11SpritesBlockedThreeSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprites Blocked Three',
