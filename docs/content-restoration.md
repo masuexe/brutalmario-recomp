@@ -1041,3 +1041,7 @@ missing custom sprites now run: `070` moves from boss room `0x14C` to
 `0x14D` (the transition completes), and `062` now has a moving object
 that carries Mario to a death. The user must confirm both. The suite reports
 **59/59**.
+
+The user confirmed room `0x49` on `demo11-gfx-boss76`: music,
+level layout and the custom sprite are normal. This accepts the subroom
+graphics recovery for that room.

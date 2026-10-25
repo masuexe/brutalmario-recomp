@@ -66,6 +66,13 @@ The `070` transition completes, so it is not a stall. The user must
 confirm both changes. The counts above are reproducible from
 `tools/qualify_demo11_gfx_boss_range.py`.
 
+## User acceptance: room 49
+
+On 2026-10-26 the user played room `0x49` through the big door of level
+`0x109` on `demo11-gfx-boss76`. Music, level layout and the custom
+sprite are all normal now. This confirms the empty room graphics slots were
+the cause of the earlier wrong palette and damaged level.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room
