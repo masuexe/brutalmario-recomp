@@ -964,3 +964,11 @@ The batch ports 19 sprite records from cheap-demo onto
 Six sprite IDs need the next batch because no free bank range keeps their
 low 16 address bits. The suite reports **48/48**. This is a candidate that
 waits for a user playtest.
+
+The [second sprite batch](demo11-custom-sprites-w234.md) moves the Star World
+graphics blocks to free aligned banks for five more sprites. The user
+confirmed that the custom wood sprite works in level `0x123`. The chain
+end is `demo11-sprite-windows` (ROM `9bfbde5d...`, native
+`cdd44455...`). The suite reports **49/49**. One sprite (`34`) remains.
+The [space plan](demo11-space-expansion.md) records the measured cartridge
+budget and the options for later boss content.

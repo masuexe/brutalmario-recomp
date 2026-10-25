@@ -97,6 +97,31 @@ three. This is the reason `04` is not in the batch.
 Option 1 is the smaller change. The base ROM is the only constraint on the
 free banks, and it has enough free ranges in banks `38` to `3F`.
 
+## Second batch: five more sprites by relocation
+
+The user played level `0x123` on the first candidate and reported that the
+custom wood sprite works normally.
+
+The second batch frees the aligned windows by moving the Star World graphics
+blocks out of bank `3F`. The new tool support is `apply_relocations` in
+`tools/restore_star_world_1.py`. It copies a reviewed block to a new range,
+re-points its reviewed pointer slot, and zeroes the old range. The 16
+graphics blocks now live elsewhere, and the Star World rendering is
+byte-identical in all 8 sampled frames of translevels `004` and `009`.
+
+The freed windows take five more sprites: `3A`, `05`, `29`, `04` and `90`.
+Only sprite `34` remains. Its window in bank `36` is still covered by two
+other graphics blocks.
+
+Chain end `demo11-sprite-windows`:
+
+- ROM `9bfbde5dfececdcc202076ba4e1d12a2b933dfb7a1c495fc0c20c806a0d0adad`
+- native binary `cdd44455c760dd3979f5d55b362278085ac407c62ea20f7fb69d75b9d60d5b53`
+- qualifier `tools/qualify_demo11_sprite_windows.py`; suite **49/49**
+
+Affected levels `041`, `039`, `01E` and `054` load and stay in
+gameplay. Level `0x123` still loads after the change.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must

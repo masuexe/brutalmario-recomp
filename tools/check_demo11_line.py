@@ -57,6 +57,7 @@ CHECKS = [
     ('world graphics batches', 'qualify_demo11_gfx_worlds'),
     ('world graphics full survey', 'qualify_demo11_gfx_full_range'),
     ('custom sprites World 2-4', 'qualify_demo11_sprites_w234'),
+    ('sprite window relocations', 'qualify_demo11_sprite_windows'),
 ]
 
 

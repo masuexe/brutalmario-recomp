@@ -335,6 +335,37 @@ def restore_raw_blocks(donor, out, blocks):
         out[start:start+len(blob)] = blob
 
 
+
+def file_to_lorom(offset):
+    """Return the LoROM address that maps the given file offset."""
+    if offset < 0 or offset >= 0x400000:
+        raise ValueError('file offset outside the cartridge')
+    bank = offset // 0x8000
+    return (bank << 16) | 0x8000 | (offset % 0x8000)
+
+
+def apply_relocations(out, config):
+    """Move reviewed blocks and re-point their reviewed pointer slots."""
+    for item in config.get('relocations', []):
+        source = item['source_offset']
+        destination = item['destination_offset']
+        size = item['size']
+        verify(bytes(out[source:source + size]), item, 'relocated block source')
+        if destination // 0x8000 != (destination + size - 1) // 0x8000:
+            raise ValueError('relocated block crosses a bank boundary')
+        check_allocation(out, destination, size)
+        slot = item.get('pointer_offset')
+        if slot is not None:
+            before = bytes.fromhex(item['pointer_before'])
+            after = bytes.fromhex(item['pointer_after'])
+            if out[slot:slot + len(before)] != before:
+                raise ValueError('relocated pointer slot changed')
+            out[slot:slot + len(after)] = after
+        out[destination:destination + size] = out[source:source + size]
+        if item.get('zero_source', True):
+            out[source:source + size] = bytes(size)
+
+
 def make_candidate(recipient, donor, config):
     start, size = config['allocation']['offset'], config['allocation']['size']
     end = start + size
@@ -347,6 +378,7 @@ def make_candidate(recipient, donor, config):
             raise ValueError('room graphics configuration changed')
         records.append(record)
     out, cursor, assets = bytearray(recipient), start, []
+    apply_relocations(out, config)
     restore_raw_blocks(donor, out, config.get('raw_blocks', []))
     apply_code_patches(out, {'code_patches': config.get('pre_asset_patches', [])})
     for item in config['assets']:
