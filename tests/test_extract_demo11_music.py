@@ -106,9 +106,10 @@ class IndexTests(unittest.TestCase):
             html = (Path(directory) / 'index.html').read_text()
         self.assertIn('id="ids-hex"', html)
         self.assertIn('0x52', html)
-        self.assertIn('level 0x53', html)
+        self.assertIn('level byte 0x53', html)
         self.assertIn('<audio', html)
         self.assertIn('Copy id list', html)
+        self.assertIn('Level byte (id+1)', html)
 
 
 if __name__ == '__main__':

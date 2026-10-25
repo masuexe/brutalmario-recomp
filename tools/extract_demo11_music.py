@@ -452,7 +452,7 @@ def write_index(out, entries):
         title = entry['title'] or ('Untitled slot 0x%s' % entry['slot'])
         origin = entry['origin_game'] or '-'
         level = '%02X' % (entry['slot_value'] + 1)
-        detail.append('0x%s  level 0x%s  %s' % (entry['slot'], level, title))
+        detail.append('0x%s  song  ->  level byte 0x%s  %s' % (entry['slot'], level, title))
         rows.append(
             '<tr><td><b>0x%s</b></td><td>%d</td><td>0x%s</td><td>%s</td><td>%s</td>'
             '<td>%d</td><td>%.1f s</td>'
@@ -469,19 +469,24 @@ td,th{border-bottom:1px solid #333;padding:.35rem .5rem;text-align:left;vertical
 audio{height:2rem}
 pre{background:#1b1b1b;padding:1rem;overflow:auto;max-height:16rem}
 button{background:#2d2d2d;color:#ddd;border:1px solid #555;padding:.3rem .7rem;margin-right:.5rem}
+.note{color:#aaa}
 </style></head><body>
 <h1>Brutal Mario Demo 1-1 music</h1>
 <p>%d custom songs from the song table at $0F:E000. The level data music byte is
 the song id plus one. Each file starts at the song introduction and runs for
 %.1f to %.1f seconds.</p>
 <h2>Music ids</h2>
+<p class="note">Reference a song with the hex id: the music table index, the
+$0DDA record or the $1DFB request. To set a level header music field, write the
+level byte. The level byte is the hex id plus one. The level byte is not a song
+id.</p>
 <p><button onclick="copyBlock('ids-hex')">Copy id list</button>
-<button onclick="copyBlock('ids-detail')">Copy ids with names</button></p>
+<button onclick="copyBlock('ids-detail')">Copy ids, level bytes and names</button></p>
 <pre id="ids-hex">%s</pre>
 <h2>Ids with song names</h2>
 <pre id="ids-detail">%s</pre>
 <h2>Tracks</h2>
-<table><thead><tr><th>Hex id</th><th>Dec</th><th>Level byte</th><th>Title</th>
+<table><thead><tr><th>Hex id</th><th>Dec</th><th>Level byte (id+1)</th><th>Title</th>
 <th>Origin</th><th>Payload bytes</th><th>Length</th><th>Play</th></tr></thead><tbody>
 %s
 </tbody></table>
