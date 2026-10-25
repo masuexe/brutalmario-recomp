@@ -169,6 +169,10 @@ Report: `local/reports/demo11-course-survey-chain-i.json`.
 
 ## Final chain survey
 
+After the head promotion, the chain end is the line head. The table
+compares the old head with the promoted candidate.
+
+
 The full survey ran on the final chain end (`demo11-fix-batch-o2`).
 
 | Result | Head | Chain end |

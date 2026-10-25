@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET = 'demo11-star-bgm'
+TARGET = 'demo11-fix-batch-p'
 MAP = 6
 NODE_X = 0x128
 NODE_Y = 0x1E8

@@ -923,6 +923,15 @@ byte audit still has zero unexpected bytes.
 
 The user confirmed that the storm mosaic appears later and matches original
 Demo 1-1, then closed that investigation. cheap_demo parity is not claimed.
-Earlier image metrics did not prove mosaic and have been superseded. The head
-is still `demo11-star-bgm`; candidate promotion and broader restoration remain
-open.
+Earlier image metrics did not prove mosaic and have been superseded.
+
+### Head promotion
+
+The [head promotion](demo11-head-promotion.md) moved the line head from
+`demo11-star-bgm` to **`demo11-fix-batch-p`** (ROM `48891cf7...`, native binary
+`a00a993d...`). The head audit reproduces 41 recipes and reports 386,151 changed
+bytes inside 495,263 reviewed bytes with zero unexpected bytes. The suite
+reports **45/45**. The full-range survey reports 207 playable entries and zero
+stalls across all 255 translevels. The Dragon Coin column runtime fix is part
+of the promoted state. Broader restoration work remains open.
+
