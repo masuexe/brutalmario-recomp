@@ -1091,3 +1091,10 @@ row and set `$7F:FFDF`; only the HUD upload was missing. The fixed
 capture changes the HUD row and leaves the gameplay field byte-identical.
 Chain end `demo11-hp-room128` (ROM `d41eda4d...`, native
 `f3975d6f...`). Suite **63/63**; audit zero unexpected.
+
+The [room 0x146 HP bar recipe](demo11-hp-room146.md) adds the last captured
+missing HP row. A capture scan found only rooms `0x009`, `0x0BC`, `0x0CC`,
+`0x128` and `0x146` that fill the legacy row. Room `0x009` already
+displays its row through the accepted fuel shim. Room `0x146` now displays
+its row; the gameplay field stays byte-identical. Chain end
+`demo11-hp-room146` (ROM `616074b4...`). Suite **64/64**.
