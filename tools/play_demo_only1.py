@@ -237,8 +237,9 @@ def choose_level(complete_all=False):
 
 
 def practice_script(*, boss_door=False, air_swim=False, level=None, teleport=None,
-                    complete_all=False):
-    if sum((bool(boss_door), level is not None, teleport is not None)) > 1:
+                    translevel=None, complete_all=False):
+    if sum((bool(boss_door), level is not None, teleport is not None,
+            translevel is not None)) > 1:
         raise ValueError("choose one destination")
     full_route = (ROOT / 'recomp/inputs/demo-only-1-boss-door.script').read_text()
     full_route = full_route.replace('turbo off\n', '')
@@ -262,6 +263,17 @@ def practice_script(*, boss_door=False, air_swim=False, level=None, teleport=Non
                 route += f'press {direction} 30\nwait 180\n'
     if teleport is not None:
         route += teleport_script(teleport)
+    if translevel is not None:
+        # Practice only: select any translevel through the Star World map 6
+        # lower-left node by overwriting its overworld tile level byte.
+        node_x, node_y = 0x128, 0x1E8
+        route += teleport_script((6, node_x, node_y))
+        address = (0xD400 + (node_y >> 4) * 16 + ((node_x >> 4) & 15) +
+                   (node_x >> 8) * 0x200)
+        route += ('\n# Practice only: overwrite the map 6 node level with '
+                  f'translevel {translevel:#04x}.\n')
+        route += f'poke {address:x} {translevel & 0xFF:02x}\n'
+        route += 'press y 30\n'
     if air_swim:
         # $85 makes the guest apply its normal swimming physics, including
         # resetting $75 itself. Do not freeze Mario's position or velocity.
@@ -282,6 +294,8 @@ def main():
                              help='start a fresh practice session at the selected map entrance')
     destination.add_argument('--teleport', nargs=3, type=coordinate, metavar=('MAP', 'X', 'Y'),
                              help='start a fresh practice session at any map position')
+    destination.add_argument('--translevel', type=coordinate, metavar='LEVEL',
+                             help='start a fresh practice session at any translevel through the map 6 node override')
     destination.add_argument('--select-level', action='store_true',
                              help='choose a practice level from a terminal menu')
     destination.add_argument('--list-levels', action='store_true',
@@ -314,7 +328,10 @@ def main():
             args.teleport = validate_teleport(args.teleport)
         except ValueError as error:
             parser.error(str(error))
-    if args.restoration and not (args.boss_door or args.special or args.level or args.teleport is not None):
+    if args.translevel is not None and not 0 <= args.translevel <= 0xFF:
+        parser.error('translevel must be between 0 and 0xff')
+    if args.restoration and not (args.boss_door or args.special or args.level or
+                                 args.teleport is not None or args.translevel is not None):
         args.level = args.restoration
     if args.level in RESTORATIONS and args.complete_all:
         parser.error('this course becomes a Warp Star after clearing; use a fresh uncleared practice session')
@@ -338,13 +355,14 @@ def main():
                      (args.restoration or 'demo-only-1') + ' first')
     command = [str(binary), '--no-launcher', '--rom', str(rom)]
     if (args.boss_door or args.special or args.air_swim or args.level or
-            args.teleport is not None or args.complete_all):
+            args.teleport is not None or args.translevel is not None or args.complete_all):
         practice_root = ROOT / 'local/play' / (args.restoration or 'demo-only-1') / 'practice'
         practice_root.mkdir(parents=True, exist_ok=True)
         directory = Path(tempfile.mkdtemp(prefix='session-', dir=practice_root))
         script = directory / 'input.script'
         script.write_text(practice_script(boss_door=args.boss_door, air_swim=args.air_swim,
                                           level=args.level, teleport=args.teleport,
+                                          translevel=args.translevel,
                                           complete_all=args.complete_all))
         # An explicit config prevents the desktop host from changing cwd to
         # the executable directory, where the user's ordinary SRAM resides.
@@ -364,6 +382,9 @@ def main():
         if args.teleport is not None:
             map_id, x, y = args.teleport
             print(f'Map {map_id}, X={x:#05x}, Y={y:#05x}. Use the normal level-entry button.', flush=True)
+        if args.translevel is not None:
+            print(f'Translevel {args.translevel:#04x} through the map 6 node override. '
+                  'The level loads automatically.', flush=True)
         if args.complete_all:
             print('All levels + DK coins complete: ON (fresh practice save).', flush=True)
         if args.level == 'world1-castle' and args.complete_all:
