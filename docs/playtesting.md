@@ -1,5 +1,24 @@
 # Manual playtest evidence
 
+## Room entry for boss and lobby checks
+
+Some rooms have no map node. The launcher can load them through the game's
+room-exit fixture:
+
+    python3 tools/play_demo_only1.py --restoration demo11-sprites-remaining-free --room 0xCC
+
+The fixture enters the level `0x15F` corridor first. Then it writes the room exit
+registers. The room loads automatically. This is a diagnostic fixture. It does
+not prove ordinary traversal.
+
+`--level-id` uses the same fixture when the level has no map entry and the
+room number is below `0x100`. For example, `--level-id 0xCC` loads
+room `0xCC`.
+
+The fixture supports rooms `0x00` to `0xFF` only. Rooms with a known map
+entry keep the normal level-entry path.
+
+
 ## Candidate chain practice sessions
 
 Start a fresh practice session at a Lunar Magic level number:

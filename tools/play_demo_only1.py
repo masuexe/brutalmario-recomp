@@ -250,9 +250,9 @@ def choose_level(complete_all=False):
 
 
 def practice_script(*, boss_door=False, air_swim=False, level=None, teleport=None,
-                    translevel=None, complete_all=False):
+                    translevel=None, room=None, complete_all=False):
     if sum((bool(boss_door), level is not None, teleport is not None,
-            translevel is not None)) > 1:
+            translevel is not None, room is not None)) > 1:
         raise ValueError("choose one destination")
     full_route = (ROOT / 'recomp/inputs/demo-only-1-boss-door.script').read_text()
     full_route = full_route.replace('turbo off\n', '')
@@ -276,6 +276,24 @@ def practice_script(*, boss_door=False, air_swim=False, level=None, teleport=Non
                 route += f'press {direction} 30\nwait 180\n'
     if teleport is not None:
         route += teleport_script(teleport)
+    if room is not None:
+        # Practice only: enter the level 0x15F corridor, then use the game's
+        # room-exit fixture to load the requested room. This is a fixture, not
+        # ordinary traversal.
+        node_x, node_y = 0x128, 0x1E8
+        route += teleport_script((6, node_x, node_y))
+        address = (0xD400 + (node_y >> 4) * 16 + ((node_x >> 4) & 15) +
+                   (node_x >> 8) * 0x200)
+        route += f'poke {address:x} 83\n'
+        route += 'press y 30\nwait 240\n'
+        route += ('\n# Practice only: room-exit fixture to room '
+                  f'{room:#04x}.\n')
+        route += 'poke 94 80004001\n'
+        route += f'poke 19b8 {room & 0xFF:02x}\n'
+        route += 'poke 19d8 04\n'
+        route += 'poke 88 0000\n'
+        route += 'poke 71 06\n'
+        route += 'wait 180\n'
     if translevel is not None:
         # Practice only: select any translevel through the Star World map 6
         # lower-left node by overwriting its overworld tile level byte.
@@ -311,6 +329,8 @@ def main():
                              help='start a fresh practice session at any translevel through the map 6 node override')
     destination.add_argument('--level-id', type=coordinate, metavar='LEVEL',
                              help='start a practice session at a Lunar Magic level number, for example 0x122')
+    destination.add_argument('--room', type=coordinate, metavar='ROOM',
+                             help='start a practice session inside a room below 0x100 through a labeled room-exit fixture')
     destination.add_argument('--select-level', action='store_true',
                              help='choose a practice level from a terminal menu')
     destination.add_argument('--list-levels', action='store_true',
@@ -345,14 +365,21 @@ def main():
             parser.error(str(error))
     level_id = args.level_id
     if level_id is not None:
-        try:
-            args.translevel = int(load_level_index().get(f'{level_id:03X}', ''), 16)
-        except ValueError:
-            parser.error(f'no translevel maps to level {level_id:#05x}')
+        mapped = load_level_index().get(f'{level_id:03X}')
+        if mapped is None:
+            if 0 <= level_id <= 0xFF:
+                args.room = level_id
+            else:
+                parser.error(f'no translevel maps to level {level_id:#05x}')
+        else:
+            args.translevel = int(mapped, 16)
+    if args.room is not None and not 0 <= args.room <= 0xFF:
+        parser.error('room must be between 0 and 0xff')
     if args.translevel is not None and not 0 <= args.translevel <= 0xFF:
         parser.error('translevel must be between 0 and 0xff')
     if args.restoration and not (args.boss_door or args.special or args.level or
-                                 args.teleport is not None or args.translevel is not None):
+                                 args.teleport is not None or args.translevel is not None or
+                                 args.room is not None):
         args.level = args.restoration
     if args.level in RESTORATIONS and args.complete_all:
         parser.error('this course becomes a Warp Star after clearing; use a fresh uncleared practice session')
@@ -376,14 +403,15 @@ def main():
                      (args.restoration or 'demo-only-1') + ' first')
     command = [str(binary), '--no-launcher', '--rom', str(rom)]
     if (args.boss_door or args.special or args.air_swim or args.level or
-            args.teleport is not None or args.translevel is not None or args.complete_all):
+            args.teleport is not None or args.translevel is not None or
+            args.room is not None or args.complete_all):
         practice_root = ROOT / 'local/play' / (args.restoration or 'demo-only-1') / 'practice'
         practice_root.mkdir(parents=True, exist_ok=True)
         directory = Path(tempfile.mkdtemp(prefix='session-', dir=practice_root))
         script = directory / 'input.script'
         script.write_text(practice_script(boss_door=args.boss_door, air_swim=args.air_swim,
                                           level=args.level, teleport=args.teleport,
-                                          translevel=args.translevel,
+                                          translevel=args.translevel, room=args.room,
                                           complete_all=args.complete_all))
         # An explicit config prevents the desktop host from changing cwd to
         # the executable directory, where the user's ordinary SRAM resides.
@@ -403,7 +431,13 @@ def main():
         if args.teleport is not None:
             map_id, x, y = args.teleport
             print(f'Map {map_id}, X={x:#05x}, Y={y:#05x}. Use the normal level-entry button.', flush=True)
-        if level_id is not None:
+        if level_id is not None and args.room is not None:
+            print(f'Lunar Magic level {level_id:03X} has no map entry. '
+                  f'Diagnostic room-exit fixture loads room {args.room:#04x}.', flush=True)
+        elif args.room is not None and level_id is None:
+            print(f'Diagnostic room-exit fixture loads room {args.room:#04x}. '
+                  'The room loads automatically.', flush=True)
+        elif level_id is not None:
             print(f'Lunar Magic level {level_id:03X} maps to translevel '
                   f'{args.translevel:#04x}. The level loads automatically.', flush=True)
         elif args.translevel is not None:
