@@ -1132,3 +1132,8 @@ The [snow projectile batch](demo11-sprites-snowflake.md) ports custom sprite
 `0x5A` with one graphics relocation. The dragon spawn code can spawn
 it beside the fire projectile. Chain end `demo11-sprites-snowflake`
 (ROM `81d752be...`). Suite **70/70**; audit zero unexpected.
+
+The [second free sprite batch](demo11-sprites-free-two.md) ports seven more
+custom records: `0x03`, `0x1D`, `0x2F`, `0x41`, `0x59`, `0x84` and `0x85`.
+Chain end `demo11-sprites-free-two` (ROM `01bbcefa...`). Suite
+**71/71**; audit zero unexpected.
