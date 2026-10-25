@@ -1,0 +1,156 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Fix Batch K1",
+  "id": "demo11-fix-batch-k1",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-music-batch-j",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "60422232d4c9125a5426e4e7c34b6739dc0a1e9a6fbb6d88ef56a8dbae101dd9"
+  },
+  "scope": "Port seven extended graphics IDs from 7hero on top of music batch J. Targets translevels 00D, 02C, 055 and 062.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3680840,
+    "size": 18630,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "261",
+      "target_id": "261",
+      "source_address": "3CF4BC",
+      "decoded": {
+        "size": 4096,
+        "sha256": "148112129e6c19205794ec76529076df7881e81ea5d36f74aae0568e52f19c5d"
+      },
+      "compressed": {
+        "size": 2579,
+        "sha256": "8421168367afb2703440e129bcf195186591134bb287782a62d554cfe19bf5e3"
+      },
+      "global_pointer": true,
+      "rooms": [
+        13
+      ]
+    },
+    {
+      "source_id": "260",
+      "target_id": "260",
+      "source_address": "3CEA78",
+      "decoded": {
+        "size": 4096,
+        "sha256": "baf9f9661d6e28f77b920ab2fa8177c553f210d4b4f7bc06ab1bdd463319d2d6"
+      },
+      "compressed": {
+        "size": 2620,
+        "sha256": "18ecb1970a9c70f0b9dc613efbf477d0038fab30f3dc9ec85aebd17957ddb4ee"
+      },
+      "global_pointer": true,
+      "rooms": [
+        13
+      ]
+    },
+    {
+      "source_id": "262",
+      "target_id": "262",
+      "source_address": "3CFED7",
+      "decoded": {
+        "size": 4096,
+        "sha256": "7521a51b66d94f9f9d2ed355d9ce521a291cf74f5a3dec3df584d2405630c4d2"
+      },
+      "compressed": {
+        "size": 2538,
+        "sha256": "be03795d8158f0dbdbdcae81d03eeca690ef22e4be1e57b0ce6536dcdab29f5d"
+      },
+      "global_pointer": true,
+      "rooms": [
+        13,
+        354,
+        355,
+        356,
+        357
+      ]
+    },
+    {
+      "source_id": "1E8",
+      "target_id": "1E8",
+      "source_address": "33930E",
+      "decoded": {
+        "size": 4096,
+        "sha256": "cefeeeddac6a873a720eaf21d7973f61bd2cb6300818119b9b14558d2e94b231"
+      },
+      "compressed": {
+        "size": 2836,
+        "sha256": "73d46306e4f001872a184fd0181719cce4fbea556161e201f880bee5f539757d"
+      },
+      "global_pointer": true,
+      "rooms": [
+        234,
+        235,
+        236,
+        264
+      ]
+    },
+    {
+      "source_id": "1B6",
+      "target_id": "1B6",
+      "source_address": "2EE610",
+      "decoded": {
+        "size": 4096,
+        "sha256": "71a32555df87a08f117f6d8245965a863a71a92defa21f2d806e9d2837e0309d"
+      },
+      "compressed": {
+        "size": 2157,
+        "sha256": "06de686a657e0ede1d2fd3b064e9377c95c6d53229b5fef4e2537a7cbdb46987"
+      },
+      "global_pointer": true,
+      "rooms": [
+        29,
+        318
+      ]
+    },
+    {
+      "source_id": "120",
+      "target_id": "120",
+      "source_address": "249263",
+      "decoded": {
+        "size": 4096,
+        "sha256": "aa11a5141c9126c81385b04ce71c35a567ba85001649e31cf4461c146c39eae5"
+      },
+      "compressed": {
+        "size": 2268,
+        "sha256": "692e45ffde8bddb1c285631a1054a34855d2f336c5e2ba25d7cb2d5ca3896175"
+      },
+      "global_pointer": true,
+      "rooms": [
+        131,
+        305
+      ]
+    },
+    {
+      "source_id": "1A4",
+      "target_id": "1A4",
+      "source_address": "2DC93E",
+      "decoded": {
+        "size": 4096,
+        "sha256": "048d569edcbd069e62288c7c27b2e6bd4b31155817a2c0eb316b4545a9686474"
+      },
+      "compressed": {
+        "size": 3320,
+        "sha256": "657dc4f1232457e5e34412f59d793412354c92057ccb38065346c46b1facc8c9"
+      },
+      "global_pointer": true,
+      "rooms": [
+        305
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "dee49001788fbf4c55b7bc7dbba9eb5f2405e4095079a6784af4ab94a0c78b11"
+  }
+}

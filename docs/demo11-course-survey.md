@@ -155,6 +155,11 @@ The chain improves 22 reviewed translevels and removes 27 stalls in total. The
 51 remaining stalls need the low ids (`02`, `03`, `05`, `06`, `1A`),
 song `6D`, or graphics that are not ported yet.
 
+The [music batch J and graphics batches K1-M](demo11-course-batch-j.md) add
+five more legacy songs and 21 graphics IDs. They fix `00D`, `01A`, `02C`,
+`034`, `03C`, `048`, `04E`, `055`, `056`, `062`, `06F` and
+`070`.
+
 Report: `local/reports/demo11-course-survey-chain-i.json`.
 
 ## First broken course: translevel 001
