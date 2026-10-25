@@ -43,6 +43,23 @@ The Dragon Coin is a sprite. Its animation uses the sprite graphics set, not
 the extended tile IDs that batch O1 ports. The glitch may come from the recomp
 host, or from a graphics set that differs from the intended version.
 
+## User observations (2026-10-26)
+
+- A second Dragon Coin in level `0x122` also causes the vertical line.
+- A green Koopa stands near that second coin. Touching the Koopa causes death,
+  and mosaic appears at the death moment.
+- The user sees mosaic at normal death transitions, not during ordinary play.
+- The user expects the thunder mosaic from the reference video
+  `https://www.youtube.com/watch?v=an3OtxYxhlU`.
+
+Control test: a 40-second standing capture of level `0x002` has zero high-uniform
+frames. A 70-second standing capture of level `0x122` has mosaic frames in 13 of
+42 samples. The mosaic in `0x122` applies to the rain layer: the stripes become
+smooth 8 by 8 blocks for 2 or 3 seconds, then return.
+
+The window session and the capture session still differ. A short video from the
+user, or a check at the captured TIME values, will resolve the difference.
+
 ## Next steps
 
 1. Capture level 122 on the reference host for a longer interval. Check for
