@@ -45,6 +45,7 @@ CHECKS = [
     ('song 0x57 restoration', 'qualify_demo11_music_57'),
     ('course graphics A', 'qualify_demo11_course_gfx_a'),
     ('music batch A / fix batch B', 'qualify_demo11_music_batch'),
+    ('music batch C / fix batch D', 'qualify_demo11_music_batch_cd'),
 ]
 
 

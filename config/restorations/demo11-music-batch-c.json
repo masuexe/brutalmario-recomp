@@ -1,0 +1,210 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Music Batch C",
+  "id": "demo11-music-batch-c",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-fix-batch-b",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "04897aaf847d9fb3d0148974ad6702587495ccca14a22348dac5eaebc26396c6"
+  },
+  "scope": "Install the validated cheap-demo songs 0x55, 0x56 and 0x57 into their null slots on top of fix batch B. Song 0x54 is already present from the Star World work.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 14976,
+    "size": 16,
+    "fill": 0
+  },
+  "assets": [],
+  "music_tracks": [
+    {
+      "id": "55",
+      "source_address": "44A008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+      },
+      "source_base": 26624,
+      "destination_base": 21504,
+      "sequence_offset": 8,
+      "source_data_offset": 64,
+      "song_size": 1987,
+      "pattern_count": 1,
+      "relocations": [
+        0,
+        2,
+        6,
+        723,
+        796,
+        854,
+        865,
+        978,
+        989,
+        1040,
+        1130,
+        1181,
+        1273,
+        1297,
+        1309,
+        1402,
+        1406,
+        1410,
+        1499,
+        1510,
+        1520,
+        1542,
+        1555,
+        1568,
+        1581,
+        1609,
+        1971,
+        1973,
+        1975,
+        1977,
+        1979,
+        1981,
+        1983
+      ],
+      "pointer_address": "0FE0FF",
+      "before": "000000",
+      "allocation": {
+        "offset": 1693320,
+        "size": 4096,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 1995,
+        "sha256": "1b6b6e078c0c894f66046cb7c0fa5a5cd1756ecae9b88788c44a6a1b4c4f0d92"
+      }
+    },
+    {
+      "id": "56",
+      "source_address": "44A008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+      },
+      "source_base": 26624,
+      "destination_base": 21504,
+      "sequence_offset": 16,
+      "source_data_offset": 64,
+      "song_size": 3618,
+      "pattern_count": 1,
+      "relocations": [
+        0,
+        2,
+        6,
+        2083,
+        2103,
+        2114,
+        2118,
+        2137,
+        2141,
+        2145,
+        2149,
+        2153,
+        2167,
+        2234,
+        2340,
+        2348,
+        2355,
+        2396,
+        2470,
+        2474,
+        2478,
+        2486,
+        2506,
+        2510,
+        2514,
+        2522,
+        2542,
+        2546,
+        2554,
+        2578,
+        2607,
+        2623,
+        2627,
+        2656,
+        2673,
+        2686,
+        2730,
+        2748,
+        2789,
+        2866,
+        2885,
+        2899,
+        2912,
+        2925,
+        3602,
+        3604,
+        3606,
+        3608,
+        3610,
+        3612,
+        3614
+      ],
+      "pointer_address": "0FE102",
+      "before": "000000",
+      "allocation": {
+        "offset": 1716944,
+        "size": 4096,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 3626,
+        "sha256": "d2711966027951367e94c77c62f4dcad9bfe14445aeaeb9cb9260c4d4f7f675c"
+      }
+    },
+    {
+      "id": "57",
+      "source_address": "44A008",
+      "source_group": {
+        "size": 6136,
+        "sha256": "4873f22ab18e2293b2df8e28708bae3e4ec555b5f20f8024183e195abccfdc99"
+      },
+      "source_base": 26624,
+      "destination_base": 21504,
+      "sequence_offset": 24,
+      "source_data_offset": 64,
+      "song_size": 3926,
+      "pattern_count": 1,
+      "relocations": [
+        0,
+        2,
+        6,
+        3630,
+        3654,
+        3685,
+        3689,
+        3693,
+        3697,
+        3729,
+        3733,
+        3741,
+        3910,
+        3912,
+        3914,
+        3916
+      ],
+      "pointer_address": "0FE105",
+      "before": "000000",
+      "allocation": {
+        "offset": 1741800,
+        "size": 4096,
+        "fill": 0
+      },
+      "adapted": {
+        "size": 3934,
+        "sha256": "1d293f8e6439ee80b2fecbfddf08be7a9d1b75a9db0aaf2e3fff04a59b9bba48"
+      }
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "39113adc2083ead993011db37e1e66d57bfcf400f126ecf6a50f255f2ec9505a"
+  }
+}

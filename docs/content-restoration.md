@@ -863,6 +863,10 @@ The remaining stalled songs still need donor restoration.
 The [music batch A and fix batch B candidates](demo11-course-batch-a.md) install
 five cheap-demo songs with the validated mapping and nine 7hero graphics. Three
 stalled translevels now reach and keep gameplay on reference and native:
-`01E` and `043` with music only, and `038` with music and graphics. The suite
-now reports **36/36**; the candidates are not accepted as the head.
+`01E` and `043` with music only, and `038` with music and graphics.
+
+The [music batch C and fix batch D candidates](demo11-course-batch-c.md) add
+songs `55`-`57` and five more graphics IDs. They fix `04B`, `0A5`, `00E`,
+`01F` and `06D`. The suite now reports **37/37**; the candidates are not
+accepted as the head.
 
