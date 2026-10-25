@@ -135,6 +135,27 @@ Next checks: the room list header semantics (the first byte is `0x00` here),
 the secondary entrance record, and whether the intended boss belongs to a newer
 demo lineage.
 
+## Door geometry and capture attempts: 2026-10-26
+
+A sweep that presses Up while walking right enters the only door of the
+corridor at about x=322. A sweep from the right wall enters the same door at
+about x=365. The room echo is `0xBC` and the music request is `0xA9`.
+A longer left sweep to x=322 also enters `0xBC`.
+
+Captures that enter `0xBC` show these results:
+
+- Reference host, fresh SRAM: no sprite spawns in gameplay.
+- Native host, fresh SRAM: no sprite spawns in gameplay.
+- Native host with the user's latest practice SRAM: no sprite spawns.
+- The screenshots show the room tiles and the boss picture as tiles.
+
+The user reports that the boss and its lightning, spit and hat attacks work in
+ordinary play, and that cheap-demo shows the health bar immediately after room
+entry. The room sprite list bytes, the room pointer entries and the record
+format equal the chain, so the remaining difference is not in those data.
+The next evidence to request is a savestate of a working fight or a screenshot
+of the cheap-demo room entry.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room
