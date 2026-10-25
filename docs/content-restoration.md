@@ -1110,3 +1110,9 @@ lobby sprites `0x67`, `0x68`, `0x6A`, `0x71` and `0x5B` with nine
 reviewed graphics relocations. Room frames change and the HUD stays identical.
 Chain end `demo11-sprites-cc-lobby-full` (ROM `3ef5817b...`).
 Suite **66/66**; audit zero unexpected.
+
+The [remaining free sprite batch](demo11-sprites-remaining-free.md) ports
+fifteen free-window sprites: `0x1A`, `0x27`, `0x3D`, `0x4F`, `0x51`, `0x53`,
+`0x5C`, `0x6B`, `0x6D`, `0x70`, `0x73`, `0x77`, `0x7B`, `0x7D`
+and `0x8B`. Chain end `demo11-sprites-remaining-free` (ROM
+`fa986111...`). Suite **67/67**; audit zero unexpected.
