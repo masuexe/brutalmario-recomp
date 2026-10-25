@@ -1143,3 +1143,8 @@ placed custom sprites with thirteen reviewed graphics relocations. Rooms
 `0x8F`, `0x95`, `0xB0` and `0x1D` change and keep an identical HUD.
 Chain end `demo11-sprites-blocked-one` (ROM `c4799ec8...`). Suite
 **72/72**; audit zero unexpected.
+
+The [blocked sprite batch two](demo11-sprites-blocked-two.md) ports ten more
+custom sprites with ten reviewed graphics relocations. Room `0xAC` changes
+its gameplay field. Chain end `demo11-sprites-blocked-two` (ROM
+`e99b8733...`). Suite **73/73**; audit zero unexpected.
