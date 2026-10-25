@@ -2,6 +2,7 @@
 from array import array
 from pathlib import Path
 import sys
+import tempfile
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
@@ -87,5 +88,26 @@ class ContentTests(unittest.TestCase):
         self.assertEqual(stats['silent_fraction'], 1.0)
 
 
+
+
 if __name__ == '__main__':
     unittest.main()
+
+
+class IdListTests(unittest.TestCase):
+    def test_id_list_writes_the_hex_slot_and_the_level_byte(self):
+        entry = {
+            'slot': '52',
+            'slot_value': 0x52,
+            'title': 'Stickerbrush Symphony',
+            'origin_game': 'Donkey Kong Country 2',
+            'payload': {'size': 3020},
+            'audio': {'file': 'wav/song-52-stickerbrush-symphony.wav'},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            music.write_ids(Path(directory), [entry])
+            text = (Path(directory) / 'music-ids.txt').read_text()
+            table = (Path(directory) / 'music-ids.csv').read_text()
+        self.assertIn('52  dec  82  level-byte 53', text)
+        self.assertIn('52,82,53,3020', table)
+        self.assertIn('Stickerbrush Symphony', table)

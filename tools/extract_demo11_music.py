@@ -410,6 +410,27 @@ def write_manifest(out, entries, base_rom, songs, args):
     (out / 'checksums.sha256').write_text('\n'.join(lines) + '\n')
 
 
+def write_ids(out, entries):
+    """Write the song id list as text and CSV."""
+    text = ['# Demo 1-1 custom music ids. Level data music byte = slot id + 1.']
+    rows = ['slot_hex,slot_dec,level_param_hex,payload_bytes,title,origin_game,wav']
+    for entry in entries:
+        slot = entry['slot_value']
+        title = entry['title'] or ''
+        origin = entry['origin_game'] or ''
+        detail = title
+        if origin:
+            detail = '%s (%s)' % (title, origin) if title else origin
+        text.append('%02X  dec %3d  level-byte %02X  %5d B  %s'
+                    % (slot, slot, slot + 1, entry['payload']['size'], detail or '-'))
+        rows.append('%02X,%d,%02X,%d,"%s","%s",%s'
+                    % (slot, slot, slot + 1, entry['payload']['size'],
+                       title.replace('"', '""'), origin.replace('"', '""'),
+                       entry['audio']['file']))
+    (out / 'music-ids.txt').write_text('\n'.join(text) + '\n')
+    (out / 'music-ids.csv').write_text('\n'.join(rows) + '\n')
+
+
 def write_playlist(out, entries):
     lines = ['#EXTM3U']
     for entry in entries:
@@ -468,6 +489,8 @@ The tool that made it is tools/extract_demo11_music.py.
 | manifest.json | Slot, payload, audio and identity records. |
 | checksums.sha256 | SHA-256 values for every payload and WAV. |
 | demo-1-1.m3u | Playlist for the WAV files. |
+| music-ids.txt | Song id list with titles. |
+| music-ids.csv | Song id list for spreadsheets. |
 | index.html | Browser player for the WAV files. |
 
 ## Scope
@@ -573,6 +596,7 @@ def main():
 
     write_manifest(out, entries, base_rom, songs, args)
     write_playlist(out, entries)
+    write_ids(out, entries)
     write_index(out, entries)
     write_readme(out, entries, args)
     print('wrote %d songs to %s' % (len(entries), out))
