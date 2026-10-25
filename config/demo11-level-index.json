@@ -1,0 +1,1282 @@
+{
+  "schema": 1,
+  "source": "Survey reports of demo11-fix-batch-o2 (255 translevels).",
+  "note": "level is the Lunar Magic level number; translevel is the internal map byte for the practice launcher.",
+  "entries": [
+    {
+      "translevel": "001",
+      "level": "001",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "002",
+      "level": "002",
+      "result": "playable"
+    },
+    {
+      "translevel": "003",
+      "level": "003",
+      "result": "playable"
+    },
+    {
+      "translevel": "004",
+      "level": "004",
+      "result": "playable"
+    },
+    {
+      "translevel": "005",
+      "level": "005",
+      "result": "playable"
+    },
+    {
+      "translevel": "006",
+      "level": "006",
+      "result": "playable"
+    },
+    {
+      "translevel": "007",
+      "level": "007",
+      "result": "playable"
+    },
+    {
+      "translevel": "008",
+      "level": "008",
+      "result": "playable"
+    },
+    {
+      "translevel": "009",
+      "level": "009",
+      "result": "playable"
+    },
+    {
+      "translevel": "00A",
+      "level": "00A",
+      "result": "playable"
+    },
+    {
+      "translevel": "00B",
+      "level": "00B",
+      "result": "playable"
+    },
+    {
+      "translevel": "00C",
+      "level": "00C",
+      "result": "playable"
+    },
+    {
+      "translevel": "00D",
+      "level": "00D",
+      "result": "playable"
+    },
+    {
+      "translevel": "00E",
+      "level": "00E",
+      "result": "playable"
+    },
+    {
+      "translevel": "00F",
+      "level": "00F",
+      "result": "playable"
+    },
+    {
+      "translevel": "010",
+      "level": "010",
+      "result": "playable"
+    },
+    {
+      "translevel": "011",
+      "level": "011",
+      "result": "playable"
+    },
+    {
+      "translevel": "012",
+      "level": "012",
+      "result": "playable"
+    },
+    {
+      "translevel": "013",
+      "level": "013",
+      "result": "playable"
+    },
+    {
+      "translevel": "014",
+      "level": "014",
+      "result": "playable"
+    },
+    {
+      "translevel": "015",
+      "level": "015",
+      "result": "playable"
+    },
+    {
+      "translevel": "016",
+      "level": "016",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "017",
+      "level": "017",
+      "result": "playable"
+    },
+    {
+      "translevel": "018",
+      "level": "018",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "019",
+      "level": "019",
+      "result": "playable"
+    },
+    {
+      "translevel": "01A",
+      "level": "01A",
+      "result": "playable"
+    },
+    {
+      "translevel": "01B",
+      "level": "01B",
+      "result": "mode-0C"
+    },
+    {
+      "translevel": "01C",
+      "level": "01C",
+      "result": "playable"
+    },
+    {
+      "translevel": "01D",
+      "level": "01D",
+      "result": "playable"
+    },
+    {
+      "translevel": "01E",
+      "level": "01E",
+      "result": "playable"
+    },
+    {
+      "translevel": "01F",
+      "level": "01F",
+      "result": "playable"
+    },
+    {
+      "translevel": "020",
+      "level": "020",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "021",
+      "level": "021",
+      "result": "playable"
+    },
+    {
+      "translevel": "022",
+      "level": "022",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "023",
+      "level": "023",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "024",
+      "level": "024",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "025",
+      "level": "101",
+      "result": "playable"
+    },
+    {
+      "translevel": "026",
+      "level": "102",
+      "result": "playable"
+    },
+    {
+      "translevel": "027",
+      "level": "103",
+      "result": "playable"
+    },
+    {
+      "translevel": "028",
+      "level": "104",
+      "result": "playable"
+    },
+    {
+      "translevel": "029",
+      "level": "105",
+      "result": "playable"
+    },
+    {
+      "translevel": "02A",
+      "level": "106",
+      "result": "playable"
+    },
+    {
+      "translevel": "02B",
+      "level": "107",
+      "result": "playable"
+    },
+    {
+      "translevel": "02C",
+      "level": "108",
+      "result": "playable"
+    },
+    {
+      "translevel": "02D",
+      "level": "109",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "02E",
+      "level": "10A",
+      "result": "playable"
+    },
+    {
+      "translevel": "02F",
+      "level": "10B",
+      "result": "playable"
+    },
+    {
+      "translevel": "030",
+      "level": "10C",
+      "result": "playable"
+    },
+    {
+      "translevel": "031",
+      "level": "10D",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "032",
+      "level": "10E",
+      "result": "playable"
+    },
+    {
+      "translevel": "033",
+      "level": "10F",
+      "result": "playable"
+    },
+    {
+      "translevel": "034",
+      "level": "110",
+      "result": "playable"
+    },
+    {
+      "translevel": "035",
+      "level": "111",
+      "result": "playable"
+    },
+    {
+      "translevel": "036",
+      "level": "112",
+      "result": "playable"
+    },
+    {
+      "translevel": "037",
+      "level": "113",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "038",
+      "level": "114",
+      "result": "playable"
+    },
+    {
+      "translevel": "039",
+      "level": "115",
+      "result": "playable"
+    },
+    {
+      "translevel": "03A",
+      "level": "116",
+      "result": "playable"
+    },
+    {
+      "translevel": "03B",
+      "level": "117",
+      "result": "playable"
+    },
+    {
+      "translevel": "03C",
+      "level": "118",
+      "result": "playable"
+    },
+    {
+      "translevel": "03D",
+      "level": "119",
+      "result": "playable"
+    },
+    {
+      "translevel": "03E",
+      "level": "11A",
+      "result": "playable"
+    },
+    {
+      "translevel": "03F",
+      "level": "11B",
+      "result": "playable"
+    },
+    {
+      "translevel": "040",
+      "level": "11C",
+      "result": "playable"
+    },
+    {
+      "translevel": "041",
+      "level": "11D",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "042",
+      "level": "11E",
+      "result": "playable"
+    },
+    {
+      "translevel": "043",
+      "level": "11F",
+      "result": "playable"
+    },
+    {
+      "translevel": "044",
+      "level": "120",
+      "result": "playable"
+    },
+    {
+      "translevel": "045",
+      "level": "121",
+      "result": "playable"
+    },
+    {
+      "translevel": "046",
+      "level": "122",
+      "result": "playable"
+    },
+    {
+      "translevel": "047",
+      "level": "123",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "048",
+      "level": "124",
+      "result": "playable"
+    },
+    {
+      "translevel": "049",
+      "level": "125",
+      "result": "playable"
+    },
+    {
+      "translevel": "04A",
+      "level": "126",
+      "result": "playable"
+    },
+    {
+      "translevel": "04B",
+      "level": "127",
+      "result": "playable"
+    },
+    {
+      "translevel": "04C",
+      "level": "128",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "04D",
+      "level": "129",
+      "result": "mode-0B"
+    },
+    {
+      "translevel": "04E",
+      "level": "12A",
+      "result": "playable"
+    },
+    {
+      "translevel": "04F",
+      "level": "12B",
+      "result": "playable"
+    },
+    {
+      "translevel": "050",
+      "level": "12C",
+      "result": "playable"
+    },
+    {
+      "translevel": "051",
+      "level": "12D",
+      "result": "playable"
+    },
+    {
+      "translevel": "052",
+      "level": "12E",
+      "result": "mode-0C"
+    },
+    {
+      "translevel": "053",
+      "level": "12F",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "054",
+      "level": "130",
+      "result": "playable"
+    },
+    {
+      "translevel": "055",
+      "level": "131",
+      "result": "playable"
+    },
+    {
+      "translevel": "056",
+      "level": "132",
+      "result": "playable"
+    },
+    {
+      "translevel": "057",
+      "level": "133",
+      "result": "playable"
+    },
+    {
+      "translevel": "058",
+      "level": "134",
+      "result": "playable"
+    },
+    {
+      "translevel": "059",
+      "level": "135",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "05A",
+      "level": "136",
+      "result": "playable"
+    },
+    {
+      "translevel": "05B",
+      "level": "137",
+      "result": "playable"
+    },
+    {
+      "translevel": "05C",
+      "level": "138",
+      "result": "playable"
+    },
+    {
+      "translevel": "05D",
+      "level": "139",
+      "result": "playable"
+    },
+    {
+      "translevel": "05E",
+      "level": "13A",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "05F",
+      "level": "13B",
+      "result": "mode-17"
+    },
+    {
+      "translevel": "060",
+      "level": "13C",
+      "result": "playable"
+    },
+    {
+      "translevel": "061",
+      "level": "13D",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "062",
+      "level": "13E",
+      "result": "playable"
+    },
+    {
+      "translevel": "063",
+      "level": "13F",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "064",
+      "level": "140",
+      "result": "playable"
+    },
+    {
+      "translevel": "065",
+      "level": "141",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "066",
+      "level": "142",
+      "result": "playable"
+    },
+    {
+      "translevel": "067",
+      "level": "143",
+      "result": "playable"
+    },
+    {
+      "translevel": "068",
+      "level": "144",
+      "result": "playable"
+    },
+    {
+      "translevel": "069",
+      "level": "145",
+      "result": "playable"
+    },
+    {
+      "translevel": "06A",
+      "level": "146",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "06B",
+      "level": "147",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "06C",
+      "level": "148",
+      "result": "playable"
+    },
+    {
+      "translevel": "06D",
+      "level": "149",
+      "result": "playable"
+    },
+    {
+      "translevel": "06E",
+      "level": "14A",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "06F",
+      "level": "14B",
+      "result": "playable"
+    },
+    {
+      "translevel": "070",
+      "level": "14C",
+      "result": "playable"
+    },
+    {
+      "translevel": "071",
+      "level": "14D",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "072",
+      "level": "14E",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "073",
+      "level": "14F",
+      "result": "playable"
+    },
+    {
+      "translevel": "074",
+      "level": "150",
+      "result": "playable"
+    },
+    {
+      "translevel": "075",
+      "level": "151",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "076",
+      "level": "152",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "077",
+      "level": "0C5",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "078",
+      "level": "154",
+      "result": "playable"
+    },
+    {
+      "translevel": "079",
+      "level": "155",
+      "result": "playable"
+    },
+    {
+      "translevel": "07A",
+      "level": "156",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "07B",
+      "level": "0C5",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "07C",
+      "level": "158",
+      "result": "playable"
+    },
+    {
+      "translevel": "07D",
+      "level": "159",
+      "result": "playable"
+    },
+    {
+      "translevel": "07E",
+      "level": "15A",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "07F",
+      "level": "15B",
+      "result": "playable"
+    },
+    {
+      "translevel": "080",
+      "level": "15C",
+      "result": "playable"
+    },
+    {
+      "translevel": "081",
+      "level": "15D",
+      "result": "playable"
+    },
+    {
+      "translevel": "082",
+      "level": "15E",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "083",
+      "level": "15F",
+      "result": "mode-0D"
+    },
+    {
+      "translevel": "084",
+      "level": "160",
+      "result": "playable"
+    },
+    {
+      "translevel": "085",
+      "level": "161",
+      "result": "playable"
+    },
+    {
+      "translevel": "086",
+      "level": "162",
+      "result": "playable"
+    },
+    {
+      "translevel": "087",
+      "level": "163",
+      "result": "playable"
+    },
+    {
+      "translevel": "088",
+      "level": "164",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "089",
+      "level": "165",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "08A",
+      "level": "166",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "08B",
+      "level": "167",
+      "result": "playable"
+    },
+    {
+      "translevel": "08C",
+      "level": "168",
+      "result": "playable"
+    },
+    {
+      "translevel": "08D",
+      "level": "169",
+      "result": "playable"
+    },
+    {
+      "translevel": "08E",
+      "level": "16A",
+      "result": "playable"
+    },
+    {
+      "translevel": "08F",
+      "level": "16B",
+      "result": "playable"
+    },
+    {
+      "translevel": "090",
+      "level": "16C",
+      "result": "playable"
+    },
+    {
+      "translevel": "091",
+      "level": "16D",
+      "result": "playable"
+    },
+    {
+      "translevel": "092",
+      "level": "16E",
+      "result": "mode-0B"
+    },
+    {
+      "translevel": "093",
+      "level": "16F",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "094",
+      "level": "170",
+      "result": "playable"
+    },
+    {
+      "translevel": "095",
+      "level": "171",
+      "result": "playable"
+    },
+    {
+      "translevel": "096",
+      "level": "172",
+      "result": "playable"
+    },
+    {
+      "translevel": "097",
+      "level": "173",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "098",
+      "level": "174",
+      "result": "playable"
+    },
+    {
+      "translevel": "099",
+      "level": "175",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "09A",
+      "level": "176",
+      "result": "playable"
+    },
+    {
+      "translevel": "09B",
+      "level": "177",
+      "result": "playable"
+    },
+    {
+      "translevel": "09C",
+      "level": "178",
+      "result": "playable"
+    },
+    {
+      "translevel": "09D",
+      "level": "179",
+      "result": "playable"
+    },
+    {
+      "translevel": "09E",
+      "level": "17A",
+      "result": "playable"
+    },
+    {
+      "translevel": "09F",
+      "level": "17B",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A0",
+      "level": "17C",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A1",
+      "level": "17D",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A2",
+      "level": "17E",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A3",
+      "level": "17F",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A4",
+      "level": "180",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A5",
+      "level": "181",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A6",
+      "level": "182",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A7",
+      "level": "183",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A8",
+      "level": "184",
+      "result": "playable"
+    },
+    {
+      "translevel": "0A9",
+      "level": "185",
+      "result": "playable"
+    },
+    {
+      "translevel": "0AA",
+      "level": "186",
+      "result": "playable"
+    },
+    {
+      "translevel": "0AB",
+      "level": "187",
+      "result": "playable"
+    },
+    {
+      "translevel": "0AC",
+      "level": "188",
+      "result": "playable"
+    },
+    {
+      "translevel": "0AD",
+      "level": "189",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "0AE",
+      "level": "18A",
+      "result": "playable"
+    },
+    {
+      "translevel": "0AF",
+      "level": "18B",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B0",
+      "level": "18C",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B1",
+      "level": "18D",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B2",
+      "level": "18E",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B3",
+      "level": "18F",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B4",
+      "level": "190",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B5",
+      "level": "191",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B6",
+      "level": "192",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B7",
+      "level": "193",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B8",
+      "level": "194",
+      "result": "playable"
+    },
+    {
+      "translevel": "0B9",
+      "level": "195",
+      "result": "playable"
+    },
+    {
+      "translevel": "0BA",
+      "level": "196",
+      "result": "playable"
+    },
+    {
+      "translevel": "0BB",
+      "level": "197",
+      "result": "playable"
+    },
+    {
+      "translevel": "0BC",
+      "level": "198",
+      "result": "playable"
+    },
+    {
+      "translevel": "0BD",
+      "level": "199",
+      "result": "playable"
+    },
+    {
+      "translevel": "0BE",
+      "level": "19A",
+      "result": "mode-0B"
+    },
+    {
+      "translevel": "0BF",
+      "level": "19B",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C0",
+      "level": "19C",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C1",
+      "level": "19D",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C2",
+      "level": "19E",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C3",
+      "level": "19F",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C4",
+      "level": "1A0",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C5",
+      "level": "1A1",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C6",
+      "level": "1A2",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C7",
+      "level": "1A3",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C8",
+      "level": "1A4",
+      "result": "playable"
+    },
+    {
+      "translevel": "0C9",
+      "level": "1A5",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CA",
+      "level": "1A6",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CB",
+      "level": "1A7",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CC",
+      "level": "1A8",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CD",
+      "level": "1A9",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CE",
+      "level": "1AA",
+      "result": "playable"
+    },
+    {
+      "translevel": "0CF",
+      "level": "1AB",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D0",
+      "level": "1AC",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D1",
+      "level": "1AD",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D2",
+      "level": "1AE",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D3",
+      "level": "1AF",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D4",
+      "level": "1B0",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D5",
+      "level": "1B1",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D6",
+      "level": "1B2",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D7",
+      "level": "1B3",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D8",
+      "level": "1B4",
+      "result": "playable"
+    },
+    {
+      "translevel": "0D9",
+      "level": "1B5",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DA",
+      "level": "1B6",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DB",
+      "level": "1B7",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DC",
+      "level": "1B8",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DD",
+      "level": "1B9",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DE",
+      "level": "1BA",
+      "result": "playable"
+    },
+    {
+      "translevel": "0DF",
+      "level": "1BB",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E0",
+      "level": "1BC",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E1",
+      "level": "1BD",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E2",
+      "level": "1BE",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E3",
+      "level": "1BF",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E4",
+      "level": "1C0",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E5",
+      "level": "1C1",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E6",
+      "level": "1C2",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E7",
+      "level": "1C3",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E8",
+      "level": "1C4",
+      "result": "playable"
+    },
+    {
+      "translevel": "0E9",
+      "level": "1C5",
+      "result": "playable"
+    },
+    {
+      "translevel": "0EA",
+      "level": "1C6",
+      "result": "playable"
+    },
+    {
+      "translevel": "0EB",
+      "level": "1C7",
+      "result": "playable"
+    },
+    {
+      "translevel": "0EC",
+      "level": "1C8",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "0ED",
+      "level": "1C9",
+      "result": "playable"
+    },
+    {
+      "translevel": "0EE",
+      "level": "1CA",
+      "result": "playable"
+    },
+    {
+      "translevel": "0EF",
+      "level": "1CB",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F0",
+      "level": "1CC",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F1",
+      "level": "1CD",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F2",
+      "level": "1CE",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F3",
+      "level": "1CF",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F4",
+      "level": "1D0",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F5",
+      "level": "1D1",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F6",
+      "level": "1D2",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F7",
+      "level": "1D3",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F8",
+      "level": "1D4",
+      "result": "playable"
+    },
+    {
+      "translevel": "0F9",
+      "level": "1D5",
+      "result": "playable"
+    },
+    {
+      "translevel": "0FA",
+      "level": "1D6",
+      "result": "playable"
+    },
+    {
+      "translevel": "0FB",
+      "level": "1D7",
+      "result": "playable"
+    },
+    {
+      "translevel": "0FC",
+      "level": "1D8",
+      "result": "mode-0E"
+    },
+    {
+      "translevel": "0FD",
+      "level": "1D9",
+      "result": "playable"
+    },
+    {
+      "translevel": "0FE",
+      "level": "1DA",
+      "result": "playable"
+    },
+    {
+      "translevel": "0FF",
+      "level": "1DB",
+      "result": "mode-0E"
+    }
+  ]
+}

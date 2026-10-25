@@ -2,26 +2,39 @@
 
 ## Candidate chain practice sessions
 
-Start a fresh practice session at any translevel of a candidate chain:
+Start a fresh practice session at a Lunar Magic level number:
 
-    python3 tools/play_demo_only1.py --restoration demo11-fix-batch-o2 --translevel 0x09E
+    python3 tools/play_demo_only1.py --restoration demo11-fix-batch-p --level-id 0x122
 
-The script transfers to the map 6 lower-left node. It writes the translevel to
-the node level byte and enters the level. The game stays interactive after the
-script ends. The session uses a fresh practice save.
+The launcher maps the level number to the internal translevel with
+`config/demo11-level-index.json`. It transfers to the map 6 lower-left node,
+writes the translevel to the node level byte and enters the level. The game
+stays interactive after the script ends. The session uses a fresh practice save.
+
+The internal translevel is not the Lunar Magic level number. One translevel
+byte selects one level. For example, Lunar Magic level `122` loads from
+translevel `046`.
+
+You can also use the internal translevel directly:
+
+    python3 tools/play_demo_only1.py --restoration demo11-fix-batch-p --translevel 0x046
 
 Useful test points:
 
-| Translevel | Coverage |
-| --- | --- |
-| 0x09E | Low song id 02 |
-| 0x046 | Low song id 03 and new graphics |
-| 0x0A6 | Song id 6D |
-| 0x097 | Low song id 1A and new graphics |
-| 0x05D | Low song id 06 |
-| 0x0BE | Low song id 05 |
-| 0x02B | Earlier music batch |
-| 0x068 | Earlier music batch |
+| Lunar Magic level | Translevel | Coverage |
+| --- | --- | --- |
+| 0x122 | 0x046 | Low song id 03, new graphics, storm level |
+| 0x182 | 0x0A6 | Song id 6D |
+| 0x173 | 0x097 | Low song id 1A, new graphics |
+| 0x139 | 0x05D | Low song id 06 |
+| 0x19A | 0x0BE | Low song id 05 |
+| 0x107 | 0x02B | Earlier music batch |
+| 0x144 | 0x068 | Earlier music batch |
+| 0x129 | 0x04D | Graphics batch P |
+| 0x130 | 0x054 | Graphics batch P |
+
+Translevel `09E` (level `17A`) is a test level. Do not use it for ordinary
+playtests.
 
 Close the game window to end the session.
 

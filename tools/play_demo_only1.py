@@ -13,6 +13,19 @@ import windows_audio
 from restoration_targets import RESTORATIONS
 
 ROOT = Path(__file__).resolve().parents[1]
+LEVEL_INDEX = ROOT / 'config/demo11-level-index.json'
+
+
+def load_level_index():
+    """Map a Lunar Magic level number to the internal translevel byte."""
+    data = json.loads(LEVEL_INDEX.read_text())
+    index = {}
+    for entry in data['entries']:
+        key = entry['level']
+        current = index.get(key)
+        if current is None or (current[1] != 'playable' and entry['result'] == 'playable'):
+            index[key] = (entry['translevel'], entry['result'])
+    return {key: value[0] for key, value in index.items()}
 
 
 # Named entrances use observed map positions; map IDs are not world numbers.
@@ -296,6 +309,8 @@ def main():
                              help='start a fresh practice session at any map position')
     destination.add_argument('--translevel', type=coordinate, metavar='LEVEL',
                              help='start a fresh practice session at any translevel through the map 6 node override')
+    destination.add_argument('--level-id', type=coordinate, metavar='LEVEL',
+                             help='start a practice session at a Lunar Magic level number, for example 0x122')
     destination.add_argument('--select-level', action='store_true',
                              help='choose a practice level from a terminal menu')
     destination.add_argument('--list-levels', action='store_true',
@@ -328,6 +343,12 @@ def main():
             args.teleport = validate_teleport(args.teleport)
         except ValueError as error:
             parser.error(str(error))
+    level_id = args.level_id
+    if level_id is not None:
+        try:
+            args.translevel = int(load_level_index().get(f'{level_id:03X}', ''), 16)
+        except ValueError:
+            parser.error(f'no translevel maps to level {level_id:#05x}')
     if args.translevel is not None and not 0 <= args.translevel <= 0xFF:
         parser.error('translevel must be between 0 and 0xff')
     if args.restoration and not (args.boss_door or args.special or args.level or
@@ -382,7 +403,10 @@ def main():
         if args.teleport is not None:
             map_id, x, y = args.teleport
             print(f'Map {map_id}, X={x:#05x}, Y={y:#05x}. Use the normal level-entry button.', flush=True)
-        if args.translevel is not None:
+        if level_id is not None:
+            print(f'Lunar Magic level {level_id:03X} maps to translevel '
+                  f'{args.translevel:#04x}. The level loads automatically.', flush=True)
+        elif args.translevel is not None:
             print(f'Translevel {args.translevel:#04x} through the map 6 node override. '
                   'The level loads automatically.', flush=True)
         if args.complete_all:
