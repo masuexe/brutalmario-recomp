@@ -59,6 +59,7 @@ The second tool verifies the supplied base and nine patches against `config/cont
 - [Buffer-match flag AOT expansion and index-width correction](docs/aot-buffer-flags.md)
 - [WRAM record writers and nested-call AOT expansion](docs/aot-records.md)
 - [User-reported manual playtests](docs/playtesting.md)
+- [Demo 1-1 music extraction](docs/demo11-music-extraction.md)
 - [Audio baseline and capture reproduction](docs/audio.md)
 - [Practice audio synchronization and WSLg output workaround](docs/audio-sync.md)
 - [Star-music timing probe](docs/star-audio.md)
