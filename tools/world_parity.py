@@ -59,9 +59,28 @@ def compare(left, right):
     if len(left_fb) != expected or len(right_fb) != expected:
         result['framebuffer'] = 'size mismatch'
         return result
+    exact = 0
+    small = 0
+    mid = 0
+    large = 0
+    for i in range(0, expected, 4):
+        delta = 0
+        for k in range(3):
+            difference = abs(left_fb[i + k] - right_fb[i + k])
+            if difference > delta:
+                delta = difference
+        if delta == 0:
+            exact += 1
+        elif delta <= 16:
+            small += 1
+        elif delta <= 64:
+            mid += 1
+        else:
+            large += 1
     result['rgb5_different_pixels'] = sum(
         any(left_fb[i + k] >> 3 != right_fb[i + k] >> 3 for k in range(3))
         for i in range(0, expected, 4))
+    result['delta_histogram'] = {'exact': exact, 'small': small, 'mid': mid, 'large': large}
     return result
 
 
@@ -118,7 +137,9 @@ def main():
         for host in ('reference', 'native'):
             capture_name = 'world-%s-%s-%s' % (args.world, translevel, host)
             directory = ROOT / 'local/captures' / capture_name
-            need = args.force or not (directory / 'entry240.wram.bin').exists()
+            info_path = directory / 'entry240.info.json'
+            ready = (directory / 'entry240.wram.bin').exists() and info_path.exists()                 and info_path.stat().st_size > 0
+            need = args.force or not ready
             if need:
                 if directory.exists():
                     import shutil
@@ -135,10 +156,15 @@ def main():
             report['rooms'][room_hex] = {'status': 'capture-failed', 'translevel': translevel}
             continue
         rows = {}
-        for tag in ('entry240', 'entry600'):
-            left = scene(captures['reference'], tag)
-            right = scene(captures['native'], tag)
-            rows[tag] = compare(left, right)
+        try:
+            for tag in ('entry240', 'entry600'):
+                left = scene(captures['reference'], tag)
+                right = scene(captures['native'], tag)
+                rows[tag] = compare(left, right)
+        except (OSError, ValueError, KeyError) as error:
+            report['rooms'][room_hex] = {'status': 'dump-missing', 'translevel': translevel,
+                                         'error': str(error)[:120]}
+            continue
         mismatches = classify(translevel, rows)
         report['rooms'][room_hex] = {
             'status': 'divergence' if mismatches else 'parity',
