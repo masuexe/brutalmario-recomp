@@ -184,5 +184,12 @@ RESTORATIONS = {
     'demo11-course-gfx-a': {
         'binary': 'BrutalMarioDemo11CourseGfxASNESRecomp',
         'title': 'Brutal Mario Demo11 Course Gfx A',
+    },    'demo11-music-batch-a': {
+        'binary': 'BrutalMarioDemo11MusicBatchASNESRecomp',
+        'title': 'Brutal Mario Demo11 Music Batch A',
+    },
+    'demo11-fix-batch-b': {
+        'binary': 'BrutalMarioDemo11FixBatchBSNESRecomp',
+        'title': 'Brutal Mario Demo11 Fix Batch B',
     },
 }

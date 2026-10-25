@@ -122,6 +122,10 @@ Room `0x173` layer-1 data matches 7hero room `0x173` and demoOnly1 room
 `0x173` exactly. Both new-family builds leave the room unplayable, so the
 legacy donors are the only resource source.
 
+The [music batch A and fix batch B candidates](demo11-course-batch-a.md) now
+fix three stalled translevels: `01E` and `043` with music only, and `038`
+with music and graphics. Their captures reach gameplay on reference and native.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

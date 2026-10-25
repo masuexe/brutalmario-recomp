@@ -860,3 +860,9 @@ Stall root causes now split into two groups: 42 stalls have no missing extended
 graphics and request null songs; 19 stalls select 59 null extended graphics IDs.
 The remaining stalled songs still need donor restoration.
 
+The [music batch A and fix batch B candidates](demo11-course-batch-a.md) install
+five cheap-demo songs with the validated mapping and nine 7hero graphics. Three
+stalled translevels now reach and keep gameplay on reference and native:
+`01E` and `043` with music only, and `038` with music and graphics. The suite
+now reports **36/36**; the candidates are not accepted as the head.
+

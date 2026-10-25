@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Fix Batch B",
+  "id": "demo11-fix-batch-b",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-music-batch-a",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "07352a92bcc8a7a967b8578ca480cbaaa0b31c1ee7b87020046f52e0faa711fd"
+  },
+  "scope": "Port the extended graphics used by rooms 0x01E and 0x114 from 7hero, on top of music batch A. With both dependencies, translevels 001E, 038 and 043 should leave Mario Start.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1877776,
+    "size": 21424,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1A1",
+      "target_id": "1A1",
+      "source_address": "2DA096",
+      "decoded": {
+        "size": 4095,
+        "sha256": "53be95a4a2456e95e421af58052a7ce74408d3f883cfdc1ca116ad90f789f54b"
+      },
+      "compressed": {
+        "size": 1657,
+        "sha256": "061e537e7eba7e9104a7b6ec7a1bcb3870db68df1a2c56debd1b5508acb44ee3"
+      },
+      "global_pointer": true,
+      "rooms": [
+        30,
+        173
+      ]
+    },
+    {
+      "source_id": "19A",
+      "target_id": "19A",
+      "source_address": "2CDBE5",
+      "decoded": {
+        "size": 4096,
+        "sha256": "bbb2c2176c48eb30d4c132df78fc1c4d592f3387a27bad299e03ecf5a5c966ab"
+      },
+      "compressed": {
+        "size": 2080,
+        "sha256": "ba589c7d173780be7fd61bae5e757cb31f2fb9da55da5dde571ff145463f02ed"
+      },
+      "global_pointer": true,
+      "rooms": [
+        30,
+        160,
+        172,
+        173
+      ]
+    },
+    {
+      "source_id": "19B",
+      "target_id": "19B",
+      "source_address": "2CE40D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "72acf05fe79b34619a126921b292c6d9eecf64b9abe69c0cde69efe0cc0f1b3e"
+      },
+      "compressed": {
+        "size": 2389,
+        "sha256": "60e1f831d14257b4214ce6f7271db157e88c1521f37ebb7028878d52e331a634"
+      },
+      "global_pointer": true,
+      "rooms": [
+        30,
+        160,
+        172,
+        173
+      ]
+    },
+    {
+      "source_id": "1A2",
+      "target_id": "1A2",
+      "source_address": "2DA717",
+      "decoded": {
+        "size": 4096,
+        "sha256": "8e9a9c981f3e4a4bde876484d32570e521a905306aab0471b09b209958f4b393"
+      },
+      "compressed": {
+        "size": 3138,
+        "sha256": "a92bc315ebefdf041f5624d6c1f55340e89e3e288afbf6f30671b9cb72ed493a"
+      },
+      "global_pointer": true,
+      "rooms": [
+        15,
+        30,
+        35,
+        63,
+        75,
+        93,
+        122,
+        173,
+        232,
+        233,
+        264,
+        273,
+        351,
+        366
+      ]
+    },
+    {
+      "source_id": "14E",
+      "target_id": "14E",
+      "source_address": "279DE7",
+      "decoded": {
+        "size": 4096,
+        "sha256": "6d9e274878199fdf9ce69430c9543d7796cff03bd92b3b7d03361b04a4bf4994"
+      },
+      "compressed": {
+        "size": 3031,
+        "sha256": "19e03433ec5aa63ac3c76d06e2b500acc20bd58d9ddc7227f4617f5575167fa0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        66,
+        67,
+        80,
+        276,
+        286,
+        291
+      ]
+    },
+    {
+      "source_id": "14D",
+      "target_id": "14D",
+      "source_address": "279306",
+      "decoded": {
+        "size": 4096,
+        "sha256": "6fd3e561afd5028518297c25dfc6fa2c4af81c3baedb628ee6166b2d057562c6"
+      },
+      "compressed": {
+        "size": 2777,
+        "sha256": "eaac1b7a9a9ed474ac98685b3814b37f8adf02e2654523b6738d128d6750bfec"
+      },
+      "global_pointer": true,
+      "rooms": [
+        66,
+        67,
+        80,
+        276,
+        286,
+        291
+      ]
+    },
+    {
+      "source_id": "14C",
+      "target_id": "14C",
+      "source_address": "27887C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "5901286cf11984d351f99b4610ca85a89f5f21318b281ac06b6e83f5065e6c49"
+      },
+      "compressed": {
+        "size": 2690,
+        "sha256": "36dbb073fd9765d0364b4974648761d50c3de6a57a182e48a5e5573f02348785"
+      },
+      "global_pointer": true,
+      "rooms": [
+        276
+      ]
+    },
+    {
+      "source_id": "14B",
+      "target_id": "14B",
+      "source_address": "26FD30",
+      "decoded": {
+        "size": 4096,
+        "sha256": "724e2b2b25e5730ae311d7a4f7c7367015347216d7fa0c92e82f4330294a38d1"
+      },
+      "compressed": {
+        "size": 2884,
+        "sha256": "01d96c2394c6a6d051e81b3e51413d78a92aecd2f00a9b97d2eb5df19e93c9e4"
+      },
+      "global_pointer": true,
+      "rooms": [
+        276
+      ]
+    },
+    {
+      "source_id": "150",
+      "target_id": "150",
+      "source_address": "27AFF3",
+      "decoded": {
+        "size": 4096,
+        "sha256": "7cc70d06f819737d5e46cea33b4ec6e31a20a77d399dd133d8f945f2d8784a9e"
+      },
+      "compressed": {
+        "size": 450,
+        "sha256": "d6a364ff3f82dc3d5bfb02d906c0d92206d8f8b133a473c9a28810d3d01571a6"
+      },
+      "global_pointer": true,
+      "rooms": [
+        276
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "04897aaf847d9fb3d0148974ad6702587495ccca14a22348dac5eaebc26396c6"
+  }
+}
