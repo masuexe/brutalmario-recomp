@@ -1,6 +1,11 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-sprites-orphan-cleanup': {
+        'binary': 'BrutalMarioDemo11SpritesOrphanCleanupSNESRecomp',
+        'title': 'Brutal Mario Demo11 Sprites Orphan Cleanup',
+    },
+
     'demo11-sprites-room8f-boss': {
         'binary': 'BrutalMarioDemo11SpritesRoom8FBossSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprites Room8F Boss',

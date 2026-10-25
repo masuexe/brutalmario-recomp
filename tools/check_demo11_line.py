@@ -86,6 +86,7 @@ CHECKS = [
     ('blocked sprites batch 4', 'qualify_demo11_sprites_blocked_four'),
     ('native sprite records', 'qualify_demo11_sprites_native_records'),
     ('room 8F demoOnly1 boss', 'qualify_demo11_sprites_room8f_boss'),
+    ('orphan sprite cleanup', 'qualify_demo11_sprites_orphan_cleanup'),
 ]
 
 

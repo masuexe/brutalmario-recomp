@@ -1177,3 +1177,8 @@ demoOnly1 frame. Chain end `demo11-sprites-room8f-boss`
 The user accepted the [demoOnly1 room 0x8F boss port](demo11-room8f-boss-port.md).
 The boss drops coins after the defeat and a world conquest rate screen follows.
 The user states that this is the author intent.
+
+The [orphan sprite block cleanup](demo11-orphan-sprite-cleanup.md) removes
+the two code blocks of the restored records `0x42` and `0x3D`.
+Two room frames stay byte-identical. Chain end `demo11-sprites-orphan-cleanup`
+(ROM `eccde661...`). Suite **78/78**.
