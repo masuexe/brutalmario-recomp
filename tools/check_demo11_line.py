@@ -77,6 +77,7 @@ CHECKS = [
     ('CC lobby sprite set', 'qualify_demo11_sprites_cc_lobby_full'),
     ('remaining free sprites', 'qualify_demo11_sprites_remaining_free'),
     ('room CF HP bar', 'qualify_demo11_hp_roomcf'),
+    ('fire projectile sprite', 'qualify_demo11_sprites_fireball'),
 ]
 
 

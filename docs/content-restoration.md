@@ -1121,3 +1121,9 @@ The [room 0xCF HP bar recipe](demo11-hp-roomcf.md) extends the HP shim to
 room `0xCF`. The room already filled the legacy row and set the flag;
 only the HUD upload was missing. Chain end `demo11-hp-roomcf`
 (ROM `925b004a...`). Suite **68/68**; audit zero unexpected.
+
+The [fire projectile batch](demo11-sprites-fireball.md) ports custom sprite
+`0x56` with two graphics relocations. Room `0xCC` now shows the red
+fireball and its path matches cheap-demo. Chain end
+`demo11-sprites-fireball` (ROM `ee09118e...`). Suite **69/69**;
+audit zero unexpected.
