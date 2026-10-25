@@ -1098,3 +1098,9 @@ missing HP row. A capture scan found only rooms `0x009`, `0x0BC`, `0x0CC`,
 displays its row through the accepted fuel shim. Room `0x146` now displays
 its row; the gameplay field stays byte-identical. Chain end
 `demo11-hp-room146` (ROM `616074b4...`). Suite **64/64**.
+
+The [CC lobby sprite batch](demo11-cc-lobby-sprites.md) ports custom sprite
+`0x69` from cheap-demo. Rooms `0xD6`, `0xDA`, `0xDB`, `0xE0`,
+`0xE2` and `0x155` now run the custom code. The room frame changes
+and the HUD stays identical. Chain end `demo11-sprites-cc-lobby`
+(ROM `34bddb84...`). Suite **65/65**; audit zero unexpected.

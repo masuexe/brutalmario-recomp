@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGETS = ['demo11-hp-room146']
+TARGETS = ['demo11-sprites-cc-lobby']
 THRESHOLDS = {
     'total_free': 300000,
     'aligned_free': 80000,

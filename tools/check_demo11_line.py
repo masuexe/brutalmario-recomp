@@ -73,6 +73,7 @@ CHECKS = [
     ('CC room custom sprites', 'qualify_demo11_sprites_cc'),
     ('room 128 HP bar', 'qualify_demo11_hp_room128'),
     ('room 146 HP bar', 'qualify_demo11_hp_room146'),
+    ('CC lobby custom sprite', 'qualify_demo11_sprites_cc_lobby'),
 ]
 
 
