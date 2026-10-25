@@ -59,6 +59,34 @@ The previous chain reported 216 playable, so the net gain is 17.
 - Suite reports **54/54**; the space budget guard still passes with 711,805
   free bytes and 124,631 bank-aligned bytes.
 
+## Verification notes
+
+The 18 newly playable translevels keep a stable player position after the
+level load finishes, so no start fall remains. Reference and native state
+(mode, level, translevel, player position, sprite arrays) match on
+`023`, `083`, `02D` and `069`. The framebuffers match
+exactly for `083` and `02D`, and differ slightly in `023` and 
+`069` at one sample, which is consistent with the earlier palette and
+lighting phase findings.
+
+## Remaining non-playable translevels
+
+Twenty-two translevels still do not stay in gameplay. Most are unused rooms:
+their level data is 6 to 24 bytes, or their level header is invalid. The
+others deserve a user check:
+
+| Translevel | Mode | Level data | Note |
+| --- | --- | ---: | --- |
+| `018` | `0D` | 4818 | active level, no-input death |
+| `022` | `0D` | 1066 | custom sprites active, no-input death |
+| `04E` | `0C` | 13189 | active level, no-input death |
+| `01B` | `0C` | 1841 | active level |
+| `069` | `0C` | 338 | moving start setup |
+| `05F` | `17` | 328 | special mode |
+| `04D` | `0E` | 263 | short room, likely unused |
+| `088`/`089`/`097` | `0E` | 125-283 | short rooms, likely unused |
+| `024`/`052`/`059`/`077`/`07B`/`08A`/`0AD`/`0BE`/`0EC`/`0FC`/`0FF` | `0B`/`0E` | 6-24 | unused rooms |
+
 ## Limits
 
 - Entry and short idle gameplay are the automated claims.
