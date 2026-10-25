@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "source": "docs/walkthrough-reference.md stage table (2026-10-26)",
+  "note": "Rooms are level IDs. Boss rooms 06E-072 load through boss doors and do not appear in the level entry list.",
+  "worlds": {
+    "world1": {
+      "name": "Grassland",
+      "rooms": [
+        "104",
+        "105",
+        "106",
+        "010",
+        "120",
+        "138",
+        "06E",
+        "014"
+      ]
+    },
+    "world2": {
+      "name": "Forest",
+      "rooms": [
+        "00F",
+        "124",
+        "121",
+        "122",
+        "123",
+        "125",
+        "126",
+        "06F",
+        "00D"
+      ]
+    },
+    "world3": {
+      "name": "Bay",
+      "rooms": [
+        "00B",
+        "11C",
+        "11D",
+        "11E",
+        "070"
+      ]
+    },
+    "world4": {
+      "name": "Cave",
+      "rooms": [
+        "11F",
+        "127",
+        "113",
+        "114",
+        "015",
+        "115",
+        "116",
+        "12A",
+        "071"
+      ]
+    },
+    "world5": {
+      "name": "Plateau",
+      "rooms": [
+        "00E",
+        "102",
+        "103",
+        "016",
+        "10C",
+        "10D",
+        "10E",
+        "10F",
+        "072"
+      ]
+    },
+    "world6": {
+      "name": "Sky",
+      "rooms": [
+        "131",
+        "01E",
+        "101",
+        "132",
+        "130",
+        "006",
+        "022",
+        "020",
+        "013",
+        "01F"
+      ]
+    },
+    "world7": {
+      "name": "Snowfield",
+      "rooms": [
+        "01C",
+        "12F",
+        "01B",
+        "021",
+        "01D",
+        "10A",
+        "133",
+        "118",
+        "01A"
+      ]
+    },
+    "world8": {
+      "name": "Bowser Valley",
+      "rooms": [
+        "018",
+        "019",
+        "128",
+        "13B",
+        "108"
+      ]
+    },
+    "star": {
+      "name": "Star World",
+      "rooms": [
+        "001",
+        "002",
+        "003",
+        "004",
+        "005",
+        "006",
+        "007",
+        "008",
+        "009",
+        "00A",
+        "079",
+        "117"
+      ]
+    }
+  }
+}
