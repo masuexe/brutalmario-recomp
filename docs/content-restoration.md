@@ -995,3 +995,7 @@ translevels (previous chain: 216). Translevel `069` changed its idle
 behaviour and needs a user check. The chain-end audit has zero unexpected
 bytes and the suite reports **54/54**. The user confirmed that room `11D` is
 fine on `demo11-sprite-final`.
+
+The user confirmed that room `0x116` (translevel `03A`) completes normally on
+`demo11-sprite-final`. The custom object with the red counter behaves as
+intended.
