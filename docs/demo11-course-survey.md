@@ -195,6 +195,25 @@ the whole-line byte audit: 39 recipes reproduced, 382,653 changed bytes inside
 
 Report: `local/reports/demo11-course-survey-chain-o.json`.
 
+## Full-range completion (0x001-0x0FF)
+
+The tail range ran on the chain end after the main range.
+
+| Range | Playable | Stalls | No-input deaths | Map returns |
+| --- | ---: | ---: | ---: | ---: |
+| `001`-`0C0` | 147 | 0 | 43 | 2 |
+| `0C1`-`0FF` | 60 | 0 | 3 | 0 |
+| **Total** | **207** | **0** | **46** | **2** |
+
+All 255 translevels load. No stall remains in the full range. The 48
+non-playable entries are the 46 no-input deaths and the two Yoshi's House
+returns.
+
+The survey tool now rejects a range outside `0x000`-`0x0FF`, because the
+map node level byte is eight bits wide.
+
+Report: `local/reports/demo11-course-survey-tail.json`.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

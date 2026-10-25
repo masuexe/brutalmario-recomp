@@ -16,6 +16,40 @@ This document defines the custom music ID mapping between Carol's **Legacy Demo 
 > When porting levels or repairing music on the modern line (`demo 1-1`), **never copy
 > donor music IDs verbatim**; consult this table to map them to the recipient target.
 
+## Official ROM batch (2026-10-26)
+
+The user added an official ROM batch at
+
+    /home/harp/projects/sfc/roms/Super Kitiku Brutal Mario
+
+The batch maps to the pinned versions as follows:
+
+| File | Pinned version |
+| --- | --- |
+| `Super Kitiku Brutal Mario 6.0.smc` | `demo6` |
+| `Super Kitiku Brutal Mario 7.0.smc` | `demo7` |
+| `Super Kitiku Brutal Mario 7.5.1 Cheap Demo.smc` | `cheap-demo` |
+| `Super Kitiku Brutal Mario 7.5.3 Airship.smc` | `mazo` |
+| `Super Kitiku Brutal Mario 7.5.4 Hero.smc` | `7hero` |
+| `Super Kitiku Brutal Mario 7.8 7Hero.smc` | `7hero` (same bytes as 7.5.4) |
+| `Super Kitiku Brutal Mario 8.1 DemoOnly1.smc` | `demo-only-1` |
+| `Super Kitiku Brutal Mario Complete!.smc` | `ra-mario-complete` |
+| `Super Kitiku Mario Bowser's Castle.smc` | `ra-bowser-castle` |
+| `Super Kitiku Mario Luigi Boss.smc` | `ra-luigi` |
+
+The batch also contains these files. They have no pin yet:
+
+- `Super Kitiku Brutal Mario 5.0.smc`
+- `Super Kitiku Brutal Mario 6.5.smc` (this answers the missing demo6.5)
+- `Super Kitiku Brutal Mario 8.0 Final Boss.smc`
+- `Brutal Mario English.smc` (2024)
+- `Brutal Mario Demo 7` English, Español and Japanese versions
+- the `Super Kitiku Data` ZIP archive
+
+Every legacy file keeps the untouched vanilla SMW music table at `0F:E000`.
+The legacy engine does not use that table for its custom songs. The table is
+not a low-id data source.
+
 ## Version Chronology and Engine Architecture
 
 The user supplied the development order of the demos, from oldest to newest:

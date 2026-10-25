@@ -162,6 +162,8 @@ def main():
     parser.add_argument('--prefix', default=CAPTURE_PREFIX)
     parser.add_argument('--report', type=Path, default=REPORT)
     args = parser.parse_args()
+    if not 0x000 <= args.first <= args.last <= 0x0FF:
+        parser.error('the translevel range must stay within 0x000-0x0FF')
     if args.action == 'prepare':
         prepare(args.first, args.last)
     elif args.action == 'run':
