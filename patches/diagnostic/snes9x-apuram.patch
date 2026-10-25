@@ -1,0 +1,61 @@
+diff --git a/apu/apu.cpp b/apu/apu.cpp
+index 3d0efb5..5c56b1d 100644
+--- a/apu/apu.cpp
++++ b/apu/apu.cpp
+@@ -15,6 +15,11 @@
+ 
+ #include "bapu/snes/snes.hpp"
+ 
++uint8 *S9xGetAPURAM (void)
++{
++    return SNES::smp.apuram;
++}
++
+ static const int APU_DEFAULT_INPUT_RATE = 32040;
+ static const int APU_SAMPLE_BLOCK       = 48;
+ static const int APU_NUMERATOR_NTSC     = 15664;
+diff --git a/apu/apu.h b/apu/apu.h
+index 5d075b4..af235ab 100644
+--- a/apu/apu.h
++++ b/apu/apu.h
+@@ -14,6 +14,7 @@ typedef void (*apu_callback) (void *);
+ #define SPC_SAVE_STATE_BLOCK_SIZE (1024 * 65)
+ #define SPC_FILE_SIZE             (66048)
+ 
++uint8 *S9xGetAPURAM (void);
+ bool8 S9xInitAPU (void);
+ void S9xDeinitAPU (void);
+ void S9xResetAPU (void);
+diff --git a/libretro/libretro.cpp b/libretro/libretro.cpp
+index 6060767..16121b0 100644
+--- a/libretro/libretro.cpp
++++ b/libretro/libretro.cpp
+@@ -1867,6 +1867,8 @@ unsigned retro_get_region()
+     return Settings.PAL ? RETRO_REGION_PAL : RETRO_REGION_NTSC;
+ }
+ 
++extern uint8 *S9xGetAPURAM (void);
++
+ void* retro_get_memory_data(unsigned type)
+ {
+     void* data;
+@@ -1889,6 +1891,9 @@ void* retro_get_memory_data(unsigned type)
+         case RETRO_MEMORY_VIDEO_RAM:
+         data = Memory.VRAM;
+         break;
++        case 0x100:
++            data = S9xGetAPURAM();
++            break;
+         //case RETRO_MEMORY_ROM:
+         //	data = Memory.ROM;
+         //	break;
+@@ -1923,6 +1928,9 @@ size_t retro_get_memory_size(unsigned type)
+         case RETRO_MEMORY_VIDEO_RAM:
+             size = 64 * 1024;
+             break;
++        case 0x100:
++            size = 0x10000;
++            break;
+         //case RETRO_MEMORY_ROM:
+         //	size = Memory.CalculatedSize;
+         //	break;

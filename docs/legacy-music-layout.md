@@ -73,11 +73,54 @@ The recipient map 6 overworld tile override does not work on `cheap-demo`. A
 tile address differ. The donor survey must locate the donor map tile address
 before it can select courses by level number.
 
+## APU RAM trace tooling
+
+The reference frontend already supports a changed-byte APU RAM trace. The
+snes9x core does not expose APU RAM by default, so this repository carries a
+diagnostic core patch.
+
+| Item | Value |
+| --- | --- |
+| Core patch | `patches/diagnostic/snes9x-apuram.patch` |
+| Patch effect | Adds APU RAM as libretro memory id 0x100, size 0x10000 |
+| Capture helper | `tools/capture_apu_trace.py` |
+
+Use these steps:
+
+1. Apply the patch to `local/upstream/snes9x`.
+2. Rebuild the core: `make -C local/upstream/snes9x/libretro -j4`.
+3. Restore the upstream source tree. The pinned repository check expects a
+   clean tree. The rebuilt core stays in place.
+4. Run `tools/capture_apu_trace.py` with a manifest, a ROM, a script and a
+   capture name.
+
+The trace is a JSON-lines changed-byte log. The first frame writes a full
+0x10000-byte snapshot. Later lines record per-frame changes.
+
+### Trace validation
+
+A frame-20 snapshot from the donor run matches the donor ROM at 186 places.
+The first match is ARAM 0x500 against ROM file offset 0x70004. The SPC program
+image therefore starts near ROM file offset 0x70000. This validates the trace
+and the byte replay.
+
+### Trace findings (cheap-demo)
+
+- Frames 1-17 upload the SPC program image.
+- The map idle probe, the in-level standard music probe and the custom
+  request probe (song 0x2E poked into `$1DFB`) never show group bytes
+  verbatim in APU RAM. The standard probes had no upload, as expected.
+- The custom request probe changed game mode to 0x0F and then room 0x14C. The
+  request path for an arbitrary poke is not a clean upload trigger yet.
+- A 64-byte window of group `$44:E008` appears at ARAM 0x2A11 at frames 620
+  and 1000. That is one weak hit and not a group identification.
+
 ## Next steps
 
-1. Capture APU RAM on a donor level that plays a target song, with
-   `SNESREF_APURAM_TRACE_FILE`. The uploaded group bytes appear at APU RAM
-   `0x6800`; match them in the ROM to identify the group.
-2. Use the DSP register trace to select the slot. Compare the donor trace with
+1. Trigger a real custom-song upload. A donor course that plays a custom song
+   is the reliable way. The donor map tile address must be found first.
+2. Search the trace with a full-window scan and accept only long exact
+   matches.
+3. Use the DSP register trace to select the slot. Compare the donor trace with
    the four candidate payloads.
-3. Resolve the id to group and slot table. Then restore the remaining songs.
+4. Resolve the id to group and slot table. Then restore the remaining songs.
