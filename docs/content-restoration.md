@@ -947,3 +947,7 @@ sets. The suite reports **46/46**. The chain-end audit passes with zero
 unexpected bytes. The chain end is `demo11-gfx-world8c` (ROM
 `03704a35...`, native binary `b729ba48...`); the head stays at
 `demo11-fix-batch-p`.
+
+The full-range survey on the graphics chain end reports 255 loads, zero
+stalls and 218 playable translevels (head: 207). Qualifier:
+`tools/qualify_demo11_gfx_full_range.py`.

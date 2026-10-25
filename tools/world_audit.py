@@ -23,15 +23,36 @@ DEFAULT_RECORD = bytes.fromhex('0000ffffffffffff218001218001ffff')
 RECORD_TABLE = 0x188272
 DONORS = [
     ('7hero', 0x8315D),
-    ('ra-bowser-castle', 0x8315D),
-    ('ra-mario-complete', 0x8315D),
+    ('cheap-demo', 0x8315D),
     ('mazo', 0x8315D),
     ('ow', 0x8315D),
-    ('cheap-demo', 0x8315D),
     ('demo8', 0x8315D),
     ('demo7', 0x8315D),
     ('demo6', 0x8315D),
 ]
+
+
+def enclosing_rats(data, pointer):
+    """Return the start and size of the RATS block that contains the pointer."""
+    for cursor in range(pointer, max(0, pointer - 0x10000), -1):
+        if data[cursor:cursor + 4] != b'STAR':
+            continue
+        count = int.from_bytes(data[cursor + 4:cursor + 6], 'little')
+        complement = int.from_bytes(data[cursor + 6:cursor + 8], 'little')
+        if count ^ complement == 0xffff and cursor + count + 9 >= pointer:
+            return cursor, count
+    return None
+
+
+def is_custom_code(data, row):
+    """A custom sprite record points into its code block at offsets 8 and 11."""
+    if row is None or len(row) != 16:
+        return False
+    for index in (8, 11):
+        pointer = int.from_bytes(row[index:index + 3], 'little')
+        if enclosing_rats(data, pointer) is None:
+            return False
+    return True
 
 
 def load(path):
@@ -98,9 +119,12 @@ def main():
                 donor = None
                 for version, (donor_rom, table) in donor_records.items():
                     donor_row = record(donor_rom, table, sprite_id)
-                    if donor_row is not None and donor_row != DEFAULT_RECORD:
-                        donor = (version, donor_row.hex())
-                        break
+                    if donor_row is None or donor_row == DEFAULT_RECORD:
+                        continue
+                    if not is_custom_code(donor_rom, donor_row):
+                        continue
+                    donor = (version, donor_row.hex())
+                    break
                 if donor:
                     room_rows['sprite_gaps'].append({'id': '%02X' % sprite_id,
                                                      'rooms_used': ids.count(sprite_id),

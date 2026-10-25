@@ -57,6 +57,26 @@ The suite reports **46/46**. The whole-line audit for the chain end passes:
 
 Captures: `local/captures/gfxw-*` and `local/captures/gfxwn-*`.
 
+## Full-range survey after the batches
+
+The full-range survey ran on the chain end. It reports 255 loads, zero
+Mario Start stalls and 218 playable translevels. The head survey before the
+batches reported 207 playable translevels.
+
+| Result | Count |
+| --- | ---: |
+| Playable | 218 |
+| Mode `0E` | 28 |
+| Mode `0D` | 4 |
+| Mode `0C` | 2 |
+| Mode `0B` | 2 |
+| Mode `17` | 1 |
+
+Translevels `077` and `07B` still return to
+Yoshi's House. Qualifier: `tools/qualify_demo11_gfx_full_range.py`.
+Reports: `local/reports/demo11-course-survey-gfx-chain.json` and
+`local/reports/demo11-course-survey-gfx-tail.json`.
+
 ## Limits
 
 - The claim is bounded: no empty slots remain and the sampled scenes load and

@@ -68,6 +68,12 @@ host applies the per-scanline window mask; the reference sample was taken a few
 frames before the effect's first activation. This is a timing-phase difference,
 not a missing-content defect.
 
+## Custom sprite status
+
+The [custom sprite audit](demo11-sprite-audit.md) records the record format
+and the static candidate list. The rule over-triggers on vanilla IDs and
+needs runtime evidence. Sprites `8D` and `0B` are ported.
+
 ## Next steps
 
 1. Investigate the persistent candidates in world order: World 1 room `120`,
