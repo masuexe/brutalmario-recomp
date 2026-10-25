@@ -71,7 +71,7 @@ the map and the course layout stay unchanged.
 | `demo-1-1.m3u` | Playlist for the WAV files |
 | `music-ids.txt` | Song id list with titles |
 | `music-ids.csv` | Song id list for spreadsheets |
-| `index.html` | Browser player for the WAV files |
+| `index.html` | Browser player with the embedded id list |
 | `README.md` | Short use note for the output directory |
 
 The WAV files are stereo, signed 16-bit PCM at 32,040 Hz. The total size is
@@ -207,7 +207,9 @@ built-in songs for some low ids, and those songs are not table entries.
 - Every capture requested the carrier song at frame 2,196. The cut frame is
   2,161 for every capture. The cut is inside the level-load gap.
 - No render is silent. The peak range is 10,327 to 26,321.
-- `tests/test_extract_demo11_music.py` passes 10 checks. The checks cover the
+- `index.html` embeds the complete id list, the level bytes and two
+  copy buttons. The page needs no network access.
+- `tests/test_extract_demo11_music.py` passes 11 checks. The checks cover the
   table reader, the naming, the cut selection and the level statistics.
 - The earlier room 106 audition render of slot `33` matches the new render.
   The 0.1-second RMS envelope correlation is 0.511 at a 40.3-second lag. The

@@ -90,6 +90,27 @@ class ContentTests(unittest.TestCase):
 
 
 
+class IndexTests(unittest.TestCase):
+    def test_index_embeds_the_id_list_and_the_level_bytes(self):
+        entry = {
+            'slot': '52',
+            'slot_value': 0x52,
+            'title': 'Stickerbrush Symphony',
+            'origin_game': 'Donkey Kong Country 2',
+            'payload': {'size': 3020},
+            'audio': {'file': 'wav/song-52-stickerbrush-symphony.wav',
+                      'duration_seconds': 100.0},
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            music.write_index(Path(directory), [entry])
+            html = (Path(directory) / 'index.html').read_text()
+        self.assertIn('id="ids-hex"', html)
+        self.assertIn('0x52', html)
+        self.assertIn('level 0x53', html)
+        self.assertIn('<audio', html)
+        self.assertIn('Copy id list', html)
+
+
 if __name__ == '__main__':
     unittest.main()
 

@@ -442,16 +442,24 @@ def write_playlist(out, entries):
 
 
 def write_index(out, entries):
+    named = sum(1 for entry in entries if entry['title'])
+    shortest = min(entry['audio']['duration_seconds'] for entry in entries)
+    longest = max(entry['audio']['duration_seconds'] for entry in entries)
+    hex_ids = ', '.join('0x%s' % entry['slot'] for entry in entries)
+    detail = []
     rows = []
     for entry in entries:
         title = entry['title'] or ('Untitled slot 0x%s' % entry['slot'])
-        origin = entry['origin_game'] or ''
-        size = entry['payload']['size']
-        duration = entry['audio']['duration_seconds']
+        origin = entry['origin_game'] or '-'
+        level = '%02X' % (entry['slot_value'] + 1)
+        detail.append('0x%s  level 0x%s  %s' % (entry['slot'], level, title))
         rows.append(
-            '<tr><td>0x%s</td><td>%s</td><td>%s</td><td>%d</td><td>%.1f s</td>'
+            '<tr><td><b>0x%s</b></td><td>%d</td><td>0x%s</td><td>%s</td><td>%s</td>'
+            '<td>%d</td><td>%.1f s</td>'
             '<td><audio controls preload="none" src="%s"></audio></td></tr>'
-            % (entry['slot'], title, origin, size, duration, entry['audio']['file']))
+            % (entry['slot'], entry['slot_value'], level, title, origin,
+               entry['payload']['size'], entry['audio']['duration_seconds'],
+               entry['audio']['file']))
     html = '''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><title>Brutal Mario Demo 1-1 music</title>
 <style>
@@ -459,16 +467,33 @@ body{font-family:sans-serif;margin:2rem;background:#111;color:#ddd}
 table{border-collapse:collapse;width:100%%}
 td,th{border-bottom:1px solid #333;padding:.35rem .5rem;text-align:left;vertical-align:middle}
 audio{height:2rem}
+pre{background:#1b1b1b;padding:1rem;overflow:auto;max-height:16rem}
+button{background:#2d2d2d;color:#ddd;border:1px solid #555;padding:.3rem .7rem;margin-right:.5rem}
 </style></head><body>
 <h1>Brutal Mario Demo 1-1 music</h1>
-<p>%d custom songs from the song table at $0F:E000. Each file starts at the
-song introduction and runs for about %d seconds.</p>
-<table><thead><tr><th>Slot</th><th>Title</th><th>Origin</th><th>Payload bytes</th>
-<th>Length</th><th>Play</th></tr></thead><tbody>
+<p>%d custom songs from the song table at $0F:E000. The level data music byte is
+the song id plus one. Each file starts at the song introduction and runs for
+%.1f to %.1f seconds.</p>
+<h2>Music ids</h2>
+<p><button onclick="copyBlock('ids-hex')">Copy id list</button>
+<button onclick="copyBlock('ids-detail')">Copy ids with names</button></p>
+<pre id="ids-hex">%s</pre>
+<h2>Ids with song names</h2>
+<pre id="ids-detail">%s</pre>
+<h2>Tracks</h2>
+<table><thead><tr><th>Hex id</th><th>Dec</th><th>Level byte</th><th>Title</th>
+<th>Origin</th><th>Payload bytes</th><th>Length</th><th>Play</th></tr></thead><tbody>
 %s
-</tbody></table></body></html>
-''' % (len(entries), entries[0]['audio']['duration_seconds'] if entries else 0,
-       '\n'.join(rows))
+</tbody></table>
+<script>
+function copyBlock(id){var el=document.getElementById(id);var text=el.textContent;
+if(navigator.clipboard){navigator.clipboard.writeText(text);return;}
+var range=document.createRange();range.selectNodeContents(el);
+var selection=window.getSelection();selection.removeAllRanges();selection.addRange(range);
+document.execCommand('copy');selection.removeAllRanges();}
+</script></body></html>
+''' % (len(entries), shortest, longest, hex_ids,
+       '\n'.join(detail), '\n'.join(rows))
     (out / 'index.html').write_text(html)
 
 
