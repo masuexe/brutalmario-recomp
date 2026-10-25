@@ -102,6 +102,26 @@ the map or die, so they need separate work.
 `05` blocks 3. The rest are one or two levels each. Song `02` is the first
 target for the donor song restoration.
 
+## Stall root causes
+
+The 61 remaining stalls split into two dependency groups:
+
+| Group | Count | Evidence |
+| --- | ---: | --- |
+| No missing extended graphics | 42 | Each requests a null music slot |
+| Missing extended graphics | 19 | 59 distinct null graphics IDs |
+
+Many stalled rooms select several null extended graphics IDs. Room `0x173`
+selects seven: `1AB`, `201`, `202`, `286`, `287`, `288` and `289`.
+The [graphics candidate A](demo11-course-gfx-a.md) ports them from 7hero.
+
+The graphics install alone does not fix room `0x173`. Its last request is song
+`1A`, and slot `1A` stays null. The room still stalls at mode `12`.
+
+Room `0x173` layer-1 data matches 7hero room `0x173` and demoOnly1 room
+`0x173` exactly. Both new-family builds leave the room unplayable, so the
+legacy donors are the only resource source.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

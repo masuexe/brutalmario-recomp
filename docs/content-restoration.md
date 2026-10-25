@@ -849,8 +849,14 @@ MechaBonbie song from the reviewed cheap-demo four-song group. Translevel `001`
 stalls on the head and reaches gameplay on the candidate. The reference and
 native captures match on the sampled fields. An audible match is not claimed.
 
-The suite now reports **34/34**; the head byte audit is unchanged. The remaining
-stalled songs still need donor restoration: the legacy-exclusive `53` and
-`57`, and the unmapped slots `02`, `03`, `05`, `06`, `21`, `2C`,
-`3C`, `3F`, `44`, `45`, `46`, `55`, `56` and `5B`.
+The suite now reports **35/35**; the head byte audit is unchanged.
+
+The [course graphics candidate A](demo11-course-gfx-a.md) ports seven null
+extended graphics IDs from 7hero for room 0x173. The candidate verifies the
+data, the pointer slots and the native build, but the room still stalls at
+Mario Start because song `1A` is also null. The candidate is a building block.
+
+Stall root causes now split into two groups: 42 stalls have no missing extended
+graphics and request null songs; 19 stalls select 59 null extended graphics IDs.
+The remaining stalled songs still need donor restoration.
 

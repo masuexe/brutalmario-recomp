@@ -181,4 +181,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11Music57SNESRecomp',
         'title': 'Brutal Mario Demo11 Music 57',
     },
+    'demo11-course-gfx-a': {
+        'binary': 'BrutalMarioDemo11CourseGfxASNESRecomp',
+        'title': 'Brutal Mario Demo11 Course Gfx A',
+    },
 }

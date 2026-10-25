@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Course Graphics A",
+  "id": "demo11-course-gfx-a",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-star-bgm",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "8939c2ace216af9f6b8c9de365ea8b2614cc8a686b0692e86fec98608afc36c0"
+  },
+  "scope": "Port the seven extended graphics selected by room 0x173 from the 7hero donor. The recipient selects these IDs but leaves every pointer null, so the room stalls at Mario Start.",
+  "gfx_record": {
+    "address": "14DB68",
+    "before": "0180870286028802ab0102020102890200007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1880064,
+    "size": 17475,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1AB",
+      "target_id": "1AB",
+      "source_address": "2DFDD2",
+      "decoded": {
+        "size": 4096,
+        "sha256": "303a57aee624254d15c41b9bf8ee1584b81f34f905da504767aaee743a45ec0b"
+      },
+      "compressed": {
+        "size": 2052,
+        "sha256": "50366862e14930232998c634d2b103dad709de87933487e24ce4d6b691e562e4"
+      },
+      "global_pointer": true,
+      "rooms": [
+        304,
+        371
+      ]
+    },
+    {
+      "source_id": "201",
+      "target_id": "201",
+      "source_address": "35B4FD",
+      "decoded": {
+        "size": 4096,
+        "sha256": "03f58b783152b17d6f322ae2c5f98984684ff899f20d3a8e7e78277afc51bae4"
+      },
+      "compressed": {
+        "size": 2396,
+        "sha256": "14df6869f6df8fc5ab69176c68b5ad0f85dbf6d3153fe9cfb52e4278420664e8"
+      },
+      "global_pointer": true,
+      "rooms": [
+        128,
+        371
+      ]
+    },
+    {
+      "source_id": "202",
+      "target_id": "202",
+      "source_address": "35CE6C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "5a05f835433373395759d7921414b0f5260915c2810dbb38227ca5a394b6e022"
+      },
+      "compressed": {
+        "size": 2038,
+        "sha256": "409f16cff9549f6ddd1ed96b95ef899432c3246035ff144ac84aa7c9fb16adc9"
+      },
+      "global_pointer": true,
+      "rooms": [
+        128,
+        371
+      ]
+    },
+    {
+      "source_id": "286",
+      "target_id": "286",
+      "source_address": "3FCA0B",
+      "decoded": {
+        "size": 4096,
+        "sha256": "1043d1fcb2642a8beac6f6f0618ebc0bbaece29d27b0f437713a0ca645653d8f"
+      },
+      "compressed": {
+        "size": 2764,
+        "sha256": "2a26665d1d4e54511c642b518ca97b467600f54b591e68114544bfe02947db9b"
+      },
+      "global_pointer": true,
+      "rooms": [
+        371
+      ]
+    },
+    {
+      "source_id": "287",
+      "target_id": "287",
+      "source_address": "3FD4DF",
+      "decoded": {
+        "size": 4096,
+        "sha256": "d598ec4613e517fac9d83c0f795b2ed065276c73442aa5d018d3b5720bf7c5f7"
+      },
+      "compressed": {
+        "size": 3182,
+        "sha256": "4f29fd6e95cec6fa19c85f6e2883e2d8ea78a56eb36882caf5d64c9f8d58ce4b"
+      },
+      "global_pointer": true,
+      "rooms": [
+        371
+      ]
+    },
+    {
+      "source_id": "288",
+      "target_id": "288",
+      "source_address": "3FE155",
+      "decoded": {
+        "size": 4096,
+        "sha256": "b7c5eee824ac9e83e8f59b9902e1019ae54082c6cc7708a53219c984750481de"
+      },
+      "compressed": {
+        "size": 1965,
+        "sha256": "0c1e2dcef0ef5c5ce9b147a6d634e9405477665376b3ef86dabeaf08f900b1de"
+      },
+      "global_pointer": true,
+      "rooms": [
+        371
+      ]
+    },
+    {
+      "source_id": "289",
+      "target_id": "289",
+      "source_address": "3FE90A",
+      "decoded": {
+        "size": 4096,
+        "sha256": "649ffbc6c98fed7c89e3b474ce5d4d3ae91cec09dcd0df79ff12a3a494b99be9"
+      },
+      "compressed": {
+        "size": 2766,
+        "sha256": "148f7631ff4e3dd405c27eff6554a6766fab61f33b4bd04277b49120bdc71dba"
+      },
+      "global_pointer": true,
+      "rooms": [
+        371
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "38bc2d436c545c6030d7871029184426eab25680ae187bb430c519cbebddd8b1"
+  }
+}
