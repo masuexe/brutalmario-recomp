@@ -167,6 +167,27 @@ chain stalls now reach gameplay.
 
 Report: `local/reports/demo11-course-survey-chain-i.json`.
 
+## Final chain survey
+
+The full survey ran on the final chain end (`demo11-fix-batch-o2`).
+
+| Result | Head | Chain end |
+| --- | ---: | ---: |
+| Playable `14` | 70 | 147 |
+| Mario Start stall `12` | 78 | 0 |
+| Mode `0E` (returns to map) | 34 | 31 |
+| Death or other | 10 | 14 |
+
+All 78 stalls are fixed. The 45 non-playable entries that remain are not
+stalls: 31 return to the map, 10 die or use a death mode, 3 are in a reload
+fade and 1 has an unexpected mode.
+
+Several of the deaths are scripted no-input falls: `001`, `018`, `01B`,
+`024`, `097`, `0AD` and `0BE`. The rest of the `0E` entries are
+probably unused or empty rooms.
+
+Report: `local/reports/demo11-course-survey-chain-o.json`.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows
