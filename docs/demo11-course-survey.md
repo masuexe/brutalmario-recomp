@@ -214,6 +214,9 @@ map node level byte is eight bits wide.
 
 Report: `local/reports/demo11-course-survey-tail.json`.
 
+`tools/qualify_demo11_full_range.py` checks both reports, the capture
+receipts and the result classes. The suite now reports **43/43**.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

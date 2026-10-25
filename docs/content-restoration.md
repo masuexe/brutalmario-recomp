@@ -891,8 +891,10 @@ resolve the low-id blocker. Audio comparison shows the engine plays its own
 built-in song for those ids; the payload only satisfies the upload handshake.
 All 39 remaining chain stalls now reach gameplay.
 
-The final chain survey reports 147 playable entries and **zero stalls** (head:
-70 playable and 78 stalls). The remaining 45 entries are map returns, deaths
-and reload fades, not stalls. The suite reports **42/42**; the candidates are
-not accepted as the head.
+The final chain survey reports 207 playable entries and **zero stalls** across
+all 255 translevels (head: 70 playable and 78 stalls). The remaining 48 entries
+are 46 no-input deaths and 2 Yoshi's House returns. The
+[full-range survey qualifier](demo11-course-survey.md) checks both survey
+reports. The suite reports **43/43**; the candidates are not accepted as the
+head.
 
