@@ -23,6 +23,13 @@
 - Express content recovery in reviewed recipes with pinned source assets,
   bounded allocations, and explicit patches. Do not silently replace recipient
   layouts, map events, or engine behavior with donor behavior.
+- Official demo chronology (from oldest to newest):
+  `demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss -> demoonly1 -> 1-1`.
+  When code or data is missing, prioritize the newest available code, and ONLY
+  reference code from the official demos in this list (do not reference unofficial
+  hacks or unverified edits). Note that `cheap_demo` is the last version that contains
+  all custom sprite code; for missing custom sprites not present in newer versions,
+  consult `cheap_demo` first.
 - Numeric music, graphics, sprite, and room IDs are version-local. Matching an
   ID alone does not establish that the underlying content matches. For custom
   music mapping between the legacy donor family (cheap_demo, 7hero, etc.) and

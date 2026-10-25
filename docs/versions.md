@@ -69,6 +69,23 @@ Entry counts include directories; expanded size sums declared member sizes. Inpu
 - Complete per-file/member SHA-256 metadata is in `local/reports/inventory.json`, without file bodies.
 
 
+## Authoritative Official Demo Chronology & Code Priority
+
+The official demo sequence (from oldest to newest) is established by project agreement:
+
+`demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss -> demoonly1 -> 1-1`
+
+### Donor Search Priority Rules
+1. **Newest first**: When data, level code, or assets are missing or need restoration,
+   prioritize referencing the newest available official demo code (search in reverse
+   chronological order starting from `1-1`).
+2. **Official demos only**: Only reference code and assets from the official demos in the
+   chronology above. Unofficial community composites or edits (e.g. `demo8`) must not be used
+   as code donors.
+3. **Custom sprite benchmark (`cheap_demo`)**: `cheap_demo` is the final version that contains
+   all custom sprite code. When restoring missing custom sprites that are absent from newer versions,
+   `cheap_demo` serves as the primary canonical donor.
+
 ## Restoration-track follow-up
 
 The user accepted the 68-variant baseline and chose to compare the existing
@@ -76,7 +93,6 @@ local versions for cross-version restoration. All nine candidates now have
 pinned patch/body identities in `config/content-versions.json`, with isolated
 local copies prepared by `tools/audit_content_versions.py`. Both baseline
 copies match the accepted target ROMs. Donor +512 alignment remains a
-structural candidate until reference gameplay is qualified. No authoritative
-chronology or latest complete release is inferred. See
+structural candidate until reference gameplay is qualified. See
 [content restoration](content-restoration.md) for the comparison, per-course
 migration plan and reduced manual-checkpoint policy.

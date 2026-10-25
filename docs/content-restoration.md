@@ -4,7 +4,13 @@ The user has accepted the 68-variant Demo 1-1 checkpoint and clarified the
 long-term objective: retain Demo 1-1 or demoOnly1 as the engine/baseline and
 restore unplayable content from other supplied versions where a complete,
 playable donor exists. The user chose to compare the existing local versions
-first. Official chronology and a latest complete release are not established.
+first.
+
+The official demo chronology (from oldest to newest) is established as:
+`demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss -> demoonly1 -> 1-1`.
+When code or data is missing, agents prioritize referencing the newest available code,
+and only reference code from these official demos. Note that `cheap_demo` is the last
+version that contains all custom sprite code.
 
 ## Priorities
 
