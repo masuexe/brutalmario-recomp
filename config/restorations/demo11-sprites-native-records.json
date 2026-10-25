@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Native Records",
+  "id": "demo11-sprites-native-records",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-blocked-four",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "7f20e47444c39a0c40236d221e27184ad81a970ee0149a85bf9f436f80d1dc03"
+  },
+  "scope": "Restore the native demo 1-1 records for sprites 0x42 and 0x3D. Two cheap-demo ports changed native gameplay: the 0x42 coin boss in room 0x8F and the 0x3D sprite that kills Mario in room 0x13C.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2129168,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "code_patches": [
+    {
+      "address": "318692",
+      "before": "012800003f81194408fc200dfc200000",
+      "after": "0000ffffffffffff218001218001ffff",
+      "role": "Restore the demo 1-1 native record for sprite 42."
+    },
+    {
+      "address": "318642",
+      "before": "018509bb3d8b99002afc3d34fc3d0000",
+      "after": "0000ffffffffffff218001218001ffff",
+      "role": "Restore the demo 1-1 native record for sprite 3D."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "63389cabd0bd901acd7cea58dc9a21c4a10095984929e01f746a1ad4b3e1c606"
+  }
+}

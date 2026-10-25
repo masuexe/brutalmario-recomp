@@ -1159,3 +1159,10 @@ The [blocked sprite batch four](demo11-sprites-blocked-four.md) ports sprites
 `0x1B` and `0x0C` and adds sprite-block rebanking to the planner.
 Chain end `demo11-sprites-blocked-four` (ROM `7f20e474...`). Suite
 **75/75**; audit zero unexpected. The free-space review floor is now 150,000 bytes.
+
+The [native record restores](demo11-native-record-restores.md) revert two
+wrong cheap-demo ports: sprite `0x42` in room `0x8F` and sprite
+`0x3D` in room `0x13C`. Demo 1-1 and demoOnly1 keep the default
+records for these IDs. Room `0x8F` now matches the pristine demo 1-1 frame.
+The full-range survey finds 231 playable translevels. Chain end
+`demo11-sprites-native-records` (ROM `63389cab...`). Suite **76/76**.
