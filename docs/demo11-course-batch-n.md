@@ -62,6 +62,17 @@ and graphics installation, all 39 reference captures and eight native captures.
 
 The suite now reports **42/42**.
 
+## Causality check
+
+Music batch N alone unblocks all four low-id levels that also needed graphics.
+Reference captures of the music batch N candidate reach gameplay at entry 240
+for `046`, `05D`, `078` and `097`.
+
+The graphics batches O1 and O2 update the graphics of those rooms. They are not
+required for entry.
+
+Captures: `local/captures/d11-musiconly-*`.
+
 ## Limits
 
 - Entry and short gameplay are the claims.

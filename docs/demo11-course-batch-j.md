@@ -60,8 +60,22 @@ captures match on mode, room, lives and translevel.
 
 The suite now reports **41/41**.
 
+## Causality check
+
+Music batch J alone unblocks all twelve levels. Reference captures of the music
+batch J candidate reach gameplay at entry 240 for every one of them:
+`00D`, `01A`, `02C`, `034`, `03C`, `048`, `04E`, `055`, `056`,
+`062`, `06F` and `070`.
+
+The graphics batches K1, K2, L and M update the graphics of those rooms. They
+are not required for entry. This is an important scope correction: the music
+batches fix the stalls; the graphics batches are visual work.
+
+Captures: `local/captures/d11-musiconly-*`.
+
 ## Limits
 
 - Entry and short gameplay are the claims.
-- The low-id songs remain the main open blocker.
+- The graphics edits are visual only. An audible or visual comparison against
+  the original is not claimed.
 - The candidate chain is not accepted as the head.

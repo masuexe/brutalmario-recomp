@@ -217,6 +217,18 @@ Report: `local/reports/demo11-course-survey-tail.json`.
 `tools/qualify_demo11_full_range.py` checks both reports, the capture
 receipts and the result classes. The suite now reports **43/43**.
 
+## Remaining graphics references
+
+The chain end still leaves some extended graphics slots empty. The base Demo
+1-1 ROM has 190 unique empty slots across 111 room headers, so empty slots are
+normal in this game. The chain end has 90 unique empty slots across 55 room
+headers.
+
+All those rooms load and reach gameplay. The engine uses its fallback graphics.
+Visual correctness for those rooms is not claimed.
+
+The graphics batches J-M, N and O explain the reduction from 190 to 90.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows
