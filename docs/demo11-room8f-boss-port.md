@@ -41,9 +41,16 @@ A guard allocation of 256 bytes sits at `0x68E10`.
 - Whole-line audit: 1,028,055 changed bytes, zero unexpected.
 - Suite **77/77**; space budget passes.
 
+## Acceptance
+
+The user playtested the room on 2026-10-26. The boss matches the expected
+demoOnly1 boss, including the large yellow ball. After the defeat, the boss
+drops coins. A world conquest rate screen follows the drop. The user states
+that this behavior is the author intent.
+
 ## Limits
 
-- The coin drop after the defeat needs a user check. The capture does not
-  defeat the boss.
+- The automated capture does not defeat the boss. The long capture reaches
+  the same defeat state as demoOnly1.
 - The two moved graphics assets keep their decode. The qualifier checks the
   first decoded byte only.

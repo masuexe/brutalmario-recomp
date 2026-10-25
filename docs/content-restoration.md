@@ -1173,3 +1173,7 @@ new boss record and code block. The demoOnly1 record table is at file
 assets move to free the bank window. Room `0x8F` now matches the
 demoOnly1 frame. Chain end `demo11-sprites-room8f-boss`
 (ROM `23f8ab7f...`). Suite **77/77**.
+
+The user accepted the [demoOnly1 room 0x8F boss port](demo11-room8f-boss-port.md).
+The boss drops coins after the defeat and a world conquest rate screen follows.
+The user states that this is the author intent.

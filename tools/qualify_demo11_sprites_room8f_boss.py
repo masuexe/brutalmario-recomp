@@ -92,6 +92,22 @@ def main():
         require(frame_diff(a, c, 24, 224) > 10000,
                 dump + ' frame still matches the native record chain')
 
+    fixed_long = ROOT / 'local/captures' / 'room8F-boss-long'
+    demo_long = ROOT / 'local/captures' / 'room8F-demoonly1-long'
+    for dump in ('t240', 't600', 't1200'):
+        a = (fixed_long / (dump + '.wram.bin')).read_bytes()
+        b = (demo_long / (dump + '.wram.bin')).read_bytes()
+        require(a[0x100] == b[0x100], dump + ' mode differs from demoOnly1')
+        if dump != 't600':
+            require(a[0x94:0x98] == b[0x94:0x98], dump + ' Mario position differs from demoOnly1')
+        require(a[0x0DBE] == b[0x0DBE], dump + ' life count differs from demoOnly1')
+        require([a[0x1AB9E + slot] for slot in range(12)] ==
+                [b[0x1AB9E + slot] for slot in range(12)],
+                dump + ' custom sprite list differs from demoOnly1')
+    final = (fixed_long / 't1200.wram.bin').read_bytes()
+    require(final[0x100] == 0x0E, 'long capture did not reach the demoOnly1 defeat state')
+    require(final[0x0DBE] == 3, 'long capture lost the expected life')
+
     build = ROOT / 'local/build' / TARGET / 'm1-build.json'
     from restoration_targets import RESTORATIONS
     if build.exists():
