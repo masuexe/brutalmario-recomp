@@ -47,6 +47,25 @@ Chain end: `demo11-gfx-boss76`
   loads room `0x49` through the level `0x109` entry and reports music
   `0x6B`. The user must confirm the palette and the level in ordinary play.
 
+## Full-range survey
+
+The survey on `demo11-gfx-boss76` reports 255 loads and **231
+playable** translevels. Every outer translevel result equals the room 49
+chain, so the subroom graphics and sprite `0x2B` do not change the ordinary
+course outcomes.
+
+Two translevels change because their previously missing custom sprites now
+run:
+
+| Translevel | Before | After |
+| --- | --- | --- |
+| `070` | boss room `0x14C`, idle | chain `0x14C` -> `0x14D`, gameplay at frame 690 |
+| `062` | idle Mario at x=32 | a moving object now carries Mario and he dies |
+
+The `070` transition completes, so it is not a stall. The user must
+confirm both changes. The counts above are reproducible from
+`tools/qualify_demo11_gfx_boss_range.py`.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room

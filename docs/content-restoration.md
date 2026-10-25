@@ -1034,3 +1034,10 @@ graphics (`0x160`, `0x16E`, `0x16F`), which the user reported as a wrong
 palette and a damaged level. Chain end `demo11-gfx-boss76` (ROM `d6e78605...`,
 native `63ddcb2f...`). The suite reports **58/58** and the audit has zero
 unexpected bytes. The space floor is now 300,000 free bytes.
+
+The full-range survey on `demo11-gfx-boss76` reports 231 playable
+translevels and no outer behavior change. Two translevels change because their
+missing custom sprites now run: `070` moves from boss room `0x14C` to
+`0x14D` (the transition completes), and `062` now has a moving object
+that carries Mario to a death. The user must confirm both. The suite reports
+**59/59**.

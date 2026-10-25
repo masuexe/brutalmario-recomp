@@ -67,6 +67,7 @@ CHECKS = [
     ('boss room music retarget', 'qualify_demo11_boss_music'),
     ('room 049 custom sprite', 'qualify_demo11_sprite_room49'),
     ('boss room graphics', 'qualify_demo11_gfx_boss'),
+    ('boss chain survey', 'qualify_demo11_gfx_boss_range'),
 ]
 
 
