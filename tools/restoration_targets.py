@@ -1,6 +1,12 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-hp-roomcf': {
+        'binary': 'BrutalMarioDemo11HpRoomCfSNESRecomp',
+        'title': 'Brutal Mario Demo11 HP Room CF',
+    },
+
+
     'demo11-sprites-remaining-free': {
         'binary': 'BrutalMarioDemo11SpritesRemainingFreeSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprites Remaining Free',

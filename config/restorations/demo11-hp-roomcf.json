@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 HP Room CF",
+  "id": "demo11-hp-roomcf",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-remaining-free",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "fa986111901e2114c4ff411134e8616351fa6d76f09107ded19e4be368738aec"
+  },
+  "scope": "Extend the HP HUD upload to active room 0xCF, which fills the legacy $7F:FFE0 row and sets the HUD flag.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2106624,
+    "size": 106,
+    "fill": 0
+  },
+  "assets": [],
+  "raw_blocks": [
+    {
+      "name": "HP HUD upload for rooms BC, CC, 128, 146 and CF",
+      "rats_address": "40A500",
+      "destination_address": "40A508",
+      "bytes": "2208a03e08c22048ad0b01c9bc00f014c9cc00f00fc92801f00ac94601f005c9cf00d03bad000129ff00c91400d030afdfff7f29ff00f027a928508d1621a900188d1043a9e0ff8d1243a97f108d1443e2209c15219c1643a9028d0b42c22068286b",
+      "data": {
+        "size": 98,
+        "sha256": "b62ae82b80b95e2771bcda3e671ffefd3d1d2595dd11c8aedaa4c88482f7a0a0"
+      }
+    }
+  ],
+  "source_dma": {
+    "version": "cheap-demo",
+    "address": "349E57",
+    "size": 37,
+    "sha256": "8ed5ae79fc8b16c862364156d57bbbddc24b07547d86f99d312443e3f1348918",
+    "adaptation": "SEP #$20 retains the caller index width; restore A/P before RTL."
+  },
+  "code_patches": [
+    {
+      "address": "008DE1",
+      "before": "2208a440",
+      "after": "2208a540",
+      "role": "Chain the existing shim and add room 00CF to the HP row upload."
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "925b004a02d195a6d12cc14220aa79ab1d88eae1e05236d519acfbf0e85e2aff"
+  }
+}

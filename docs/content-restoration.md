@@ -1116,3 +1116,8 @@ fifteen free-window sprites: `0x1A`, `0x27`, `0x3D`, `0x4F`, `0x51`, `0x53`,
 `0x5C`, `0x6B`, `0x6D`, `0x70`, `0x73`, `0x77`, `0x7B`, `0x7D`
 and `0x8B`. Chain end `demo11-sprites-remaining-free` (ROM
 `fa986111...`). Suite **67/67**; audit zero unexpected.
+
+The [room 0xCF HP bar recipe](demo11-hp-roomcf.md) extends the HP shim to
+room `0xCF`. The room already filled the legacy row and set the flag;
+only the HUD upload was missing. Chain end `demo11-hp-roomcf`
+(ROM `925b004a...`). Suite **68/68**; audit zero unexpected.
