@@ -951,3 +951,16 @@ unexpected bytes. The chain end is `demo11-gfx-world8c` (ROM
 The full-range survey on the graphics chain end reports 255 loads, zero
 stalls and 218 playable translevels (head: 207). Qualifier:
 `tools/qualify_demo11_gfx_full_range.py`.
+
+### Custom sprite port, World 2 to World 4
+
+The [custom sprite port](demo11-custom-sprites-w234.md) fixes the cause of
+the strange falling object in the later worlds. A custom sprite placement
+sets bit 3 in the first sprite-list byte. The target record for that sprite
+was still the default record, so the custom code was absent.
+The batch ports 19 sprite records from cheap-demo onto
+`demo11-gfx-world8c`. Candidate ROM
+`8db14be6...`, native binary `61f4b869...`.
+Six sprite IDs need the next batch because no free bank range keeps their
+low 16 address bits. The suite reports **48/48**. This is a candidate that
+waits for a user playtest.
