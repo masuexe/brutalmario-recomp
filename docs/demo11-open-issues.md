@@ -17,6 +17,23 @@ inspected register dumps show MOSAIC `$03`, a 1x1 setting. The previous
 assertion that these captures prove a periodic 8x8 rain-layer effect is
 withdrawn. Keep the captures intact as historical observations.
 
+## Room 126: Baby Yoshi growth — recorded, deferred
+
+The user reports that a baby Yoshi in Baby Yoshi Hill (room `$126`) does not
+grow into an adult Yoshi when it eats a flower or a feather.
+
+Likely cause: Demo 1-1 overrides the related growth code. The user expects a
+difficult fix and asked to record the issue first.
+
+Evidence to collect:
+
+- the Baby Yoshi sprite and its growth routine in the Demo 1-1 ROM,
+- the same routine in demoOnly1,
+- the point where Demo 1-1 replaces the routine,
+- a scripted reference/native feed test.
+
+Status: open, deferred. Room data and sprite code are not inspected yet.
+
 ## Level 122: Dragon Coin column — automatically fixed
 
 The user reported a persistent column of garbage 8x8 tiles at the collected
