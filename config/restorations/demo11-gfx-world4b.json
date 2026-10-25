@@ -1,0 +1,114 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx World 4b",
+  "id": "demo11-gfx-world4b",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-world4a",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "b5aae804c19d2030cd4aeb81f2d051e942b1bb70320d684312ba66d52b309732"
+  },
+  "scope": "Port the missing extended graphics of World 4 room 071 from 7hero.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2833984,
+    "size": 10788,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "21A",
+      "target_id": "21A",
+      "source_address": "37A1B4",
+      "decoded": {
+        "size": 4096,
+        "sha256": "ed34015a9dfce4fdc1773e4e926858c059eebf5486921ecad49cf7b64c3da083"
+      },
+      "compressed": {
+        "size": 2482,
+        "sha256": "9c23471e0656227acaf76a2af3b4bccf180269a9b1de4dac85a8d0fc754524a0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        76,
+        77,
+        93,
+        113
+      ]
+    },
+    {
+      "source_id": "219",
+      "target_id": "219",
+      "source_address": "3796E7",
+      "decoded": {
+        "size": 4096,
+        "sha256": "b83bd923123e1c5aaa46f99bbbbd1663e17eaa5da788e84c56b33fabaee47ff5"
+      },
+      "compressed": {
+        "size": 2757,
+        "sha256": "17f2e98e9fc280dd34865feb912b9172b2dc28fb881f8c29d1ca39883665e308"
+      },
+      "global_pointer": true,
+      "rooms": [
+        76,
+        77,
+        93,
+        113
+      ]
+    },
+    {
+      "source_id": "21B",
+      "target_id": "21B",
+      "source_address": "37AB6E",
+      "decoded": {
+        "size": 4096,
+        "sha256": "8c821d530f58be5b558eb3de485674a2b7de65229b262dc4f563504b34e37d04"
+      },
+      "compressed": {
+        "size": 2782,
+        "sha256": "8edcee4d083024665cc1ec63e43ca5c88c0e062d824c9a651cd3d23336c9d8b0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        76,
+        77,
+        93,
+        113
+      ]
+    },
+    {
+      "source_id": "214",
+      "target_id": "214",
+      "source_address": "36F149",
+      "decoded": {
+        "size": 4096,
+        "sha256": "bad259a200c2bed907ada915d250ae288267b68ade234e57132c45ae86d6ef40"
+      },
+      "compressed": {
+        "size": 2479,
+        "sha256": "dee2e1ff96c376ca0174f28633cfcdf59c932fb7e2dcbe592a74d6753390bf88"
+      },
+      "global_pointer": true,
+      "rooms": [
+        35,
+        63,
+        75,
+        76,
+        77,
+        113,
+        122,
+        232,
+        233,
+        351
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "ce0f140dd80b2e0dd1d5077913e4de90f8a0a55909355f01d66261cd45acafcf"
+  }
+}

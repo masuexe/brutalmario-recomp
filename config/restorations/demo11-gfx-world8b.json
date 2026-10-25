@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx World 8b",
+  "id": "demo11-gfx-world8b",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-world8a",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "e35c689e5d208dc9ae875423d8f9b1d611877d3992f4e6b79e33ddd21f724c5c"
+  },
+  "scope": "Port the missing extended graphics of World 8 room 128 from 7hero.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2221352,
+    "size": 5953,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "105",
+      "target_id": "105",
+      "source_address": "21C2B0",
+      "decoded": {
+        "size": 4096,
+        "sha256": "f4a70b8857e5e47e6137297cd9ea0ce4c8e8abe49d54c4b4211c776ca384341b"
+      },
+      "compressed": {
+        "size": 3023,
+        "sha256": "4265fd97851a4038824e9ed8e0738e7fece7cb986282772d894482634997715d"
+      },
+      "global_pointer": true,
+      "rooms": [
+        204,
+        206,
+        208,
+        209,
+        210,
+        211,
+        213,
+        214,
+        215,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        229,
+        230,
+        296
+      ]
+    },
+    {
+      "source_id": "108",
+      "target_id": "108",
+      "source_address": "21DE81",
+      "decoded": {
+        "size": 4096,
+        "sha256": "f08c388ccc479973eae1444c2b0a419e24a38978a4cd909cbadf537922c3aabe"
+      },
+      "compressed": {
+        "size": 2658,
+        "sha256": "4b2d83d28e0fa10755c59042175e127ecb7ddc566d519cd411587d1fb511c653"
+      },
+      "global_pointer": true,
+      "rooms": [
+        204,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        213,
+        214,
+        215,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        229,
+        230,
+        296
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "82b47c0a39e7af3af1d455f65510fc5733b0d758025e67a40df6e830db7271ea"
+  }
+}

@@ -1,0 +1,174 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx World 6",
+  "id": "demo11-gfx-world6",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-world5",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "d1931a3c2c943de3ed315225c42e5e68ea9f5761b5ccfe2a3b70139fe66635c1"
+  },
+  "scope": "Port the missing extended graphics of World 6 rooms 101/022/020 from 7hero.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3024744,
+    "size": 10530,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "195",
+      "target_id": "195",
+      "source_address": "2CC1BA",
+      "decoded": {
+        "size": 4096,
+        "sha256": "b4691bd58b2f1fa41132e72e83b3b7beff454a733995f03e726a859e2a18585e"
+      },
+      "compressed": {
+        "size": 1407,
+        "sha256": "943f598362879883930fc949079da99b8f6427fa7b4bc5cdd6317ce0b4c956da"
+      },
+      "global_pointer": true,
+      "rooms": [
+        158,
+        159,
+        161,
+        162,
+        163,
+        164,
+        257
+      ]
+    },
+    {
+      "source_id": "194",
+      "target_id": "194",
+      "source_address": "2CB7B9",
+      "decoded": {
+        "size": 4096,
+        "sha256": "7ad4eb9fbca259a95bc228fa06dee142431d3e97f7067223e33ea823ae2a6b7f"
+      },
+      "compressed": {
+        "size": 2553,
+        "sha256": "3750cca583855d0b0eb7276b8bf93cd91f2fe4a1ac7abe880da97352998db941"
+      },
+      "global_pointer": true,
+      "rooms": [
+        158,
+        159,
+        257
+      ]
+    },
+    {
+      "source_id": "192",
+      "target_id": "192",
+      "source_address": "2C91E0",
+      "decoded": {
+        "size": 4096,
+        "sha256": "86aed19851a2ab03dd13243cac964e21c99cfa3b3c670ad6ad6d7c1903d1f9f1"
+      },
+      "compressed": {
+        "size": 856,
+        "sha256": "a807d83c66594af545b5aa0e5e477d5240177cb342ae79aacdb2c5e2a44d2391"
+      },
+      "global_pointer": true,
+      "rooms": [
+        34,
+        373
+      ]
+    },
+    {
+      "source_id": "191",
+      "target_id": "191",
+      "source_address": "2C842F",
+      "decoded": {
+        "size": 4096,
+        "sha256": "4028090dbcd1d53fe9be4d9215b109076f9cf48060add294af6ad56e30b63482"
+      },
+      "compressed": {
+        "size": 717,
+        "sha256": "56e6fd613f95c7c6204963784b2e0c93b819767fa1c376c1b8343c411f53db69"
+      },
+      "global_pointer": true,
+      "rooms": [
+        34,
+        373
+      ]
+    },
+    {
+      "source_id": "18F",
+      "target_id": "18F",
+      "source_address": "2BF6B1",
+      "decoded": {
+        "size": 4096,
+        "sha256": "c7d90f436f230fc1477b975a7e701ca0517fbd1e1f3a84886abec400653259b3"
+      },
+      "compressed": {
+        "size": 1058,
+        "sha256": "65b1fc43d0c6896c94f4280a64c92e0b52a959ada3435125e72de76e0a01815c"
+      },
+      "global_pointer": true,
+      "rooms": [
+        34,
+        151,
+        152,
+        157,
+        373
+      ]
+    },
+    {
+      "source_id": "182",
+      "target_id": "182",
+      "source_address": "2AE4FA",
+      "decoded": {
+        "size": 4096,
+        "sha256": "12dba2b1371b3e99d90373ad570d2472a925227a2e4c69ada7eb556162ab7dc6"
+      },
+      "compressed": {
+        "size": 1072,
+        "sha256": "d94268fb6de810d5bc4f18e6ac5769e7f33d684db1de384a5b0a477ed8aae656"
+      },
+      "global_pointer": true,
+      "rooms": [
+        32,
+        55,
+        56,
+        147,
+        148,
+        157
+      ]
+    },
+    {
+      "source_id": "184",
+      "target_id": "184",
+      "source_address": "2AF1AB",
+      "decoded": {
+        "size": 4096,
+        "sha256": "82a061cb369d0fbfcf4826b2ea40721e092c74dc8c0088d80ed17ed254628a07"
+      },
+      "compressed": {
+        "size": 2555,
+        "sha256": "37c6a56fad02784f4923c41d4b43ed90cd604effcac95ca0bfad6263576ce8ec"
+      },
+      "global_pointer": true,
+      "rooms": [
+        32,
+        55,
+        56,
+        59,
+        147,
+        350,
+        361,
+        362,
+        365
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "f651f57b31005abac735ac9861042b0eaece59f6efba8440e9ae477a89b29605"
+  }
+}

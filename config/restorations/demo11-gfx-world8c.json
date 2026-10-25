@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx World 8c",
+  "id": "demo11-gfx-world8c",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-world8b",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "82b47c0a39e7af3af1d455f65510fc5733b0d758025e67a40df6e830db7271ea"
+  },
+  "scope": "Port the missing extended graphics of World 8 room 13B from 7hero.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2253368,
+    "size": 6538,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "400",
+      "target_id": "400",
+      "source_address": "41A7CA",
+      "decoded": {
+        "size": 4096,
+        "sha256": "391aa247a93b1fcf463a1018fa7f2777a3bd978e3fcbe6e0c02a57c7ee35e207"
+      },
+      "compressed": {
+        "size": 2074,
+        "sha256": "b2a03e3eb869288982c7985118f3871a9aa811e88be20dcf3181880084d88d96"
+      },
+      "global_pointer": true,
+      "rooms": [
+        315
+      ]
+    },
+    {
+      "source_id": "401",
+      "target_id": "401",
+      "source_address": "41AFEC",
+      "decoded": {
+        "size": 4096,
+        "sha256": "0fbcfdd545b376e10e7a388d292ed62655c3e5b1a0958e75610a7510d34ca6bf"
+      },
+      "compressed": {
+        "size": 2952,
+        "sha256": "375c697a4e07a1c62eeb53e1afe33216e13ed1e7c8fdab2170a557b0a1508542"
+      },
+      "global_pointer": true,
+      "rooms": [
+        315
+      ]
+    },
+    {
+      "source_id": "402",
+      "target_id": "402",
+      "source_address": "41BB7C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "28946ebd9b49128662bb6cbc5f3ab266b1bbd1d4b7a7d28eb520bd4817415ad6"
+      },
+      "compressed": {
+        "size": 1232,
+        "sha256": "8d42f1859baf2b811b4265225d352ebc35a04b12e22991ce6161c1546e9fd371"
+      },
+      "global_pointer": true,
+      "rooms": [
+        315
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "03704a35e5b80676cd3c78f1f08e8192bebab0daa75198d8a10b2e14d2ff970a"
+  }
+}

@@ -54,6 +54,7 @@ CHECKS = [
     ('full-range course survey', 'qualify_demo11_full_range'),
     ('graphics batch P', 'qualify_demo11_batch_p'),
     ('storm Dragon Coin VRAM', 'qualify_demo11_storm_coins'),
+    ('world graphics batches', 'qualify_demo11_gfx_worlds'),
 ]
 
 

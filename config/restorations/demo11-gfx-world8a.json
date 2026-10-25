@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx World 8a",
+  "id": "demo11-gfx-world8a",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-world7",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "c892409d19b4c0d8f1bbcb1d60c8ad3ddb3ca37efce0f700cf9745c6e71b4966"
+  },
+  "scope": "Port the missing extended graphics of World 8 room 019 from 7hero.",
+  "gfx_record": {
+    "address": "14B0C8",
+    "before": "0180a101b000170014009a019b01a20100007f00ffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1860104,
+    "size": 7437,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "1D6",
+      "target_id": "1D6",
+      "source_address": "318E8C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "94d85da4b4bfe3998b5e037353030824f8a865dca3698730d14f18622e91b7c0"
+      },
+      "compressed": {
+        "size": 2776,
+        "sha256": "cfe47ac43b031d08e1959a33df65602910f2cd6f16c1e9e9401273aa3c5bfd83"
+      },
+      "global_pointer": true,
+      "rooms": [
+        25
+      ]
+    },
+    {
+      "source_id": "1D7",
+      "target_id": "1D7",
+      "source_address": "31996C",
+      "decoded": {
+        "size": 4096,
+        "sha256": "33ad791e8415fd75010edfb77fee0d5d271d587f601e2240915896957b3c2a51"
+      },
+      "compressed": {
+        "size": 1305,
+        "sha256": "debccd085541b1036f5b7061d98650ef92406f3a02b03860335537ace601fa99"
+      },
+      "global_pointer": true,
+      "rooms": [
+        25
+      ]
+    },
+    {
+      "source_id": "1D8",
+      "target_id": "1D8",
+      "source_address": "319E8D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "3e738b439c469b2c0ec88a4903858a19c9802ac8c3f3038189d1a0036c83f0f4"
+      },
+      "compressed": {
+        "size": 3076,
+        "sha256": "69378acc8d92f4c109417d8d24e590db1a027b5a1fa066bc6f981d2b871672f1"
+      },
+      "global_pointer": true,
+      "rooms": [
+        25
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "e35c689e5d208dc9ae875423d8f9b1d611877d3992f4e6b79e33ddd21f724c5c"
+  }
+}

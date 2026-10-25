@@ -935,3 +935,15 @@ reports **45/45**. The full-range survey reports 207 playable entries and zero
 stalls across all 255 translevels. The Dragon Coin column runtime fix is part
 of the promoted state. Broader restoration work remains open.
 
+
+### World-by-world graphics batches
+
+The [world graphics batches](demo11-gfx-worlds.md) port 37 extended graphics
+IDs from 7hero in nine bounded batches. The batches follow the world order.
+After the chain, no room in Worlds 2 to 8 has an empty extended graphics
+slot. Eight translevels now stay in gameplay: `047`, `041`, `037`, `016`,
+`031`, `022`, `020` and `04C`. Five playable translevels show the new tile
+sets. The suite reports **46/46**. The chain-end audit passes with zero
+unexpected bytes. The chain end is `demo11-gfx-world8c` (ROM
+`03704a35...`, native binary `b729ba48...`); the head stays at
+`demo11-fix-batch-p`.

@@ -1,6 +1,51 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-gfx-world8c': {
+        'binary': 'BrutalMarioDemo11GfxWorld8CSNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 8C',
+    },
+
+    'demo11-gfx-world8b': {
+        'binary': 'BrutalMarioDemo11GfxWorld8BSNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 8B',
+    },
+
+    'demo11-gfx-world8a': {
+        'binary': 'BrutalMarioDemo11GfxWorld8ASNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 8A',
+    },
+
+    'demo11-gfx-world7': {
+        'binary': 'BrutalMarioDemo11GfxWorld7SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 7',
+    },
+
+    'demo11-gfx-world6': {
+        'binary': 'BrutalMarioDemo11GfxWorld6SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 6',
+    },
+
+    'demo11-gfx-world5': {
+        'binary': 'BrutalMarioDemo11GfxWorld5SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 5',
+    },
+
+    'demo11-gfx-world4b': {
+        'binary': 'BrutalMarioDemo11GfxWorld4BSNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 4B',
+    },
+
+    'demo11-gfx-world4a': {
+        'binary': 'BrutalMarioDemo11GfxWorld4ASNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 4A',
+    },
+
+    'demo11-gfx-world23': {
+        'binary': 'BrutalMarioDemo11GfxWorld23SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx World 2-3',
+    },
+
     'world1-room138-audio': {
         'binary': 'BrutalMarioWorld1Room138AudioSNESRecomp',
         'title': 'Brutal Mario World1 Room138 Audio',
