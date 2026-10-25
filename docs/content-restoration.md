@@ -1084,3 +1084,10 @@ from cheap-demo onto `demo11-hp-bars`. Room `0xCC` now keeps both
 custom sprites active while the HP HUD region stays byte-identical. Chain end
 `demo11-sprites-cc` (ROM `8d9330de...`, native `e5e1a3e9...`).
 Suite **62/62**; audit zero unexpected.
+
+The [room 0x128 HP bar recipe](demo11-hp-room128.md) extends the accepted
+HP shim to room `0x128`. The room already filled the legacy `$7F:FFE0`
+row and set `$7F:FFDF`; only the HUD upload was missing. The fixed
+capture changes the HUD row and leaves the gameplay field byte-identical.
+Chain end `demo11-hp-room128` (ROM `d41eda4d...`, native
+`f3975d6f...`). Suite **63/63**; audit zero unexpected.

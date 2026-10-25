@@ -71,6 +71,7 @@ CHECKS = [
     ('boss room music A9', 'qualify_demo11_boss_music_a9'),
     ('boss/Mario HP bars', 'qualify_demo11_hp_bars'),
     ('CC room custom sprites', 'qualify_demo11_sprites_cc'),
+    ('room 128 HP bar', 'qualify_demo11_hp_room128'),
 ]
 
 
