@@ -294,3 +294,31 @@
  }
 
  /* Snapshot of the journal as the renderer will consume it, for the debug
+@@ -3518,7 +3602,15 @@
+       break;
+     }
+     case 0x18: {
+-      // TODO: vram access during rendering (also cgram and oam)
++      /* HDMA runs during the visible field: H-blank does not open VRAM.
++       * Reject its writes unless forced blank is active, while retaining
++       * VMAIN's address increment. CPU/general DMA retain the legacy
++       * permissive upload policy required by accepted Carol scripts. */
++      if (g_ppu_wlog_src == kPpuWlogHdma && !PPU_forcedBlank(ppu)) {
++        if (!ppu->vramIncrementOnHigh) ppu->vramPointer += ppu->vramIncrement;
++        break;
++      }
++      // TODO: CPU/general DMA access during rendering (also cgram and oam)
+       uint16_t vramAdr = ppu_getVramRemap(ppu);
+       ppu->vram[vramAdr & 0x7fff] = (ppu->vram[vramAdr & 0x7fff] & 0xff00) | val;
+       ppu->vramWriteCount++;
+@@ -3535,6 +3627,10 @@
+       break;
+     }
+     case 0x19: {
++      if (g_ppu_wlog_src == kPpuWlogHdma && !PPU_forcedBlank(ppu)) {
++        if (ppu->vramIncrementOnHigh) ppu->vramPointer += ppu->vramIncrement;
++        break;
++      }
+       uint16_t vramAdr = ppu_getVramRemap(ppu);
+       ppu->vram[vramAdr & 0x7fff] = (ppu->vram[vramAdr & 0x7fff] & 0x00ff) | (val << 8);
+       ppu->vramWriteCount++;

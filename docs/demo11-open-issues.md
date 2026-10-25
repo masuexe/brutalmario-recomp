@@ -1,70 +1,37 @@
-# Demo 1-1 open course issues
+# Demo 1-1 course playtest issues
 
-Date: 2026-10-26. This note records issues that the user reported during the
-playtest of the candidate chain. These issues are not fixed.
+The latest dispositions supersede the earlier speculative storm notes. See
+[the Dragon Coin runtime fix](demo11-storm-dragon-coins.md) for reproduction,
+identities and bounded automated evidence.
 
-## Level 122 (translevel 046): storm effects
+## Level 122 (translevel 046): storm mosaic — user accepted
 
-The user reports that this level has a thunder effect that triggers a mosaic
-effect. The candidate chain plays the level, but the user does not see the
-mosaic effect.
+The user confirmed that the mosaic effect appears later in gameplay and
+matches original Demo 1-1. They requested no further investigation. Parity
+with cheap_demo remains unproven and is not a condition of this acceptance.
+Death-transition mosaic is a separate observation.
 
-Test result: the effect is present in both hosts. A 21-second capture of the
-level shows dark lightning frames and mosaic frames after about 20 seconds.
+Earlier reports called 13 of 42 standing screenshots "mosaic frames" based
+on image brightness and edge metrics. Those metrics do not establish mosaic;
+inspected register dumps show MOSAIC `$03`, a 1x1 setting. The previous
+assertion that these captures prove a periodic 8x8 rain-layer effect is
+withdrawn. Keep the captures intact as historical observations.
 
-| Frame | Mean brightness | Edge ratio |
-| --- | ---: | ---: |
-| normal | 75.6 | 0.43 |
-| lightning with mosaic | 64.1 | 0.083 |
-| mosaic only | 74.9 | 0.083 |
+## Level 122: Dragon Coin column — automatically fixed
 
-The native host shows the same pattern as the reference host. A 70-second
-standing capture has mosaic in 13 of 42 samples (about 31 percent). The mosaic
-periods last about two to three seconds and repeat every few seconds.
+The user reported a persistent column of garbage 8x8 tiles at the collected
+coin's position, including the second coin near a green Koopa. Scrolling the
+area out and back removes it. This was reproduced on the old native build
+and in interpreter-only mode. The Dragon Coins here are Map16 objects,
+not sprites; the earlier sprite/OAM explanation was speculation.
 
-Screenshots: `local/captures/storm-046-long/normal.png` and
-`local/captures/storm-046-long/mosaic.png`. The mosaic frames render in 8 by 8
-blocks, so the striped background looks coarse.
+The runtime now rejects invalid visible-field HDMA VRAM writes while retaining
+ordinary CPU/DMA upload compatibility. Five real pickups, the extra life,
+both Map16 planes and the full tilemap match default Snes9x in both native
+renderers and pure interpreter mode. The old binary remains an explicit
+negative control. This is automated qualification, not a new user playtest,
+full-course clear or save/reload claim.
 
-Captures: `local/captures/storm-046-ref` and `storm-046-nat`. Script:
-`local/probes/storm-046.script`. The analysis tool is
-`local/probes/storm-metrics.py`.
-
-The level stream for room `0x122` is byte-identical in most versions, and the
-room header lists the same graphics IDs. The graphics batch O1 ports `30F` and
-`30E` from 7hero.
-
-## Level 122 (translevel 046): Dragon Coin glitch
-
-The user reports that collecting a Dragon Coin causes a vertical-line
-graphics glitch.
-
-The Dragon Coin is a sprite. Its animation uses the sprite graphics set, not
-the extended tile IDs that batch O1 ports. The glitch may come from the recomp
-host, or from a graphics set that differs from the intended version.
-
-## User observations (2026-10-26)
-
-- A second Dragon Coin in level `0x122` also causes the vertical line.
-- A green Koopa stands near that second coin. Touching the Koopa causes death,
-  and mosaic appears at the death moment.
-- The user sees mosaic at normal death transitions, not during ordinary play.
-- The user expects the thunder mosaic from the reference video
-  `https://www.youtube.com/watch?v=an3OtxYxhlU`.
-
-Control test: a 40-second standing capture of level `0x002` has zero high-uniform
-frames. A 70-second standing capture of level `0x122` has mosaic frames in 13 of
-42 samples. The mosaic in `0x122` applies to the rain layer: the stripes become
-smooth 8 by 8 blocks for 2 or 3 seconds, then return.
-
-The window session and the capture session still differ. A short video from the
-user, or a check at the captured TIME values, will resolve the difference.
-
-## Next steps
-
-1. Capture level 122 on the reference host for a longer interval. Check for
-   mosaic frames during a lightning strike.
-2. Compare the reference and native captures at the same frame.
-3. List the sprites of room `0x122` and identify the storm sprite.
-4. Ask the user which version shows the expected effect. A newer or older
-   version may hold the intended graphics or behavior.
+The cumulative ROM remains `demo11-fix-batch-p`; head promotion and the broader
+full-game restoration remain open. Level `09E` is a user-identified test room
+that normally does not appear during ordinary play.

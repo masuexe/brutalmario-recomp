@@ -7,8 +7,8 @@
       "source": "runner/src/snes/ppu.c",
       "patch": "patches/runtime/0001-fix-mosaic-and-raster-restore.patch",
       "source_sha256": "c505bdfdc64cbc84ecdb2750fca34893ca93c43f789c85bbd6462b9488de2e46",
-      "patch_sha256": "bba7ca514d4b5ea4c25e404d76ad926db7579311de1828381734361fe91e1594",
-      "result_sha256": "452e63ea7606cd22cea25ac97d396a16aee66f580fdfde90f1bad43816c7bd14"
+      "patch_sha256": "1c8c3f813b6c959af1f7ce55741ced8fc8072f2eb7e3d2359206021fa3ef6574",
+      "result_sha256": "78a111116b431be5e6f4dec1e071b865c79af7c7960d00a9c799a130b47dc7b1"
     },
     {
       "id": "beam-resumable-interrupts",

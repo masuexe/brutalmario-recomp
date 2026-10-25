@@ -15,6 +15,12 @@ class PpuMosaicTests(unittest.TestCase):
     @unittest.skipUnless(shutil.which('cc') and
                          (ROOT / 'local/upstream/snesrecomp/runner/src/snes/ppu.c').is_file(),
                          'requires the pinned local runtime checkout and a C compiler')
+    def test_hdma_cannot_corrupt_vram_outside_forced_blank(self):
+        self.compile_and_run('ppu_hdma_vram_test.c')
+
+    @unittest.skipUnless(shutil.which('cc') and
+                         (ROOT / 'local/upstream/snesrecomp/runner/src/snes/ppu.c').is_file(),
+                         'requires the pinned local runtime checkout and a C compiler')
     def test_counter_latch_selectors_bus_and_save_compatibility(self):
         self.compile_and_run('ppu_counter_latch_test.c')
 

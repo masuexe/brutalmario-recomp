@@ -906,3 +906,23 @@ as the head.
 The [head promotion plan](demo11-head-promotion.md) promotes
 `demo11-fix-batch-p` after the user playtest.
 
+
+
+### Room 122 Dragon Coin runtime correction
+
+The [Dragon Coin fix](demo11-storm-dragon-coins.md) resolves the persistent
+vertical garbage column after pickups on `demo11-fix-batch-p`. The ROM is
+unchanged. The PPU rejects visible-field HDMA VRAM writes outside forced
+blank while preserving the accepted permissive CPU/general-DMA upload policy.
+Five real assisted pickups, the fifth-coin extra life, both Map16 planes and
+all 16 KiB of tilemap VRAM match default Snes9x in both renderers and pure
+interpreter mode. The preserved old binary reproduces the corruption using
+the same tracked input. Startup pictures and the LOVE ANIMAL legacy graphics
+upload regression pass. The integrated suite reports **45/45**; the whole-ROM
+byte audit still has zero unexpected bytes.
+
+The user confirmed that the storm mosaic appears later and matches original
+Demo 1-1, then closed that investigation. cheap_demo parity is not claimed.
+Earlier image metrics did not prove mosaic and have been superseded. The head
+is still `demo11-star-bgm`; candidate promotion and broader restoration remain
+open.

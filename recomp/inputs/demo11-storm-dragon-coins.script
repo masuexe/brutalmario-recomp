@@ -1,0 +1,102 @@
+# Diagnostic practice entry followed by assisted real Dragon Coin collisions.
+# Map-node override, player teleports and damage immunity are fixtures.
+# Never writes coin counters, Map16, VRAM, completion flags or SRAM.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 46
+press y 2
+wait 240
+dump entry
+forcepoke 1497 ff
+
+# Coin 1: settle camera near its real Map16 placement.
+poke 96 d000
+poke 94 8002
+poke 7b 00
+poke 7d 00
+wait 30
+dump near1
+dump pre1
+poke 94 d002
+poke 96 4801
+wait 2
+dump coin1
+wait 15
+dump held1
+
+# Coin 2: settle camera near its real Map16 placement.
+poke 96 9000
+poke 94 9006
+poke 7b 00
+poke 7d 00
+wait 30
+dump near2
+dump pre2
+poke 94 e006
+poke 96 0801
+wait 2
+dump coin2
+wait 15
+dump held2
+
+# Coin 3: settle camera near its real Map16 placement.
+poke 96 f000
+poke 94 1008
+poke 7b 00
+poke 7d 00
+wait 30
+dump near3
+dump pre3
+poke 94 6008
+poke 96 6801
+wait 2
+dump coin3
+wait 15
+dump held3
+
+# Coin 4: settle camera near its real Map16 placement.
+poke 96 f000
+poke 94 300a
+poke 7b 00
+poke 7d 00
+wait 30
+dump near4
+dump pre4
+poke 94 800a
+poke 96 6801
+wait 2
+dump coin4
+wait 15
+dump held4
+
+# Coin 5: settle camera near its real Map16 placement.
+poke 96 d000
+poke 94 a00b
+poke 7b 00
+poke 7d 00
+wait 30
+dump near5
+dump pre5
+poke 94 f00b
+poke 96 4801
+wait 2
+dump coin5
+wait 15
+dump held5
+quit
