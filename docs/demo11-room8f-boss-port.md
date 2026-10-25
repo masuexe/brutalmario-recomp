@@ -54,3 +54,9 @@ that this behavior is the author intent.
   the same defeat state as demoOnly1.
 - The two moved graphics assets keep their decode. The qualifier checks the
   first decoded byte only.
+
+## Survey
+
+A survey of all 255 translevels on this chain gives 232 playable entries.
+The result matches the `demo11-sprites-native-records` survey for every
+translevel. The boss port changes no survey result.
