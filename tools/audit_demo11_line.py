@@ -6,6 +6,7 @@ allocations, graphics slots, room-record words, music slots and code patches. Th
 tool unions those regions from the recipe configs and asserts that the head differs
 from the pinned input nowhere else, across the whole line at once.
 """
+import argparse
 import json
 import sys
 from pathlib import Path
@@ -69,15 +70,20 @@ def allowed_regions(cfg):
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--head', default=HEAD,
+                        help='restoration target to audit; defaults to the current head')
+    args = parser.parse_args()
+    head_target = args.head
     versions = json.loads((ROOT / 'config/content-versions.json').read_text())['versions']
     input_pin = next(v['output'] for v in versions if v['id'] == 'demo-1-1')
     source = (ROOT / 'local/content-versions/demo-1-1/rom.sfc').read_bytes()
     verify(source, input_pin, 'demo 1-1 input')
-    head = (ROOT / 'local/restoration' / HEAD / 'rom.sfc').read_bytes()
-    head_cfg = json.loads((ROOT / 'config/restorations' / (HEAD + '.json')).read_text())
-    verify(head, head_cfg['output'], HEAD)
+    head = (ROOT / 'local/restoration' / head_target / 'rom.sfc').read_bytes()
+    head_cfg = json.loads((ROOT / 'config/restorations' / (head_target + '.json')).read_text())
+    verify(head, head_cfg['output'], head_target)
 
-    chain = recipe_chain(HEAD)
+    chain = recipe_chain(head_target)
     regions = set()
     previous = None
     pins = {v['id']: v['output'] for v in versions}

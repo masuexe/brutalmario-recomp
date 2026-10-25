@@ -182,9 +182,16 @@ All 78 stalls are fixed. The 45 non-playable entries that remain are not
 stalls: 31 return to the map, 10 die or use a death mode, 3 are in a reload
 fade and 1 has an unexpected mode.
 
-Several of the deaths are scripted no-input falls: `001`, `018`, `01B`,
-`024`, `097`, `0AD` and `0BE`. The rest of the `0E` entries are
-probably unused or empty rooms.
+Every non-playable entry is explained:
+
+| Class | Count | Detail |
+| --- | ---: | --- |
+| No-input death | 43 | Mode `14` at entry 240, lives drop 4 to 3, then map, death or reload mode |
+| Normal map return | 2 | Translevels `077` and `07B` load room `0C5` (Yoshi's House), which returns to the map by design |
+
+No stall and no unreachable room remain in the range. The chain end also passes
+the whole-line byte audit: 39 recipes reproduced, 382,653 changed bytes inside
+494,184 reviewed bytes, zero unexpected bytes.
 
 Report: `local/reports/demo11-course-survey-chain-o.json`.
 
