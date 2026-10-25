@@ -156,6 +156,20 @@ format equal the chain, so the remaining difference is not in those data.
 The next evidence to request is a savestate of a working fight or a screenshot
 of the cheap-demo room entry.
 
+## Direct room entry: 2026-10-26
+
+The user asked to run the launcher with level `0xBC` so the boss room loads
+directly. The launcher maps a Lunar Magic level number to a translevel byte
+through `config/demo11-level-index.json`. That index has no
+level `0xBC` entry, so the launcher refuses the value now.
+
+A scan of all 256 translevel values on the chain measured the loaded room for
+each value. The map is mostly identity, with a few remaps such as
+`0x83 -> 0x15F` and `0xBC -> 0x198`. No translevel value loads room
+`0xBC`, so a level-index entry alone cannot reach the boss room.
+The recipe must also remap a translevel value, or the game must load the room
+by another path. The map table location is not yet found.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room
