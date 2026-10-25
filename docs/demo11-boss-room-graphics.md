@@ -100,6 +100,32 @@ a secondary entrance record, or boss content that still needs the later boss
 migration. The user must report whether the bar appears after walking to the
 boss trigger.
 
+## Boss spawn investigation: 2026-10-26
+
+The room sprite list entry for room `0xBC` is
+`00 19 70 2B 3D 70 29 FF`. Under the variable-length record format
+(a record with flag bit 3 carries one extra byte) the list places **sprite `0x2B`**
+with parameter `0x3D`. The chain installs the cheap-demo record and code block
+for sprite `0x2B`, so the data to spawn it exists.
+
+Observed results:
+
+- Runtime captures of room `0xBC` show only the scroll-control pseudo
+  sprite `0x01` during Mario Start and no sprite in gameplay.
+- Walking right, forcing Mario to screen 1, and idling up to 600 frames do not
+  spawn any sprite.
+- A fixture that places a vanilla sprite in the room list also spawns nothing.
+- A fixture with default records for `0x2B` and `0x29` spawns nothing.
+- Pointing room `0x083` at the room `0xBC` list spawns nothing, so the
+  sprite index is not the translevel byte alone.
+
+The boss graphics of the room are tiles. The boss health bar is drawn by the
+boss sprite code, so it cannot appear while no boss spawns.
+
+Next checks: the room list header semantics (the first byte is `0x00` here),
+the secondary entrance record, and whether the intended boss belongs to a newer
+demo lineage.
+
 ## Limits
 
 - The scripted route cannot reach the big door of level `0x109`. The room
