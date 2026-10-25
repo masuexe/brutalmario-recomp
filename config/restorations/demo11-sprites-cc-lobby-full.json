@@ -1,0 +1,477 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Sprites CC Lobby Full",
+  "id": "demo11-sprites-cc-lobby-full",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-cc-lobby",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "34bddb8412945c68e82f78bb642d46c0c41ffa5b27e112e5d6925d62b1fd21df"
+  },
+  "scope": "Port the remaining CC lobby custom sprites 0x67, 0x68, 0x6A, 0x71 and 0x5B with reviewed graphics relocations.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 2106472,
+    "size": 256,
+    "fill": 0
+  },
+  "assets": [],
+  "relocations": [
+    {
+      "source_offset": 1060084,
+      "destination_offset": 3518464,
+      "size": 2605,
+      "sha256": "ee127c13cd71d8444b51b37dae26984d66932ec33982908d1eadf792f39d4105",
+      "pointer_offset": 655623,
+      "pointer_before": "fcac20",
+      "pointer_after": "08b06b",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1093234,
+      "destination_offset": 2408192,
+      "size": 1668,
+      "sha256": "5826be0904d5dd4366c6c908d9a8de50ad72487eef2a75a2b045757d9bd17522",
+      "pointer_offset": 656439,
+      "pointer_before": "7aae21",
+      "pointer_after": "08bf49",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1094902,
+      "destination_offset": 2830848,
+      "size": 1967,
+      "sha256": "a7b650245a82cdab5e2b5b63ea78682f4d62cf8e7aa1c48833a0f330c689dc00",
+      "pointer_offset": 656442,
+      "pointer_before": "feb421",
+      "pointer_after": "08b256",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1062689,
+      "destination_offset": 3192832,
+      "size": 2274,
+      "sha256": "f4820e6ea4c89f0df0816affa92fa96d67c8330fc62d74e903806d131cd8234b",
+      "pointer_offset": 655626,
+      "pointer_before": "29b720",
+      "pointer_after": "08b861",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1064963,
+      "destination_offset": 2992896,
+      "size": 2239,
+      "sha256": "02dea385e2e676adc428b0ba038cb50df22057a1db28126fe359c9e53073ef78",
+      "pointer_offset": 655629,
+      "pointer_before": "0bc020",
+      "pointer_after": "08ab5b",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1067202,
+      "destination_offset": 2696960,
+      "size": 1742,
+      "sha256": "456a13d5be4a4782e7d72235e8863e482cc1c45a017de455fd9bcfe758521644",
+      "pointer_offset": 655680,
+      "pointer_before": "cac820",
+      "pointer_after": "08a752",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1070786,
+      "destination_offset": 3874816,
+      "size": 2978,
+      "sha256": "14aedd82934d6a68c1957ee989639cbd7356b7470e4d734bba014cd0338eac1d",
+      "pointer_offset": 655905,
+      "pointer_before": "cad620",
+      "pointer_after": "08a076",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1102085,
+      "destination_offset": 2894848,
+      "size": 1548,
+      "sha256": "08af514fbd2a9ec3d76f158a4ab4bfd88b03e2a64448a1683b63419fce0c171f",
+      "pointer_offset": 656574,
+      "pointer_before": "0dd121",
+      "pointer_after": "08ac58",
+      "zero_source": true
+    },
+    {
+      "source_offset": 1103633,
+      "destination_offset": 2941696,
+      "size": 1408,
+      "sha256": "2656e2d43aa292c541f3594d90c1c8ebd3214a524bc20913eb0bbc280980cfc9",
+      "pointer_offset": 656577,
+      "pointer_before": "19d721",
+      "pointer_after": "08e359",
+      "zero_source": true
+    }
+  ],
+  "custom_sprites": [
+    {
+      "id": "67",
+      "rooms": [
+        205,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220,
+        221,
+        222,
+        223,
+        225,
+        229,
+        230,
+        231
+      ],
+      "source_address": "23B00F",
+      "destination_address": "20B00F",
+      "allocation": {
+        "offset": 1060879,
+        "size": 864
+      },
+      "block": {
+        "size": 864,
+        "sha256": "bdb53b2e46151a53a002749e6f2f4bac94b21a3f4e0badb3700965ccd159afe9"
+      },
+      "source_record_address": "10B7CD",
+      "destination_record_address": "3188E2",
+      "source_record": "012200003e0319441eb02335b0230000",
+      "record_after": "012200003e0319441eb02035b0200000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    },
+    {
+      "id": "68",
+      "rooms": [
+        211,
+        212
+      ],
+      "source_address": "23B36F",
+      "destination_address": "21B36F",
+      "allocation": {
+        "offset": 1094511,
+        "size": 1707
+      },
+      "block": {
+        "size": 1707,
+        "sha256": "16525149662b500d446a7703b489c11bb3bbb5c78ac1bb02ce0c655c62eba2eb"
+      },
+      "source_record_address": "10B7DD",
+      "destination_record_address": "3188F2",
+      "source_record": "013610bb3b8b18407eb323c4b3230000",
+      "record_after": "013610bb3b8b18407eb321c4b3210000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    },
+    {
+      "id": "6A",
+      "rooms": [
+        216,
+        226,
+        227,
+        228
+      ],
+      "source_address": "23BEE5",
+      "destination_address": "20BEE5",
+      "allocation": {
+        "offset": 1064677,
+        "size": 3376
+      },
+      "block": {
+        "size": 3376,
+        "sha256": "03ea43204426c9e84df053724e577bfd346a07e1d98a9da281e4457b1f94518c"
+      },
+      "source_record_address": "10B7FD",
+      "destination_record_address": "318912",
+      "source_record": "013610003b8b1840f4be233fbf230000",
+      "record_after": "013610003b8b1840f4be203fbf200000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    },
+    {
+      "id": "71",
+      "rooms": [
+        58,
+        85,
+        153,
+        196
+      ],
+      "source_address": "23DFDA",
+      "destination_address": "20DFDA",
+      "allocation": {
+        "offset": 1073114,
+        "size": 460
+      },
+      "block": {
+        "size": 460,
+        "sha256": "f660660571d0ac56d2c3df2b88b71712cfcb6d248e10379ff9df07d9b559a2e2"
+      },
+      "source_record_address": "10B86D",
+      "destination_record_address": "318982",
+      "source_record": "013601063b139964e9df23f3df230000",
+      "record_after": "013601063b139964e9df20f3df200000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    },
+    {
+      "id": "5B",
+      "rooms": [
+        193
+      ],
+      "source_address": "22D305",
+      "destination_address": "21D305",
+      "allocation": {
+        "offset": 1102597,
+        "size": 1241
+      },
+      "block": {
+        "size": 1241,
+        "sha256": "440e3abd4011d9f56558ab05e9b92356bf538bda38a109a4dbacc2182d6a9321"
+      },
+      "source_record_address": "10B70D",
+      "destination_record_address": "318822",
+      "source_record": "013601063b13194414d32234d3220000",
+      "record_after": "013601063b13194414d32134d3210000",
+      "before": "0000ffffffffffff218001218001ffff",
+      "shared_dependencies": [
+        {
+          "address": "27FAE4",
+          "size": 256,
+          "sha256": "9143c172b10acf02c46a26bf8f6b6bdb98170a649b683d76a923d5d8ed1c4177"
+        },
+        {
+          "address": "01801A",
+          "size": 32,
+          "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+        },
+        {
+          "address": "01A7DC",
+          "size": 384,
+          "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+        },
+        {
+          "address": "01B7B3",
+          "size": 256,
+          "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+        },
+        {
+          "address": "02A9DE",
+          "size": 128,
+          "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+        },
+        {
+          "address": "07F7D2",
+          "size": 160,
+          "sha256": "47c70ff30cb01b22142f2ff11dd34385ecc244ebc8483abb9eccb73118644464"
+        }
+      ],
+      "versioned_dependencies": [
+        {
+          "role": "recipient",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "6409738da005b37970aa4184b0a48e93c7429cf2fd08aed3492ebf306929fd31"
+        },
+        {
+          "role": "donor",
+          "address": "0187A7",
+          "size": 4,
+          "sha256": "5e58b0e43332d7b141bc4497c23d1b437406e4f2046f149fbfbc039736744f5a"
+        }
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "3ef5817beffc26b5c11cb51d0c810839478db9bf4234a59c6cf27f9c25fdeff0"
+  }
+}

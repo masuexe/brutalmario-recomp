@@ -1104,3 +1104,9 @@ The [CC lobby sprite batch](demo11-cc-lobby-sprites.md) ports custom sprite
 `0xE2` and `0x155` now run the custom code. The room frame changes
 and the HUD stays identical. Chain end `demo11-sprites-cc-lobby`
 (ROM `34bddb84...`). Suite **65/65**; audit zero unexpected.
+
+The [CC lobby sprite set](demo11-cc-lobby-sprites-full.md) ports the remaining
+lobby sprites `0x67`, `0x68`, `0x6A`, `0x71` and `0x5B` with nine
+reviewed graphics relocations. Room frames change and the HUD stays identical.
+Chain end `demo11-sprites-cc-lobby-full` (ROM `3ef5817b...`).
+Suite **66/66**; audit zero unexpected.
