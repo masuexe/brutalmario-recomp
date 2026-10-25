@@ -136,6 +136,10 @@ graphics IDs. They fix `080`, `081` and `068`.
 The [music batch G](demo11-course-batch-g.md) uses raw legacy group slices for
 songs with unreviewed commands. It fixes `02B`, `02F` and `06C`.
 
+The [graphics fix batches H and I](demo11-course-batch-h.md) port sixteen more
+graphics IDs. They fix `027`, `03A`, `040`, `051` and `066`, and reach
+gameplay on `018` and `01B`.
+
 ## First broken course: translevel 001
 
 Translevel `001` stops at mode `12` (Mario Start). The reference capture shows

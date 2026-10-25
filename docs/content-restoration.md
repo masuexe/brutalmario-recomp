@@ -875,6 +875,10 @@ graphics IDs for rooms `0x15C`, `0x15D` and `0x144`. They fix `080`, `081` and
 
 The [music batch G](demo11-course-batch-g.md) installs six legacy songs as raw
 group slices. This path skips the command-graph walk, so songs with unreviewed
-commands are installable. It fixes `02B`, `02F` and `06C`. The suite now reports
-**39/39**; the candidates are not accepted as the head.
+commands are installable. It fixes `02B`, `02F` and `06C`.
+
+The [graphics fix batches H and I](demo11-course-batch-h.md) port sixteen more
+graphics IDs for the remaining graphics-only stalls. They fix `027`, `03A`,
+`040`, `051` and `066`, and they let `018` and `01B` reach gameplay. The suite
+now reports **40/40**; the candidates are not accepted as the head.
 

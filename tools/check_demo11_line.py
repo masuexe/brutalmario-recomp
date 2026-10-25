@@ -48,6 +48,7 @@ CHECKS = [
     ('music batch C / fix batch D', 'qualify_demo11_music_batch_cd'),
     ('graphics fix batches E / F', 'qualify_demo11_gfx_batches_ef'),
     ('music batch G', 'qualify_demo11_music_batch_g'),
+    ('graphics fix batches H / I', 'qualify_demo11_gfx_batches_hi'),
 ]
 
 
