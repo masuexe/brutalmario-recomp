@@ -19,6 +19,17 @@ The fixture supports rooms `0x00` to `0xFF` only. Rooms with a known map
 entry keep the normal level-entry path.
 
 
+## On-screen room label
+
+Add `--show-room` to a practice command. The game window then shows a
+top-left label with the current room, the translevel and the game mode:
+
+    python3 tools/play_demo_only1.py --restoration demo11-sprites-remaining-free --room 0xCC --show-room
+
+The label is a host overlay. It does not change guest memory or a capture.
+Use the room number from the label in the playtest report.
+
+
 ## Candidate chain practice sessions
 
 Start a fresh practice session at a Lunar Magic level number:

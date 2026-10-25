@@ -341,6 +341,8 @@ def main():
                         help='enable normal swimming in air for this practice session (tap jump to rise)')
     parser.add_argument('--show-location', action='store_true',
                         help='print map coordinates and room IDs in this terminal as they change')
+    parser.add_argument('--show-room', action='store_true',
+                        help='show the current room ID in an on-screen host label')
     args = parser.parse_args()
     if args.list_levels:
         print_levels()
@@ -455,6 +457,9 @@ def main():
     if args.show_location:
         os.environ['M1_SHOW_LOCATION'] = '1'
         print('Location readout ON in this terminal. OW coordinates persist inside levels; room IDs may be stale on the map.', flush=True)
+    if args.show_room:
+        os.environ['M1_ROOM_OSD'] = '1'
+        print('Room ID label ON in the game window. It shows ROOM, translevel and game mode.', flush=True)
     os.chdir(directory)
     os.environ['SNESRECOMP_SEPARATE_ECHO'] = '1'
     if windows_audio.available(ROOT) and windows_audio.enabled(directory / 'config.ini'):

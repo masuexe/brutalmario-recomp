@@ -7,6 +7,7 @@
 #include "snes/interp_bridge.h"
 #include "common_rtl.h"
 #include "desktop/host_main.h"
+#include "snes_osd.h"
 
 extern Snes *g_snes;
 
@@ -62,10 +63,36 @@ extern CpuState g_cpu;
 extern Snes *g_snes;
 extern unsigned char g_ram[0x20000];
 
+/* Optional on-screen room label. The host OSD sits above the presented frame,
+ * so this never writes guest memory. M1_ROOM_OSD=1 enables it. */
+void M1RoomOsdSample(void)
+{
+    static int enabled = -1;
+    static unsigned previous_room = ~0u, previous_translevel = ~0u;
+    static unsigned frames;
+    if (enabled < 0) {
+        const char *value = getenv("M1_ROOM_OSD");
+        enabled = value && value[0] == '1';
+    }
+    if (!enabled || !g_snes) return;
+    unsigned room = g_ram[0x10b] | (g_ram[0x10c] << 8);
+    unsigned translevel = g_ram[0x13bf];
+    unsigned mode = g_ram[0x100];
+    frames++;
+    if (room == previous_room && translevel == previous_translevel && frames % 90 != 0)
+        return;
+    previous_room = room;
+    previous_translevel = translevel;
+    char text[64];
+    snprintf(text, sizeof(text), "ROOM %03X  T%02X  MODE %02X", room, translevel, mode);
+    snes_osd_push(text, 2000);
+}
+
 /* Optional frame-boundary observations for recording reproducible entrances.
  * No guest writes, debugger thread or instruction hooks are needed. */
 void M1LocationSample(const SnesDesktopHostFrameStats *stats)
 {
+    M1RoomOsdSample();
     static int enabled = -1;
     static unsigned previous[6];
     static int have_previous;
