@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Global 10",
+  "id": "demo11-gfx-global10",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-global9",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "1953f7d33f25b43553013176d26c5fb4ed4c3d09f70a08718d8ba7568d216f6a"
+  },
+  "scope": "Port the missing extended graphics of the remaining level rooms, group 10.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 3268537,
+    "size": 7990,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "26C",
+      "target_id": "26C",
+      "source_address": "3DD229",
+      "decoded": {
+        "size": 4096,
+        "sha256": "6b2a92052ecf3cda436e182f91e88a056293d2949e4293566804cba4da6daa33"
+      },
+      "compressed": {
+        "size": 2134,
+        "sha256": "11368962e4a501f43bcb6b7f676dd4a637be48829d8d64a3afbc4f2765aaccbd"
+      },
+      "global_pointer": true,
+      "rooms": [
+        339,
+        350
+      ]
+    },
+    {
+      "source_id": "26D",
+      "target_id": "26D",
+      "source_address": "3DDA87",
+      "decoded": {
+        "size": 4096,
+        "sha256": "b99172b8beb038e7ac76818d677f3746317d812c1ca7344a6a96387ad49fad1e"
+      },
+      "compressed": {
+        "size": 2969,
+        "sha256": "67d0fbf82a2711b52f414d0e8b7f9f01a539519bb90e17f8ca6d79c458704f20"
+      },
+      "global_pointer": true,
+      "rooms": [
+        359,
+        361,
+        362,
+        370
+      ]
+    },
+    {
+      "source_id": "26E",
+      "target_id": "26E",
+      "source_address": "3DE628",
+      "decoded": {
+        "size": 4096,
+        "sha256": "6d02e62330729eddaed5e307934133f16571eeb796e03e76831843fea7e133d0"
+      },
+      "compressed": {
+        "size": 2607,
+        "sha256": "80f2c01d86db4e6e7054da3a76000526d331dc3209c6e7b051aa2c6072101641"
+      },
+      "global_pointer": true,
+      "rooms": [
+        350,
+        359,
+        361,
+        362,
+        370
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "882dfea7a7d376afac44861a965f7833019e24b92edf83788f0c4e82a63a153f"
+  }
+}

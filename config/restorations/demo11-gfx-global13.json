@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "target": "Brutal Mario Demo11 Gfx Global 13",
+  "id": "demo11-gfx-global13",
+  "recipient": "demo-1-1",
+  "donor": "7hero",
+  "base_restoration": "demo11-gfx-global12",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "588950eec79ea4267c828d339b1d409ee0b40f455e6e45b2632a7d615e47ca20"
+  },
+  "scope": "Port the missing extended graphics of the remaining level rooms, group 13.",
+  "gfx_record": {
+    "address": "14AF08",
+    "before": "01808108bc0f17001400bb0f130001000000bc0fffffffffffffffffffffffff"
+  },
+  "allocation": {
+    "offset": 1822737,
+    "size": 3608,
+    "fill": 0
+  },
+  "assets": [
+    {
+      "source_id": "284",
+      "target_id": "284",
+      "source_address": "3FBCF3",
+      "decoded": {
+        "size": 4096,
+        "sha256": "38d35fdbe00525c002ee34f7bf332143f01f90e8d7cd6b3aeba45eb13c209d4f"
+      },
+      "compressed": {
+        "size": 1570,
+        "sha256": "63503763bb2bc5bfadcd4efa025dbddb44dcdae21c9cca7466358bc57616448f"
+      },
+      "global_pointer": true,
+      "rooms": [
+        367
+      ]
+    },
+    {
+      "source_id": "285",
+      "target_id": "285",
+      "source_address": "3FC31D",
+      "decoded": {
+        "size": 4096,
+        "sha256": "c902ec67d518b081560318e6de65b9a2416148bab54dfae17db210777609519b"
+      },
+      "compressed": {
+        "size": 1766,
+        "sha256": "d79d4127a195ddfb57c193c3b7656b8a6cae8d75092c38a5f0e4ff228de609e0"
+      },
+      "global_pointer": true,
+      "rooms": [
+        366
+      ]
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "86d3a5cd5e2feebbd189e98b84deb3300f670128c3062901b64d1a7d106d691f"
+  }
+}

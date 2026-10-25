@@ -1,6 +1,71 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-gfx-global13': {
+        'binary': 'BrutalMarioDemo11GfxGlobal13SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 13',
+    },
+
+    'demo11-gfx-global12': {
+        'binary': 'BrutalMarioDemo11GfxGlobal12SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 12',
+    },
+
+    'demo11-gfx-global11': {
+        'binary': 'BrutalMarioDemo11GfxGlobal11SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 11',
+    },
+
+    'demo11-gfx-global10': {
+        'binary': 'BrutalMarioDemo11GfxGlobal10SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 10',
+    },
+
+    'demo11-gfx-global9': {
+        'binary': 'BrutalMarioDemo11GfxGlobal9SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 9',
+    },
+
+    'demo11-gfx-global8': {
+        'binary': 'BrutalMarioDemo11GfxGlobal8SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 8',
+    },
+
+    'demo11-gfx-global7': {
+        'binary': 'BrutalMarioDemo11GfxGlobal7SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 7',
+    },
+
+    'demo11-gfx-global6': {
+        'binary': 'BrutalMarioDemo11GfxGlobal6SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 6',
+    },
+
+    'demo11-gfx-global5': {
+        'binary': 'BrutalMarioDemo11GfxGlobal5SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 5',
+    },
+
+    'demo11-gfx-global4': {
+        'binary': 'BrutalMarioDemo11GfxGlobal4SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 4',
+    },
+
+    'demo11-gfx-global3': {
+        'binary': 'BrutalMarioDemo11GfxGlobal3SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 3',
+    },
+
+    'demo11-gfx-global2': {
+        'binary': 'BrutalMarioDemo11GfxGlobal2SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 2',
+    },
+
+    'demo11-gfx-global1': {
+        'binary': 'BrutalMarioDemo11GfxGlobal1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Gfx Global 1',
+    },
+
     'demo11-sprite-final': {
         'binary': 'BrutalMarioDemo11SpriteFinalSNESRecomp',
         'title': 'Brutal Mario Demo11 Sprite Final',

@@ -161,6 +161,14 @@ port. A test build that also ports the runtime sprite records `01`, `02` and
 records appear inert. The falling object needs a user description or a
 targeted runtime trace before the next change.
 
+## Room 11D resolved
+
+The user reported that room `11D` was broken on `demo11-sprites-cheap-demo`.
+That first candidate does not have the sprite `3A` record (the batch failed the
+allocated window). The record exists in `demo11-sprite-windows` and
+`demo11-sprite-final`. The user retested on the final chain and reported
+**11D is fine**.
+
 ## Status
 
 This is a candidate. The head remains `demo11-fix-batch-p`. The user must

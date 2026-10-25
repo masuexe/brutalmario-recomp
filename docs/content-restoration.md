@@ -986,3 +986,12 @@ confirm this behaviour change. The whole-line audit reproduces the chain with
 zero unexpected bytes and the suite reports **52/52**. The
 [expansion research](demo11-expansion-research.md) records the community
 answers for content beyond 4 MB.
+
+The [global graphics batches](demo11-gfx-global.md) close the 53 remaining
+empty extended graphics slots of the level rooms. Vertical-line corruption and
+start falls disappear in the affected rooms. The full-range survey on
+`demo11-gfx-global13` reports 255 loads, zero stalls and **233 playable**
+translevels (previous chain: 216). Translevel `069` changed its idle
+behaviour and needs a user check. The chain-end audit has zero unexpected
+bytes and the suite reports **54/54**. The user confirmed that room `11D` is
+fine on `demo11-sprite-final`.
