@@ -144,6 +144,37 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 2)
         self.assertFalse((self.root / 'local/play').exists())
 
+    def test_native_pack_launch_validates_pack_before_creating_session(self):
+        name = 'demo11-native-pack-pilot'
+        binary, rom, receipt = self.restoration_fixture(
+            name, 'BrutalMarioDemo11NativePackPilotSNESRecomp')
+        content = {'test_manifest': 'pinned'}
+        data = json.loads(receipt.read_text())
+        data['native_content'] = content
+        receipt.write_text(json.dumps(data))
+        pack = rom.parent / 'resource.bin'
+        pack.write_bytes(b'graphics payload')
+        spec = {'pack_file': pack.name, 'payload': {
+            'size': len(pack.read_bytes()), 'sha256': hashlib.sha256(pack.read_bytes()).hexdigest()}}
+        with patch.object(play, 'content_identity', return_value=content), \
+                patch.object(play, 'content_settings', return_value=(None, spec)):
+            _, execute, _ = self.invoke(['--restoration', name])
+            self.assertEqual(execute.call_args.args[0], str(binary))
+            sessions = list((self.root / 'local/play' / name / 'practice').iterdir())
+            pack.write_bytes(b'corrupt graphics')
+            with self.assertRaises(ValueError):
+                self.invoke(['--restoration', name])
+            self.assertEqual(list((self.root / 'local/play' / name / 'practice').iterdir()), sessions)
+
+    def test_native_pack_rejects_stale_runtime_identity(self):
+        self.restoration_fixture('demo11-native-pack-pilot',
+                                 'BrutalMarioDemo11NativePackPilotSNESRecomp')
+        with patch.object(play, 'content_identity', return_value={'test_manifest': 'new'}), \
+                self.assertRaises(SystemExit) as error:
+            self.invoke(['--restoration', 'demo11-native-pack-pilot'])
+        self.assertEqual(error.exception.code, 2)
+        self.assertFalse((self.root / 'local/play').exists())
+
     def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
         for name in ('star-world-1', 'star-world-upper-left', 'star-world-lower-right', 'star-world-upper-right', 'star-world-middle-right', 'star-world-upper-inner', 'star-world-middle-left', 'star-world-forest', 'star-world-lower-inner', 'star-world-center'):
             with self.subTest(restoration=name), self.assertRaises(SystemExit) as error:

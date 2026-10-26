@@ -18,6 +18,7 @@ import time
 
 from prepare_rom import verify
 from runtime_patches import configure_runtime, patch_plan
+from native_content import identity as content_identity, configure as configure_content
 from generator_patches import identity as generator_identity, prepare as prepare_generator
 from restoration_targets import RESTORATIONS
 
@@ -196,6 +197,9 @@ def main():
         parser.error('--renderer applies only to the native stage')
     pins = pins_check()
     runtime_patches = patch_plan()
+    native_content = content_identity(args.target)
+    if native_content and args.stage == 'reference':
+        parser.error('this content target requires the native PC runtime')
     generator_identity(args.target)
     if args.target in RESTORATIONS and args.stage in ('generate', 'build', 'native'):
         verify_scaffold_rom(EXPERIMENT, ROM)
@@ -218,6 +222,7 @@ def main():
             raise ValueError('restoration ROM differs from its build receipt; regenerate and rebuild')
         binary_sha = hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest()
         if (build_receipt['runtime_patches'] != runtime_patches or
+                build_receipt.get('native_content') != native_content or
                 build_receipt['binary_sha256'] != binary_sha or
                 build_receipt.get('audio_diagnostics', False) != args.audio or
                 (build_receipt.get('analysis') is not None and
@@ -260,6 +265,7 @@ def main():
     elif args.stage == 'build':
         install_metrics()
         configure_runtime(EXPERIMENT, TARGET)
+        configure_content(EXPERIMENT, TARGET, args.target)
         cmake = EXPERIMENT / 'CMakeLists.txt'
         support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
         if support not in cmake.read_text():
@@ -274,6 +280,7 @@ def main():
             'rom_sha256': hashlib.sha256(ROM.read_bytes()).hexdigest(),
             'binary_sha256': hashlib.sha256((BUILD / TARGET).read_bytes()).hexdigest(),
             'runtime_patches': runtime_patches,
+            'native_content': native_content,
             'audio_diagnostics': args.audio,
             'analysis': analysis_identity(),
         }, indent=2) + '\n')
@@ -321,6 +328,12 @@ def main():
             if SEPARATE_ECHO:
                 env.setdefault('SNESRECOMP_SEPARATE_ECHO', '1')
             env.setdefault('SNESRECOMP_APU_MASTER_CLOCK', '1')
+            if native_content:
+                from native_content import settings
+                spec = settings(args.target)[1]
+                pack = ROOT / 'local/restoration' / args.target / spec['pack_file']
+                verify(pack.read_bytes(), spec['payload'], 'native external pack')
+                env['BM_NATIVE_CONTENT_PACK'] = str(pack)
             if args.interpreter_only:
                 manifest = json.loads((EXPERIMENT / 'src/gen/program_manifest.json').read_text())
                 pcs = {int(key.split(':')[0], 16) for key in manifest['nodes']}
@@ -341,6 +354,7 @@ def main():
             'target': args.target,
             'upstream_pins': pins,
             'runtime_patches': runtime_patches,
+            'native_content': native_content,
             'rom_sha256': hashlib.sha256(ROM.read_bytes()).hexdigest(),
             'route_sha256': hashlib.sha256(script.read_bytes()).hexdigest(),
             'host_binary_sha256': hashlib.sha256(Path(command[0]).read_bytes()).hexdigest(),

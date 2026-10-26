@@ -12,6 +12,10 @@ the cartridge storage constraint. Preserve the working engine and restoration
 recipes. This is a direction decision, not a completed loader implementation
 or a claim that every donor is complete or compatible.
 
+The [first external graphics pilot](native-content-pilot.md) now implements a
+bounded native data-bank split with matching entry/movement and unchanged Boss
+route captures. Executable-module expansion is the next unqualified boundary.
+
 ## Frozen comparison checkpoint
 
 - Target: `demo11-sprites-orphan-cleanup`.
@@ -100,6 +104,7 @@ emulator image. Test their integration in the native host, distinguish donor
 differences from runtime defects, and preserve explicit limitations. A successful
 boot or interpreter/AOT agreement alone does not prove a correct course or boss.
 
-The next concrete action is to select the bounded resource and trace all its
-readers before implementing the first external-content target. No runtime or
-content payload changes are included in this documentation checkpoint.
+The first resource-delivery milestone is qualified separately in the
+[pilot report](native-content-pilot.md). The next concrete action is to select
+a blocked custom sprite and review its executable mapping and dependency
+closure. The fixed graphics bank must not be treated as a general code loader.

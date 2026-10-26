@@ -26,6 +26,11 @@ The [native content expansion plan](native-content-expansion.md) supersedes
 the earlier expansion recommendations to keep reclaiming cartridge space or
 require reference-host compatibility. The immediate next milestone is an
 isolated external-content pilot, followed by a currently blocked custom sprite.
+The [native graphics pilot](native-content-pilot.md) now qualifies the first
+resource-delivery step: a 3,001-byte graphics stream is absent from its derived
+ROM and supplied by an independently mapped external pack. Entry/movement and
+an unchanged Boss route match fresh native controls at 42 dump points; four
+invalid-pack startups fail as expected. Executable modules remain unqualified.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

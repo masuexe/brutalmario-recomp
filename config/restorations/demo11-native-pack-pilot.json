@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-pack-pilot",
+  "target": "Brutal Mario Demo11 Native Pack Pilot",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-sprites-orphan-cleanup",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "eccde6612343e9513e6903264f21b80d3a9a02d7f11199100e5907531232ff40"
+  },
+  "scope": "Native-only external ExGFX FFD delivery. Remove the compressed payload from the descendant ROM and serve bank B6 independently of bank 36. No new gameplay content.",
+  "native_content": {
+    "manifest": "config/native-content/star1-ffd.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "3da980ccd8ad57b9c2bd4628a63e5dd7a0fbe6e7a72b49bee691cb013f1a9865"
+  }
+}

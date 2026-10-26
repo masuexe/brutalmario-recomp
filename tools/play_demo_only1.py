@@ -9,6 +9,7 @@ import tempfile
 
 from prepare_rom import verify
 from runtime_patches import patch_plan
+from native_content import identity as content_identity, settings as content_settings
 import windows_audio
 from restoration_targets import RESTORATIONS
 
@@ -146,6 +147,11 @@ LEVELS = {
     'demo11-star-bgm': {'name': 'Star World lower-left Grassland Star with corrected BGM',
                         'map': 6, 'x': 0x128, 'y': 0x1e8, 'level': 0x005,
                         'teleport': (6, 0x128, 0x1e8)},
+    'demo11-native-pack-pilot': {
+        'name': 'Grassland Star with native external graphics',
+        'map': 6, 'x': 0x128, 'y': 0x1e8, 'level': 0x005,
+        'teleport': (6, 0x128, 0x1e8),
+    },
 }
 
 
@@ -397,12 +403,19 @@ def main():
     manifest = json.loads(manifest_path.read_text())
     verify(rom.read_bytes(), manifest['output'], manifest['target'])
     receipt = json.loads((build / 'm1-build.json').read_text())
+    content = content_identity(args.restoration or 'demo-only-1')
     if args.restoration and receipt.get('rom_sha256') != manifest['output']['sha256']:
         parser.error('restoration ROM differs from its build receipt; regenerate and rebuild')
     if (receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest() or
+            receipt.get('native_content') != content or
             receipt['runtime_patches'] != patch_plan()):
         parser.error('binary differs from its current runtime receipt; rebuild ' +
                      (args.restoration or 'demo-only-1') + ' first')
+    if content:
+        spec = content_settings(args.restoration)[1]
+        pack = ROOT / 'local/restoration' / args.restoration / spec['pack_file']
+        verify(pack.read_bytes(), spec['payload'], 'native external pack')
+        os.environ['BM_NATIVE_CONTENT_PACK'] = str(pack)
     command = [str(binary), '--no-launcher', '--rom', str(rom)]
     if (args.boss_door or args.special or args.air_swim or args.level or
             args.teleport is not None or args.translevel is not None or

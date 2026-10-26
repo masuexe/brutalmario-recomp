@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "id": "star1-ffd",
+  "resource": "cheap-demo/exgfx/101",
+  "recipient_gfx_id": "FFD",
+  "source_recipe": "config/restorations/demo11-star1-gfx.json",
+  "source_address": "25D76C",
+  "original_address": "368008",
+  "native_address": "B68008",
+  "pointer_offset": 666879,
+  "payload": {
+    "size": 3001,
+    "sha256": "3a51dd45f2df22d1f2490ca117070a68bfdab33cb03f734ad9e97c59e581a169"
+  },
+  "decoded": {
+    "size": 4096,
+    "sha256": "53b3c712f10a30c4f81baa000c4358ea7cebc9c10e3d423d0ed4124f7899fcbf"
+  },
+  "pack_file": "star1-ffd.bin",
+  "runtime_patch": "patches/runtime/0008-native-content-bank.patch",
+  "runtime_source_sha256": "fb79e160529feb156e93ddeb435e4e52929d9423cbb78f39462c2b9a311d2225",
+  "runtime_patch_sha256": "bde213969435f20652e747986f2fffae700ef196a677250559940282dfc8ecd9",
+  "runtime_result_sha256": "6df0357b97b2ea60874760f6cb97ad9bd6cd7903884f1b9cc2c469cc450b114f"
+}
