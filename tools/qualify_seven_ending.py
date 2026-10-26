@@ -242,6 +242,28 @@ def qualify(args):
             'scope': 'Ordered hidden checkpoints in the T room spawn a real sprite 78 in both '
                      'hosts. Both hosts award one life at the same sample index, and the pit '
                      'death consumes that life. Neither host writes the life count.'}
+    completion = None
+    if target == mushroom.TARGET:
+        save_ranges = ((0x1ea2,0x1f02),(0x1f02,0x1f11),(0x1f27,0x1f2b),
+                       (0x1f2e,0x1f2f),(0x1f2f,0x1f3b),(0x182c,0x1844))
+        starts = {}
+        for directory, label in ((source,'donor'),(native,'native')):
+            start, end = body(directory,'fight180'), body(directory,'test_after_death')
+            for low, high in save_ranges:
+                require(start[low:high] == end[low:high],
+                        f'{label} ending wrote saved progress at {low:05X}')
+            require(start[0x1febe] == end[0x1febe] == 0, 'master flag changed')
+            starts[label] = start
+        differing = [f'{index:05X}' for low, high in save_ranges for index in range(low,high)
+                     if starts['donor'][index] != starts['native'][index]]
+        completion = {
+            'save_progress_written': False,
+            'master_flag_7FEBE': 0,
+            'preexisting_level_status_differences': differing,
+            'scope': 'Neither host changes saved level status, events, switches, completion '
+                     'counter, DK bits, midway masks or $7FEBE across the ending path. The listed '
+                     'level-status differences exist before the fight and are version-local '
+                     'starting progress. The fixture does not prove an earned defeat.'}
     comparisons = []
     routes = [('star1','recomp/inputs/demo11-star1-entry.script'),
               ('boss','recomp/inputs/demo11-hp-boss-bc.script'),
@@ -276,6 +298,8 @@ def qualify(args):
               'scope':scope,'deferred':deferred}
     if mushroom_evidence is not None:
         report['mushroom'] = mushroom_evidence
+    if completion is not None:
+        report['completion'] = completion
     write_verified(ROOT/args.output,(json.dumps(report,indent=2)+'\n').encode())
     print(args.output,sha((ROOT/args.output).read_bytes()))
 

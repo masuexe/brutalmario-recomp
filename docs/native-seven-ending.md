@@ -21,7 +21,7 @@ The hidden checkpoints spawn a real green mushroom in both hosts. The mushroom
 awards one life at the same sample index in both hosts. The pit death then
 consumes that life. A separate assisted combat route reaches joined-part tiers
 `0` through `6` with actual attacks. Neither route proves an earned fight
-victory or a saved completion. No check writes completion flags.
+victory. No check writes completion flags.
 
 ## Adaptations
 
@@ -104,6 +104,20 @@ image stores `C2` and the recipient stores `D2` at `$167A` slot 11. The
 native host keeps the recipient value. The boundary test pins both values and
 normalizes only that reviewed byte before the comparison.
 
+The ending-route music cues agree by meaning. The fight request is donor `0x23`
+(legacy) and native `AC`. Both hosts hold `$0DDA = 0x02` in the ending rooms
+and `0xFF` on the pit death. The child program's `$1EC7CD` request `0x1E`
+maps to the modern stop/transition special case. No sampled cue shows a version
+mismatch.
+
+Neither host writes saved progress across the ending path. Saved level status,
+overworld events, switches, the completion counter, DK bits, midway masks and
+`$7FEBE` stay unchanged from the fight to the map return. Ten level-status
+bytes differ between the images before the fight. They are version-local
+starting progress, not ending writes. The report records this check. Standard
+save completion is therefore not a missing write in this path. An earned defeat
+is still not proven.
+
 The loaded foreground tilemap matches the official room after normalization of
 the reviewed eight blank pole subtiles (two loaded copies). All eleven character
 patterns selected by the source foreground match. The adapted pole patterns are
@@ -150,7 +164,7 @@ is `local/restoration/demo11-native-seven-ending-1up/input-manifest.json`,
 SHA-256 `e71264bb8c0e71a4b795683c44b132358d2b53a3a8f04e101e9bb89a182337a6`.
 The qualification report is
 `local/reports/native-seven-ending-1up-final.json`, SHA-256
-`1c0580e80fdb55a5d5b88d4ce6421c298da30f6ac502c59f907b56d465158bcd`.
+`f2759fec2d948af87c8a3724d2d2de25d7c916c94772f21abfcb0a50d4c1db98`.
 An independent qualifier rerun reproduces this report byte-for-byte. The earlier
 tiles checkpoint report `native-seven-ending-final.json` stays unchanged.
 
@@ -178,12 +192,13 @@ captures and receipts stay intact. No failed evidence got a new label.
 
 ## Remaining work and reproduction
 
-An earned final-tier defeat and a saved completion remain open. The target
-restores the hidden checkpoints only in room `17B`. Other rooms keep the
-recipient
-early return. Death timing still uses the retained recipient timer (`30` versus
-`2E`), and the two hosts return to different map contexts. Other fight and
-child music cues stay outside the accepted `AC` fight request.
+An earned final-tier defeat remains unproven. A manual play attempt on
+2026-10-27 showed a playable build. The user could not defeat the boss and
+reported no defect. The target restores the hidden checkpoints only
+in room `17B`. Other rooms keep the recipient early return. Death timing still
+uses the retained recipient timer (`30` versus `2E`), and the two hosts return
+to different map contexts. The child's `$1EC7CD` request and other cues were
+not observed to change the music outside the mapped `AC` request.
 
 ```
 python3 tools/native_seven_ending.py

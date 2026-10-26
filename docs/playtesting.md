@@ -798,3 +798,15 @@ checking global water flag `$85` and Mario's in-water state `$75` against the
 demo7 diagnostic. The user subsequently retested the correction and reported
 no remaining issue, accepting this scoped fix. No itemized route or new audio
 comparison was supplied.
+
+## Native Seven ending playability (2026-10-27)
+
+The user launched the final native target with
+
+    python3 tools/play_demo_only1.py --restoration demo11-native-seven-ending-1up --room 0x0FF --show-room
+
+The user reported that the build is playable overall. The boss was too hard to
+defeat. The user reported no other problem. This check found no earned clear,
+ending, save or reload. It is a playability report, not a completion proof. The
+bounded automated evidence in [native-seven-ending.md](native-seven-ending.md)
+stays in force.
