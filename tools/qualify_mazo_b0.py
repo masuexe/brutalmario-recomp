@@ -96,9 +96,12 @@ def qualify():
             require(sorted((a['x'], a['y']) for a in custom) == sorted(SENTINELS),
                     'custom actor positions differ: '+room)
             later = frame(name, 'entry480')
-            entry['later_room'] = int.from_bytes(later[0x10B:0x10D], 'little')
-            report['limits'].append(f'room {room}: graphics stay unverified; the room changes to '
-                                    f'0x{entry["later_room"]:03X} after entry')
+            later_room = int.from_bytes(later[0x10B:0x10D], 'little')
+            entry['later_room'] = later_room
+            entry['later_mode'] = later[0x100]
+            report['limits'].append(f'room {room}: the entry is a load step with no gameplay '
+                                    f'frame; the room changes to 0x{later_room:03X}. '
+                                    f'Graphics are not observable.')
         else:
             require(entry['mode'] == 0x14, 'entry mode differs: '+room)
             reference = REFERENCE[room]
