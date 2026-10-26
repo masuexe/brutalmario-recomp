@@ -124,7 +124,7 @@ separately in the [graphics report](native-content-pilot.md) and
 [sprite report](native-sprite9e.md). The first Boss mapping and opening are now
 qualified separately in the [Seven Koopalings entry report](native-seven-entry.md).
 The dynamic child dependency now has its own checkpoint in the
-[Seven child report](native-seven-child.md). The next concrete action is to
-trace the room `0FF` music through both audio engines, then qualify a complete
-fight and the ending. The fixed pilots must not be treated as an automatic
-loader for arbitrary content.
+[Seven child report](native-seven-child.md). The room `0FF` music request is
+pinned in the [fight-music report](native-seven-fight-music.md). The next
+concrete action is to qualify a complete fight and the ending. The fixed pilots
+must not be treated as an automatic loader for arbitrary content.

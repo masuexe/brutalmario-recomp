@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Check the bounded Seven child phase, native death/re-entry and regressions.
+"""Check the bounded Seven child phase, music request, death/re-entry and regressions.
 
 Event waits align a spawned child, not the entire cross-version fight. Different
-dialogue/phase timing outside these samples remains unqualified.
+dialogue/phase timing outside these samples remains unqualified. The music check
+confirms the requested modern slot only. The user listening check identified the
+composition; no mix or audible-equality proof is claimed.
 """
 import argparse
 import json
@@ -102,14 +104,18 @@ def collect_rejections(prefix):
 def qualify(args):
     cfg, recipe = settings(TARGET)
     directory = ROOT / 'local/restoration' / TARGET
-    base = (ROOT / 'local/restoration' / BASE / 'rom.sfc').read_bytes()
+    base = (ROOT / 'local/restoration' / cfg['base_restoration'] / 'rom.sfc').read_bytes()
     rom = (directory / 'rom.sfc').read_bytes()
     verify(base, cfg['base_output'], 'parent image')
     verify(rom, cfg['output'], 'child image')
     expected = bytearray(base)
     offset = recipe['record']['destination_offset']
     expected[offset:offset+16] = bytes.fromhex(recipe['record']['after'])
-    require(rom == expected, 'unexpected ROM edits outside the E0 record')
+    music = recipe.get('music_adaptation')
+    if music:
+        header = music['level_header']
+        expected[header['file_offset']:header['file_offset']+3] = bytes.fromhex(header['after'])
+    require(rom == expected, 'unexpected ROM edits outside the E0 record and music header')
     for pack in packs(TARGET):
         verify((directory / pack['pack_file']).read_bytes(), pack, 'final pack')
     kept = recipe['preserved_recipient_6a']
@@ -148,6 +154,14 @@ def qualify(args):
             samples.append({'tag': tag, 'slot': slot, 'fields': old_state})
         for capture in (source, native):
             verify((capture / (tag+'.vram.bin')).read_bytes()[0x9000:0x9800], font, 'local Japanese font')
+    fight_tags = ('fight180', 'fight600', 'fight1200', 'fight2400', 'after_b', 'after_a',
+                  'after_x', 'after_y', 'child_spawn', 'child32', 'child96')
+    donor_music = {tag: body(source, tag)[0xdda] for tag in fight_tags}
+    require(len(set(donor_music.values())) == 1, 'donor fight music changed during the samples')
+    if music:
+        request = int(music['level_header']['request_after'], 16)
+        for tag in fight_tags:
+            require(body(native, tag)[0xdda] == request, f'fight music request differs: {tag}')
     before, dying, returned = body(native, 'child96'), body(native, 'child_death'), body(native, 'child_map')
     reentry = body(native, 'child_fight_reentry')
     course = body(native, 'child_course_reentry')
@@ -158,6 +172,9 @@ def qualify(args):
             'explicit fight re-entry failed')
     require(reentry[0x14c8+9] == 8 and reentry[0x1ab9e+9] == 0x2a and reentry[0xc2+9] == 0,
             'fight controller did not reset')
+    if music:
+        require(reentry[0xdda] == int(music['level_header']['request_after'], 16),
+                'fight re-entry music request differs')
     english = recipe['font_lifecycle']['recipient_font']['decoded']
     verify((native / 'child_course_reentry.vram.bin').read_bytes()[0x9000:0x9800], english,
            'recipient English font after native death/map return')
@@ -209,12 +226,18 @@ def qualify(args):
             'pipe_fixture_reentry': '0FF', 'ordinary_course_font_sha256': english['sha256'],
             'fight_reentry_font_sha256': font['sha256']}, 'unchanged': comparisons,
         'existing_room_observations': observations, 'rejected_startups': 4,
+        'music': {'donor_fight_request': f'{next(iter(donor_music.values())):02X}',
+            'donor_music_constant': True,
+            'native_fight_request': music['level_header']['request_after'] if music else None,
+            'level_header': music['level_header'] if music else None,
+            'listening_check': music['listening_check'] if music else None},
         'limitations': ['Three event-aligned child samples, not full fight or motion/audio parity.',
             'Fixed-time probes retain different dialogue/phase timing; neither their cause nor whole-flow parity is qualified.',
             'Death/re-entry is native-only and fight re-entry uses an explicit pipe-action fixture.',
             'Room 0E4 remains at baseline mode 12; 0E2/0E3 samples contain no active 6A. Only 0D8 exercises an active old 6A.',
             'Font restoration is qualified on this death/map/re-entry path; other future fight exits remain open.',
-            'Music, all later fight phases, ending and saved completion remain open.'],
+            'Music selection is pinned by a level-header patch and the user listening check identified the composition; this is not a mix or audible-equality proof.',
+            'Other fight cues, all later fight phases, the ending and saved completion remain open.'],
         'receipt_sha256': {str(capture.relative_to(ROOT)): sha((capture / 'receipt.json').read_bytes())
                            for capture in captures},
         'event_dump_sha256': {str((capture / (tag+'.wram.bin')).relative_to(ROOT)):
@@ -228,13 +251,14 @@ def qualify(args):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--donor', default='seven-child-event-v1-donor')
-    parser.add_argument('--native', default='seven-child-cycle-event-v1-native')
-    parser.add_argument('--regression', default='seven-child-cycle-regression-v1')
+    parser.add_argument('--native', default='seven-child-music-event-v1-native')
+    parser.add_argument('--regression', default='seven-child-music-regression-v1')
     parser.add_argument('--existing-parent', default='seven-child-existing-v1')
-    parser.add_argument('--existing', default='seven-child-cycle-existing-v1')
-    parser.add_argument('--reject', default='seven-child-cycle-reject-v1')
+    parser.add_argument('--existing', default='seven-child-music-existing-v1')
+    parser.add_argument('--reject', default='seven-child-music-reject-v1')
     parser.add_argument('--collect-rejections', action='store_true')
-    parser.add_argument('--output', type=Path, default=ROOT / 'local/reports/native-seven-child-cycle-final.json')
+    parser.add_argument('--output', type=Path,
+                        default=ROOT / 'local/reports/native-seven-child-fight-music-final.json')
     args = parser.parse_args()
     if args.collect_rejections:
         collect_rejections(args.reject)

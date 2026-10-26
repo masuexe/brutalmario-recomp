@@ -176,12 +176,10 @@ remain unqualified.
 The preserved `6A` actor stays in rooms `0D8`, `0E2`, `0E3`, and `0E4`. Do not
 overwrite it globally. Both external-content pilots remain unchanged.
 
-Music remains open. The mapping reference identifies legacy `33` to modern `AC`
-for Last Battle. The actual room data contains `40 60 33`. The child source also
-writes music value `1E` at `$1EC7CD`. Trace the effective commands through both
-audio engines before a patch. A table number or a surviving selection byte is
-not an audible match. Later fight phases, the ending, map return for a complete
-fight, and saved completion remain open.
+The [fight-music checkpoint](native-seven-fight-music.md) now pins the room
+`0FF` music request. The child source still writes music value `1E` at
+`$1EC7CD`. That write is not adapted. Later fight phases, the ending, map
+return for a complete fight, and saved completion remain open.
 
 ## Reproduction
 

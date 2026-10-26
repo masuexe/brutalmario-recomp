@@ -43,7 +43,7 @@ class SevenChildTests(unittest.TestCase):
         from restore_star_world_1 import sha
         base = bytearray(self.base)
         offset = self.recipe['record']['destination_offset']
-        base[offset] = 1
+        base[offset+1] = 1
         recipe = copy.deepcopy(self.recipe)
         recipe['parent_output']['sha256'] = sha(base)
         with self.assertRaisesRegex(ValueError, 'record/namespace'):
@@ -55,6 +55,18 @@ class SevenChildTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'existing recipient 6A'):
             child.build(self.donor, self.base, self.master, recipe)
 
+    def test_changed_music_header_is_rejected(self):
+        recipe = copy.deepcopy(self.recipe)
+        recipe['music_adaptation']['level_header']['before'] = '406032'
+        with self.assertRaisesRegex(ValueError, 'music header identity'):
+            child.build(self.donor, self.base, self.master, recipe)
+
+    def test_music_request_encoding_is_rejected(self):
+        recipe = copy.deepcopy(self.recipe)
+        recipe['music_adaptation']['level_header']['request_after'] = 'AB'
+        with self.assertRaisesRegex(ValueError, 'music request encoding'):
+            child.build(self.donor, self.base, self.master, recipe)
+
     @unittest.skipUnless(shutil.which('cc'), 'requires a C compiler')
     def test_actual_donor_child_and_cumulative_boundary(self):
         fixture = ROOT / 'local/captures/seven-opening-v1-donor/attack1200.wram.bin'
@@ -64,6 +76,8 @@ class SevenChildTests(unittest.TestCase):
             'sha256': '74fb4823ead68901af132ef89ce9d5a9508b93a47f3eea780b593e01ca8a2b06'}, 'source CPU fixture')
         rom, master, code, audit = child.build(self.donor, self.base, self.master, self.recipe)
         verify(rom, self.cfg['output'], 'test descendant')
+        header = self.recipe['music_adaptation']['level_header']
+        self.assertEqual(rom[header['file_offset']:header['file_offset']+3].hex(), header['after'])
         self.assertEqual(len(audit['entry_states']), 32)
         self.assertEqual(audit['instruction_variants'], 1426)
         with tempfile.TemporaryDirectory(prefix='bm-seven-child-') as directory:

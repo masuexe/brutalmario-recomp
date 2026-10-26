@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-child-fight-music",
+  "target": "Brutal Mario Demo11 Native Seven Child Fight Music",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-child-font-cycle",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "a85dbe0609facffc75bf55b28080b7fba9ad7d376254a5914c835d7f89abc015"
+  },
+  "scope": "Request modern song slot AC whenever room 0FF loads, so the Seven child fight uses the documented Last Battle track. The recipient header otherwise requests slot 32. Full fight, other cues and progression remain open.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-child6a-fight-music.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "14622c254c562dcfdd5d3c8b422acec9534588bf17dbcf0e0294afed018dec63"
+  }
+}

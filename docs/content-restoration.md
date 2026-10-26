@@ -49,7 +49,10 @@ The [native Seven child checkpoint](native-seven-child.md) now names the newest
 official dynamic child `6A` as custom `E0` and keeps the recipient `6A` actor. It
 also restores the English font after a death and reloads the Japanese font on a
 fight entry. Six event-aligned child samples, 830 unchanged comparisons, native
-death/re-entry and 162 unit tests pass. Music, later fight phases, the ending
+death/re-entry and 162 unit tests pass.
+The [fight-music checkpoint](native-seven-fight-music.md) now pins the room
+`0FF` request to modern slot `AC` (Last Battle). The user listening check
+identified the composition. Other fight cues, later fight phases, the ending
 and saved completion remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify

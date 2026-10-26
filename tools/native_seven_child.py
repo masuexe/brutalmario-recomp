@@ -12,7 +12,7 @@ from prepare_rom import verify
 from restore_star_world_1 import graphics_pointer, lorom, lz2, sha, sprite_rooms, write_verified
 
 ROOT = Path(__file__).resolve().parents[1]
-TARGET = 'demo11-native-seven-child-font-cycle'
+TARGET = 'demo11-native-seven-child-fight-music'
 
 
 def settings(target):
@@ -94,13 +94,16 @@ def build(donor, base, master, recipe):
             record['destination_offset'] != lorom(destination_table)+namespace*16):
         raise ValueError('child constructor-derived record offset differs')
     slot = record['destination_offset']
-    if (donor[record['source_offset']:record['source_offset']+16].hex() != record['source'] or
-            base[slot:slot+16].hex() != record['before']):
+    if donor[record['source_offset']:record['source_offset']+16].hex() != record['source']:
         raise ValueError('child record/namespace identity differs')
     after = bytearray(bytes.fromhex(record['source']))
     after[10] = after[13] = native >> 16
     if after.hex() != record['after']:
         raise ValueError('child record adaptation differs')
+    current = base[slot:slot+16]
+    inherited_record = current == after
+    if not inherited_record and current.hex() != record['before']:
+        raise ValueError('child record/namespace identity differs')
     kept = recipe['preserved_recipient_6a']
     off = kept['record_offset']
     if base[off:off+16].hex() != kept['record'] or sprite_rooms(base, 0x6a) != kept['rooms']:
@@ -117,66 +120,123 @@ def build(donor, base, master, recipe):
     if sites != ({0x2284d9} if custom_only else {0x2284d5, 0x22a168}):
         raise ValueError('child namespace adaptation site set differs')
     adapted = bytearray(master)
-    for patch in recipe['master_patches']:
-        address = int(patch['source_address'], 16)
-        native_pc = int(patch['native_address'], 16)
-        before, replacement = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
-        offset = (native_pc & 0xffff)-0x8000
-        if native_pc != address | 0x800000 or adapted[offset:offset+len(before)] != before:
-            raise ValueError('child master call-site identity differs')
-        if custom_only:
-            if before.hex() != '9f9eab7f' or replacement.hex() != '2040f0ea':
-                raise ValueError('child custom-ID store adaptation differs')
-        elif len(before) != 2 or before[1] != 0x6a or replacement != bytes([before[0], namespace]):
-            raise ValueError('child namespace operand adaptation differs')
-        adapted[offset:offset+len(before)] = replacement
-    if custom_only:
-        for site in recipe['preserved_master_sites']:
-            offset = (int(site['address'], 16) & 0xffff)-0x8000
-            raw = bytes.fromhex(site['bytes'])
-            if adapted[offset:offset+len(raw)] != raw:
-                raise ValueError('preserved normal-ID contract differs')
-        adapter = recipe['master_adapter']
-        offset = (int(adapter['address'], 16) & 0xffff)-0x8000
-        raw = bytes.fromhex(adapter['bytes'])
-        if adapter['address'] != 'A2F040' or offset < len(adapted) or offset+len(raw) > 0x8000:
-            raise ValueError('custom-ID adapter mapping differs')
-        adapted.extend(bytes(offset-len(adapted)))
-        adapted.extend(raw)
+    master_pin = recipe['master_payload']
+    prepatched = len(master) == master_pin['size'] and sha(master) == master_pin['sha256']
     lifecycle = recipe.get('font_lifecycle')
-    if lifecycle:
-        font = lifecycle['recipient_font']
-        decoded, encoded = lz2(base, graphics_pointer(base, 0x2a), limit=0x800)
-        verify(decoded, font['decoded'], 'recipient font lifecycle bytes')
-        verify(encoded, font['encoded'], 'recipient font encoded bytes')
-        hook = lifecycle['main_hook']
-        offset = (int(hook['address'], 16) & 0xffff)-0x8000
-        before, hook_after = bytes.fromhex(hook['before']), bytes.fromhex(hook['after'])
-        if hook['address'] != 'A28090' or adapted[offset:offset+len(before)] != before or len(before) != len(hook_after):
-            raise ValueError('font lifecycle main hook differs')
-        adapted[offset:offset+len(hook_after)] = hook_after
-        for name, address in (('wrapper', 'A2F060'), ('callback', 'A2F0A0')):
-            adapter = lifecycle[name]
-            raw = bytes.fromhex(adapter['bytes'])
+    if prepatched:
+        # A cumulative descendant inherits this exact adapted master payload. Verify
+        # the inherited contracts instead of applying the patches a second time.
+        if custom_only:
+            for site in recipe['preserved_master_sites']:
+                offset = (int(site['address'], 16) & 0xffff)-0x8000
+                raw = bytes.fromhex(site['bytes'])
+                if adapted[offset:offset+len(raw)] != raw:
+                    raise ValueError('preserved normal-ID contract differs')
+            adapter = recipe['master_adapter']
             offset = (int(adapter['address'], 16) & 0xffff)-0x8000
-            if adapter['address'] != address or offset < len(adapted) or offset+len(raw) > 0x8000:
-                raise ValueError('font lifecycle adapter mapping differs')
+            raw = bytes.fromhex(adapter['bytes'])
+            if adapted[offset:offset+len(raw)] != raw:
+                raise ValueError('custom-ID adapter mapping differs')
+        if lifecycle:
+            hook = lifecycle['main_hook']
+            offset = (int(hook['address'], 16) & 0xffff)-0x8000
+            hook_after = bytes.fromhex(hook['after'])
+            if adapted[offset:offset+len(hook_after)] != hook_after:
+                raise ValueError('font lifecycle main hook differs')
+            for name in ('wrapper', 'callback'):
+                adapter = lifecycle[name]
+                raw = bytes.fromhex(adapter['bytes'])
+                offset = (int(adapter['address'], 16) & 0xffff)-0x8000
+                if adapted[offset:offset+len(raw)] != raw:
+                    raise ValueError('font lifecycle adapter mapping differs')
+            audit['font_lifecycle'] = lifecycle['scope']
+    else:
+        for patch in recipe['master_patches']:
+            address = int(patch['source_address'], 16)
+            native_pc = int(patch['native_address'], 16)
+            before, replacement = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
+            offset = (native_pc & 0xffff)-0x8000
+            if native_pc != address | 0x800000 or adapted[offset:offset+len(before)] != before:
+                raise ValueError('child master call-site identity differs')
+            if custom_only:
+                if before.hex() != '9f9eab7f' or replacement.hex() != '2040f0ea':
+                    raise ValueError('child custom-ID store adaptation differs')
+            elif len(before) != 2 or before[1] != 0x6a or replacement != bytes([before[0], namespace]):
+                raise ValueError('child namespace operand adaptation differs')
+            adapted[offset:offset+len(before)] = replacement
+        if custom_only:
+            for site in recipe['preserved_master_sites']:
+                offset = (int(site['address'], 16) & 0xffff)-0x8000
+                raw = bytes.fromhex(site['bytes'])
+                if adapted[offset:offset+len(raw)] != raw:
+                    raise ValueError('preserved normal-ID contract differs')
+            adapter = recipe['master_adapter']
+            offset = (int(adapter['address'], 16) & 0xffff)-0x8000
+            raw = bytes.fromhex(adapter['bytes'])
+            if adapter['address'] != 'A2F040' or offset < len(adapted) or offset+len(raw) > 0x8000:
+                raise ValueError('custom-ID adapter mapping differs')
             adapted.extend(bytes(offset-len(adapted)))
             adapted.extend(raw)
-        audit['font_lifecycle'] = lifecycle['scope']
-    verify(adapted, recipe['master_payload'], 'namespaced Seven master')
+        if lifecycle:
+            font = lifecycle['recipient_font']
+            decoded, encoded = lz2(base, graphics_pointer(base, 0x2a), limit=0x800)
+            verify(decoded, font['decoded'], 'recipient font lifecycle bytes')
+            verify(encoded, font['encoded'], 'recipient font encoded bytes')
+            hook = lifecycle['main_hook']
+            offset = (int(hook['address'], 16) & 0xffff)-0x8000
+            before, hook_after = bytes.fromhex(hook['before']), bytes.fromhex(hook['after'])
+            if hook['address'] != 'A28090' or adapted[offset:offset+len(before)] != before or len(before) != len(hook_after):
+                raise ValueError('font lifecycle main hook differs')
+            adapted[offset:offset+len(hook_after)] = hook_after
+            for name, address in (('wrapper', 'A2F060'), ('callback', 'A2F0A0')):
+                adapter = lifecycle[name]
+                raw = bytes.fromhex(adapter['bytes'])
+                offset = (int(adapter['address'], 16) & 0xffff)-0x8000
+                if adapter['address'] != address or offset < len(adapted) or offset+len(raw) > 0x8000:
+                    raise ValueError('font lifecycle adapter mapping differs')
+                adapted.extend(bytes(offset-len(adapted)))
+                adapted.extend(raw)
+            audit['font_lifecycle'] = lifecycle['scope']
+    verify(adapted, master_pin, 'namespaced Seven master')
     out = bytearray(base)
-    out[slot:slot+16] = after
+    if not inherited_record:
+        out[slot:slot+16] = after
+    music = recipe.get('music_adaptation')
+    if music:
+        header = music['level_header']
+        address = int(header['snes_address'], 16)
+        offset = header['file_offset']
+        before, replacement = bytes.fromhex(header['before']), bytes.fromhex(header['after'])
+        if lorom(address) != offset or not 0 <= offset <= len(out)-len(before):
+            raise ValueError('music header mapping differs')
+        if len(before) != len(replacement) or out[offset:offset+len(before)] != before:
+            raise ValueError('music header identity differs')
+        if (int(header['request_before'], 16) != before[-1]-1 or
+                int(header['request_after'], 16) != replacement[-1]-1):
+            raise ValueError('music request encoding differs')
+        out[offset:offset+len(replacement)] = replacement
+        audit['music_adaptation'] = music['scope']
     return bytes(out), bytes(adapted), payload, audit
+
+
+def parent_packs(target):
+    if parent.settings(target) is not None:
+        return parent.packs(target)
+    return packs(target)
+
+
+def parent_identity(target):
+    return parent.identity(target) or identity(target)
 
 
 def packs(target):
     cfg, recipe = settings(target)
-    data = parent.packs(cfg['base_restoration'])
+    data = parent_packs(cfg['base_restoration'])
     data[0] = dict(data[0], size=recipe['master_payload']['size'], sha256=recipe['master_payload']['sha256'])
     if 'font_lifecycle' in recipe:
         data[1] = dict(data[1], **recipe['font_lifecycle']['graphics_payload'])
     code = recipe['code']
+    data = [pack for pack in data if pack['variable'] != 'BM_SEVEN_CHILD_PACK']
     data.append(dict(variable='BM_SEVEN_CHILD_PACK', pack_file=code['pack_file'],
                      address=code['native_address'], size=code['size'], sha256=code['sha256'], executable=True))
     return data
@@ -206,7 +266,7 @@ def identity(target):
     if pair is None:
         return None
     cfg, recipe = pair
-    feature = parent.identity(cfg['base_restoration'])
+    feature = parent_identity(cfg['base_restoration'])
     paths = [ROOT / 'config/restorations' / (target+'.json'),
              ROOT / cfg['native_seven_child']['manifest'], Path(__file__),
              ROOT / 'recomp/native_seven.c', ROOT / 'recomp/native_content.h',
@@ -226,9 +286,16 @@ def prepare(target=TARGET):
     verify(donor, donor_manifest['output'], 'authoritative Boss Demo child donor')
     source_dir = ROOT / 'local/restoration' / cfg['base_restoration']
     receipt = json.loads((source_dir / 'input-manifest.json').read_text())
-    if receipt['content'] != parent.identity(cfg['base_restoration']):
-        raise ValueError('parent content receipt is stale')
-    for pack in parent.packs(cfg['base_restoration']):
+    expected = parent_identity(cfg['base_restoration'])
+    if receipt['content'] != expected:
+        # A tool revision changes the parent receipt's file hashes. The prepared
+        # inputs are the parent packs, header, output ROM and cartridge hashes.
+        content = receipt['content']
+        if any(content.get(key) != expected.get(key) for key in
+               ('kind', 'packs', 'generated_header_sha256',
+                'runtime_source_sha256', 'runtime_result_sha256')):
+            raise ValueError('parent content receipt is stale')
+    for pack in parent_packs(cfg['base_restoration']):
         verify((source_dir / pack['pack_file']).read_bytes(), pack, 'parent cumulative pack')
     rom, master, child, audit = build(donor, (source_dir / 'rom.sfc').read_bytes(),
                                     (source_dir / 'seven-code.bin').read_bytes(), recipe)
@@ -257,6 +324,9 @@ def graphics_payload(recipe, parent_dir):
     if 'font_lifecycle' not in recipe:
         return graphics
     lifecycle = recipe['font_lifecycle']
+    payload = lifecycle['graphics_payload']
+    if len(graphics) == payload['size'] and sha(graphics) == payload['sha256']:
+        return graphics
     font = lifecycle['recipient_font']
     official = (ROOT / 'local/content-versions' / font['source_version'] / 'rom.sfc').read_bytes()
     verify(official, font['source_rom'], 'official recipient font source')

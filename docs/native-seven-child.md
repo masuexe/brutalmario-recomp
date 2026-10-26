@@ -20,8 +20,10 @@ Automated checks qualify these items:
 - Four rejected startup packs.
 - 162 Python unit tests and 14 donor/native CPU pairs in the C boundary test.
 
-This is not a complete fight. Music, later fight phases, the ending, and saved
-completion remain open. The target does not promote the accepted head.
+This is not a complete fight. The later
+[fight-music checkpoint](native-seven-fight-music.md) pins the room `0FF`
+music request. Later fight phases, the ending, and saved completion remain
+open. The target does not promote the accepted head.
 
 ## Identities
 
@@ -165,10 +167,9 @@ stops at the child samples. Do not claim donor parity for death or map return.
 The checks cover the font restoration on this death, map-return, and re-entry
 path only. Other fight exits and endings remain open.
 
-Music remains open. The child source writes music value `1E` at `$1EC7CD`
-(`a91e8dfb1d`). This write is not a qualified music adaptation. The room data
-music value `33` and the legacy-to-modern Last Battle mapping need an actual
-driver trace before any patch.
+The room `0FF` music request is now pinned by the
+[fight-music checkpoint](native-seven-fight-music.md). The child source still
+writes music value `1E` at `$1EC7CD`. That write is not adapted.
 
 Later fight phases, the ending, and saved completion remain open.
 
