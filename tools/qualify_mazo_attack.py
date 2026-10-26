@@ -17,6 +17,8 @@ C9 = 'demo11-native-mazo-9c'
 C9_ROM = '7d690e9b35493ba49e7f98bb2d63d77ec79ac0c3a78181e4771eb1d6ce012396'
 C9_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-align-fine-donor.script'
 C9_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-align-fine-native.script'
+LOAD_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-load-donor.script'
+LOAD_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-load-native.script'
 B9 = 'demo11-native-mazo-9b'
 B9_ROM = '8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244'
 B9_SCRIPT_DONOR = 'recomp/inputs/mazo-9b-donor-fixture.script'
@@ -96,6 +98,49 @@ def wave_x(data):
     if data[0x14c8+6] == 8 and data[0x1ab10+6] & 8 and data[0x1ab9e+6] == 0x9c:
         return signed(data[0xe4+6] | (data[0x14e0+6] << 8))
     return None
+
+
+def onset(directory):
+    gameplay = room_first = wave = wave_x = None
+    for frame in range(1, 221):
+        data = body(directory, f't{frame:03d}')
+        if room_first is None and room(data) == 0x151:
+            room_first = frame
+        if gameplay is None and data[0x100] == 0x14:
+            gameplay = frame
+        value = wave_x_of(data)
+        if wave is None and value is not None:
+            wave, wave_x = frame, value
+    return {'room_first': room_first, 'gameplay': gameplay, 'wave': wave, 'wave_x': wave_x}
+
+
+def wave_x_of(data):
+    if data[0x14c8+6] == 8 and data[0x1ab10+6] & 8 and data[0x1ab9e+6] == 0x9c:
+        return signed(data[0xe4+6] | (data[0x14e0+6] << 8))
+    return None
+
+
+def load_timing():
+    donor = ROOT / 'local/captures/mazo-9c-load-v2-donor'
+    native = ROOT / 'local/captures/mazo-9c-load-v2-native'
+    donor_capture(donor, LOAD_SCRIPT_DONOR)
+    native_capture(native, C9, LOAD_SCRIPT_NATIVE)
+    d, n = onset(donor), onset(native)
+    require(d == {'room_first': 31, 'gameplay': 141, 'wave': 193, 'wave_x': 285},
+            'donor load timing differs')
+    require(n == {'room_first': 39, 'gameplay': 161, 'wave': 216, 'wave_x': 285},
+            'native load timing differs')
+    require(n['room_first']-d['room_first'] == 8, 'recorded room onset delta differs')
+    require(n['gameplay']-d['gameplay'] == 20, 'recorded gameplay onset delta differs')
+    require(n['wave']-d['wave'] == 23, 'recorded wave onset delta differs')
+    require(n['wave']-n['gameplay'] == 55 and d['wave']-d['gameplay'] == 52,
+            'recorded wave delay differs')
+    return {'donor': d, 'native': n,
+            'deltas': {'room_first': 8, 'gameplay': 20, 'wave': 23},
+            'wave_delay_after_gameplay': {'donor': 52, 'native': 55},
+            'scope': 'The wave onset follows the host load and gameplay onset. Most of the '
+                     '23-frame offset follows the 20-frame gameplay onset delta. A three-frame '
+                     'residual stays open.'}
 
 
 def window_9c():
@@ -193,14 +238,17 @@ def qualify(args):
             'mazo target identities differ')
     c9 = window_9c()
     b9 = window_9b()
+    load = load_timing()
     report = {'scope': __doc__.strip(),
               'targets': {C9: {'rom': C9_ROM, 'packs': packs(C9)},
                           B9: {'rom': B9_ROM, 'packs': packs(B9)}},
-              'room_151': c9, 'room_190': b9,
+              'room_151': c9, 'load_timing': load, 'room_190': b9,
               'evidence': [{'directory': str(path.relative_to(ROOT)),
                             'receipt_sha256': sha((path / 'receipt.json').read_bytes())}
                            for path in (ROOT / 'local/captures/mazo-9c-align-fine-v2-donor',
                                         ROOT / 'local/captures/mazo-9c-align-fine-v2-native',
+                                        ROOT / 'local/captures/mazo-9c-load-v2-donor',
+                                        ROOT / 'local/captures/mazo-9c-load-v2-native',
                                         ROOT / 'local/captures/mazo-9b-entry-v2-donor',
                                         ROOT / 'local/captures/mazo-9b-entry-v3-native')],
               'deferred': ['A shared-helper review for the attack actors and the room exit timing.',

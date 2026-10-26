@@ -10,6 +10,7 @@ The checkpoint records these items:
 - The room 151 persistent 9C parts match.
 - The first room 151 wave follows the same trajectory.
 - The native first wave starts 23 frames after the donor wave.
+- Most of that offset follows the host load timing.
 - Later room 151 attack cycles differ.
 - The room 190 persistent 9B parts match at the sampled positions.
 - The room 190 transient intro actors differ.
@@ -21,6 +22,10 @@ The room 151 pair uses `recomp/inputs/mazo-9c-align-fine-donor.script` and
 pipe entry. After the room load they force Mario to `(512,320)` with zero
 speed. The stationary Mario is an explicit fixture. The scripts sample every 5
 frames from `fight060` to `fight200`, then the later cycles.
+
+The load-timing pair uses `recomp/inputs/mazo-9c-load-donor.script` and
+`recomp/inputs/mazo-9c-load-native.script`. These scripts sample every frame
+from frame `1` to `220` after the pipe action. They write no forced position.
 
 The room 190 pair uses `recomp/inputs/mazo-9b-donor-fixture.script` and
 `recomp/inputs/mazo-9b-native-fixture.script`. These scripts use the labelled
@@ -47,6 +52,22 @@ Later cycles differ. The donor keeps slot `6` at X `144` at samples
 `fight450`. It then shows slot `6` at X `208`, `-32` and `112` at
 samples `fight480`, `fight540` and `fight600`.
 
+## Load timing
+
+The donor shows room `0x151` at frame `31` after the pipe action. The native
+host shows it at frame `39`. The donor reaches gameplay mode `14` at frame
+`141`. The native host reaches it at frame `161`.
+
+The donor wave starts at frame `193` with X `285`. The native wave starts at
+frame `216` with the same X `285`.
+
+The onset deltas are 8 frames for the room, 20 frames for gameplay mode and 23
+frames for the wave. The wave starts 52 frames after gameplay in the donor and
+55 frames after gameplay in native.
+
+Most of the 23-frame offset therefore follows the 20-frame gameplay onset
+delta. A three-frame residual stays open.
+
 ## Room 190
 
 The persistent 9B slots are `6`, `7` and `9` at `(96,208)`, `(120,120)`
@@ -58,10 +79,11 @@ Both hosts return to mode `0E` at `fight1200`. Transient intro actors in slots
 ## Evidence
 
 The report is `local/reports/native-mazo-attack-final.json`. Its SHA-256 is
-`3b1e6c5d9d0bd4413e50449938b12015292b397ee0948e753cd64a805a5358e2`. An
+`bbbc8262e69e90ef1bb8176a127aa5b0a8a9496de9fc4fa4b5f91064923ec4f3`. An
 independent rerun reproduces the report byte for byte.
 
 The captures are `local/captures/mazo-9c-align-fine-v2-{donor,native}`,
+`local/captures/mazo-9c-load-v2-{donor,native}`,
 `local/captures/mazo-9b-entry-v2-donor` and
 `local/captures/mazo-9b-entry-v3-native`.
 
@@ -71,7 +93,7 @@ The full suite passes 184/184 tests. The log is
 ## Limits
 
 This check records observations. It does not prove player damage, a fight
-clear, an ending or a saved completion. The 23-frame phase offset and the later
+clear, an ending or a saved completion. The three-frame residual and the later
 cycle content stay open. A shared-helper review must explain them. The `B0`
 corridor recovery needs the donor level data and a separate course batch.
 
