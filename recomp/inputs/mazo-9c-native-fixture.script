@@ -1,6 +1,5 @@
-# Mazo 9C entry boundary: labelled pipe-action room fixture.
+# Mazo 9C attack window: labelled pipe-action room fixture.
 # No invulnerability, forced movement, imported saves or completion writes.
-# Map/node fixture enters room 146, then the pipe-action transfer enters 151.
 wait 600
 dump title
 press start 2
@@ -23,20 +22,50 @@ poke d7e2 6a
 press y 2
 wait 240
 dump approach146
-# Labelled pipe-action room transfer to the mazo 9C room.
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
 poke 94 80004001
 poke 19b8 51
 poke 19d8 05
 poke 88 0000
 poke 71 06
-wait 180
+wait 60
+dump fight060
+wait 30
+dump fight090
+wait 30
+dump fight120
+wait 30
+dump fight150
+wait 30
 dump fight180
-wait 420
+wait 30
+dump fight210
+wait 30
+dump fight240
+wait 30
+dump fight270
+wait 30
+dump fight300
+wait 30
+dump fight330
+wait 30
+dump fight360
+wait 30
+dump fight390
+wait 30
+dump fight420
+wait 30
+dump fight450
+wait 30
+dump fight480
+wait 30
+dump fight510
+wait 30
+dump fight540
+wait 30
+dump fight570
+wait 30
 dump fight600
 wait 600
 dump fight1200
-wait 1200
-dump fight2400
-wait 600
-dump fight3000
 quit

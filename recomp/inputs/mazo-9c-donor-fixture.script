@@ -1,0 +1,75 @@
+# Mazo 9C donor attack window: labelled pipe-action room fixture.
+# No invulnerability, forced movement, imported saves or completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
+poke 94 80004001
+poke 19b8 51
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 60
+dump fight060
+wait 30
+dump fight090
+wait 30
+dump fight120
+wait 30
+dump fight150
+wait 30
+dump fight180
+wait 30
+dump fight210
+wait 30
+dump fight240
+wait 30
+dump fight270
+wait 30
+dump fight300
+wait 30
+dump fight330
+wait 30
+dump fight360
+wait 30
+dump fight390
+wait 30
+dump fight420
+wait 30
+dump fight450
+wait 30
+dump fight480
+wait 30
+dump fight510
+wait 30
+dump fight540
+wait 30
+dump fight570
+wait 30
+dump fight600
+wait 600
+dump fight1200
+quit

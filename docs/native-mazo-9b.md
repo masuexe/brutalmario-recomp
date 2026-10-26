@@ -91,7 +91,9 @@ The module tests pass 8/8. The full suite passes 184/184 tests. The log is
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
-a fight clear, an ending, a save state or completion writes. The transient intro
+a fight clear, an ending, a save state or completion writes. The
+[attack-window check](native-mazo-attack-window.md) records the transient intro
+actor difference. The transient intro
 actor behavior stays open. The `B0` corridor recovery stays separate because it
 conflicts with the ForestStar `B0` actor. The runtime keeps the variable name
 `BM_SEVEN_CODE_PACK` for compatibility with the existing pack loader.

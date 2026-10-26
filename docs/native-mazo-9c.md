@@ -95,7 +95,9 @@ The module tests pass 8/8. The full suite passes 184/184 tests. The log is
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
-a fight clear, an ending, a save state or completion writes. The room `190`
+a fight clear, an ending, a save state or completion writes. A bounded
+[attack-window check](native-mazo-attack-window.md) records the wave motion and
+the later cycle timing difference. The room `190`
 9B program and the `B0` corridors remain separate modules. Shared-helper
 version behavior and the full attack sequence stay open.
 
