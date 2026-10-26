@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-ending-1up",
+  "target": "Brutal Mario Demo11 Native Seven Ending 1up",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-ending-tiles",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "6fe01a081510c3faff92816378570968d701ac494bf4402918747e58b0b374ba"
+  },
+  "scope": "Restore official hidden 1-up checkpoint processing only in ending room 17B; preserve recipient early return elsewhere. The fourth ordered checkpoint spawns the real green mushroom via retained shared code.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-ending-1up.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "941f2d0c7ac3ac7ba955d26590778a665e23af1d9cdbbb546d80ec065d0e8a64"
+  }
+}

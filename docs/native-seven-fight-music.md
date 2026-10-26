@@ -15,6 +15,11 @@ identified slot `AC` as the donor fight composition.
 This checkpoint qualifies the music request only. It is not a complete fight,
 a mix comparison, an audible-equality proof, a saved clear, or an ending.
 
+The later [ending-boundary checkpoint](native-seven-ending.md) qualifies the
+modern stop command, original test-room ending and pit death through an
+explicit defeat fixture. It also restores the hidden 1-up checkpoints in that
+room. A complete earned victory remains open.
+
 ## Why the header is the patch site
 
 The donor fight theme is not selected by the ported Seven program. The donor

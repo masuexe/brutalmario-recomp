@@ -29,7 +29,12 @@ bounded mapping and a local font adaptation, with eight opening samples and
 590 unchanged regression comparisons. The
 [native Seven child checkpoint](native-seven-child.md) now names the dynamic
 child `6A` as custom `E0`, keeps the recipient `6A`, and adds the font
-lifecycle. Music and the complete fight/ending/save flow remain unqualified.
+lifecycle. The [fight-music checkpoint](native-seven-fight-music.md) pins the
+accepted composition request. The [ending boundary](native-seven-ending.md)
+now qualifies the user-selected T test room, pit death and map return through
+an explicitly injected defeat fixture. It also restores the hidden 1-up
+checkpoints in that room. A complete earned fight and saved completion remain
+open.
 
 ## Frozen comparison checkpoint
 

@@ -57,6 +57,15 @@ and saved completion remain open.
 The [hurt-learning boundary test](native-seven-learning.md) now checks 258
 paired source/native cases. The user confirmed that random defensive learning
 and attack-specific resistance are intended mechanics.
+The [ending-boundary checkpoint](native-seven-ending.md) now adapts the modern
+stop-music command. It keeps the user-selected official T test room in reserved
+room `17B` and restores the English font on exit. It also restores the hidden
+1-up checkpoints in that room. A real green mushroom spawns and awards one life
+at the same sample index in both hosts. An explicit defeat fixture qualifies the
+ending, ordinary rightward pit death and map return. A separate assisted attack
+route reaches tiers `0..6`. Seven existing native routes retain 830
+byte-identical file comparisons. An earned complete victory and saved completion
+remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

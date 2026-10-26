@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-ending-stop",
+  "target": "Brutal Mario Demo11 Native Seven Ending Stop",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-child-fight-music",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "14622c254c562dcfdd5d3c8b422acec9534588bf17dbcf0e0294afed018dec63"
+  },
+  "scope": "Adapt only the legacy Seven defeat music-stop request FF to the modern driver stop request 80. Preserve the inherited fight, child namespace and font adapters. Ending boundary fixtures do not qualify an earned clear.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-ending-stop.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "14622c254c562dcfdd5d3c8b422acec9534588bf17dbcf0e0294afed018dec63"
+  }
+}

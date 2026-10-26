@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-ending-tiles",
+  "target": "Brutal Mario Demo11 Native Seven Ending Tiles",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-ending-test",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "9dab9fca5442e2c2fe9538844a7178677e592631fc2a2c2b045aad79d279efa1"
+  },
+  "scope": "T-room-only FG2 graphics clone: blank the eight retained pole subtiles while preserving official Map16 layout, collision IDs and recipient shared helpers.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-ending-tiles.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "6fe01a081510c3faff92816378570968d701ac494bf4402918747e58b0b374ba"
+  }
+}

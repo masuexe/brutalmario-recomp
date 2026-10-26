@@ -1,0 +1,133 @@
+# Ending phase fixture only: final tier and damage are injected.
+# Pipe entry and temporary damage immunity are fixtures; no earned clear.
+# Fresh donor startup followed by a labelled pipe-action room fixture.
+# The entry prefix precedes the explicitly labelled immunity/ending fixtures.
+# All waits are guest-frame counts; early map-labelled dumps may still be intro.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+
+# Button sequence dismisses the donor intro; no overworld-map transfer.
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
+poke 94 80004001
+poke 19b8 ff
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump fight180
+wait 420
+dump fight600
+wait 600
+dump fight1200
+wait 1200
+dump fight2400
+
+# ASSISTED COMBAT: keep Mario damage-immune to exercise offensive phase logic.
+# Temporary protection for the transition to the explicitly marked ending fixture.
+forcepoke 1497 ff
+press b 2
+wait 60
+dump protected_start
+# ENDING PHASE FIXTURE: set final tier and damage threshold.
+# This skips combat and does not prove an earned defeat or saved clear.
+poke 1531 06
+poke 1ff00 00fa
+until cb == 15 3000
+forcepoke 1497 00
+dump ending_queued
+wait 120
+dump ending01
+wait 120
+dump ending02
+wait 120
+dump ending03
+wait 120
+dump ending04
+wait 120
+dump ending05
+wait 120
+dump ending06
+wait 120
+dump ending07
+wait 120
+dump ending08
+wait 120
+dump ending09
+wait 120
+dump ending10
+wait 120
+dump ending11
+wait 120
+dump ending12
+wait 120
+dump ending13
+wait 120
+dump ending14
+wait 120
+dump ending15
+wait 120
+dump ending16
+wait 120
+dump ending17
+wait 120
+dump ending18
+wait 120
+dump ending19
+wait 120
+dump ending20
+wait 1800
+dump ending_late
+# Ordinary rightward traversal to the original test-room pit.
+press right 60
+dump test_right01
+press right 60
+dump test_right02
+press right 60
+dump test_right03
+press right 60
+dump test_right04
+press right 60
+dump test_right05
+press right 60
+dump test_right06
+press right 60
+dump test_right07
+press right 60
+dump test_right08
+press right 60
+dump test_right09
+press right 60
+dump test_right10
+press right 60
+dump test_right11
+press right 60
+dump test_right12
+wait 600
+dump test_after_death
+quit

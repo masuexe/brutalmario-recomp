@@ -1,0 +1,236 @@
+{
+  "schema": 1,
+  "id": "seven-ending-tiles",
+  "scope": "T-room-only FG2 graphics clone: blank the eight retained pole subtiles while preserving official Map16 layout, collision IDs and recipient shared helpers.",
+  "parent_target": "demo11-native-seven-ending-test",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "9dab9fca5442e2c2fe9538844a7178677e592631fc2a2c2b045aad79d279efa1"
+  },
+  "donor_manifest": "config/boss-donor.json",
+  "code": {
+    "source_address": "1EC20E",
+    "native_address": "9EC20E",
+    "size": 3385,
+    "sha256": "8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb",
+    "init": "9EC21D",
+    "main": "9EC265",
+    "pack_file": "seven-child6a.bin"
+  },
+  "record": {
+    "source_slot": "6A",
+    "namespace_slot": "E0",
+    "source_offset": 538621,
+    "destination_offset": 1609842,
+    "source": "013610003bab18401dc21e65c21e0000",
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "013610003bab18401dc29e65c29e0000"
+  },
+  "preserved_recipient_6a": {
+    "record_offset": 1607954,
+    "record": "013610003b8b1840f4be203fbf200000",
+    "rooms": [
+      216,
+      226,
+      227,
+      228
+    ],
+    "code_offset": 1064677,
+    "size": 3376,
+    "sha256": "03ea43204426c9e84df053724e577bfd346a07e1d98a9da281e4457b1f94518c"
+  },
+  "master_patches": [
+    {
+      "source_address": "2284D9",
+      "native_address": "A284D9",
+      "before": "9f9eab7f",
+      "after": "2040f0ea",
+      "role": "Route only the custom-ID store through the bounded adapter; normal ID remains 6A"
+    }
+  ],
+  "master_payload": {
+    "size": 28880,
+    "sha256": "09363f98fce23e379842a19aa9b47e0d59cea8078a4283cd525c8f1860729ecd",
+    "pack_file": "seven-code.bin"
+  },
+  "shared_dependencies": [
+    {
+      "address": "01802A",
+      "size": 8,
+      "sha256": "0b0bb4264a397c3540125c99e36291ad4dfab3f83860258678a50b969ca1027d"
+    },
+    {
+      "address": "019032",
+      "size": 270,
+      "sha256": "13d754c0fb98670981c7be674c987079b17da4307b1ef3a7ab7725e4198bf0aa"
+    },
+    {
+      "address": "01A7DC",
+      "size": 384,
+      "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+    },
+    {
+      "address": "01AB99",
+      "size": 80,
+      "sha256": "2ca70ce1fddf0a9017d851939780b5dab32152860f73d269b1407800481cb24c"
+    },
+    {
+      "address": "01B7B3",
+      "size": 169,
+      "sha256": "2fc7ff06eccd8bdcd8e397ff81077fa57a50084fc1f9bb0b7cc2bf51d19cd99b"
+    },
+    {
+      "address": "02A9DE",
+      "size": 128,
+      "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+    },
+    {
+      "address": "27FAD8",
+      "size": 1056,
+      "sha256": "529b6140d6c822b74e62970ca1edb63c5285e4b360ffcabd11b4601f050296d8"
+    },
+    {
+      "address": "07F722",
+      "size": 99,
+      "sha256": "ec77474932cf413ee65f027e1c0116f803bd75440abfaa25e52afaeee7c310db"
+    },
+    {
+      "address": "07F78B",
+      "size": 80,
+      "sha256": "e0e681bb7c12884c2b749c05903d6977111f049e9bef88a1645371f101d8a250"
+    },
+    {
+      "address": "07F7DB",
+      "size": 512,
+      "sha256": "09d77801d3e9a98daf687e1c5180fbface582e81efefd2d82c87d1cbaa34d335"
+    }
+  ],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4"
+  ],
+  "recipient_adaptations": {
+    "retain_parent_hooks": [
+      "0187A7",
+      "07F785"
+    ],
+    "retain_parent_death_entry": "00F5B7",
+    "untranslated_music_write": {
+      "address": "1EC7CD",
+      "bytes": "a91e8dfb1d",
+      "scope": "Normal controller path, not a qualified Seven child music adaptation. Actual playback remains open."
+    }
+  },
+  "namespace_strategy": "custom-only",
+  "master_adapter": {
+    "address": "A2F040",
+    "bytes": "0848a9e09f9eab7f682860",
+    "role": "Preserve A/P, assign only custom ID E0, return to the original local caller"
+  },
+  "preserved_master_sites": [
+    {
+      "address": "A284D5",
+      "bytes": "a96a",
+      "role": "Preserve normal sprite ID for shared engine processing"
+    },
+    {
+      "address": "A2A168",
+      "bytes": "c96a",
+      "role": "Keep normal-ID recognition matching the preserved normal class"
+    }
+  ],
+  "font_lifecycle": {
+    "recipient_font": {
+      "source_version": "demo-1-1",
+      "source_rom": {
+        "size": 4194304,
+        "sha256": "314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32"
+      },
+      "source_id": "02A",
+      "source_address": "0981DF",
+      "encoded": {
+        "size": 1162,
+        "sha256": "9f755c0571d9d640f832a3baf7f1259cee71c8eb6b330d4af57e9de6828427ff"
+      },
+      "decoded": {
+        "size": 2048,
+        "sha256": "310facf09c5f280859dcfcf4da215c63089377af4802aabea31e49ce5f09d0fa"
+      },
+      "native_address": "A6E27D"
+    },
+    "graphics_payload": {
+      "size": 31366,
+      "sha256": "43cecea3a2201336d135466e5bb160a91115fd8b6c95223fd1b01ab95cbf7cf7"
+    },
+    "main_hook": {
+      "address": "A28090",
+      "before": "20ff80",
+      "after": "2060f0"
+    },
+    "wrapper": {
+      "address": "A2F060",
+      "bytes": "0848da5aa571c909f004c906d00822d0d81022a0f0a27afa682820ff8060"
+    },
+    "callback": {
+      "address": "A2F0A0",
+      "bytes": "0848a9808d1521c220a900488d1621a901188d2043a97de28d2243a900088d2543e220a9a68d2443a9048d0b4268286b"
+    },
+    "scope": "Restore the English font on death action 09 and the ending pipe action 06; preserve the original main call and registers."
+  },
+  "ending_graphics": {
+    "parent_graphics": {
+      "size": 27261,
+      "sha256": "9ed6aa8d4398b7b06195a7b250daa098af0d9bb09aa35b218e12251b3c62280f"
+    },
+    "source_id": "0017",
+    "source_address": "0A97B6",
+    "source_decoded": {
+      "size": 4096,
+      "sha256": "953a014c7cb8e9c28ec59d08dfded345f88cdcd1e00feb843287861845a7fb24"
+    },
+    "source_encoded": {
+      "size": 2510,
+      "sha256": "757a5b106e409b7dde68b68417a712d5872538622b86f80e6e8dbaaea2594cf7"
+    },
+    "blank_8x8_tiles": [
+      "00A4",
+      "00A5",
+      "00A6",
+      "00A7",
+      "00B4",
+      "00B5",
+      "00B6",
+      "00B7"
+    ],
+    "decoded": {
+      "size": 4096,
+      "sha256": "f9e011f3f32da6866057ed1dc0c3a33356e189e032093f79fb3f02f3b1ca5c9e"
+    },
+    "encoded": {
+      "size": 4105,
+      "sha256": "6dcddb8214d00d859142e5d81b0a8ad37b9e581be0a498ff39be427318435644"
+    },
+    "namespace_id": "FFC",
+    "native_address": "A6EA7D",
+    "room": "017B",
+    "rom_patches": [
+      {
+        "address": "14DC68",
+        "before": "0100ffffffffffffffffffffffffffffffff",
+        "after": "018015001900fc0f14000200130001000000"
+      },
+      {
+        "address": "14ACFC",
+        "before": "ffffff",
+        "after": "7deaa6"
+      }
+    ]
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-ending-test",
+  "target": "Brutal Mario Demo11 Native Seven Ending Test",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-ending-stop",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "14622c254c562dcfdd5d3c8b422acec9534588bf17dbcf0e0294afed018dec63"
+  },
+  "scope": "Preserve the user-selected official Boss T test-room ending in native room 17B. Its existing 99-byte default layout, empty sprite stream, headers and palette selection already match the official Boss room 174. Retarget the exit and background and restore English font on the real pipe-action exit. No completion flag is written.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-ending-test.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "9dab9fca5442e2c2fe9538844a7178677e592631fc2a2c2b045aad79d279efa1"
+  }
+}

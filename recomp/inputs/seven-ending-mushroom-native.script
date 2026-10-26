@@ -1,0 +1,264 @@
+# Ending phase fixture only: final tier and damage are injected.
+# Pipe entry and temporary damage immunity are fixtures; no earned clear.
+# Map/node fixture enters room 146, then a labelled pipe-action transfer enters 0FF.
+# Entry fixture below; the explicitly marked ending fixture later writes tier/damage.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+dump approach146
+# Seven Koopalings entry boundary only; labelled pipe-action room transfer.
+# No invulnerability, completion writes, imported saves or forced movement.
+poke 94 80004001
+poke 19b8 ff
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump fight180
+wait 420
+dump fight600
+wait 600
+dump fight1200
+wait 1200
+dump fight2400
+
+# ASSISTED COMBAT: keep Mario damage-immune to exercise offensive phase logic.
+# Temporary protection for the transition to the explicitly marked ending fixture.
+forcepoke 1497 ff
+press b 2
+wait 60
+dump protected_start
+# ENDING PHASE FIXTURE: set final tier and damage threshold.
+# This skips combat and does not prove an earned defeat or saved clear.
+poke 1531 06
+poke 1ff00 00fa
+until cb == 15 3000
+forcepoke 1497 00
+dump ending_queued
+wait 120
+dump ending01
+wait 120
+dump ending02
+wait 120
+dump ending03
+wait 120
+dump ending04
+wait 120
+dump ending05
+wait 120
+dump ending06
+wait 120
+dump ending07
+wait 120
+dump ending08
+wait 120
+dump ending09
+wait 120
+dump ending10
+wait 120
+dump ending11
+wait 120
+dump ending12
+wait 120
+dump ending13
+wait 120
+dump ending14
+wait 120
+dump ending15
+wait 120
+dump ending16
+wait 120
+dump ending17
+wait 120
+dump ending18
+wait 120
+dump ending19
+wait 120
+dump ending20
+wait 1800
+dump ending_late
+# Ordinary rightward walk, with single-frame dumps around the hidden mushroom.
+press right 420
+dump mushroom_before
+press right 1
+dump mushroom001
+press right 1
+dump mushroom002
+press right 1
+dump mushroom003
+press right 1
+dump mushroom004
+press right 1
+dump mushroom005
+press right 1
+dump mushroom006
+press right 1
+dump mushroom007
+press right 1
+dump mushroom008
+press right 1
+dump mushroom009
+press right 1
+dump mushroom010
+press right 1
+dump mushroom011
+press right 1
+dump mushroom012
+press right 1
+dump mushroom013
+press right 1
+dump mushroom014
+press right 1
+dump mushroom015
+press right 1
+dump mushroom016
+press right 1
+dump mushroom017
+press right 1
+dump mushroom018
+press right 1
+dump mushroom019
+press right 1
+dump mushroom020
+press right 1
+dump mushroom021
+press right 1
+dump mushroom022
+press right 1
+dump mushroom023
+press right 1
+dump mushroom024
+press right 1
+dump mushroom025
+press right 1
+dump mushroom026
+press right 1
+dump mushroom027
+press right 1
+dump mushroom028
+press right 1
+dump mushroom029
+press right 1
+dump mushroom030
+press right 1
+dump mushroom031
+press right 1
+dump mushroom032
+press right 1
+dump mushroom033
+press right 1
+dump mushroom034
+press right 1
+dump mushroom035
+press right 1
+dump mushroom036
+press right 1
+dump mushroom037
+press right 1
+dump mushroom038
+press right 1
+dump mushroom039
+press right 1
+dump mushroom040
+press right 1
+dump mushroom041
+press right 1
+dump mushroom042
+press right 1
+dump mushroom043
+press right 1
+dump mushroom044
+press right 1
+dump mushroom045
+press right 1
+dump mushroom046
+press right 1
+dump mushroom047
+press right 1
+dump mushroom048
+press right 1
+dump mushroom049
+press right 1
+dump mushroom050
+press right 1
+dump mushroom051
+press right 1
+dump mushroom052
+press right 1
+dump mushroom053
+press right 1
+dump mushroom054
+press right 1
+dump mushroom055
+press right 1
+dump mushroom056
+press right 1
+dump mushroom057
+press right 1
+dump mushroom058
+press right 1
+dump mushroom059
+press right 1
+dump mushroom060
+press right 1
+dump mushroom061
+press right 1
+dump mushroom062
+press right 1
+dump mushroom063
+press right 1
+dump mushroom064
+press right 1
+dump mushroom065
+press right 1
+dump mushroom066
+press right 1
+dump mushroom067
+press right 1
+dump mushroom068
+press right 1
+dump mushroom069
+press right 1
+dump mushroom070
+press right 1
+dump mushroom071
+press right 1
+dump mushroom072
+press right 1
+dump mushroom073
+press right 1
+dump mushroom074
+press right 1
+dump mushroom075
+press right 1
+dump mushroom076
+press right 1
+dump mushroom077
+press right 1
+dump mushroom078
+press right 1
+dump mushroom079
+press right 1
+dump mushroom080
+press right 220
+wait 600
+dump mushroom_map
+quit

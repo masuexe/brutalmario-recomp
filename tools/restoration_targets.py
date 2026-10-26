@@ -1,6 +1,22 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-seven-ending-1up': {
+        'binary': 'BrutalMarioDemo11NativeSevenEnding1UpSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Seven Ending 1up',
+    },
+    'demo11-native-seven-ending-tiles': {
+        'binary': 'BrutalMarioDemo11NativeSevenEndingTilesSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Seven Ending Tiles',
+    },
+    'demo11-native-seven-ending-test': {
+        'binary': 'BrutalMarioDemo11NativeSevenEndingTestSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Seven Ending Test',
+    },
+    'demo11-native-seven-ending-stop': {
+        'binary': 'BrutalMarioDemo11NativeSevenEndingStopSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Seven Ending Stop',
+    },
     'demo11-native-seven-child-fight-music': {
         'binary': 'BrutalMarioDemo11NativeSevenChildFightMusicSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Seven Child Fight Music',

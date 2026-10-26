@@ -174,7 +174,11 @@ The room `0FF` music request is now pinned by the
 [fight-music checkpoint](native-seven-fight-music.md). The child source still
 writes music value `1E` at `$1EC7CD`. That write is not adapted.
 
-Later fight phases, the ending, and saved completion remain open.
+The later [ending-boundary checkpoint](native-seven-ending.md) samples all
+joined-part tiers with assisted actual attacks. It qualifies the ending and
+pit death with an explicit defeat fixture, and restores the hidden 1-up
+checkpoints in the test room. A complete earned victory and saved completion
+remain open.
 
 ## Reproduction
 

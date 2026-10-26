@@ -1,0 +1,125 @@
+# Ending phase fixture only: final tier and damage are injected.
+# Pipe entry and temporary damage immunity are fixtures; no earned clear.
+# Map/node fixture enters room 146, then a labelled pipe-action transfer enters 0FF.
+# Entry fixture below; the explicitly marked ending fixture later writes tier/damage.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+dump approach146
+# Seven Koopalings entry boundary only; labelled pipe-action room transfer.
+# No invulnerability, completion writes, imported saves or forced movement.
+poke 94 80004001
+poke 19b8 ff
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump fight180
+wait 420
+dump fight600
+wait 600
+dump fight1200
+wait 1200
+dump fight2400
+
+# ASSISTED COMBAT: keep Mario damage-immune to exercise offensive phase logic.
+# Temporary protection for the transition to the explicitly marked ending fixture.
+forcepoke 1497 ff
+press b 2
+wait 60
+dump protected_start
+# ENDING PHASE FIXTURE: set final tier and damage threshold.
+# This skips combat and does not prove an earned defeat or saved clear.
+poke 1531 06
+poke 1ff00 00fa
+until cb == 15 3000
+forcepoke 1497 00
+dump ending_queued
+wait 120
+dump ending01
+wait 120
+dump ending02
+wait 120
+dump ending03
+wait 120
+dump ending04
+wait 120
+dump ending05
+wait 120
+dump ending06
+wait 120
+dump ending07
+wait 120
+dump ending08
+wait 120
+dump ending09
+wait 120
+dump ending10
+wait 120
+dump ending11
+wait 120
+dump ending12
+wait 120
+dump ending13
+wait 120
+dump ending14
+wait 120
+dump ending15
+wait 120
+dump ending16
+wait 120
+dump ending17
+wait 120
+dump ending18
+wait 120
+dump ending19
+wait 120
+dump ending20
+wait 1800
+dump ending_late
+# Ordinary rightward traversal to the original test-room pit.
+press right 60
+dump test_right01
+press right 60
+dump test_right02
+press right 60
+dump test_right03
+press right 60
+dump test_right04
+press right 60
+dump test_right05
+press right 60
+dump test_right06
+press right 60
+dump test_right07
+press right 60
+dump test_right08
+press right 60
+dump test_right09
+press right 60
+dump test_right10
+press right 60
+dump test_right11
+press right 60
+dump test_right12
+wait 600
+dump test_after_death
+quit
