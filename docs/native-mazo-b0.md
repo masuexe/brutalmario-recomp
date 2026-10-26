@@ -5,8 +5,9 @@
 The mazo `B0` corridor actor has a static module review and a built target.
 The four imported corridor rooms load. Rooms `191` and `192` enter gameplay
 and match the donor actor set. Rooms `183` and `184` are transition steps that
-load and then fade to room `190`. This document records the measured data and
-the bounded entry. It does not qualify full corridor playability.
+load and then fade to room `190`. The donor image shows the same transition
+from rooms `00D` and `10C`. This document records the measured data and the
+bounded entry. It does not qualify full corridor playability.
 
 ## Module
 
@@ -129,12 +130,12 @@ The room `184` entry matches room `183`. The capture is
 `tools/qualify_mazo_b0.py` checks the target identities, the graphics
 records, the entry mode and room, the custom `A9` actor set and the donor
 actor set. The report is `local/reports/native-mazo-b0-final.json`, SHA-256
-`7a47feee0229e5ce36de93083a9ccbb00c76294c07ffec6ff07b3d37c6d35f68`.
+`a0c3f93defb0b2acc0c8c9ba8019ec9e5a5a7e9cf83acbf092083d43ca21bf36`.
 
 | Room | Slot | Entry mode | Actors | Cap |
 | --- | --- | ---: | --- | --- |
-| `00D` | `183` | `15` | two custom `A9` | Load step. Fades to `190`. |
-| `10C` | `184` | `15` | two custom `A9` | Load step. Fades to `190`. |
+| `00D` | `183` | `15` | two custom `A9` | Load step. Both images fade to `190`. |
+| `10C` | `184` | `15` | two custom `A9` | Load step. Both images fade to `190`. |
 | `191` | `191` | `14` | three, donor parity | None. |
 | `192` | `192` | `14` | two, donor parity | None. |
 
@@ -142,16 +143,21 @@ The donor captures are `mazo-b0-donor191-v1` and `mazo-b0-donor192-v1`. The
 donor actor sets match the native actor sets. The custom id changes from `B0`
 to `A9`.
 
+The donor transition captures are `mazo-b0-donor00d-fine-v1` and
+`mazo-b0-donor10c-fine-v1`. At frame 160 the donor is in mode `17` in room
+`0x00D` or room `0x10C`. At frame 180 the donor is in room `0x190`. The native
+rooms `183` and `184` do the same.
+
 The room `183` frame at mode `15` shows a load step. The frame is not a
 gameplay frame. The room `183` and room `184` captures do not qualify
 graphics. The donor pipe chain through rooms `00D` and `10C` stays unverified.
 
 ## Next steps
 
-1. Check the donor pipe chain through rooms `00D` and `10C`. A donor capture
-   of the chain would show the transition to room `190`.
-2. Record the relocated exits of room `00D`. They stay outside this bounded
+1. Record the relocated exits of room `00D`. They stay outside this bounded
    entry check.
+2. Record the corridor camera, palette and sprite behavior in rooms `191` and
+   `192` against the donor captures.
 3. Never overwrite the recipient `B0` slot.
 
 ## Reproduction

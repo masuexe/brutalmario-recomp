@@ -60,7 +60,7 @@ Only explicitly selected official releases are consulted.
 | Seven Koopalings `2A` | `boss`, identical to `7hero` | 28,478 bytes | Selected first integration candidate |
 | mazo room `151`, `9C` | `mazo` | 12,412 bytes | Native entry target qualified. See [the mazo 9C checkpoint](native-mazo-9c.md). Attack, clear and save stay open. |
 | mazo room `190`, `9B` | `mazo` | 3,399 bytes | Native entry target qualified. See [the mazo 9B checkpoint](native-mazo-9b.md). Attack and clear stay open. |
-| mazo corridor `B0` | `mazo` | 419 bytes | Target built. Rooms `191` and `192` enter and match the donor actors. Rooms `00D` and `10C` are transition steps to room `190`. See [the corridor plan](native-mazo-b0.md). |
+| mazo corridor `B0` | `mazo` | 419 bytes | Target built. Rooms `191` and `192` enter and match the donor actors. Both images treat rooms `00D` and `10C` as transition steps to room `190`. See [the corridor plan](native-mazo-b0.md). |
 
 Seven Koopalings uses record
 `0136000035a299440f80228d80220000`, init `$22:800F`, main `$22:808D`.

@@ -22,6 +22,7 @@ CAPTURES = {
     '192': 'mazo-b0-room192-v1-native',
 }
 DONOR = {'191': 'mazo-b0-donor191-v1', '192': 'mazo-b0-donor192-v1'}
+DONOR_FINE = {'00D': 'mazo-b0-donor00d-fine-v1', '10C': 'mazo-b0-donor10c-fine-v1'}
 SLOTS = {'00D': '183', '10C': '184', '191': '191', '192': '192'}
 CUSTOM = 0xA9
 DONOR_CUSTOM = 0xB0
@@ -80,7 +81,8 @@ def qualify():
               'data_pack_sha256': corridor['data_pack']['sha256'],
               'corridor_receipt_sha256':
                   sha((ROOT/'local/native-modules/mazo-b0-corridor-v1/preparation-receipt.json').read_bytes()),
-              'entries': {}, 'donor_parity': {}, 'graphics_records': {}, 'limits': []}
+              'entries': {}, 'donor_parity': {}, 'transition_parity': {},
+              'graphics_records': {}, 'limits': []}
     for room, name in CAPTURES.items():
         slot = int(SLOTS[room], 16)
         wram = frame(name, 'entry180')
@@ -99,9 +101,22 @@ def qualify():
             later_room = int.from_bytes(later[0x10B:0x10D], 'little')
             entry['later_room'] = later_room
             entry['later_mode'] = later[0x100]
-            report['limits'].append(f'room {room}: the entry is a load step with no gameplay '
-                                    f'frame; the room changes to 0x{later_room:03X}. '
-                                    f'Graphics are not observable.')
+            donor_name = DONOR_FINE[room]
+            donor_frame = frame(donor_name, 'f160')
+            donor_room = int.from_bytes(donor_frame[0x10B:0x10D], 'little')
+            donor_later = frame(donor_name, 'f180')
+            donor_later_room = int.from_bytes(donor_later[0x10B:0x10D], 'little')
+            require(donor_room == int(room, 16), 'donor fine room differs: '+room)
+            require(donor_frame[0x100] == 0x11, 'donor fine mode differs: '+room)
+            require(donor_later_room == 0x190, 'donor later room differs: '+room)
+            require(later_room == 0x190, 'native later room differs: '+room)
+            report['transition_parity'][room] = {
+                'donor_capture': donor_name, 'donor_room': donor_room,
+                'donor_mode': donor_frame[0x100], 'donor_later_room': donor_later_room,
+                'native_capture': name, 'native_room': entry['room'],
+                'native_later_room': later_room}
+            report['limits'].append(f'room {room}: the native and the donor image both treat '
+                                    f'this room as a transition step to 0x{later_room:03X}.')
         else:
             require(entry['mode'] == 0x14, 'entry mode differs: '+room)
             reference = REFERENCE[room]
