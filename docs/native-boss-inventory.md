@@ -58,7 +58,7 @@ Only explicitly selected official releases are consulted.
 | Content | Newest retained program in the inspected official set | Protected size | Status |
 | --- | --- | ---: | --- |
 | Seven Koopalings `2A` | `boss`, identical to `7hero` | 28,478 bytes | Selected first integration candidate |
-| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Donor entry/attack observed. Static recipe prepared. Graphics, runtime and gameplay pending. |
+| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Native entry target qualified. See [the mazo 9C checkpoint](native-mazo-9c.md). Attack, clear and save stay open. |
 | mazo room `190`, `9B` | `mazo` | 3,399 bytes | Original map entry observed; role beyond sampled behavior remains open |
 | mazo corridor `B0` | `mazo` | 419 bytes | Conflicts with recipient `B0`; namespace adaptation required if recovered |
 

@@ -52,6 +52,21 @@ class MazoModuleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'adapted program hash'):
             mazo.build_code(self.donor, self.base, recipe)
 
+    def test_native_target_installation(self):
+        from restore_star_world_1 import sha
+        cfg = json.loads((ROOT / 'config/restorations/demo11-native-mazo-9c.json').read_text())
+        projected = bytearray(self.base)
+        for patch in self.recipe['unapplied_rom_patches']:
+            offset = patch['offset']
+            before, after = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
+            self.assertEqual(projected[offset:offset+len(before)], before)
+            projected[offset:offset+len(after)] = after
+        self.assertEqual(sha(bytes(projected)), cfg['output']['sha256'])
+        self.assertEqual(cfg['native_seven']['manifest'], 'config/native-content/mazo-9c-module.json')
+        rom = (ROOT / 'local/restoration/demo11-native-mazo-9c/rom.sfc').read_bytes()
+        verify(rom, cfg['output'], 'mazo native ROM')
+        self.assertEqual(rom[patch['offset']:patch['offset']+16].hex(), patch['after'])
+
     def test_record_mismatch_is_rejected(self):
         recipe = copy.deepcopy(self.recipe)
         recipe['record']['raw'] = '00'*16

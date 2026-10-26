@@ -66,6 +66,12 @@ ending, ordinary rightward pit death and map return. A separate assisted attack
 route reaches tiers `0..6`. Seven existing native routes retain 830
 byte-identical file comparisons. An earned complete victory and saved completion
 remain open.
+The [mazo 9C entry checkpoint](native-mazo-9c.md) installs the official mazo 9C
+record and runs its protected program from an immutable A2 view. Room `151`
+already exists in the recipient with matching level data, sprite list and
+graphics. Two active 9C actors appear at the donor slots and positions, and 830
+regression comparisons stay byte-identical. The attack behavior, room `190` 9B
+module, `B0` corridors and a clear remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

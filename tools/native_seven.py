@@ -27,18 +27,21 @@ def settings(target):
 def packs(target):
     cfg, recipe = settings(target)
     previous = json.loads((ROOT / 'config/native-content/sprite9e.json').read_text())
-    result = []
-    for variable, item, address, digest, executable in (
-        ('BM_SEVEN_CODE_PACK', dict(recipe['code'], **recipe['code'].get('native_payload', {})), recipe['code']['native_address'],
-         recipe['code']['adapted_sha256'], True),
-        ('BM_SEVEN_GRAPHICS_PACK', recipe['graphics_pack'], recipe['graphics_pack']['native_address'],
-         recipe['graphics_pack']['sha256'], False),
+    pins = [('BM_SEVEN_CODE_PACK', dict(recipe['code'], **recipe['code'].get('native_payload', {})),
+             recipe['code']['native_address'], recipe['code']['adapted_sha256'], True)]
+    if 'graphics_pack' in recipe:
+        pins.append(('BM_SEVEN_GRAPHICS_PACK', recipe['graphics_pack'],
+                     recipe['graphics_pack']['native_address'],
+                     recipe['graphics_pack']['sha256'], False))
+    pins.extend((
         ('BM_NATIVE_SPRITE_PACK', previous['code'], previous['code']['native_address'],
          previous['code']['sha256'], True),
         ('BM_NATIVE_GRAPHICS_PACK', dict(previous['graphics']['payload'],
          pack_file=previous['graphics']['pack_file']), previous['graphics']['native_address'],
          previous['graphics']['payload']['sha256'], False),
-    ):
+    ))
+    result = []
+    for variable, item, address, digest, executable in pins:
         result.append(dict(variable=variable, pack_file=item['pack_file'],
                            address=address, size=item['size'], sha256=digest, executable=executable))
     return result
@@ -82,7 +85,10 @@ def identity(target):
              ROOT / 'recomp/native_seven.c', ROOT / 'recomp/native_content.h', patch]
     if 'base_manifest' in recipe:
         paths.append(ROOT / recipe['base_manifest'])
-    return {'kind': 'immutable-seven-entry',
+    if 'graphics_pack' not in recipe:
+        paths.append(ROOT / 'tools/prepare_mazo_module.py')
+    kind = 'immutable-mazo-entry' if 'graphics_pack' not in recipe else 'immutable-seven-entry'
+    return {'kind': kind,
             'files': {str(path.relative_to(ROOT)): sha(path.read_bytes()) for path in paths},
             'packs': packs(target), 'generated_header_sha256': sha(header(target).encode()),
             'runtime_source_sha256': previous['runtime_source_sha256'],
@@ -90,10 +96,14 @@ def identity(target):
 
 
 def prepare(target=TARGET):
-    import prepare_seven_module
     cfg, recipe = settings(target)
     module_dir = ROOT / 'local/native-modules' / (target+'-final')
-    prepare_seven_module.prepare(module_dir, ROOT / cfg['native_seven']['manifest'])
+    if 'graphics_pack' in recipe:
+        import prepare_seven_module
+        prepare_seven_module.prepare(module_dir, ROOT / cfg['native_seven']['manifest'])
+    else:
+        import prepare_mazo_module
+        prepare_mazo_module.prepare(module_dir, ROOT / cfg['native_seven']['manifest'])
     base_dir = ROOT / 'local/restoration' / cfg['base_restoration']
     base = (base_dir / 'rom.sfc').read_bytes()
     verify(base, cfg['base_output'], 'Seven recipient base')

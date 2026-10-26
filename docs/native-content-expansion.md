@@ -34,7 +34,10 @@ accepted composition request. The [ending boundary](native-seven-ending.md)
 now qualifies the user-selected T test room, pit death and map return through
 an explicitly injected defeat fixture. It also restores the hidden 1-up
 checkpoints in that room. A complete earned fight and saved completion remain
-open.
+open. The [mazo 9C entry](native-mazo-9c.md) now installs the mazo 9C record and
+runs its protected program from an immutable A2 view. The room 151 entry, two
+active 9C actors and 830 regression comparisons pass. The attack, room 190 9B
+module and B0 corridors remain open.
 
 ## Frozen comparison checkpoint
 

@@ -506,5 +506,13 @@
     "shared-helper closure for the 13 outside calls",
     "external-pack runtime mapping and target registration",
     "entry, attack and regression qualification"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608754,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0122008035a399440f80a24080a20000",
+      "role": "Install the mazo 9C record and point init/main into the A2 module view"
+    }
   ]
 }
