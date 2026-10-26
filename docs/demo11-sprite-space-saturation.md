@@ -74,3 +74,17 @@ becomes free when these duplicates are removed.
 No remaining sprite has a safe install path yet. The next practical step is
 a full map of the level data fields. That map will let a later pass move
 sprite-tile graphics without damage.
+
+## Blob test correction: 2026-10-26
+
+A second trial moved the 271-byte blob and patched no pointers. Room
+`0x146` graphics still broke. The blob is therefore referenced by an
+unknown mechanism.
+
+The room `0x146` level data block is only 154 bytes and holds the
+sprite list. It holds no tileset pointer. The six 3-byte values also sit
+inside compressed data, so they are not the loader pointers.
+
+The blob likely belongs to a level tileset that the game loads through an
+indexed table. A later pass must disassemble the tileset loader to find that
+table. Do not move the blob before then.
