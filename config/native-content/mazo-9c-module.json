@@ -1,0 +1,510 @@
+{
+  "schema": 1,
+  "id": "mazo-9c-module",
+  "scope": "Static module review for the mazo 9C protected program. The recipe pins the donor record, the three inline dispatch tables and the 72 source-bank call patches. Graphics, the external-pack runtime mapping and gameplay qualification remain open.",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "9C",
+    "raw": "0122008035a399440f80224080220000",
+    "init": "22800F",
+    "main": "228040",
+    "rooms": [
+      "151"
+    ]
+  },
+  "code": {
+    "source_address": "228000",
+    "native_address": "A28000",
+    "size": 12412,
+    "sha256": "08c840b5967a51742c3037a8d9cfaeda75f6604c0ed687b6f8ecf2331dcec8d1",
+    "adapted_sha256": "600be50a87fc8fba185f1e3d98e8d35328a9443c92a81156ed6d7f17fa0926b5",
+    "pack_file": "mazo-9c-code.bin"
+  },
+  "entry_seeds": [
+    "22800F",
+    "228040"
+  ],
+  "dispatch_tables": [
+    {
+      "address": "228048",
+      "count": 25,
+      "sha256": "713aa973453f4917dbca4d821bede453ee8c614f60bc5f6077508b51b0f6afa7",
+      "dispatcher": "2280A9"
+    },
+    {
+      "address": "228923",
+      "count": 13,
+      "sha256": "f1e9a0065a3a15cc4a287dbfc25dba006da36eb98958c229014965efb913b0f7",
+      "dispatcher": "22897E"
+    },
+    {
+      "address": "228E49",
+      "count": 8,
+      "sha256": "238264f6b7450df57cfd04e436d03f6353b30659b425f6d3057f2c0c54e15d28",
+      "dispatcher": "228E7D"
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "2280C2",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22810E",
+      "before": "22519b22",
+      "after": "22519ba2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22815A",
+      "before": "22689f22",
+      "after": "22689fa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228166",
+      "before": "22a69f22",
+      "after": "22a69fa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228172",
+      "before": "221ca022",
+      "after": "221ca0a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22817E",
+      "before": "226aa022",
+      "after": "226aa0a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22818A",
+      "before": "22b6a022",
+      "after": "22b6a0a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228208",
+      "before": "2220a122",
+      "after": "2220a1a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228217",
+      "before": "2258a122",
+      "after": "2258a1a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228223",
+      "before": "22aaa122",
+      "after": "22aaa1a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22823E",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228289",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2282E2",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22835D",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228365",
+      "before": "22929722",
+      "after": "229297a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2283CF",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228995",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2289AF",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2289B7",
+      "before": "22a19922",
+      "after": "22a199a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2289EA",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2289F2",
+      "before": "22909822",
+      "after": "229098a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228A85",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228A8D",
+      "before": "22349722",
+      "after": "223497a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228AC3",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228ACB",
+      "before": "22639722",
+      "after": "226397a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228ADD",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228C03",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228C0B",
+      "before": "22e39922",
+      "after": "22e399a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228C3F",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228C47",
+      "before": "226d9a22",
+      "after": "226d9aa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228CC3",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228CCB",
+      "before": "22a69a22",
+      "after": "22a69aa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228D51",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228D59",
+      "before": "22ee9a22",
+      "after": "22ee9aa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228D79",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228E1D",
+      "before": "221d9b22",
+      "after": "221d9ba2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228EC1",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228EC9",
+      "before": "22349722",
+      "after": "223497a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228F7A",
+      "before": "22939b22",
+      "after": "22939ba2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228F9C",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228FA5",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228FAD",
+      "before": "22cd9722",
+      "after": "22cd97a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228FDF",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "228FE7",
+      "before": "22fa9822",
+      "after": "22fa98a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22903A",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229042",
+      "before": "22bf9822",
+      "after": "22bf98a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2290F3",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2290FB",
+      "before": "22619822",
+      "after": "226198a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229197",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22919F",
+      "before": "22269822",
+      "after": "222698a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22926B",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229273",
+      "before": "22189d22",
+      "after": "22189da2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22927F",
+      "before": "22129722",
+      "after": "221297a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22928B",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229293",
+      "before": "22549d22",
+      "after": "22549da2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22929F",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2292A7",
+      "before": "22969d22",
+      "after": "22969da2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2292D9",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2292E1",
+      "before": "22ee9d22",
+      "after": "22ee9da2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2292ED",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2292F5",
+      "before": "22589e22",
+      "after": "22589ea2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229306",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22930E",
+      "before": "22b09e22",
+      "after": "22b09ea2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22931A",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229322",
+      "before": "22ec9e22",
+      "after": "22ec9ea2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229327",
+      "before": "5c789222",
+      "after": "5c7892a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22934A",
+      "before": "22569622",
+      "after": "225696a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229352",
+      "before": "22419922",
+      "after": "224199a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "22935E",
+      "before": "22f09622",
+      "after": "22f096a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229366",
+      "before": "222c9f22",
+      "after": "222c9fa2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "229372",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    },
+    {
+      "address": "2294CD",
+      "before": "22239622",
+      "after": "222396a2",
+      "role": "Map the source-bank 22 call to the external A2 view"
+    }
+  ],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "0FF780",
+    "10D8D0",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "room 151 and 190 graphics resource review",
+    "shared-helper closure for the 13 outside calls",
+    "external-pack runtime mapping and target registration",
+    "entry, attack and regression qualification"
+  ]
+}

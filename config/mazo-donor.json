@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "mazo",
+  "target": "Official mazo donor candidate verified against cheap_demo/mazo.ips",
+  "scope": "The authoritative mazo.ips applied to the pinned SMW base with an explicit 512-byte copier prefix produces the prepared mazo donor. The audit records structural alignment only. It does not qualify complete gameplay.",
+  "authoritative_patch": {
+    "base_path": "../roms/Super Mario World (U) [!].smc",
+    "base": {
+      "size": 524288,
+      "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+    },
+    "ips_path": "../patches/cheap_demo/mazo.ips",
+    "ips": {
+      "size": 3841249,
+      "sha256": "3eea9422a0585d0c1d12e0afa8e05e5a5b007238be1df35261d28e2f0c896272"
+    },
+    "copier_prefix_bytes": 512
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1"
+  }
+}

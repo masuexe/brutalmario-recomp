@@ -58,7 +58,7 @@ Only explicitly selected official releases are consulted.
 | Content | Newest retained program in the inspected official set | Protected size | Status |
 | --- | --- | ---: | --- |
 | Seven Koopalings `2A` | `boss`, identical to `7hero` | 28,478 bytes | Selected first integration candidate |
-| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Donor entry/attack observed. Dispatch review complete. Module recipe pending. |
+| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Donor entry/attack observed. Static recipe prepared. Graphics, runtime and gameplay pending. |
 | mazo room `190`, `9B` | `mazo` | 3,399 bytes | Original map entry observed; role beyond sampled behavior remains open |
 | mazo corridor `B0` | `mazo` | 419 bytes | Conflicts with recipient `B0`; namespace adaptation required if recovered |
 
@@ -133,6 +133,16 @@ source-bank data reference remains.
 The mazo `9C` module still needs a recipe, an external-pack mapping, a review of
 the room `151` and `190` graphics and gameplay qualification. This review does
 not admit the module.
+
+The static recipe is `config/native-content/mazo-9c-module.json`. It pins the
+9C record, the three dispatch tables, 72 source-bank call patches and 13 outside
+calls. The tool `tools/prepare_mazo_module.py` verifies these pins and writes
+the adapted code pack. The adapted program SHA-256 is
+`600be50a87fc8fba185f1e3d98e8d35328a9443c92a81156ed6d7f17fa0926b5`.
+The receipt is `local/native-modules/mazo-9c-v1/preparation-receipt.json`,
+SHA-256 `eeea0a7d7a5d7016bea76ff83b06e346714adff5e11df402325264f054aaaa58`.
+The audit records 159 entry states and 4,734 instruction variants with M/X
+states, 72 call patches and 71 scheduler sites. Graphics and runtime stay open.
 
 Report: `local/reports/boss-dependencies-mazo-review.json`, SHA-256
 `89a481b5165fcf47da32a382dd534203666052c5f481b107cf58a377f063519f`.
@@ -218,7 +228,9 @@ only until correspondence to the pinned official ROM is established.
 ```
 python3 tools/audit_boss_dependencies.py --output local/reports/YOUR_FRESH_inventory.json
 python3 tools/check_boss_dependency_evidence.py --output local/reports/YOUR_FRESH_entry_check.json
+python3 tools/prepare_mazo_module.py
 python3 -m unittest discover -s tests -p test_boss_dependencies.py -v
+python3 -m unittest discover -s tests -p test_mazo_module.py -v
 ```
 
 For new captures, use `tools/probe_reference.py` with each tracked script,
