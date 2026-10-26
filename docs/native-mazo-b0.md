@@ -32,13 +32,13 @@ The module tests pass 9/9. The full suite passes 185/185 tests. The log is
 
 | Room | L1 bytes | L2 | Sprite list bytes |
 | --- | ---: | --- | ---: |
-| `00D` | 21 | empty (`FF`) | 16 |
-| `10C` | 6 | empty (`FF`) | 517 |
-| `191` | 105 | sentinel `FFDE54` | 472 |
-| `192` | 99 | sentinel `FFDE54` | 8,290 |
+| `00D` | 26 | empty (`FF`) | 8 |
+| `10C` | 11 | empty (`FF`) | 8 |
+| `191` | 110 | sentinel `FFDE54` | 11 |
+| `192` | 104 | sentinel `FFDE54` | 8 |
 
 Each room also has a 32-byte graphics and palette record. The level streams and
-the sprite lists total 9,526 bytes. The records total 128 bytes. One external
+the sprite lists total 288 bytes. The records total 128 bytes. One external
 bank of 32 KiB has enough room.
 
 The donor L1 streams are raw object streams that end with `FF`. The `FFDE54`
@@ -53,25 +53,49 @@ recipient has 49 level entries that point at `0x068000`.
 The recipient `B0` slot is the ForestStar room `003` actor. Keep that slot.
 The donor `B0` program needs a free SpriteTool slot.
 
-A room sprite entry carries the custom id in byte 2 when bit 3 of byte 0 is
-set. The imported lists need byte 2 changed from `B0` to the new id. A raw
-bit-3 scan over all rooms misreads standard sprites. The corrected scan is the
-next task.
+A sprite list starts with one header byte. The 3-byte entries follow it and
+end with `FF`. A room entry carries the custom id in byte 2 when bit 3 of byte
+0 is active. The imported lists change byte 2 from `B0` to `A9`.
+
+The plan uses the free SpriteTool slot `A9`. The slot record is a type-0
+placeholder and no recipient room places custom id `A9`.
+
+## Prepared plan
+
+The plan uses four target level slots. Slots `191` and `192` keep their donor
+numbers because the recipient entries are empty. Rooms `00D` and `10C` move
+to free slots `183` and `184`.
+
+Each target slot is empty level `0x068000`. No room has a screen exit to a
+target slot. No target slot byte occurs in the decoded map. The donor room
+`00D` has exits to rooms `166`, `162` and `164`. Those rooms are not
+imported. Rooms `10C`, `191` and `192` have no primary exit.
+
+The pack is `mazo-b0-corridor.bin`, 288 bytes, SHA-256
+`887eee9103f7d8838dfae70839e049f3c43d144e500cef8290749c559a9d7c00`.
+The recipe is `config/native-content/mazo-b0-corridor.json`. The integration
+plan has 21 patches. The projected ROM SHA-256 is
+`405ba709779d8ac14a802a4fbab327e57cfd4fa585f0c22f6b5b59b2b02d5d07`.
+The receipt is
+`local/native-modules/mazo-b0-corridor-v1/preparation-receipt.json`, SHA-256
+`c2e4ad1aa94636ea21068326d0f09203b04d40bd714d3fdfe75c04e4ea9f5fac`. The tool
+is `tools/prepare_mazo_b0_corridor.py`.
 
 ## Next steps
 
-1. Run a corrected custom-id scan and choose a free SpriteTool slot.
-2. Copy the four rooms into one A7 data pack. Choose four free recipient level
-   slots. Patch the level, sprite and metadata tables.
-3. Add a target with the A2 code pack, the A7 data pack, the A5 sprite pack and
-   the B6 graphics pack.
-4. Capture a fixture entry into the imported rooms. Qualify the actors and the
+1. Add a target with the A2 code pack, the A7 data pack, the A5 sprite pack and
+   the B6 graphics pack. Extend the mazo runtime to mount the A7 data pack.
+2. Capture a fixture entry into the imported rooms. Qualify the actors and the
    room graphics.
-5. Never overwrite the recipient `B0` slot.
+3. Record the relocated exits of room `00D`. They stay outside this bounded
+   entry check.
+4. Never overwrite the recipient `B0` slot.
 
 ## Reproduction
 
 ```
 python3 -c "import sys; sys.path.insert(0, 'tools'); import prepare_mazo_module as p; from pathlib import Path; p.prepare(Path('local/native-modules/mazo-b0-v1').resolve(), Path('config/native-content/mazo-b0-module.json').resolve())"
+python3 tools/prepare_mazo_b0_corridor.py --write-recipe
+python3 tools/prepare_mazo_b0_corridor.py
 python3 -m unittest discover -s tests -p test_mazo_module.py -v
 ```

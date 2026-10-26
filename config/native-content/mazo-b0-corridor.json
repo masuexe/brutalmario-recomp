@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "id": "mazo-b0-corridor",
+  "scope": "B0 corridor data pack and integration plan. The target build, runtime data pack and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "custom_slot": "A9",
+  "data_pack": {
+    "address": "A78000",
+    "bank": "A7",
+    "pack_file": "mazo-b0-corridor.bin",
+    "size": 288,
+    "sha256": "887eee9103f7d8838dfae70839e049f3c43d144e500cef8290749c559a9d7c00"
+  },
+  "rooms": [
+    {
+      "source_room": "00D",
+      "target_slot": "183",
+      "level": {
+        "pointer": "5BB0E0",
+        "size": 26,
+        "sha256": "a11289b02e4b78f95c13e6831345bf06608ec746dc5af943c5b000e4731ffae4",
+        "offset": 0
+      },
+      "sprites": {
+        "pointer": "5BAE87",
+        "size": 8,
+        "sha256": "5102ba587bbdf43a96912f5bdc2020ca80e386b3922c74125b3a1ab6b9d81b6b",
+        "offset": 26
+      },
+      "metadata": {
+        "raw": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+        "sha256": "833ac5e83b9c0abf5b5246f30ca41b4d5300de4803989e4a51178c21f3041221"
+      },
+      "layer2": {
+        "mode": "copy",
+        "bytes": "ff"
+      }
+    },
+    {
+      "source_room": "10C",
+      "target_slot": "184",
+      "level": {
+        "pointer": "5C8222",
+        "size": 11,
+        "sha256": "da4b270e2d56c4b67d743cd94eb32dedbc15bd4ad179f12d7e9bbf3bfa46ca7b",
+        "offset": 35
+      },
+      "sprites": {
+        "pointer": "5C8452",
+        "size": 8,
+        "sha256": "5102ba587bbdf43a96912f5bdc2020ca80e386b3922c74125b3a1ab6b9d81b6b",
+        "offset": 46
+      },
+      "metadata": {
+        "raw": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+        "sha256": "833ac5e83b9c0abf5b5246f30ca41b4d5300de4803989e4a51178c21f3041221"
+      },
+      "layer2": {
+        "mode": "copy",
+        "bytes": "ff"
+      }
+    },
+    {
+      "source_room": "191",
+      "target_slot": "191",
+      "level": {
+        "pointer": "5BAE97",
+        "size": 110,
+        "sha256": "55ce4528ea9a82608118436e2df9eff2a5a90d3f6351f63fd5d1902af0677253",
+        "offset": 55
+      },
+      "sprites": {
+        "pointer": "5BAF08",
+        "size": 11,
+        "sha256": "97db9319d99f53534dd4f1826fe9db9e28674f6e59193343f157728f7a8a9f2c",
+        "offset": 165
+      },
+      "metadata": {
+        "raw": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "sha256": "e279a285191dac56cf0532fb76c581c14f75d5ef8a76a7a81d99d0ef05043c67"
+      },
+      "layer2": {
+        "mode": "sentinel",
+        "value": "FFDE54"
+      }
+    },
+    {
+      "source_room": "192",
+      "target_slot": "192",
+      "level": {
+        "pointer": "5C8657",
+        "size": 104,
+        "sha256": "59ba34ffa7f04a03a227a40532504bd7f9eb6af881c503a73490a7e8403e27c2",
+        "offset": 176
+      },
+      "sprites": {
+        "pointer": "5C86C2",
+        "size": 8,
+        "sha256": "1b5847518a2e2ff8a2be7b31f523abbba12db366f5f7094576c9100d51f1dbb1",
+        "offset": 280
+      },
+      "metadata": {
+        "raw": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "sha256": "e279a285191dac56cf0532fb76c581c14f75d5ef8a76a7a81d99d0ef05043c67"
+      },
+      "layer2": {
+        "mode": "sentinel",
+        "value": "FFDE54"
+      }
+    }
+  ],
+  "projected_output": {
+    "size": 4194304,
+    "sha256": "405ba709779d8ac14a802a4fbab327e57cfd4fa585f0c22f6b5b59b2b02d5d07"
+  },
+  "open_dependencies": [
+    "target registration and runtime data pack",
+    "fixture entry",
+    "actor and room graphics qualification"
+  ]
+}

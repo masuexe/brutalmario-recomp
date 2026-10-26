@@ -102,6 +102,15 @@ class MazoModuleTests(unittest.TestCase):
         self.assertEqual(audit['outside_calls'], recipe['external_calls'])
         self.assertEqual(recipe['code']['adapted_sha256'], recipe['code']['sha256'])
 
+    def test_b0_corridor_plan(self):
+        import prepare_mazo_b0_corridor as corridor
+        recipe = json.loads((ROOT / 'config/native-content/mazo-b0-corridor.json').read_text())
+        pack, patches, facts = corridor.build(recipe, self.donor, self.base)
+        self.assertEqual(len(pack), 288)
+        self.assertEqual(len(patches), 21)
+        self.assertEqual(corridor.sha(pack), recipe['data_pack']['sha256'])
+        self.assertEqual(facts['custom_slot'], 'A9')
+
     def test_record_mismatch_is_rejected(self):
         recipe = copy.deepcopy(self.recipe)
         recipe['record']['raw'] = '00'*16
