@@ -19,6 +19,8 @@ C9_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-align-fine-donor.script'
 C9_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-align-fine-native.script'
 LOAD_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-load-donor.script'
 LOAD_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-load-native.script'
+LATE_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-late-donor.script'
+LATE_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-late-native.script'
 B9 = 'demo11-native-mazo-9b'
 B9_ROM = '8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244'
 B9_SCRIPT_DONOR = 'recomp/inputs/mazo-9b-donor-fixture.script'
@@ -143,6 +145,52 @@ def load_timing():
                      'residual stays open.'}
 
 
+def window_9c_late():
+    donor = ROOT / 'local/captures/mazo-9c-late-v1-donor'
+    native = ROOT / 'local/captures/mazo-9c-late-v1-native'
+    donor_capture(donor, LATE_SCRIPT_DONOR)
+    native_capture(native, C9, LATE_SCRIPT_NATIVE)
+
+    tags = ['late400']+[f'late{frame:03d}' for frame in range(405, 661, 5)]
+    donor_rows, native_rows = {}, {}
+    for tag in tags:
+        a, b = body(donor, tag), body(native, tag)
+        require(a[0x100] == b[0x100] == 0x14, 'later window mode differs at '+tag)
+        donor_rows[tag], native_rows[tag] = actors(a, 0x9c), actors(b, 0x9c)
+
+    for tag in tags:
+        parts = donor_rows[tag]
+        require(parts.get(6) == (144, 320), 'donor later slot 6 differs at '+tag)
+        require(all(body(donor, tag)[0xb6+slot] == 0 for slot in parts),
+                'donor later actor has speed at '+tag)
+    require(donor_rows['late400'] == {6: (144, 320), 7: (168, 272), 9: (144, 320)},
+            'donor later start set differs')
+    require(native_rows['late400'] == {7: (168, 272), 9: (144, 320)},
+            'native later start set differs')
+
+    def x_at(tag, slot):
+        return native_rows[tag].get(slot, (None, None))[0]
+
+    require(x_at('late410', 6) == 268 and x_at('late480', 6) == -12,
+            'native slot 6 later motion differs')
+    require(x_at('late445', 5) == 256 and x_at('late470', 5) == 156,
+            'native slot 5 later motion differs')
+    require(x_at('late475', 4) == 264 and x_at('late540', 4) == 4,
+            'native slot 4 later motion differs')
+    speeds = {body(native, tag)[0xb6+slot] for tag in tags for slot in (4, 5, 6)
+              if slot in native_rows[tag]}
+    require(speeds == {192}, 'native later wave speed differs')
+    return {'donor': 'One stationary slot 6 part at (144,320) with zero speed through the window. '
+                     'Slots 7 and 9 stay fixed.',
+            'native': 'Repeating left-moving waves in slots 6, 5 and 4 with speed 192. '
+                      'Slot 6: X 268 at late410 and -12 at late480. Slot 5: X 256 at late445. '
+                      'Slot 4: X 264 at late475.',
+            'donor_rows': {tag: {str(k): list(v) for k, v in donor_rows[tag].items()}
+                           for tag in ('late400', 'late480', 'late600', 'late660')},
+            'native_rows': {tag: {str(k): list(v) for k, v in native_rows[tag].items()}
+                            for tag in ('late410', 'late480', 'late540', 'late600')}}
+
+
 def window_9c():
     donor = ROOT / 'local/captures/mazo-9c-align-fine-v2-donor'
     native = ROOT / 'local/captures/mazo-9c-align-fine-v2-native'
@@ -239,16 +287,20 @@ def qualify(args):
     c9 = window_9c()
     b9 = window_9b()
     load = load_timing()
+    late = window_9c_late()
     report = {'scope': __doc__.strip(),
               'targets': {C9: {'rom': C9_ROM, 'packs': packs(C9)},
                           B9: {'rom': B9_ROM, 'packs': packs(B9)}},
-              'room_151': c9, 'load_timing': load, 'room_190': b9,
+              'room_151': c9, 'load_timing': load, 'room_151_late': late,
+              'room_190': b9,
               'evidence': [{'directory': str(path.relative_to(ROOT)),
                             'receipt_sha256': sha((path / 'receipt.json').read_bytes())}
                            for path in (ROOT / 'local/captures/mazo-9c-align-fine-v2-donor',
                                         ROOT / 'local/captures/mazo-9c-align-fine-v2-native',
                                         ROOT / 'local/captures/mazo-9c-load-v2-donor',
                                         ROOT / 'local/captures/mazo-9c-load-v2-native',
+                                        ROOT / 'local/captures/mazo-9c-late-v1-donor',
+                                        ROOT / 'local/captures/mazo-9c-late-v1-native',
                                         ROOT / 'local/captures/mazo-9b-entry-v2-donor',
                                         ROOT / 'local/captures/mazo-9b-entry-v3-native')],
               'deferred': ['A shared-helper review for the attack actors and the room exit timing.',

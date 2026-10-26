@@ -11,7 +11,7 @@ The checkpoint records these items:
 - The first room 151 wave follows the same trajectory.
 - The native first wave starts 23 frames after the donor wave.
 - Most of that offset follows the host load timing.
-- Later room 151 attack cycles differ.
+- Later room 151 attack cycles differ in structure.
 - The room 190 persistent 9B parts match at the sampled positions.
 - The room 190 transient intro actors differ.
 
@@ -52,6 +52,15 @@ Later cycles differ. The donor keeps slot `6` at X `144` at samples
 `fight450`. It then shows slot `6` at X `208`, `-32` and `112` at
 samples `fight480`, `fight540` and `fight600`.
 
+A second window samples every 5 frames from `late400` to `late660`. In that
+window the donor keeps one stationary slot `6` part at `(144,320)` with zero
+speed. Slots `7` and `9` stay fixed.
+
+The native host repeats left-moving waves. Slot `6` is at X `268` at
+`late410` and X `-12` at `late480`. Slot `5` starts at X `256` at
+`late445`. Slot `4` starts at X `264` at `late475`. Every wave has speed
+`192` and moves 4 pixels left per frame.
+
 ## Load timing
 
 The donor shows room `0x151` at frame `31` after the pipe action. The native
@@ -79,11 +88,12 @@ Both hosts return to mode `0E` at `fight1200`. Transient intro actors in slots
 ## Evidence
 
 The report is `local/reports/native-mazo-attack-final.json`. Its SHA-256 is
-`bbbc8262e69e90ef1bb8176a127aa5b0a8a9496de9fc4fa4b5f91064923ec4f3`. An
+`e151c1d0eb9a0a7bcacdd83e4e52abdcb80a64fdd48ea38125b6814c14c52ea8`. An
 independent rerun reproduces the report byte for byte.
 
 The captures are `local/captures/mazo-9c-align-fine-v2-{donor,native}`,
 `local/captures/mazo-9c-load-v2-{donor,native}`,
+`local/captures/mazo-9c-late-v1-{donor,native}`,
 `local/captures/mazo-9b-entry-v2-donor` and
 `local/captures/mazo-9b-entry-v3-native`.
 
@@ -94,7 +104,7 @@ The full suite passes 184/184 tests. The log is
 
 This check records observations. It does not prove player damage, a fight
 clear, an ending or a saved completion. The three-frame residual and the later
-cycle content stay open. A shared-helper review must explain them. The `B0`
+cycle structure stay open. A shared-helper review must explain them. The `B0`
 corridor recovery needs the donor level data and a separate course batch.
 
 ## Reproduction

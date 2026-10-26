@@ -1,0 +1,157 @@
+# Mazo 9C later-cycle window (native).
+# Pipe entry and forced position are fixtures; no invulnerability or completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+dump approach146
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
+# Forced stationary Mario is applied after the room load for the later cycles.
+poke 94 80004001
+poke 19b8 51
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 120
+forcepoke 94 00024001
+forcepoke 7b 0000
+forcepoke 7d 0000
+wait 400
+dump late400
+wait 5
+dump late405
+wait 5
+dump late410
+wait 5
+dump late415
+wait 5
+dump late420
+wait 5
+dump late425
+wait 5
+dump late430
+wait 5
+dump late435
+wait 5
+dump late440
+wait 5
+dump late445
+wait 5
+dump late450
+wait 5
+dump late455
+wait 5
+dump late460
+wait 5
+dump late465
+wait 5
+dump late470
+wait 5
+dump late475
+wait 5
+dump late480
+wait 5
+dump late485
+wait 5
+dump late490
+wait 5
+dump late495
+wait 5
+dump late500
+wait 5
+dump late505
+wait 5
+dump late510
+wait 5
+dump late515
+wait 5
+dump late520
+wait 5
+dump late525
+wait 5
+dump late530
+wait 5
+dump late535
+wait 5
+dump late540
+wait 5
+dump late545
+wait 5
+dump late550
+wait 5
+dump late555
+wait 5
+dump late560
+wait 5
+dump late565
+wait 5
+dump late570
+wait 5
+dump late575
+wait 5
+dump late580
+wait 5
+dump late585
+wait 5
+dump late590
+wait 5
+dump late595
+wait 5
+dump late600
+wait 5
+dump late605
+wait 5
+dump late610
+wait 5
+dump late615
+wait 5
+dump late620
+wait 5
+dump late625
+wait 5
+dump late630
+wait 5
+dump late635
+wait 5
+dump late640
+wait 5
+dump late645
+wait 5
+dump late650
+wait 5
+dump late655
+wait 5
+dump late660
+wait 5
+dump late665
+wait 5
+dump late670
+wait 5
+dump late675
+wait 5
+dump late680
+wait 5
+dump late685
+wait 5
+dump late690
+wait 5
+dump late695
+wait 5
+dump late700
+quit
