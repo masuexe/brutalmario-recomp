@@ -36,6 +36,10 @@ from a fixed independent bank, with donor-matched lift behavior, native real
 death/re-entry, 420 unchanged comparisons and five rejected invalid-pack
 startups. This qualifies one immutable code mapping; complete Boss integration
 and general executable-module support remain open.
+The [Boss inventory](native-boss-inventory.md) now pins the supplied official
+Boss Demo and selects its Seven Koopalings program as the first fight candidate.
+Eight bounded donor entry checks pass; complete dependency closure, native
+installation, fight clear, ending and saved completion remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

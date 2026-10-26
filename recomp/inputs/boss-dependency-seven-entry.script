@@ -1,0 +1,46 @@
+# Fresh donor startup followed by a labelled pipe-action room fixture.
+# No invulnerability, forced movement, imported saves or completion writes.
+# All waits are guest-frame counts; early map-labelled dumps may still be intro.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+
+# Button sequence dismisses the donor intro; no overworld-map transfer.
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
+poke 94 80004001
+poke 19b8 ff
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump fight180
+wait 420
+dump fight600
+wait 600
+dump fight1200
+quit

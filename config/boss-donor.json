@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "id": "boss",
+  "target": "Official Boss Demo verified against boss.ips",
+  "scope": "The authoritative boss.ips applied to the pinned SMW base with an explicit 512-byte copier prefix produces a body byte-for-byte identical to both supplied ROM bodies. The user authorizes continued use on this exact-match condition.",
+  "authoritative_patch": {
+    "base_path": "../roms/Super Mario World (U) [!].smc",
+    "base": {
+      "size": 524288,
+      "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+    },
+    "ips_path": "../patches/boss.ips",
+    "ips": {
+      "size": 3045935,
+      "sha256": "066e7aeca041e02bb347bd01a665283263502df0abed1f1708a3fff65b88f881"
+    },
+    "copier_prefix_bytes": 512
+  },
+  "inputs": [
+    {
+      "path": "../roms/Super Kitiku (Brutal) Mario - Boss Demo by Carol [2009-06-16] (SMW Hack) [BAD-emu].sfc",
+      "size": 4194304,
+      "sha256": "337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd",
+      "copier_prefix_bytes": 0
+    },
+    {
+      "path": "../roms/Super Kitiku Brutal Mario/Super Kitiku Brutal Mario 8.0 Final Boss.smc",
+      "size": 4194816,
+      "sha256": "6da68fa6ff14be9eb56f74d91cb1b3412bf1fdd9febc57640d11b2c9211ab29f",
+      "copier_prefix_bytes": 512
+    }
+  ],
+  "output": {
+    "size": 4194304,
+    "sha256": "337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd"
+  }
+}

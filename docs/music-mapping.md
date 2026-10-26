@@ -32,6 +32,7 @@ The batch maps to the pinned versions as follows:
 | `Super Kitiku Brutal Mario 7.5.3 Airship.smc` | `mazo` |
 | `Super Kitiku Brutal Mario 7.5.4 Hero.smc` | `7hero` |
 | `Super Kitiku Brutal Mario 7.8 7Hero.smc` | `7hero` (same bytes as 7.5.4) |
+| `Super Kitiku Brutal Mario 8.0 Final Boss.smc` | `boss` (explicit 512-byte prefix removal; byte-for-byte equal to pinned `boss.ips` output) |
 | `Super Kitiku Brutal Mario 8.1 DemoOnly1.smc` | `demo-only-1` |
 | `Super Kitiku Brutal Mario Complete!.smc` | `ra-mario-complete` |
 | `Super Kitiku Mario Bowser's Castle.smc` | `ra-bowser-castle` |
@@ -41,7 +42,6 @@ The batch also contains these files. They have no pin yet:
 
 - `Super Kitiku Brutal Mario 5.0.smc`
 - `Super Kitiku Brutal Mario 6.5.smc` (this answers the missing demo6.5)
-- `Super Kitiku Brutal Mario 8.0 Final Boss.smc`
 - `Brutal Mario English.smc` (2024)
 - `Brutal Mario Demo 7` English, Español and Japanese versions
 - the `Super Kitiku Data` ZIP archive
@@ -70,7 +70,7 @@ This order is authoritative for donor selection. The newest demos are
 | ow | `ow` | |
 | mazo | `mazo` | |
 | 7hero | `7hero` | |
-| boss | external file | The user identifies `Super Kitiku (Brutal) Mario - Boss Demo by Carol [2009-06-16]` as the boss demo. The file is outside the pinned set and its accuracy is not guaranteed. SHA-256 `337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd`. |
+| boss | `local/content-versions/boss` | Authoritative `boss.ips` output equals both supplied ROM bodies byte for byte (zero differences), SHA-256 `337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd`; see [the source identity review](native-boss-inventory.md). |
 | demoOnly1 | `demo-only-1` | |
 | 1-1 | `demo-1-1` | Recipient base |
 

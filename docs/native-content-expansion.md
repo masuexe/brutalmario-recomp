@@ -19,6 +19,12 @@ immutable code mapping for custom sprite `9E`, with donor-matched platform
 behavior, native death/re-entry and unchanged-content regressions. General
 module admission and complete Boss integration remain open.
 
+The [Boss dependency inventory](native-boss-inventory.md) selects the newer
+official Boss Demo's Seven Koopalings program for the first fight integration.
+Eight donor entry samples pass, while explicit source-bank references,
+indirect dispatch, shared helpers and ending/save flow remain to be adapted.
+Mazo corridor recovery must preserve the recipient's different `B0` actor.
+
 ## Frozen comparison checkpoint
 
 - Target: `demo11-sprites-orphan-cleanup`.
@@ -110,5 +116,6 @@ boot or interpreter/AOT agreement alone does not prove a correct course or boss.
 The resource-delivery milestone and the first fixed-code mapping are qualified
 separately in the [graphics report](native-content-pilot.md) and
 [sprite report](native-sprite9e.md). The next concrete action is to inventory
-the requested Boss dependencies and choose one complete bounded fight. The
+the selected Boss program's remaining dispatch/helper dependencies and define
+its reviewed native mapping before installation. The
 fixed pilots must not be treated as an automatic loader for arbitrary content.
