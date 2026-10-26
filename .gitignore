@@ -8,3 +8,10 @@ __pycache__/
 /.agents/*-handoff.md
 /snesref_audio.wav
 /snesref_trace.jsonl
+
+# Local runtime state written beside the executable when a game runs from the
+# repository root. Shared SRAM (and its backup), the mod catalog state, and the
+# exit diagnostics report belong to one machine and one play session.
+/saves/
+/mods/preloaded/state.toml
+/last_run_report.json
