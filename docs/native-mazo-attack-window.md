@@ -11,7 +11,8 @@ The checkpoint records these items:
 - The first room 151 wave follows the same trajectory.
 - The native first wave starts 23 frames after the donor wave.
 - Most of that offset follows the host load timing.
-- Later room 151 attack cycles differ in structure.
+- The uncontrolled later room 151 cycles differ.
+- A fixed RNG seed makes the later wave volleys match.
 - The room 190 persistent 9B parts match at the sampled positions.
 - The room 190 transient intro actors differ.
 
@@ -22,6 +23,11 @@ The room 151 pair uses `recomp/inputs/mazo-9c-align-fine-donor.script` and
 pipe entry. After the room load they force Mario to `(512,320)` with zero
 speed. The stationary Mario is an explicit fixture. The scripts sample every 5
 frames from `fight060` to `fight200`, then the later cycles.
+
+The fixed-RNG pair uses `recomp/inputs/mazo-9c-rnglate-donor.script` and
+`recomp/inputs/mazo-9c-rnglate-native.script`. These scripts force the RNG
+state at `$148B`, `$148C` and `$148D` on every frame. They also keep Mario
+stationary.
 
 The load-timing pair uses `recomp/inputs/mazo-9c-load-donor.script` and
 `recomp/inputs/mazo-9c-load-native.script`. These scripts sample every frame
@@ -61,6 +67,17 @@ The native host repeats left-moving waves. Slot `6` is at X `268` at
 `late445`. Slot `4` starts at X `264` at `late475`. Every wave uses speed
 `192` and moves 4 pixels left per frame.
 
+The fixed-RNG pair removes the structural difference. Both hosts repeat the
+same wave volleys in slots `4` to `6` with speed `192`. Slot `6` is at X
+`172`, `112` and `52` in the donor at `late405`, `late420` and
+`late435`. The native values are `264`, `204` and `144`.
+
+The difference is 92 pixels. At 4 pixels per frame, that is 23 frames. The last
+wave is at `late600` in the donor and `late625` in native.
+
+The uncontrolled later-cycle difference therefore follows the host RNG state.
+It is not a module behavior gap. The 23-frame load offset remains.
+
 ## Load timing
 
 The donor shows room `0x151` at frame `31` after the pipe action. The native
@@ -88,12 +105,13 @@ Both hosts return to mode `0E` at `fight1200`. Transient intro actors in slots
 ## Evidence
 
 The report is `local/reports/native-mazo-attack-final.json`. Its SHA-256 is
-`e151c1d0eb9a0a7bcacdd83e4e52abdcb80a64fdd48ea38125b6814c14c52ea8`. An
+`57c67443abcac251435a02ff0c072bafc5d8d600415bc5c810f1fc88f453821d`. An
 independent rerun reproduces the report byte for byte.
 
 The captures are `local/captures/mazo-9c-align-fine-v2-{donor,native}`,
 `local/captures/mazo-9c-load-v2-{donor,native}`,
 `local/captures/mazo-9c-late-v1-{donor,native}`,
+`local/captures/mazo-9c-rnglate-v1-{donor,native}`,
 `local/captures/mazo-9b-entry-v2-donor` and
 `local/captures/mazo-9b-entry-v3-native`.
 
@@ -103,9 +121,10 @@ The full suite passes 184/184 tests. The log is
 ## Limits
 
 This check records observations. It does not prove player damage, a fight
-clear, an ending or a saved completion. The three-frame residual and the later
-cycle structure stay open. A shared-helper review must explain them. The `B0`
-corridor recovery needs the donor level data and a separate course batch.
+clear, an ending or a saved completion. The three-frame residual stays open.
+The later-cycle difference follows the host RNG state under the fixed-RNG
+fixture. The `B0` corridor recovery needs the donor level data and a separate
+course batch.
 
 ## Reproduction
 

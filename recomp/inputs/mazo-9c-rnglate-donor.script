@@ -1,0 +1,149 @@
+# Mazo 9C donor later cycle with fixed RNG.
+# Pipe entry, forced position and fixed RNG are fixtures.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+# Diagnostic pipe-action room fixture; not a natural route or course clear.
+# Forced stationary Mario and fixed RNG state are explicit fixtures.
+poke 94 80004001
+poke 19b8 51
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 120
+forcepoke 94 00024001
+forcepoke 7b 0000
+forcepoke 7d 0000
+forcepoke 148b 0011
+forcepoke 148c 0022
+forcepoke 148d 0033
+wait 400
+dump late400
+wait 5
+dump late405
+wait 5
+dump late410
+wait 5
+dump late415
+wait 5
+dump late420
+wait 5
+dump late425
+wait 5
+dump late430
+wait 5
+dump late435
+wait 5
+dump late440
+wait 5
+dump late445
+wait 5
+dump late450
+wait 5
+dump late455
+wait 5
+dump late460
+wait 5
+dump late465
+wait 5
+dump late470
+wait 5
+dump late475
+wait 5
+dump late480
+wait 5
+dump late485
+wait 5
+dump late490
+wait 5
+dump late495
+wait 5
+dump late500
+wait 5
+dump late505
+wait 5
+dump late510
+wait 5
+dump late515
+wait 5
+dump late520
+wait 5
+dump late525
+wait 5
+dump late530
+wait 5
+dump late535
+wait 5
+dump late540
+wait 5
+dump late545
+wait 5
+dump late550
+wait 5
+dump late555
+wait 5
+dump late560
+wait 5
+dump late565
+wait 5
+dump late570
+wait 5
+dump late575
+wait 5
+dump late580
+wait 5
+dump late585
+wait 5
+dump late590
+wait 5
+dump late595
+wait 5
+dump late600
+wait 5
+dump late605
+wait 5
+dump late610
+wait 5
+dump late615
+wait 5
+dump late620
+wait 5
+dump late625
+wait 5
+dump late630
+wait 5
+dump late635
+wait 5
+dump late640
+wait 5
+dump late645
+wait 5
+dump late650
+wait 5
+dump late655
+wait 5
+dump late660
+quit

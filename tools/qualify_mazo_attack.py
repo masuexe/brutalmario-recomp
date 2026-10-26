@@ -21,6 +21,8 @@ LOAD_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-load-donor.script'
 LOAD_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-load-native.script'
 LATE_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-late-donor.script'
 LATE_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-late-native.script'
+RNG_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-rnglate-donor.script'
+RNG_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-rnglate-native.script'
 B9 = 'demo11-native-mazo-9b'
 B9_ROM = '8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244'
 B9_SCRIPT_DONOR = 'recomp/inputs/mazo-9b-donor-fixture.script'
@@ -191,6 +193,53 @@ def window_9c_late():
                             for tag in ('late410', 'late480', 'late540', 'late600')}}
 
 
+def window_9c_rng():
+    donor = ROOT / 'local/captures/mazo-9c-rnglate-v1-donor'
+    native = ROOT / 'local/captures/mazo-9c-rnglate-v1-native'
+    donor_capture(donor, RNG_SCRIPT_DONOR)
+    native_capture(native, C9, RNG_SCRIPT_NATIVE)
+
+    tags = ['late400']+[f'late{frame:03d}' for frame in range(405, 631, 5)]
+    for tag in tags:
+        require(body(donor, tag)[0x100] == body(native, tag)[0x100] == 0x14,
+                'fixed-RNG mode differs at '+tag)
+
+    def x_at(directory, tag, slot):
+        return actors(body(directory, tag), 0x9c).get(slot, (None, None))[0]
+
+    require([x_at(donor, tag, 6) for tag in ('late405', 'late420', 'late435')] == [172, 112, 52],
+            'donor fixed-RNG slot 6 differs')
+    require([x_at(native, tag, 6) for tag in ('late405', 'late420', 'late435')] == [264, 204, 144],
+            'native fixed-RNG slot 6 differs')
+    require(all(x_at(native, tag, 6)-x_at(donor, tag, 6) == 92
+                for tag in ('late405', 'late420', 'late435')),
+            'fixed-RNG phase difference differs')
+
+    for directory, label in ((donor, 'donor'), (native, 'native')):
+        speeds = {body(directory, tag)[0xb6+slot] for tag in tags for slot in (4, 5, 6)
+                  if slot in actors(body(directory, tag), 0x9c)}
+        require(speeds == {192}, label+' fixed-RNG wave speed differs')
+        require(all(body(directory, tag)[0x14c8+slot] == 8 for tag in tags
+                    for slot in (7, 9)), label+' fixed-RNG persistent part differs')
+
+    last_donor = max(tag for tag in tags if 4 in actors(body(donor, tag), 0x9c) or
+                     5 in actors(body(donor, tag), 0x9c) or
+                     6 in actors(body(donor, tag), 0x9c))
+    last_native = max(tag for tag in tags if 4 in actors(body(native, tag), 0x9c) or
+                      5 in actors(body(native, tag), 0x9c) or
+                      6 in actors(body(native, tag), 0x9c))
+    require(last_donor == 'late600' and last_native == 'late625',
+            'fixed-RNG wave end differs')
+    return {'slots': [4, 5, 6], 'speed': 192, 'pixels_per_frame': 4,
+            'slot_6_positions': {'donor': [172, 112, 52], 'native': [264, 204, 144]},
+            'phase_difference_pixels': 92, 'phase_difference_frames': 23,
+            'last_wave_sample': {'donor': last_donor, 'native': last_native},
+            'scope': 'With the RNG seed fixed, both hosts repeat the same wave volley '
+                     'structure in slots 4 to 6 with speed 192. The later-cycle difference '
+                     'of the uncontrolled pair follows the host RNG state, not a module '
+                     'behavior gap. The 23-frame load offset remains.'}
+
+
 def window_9c():
     donor = ROOT / 'local/captures/mazo-9c-align-fine-v2-donor'
     native = ROOT / 'local/captures/mazo-9c-align-fine-v2-native'
@@ -288,11 +337,12 @@ def qualify(args):
     b9 = window_9b()
     load = load_timing()
     late = window_9c_late()
+    rng = window_9c_rng()
     report = {'scope': __doc__.strip(),
               'targets': {C9: {'rom': C9_ROM, 'packs': packs(C9)},
                           B9: {'rom': B9_ROM, 'packs': packs(B9)}},
               'room_151': c9, 'load_timing': load, 'room_151_late': late,
-              'room_190': b9,
+              'room_151_fixed_rng': rng, 'room_190': b9,
               'evidence': [{'directory': str(path.relative_to(ROOT)),
                             'receipt_sha256': sha((path / 'receipt.json').read_bytes())}
                            for path in (ROOT / 'local/captures/mazo-9c-align-fine-v2-donor',
@@ -301,6 +351,8 @@ def qualify(args):
                                         ROOT / 'local/captures/mazo-9c-load-v2-native',
                                         ROOT / 'local/captures/mazo-9c-late-v1-donor',
                                         ROOT / 'local/captures/mazo-9c-late-v1-native',
+                                        ROOT / 'local/captures/mazo-9c-rnglate-v1-donor',
+                                        ROOT / 'local/captures/mazo-9c-rnglate-v1-native',
                                         ROOT / 'local/captures/mazo-9b-entry-v2-donor',
                                         ROOT / 'local/captures/mazo-9b-entry-v3-native')],
               'deferred': ['A shared-helper review for the attack actors and the room exit timing.',
