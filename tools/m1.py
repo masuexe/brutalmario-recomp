@@ -20,6 +20,7 @@ from prepare_rom import verify
 from runtime_patches import configure_runtime, patch_plan
 from native_content import identity as content_identity, configure as configure_content
 from native_sprite import identity as sprite_identity, configure as configure_sprite, environment as sprite_environment
+from native_seven import identity as seven_identity, configure as configure_seven, environment as seven_environment
 from generator_patches import identity as generator_identity, prepare as prepare_generator
 from restoration_targets import RESTORATIONS
 
@@ -199,7 +200,8 @@ def main():
     pins = pins_check()
     runtime_patches = patch_plan()
     native_sprite = sprite_identity(args.target)
-    native_content = content_identity(args.target) or native_sprite
+    native_seven = seven_identity(args.target)
+    native_content = content_identity(args.target) or native_sprite or native_seven
     if native_content and args.stage == 'reference':
         parser.error('this content target requires the native PC runtime')
     generator_identity(args.target)
@@ -269,6 +271,7 @@ def main():
         configure_runtime(EXPERIMENT, TARGET)
         configure_content(EXPERIMENT, TARGET, args.target)
         configure_sprite(EXPERIMENT, TARGET, args.target)
+        configure_seven(EXPERIMENT, TARGET, args.target)
         cmake = EXPERIMENT / 'CMakeLists.txt'
         support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
         if support not in cmake.read_text():
@@ -331,7 +334,9 @@ def main():
             if SEPARATE_ECHO:
                 env.setdefault('SNESRECOMP_SEPARATE_ECHO', '1')
             env.setdefault('SNESRECOMP_APU_MASTER_CLOCK', '1')
-            if native_sprite:
+            if native_seven:
+                seven_environment(args.target, env)
+            elif native_sprite:
                 sprite_environment(args.target, env)
             elif native_content:
                 from native_content import settings

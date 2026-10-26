@@ -1,0 +1,709 @@
+{
+  "schema": 1,
+  "id": "seven-a2-prototype",
+  "scope": "Prepared immutable Seven Koopalings code/resources and an unapplied integration plan. Not admitted to a native game target or qualified as a complete fight.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "code": {
+    "source_address": "228000",
+    "native_address": "A28000",
+    "size": 28478,
+    "sha256": "d070d644b5da61d4150e58f4d6603a0ccbe5d0c37b19e7a00c8ffc2d9bb1d757",
+    "adapted_sha256": "24a58ba8e1c2ad716d73428795164d36c1b808efa53ea141854085b807318787",
+    "pack_file": "seven-code.bin"
+  },
+  "dispatch_tables": [
+    {
+      "address": "228095",
+      "count": 35,
+      "sha256": "230b268301db1f8298bbc4004b67710005b92434528967ebfd3e6c39c474ba40",
+      "dispatcher": "228115",
+      "selector": "$1504,x"
+    },
+    {
+      "address": "228118",
+      "count": 23,
+      "sha256": "b84554289224f70205819d44616ad59c0860b081933662305fa7471db23cf2d1",
+      "dispatcher": "2281C8",
+      "selector": "$C2,x"
+    },
+    {
+      "address": "22BB7B",
+      "count": 21,
+      "sha256": "0f4dd63099b5accb15fb52e0a380b66c509e26eb0b9393b49e7b1ca22d0e0eeb",
+      "dispatcher": "22BBF7",
+      "selector": "$7FFFA1"
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "2281D3",
+      "before": "22a5a522",
+      "after": "22a5a5a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "228246",
+      "before": "2218ea22",
+      "after": "2218eaa2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22826A",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2286A8",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "228824",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "228835",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "228894",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2288A9",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "228F15",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229060",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229071",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2291DD",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2291ED",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229289",
+      "before": "2244ea22",
+      "after": "2244eaa2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2292B0",
+      "before": "2227a622",
+      "after": "2227a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229320",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229329",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22943C",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229450",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22946C",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229479",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2294F8",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229505",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "2298AF",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229A11",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "229A99",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22A0C6",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22AF0C",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22AF30",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22AF3C",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22AF5C",
+      "before": "227fa622",
+      "after": "227fa6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22B4C5",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22BEF3",
+      "before": "2253a622",
+      "after": "2253a6a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22E004",
+      "before": "2295e222",
+      "after": "2295e2a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22E02F",
+      "before": "2295e222",
+      "after": "2295e2a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22E082",
+      "before": "22c1e222",
+      "after": "22c1e2a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22E134",
+      "before": "22c1e222",
+      "after": "22c1e2a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22EA13",
+      "before": "22ede222",
+      "after": "22ede2a2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22ECFD",
+      "before": "22c4ec22",
+      "after": "22c4eca2",
+      "role": "Retarget local JSL, including deferred scheduler inline instructions, to immutable A2"
+    },
+    {
+      "address": "22EAE1",
+      "before": "8d02",
+      "after": "e30f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAE3",
+      "before": "8c02",
+      "after": "e20f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAE5",
+      "before": "8a02",
+      "after": "e10f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAE7",
+      "before": "8b02",
+      "after": "e00f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAE9",
+      "before": "1002",
+      "after": "e80f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAEB",
+      "before": "1102",
+      "after": "e90f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAED",
+      "before": "0e02",
+      "after": "ea0f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    },
+    {
+      "address": "22EAEF",
+      "before": "0f02",
+      "after": "eb0f",
+      "role": "Namespace the deferred decompressor graphics selection"
+    }
+  ],
+  "graphics": [
+    {
+      "source_id": "28B",
+      "namespace_id": "FE0",
+      "source_address": "3FF717",
+      "native_address": "A68008",
+      "encoded": {
+        "size": 2230,
+        "sha256": "07eed898a347fd1e12d4fdd5bf6b17b03aaef4d0f50a574aaceb196befaf494a"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "12798e21487b17553899e228bcf4060a592afe738e44a546170d7f0c9bed1db0"
+      }
+    },
+    {
+      "source_id": "28A",
+      "namespace_id": "FE1",
+      "source_address": "3FF3E0",
+      "native_address": "A688BE",
+      "encoded": {
+        "size": 815,
+        "sha256": "29c759dedae22ac3f948b6506a70066f35962d9b1caa81f1d72c3020e76e1765"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "1c51f5b5ddde0ed18bd620428cc00ba23208dafcb726beb060d3faf2b4248351"
+      }
+    },
+    {
+      "source_id": "28C",
+      "namespace_id": "FE2",
+      "source_address": "3F8099",
+      "native_address": "A68BED",
+      "encoded": {
+        "size": 717,
+        "sha256": "ccb54998bb3b97e2fd0aa81019705b88f038b6eaa98b957b48b8ce70afd1fac5"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "9ccbd204960391aec835d0d13b6e3bf58d02353bd120806eb9dde72683c1e272"
+      }
+    },
+    {
+      "source_id": "28D",
+      "namespace_id": "FE3",
+      "source_address": "3F836E",
+      "native_address": "A68EBA",
+      "encoded": {
+        "size": 1115,
+        "sha256": "e7cd5ba784448e41739889d49595cf74d529c216ad693a7a987743214b2ed7af"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "9b062cc445f8a7571c330d7b37e88a079c548934da6b85441ad26c921406815c"
+      }
+    },
+    {
+      "source_id": "1E3",
+      "namespace_id": "FE4",
+      "source_address": "32E5D0",
+      "native_address": "A69315",
+      "encoded": {
+        "size": 2551,
+        "sha256": "42f15026034698e3008855aca1ef0ee6c8845a379fe326972709691b17e895b0"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "a408c41fcf6e15c515f1b8db7ce68a3a9f78d7358a257fd0df86a68c522031a5"
+      }
+    },
+    {
+      "source_id": "15C",
+      "namespace_id": "FE5",
+      "source_address": "28C4E9",
+      "native_address": "A69D0C",
+      "encoded": {
+        "size": 1803,
+        "sha256": "b65cb841532ac5918806a02acefdee624be03816e94e9263a53336c025fca929"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "9df89ba87a616a2f38ee8398516882e3c64f81a4b8dfb428ad1b2c85fc2107cf"
+      }
+    },
+    {
+      "source_id": "119",
+      "namespace_id": "FE6",
+      "source_address": "23D60B",
+      "native_address": "A6A417",
+      "encoded": {
+        "size": 2300,
+        "sha256": "601054cfc4b6ab466c5943a9a37a6cee4303a377d91c46160640c7ae71535f03"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "2ec07d6ff4ae24870eeb5d8f84b63137198d04cbe2bc707648f14b4c230f02ac"
+      }
+    },
+    {
+      "source_id": "28E",
+      "namespace_id": "FE7",
+      "source_address": "3FFFD5",
+      "native_address": "A6AD13",
+      "encoded": {
+        "size": 1645,
+        "sha256": "1f9a4a3a1e72eaeca5fb3491b84578d6434025b781e57f0882406864d8ab66ca"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "afcad4cac0915cc964d27406efb8a3985518daddf6501fc84d3b0af7ff183247"
+      }
+    },
+    {
+      "source_id": "210",
+      "namespace_id": "FE8",
+      "source_address": "36D05B",
+      "native_address": "A6B380",
+      "encoded": {
+        "size": 2616,
+        "sha256": "f7b968cea5fa7d8e1ad79b5679e75a25b877c8c8eb0fb750102275b592c9664c"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "08f6533d844783b8062bffa8b797da9ca188741c649577fead8e1a87a5086190"
+      }
+    },
+    {
+      "source_id": "211",
+      "namespace_id": "FE9",
+      "source_address": "36DA9B",
+      "native_address": "A6BDB8",
+      "encoded": {
+        "size": 2377,
+        "sha256": "e3a13694f3b817956fd1f4977ce4cab9ce2a05b2369878603c85e1d853a0d45f"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "de7aa9ae9c0ba8a8952de3eb85a7b96f775db76949835bf710346def7a91bbe8"
+      }
+    },
+    {
+      "source_id": "20E",
+      "namespace_id": "FEA",
+      "source_address": "36BCCF",
+      "native_address": "A6C701",
+      "encoded": {
+        "size": 2660,
+        "sha256": "272f2a0c99f55f4697c3e0513d62e8a996196b850834be353ae3e032852b3b1f"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "6c012599403ddddc4a266c27915c5eccb48d39c71bbd81c1fdad42ca44ec172b"
+      }
+    },
+    {
+      "source_id": "20F",
+      "namespace_id": "FEB",
+      "source_address": "36C73B",
+      "native_address": "A6D165",
+      "encoded": {
+        "size": 2328,
+        "sha256": "c505b85ace07376d2ebf60ea2e0c721e814e01f7fd748fc2abfda05d47cef5a1"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "f422c933fb55fcfa47d4caee1a396028d7ca802a32923e2c6d033c0b260b4a24"
+      }
+    }
+  ],
+  "graphics_pack": {
+    "native_address": "A68000",
+    "size": 23165,
+    "sha256": "f37524950aace0fa931a051bc751b365ddea3ef6ee27fc29a8712971e0de209d",
+    "pack_file": "seven-graphics.bin"
+  },
+  "shared_dependencies": [
+    {
+      "address": "0FF780",
+      "size": 2172,
+      "sha256": "90d521619eefe59bf01c072dbb553861604c83389df51981e452454ecd554146"
+    },
+    {
+      "address": "10D8D0",
+      "size": 512,
+      "sha256": "cb44192c973e14ba58aded82bb8eb3cd8f5b91b1d74be7d784d6c3cd1086d3aa"
+    },
+    {
+      "address": "27FAD8",
+      "size": 1056,
+      "sha256": "529b6140d6c822b74e62970ca1edb63c5285e4b360ffcabd11b4601f050296d8"
+    },
+    {
+      "address": "28FCC0",
+      "size": 169,
+      "sha256": "abf4763949320274d23c85105c03c5dd96bca73f913ce99a5be9676d4f71e179"
+    },
+    {
+      "address": "01801A",
+      "size": 32,
+      "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+    },
+    {
+      "address": "019138",
+      "size": 1024,
+      "sha256": "2eedc85a5707b095c74fa8640ead51709a7f3686ce8414ecbcb52321c9d5bd52"
+    },
+    {
+      "address": "01A7DC",
+      "size": 384,
+      "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+    },
+    {
+      "address": "01AB99",
+      "size": 80,
+      "sha256": "2ca70ce1fddf0a9017d851939780b5dab32152860f73d269b1407800481cb24c"
+    },
+    {
+      "address": "01ACF9",
+      "size": 256,
+      "sha256": "3ef2147878c9df3655dc77fac3d7acb411cb73a31ab886e79918012af01c307d"
+    },
+    {
+      "address": "01B7B3",
+      "size": 169,
+      "sha256": "2fc7ff06eccd8bdcd8e397ff81077fa57a50084fc1f9bb0b7cc2bf51d19cd99b"
+    },
+    {
+      "address": "0285BA",
+      "size": 96,
+      "sha256": "a4fe2a186bc6232e5ca4aa0ab432eefc1b65a9b16e8ef6277a7f15f04d569025"
+    },
+    {
+      "address": "02A9DE",
+      "size": 128,
+      "sha256": "8091ae67663bfda5567583676d40f604ca911320ed3270f931378519061f1a5a"
+    },
+    {
+      "address": "07F722",
+      "size": 99,
+      "sha256": "ec77474932cf413ee65f027e1c0116f803bd75440abfaa25e52afaeee7c310db"
+    },
+    {
+      "address": "07F78B",
+      "size": 71,
+      "sha256": "287deed03c47752c160df63f0c7ff1803eabd4f2b1b17c902275c2dc9844c0d3"
+    },
+    {
+      "address": "07F7D2",
+      "size": 9,
+      "sha256": "958adc9ba1b90b2c1959dc924bf95a8716d72d41992fa231407debe96929360f"
+    }
+  ],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "019138",
+    "01A7DC",
+    "01AB99",
+    "01ACF9",
+    "01B7B3",
+    "0285BA",
+    "02A9DE",
+    "07F7D2",
+    "0FF780",
+    "10D8D0",
+    "27FB02",
+    "28FCC0"
+  ],
+  "recipient_adaptations": [
+    {
+      "address": "07F785",
+      "role": "Retain recipient custom sprite initialization hook used by 07F7D2; never jump into the donor table",
+      "source_bytes": "2247af10",
+      "recipient_bytes": "227c8031"
+    },
+    {
+      "address": "0187A7",
+      "role": "Retain recipient generic SpriteTool constructor and recipient table; its hook intentionally differs from donor",
+      "source_bytes": "5c59b010",
+      "recipient_bytes": "5c778131"
+    },
+    {
+      "address": "00F5B7",
+      "role": "Retain recipient death behavior; this is not a donor death parity claim",
+      "source_sha256": "ebb258869d2d101fc5812a30e8715b543536719887b2ffb38e030a75fc134cdd",
+      "recipient_sha256": "f6bf2c753b536480005da71452c91a1d6e6baf3374f965cb27bf65dc06cc0afb"
+    }
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606930,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0136000035a299440f80a28d80a20000",
+      "role": "Enable only recipient 2A through its own generic constructor"
+    },
+    {
+      "offset": 675048,
+      "before": "01808b028a028c028d02e3015c0119018e027f00ffffffffffffffffffffffff",
+      "after": "0180e00fe10fe20fe30fe40fe50fe60fe70f7f00ffffffffffffffffffffffff",
+      "role": "Namespace eight static graphics selections in recipient room 0FF only"
+    },
+    {
+      "offset": 666792,
+      "before": "ffffff",
+      "after": "0880a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666795,
+      "before": "ffffff",
+      "after": "be88a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666798,
+      "before": "ffffff",
+      "after": "ed8ba6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666801,
+      "before": "ffffff",
+      "after": "ba8ea6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666804,
+      "before": "ffffff",
+      "after": "1593a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666807,
+      "before": "ffffff",
+      "after": "0c9da6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666810,
+      "before": "ffffff",
+      "after": "17a4a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666813,
+      "before": "ffffff",
+      "after": "13ada6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666816,
+      "before": "ffffff",
+      "after": "80b3a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666819,
+      "before": "ffffff",
+      "after": "b8bda6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666822,
+      "before": "ffffff",
+      "after": "01c7a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    },
+    {
+      "offset": 666825,
+      "before": "ffffff",
+      "after": "65d1a6",
+      "role": "Previously unreferenced native graphics namespace pointer"
+    }
+  ],
+  "open_dependencies": [
+    "Music: actual room record 40 60 33 must be traced through both engines before choosing a modern slot.",
+    "Dynamic palette/HDMA and complete shared-helper closure require native gameplay qualification.",
+    "Fight phase transitions, ending, recipient map return, death/reentry, save persistence."
+  ]
+}

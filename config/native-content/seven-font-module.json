@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "id": "seven-a2-font-entry",
+  "base_manifest": "config/native-content/seven-module.json",
+  "scope": "Seven Koopalings entry adaptation with fight-local Japanese GFX2A font upload; all prior module identities remain in the base recipe.",
+  "font_adaptation": {
+    "source_id": "02A",
+    "source_address": "0981C8",
+    "encoded": {
+      "size": 1428,
+      "sha256": "f639a55ce580e6d0d2ae0efd69bb78ed26030914c8ec5a5d927583b73a437418"
+    },
+    "decoded": {
+      "size": 2048,
+      "sha256": "2f0619a305c515d72c4707dd7f18a792dcc376d3a5ac65adab35e68e75e15e1f"
+    },
+    "native_address": "A6DA7D",
+    "native_routine": "A2F000",
+    "routine_bytes": "08489caf14a9808d1521c220a900488d1621a901188d2043a97dda8d2243a900088d2543e220a9a68d2443a9048d0b42682860",
+    "init_patch": {
+      "address": "228085",
+      "before": "9caf146b",
+      "after": "2000f06b",
+      "role": "Retain STZ 14AF in the local adapter, upload only the fight font using guest DMA, preserve A/P, then return to original init RTL"
+    }
+  },
+  "native_payload": {
+    "size": 28723,
+    "sha256": "e30de7380bea73d18e5eff3b79d71976714a3cbe8235076361968d5776d8f46f"
+  },
+  "graphics_payload": {
+    "size": 25213,
+    "sha256": "e6c3fcf9b3e304b8b93ab593c5a6d971a430b0928888507fba7bc68a4e8c9078"
+  }
+}

@@ -7,9 +7,13 @@ the two newer recipient releases have removed that record. This selection
 follows the user's newest-available-code policy. It does not qualify a complete
 fight or admit the program through the external-code loader yet.
 
-The current PC candidate remains `demo11-native-sprite9e`. This checkpoint
+At this inventory checkpoint the PC candidate remained `demo11-native-sprite9e`. This checkpoint
 changes investigation tools, source pins and regression inputs only. It does
 not install Boss code, change the recipient map, or promote the accepted head.
+The subsequent [native opening checkpoint](native-seven-entry.md) implements
+A2/A6 mapping and resolves these explicit indirect tables. It also identifies
+a later dynamically spawned `6A` dependency that the placed-sprite inventory
+did not capture. Use that report for current runtime status and limitations.
 
 ## Reproducible official inputs
 

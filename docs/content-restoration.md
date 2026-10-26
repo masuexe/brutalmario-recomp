@@ -38,8 +38,15 @@ startups. This qualifies one immutable code mapping; complete Boss integration
 and general executable-module support remain open.
 The [Boss inventory](native-boss-inventory.md) now pins the supplied official
 Boss Demo and selects its Seven Koopalings program as the first fight candidate.
-Eight bounded donor entry checks pass; complete dependency closure, native
-installation, fight clear, ending and saved completion remain open.
+At that inventory checkpoint, eight bounded donor entry checks passed and
+native installation was still open.
+The [native Seven Koopalings opening](native-seven-entry.md) now executes the
+selected program from immutable A2/A6 packs while preserving A5/B6. Eight
+opening samples, fight-local Japanese font bytes, 590 unchanged comparisons,
+five rejected startups and 157 unit tests pass. The longer probe diverges at a
+later phase with a different dynamically spawned `6A` dependency; that actor,
+music, complete fight and progression remain open. Demo 1-1's English font
+overwriting the older Japanese glyphs is a release difference, adapted locally.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

@@ -24,6 +24,10 @@ official Boss Demo's Seven Koopalings program for the first fight integration.
 Eight donor entry samples pass, while explicit source-bank references,
 indirect dispatch, shared helpers and ending/save flow remain to be adapted.
 Mazo corridor recovery must preserve the recipient's different `B0` actor.
+The [native Seven Koopalings entry](native-seven-entry.md) now implements that
+bounded mapping and a local font adaptation, with eight opening samples and
+590 unchanged regression comparisons. Later dynamic sprite `6A`, music and the
+complete fight/ending/save flow remain unqualified.
 
 ## Frozen comparison checkpoint
 
@@ -115,7 +119,9 @@ boot or interpreter/AOT agreement alone does not prove a correct course or boss.
 
 The resource-delivery milestone and the first fixed-code mapping are qualified
 separately in the [graphics report](native-content-pilot.md) and
-[sprite report](native-sprite9e.md). The next concrete action is to inventory
-the selected Boss program's remaining dispatch/helper dependencies and define
-its reviewed native mapping before installation. The
+[sprite report](native-sprite9e.md). The first Boss mapping and opening are now
+qualified separately in the [Seven Koopalings entry report](native-seven-entry.md).
+The next concrete action is to review and namespace its dynamically spawned
+newer `6A` dependency while retaining the recipient's existing actor, then
+retest the later phase and continue toward a complete fight. The
 fixed pilots must not be treated as an automatic loader for arbitrary content.

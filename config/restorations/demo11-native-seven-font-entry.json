@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-font-entry",
+  "target": "Brutal Mario Demo11 Native Seven Font Entry",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "scope": "Experimental Seven Koopalings entry with local Japanese font DMA. Preserve A5/B6; full fight, music and progression remain open.",
+  "native_seven": {
+    "manifest": "config/native-content/seven-font-module.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "c0cf157839e52b4571615c1aacbb5cc989378f14529645107f06fd31a94d4e64"
+  }
+}
