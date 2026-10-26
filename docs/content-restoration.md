@@ -78,9 +78,10 @@ already exists in the recipient with matching level data and sprite list. The
 entry holds three persistent 9B parts at the donor positions, and the settled
 state matches at `fight600`. Transient intro actors differ. The [attack-window check](native-mazo-attack-window.md)
 records the room 151 wave motion and the later cycle timing. The
-[B0 corridor plan](native-mazo-b0.md) records the 419-byte module review and the
-corridor data sizes. The free SpriteTool slot, the level-data pack and the
-corridor target stay open. The attack, `B0` corridors and a clear remain open.
+[B0 corridor plan](native-mazo-b0.md) records the 419-byte module review, the
+corridor data pack and the built target. Room `191` enters gameplay with the
+custom `A9` actor. Rooms `00D` and `10C` still fail to load. The attack, the
+corridor failure and a clear remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

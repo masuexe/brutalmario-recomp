@@ -46,10 +46,16 @@ def packs(target):
          pack_file=previous['graphics']['pack_file']), previous['graphics']['native_address'],
          previous['graphics']['payload']['sha256'], False),
     ))
+    for pack in recipe.get('data_packs', []):
+        pins.append((pack['variable'], dict(pack, native_address=pack['address']),
+                     pack['address'], pack['sha256'], False))
     result = []
     for variable, item, address, digest, executable in pins:
-        result.append(dict(variable=variable, pack_file=item['pack_file'],
-                           address=address, size=item['size'], sha256=digest, executable=executable))
+        entry = dict(variable=variable, pack_file=item['pack_file'], address=address,
+                     size=item['size'], sha256=digest, executable=executable)
+        if item.get('source_pack'):
+            entry['source_pack'] = item['source_pack']
+        result.append(entry)
     return result
 
 
@@ -116,9 +122,13 @@ def prepare(target=TARGET):
     directory = ROOT / 'local/restoration' / target
     directory.mkdir(parents=True, exist_ok=True)
     write_verified(directory / 'rom.sfc', out)
+    data_variables = {pack['variable'] for pack in recipe.get('data_packs', [])}
     for pack in packs(target):
-        source = module_dir if pack['variable'].startswith('BM_SEVEN_') else base_dir
-        data = (source / pack['pack_file']).read_bytes()
+        if pack['variable'] in data_variables:
+            data = (ROOT / pack['source_pack']).read_bytes()
+        else:
+            source = module_dir if pack['variable'].startswith('BM_SEVEN_') else base_dir
+            data = (source / pack['pack_file']).read_bytes()
         verify(data, pack, 'cumulative module pack')
         write_verified(directory / pack['pack_file'], data)
     receipt = {'config': cfg, 'content': identity(target),

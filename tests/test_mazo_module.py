@@ -107,9 +107,22 @@ class MazoModuleTests(unittest.TestCase):
         recipe = json.loads((ROOT / 'config/native-content/mazo-b0-corridor.json').read_text())
         pack, patches, facts = corridor.build(recipe, self.donor, self.base)
         self.assertEqual(len(pack), 288)
-        self.assertEqual(len(patches), 21)
+        self.assertEqual(len(patches), 45)
         self.assertEqual(corridor.sha(pack), recipe['data_pack']['sha256'])
         self.assertEqual(facts['custom_slot'], 'A9')
+        self.assertEqual([room['level']['music'] for room in recipe['rooms']],
+                         [{'before': '31', 'after': '02'}, {'before': '31', 'after': '02'}, None, None])
+
+    def test_b0_target_installation(self):
+        from restore_star_world_1 import sha
+        recipe = json.loads((ROOT / 'config/native-content/mazo-b0.json').read_text())
+        corridor = json.loads((ROOT / 'config/native-content/mazo-b0-corridor.json').read_text())
+        target = json.loads((ROOT / 'config/restorations/demo11-native-mazo-b0.json').read_text())
+        self.assertEqual(target['output']['sha256'], corridor['projected_output']['sha256'])
+        self.assertEqual(recipe['data_packs'][0]['sha256'], corridor['data_pack']['sha256'])
+        rom = (ROOT / 'local/restoration/demo11-native-mazo-b0/rom.sfc').read_bytes()
+        verify(rom, target['output'], 'mazo B0 corridor ROM')
+        self.assertEqual(sha(rom), recipe['projected_output']['sha256'])
 
     def test_record_mismatch_is_rejected(self):
         recipe = copy.deepcopy(self.recipe)

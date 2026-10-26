@@ -1,0 +1,38 @@
+# Mazo B0 corridor entry (native).
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+dump approach146
+# Mazo corridor entry fixture: room 0x183 (donor 00D).
+# Pipe entry is a labelled fixture; no invulnerability or completion writes.
+poke 94 80004001
+poke 19b8 83
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 180
+dump entry180
+wait 300
+dump entry480
+wait 600
+dump entry1080
+wait 600
+dump entry1680
+quit

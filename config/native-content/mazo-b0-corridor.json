@@ -14,7 +14,7 @@
     "bank": "A7",
     "pack_file": "mazo-b0-corridor.bin",
     "size": 288,
-    "sha256": "887eee9103f7d8838dfae70839e049f3c43d144e500cef8290749c559a9d7c00"
+    "sha256": "4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d"
   },
   "rooms": [
     {
@@ -23,8 +23,12 @@
       "level": {
         "pointer": "5BB0E0",
         "size": 26,
-        "sha256": "a11289b02e4b78f95c13e6831345bf06608ec746dc5af943c5b000e4731ffae4",
-        "offset": 0
+        "sha256": "c355cd6305bb9e908644ca04bd2776333bb4a718cfd1196aacbb1a6940393e20",
+        "offset": 0,
+        "music": {
+          "before": "31",
+          "after": "02"
+        }
       },
       "sprites": {
         "pointer": "5BAE87",
@@ -47,8 +51,12 @@
       "level": {
         "pointer": "5C8222",
         "size": 11,
-        "sha256": "da4b270e2d56c4b67d743cd94eb32dedbc15bd4ad179f12d7e9bbf3bfa46ca7b",
-        "offset": 35
+        "sha256": "b0072007b56fe597d4ed109971317c3861f7c13b2a5429da296b172c0e4913f1",
+        "offset": 35,
+        "music": {
+          "before": "31",
+          "after": "02"
+        }
       },
       "sprites": {
         "pointer": "5C8452",
@@ -72,7 +80,8 @@
         "pointer": "5BAE97",
         "size": 110,
         "sha256": "55ce4528ea9a82608118436e2df9eff2a5a90d3f6351f63fd5d1902af0677253",
-        "offset": 55
+        "offset": 55,
+        "music": null
       },
       "sprites": {
         "pointer": "5BAF08",
@@ -96,7 +105,8 @@
         "pointer": "5C8657",
         "size": 104,
         "sha256": "59ba34ffa7f04a03a227a40532504bd7f9eb6af881c503a73490a7e8403e27c2",
-        "offset": 176
+        "offset": 176,
+        "music": null
       },
       "sprites": {
         "pointer": "5C86C2",
@@ -116,7 +126,7 @@
   ],
   "projected_output": {
     "size": 4194304,
-    "sha256": "405ba709779d8ac14a802a4fbab327e57cfd4fa585f0c22f6b5b59b2b02d5d07"
+    "sha256": "5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511"
   },
   "open_dependencies": [
     "target registration and runtime data pack",

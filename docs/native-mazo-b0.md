@@ -2,9 +2,10 @@
 
 ## Result
 
-The mazo `B0` corridor actor has a static module review. The corridor rooms are
-not in the recipient. This document records the measured data and the next
-steps. It does not qualify playability.
+The mazo `B0` corridor actor has a static module review and a built target.
+One imported corridor room enters gameplay. Rooms `00D` and `10C` still fail
+to load. This document records the measured data and the open failure. It does
+not qualify full corridor playability.
 
 ## Module
 
@@ -25,8 +26,7 @@ The recipe is `config/native-content/mazo-b0-module.json`. The module receipt
 is `local/native-modules/mazo-b0-v1/preparation-receipt.json`, SHA-256
 `188fc1bb41bf1a95af89c17889049c007fe110ba4201ab398bac927afa137b5c`.
 
-The module tests pass 10/10. The full suite passes 186/186 tests. The log is
-`local/reports/unit-tests-mazo-corridor.log`.
+The module tests pass 11/11.
 
 ## Corridor data
 
@@ -71,22 +71,56 @@ target slot. No target slot byte occurs in the decoded map. The donor room
 `00D` has exits to rooms `166`, `162` and `164`. Those rooms are not
 imported. Rooms `10C`, `191` and `192` have no primary exit.
 
+The donor rooms `00D` and `10C` use legacy music `31` in the level header.
+The modern family has no row for that track, so the copied header uses music
+`02`. Rooms `191` and `192` keep music `02`.
+
 The pack is `mazo-b0-corridor.bin`, 288 bytes, SHA-256
-`887eee9103f7d8838dfae70839e049f3c43d144e500cef8290749c559a9d7c00`.
+`4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d`.
 The recipe is `config/native-content/mazo-b0-corridor.json`. The integration
-plan has 21 patches. The projected ROM SHA-256 is
-`405ba709779d8ac14a802a4fbab327e57cfd4fa585f0c22f6b5b59b2b02d5d07`.
+plan has 45 patches. The projected ROM SHA-256 is
+`5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511`.
 The receipt is
 `local/native-modules/mazo-b0-corridor-v1/preparation-receipt.json`, SHA-256
-`c2e4ad1aa94636ea21068326d0f09203b04d40bd714d3fdfe75c04e4ea9f5fac`. The tool
+`0140e6306f79c78f936e88237d69500e78bfd1a50b54e968c6f501801e5f95b2`. The tool
 is `tools/prepare_mazo_b0_corridor.py`.
+
+## Target and entry
+
+The target is `demo11-native-mazo-b0`. Its recipe is
+`config/native-content/mazo-b0.json`. The target mounts four packs:
+
+| Pack | Bank | Address | Size |
+| --- | --- | ---: | ---: |
+| `mazo-b0-code.bin` | `A2` | `A28989` | 419 |
+| `sprite9e.bin` | `A5` | `A595CD` | 1,291 |
+| `star1-ffd.bin` | `B6` | `B68008` | 3,001 |
+| `mazo-b0-corridor.bin` | `A7` | `A78000` | 288 |
+
+The target ROM SHA-256 is
+`5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511`. The
+native binary SHA-256 is
+`272b0edd2fc956e523377976b58ab9109b1d4512a7fecd10a6f56c6dcc27b94c`.
+
+The room `191` entry works. The capture is
+`local/captures/mazo-b0-room191-v1-native`. It loads mode `14` in room
+`0x191`. Custom actor `A9` is active in slot `7` at `(192,368)`. Standard
+sprites `77` occupy slots `8` and `9`. The A7 data pack resolves 1,166 reads
+and the A2 module view executes.
+
+The room `183` entry fails. The capture is
+`local/captures/mazo-b0-room183-v3-native`. The host enters a bad state with
+mode `34` and room `0x3400`. The actor slots hold garbage. The failure stays
+open. The donor rooms `00D` and `10C` have level header bytes `c0 70`.
+Room `191` has `40 30`.
 
 ## Next steps
 
-1. Add a target with the A2 code pack, the A7 data pack, the A5 sprite pack and
-   the B6 graphics pack. Extend the mazo runtime to mount the A7 data pack.
-2. Capture a fixture entry into the imported rooms. Qualify the actors and the
-   room graphics.
+1. Diagnose the rooms `00D` and `10C` load failure. Test the level bytes with
+   an empty sprite list first. Then compare the header mode bytes and the
+   layer 2 handling.
+2. Qualify the room `191` graphics, camera and actor behavior against the
+   donor capture.
 3. Record the relocated exits of room `00D`. They stay outside this bounded
    entry check.
 4. Never overwrite the recipient `B0` slot.
@@ -97,5 +131,11 @@ is `tools/prepare_mazo_b0_corridor.py`.
 python3 -c "import sys; sys.path.insert(0, 'tools'); import prepare_mazo_module as p; from pathlib import Path; p.prepare(Path('local/native-modules/mazo-b0-v1').resolve(), Path('config/native-content/mazo-b0-module.json').resolve())"
 python3 tools/prepare_mazo_b0_corridor.py --write-recipe
 python3 tools/prepare_mazo_b0_corridor.py
+python3 tools/native_seven.py
+python3 -c "import sys; sys.path.insert(0, 'tools'); import native_mazo as n; n.prepare('demo11-native-mazo-b0')"
+python3 tools/m1.py --target demo11-native-mazo-b0 scaffold
+python3 tools/m1.py --target demo11-native-mazo-b0 generate
+python3 tools/m1.py --target demo11-native-mazo-b0 build
+python3 tools/m1.py --target demo11-native-mazo-b0 native --script recomp/inputs/mazo-b0-room191.script --capture YOUR_FRESH_NAME
 python3 -m unittest discover -s tests -p test_mazo_module.py -v
 ```

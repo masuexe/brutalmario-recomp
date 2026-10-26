@@ -26,6 +26,7 @@ PACK_BANK = 0xA7
 PACK_ADDRESS = 0xA78000
 L2_SENTINEL = 0xFFDE54
 MAP_ADDRESS = 0x37C008
+LEVEL_TABLES = (0x05F000, 0x05F200, 0x05F400, 0x05F600, 0x05DE00, 0x0EF310)
 ROOMS = ({'source': 0x00d, 'slot': 0x183}, {'source': 0x10c, 'slot': 0x184},
          {'source': 0x191, 'slot': 0x191}, {'source': 0x192, 'slot': 0x192})
 
@@ -62,7 +63,12 @@ def stream_size(rom, room):
 
 def level_bytes(rom, room):
     pointer = pointer3(rom, lorom(0x05E000+room*3))
-    return pointer, rom[lorom(pointer):lorom(pointer)+stream_size(rom, room)]
+    data = bytearray(rom[lorom(pointer):lorom(pointer)+stream_size(rom, room)])
+    music = None
+    if data[2] == 0x31:
+        music = {'before': '31', 'after': '02'}
+        data[2] = 0x02
+    return pointer, bytes(data), music
 
 
 def sprite_bytes(rom, room, slot):
@@ -164,7 +170,7 @@ def build_bytes(donor, slot):
     rooms = []
     for entry in ROOMS:
         source = entry['source']
-        pointer, level = level_bytes(donor, source)
+        pointer, level, music = level_bytes(donor, source)
         level_offset = len(pack)
         pack.extend(level)
         sprite_pointer, sprites = sprite_bytes(donor, source, slot)
@@ -177,13 +183,18 @@ def build_bytes(donor, slot):
             pack.extend(bytes.fromhex(l2['bytes']))
         rooms.append({'source_room': f'{source:03X}', 'target_slot': f"{entry['slot']:03X}",
                       'level': {'pointer': f'{pointer:06X}', 'size': len(level), 'sha256': sha(level),
-                                'offset': level_offset},
+                                'offset': level_offset, 'music': music},
                       'sprites': {'pointer': f'{sprite_pointer:06X}', 'size': len(sprites),
                                   'sha256': sha(sprites), 'offset': sprite_offset},
                       'metadata': {'raw': metadata(donor, source).hex(),
                                    'sha256': sha(metadata(donor, source))},
                       'layer2': l2})
     return bytes(pack), rooms
+
+
+def donor_byte(base, source, table):
+    donor = (ROOT/'local/content-versions/mazo/rom.sfc').read_bytes()
+    return f'{donor[lorom(table)+source]:02x}'
 
 
 def plan(base, offset, after, role):
@@ -214,6 +225,10 @@ def patches(base, rooms, custom_slot):
         result.append(plan(base, lorom(0x0EF100)+slot, f'{PACK_BANK:02x}', 'sprite pointer bank'))
         result.append(plan(base, lorom(0x14AD08)+slot*32,
                            room['metadata']['raw'], 'room graphics and palette record'))
+        source = int(room['source_room'], 16)
+        for table in LEVEL_TABLES:
+            result.append(plan(base, lorom(table)+slot, donor_byte(base, source, table),
+                               f'level table {table:06X}'))
     constructor, body, table = sprite_table(base)
     module = read(MODULE)
     record = bytearray.fromhex(module['record']['raw'])

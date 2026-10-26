@@ -1,0 +1,338 @@
+{
+  "schema": 1,
+  "id": "mazo-b0",
+  "scope": "B0 corridor target recipe. The A2 module view, the A7 corridor data pack, the level, sprite, metadata and record patches are reviewed. Gameplay qualification stays separate.",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "B0",
+    "raw": "01400080308300009889139d89130000",
+    "init": "138998",
+    "main": "13899D",
+    "rooms": [
+      "00D",
+      "10C",
+      "191",
+      "192"
+    ]
+  },
+  "code": {
+    "source_address": "138989",
+    "native_address": "A28989",
+    "size": 419,
+    "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+    "adapted_sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+    "pack_file": "mazo-b0-code.bin"
+  },
+  "entry_seeds": [
+    "138998",
+    "13899D"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "0285BA"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "free SpriteTool slot and custom-id namespace choice",
+    "corridor level-data pack and free level slots",
+    "runtime target and fixture entry",
+    "attack and clear qualification"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 189577,
+      "before": "008006",
+      "after": "0080a7",
+      "role": "level pointer"
+    },
+    {
+      "offset": 191113,
+      "before": "00d9ff",
+      "after": "2280a7",
+      "role": "layer 2 pointer"
+    },
+    {
+      "offset": 192262,
+      "before": "6de7",
+      "after": "1a80",
+      "role": "sprite pointer low bytes"
+    },
+    {
+      "offset": 488067,
+      "before": "07",
+      "after": "a7",
+      "role": "sprite pointer bank"
+    },
+    {
+      "offset": 679272,
+      "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+      "role": "room graphics and palette record"
+    },
+    {
+      "offset": 192899,
+      "before": "0b",
+      "after": "30",
+      "role": "level table 05F000"
+    },
+    {
+      "offset": 193411,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F200"
+    },
+    {
+      "offset": 193923,
+      "before": "0a",
+      "after": "1a",
+      "role": "level table 05F400"
+    },
+    {
+      "offset": 194435,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F600"
+    },
+    {
+      "offset": 188291,
+      "before": "00",
+      "after": "20",
+      "role": "level table 05DE00"
+    },
+    {
+      "offset": 488595,
+      "before": "00",
+      "after": "e2",
+      "role": "level table 0EF310"
+    },
+    {
+      "offset": 189580,
+      "before": "008006",
+      "after": "2380a7",
+      "role": "level pointer"
+    },
+    {
+      "offset": 191116,
+      "before": "00d9ff",
+      "after": "3680a7",
+      "role": "layer 2 pointer"
+    },
+    {
+      "offset": 192264,
+      "before": "6de7",
+      "after": "2e80",
+      "role": "sprite pointer low bytes"
+    },
+    {
+      "offset": 488068,
+      "before": "07",
+      "after": "a7",
+      "role": "sprite pointer bank"
+    },
+    {
+      "offset": 679304,
+      "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+      "role": "room graphics and palette record"
+    },
+    {
+      "offset": 192900,
+      "before": "0b",
+      "after": "30",
+      "role": "level table 05F000"
+    },
+    {
+      "offset": 193412,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F200"
+    },
+    {
+      "offset": 193924,
+      "before": "0a",
+      "after": "1a",
+      "role": "level table 05F400"
+    },
+    {
+      "offset": 194436,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F600"
+    },
+    {
+      "offset": 188292,
+      "before": "00",
+      "after": "20",
+      "role": "level table 05DE00"
+    },
+    {
+      "offset": 488596,
+      "before": "00",
+      "after": "e2",
+      "role": "level table 0EF310"
+    },
+    {
+      "offset": 189619,
+      "before": "008006",
+      "after": "3780a7",
+      "role": "level pointer"
+    },
+    {
+      "offset": 191155,
+      "before": "00d9ff",
+      "after": "54deff",
+      "role": "retained empty layer 2 sentinel"
+    },
+    {
+      "offset": 192290,
+      "before": "6de7",
+      "after": "a580",
+      "role": "sprite pointer low bytes"
+    },
+    {
+      "offset": 488081,
+      "before": "07",
+      "after": "a7",
+      "role": "sprite pointer bank"
+    },
+    {
+      "offset": 679720,
+      "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "after": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "role": "room graphics and palette record"
+    },
+    {
+      "offset": 192913,
+      "before": "0b",
+      "after": "3b",
+      "role": "level table 05F000"
+    },
+    {
+      "offset": 193425,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F200"
+    },
+    {
+      "offset": 193937,
+      "before": "0a",
+      "after": "0a",
+      "role": "level table 05F400"
+    },
+    {
+      "offset": 194449,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F600"
+    },
+    {
+      "offset": 188305,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05DE00"
+    },
+    {
+      "offset": 488609,
+      "before": "00",
+      "after": "00",
+      "role": "level table 0EF310"
+    },
+    {
+      "offset": 189622,
+      "before": "008006",
+      "after": "b080a7",
+      "role": "level pointer"
+    },
+    {
+      "offset": 191158,
+      "before": "00d9ff",
+      "after": "54deff",
+      "role": "retained empty layer 2 sentinel"
+    },
+    {
+      "offset": 192292,
+      "before": "6de7",
+      "after": "1881",
+      "role": "sprite pointer low bytes"
+    },
+    {
+      "offset": 488082,
+      "before": "07",
+      "after": "a7",
+      "role": "sprite pointer bank"
+    },
+    {
+      "offset": 679752,
+      "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "after": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "role": "room graphics and palette record"
+    },
+    {
+      "offset": 192914,
+      "before": "0b",
+      "after": "0b",
+      "role": "level table 05F000"
+    },
+    {
+      "offset": 193426,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F200"
+    },
+    {
+      "offset": 193938,
+      "before": "0a",
+      "after": "0a",
+      "role": "level table 05F400"
+    },
+    {
+      "offset": 194450,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05F600"
+    },
+    {
+      "offset": 188306,
+      "before": "00",
+      "after": "00",
+      "role": "level table 05DE00"
+    },
+    {
+      "offset": 488610,
+      "before": "00",
+      "after": "00",
+      "role": "level table 0EF310"
+    },
+    {
+      "offset": 1608962,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01400080308300009889a29d89a20000",
+      "role": "B0 record at the free slot"
+    }
+  ],
+  "data_packs": [
+    {
+      "variable": "BM_MAZO_DATA_PACK",
+      "address": "A78000",
+      "pack_file": "mazo-b0-corridor.bin",
+      "size": 288,
+      "sha256": "4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d",
+      "source_pack": "local/native-modules/mazo-b0-corridor-v1/mazo-b0-corridor.bin"
+    }
+  ],
+  "projected_output": {
+    "size": 4194304,
+    "sha256": "5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511"
+  }
+}
