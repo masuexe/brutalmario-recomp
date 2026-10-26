@@ -175,6 +175,29 @@ class PracticeLauncherTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 2)
         self.assertFalse((self.root / 'local/play').exists())
 
+    def test_native_sprite_launch_configures_both_external_packs(self):
+        name = 'demo11-native-sprite9e'
+        binary, _, receipt = self.restoration_fixture(name, 'BrutalMarioDemo11NativeSprite9ESNESRecomp')
+        feature = {'kind': 'immutable-external-sprite'}
+        data = json.loads(receipt.read_text())
+        data['native_content'] = feature
+        receipt.write_text(json.dumps(data))
+        with patch.object(play, 'content_identity', return_value=None), \
+                patch.object(play, 'sprite_identity', return_value=feature), \
+                patch.object(play, 'sprite_environment') as configure:
+            _, execute, _ = self.invoke(['--restoration', name, '--room', '0x97'])
+            self.assertEqual(execute.call_args.args[0], str(binary))
+            self.assertEqual(configure.call_args.args[0], name)
+
+    def test_native_sprite_rejects_stale_feature_before_creating_session(self):
+        self.restoration_fixture('demo11-native-sprite9e', 'BrutalMarioDemo11NativeSprite9ESNESRecomp')
+        with patch.object(play, 'content_identity', return_value=None), \
+                patch.object(play, 'sprite_identity', return_value={'kind': 'new'}), \
+                self.assertRaises(SystemExit) as error:
+            self.invoke(['--restoration', 'demo11-native-sprite9e', '--room', '0x97'])
+        self.assertEqual(error.exception.code, 2)
+        self.assertFalse((self.root / 'local/play').exists())
+
     def test_star_course_rejects_completion_that_would_turn_it_into_a_warp(self):
         for name in ('star-world-1', 'star-world-upper-left', 'star-world-lower-right', 'star-world-upper-right', 'star-world-middle-right', 'star-world-upper-inner', 'star-world-middle-left', 'star-world-forest', 'star-world-lower-inner', 'star-world-center'):
             with self.subTest(restoration=name), self.assertRaises(SystemExit) as error:

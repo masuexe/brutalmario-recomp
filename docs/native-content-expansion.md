@@ -14,7 +14,10 @@ or a claim that every donor is complete or compatible.
 
 The [first external graphics pilot](native-content-pilot.md) now implements a
 bounded native data-bank split with matching entry/movement and unchanged Boss
-route captures. Executable-module expansion is the next unqualified boundary.
+route captures. The [external sprite-code pilot](native-sprite9e.md) now adds
+immutable code mapping for custom sprite `9E`, with donor-matched platform
+behavior, native death/re-entry and unchanged-content regressions. General
+module admission and complete Boss integration remain open.
 
 ## Frozen comparison checkpoint
 
@@ -104,7 +107,8 @@ emulator image. Test their integration in the native host, distinguish donor
 differences from runtime defects, and preserve explicit limitations. A successful
 boot or interpreter/AOT agreement alone does not prove a correct course or boss.
 
-The first resource-delivery milestone is qualified separately in the
-[pilot report](native-content-pilot.md). The next concrete action is to select
-a blocked custom sprite and review its executable mapping and dependency
-closure. The fixed graphics bank must not be treated as a general code loader.
+The resource-delivery milestone and the first fixed-code mapping are qualified
+separately in the [graphics report](native-content-pilot.md) and
+[sprite report](native-sprite9e.md). The next concrete action is to inventory
+the requested Boss dependencies and choose one complete bounded fight. The
+fixed pilots must not be treated as an automatic loader for arbitrary content.

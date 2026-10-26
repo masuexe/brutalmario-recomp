@@ -1,0 +1,34 @@
+# Map-position and node-selection fixture: enter translevel 06A / room 146.
+# Platform boarding is a player-position fixture, followed by ordinary physics.
+# No sprite, completion or HP writes. Not an unassisted traversal or course clear.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+# Explicit pipe-action fixture into room 146; avoids version-local map-entry IDs.
+poke 94 80004001
+poke 19b8 46
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 240
+dump entry240
+wait 120
+dump entry360
+quit

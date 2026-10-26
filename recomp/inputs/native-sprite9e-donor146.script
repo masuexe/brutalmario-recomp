@@ -1,0 +1,70 @@
+# Map-position and node-selection fixture: enter translevel 06A / room 146.
+# Platform boarding is a player-position fixture, followed by ordinary physics.
+# No sprite, completion or HP writes. Not an unassisted traversal or course clear.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+# Explicit pipe-action fixture into room 146; avoids version-local map-entry IDs.
+poke 94 80004001
+poke 19b8 46
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 240
+dump entry240
+wait 120
+dump entry360
+# Board the upper lift at x=224, y=304; small Mario bottom starts at its top.
+poke 94 e8001001
+poke 7d 10
+wait 2
+dump board
+wait 30
+dump ride32
+wait 32
+dump ride64
+wait 64
+dump ride128
+# Boarding fixture for the vertical lift at x=240, y=400.
+poke 94 00017001
+poke 7d 10
+wait 2
+dump vertical_board
+wait 30
+dump vertical32
+wait 32
+dump vertical64
+# Pipe-action fixture into the other room that places sprite 9E.
+poke 94 80004001
+poke 19b8 97
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 240
+dump other097
+# Return through the same game pipe action; do not alter sprite records/state.
+poke 94 80004001
+poke 19b8 46
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 240
+dump return146
+quit

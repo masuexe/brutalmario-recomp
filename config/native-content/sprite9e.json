@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "id": "sprite9e-fixed-bank",
+  "resource": "cheap-demo/custom-sprite/9E",
+  "rooms": [
+    151,
+    326
+  ],
+  "record": {
+    "source_offset": 539453,
+    "destination_offset": 1608786,
+    "before": "0000ffffffffffff218001218001ffff",
+    "source": "01360000efa22945dc95252996250000",
+    "after": "01360000efa22945dc95a52996a50000"
+  },
+  "code": {
+    "source_address": "2595CD",
+    "native_address": "A595CD",
+    "size": 1291,
+    "sha256": "a6654d22c2dd9f146fc117ba7dca01f9389995fcb8b75f52ba6f2c4a6b1a717d",
+    "init": "A595DC",
+    "main": "A59629",
+    "pack_file": "sprite9e.bin"
+  },
+  "graphics": {
+    "id": "star1-ffd",
+    "original_address": "368008",
+    "native_address": "B68008",
+    "payload": {
+      "size": 3001,
+      "sha256": "3a51dd45f2df22d1f2490ca117070a68bfdab33cb03f734ad9e97c59e581a169"
+    },
+    "pack_file": "star1-ffd.bin",
+    "source_manifest": "config/native-content/star1-ffd.json"
+  },
+  "shared_dependencies": [
+    {
+      "address": "27FAF4",
+      "size": 240,
+      "sha256": "80ade3198671bedc1d7e13db8948bb295fc69c108eef7bedd42b06e4ce72b484"
+    },
+    {
+      "address": "01801A",
+      "size": 32,
+      "sha256": "de22bd67e1f72e2ce74480050338618589e9b8e562c4f2879eeb9f964fe50354"
+    },
+    {
+      "address": "018022",
+      "size": 8,
+      "sha256": "27b4f3029865a0e19adad799a9022a547efe1f69bd805986de4585f68089c8d3"
+    },
+    {
+      "address": "01802A",
+      "size": 8,
+      "sha256": "0b0bb4264a397c3540125c99e36291ad4dfab3f83860258678a50b969ca1027d"
+    },
+    {
+      "address": "019032",
+      "size": 270,
+      "sha256": "13d754c0fb98670981c7be674c987079b17da4307b1ef3a7ab7725e4198bf0aa"
+    },
+    {
+      "address": "019014",
+      "size": 30,
+      "sha256": "4e00997bc71c981f611d03928d440e2f95177f4bfd9b0b66d4f700363459691e"
+    },
+    {
+      "address": "019140",
+      "size": 512,
+      "sha256": "7a2e62ca89ee91debd070c900dc9eb755fcb3092feb2d989fb0fadd8e38fdd84"
+    },
+    {
+      "address": "01B7B3",
+      "size": 256,
+      "sha256": "85a5ec00650f13609f63600a2edb66ef0c62ecad809daf042865b4945a939ef5"
+    },
+    {
+      "address": "01A7DC",
+      "size": 384,
+      "sha256": "96d856a078d0a1888c8e81280ce15406fd090b6dac4f2dbaf0b4a88fa4b9f1a5"
+    },
+    {
+      "address": "03B664",
+      "size": 256,
+      "sha256": "cab87529054df75480ade15f8750470905420026ea04ed94c8e8914f5df15691"
+    }
+  ],
+  "runtime_patch": "patches/runtime/0008-native-content-bank.patch",
+  "runtime_source_sha256": "fb79e160529feb156e93ddeb435e4e52929d9423cbb78f39462c2b9a311d2225",
+  "runtime_patch_sha256": "bde213969435f20652e747986f2fffae700ef196a677250559940282dfc8ecd9",
+  "runtime_result_sha256": "6df0357b97b2ea60874760f6cb97ad9bd6cd7903884f1b9cc2c469cc450b114f",
+  "execution_policy": "Immutable A5/B6 upper-bank views; no generated nodes in 25/A5 or 36/B6; original shared engine dispatch and guest return/interrupt stack retained.",
+  "external_calls": [
+    "01801A",
+    "018022",
+    "01802A",
+    "01A7DC",
+    "01B7B3",
+    "03B664",
+    "03B72B",
+    "27FAF4"
+  ]
+}

@@ -10,6 +10,7 @@ import tempfile
 from prepare_rom import verify
 from runtime_patches import patch_plan
 from native_content import identity as content_identity, settings as content_settings
+from native_sprite import identity as sprite_identity, environment as sprite_environment
 import windows_audio
 from restoration_targets import RESTORATIONS
 
@@ -149,6 +150,11 @@ LEVELS = {
                         'teleport': (6, 0x128, 0x1e8)},
     'demo11-native-pack-pilot': {
         'name': 'Grassland Star with native external graphics',
+        'map': 6, 'x': 0x128, 'y': 0x1e8, 'level': 0x005,
+        'teleport': (6, 0x128, 0x1e8),
+    },
+    'demo11-native-sprite9e': {
+        'name': 'Grassland Star on the external sprite9E candidate',
         'map': 6, 'x': 0x128, 'y': 0x1e8, 'level': 0x005,
         'teleport': (6, 0x128, 0x1e8),
     },
@@ -403,7 +409,8 @@ def main():
     manifest = json.loads(manifest_path.read_text())
     verify(rom.read_bytes(), manifest['output'], manifest['target'])
     receipt = json.loads((build / 'm1-build.json').read_text())
-    content = content_identity(args.restoration or 'demo-only-1')
+    sprite = sprite_identity(args.restoration or 'demo-only-1')
+    content = content_identity(args.restoration or 'demo-only-1') or sprite
     if args.restoration and receipt.get('rom_sha256') != manifest['output']['sha256']:
         parser.error('restoration ROM differs from its build receipt; regenerate and rebuild')
     if (receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest() or
@@ -411,7 +418,9 @@ def main():
             receipt['runtime_patches'] != patch_plan()):
         parser.error('binary differs from its current runtime receipt; rebuild ' +
                      (args.restoration or 'demo-only-1') + ' first')
-    if content:
+    if sprite:
+        sprite_environment(args.restoration, os.environ)
+    elif content:
         spec = content_settings(args.restoration)[1]
         pack = ROOT / 'local/restoration' / args.restoration / spec['pack_file']
         verify(pack.read_bytes(), spec['payload'], 'native external pack')

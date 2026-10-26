@@ -30,7 +30,12 @@ The [native graphics pilot](native-content-pilot.md) now qualifies the first
 resource-delivery step: a 3,001-byte graphics stream is absent from its derived
 ROM and supplied by an independently mapped external pack. Entry/movement and
 an unchanged Boss route match fresh native controls at 42 dump points; four
-invalid-pack startups fail as expected. Executable modules remain unqualified.
+invalid-pack startups fail as expected. The subsequent
+[external sprite-code pilot](native-sprite9e.md) now runs custom sprite `9E`
+from a fixed independent bank, with donor-matched lift behavior, native real
+death/re-entry, 420 unchanged comparisons and five rejected invalid-pack
+startups. This qualifies one immutable code mapping; complete Boss integration
+and general executable-module support remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.
