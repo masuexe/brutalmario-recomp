@@ -107,11 +107,13 @@ class MazoModuleTests(unittest.TestCase):
         recipe = json.loads((ROOT / 'config/native-content/mazo-b0-corridor.json').read_text())
         pack, patches, facts = corridor.build(recipe, self.donor, self.base)
         self.assertEqual(len(pack), 288)
-        self.assertEqual(len(patches), 45)
+        self.assertEqual(len(patches), 33)
         self.assertEqual(corridor.sha(pack), recipe['data_pack']['sha256'])
         self.assertEqual(facts['custom_slot'], 'A9')
         self.assertEqual([room['level']['music'] for room in recipe['rooms']],
                          [{'before': '31', 'after': '02'}, {'before': '31', 'after': '02'}, None, None])
+        self.assertEqual([room['tables'] for room in recipe['rooms']],
+                         ['keep', 'keep', 'copy', 'copy'])
 
     def test_b0_target_installation(self):
         from restore_star_world_1 import sha

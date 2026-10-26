@@ -27,8 +27,10 @@ PACK_ADDRESS = 0xA78000
 L2_SENTINEL = 0xFFDE54
 MAP_ADDRESS = 0x37C008
 LEVEL_TABLES = (0x05F000, 0x05F200, 0x05F400, 0x05F600, 0x05DE00, 0x0EF310)
-ROOMS = ({'source': 0x00d, 'slot': 0x183}, {'source': 0x10c, 'slot': 0x184},
-         {'source': 0x191, 'slot': 0x191}, {'source': 0x192, 'slot': 0x192})
+ROOMS = ({'source': 0x00d, 'slot': 0x183, 'tables': 'keep'},
+         {'source': 0x10c, 'slot': 0x184, 'tables': 'keep'},
+         {'source': 0x191, 'slot': 0x191, 'tables': 'copy'},
+         {'source': 0x192, 'slot': 0x192, 'tables': 'copy'})
 
 
 def read(path):
@@ -182,6 +184,7 @@ def build_bytes(donor, slot):
             l2_offset = len(pack)
             pack.extend(bytes.fromhex(l2['bytes']))
         rooms.append({'source_room': f'{source:03X}', 'target_slot': f"{entry['slot']:03X}",
+                      'tables': entry['tables'],
                       'level': {'pointer': f'{pointer:06X}', 'size': len(level), 'sha256': sha(level),
                                 'offset': level_offset, 'music': music},
                       'sprites': {'pointer': f'{sprite_pointer:06X}', 'size': len(sprites),
@@ -226,9 +229,10 @@ def patches(base, rooms, custom_slot):
         result.append(plan(base, lorom(0x14AD08)+slot*32,
                            room['metadata']['raw'], 'room graphics and palette record'))
         source = int(room['source_room'], 16)
-        for table in LEVEL_TABLES:
-            result.append(plan(base, lorom(table)+slot, donor_byte(base, source, table),
-                               f'level table {table:06X}'))
+        if room['tables'] == 'copy':
+            for table in LEVEL_TABLES:
+                result.append(plan(base, lorom(table)+slot, donor_byte(base, source, table),
+                                   f'level table {table:06X}'))
     constructor, body, table = sprite_table(base)
     module = read(MODULE)
     record = bytearray.fromhex(module['record']['raw'])

@@ -20,6 +20,7 @@
     {
       "source_room": "00D",
       "target_slot": "183",
+      "tables": "keep",
       "level": {
         "pointer": "5BB0E0",
         "size": 26,
@@ -48,6 +49,7 @@
     {
       "source_room": "10C",
       "target_slot": "184",
+      "tables": "keep",
       "level": {
         "pointer": "5C8222",
         "size": 11,
@@ -76,6 +78,7 @@
     {
       "source_room": "191",
       "target_slot": "191",
+      "tables": "copy",
       "level": {
         "pointer": "5BAE97",
         "size": 110,
@@ -101,6 +104,7 @@
     {
       "source_room": "192",
       "target_slot": "192",
+      "tables": "copy",
       "level": {
         "pointer": "5C8657",
         "size": 104,
@@ -126,7 +130,7 @@
   ],
   "projected_output": {
     "size": 4194304,
-    "sha256": "5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511"
+    "sha256": "67e5b578ff0efac53e732ed008dc0a5b740a96b05c815e15803268185c2d1875"
   },
   "open_dependencies": [
     "target registration and runtime data pack",

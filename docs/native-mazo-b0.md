@@ -3,9 +3,9 @@
 ## Result
 
 The mazo `B0` corridor actor has a static module review and a built target.
-One imported corridor room enters gameplay. Rooms `00D` and `10C` still fail
-to load. This document records the measured data and the open failure. It does
-not qualify full corridor playability.
+The four imported corridor rooms enter gameplay. Room `183` changes to room
+`190` after the first load. This document records the measured data and the
+bounded entry. It does not qualify full corridor playability.
 
 ## Module
 
@@ -26,8 +26,7 @@ The recipe is `config/native-content/mazo-b0-module.json`. The module receipt
 is `local/native-modules/mazo-b0-v1/preparation-receipt.json`, SHA-256
 `188fc1bb41bf1a95af89c17889049c007fe110ba4201ab398bac927afa137b5c`.
 
-The module tests pass 11/11. The full suite passes 187/187 tests. The log is
-`local/reports/unit-tests-mazo-b0-target.log`.
+The module tests pass 11/11.
 
 ## Corridor data
 
@@ -76,14 +75,18 @@ The donor rooms `00D` and `10C` use legacy music `31` in the level header.
 The modern family has no row for that track, so the copied header uses music
 `02`. Rooms `191` and `192` keep music `02`.
 
+The plan has a level table policy. Rooms `00D` and `10C` keep the recipient
+level tables. The donor table values crash the level load. Rooms `191` and
+`192` copy the donor values. These two rooms load with the copied values.
+
 The pack is `mazo-b0-corridor.bin`, 288 bytes, SHA-256
 `4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d`.
 The recipe is `config/native-content/mazo-b0-corridor.json`. The integration
-plan has 45 patches. The projected ROM SHA-256 is
-`5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511`.
+plan has 33 patches. The projected ROM SHA-256 is
+`67e5b578ff0efac53e732ed008dc0a5b740a96b05c815e15803268185c2d1875`.
 The receipt is
 `local/native-modules/mazo-b0-corridor-v1/preparation-receipt.json`, SHA-256
-`0140e6306f79c78f936e88237d69500e78bfd1a50b54e968c6f501801e5f95b2`. The tool
+`1ae24236421222be44342a29dd03ab0fe98817b8670a3b1107790a267ffa9808`. The tool
 is `tools/prepare_mazo_b0_corridor.py`.
 
 ## Target and entry
@@ -99,29 +102,28 @@ The target is `demo11-native-mazo-b0`. Its recipe is
 | `mazo-b0-corridor.bin` | `A7` | `A78000` | 288 |
 
 The target ROM SHA-256 is
-`5711ea39a84c02416efb427dd0f1bbd085f944c1412446636c10baaf28e53511`. The
+`67e5b578ff0efac53e732ed008dc0a5b740a96b05c815e15803268185c2d1875`. The
 native binary SHA-256 is
-`272b0edd2fc956e523377976b58ab9109b1d4512a7fecd10a6f56c6dcc27b94c`.
+`20d44ee859dabadbc518866beba71144123e2cf60389b7a1cfff34d70fe08f49`.
 
 The room `191` entry works. The capture is
-`local/captures/mazo-b0-room191-v1-native`. It loads mode `14` in room
+`local/captures/mazo-b0-room191-v2-native`. It loads mode `14` in room
 `0x191`. Custom actor `A9` is active in slot `7` at `(192,368)`. Standard
 sprites `77` occupy slots `8` and `9`. The A7 data pack resolves 1,166 reads
 and the A2 module view executes.
 
-The room `183` entry fails. The capture is
-`local/captures/mazo-b0-room183-v3-native`. The host enters a bad state with
-mode `34` and room `0x3400`. The actor slots hold garbage. The failure stays
-open. The donor rooms `00D` and `10C` have level header bytes `c0 70`.
-Room `191` has `40 30`.
+The room `183` entry works with a limit. The capture is
+`local/captures/mazo-b0-room183-v5-native`. At frame 180 it loads mode `15`
+in room `0x183`. Two custom actors `A9` occupy slots `8` and `9` at
+`(272,48)` and `(32,64)`. At frame 480 the room changes to `0x190` with no
+actors. The room `00D` data causes the change. The cause stays open.
 
 ## Next steps
 
-1. Diagnose the rooms `00D` and `10C` load failure. Test the level bytes with
-   an empty sprite list first. Then compare the header mode bytes and the
-   layer 2 handling.
-2. Qualify the room `191` graphics, camera and actor behavior against the
-   donor capture.
+1. Qualify the room `191` and room `183` graphics, camera and actor behavior
+   against the donor capture.
+2. Record the room `183` change to room `190`. Test the room `184` and room
+   `192` entries with the same fixtures.
 3. Record the relocated exits of room `00D`. They stay outside this bounded
    entry check.
 4. Never overwrite the recipient `B0` slot.
