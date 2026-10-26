@@ -92,10 +92,20 @@ class MazoModuleTests(unittest.TestCase):
         verify(rom, cfg['output'], 'mazo 9B native ROM')
         self.assertEqual(rom[patch['offset']:patch['offset']+16].hex(), patch['after'])
 
+    def test_b0_review_pins(self):
+        recipe = json.loads((ROOT / 'config/native-content/mazo-b0-module.json').read_text())
+        code, audit = mazo.build_code(self.donor, self.base, recipe)
+        self.assertEqual(len(code), 419)
+        self.assertEqual(audit['local_entry_states'], 6)
+        self.assertEqual(audit['instruction_variants'], 177)
+        self.assertEqual(audit['source_bank_jsl_sites'], [])
+        self.assertEqual(audit['outside_calls'], recipe['external_calls'])
+        self.assertEqual(recipe['code']['adapted_sha256'], recipe['code']['sha256'])
+
     def test_record_mismatch_is_rejected(self):
         recipe = copy.deepcopy(self.recipe)
         recipe['record']['raw'] = '00'*16
-        with self.assertRaisesRegex(ValueError, '9C record'):
+        with self.assertRaisesRegex(ValueError, 'record differs from the review'):
             mazo.check_record(self.donor, recipe)
 
 

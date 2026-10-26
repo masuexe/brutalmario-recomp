@@ -41,14 +41,14 @@ def check_record(donor, recipe):
     offset = lorom(table) + slot*16
     raw = donor[offset:offset+16]
     if raw.hex() != record['raw']:
-        raise ValueError('9C record differs from the review')
+        raise ValueError('module record differs from the review')
     if f'{int.from_bytes(raw[8:11], "little"):06X}' != record['init']:
-        raise ValueError('9C init address differs from the review')
+        raise ValueError('module init address differs from the review')
     if f'{int.from_bytes(raw[11:14], "little"):06X}' != record['main']:
-        raise ValueError('9C main address differs from the review')
+        raise ValueError('module main address differs from the review')
     rooms = [f'{room:03X}' for room in sprite_rooms(donor, slot)]
     if rooms != record['rooms']:
-        raise ValueError('9C room list differs from the review')
+        raise ValueError('module room list differs from the review')
     return {'slot': record['slot'], 'raw': raw.hex(), 'init': record['init'],
             'main': record['main'], 'rooms': rooms,
             'constructor': f'{constructor:06X}', 'table': f'{table:06X}'}

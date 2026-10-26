@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "mazo-b0-module",
+  "scope": "Static module review for the mazo B0 corridor actor. The recipe pins the donor record and the 419-byte protected block. The free SpriteTool slot, the corridor level-data pack and the runtime target stay open.",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "B0",
+    "raw": "01400080308300009889139d89130000",
+    "init": "138998",
+    "main": "13899D",
+    "rooms": [
+      "00D",
+      "10C",
+      "191",
+      "192"
+    ]
+  },
+  "code": {
+    "source_address": "138989",
+    "native_address": "A28989",
+    "size": 419,
+    "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+    "adapted_sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+    "pack_file": "mazo-b0-code.bin"
+  },
+  "entry_seeds": [
+    "138998",
+    "13899D"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "0285BA"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "free SpriteTool slot and custom-id namespace choice",
+    "corridor level-data pack and free level slots",
+    "runtime target and fixture entry",
+    "attack and clear qualification"
+  ]
+}
