@@ -80,8 +80,9 @@ state matches at `fight600`. Transient intro actors differ. The [attack-window c
 records the room 151 wave motion and the later cycle timing. The
 [B0 corridor plan](native-mazo-b0.md) records the 419-byte module review, the
 corridor data pack and the built target. The four corridor rooms enter gameplay
-with the custom `A9` actor. Room `183` changes to room `190` after the first
-load. The attack, the room change and a clear remain open.
+with the custom `A9` actor. Rooms `191` and `192` match the donor actors.
+Rooms `00D` and `10C` still need their graphics selection. The attack, the
+graphics selection and a clear remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

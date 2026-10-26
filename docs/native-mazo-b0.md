@@ -3,9 +3,10 @@
 ## Result
 
 The mazo `B0` corridor actor has a static module review and a built target.
-The four imported corridor rooms enter gameplay. Room `183` changes to room
-`190` after the first load. This document records the measured data and the
-bounded entry. It does not qualify full corridor playability.
+The four imported corridor rooms enter gameplay. Rooms `191` and `192` match
+the donor actor set. Rooms `183` and `184` load with corrupt graphics and
+change to room `190`. This document records the measured data and the bounded
+entry. It does not qualify full corridor playability.
 
 ## Module
 
@@ -113,18 +114,43 @@ The room `191` entry works. The capture is
 sprites `77` occupy slots `8` and `9`. The A7 data pack resolves 1,166 reads
 and the A2 module view executes.
 
-The room `183` entry works with a limit. The capture is
+The room `183` entry works with limits. The capture is
 `local/captures/mazo-b0-room183-v5-native`. At frame 180 it loads mode `15`
 in room `0x183`. Two custom actors `A9` occupy slots `8` and `9` at
 `(272,48)` and `(32,64)`. At frame 480 the room changes to `0x190` with no
 actors. The room `00D` data causes the change. The cause stays open.
 
+The room `184` entry matches room `183`. The capture is
+`local/captures/mazo-b0-room184-v1-native`.
+
+## Entry qualification
+
+`tools/qualify_mazo_b0.py` checks the target identities, the graphics
+records, the entry mode and room, the custom `A9` actor set and the donor
+actor set. The report is `local/reports/native-mazo-b0-final.json`, SHA-256
+`60d23b8a11ac340c23e4bfb3aac724a1ebe9062ab4ab27bbf40d67c0e3821406`.
+
+| Room | Slot | Entry mode | Actors | Cap |
+| --- | --- | ---: | --- | --- |
+| `00D` | `183` | `15` | two custom `A9` | Room changes to `190`. Graphics unverified. |
+| `10C` | `184` | `15` | two custom `A9` | Room changes to `190`. Graphics unverified. |
+| `191` | `191` | `14` | three, donor parity | None. |
+| `192` | `192` | `14` | two, donor parity | None. |
+
+The donor captures are `mazo-b0-donor191-v1` and `mazo-b0-donor192-v1`. The
+donor actor sets match the native actor sets. The custom id changes from `B0`
+to `A9`.
+
+The room `183` frame shows dark tiles and a corrupt HUD. The donor rooms
+`00D` and `10C` use level header bytes `c0 70`. Room `191` uses `40 30`.
+The header selects donor graphics that the recipient does not have. The
+graphics mapping or import stays open.
+
 ## Next steps
 
-1. Qualify the room `191` and room `183` graphics, camera and actor behavior
-   against the donor capture.
-2. Record the room `183` change to room `190`. Test the room `184` and room
-   `192` entries with the same fixtures.
+1. Resolve the room `00D` and `10C` graphics selection. Map the donor header
+   bytes `c0 70` or import the selected graphics.
+2. Record the room `183` change to room `190`.
 3. Record the relocated exits of room `00D`. They stay outside this bounded
    entry check.
 4. Never overwrite the recipient `B0` slot.
@@ -141,5 +167,6 @@ python3 tools/m1.py --target demo11-native-mazo-b0 scaffold
 python3 tools/m1.py --target demo11-native-mazo-b0 generate
 python3 tools/m1.py --target demo11-native-mazo-b0 build
 python3 tools/m1.py --target demo11-native-mazo-b0 native --script recomp/inputs/mazo-b0-room191.script --capture YOUR_FRESH_NAME
+python3 tools/qualify_mazo_b0.py
 python3 -m unittest discover -s tests -p test_mazo_module.py -v
 ```
