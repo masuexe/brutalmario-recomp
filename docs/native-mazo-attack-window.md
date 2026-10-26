@@ -58,7 +58,7 @@ speed. Slots `7` and `9` stay fixed.
 
 The native host repeats left-moving waves. Slot `6` is at X `268` at
 `late410` and X `-12` at `late480`. Slot `5` starts at X `256` at
-`late445`. Slot `4` starts at X `264` at `late475`. Every wave has speed
+`late445`. Slot `4` starts at X `264` at `late475`. Every wave uses speed
 `192` and moves 4 pixels left per frame.
 
 ## Load timing
