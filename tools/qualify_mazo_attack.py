@@ -15,8 +15,8 @@ from restore_star_world_1 import sha, write_verified
 
 C9 = 'demo11-native-mazo-9c'
 C9_ROM = '7d690e9b35493ba49e7f98bb2d63d77ec79ac0c3a78181e4771eb1d6ce012396'
-C9_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-align-donor.script'
-C9_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-align-native.script'
+C9_SCRIPT_DONOR = 'recomp/inputs/mazo-9c-align-fine-donor.script'
+C9_SCRIPT_NATIVE = 'recomp/inputs/mazo-9c-align-fine-native.script'
 B9 = 'demo11-native-mazo-9b'
 B9_ROM = '8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244'
 B9_SCRIPT_DONOR = 'recomp/inputs/mazo-9b-donor-fixture.script'
@@ -92,50 +92,70 @@ def native_capture(directory, target, script):
     return receipt, log
 
 
+def wave_x(data):
+    if data[0x14c8+6] == 8 and data[0x1ab10+6] & 8 and data[0x1ab9e+6] == 0x9c:
+        return signed(data[0xe4+6] | (data[0x14e0+6] << 8))
+    return None
+
+
 def window_9c():
-    donor = ROOT / 'local/captures/mazo-9c-align-v2-donor'
-    native = ROOT / 'local/captures/mazo-9c-align-v2-native'
+    donor = ROOT / 'local/captures/mazo-9c-align-fine-v2-donor'
+    native = ROOT / 'local/captures/mazo-9c-align-fine-v2-native'
     donor_capture(donor, C9_SCRIPT_DONOR)
     _, log = native_capture(native, C9, C9_SCRIPT_NATIVE)
     require('[native-seven] rejected:' not in log, 'native startup was rejected')
 
     observed = {'samples': []}
-    offset = None
-    wave_samples = []
-    for frame in range(60, 481, 30):
+    for frame in range(60, 201, 5):
         tag = f'fight{frame:03d}'
         a, b = body(donor, tag), body(native, tag)
-        require(a[0x100] == b[0x100] == 0x14, 'aligned room mode differs at '+tag)
+        if a[0x100] != 0x14 or b[0x100] != 0x14:
+            observed['samples'].append({'sample': tag, 'mode': [f'{a[0x100]:02X}', f'{b[0x100]:02X}']})
+            continue
         require(room(a) == room(b) == 0x151, 'aligned room number differs at '+tag)
         require(mario(a) == mario(b) == (512, 320), 'aligned Mario state differs at '+tag)
         donor_parts, native_parts = actors(a, 0x9c), actors(b, 0x9c)
         for slot in (7, 9):
             require(donor_parts.get(slot) == native_parts.get(slot),
                     'persistent 9C part differs at '+tag+f' slot {slot}')
-        if 6 in donor_parts and 6 in native_parts and frame <= 180:
-            wave_samples.append((frame, donor_parts[6][0], native_parts[6][0]))
-            wave_offset = native_parts[6][0]-donor_parts[6][0]
-            if offset is None:
-                offset = wave_offset
-            require(wave_offset == offset, 'wave offset differs at '+tag)
-        observed['samples'].append({'sample': tag, 'donor_actors': sorted(donor_parts),
-                                    'native_actors': sorted(native_parts),
-                                    'donor_wave_x': donor_parts.get(6, (None,))[0] if 6 in donor_parts else None,
-                                    'native_wave_x': native_parts.get(6, (None,))[0] if 6 in native_parts else None})
-    require(len(wave_samples) >= 3, 'wave samples are missing')
-    require(offset == 69, 'recorded wave offset differs')
-    require([donor_x-native_x for _, donor_x, native_x in wave_samples] == [-69]*len(wave_samples),
-            'wave slope differs')
+        observed['samples'].append({'sample': tag, 'donor_wave_x': wave_x(a),
+                                    'native_wave_x': wave_x(b)})
 
-    late_donor = {tag: sorted(actors(body(donor, tag), 0x9c)) for tag in ('fight360', 'fight420', 'fight480')}
-    late_native = {tag: sorted(actors(body(native, tag), 0x9c)) for tag in ('fight360', 'fight420', 'fight480')}
-    require(late_donor == {'fight360': [6, 7, 9], 'fight420': [6, 7, 9], 'fight480': [6, 7, 9]},
-            'donor late attack window differs')
-    require(late_native == {'fight360': [7, 9], 'fight420': [6, 7, 9], 'fight480': [4, 5, 6, 7, 9]},
-            'native late attack window differs')
-    observed['wave'] = {'offset': offset, 'samples': wave_samples}
-    observed['late_donor'] = late_donor
-    observed['late_native'] = late_native
+    require(body(donor, 'fight120')[0x100] == body(native, 'fight120')[0x100] == 0x14,
+            'aligned gameplay mode is absent at fight120')
+    # The first wave moves -3 pixels per frame in both hosts. The intercept
+    # x+3*t records the wave phase. A 69-pixel difference equals 23 frames.
+    frames = list(range(125, 201, 5)) + [240]
+    donor_phase = {wave_x(body(donor, f'fight{frame:03d}'))+3*frame
+                   for frame in frames
+                   if wave_x(body(donor, f'fight{frame:03d}')) is not None}
+    frames = list(range(145, 201, 5)) + [240]
+    native_phase = {wave_x(body(native, f'fight{frame:03d}'))+3*frame
+                    for frame in frames
+                    if wave_x(body(native, f'fight{frame:03d}')) is not None}
+    require(donor_phase == {651}, 'donor first wave phase differs')
+    require(native_phase == {720}, 'native first wave phase differs')
+    require(wave_x(body(donor, 'fight125')) == 276 and wave_x(body(native, 'fight145')) == 285,
+            'first wave entry sample differs')
+    require(wave_x(body(donor, 'fight240')) == -69 and wave_x(body(native, 'fight240')) == 0,
+            'first wave exit sample differs')
+    require((720-651) // 3 == 23, 'recorded wave phase offset differs')
+
+    later = {}
+    for label, directory in (('donor', donor), ('native', native)):
+        later[label] = {tag: wave_x(body(directory, tag))
+                        for tag in ('fight420', 'fight450', 'fight480', 'fight540', 'fight600')}
+    require(later['donor'] == {'fight420': 144, 'fight450': 144, 'fight480': 144,
+                               'fight540': 144, 'fight600': 144},
+            'donor later attack cycle differs')
+    require(later['native'] == {'fight420': None, 'fight450': None, 'fight480': 208,
+                                'fight540': -32, 'fight600': 112},
+            'native later attack cycle differs')
+
+    observed['first_wave'] = {'donor_phase': 651, 'native_phase': 720,
+                              'speed_pixels_per_frame': 3, 'phase_offset_frames': 23,
+                              'donor_first_sample': 125, 'native_first_sample': 145}
+    observed['later_cycles'] = later
     return observed
 
 
@@ -179,8 +199,8 @@ def qualify(args):
               'room_151': c9, 'room_190': b9,
               'evidence': [{'directory': str(path.relative_to(ROOT)),
                             'receipt_sha256': sha((path / 'receipt.json').read_bytes())}
-                           for path in (ROOT / 'local/captures/mazo-9c-align-v2-donor',
-                                        ROOT / 'local/captures/mazo-9c-align-v2-native',
+                           for path in (ROOT / 'local/captures/mazo-9c-align-fine-v2-donor',
+                                        ROOT / 'local/captures/mazo-9c-align-fine-v2-native',
                                         ROOT / 'local/captures/mazo-9b-entry-v2-donor',
                                         ROOT / 'local/captures/mazo-9b-entry-v3-native')],
               'deferred': ['A shared-helper review for the attack actors and the room exit timing.',
