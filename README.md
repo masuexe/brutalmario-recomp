@@ -71,3 +71,8 @@ The second tool verifies the supplied base and nine patches against `config/cont
 - [demoOnly1 death black-screen fix](docs/death-black-screen.md)
 
 Original archives, patches, third-party sources, and ROMs are not included in the repository. Historical versions are not automatically merged.
+
+The delivery target is the native PC game. The requested cross-version content
+does not have to fit in one SFC image or remain playable in an emulator. See the
+[native content expansion plan](docs/native-content-expansion.md) for the next
+architecture milestone and its verification boundaries.

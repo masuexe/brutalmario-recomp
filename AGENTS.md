@@ -11,6 +11,10 @@
 - Markdown documents use English. User-facing conversation may use Chinese.
 - Continue the authorized restoration work autonomously. Do not spawn
   subagents unless the user or applicable instructions explicitly request it.
+- The delivery target is the native PC game. A single SFC image, emulator
+  compatibility and cartridge capacity are not product requirements. Prefer
+  native content packs and explicit runtime adaptations when ROM limits block
+  restoration; see `docs/native-content-expansion.md`.
 
 ## Preserve reproducibility
 
@@ -46,7 +50,10 @@
 ## Verification and acceptance
 
 - Run checks appropriate to the change. Compare source and recipient behavior
-  where needed, then compare the native build with the reference host.
+  where needed. Use the reference host where it can exercise the same content;
+  native-only content does not need an emulator-compatible build. Retain donor
+  behavior references and qualify native integration with explicit assertions
+  and regressions; do not claim same-image parity when the images differ.
 - Check completion logs, assertions, dump sizes, and receipts. A process exit
   code alone does not prove that the route reached its intended state.
 - Label teleportation, invulnerability, forced movement, and pipe-action

@@ -1,5 +1,12 @@
 # Expansion research: what other projects do
 
+Historical assessment. The [native content expansion plan](native-content-expansion.md)
+supersedes the recommendation below: the user requires PC delivery only.
+The pinned SNESRecomp revision already includes the MSU-1 data implementation
+and register routing; the statement below that it must be added is incorrect.
+This does not establish a working Brutal Mario data-streaming driver. MSU-1
+is optional, and streaming data alone does not solve executable addressing.
+
 Date: 2026-10-26. The user asked for existing GitHub and community answers to
 the 4 MB cartridge limit, because later boss ports may exceed it.
 

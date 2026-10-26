@@ -14,7 +14,27 @@ version that contains all custom sprite code.
 
 ## Priorities
 
-### Current objective (2026-10-22)
+### Current direction: native PC delivery
+
+The user's latest decision is that the completed game only needs to run on PC.
+An emulator-compatible merged ROM is not a deliverable. Recover the requested
+Demo 1-1, demoOnly1, cheap_demo, 7hero, boss and mazo content through the native
+host, without requiring it all to fit in one cartridge image. Preserve the
+official-source, version-selection and reproducibility rules above.
+
+The [native content expansion plan](native-content-expansion.md) supersedes
+the earlier expansion recommendations to keep reclaiming cartridge space or
+require reference-host compatibility. The immediate next milestone is an
+isolated external-content pilot, followed by a currently blocked custom sprite.
+The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
+checkpoint; this direction change does not promote the candidate or qualify
+new content. Full restoration remains open.
+
+Reference emulation remains useful for original donor behavior and unchanged
+content, but native-only integration is qualified in the PC host. Compatibility
+with an emulator must not block that work. MSU-1 is optional, not a prerequisite.
+
+### Earlier World 1 objective (2026-10-22)
 
 Continue from the accepted demoOnly1-based cumulative restoration, currently
 `world1-next-course` (descending from `star-world-forest`). Restore playable

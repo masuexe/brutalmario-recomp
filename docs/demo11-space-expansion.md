@@ -1,5 +1,11 @@
 # Cartridge space and the boss expansion question
 
+Historical assessment. The user's subsequent PC-only delivery decision and
+the [native content expansion plan](native-content-expansion.md) supersede the
+recommendation to keep fitting the complete game into one cartridge image.
+The figures below describe an earlier chain, not current capacity. The custom
+mapping costs are engineering choices, not grounds to reject native expansion.
+
 Date: 2026-10-26. The user asks for an expansion scheme that can hold the 7hero
 boss and the mazo boss without a 4 MB limit.
 
