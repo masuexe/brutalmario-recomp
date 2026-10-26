@@ -43,3 +43,34 @@ The blocks stay for a later reclamation pass.
    and reclaim the duplicate windows.
 3. Change the remaining sprite code to run at a different low 16 bits.
    This step needs a manual review of the absolute references.
+
+## Tested options: 2026-10-26
+
+### Sprite `0x9E`
+
+The window for sprite `0x9E` in bank `0x3F` held a 271-byte
+raw data blob. Six 3-byte pointers in level data referred to the blob.
+A trial moved the blob and patched the six pointers.
+The record then made sprite `0x9E` active in room `0x146`.
+The trial failed: the room tiles broke into colour noise.
+The blob is level sprite-tile graphics with pointers that the scan did not
+find. The trial target was removed.
+
+### Sprite `0x12`
+
+The window sits inside the 65544-byte RATS block at `0x15FDE8`.
+The block also exists in the demo 1-1 baseline. The allocator protects the
+full block, so the window needs a block move. No free 65544-byte run exists.
+
+### Deduplication
+
+Three duplicate live sprite groups exist: `0x0D`/`0xB0`,
+`0x0E`/`0xB1` and `0x47`/`0xB2`.
+The group sizes are 633, 509 and 609 bytes. No remaining sprite window
+becomes free when these duplicates are removed.
+
+### Result
+
+No remaining sprite has a safe install path yet. The next practical step is
+a full map of the level data fields. That map will let a later pass move
+sprite-tile graphics without damage.
