@@ -26,7 +26,8 @@ The recipe is `config/native-content/mazo-b0-module.json`. The module receipt
 is `local/native-modules/mazo-b0-v1/preparation-receipt.json`, SHA-256
 `188fc1bb41bf1a95af89c17889049c007fe110ba4201ab398bac927afa137b5c`.
 
-The module tests pass 11/11.
+The module tests pass 11/11. The full suite passes 187/187 tests. The log is
+`local/reports/unit-tests-mazo-b0-entry.log`.
 
 ## Corridor data
 
