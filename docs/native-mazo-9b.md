@@ -85,7 +85,8 @@ The qualification report is `local/reports/native-mazo-9b-final.json`,
 SHA-256 `075859183cb94726191a592e353ad2abb7abee2d60f3259558c9fc8bac57b40b`.
 An independent rerun reproduces this report byte for byte.
 
-The module tests pass 8/8.
+The module tests pass 8/8. The full suite passes 184/184 tests. The log is
+`local/reports/unit-tests-mazo-9b.log`.
 
 ## Limits
 
