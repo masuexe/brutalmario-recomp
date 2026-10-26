@@ -58,7 +58,9 @@ def check_record(donor, recipe):
 def build_code(donor, base, recipe):
     code = recipe['code']
     first, native = int(code['source_address'], 16), int(code['native_address'], 16)
-    if first != 0x228000 or native != 0xa28000 or code['size'] > 0x8000:
+    low = native & 0xffff
+    if ((first & 0xffff) < 0x8000 or (native >> 16) != 0xa2 or low < 0x8000 or
+            lorom(native)+code['size'] > lorom(0xa28000)+0x8000):
         raise ValueError('unreviewed executable mapping')
     payload = donor[lorom(first):lorom(first)+code['size']]
     verify(payload, code, 'source protected program')

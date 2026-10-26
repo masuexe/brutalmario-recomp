@@ -72,6 +72,12 @@ already exists in the recipient with matching level data, sprite list and
 graphics. Two active 9C actors appear at the donor slots and positions, and 830
 regression comparisons stay byte-identical. The attack behavior, room `190` 9B
 module, `B0` corridors and a clear remain open.
+The [mazo 9B entry checkpoint](native-mazo-9b.md) installs the official 9B
+record and runs its protected program from an immutable A2 view. Room `190`
+already exists in the recipient with matching level data and sprite list. The
+entry holds three persistent 9B parts at the donor positions, and the settled
+state matches at `fight600`. Transient intro actors differ. The attack, `B0`
+corridors and a clear remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

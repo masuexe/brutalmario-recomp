@@ -36,8 +36,11 @@ an explicitly injected defeat fixture. It also restores the hidden 1-up
 checkpoints in that room. A complete earned fight and saved completion remain
 open. The [mazo 9C entry](native-mazo-9c.md) now installs the mazo 9C record and
 runs its protected program from an immutable A2 view. The room 151 entry, two
-active 9C actors and 830 regression comparisons pass. The attack, room 190 9B
-module and B0 corridors remain open.
+active 9C actors and 830 regression comparisons pass. The [mazo 9B entry](native-mazo-9b.md)
+now installs the 9B record and runs its program from the same A2 view. The room
+190 entry, three persistent 9B parts, the settled state and 830 regression
+comparisons pass. The attack, transient intro behavior and B0 corridors remain
+open.
 
 ## Frozen comparison checkpoint
 

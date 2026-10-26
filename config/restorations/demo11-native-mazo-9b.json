@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "id": "demo11-native-mazo-9b",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "native_seven": {
+    "manifest": "config/native-content/mazo-9b-module.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244"
+  }
+}

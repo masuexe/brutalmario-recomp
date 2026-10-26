@@ -67,6 +67,31 @@ class MazoModuleTests(unittest.TestCase):
         verify(rom, cfg['output'], 'mazo native ROM')
         self.assertEqual(rom[patch['offset']:patch['offset']+16].hex(), patch['after'])
 
+    def test_9b_review_pins(self):
+        recipe = json.loads((ROOT / 'config/native-content/mazo-9b-module.json').read_text())
+        code, audit = mazo.build_code(self.donor, self.base, recipe)
+        self.assertEqual(len(code), 3399)
+        self.assertEqual(audit['local_entry_states'], 28)
+        self.assertEqual(audit['instruction_variants'], 1277)
+        self.assertEqual(audit['source_bank_jsl_sites'], [])
+        self.assertEqual(audit['outside_calls'], recipe['external_calls'])
+        self.assertEqual(recipe['code']['adapted_sha256'], recipe['code']['sha256'])
+
+    def test_9b_native_target_installation(self):
+        from restore_star_world_1 import sha
+        recipe = json.loads((ROOT / 'config/native-content/mazo-9b-module.json').read_text())
+        cfg = json.loads((ROOT / 'config/restorations/demo11-native-mazo-9b.json').read_text())
+        projected = bytearray(self.base)
+        for patch in recipe['unapplied_rom_patches']:
+            offset = patch['offset']
+            before, after = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
+            self.assertEqual(projected[offset:offset+len(before)], before)
+            projected[offset:offset+len(after)] = after
+        self.assertEqual(sha(bytes(projected)), cfg['output']['sha256'])
+        rom = (ROOT / 'local/restoration/demo11-native-mazo-9b/rom.sfc').read_bytes()
+        verify(rom, cfg['output'], 'mazo 9B native ROM')
+        self.assertEqual(rom[patch['offset']:patch['offset']+16].hex(), patch['after'])
+
     def test_record_mismatch_is_rejected(self):
         recipe = copy.deepcopy(self.recipe)
         recipe['record']['raw'] = '00'*16

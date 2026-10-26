@@ -1,0 +1,113 @@
+# Native mazo 9B entry and module view
+
+## Result
+
+The target `demo11-native-mazo-9b` descends from `demo11-native-sprite9e`. It
+installs the official mazo 9B record and runs the protected program from an
+immutable A2 view. The recipient already supplies the room 190 level data and
+the sprite list. This target needs no graphics pack.
+
+The checkpoint qualifies these items:
+
+- The room 190 entry in mode `14`.
+- The three persistent 9B parts in slots `6`, `7` and `9`.
+- The persistent part positions at the donor values.
+- The settled state at `fight600`.
+- The map return in mode `0E`.
+- 830 byte-identical regression comparisons.
+
+## Adaptation
+
+The record install changes one 16-byte sprite table slot. The recipient slot
+holds the type-0 placeholder `0000ffffffffffff218001218001ffff`. The installed
+record is `012800003fa39944bdefa2efefa20000`. The init and main banks change
+from `1E` to `A2`. The file offset is `0x188C22`.
+
+The protected program starts at file offset `0xF6FAE`. That offset maps to
+`1E:EFAE`. The program is 3,399 bytes. Its SHA-256 is
+`1668041b55de0a639ebc37d7742b0a378d22d005a1e6eecadccb95278d4b61af`. The
+module needs no call patch. The audit finds no source-bank long reference. All
+61 absolute operands stay inside the block. The module calls 11 outside shared
+helpers.
+
+The recipe is `config/native-content/mazo-9b-module.json`. The target mounts
+three packs:
+
+| Pack | Bank | Address | Size |
+| --- | --- | ---: | ---: |
+| `mazo-9b-code.bin` | `A2` | `A2EFAE` | 3,399 |
+| `sprite9e.bin` | `A5` | `A595CD` | 1,291 |
+| `star1-ffd.bin` | `B6` | `B68008` | 3,001 |
+
+The pack starts at bank offset `0x6FAE`. The runtime checks that the pack ends
+inside the bank window. The record init and main addresses resolve inside the
+pack.
+
+## Verification
+
+The donor capture is `local/captures/mazo-9b-entry-v2-donor`. It uses the mazo
+ROM SHA-256
+`94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1` and the
+tracked script `recomp/inputs/mazo-9b-donor-fixture.script`. The native capture
+is `local/captures/mazo-9b-entry-v2-native`. It uses the tracked script
+`recomp/inputs/mazo-9b-native-fixture.script`.
+
+Both hosts enter room 190 in mode `14`. At `fight150` the three persistent
+parts have the same positions: slot `6` at `(96,208)`, slot `7` at
+`(120,120)` and slot `9` at `(128,8)`. At `fight600` both hosts hold
+exactly those three parts at those positions. At `fight1200` both hosts return
+to mode `0E`.
+
+The A2 view reports 17,534,396 resolutions and 2,738,710 executed page
+instructions. The runtime rejects no pack.
+
+The room 190 script also spawns transient 9B actors in slots `0` to `5`. Both
+hosts spawn them in the same order. Their positions and their sample timing
+differ. The report records 58 sample and slot observations of this difference.
+The module calls the shared helper `01:ACF9` at seven sites. The report does not
+claim that the helper causes the difference.
+
+Seven unchanged native routes compare against fresh parent captures. The parent
+is `demo11-native-sprite9e`. The routes are Star 1 entry, the Boss route, the
+sprite `9E` lift route and custom `6A` rooms `0D8`, `0E2`, `0E3` and
+`0E4`. The comparison has 830 byte-identical files.
+
+The module receipt is
+`local/native-modules/demo11-native-mazo-9b-final/preparation-receipt.json`,
+SHA-256 `30f4baea131f46718130d90207fa94227b36db1a14bd6d0816e54e566533487e`.
+The target ROM SHA-256 is
+`8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244`.
+The native binary SHA-256 is
+`06d034b69915219829bdadee63de24c01401e72aa0e8ae92bf76364ff539d0fd`.
+The generated header SHA-256 is
+`a5825cd9fd782f02ad0c493a199491fcf68fb0647006bcff30294997caae10c1`.
+The qualification report is `local/reports/native-mazo-9b-final.json`,
+SHA-256 `075859183cb94726191a592e353ad2abb7abee2d60f3259558c9fc8bac57b40b`.
+An independent rerun reproduces this report byte for byte.
+
+The module tests pass 8/8.
+
+## Limits
+
+The entry window ends at the first map return. It does not prove attack damage,
+a fight clear, an ending, a save state or completion writes. The transient intro
+actor behavior stays open. The `B0` corridor recovery stays separate because it
+conflicts with the ForestStar `B0` actor. The runtime keeps the variable name
+`BM_SEVEN_CODE_PACK` for compatibility with the existing pack loader.
+
+## Reproduction
+
+```
+python3 tools/prepare_mazo_module.py
+python3 -c "import sys; sys.path.insert(0, 'tools'); import native_seven; native_seven.prepare('demo11-native-mazo-9b')"
+python3 tools/m1.py --target demo11-native-mazo-9b scaffold
+python3 tools/m1.py --target demo11-native-mazo-9b generate
+python3 tools/m1.py --target demo11-native-mazo-9b build
+python3 tools/m1.py --target demo11-native-mazo-9b native --script recomp/inputs/mazo-9b-native-fixture.script --capture YOUR_FRESH_ENTRY_NAME
+python3 tools/qualify_mazo_9b.py --prefix YOUR_FRESH_PREFIX --parent-prefix YOUR_PARENT_PREFIX --output local/reports/YOUR_FRESH_REPORT.json
+```
+
+For the parent regressions, run each tracked regression script with
+`--target demo11-native-sprite9e` and with
+`--target demo11-native-mazo-9b`. Use fresh capture names for both. The
+qualifier checks both capture receipts and then compares every dump file.
