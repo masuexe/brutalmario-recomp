@@ -481,6 +481,9 @@ def prepare(target='star-world-1', ancestors=()):
     config = json.loads(config_path.read_text())
     if config['id'] != target:
         raise ValueError('restoration config identity differs from target')
+    if 'native_seven_child' in config:
+        from native_seven_child import prepare as prepare_child
+        return prepare_child(target)
     if 'native_seven' in config:
         from native_seven import prepare as prepare_seven
         return prepare_seven(target)

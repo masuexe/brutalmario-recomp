@@ -43,10 +43,14 @@ native installation was still open.
 The [native Seven Koopalings opening](native-seven-entry.md) now executes the
 selected program from immutable A2/A6 packs while preserving A5/B6. Eight
 opening samples, fight-local Japanese font bytes, 590 unchanged comparisons,
-five rejected startups and 157 unit tests pass. The longer probe diverges at a
-later phase with a different dynamically spawned `6A` dependency; that actor,
-music, complete fight and progression remain open. Demo 1-1's English font
+five rejected startups and 157 unit tests pass. Demo 1-1's English font
 overwriting the older Japanese glyphs is a release difference, adapted locally.
+The [native Seven child checkpoint](native-seven-child.md) now names the newest
+official dynamic child `6A` as custom `E0` and keeps the recipient `6A` actor. It
+also restores the English font after a death and reloads the Japanese font on a
+fight entry. Six event-aligned child samples, 830 unchanged comparisons, native
+death/re-entry and 162 unit tests pass. Music, later fight phases, the ending
+and saved completion remain open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

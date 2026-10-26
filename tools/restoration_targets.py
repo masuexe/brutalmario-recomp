@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-seven-child-font-cycle': {
+        'binary': 'BrutalMarioDemo11NativeSevenChildFontCycleSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Seven Child Font Cycle',
+    },
     'demo11-native-seven-font-entry': {
         'binary': 'BrutalMarioDemo11NativeSevenFontEntrySNESRecomp',
         'title': 'Brutal Mario Demo11 Native Seven Font Entry',

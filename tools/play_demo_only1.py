@@ -12,6 +12,7 @@ from runtime_patches import patch_plan
 from native_content import identity as content_identity, settings as content_settings
 from native_sprite import identity as sprite_identity, environment as sprite_environment
 from native_seven import identity as seven_identity, environment as seven_environment
+from native_seven_child import identity as child_identity, environment as child_environment
 import windows_audio
 from restoration_targets import RESTORATIONS
 
@@ -412,7 +413,8 @@ def main():
     receipt = json.loads((build / 'm1-build.json').read_text())
     sprite = sprite_identity(args.restoration or 'demo-only-1')
     seven = seven_identity(args.restoration or 'demo-only-1')
-    content = content_identity(args.restoration or 'demo-only-1') or sprite or seven
+    child = child_identity(args.restoration or 'demo-only-1')
+    content = content_identity(args.restoration or 'demo-only-1') or sprite or seven or child
     if args.restoration and receipt.get('rom_sha256') != manifest['output']['sha256']:
         parser.error('restoration ROM differs from its build receipt; regenerate and rebuild')
     if (receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest() or
@@ -420,7 +422,9 @@ def main():
             receipt['runtime_patches'] != patch_plan()):
         parser.error('binary differs from its current runtime receipt; rebuild ' +
                      (args.restoration or 'demo-only-1') + ' first')
-    if seven:
+    if child:
+        child_environment(args.restoration, os.environ)
+    elif seven:
         seven_environment(args.restoration, os.environ)
     elif sprite:
         sprite_environment(args.restoration, os.environ)

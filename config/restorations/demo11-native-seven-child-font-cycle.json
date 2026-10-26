@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "demo11-native-seven-child-font-cycle",
+  "target": "Brutal Mario Demo11 Native Seven Child Font Cycle",
+  "recipient": "demo-1-1",
+  "donor": "boss",
+  "base_restoration": "demo11-native-seven-font-entry",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "c0cf157839e52b4571615c1aacbb5cc989378f14529645107f06fd31a94d4e64"
+  },
+  "scope": "Namespace the official child as custom E0 with normal 6A; restore the recipient font through a deferred guest DMA during native death and reload Japanese font on fight re-entry. Full fight, other exits and progression remain open.",
+  "native_seven_child": {
+    "manifest": "config/native-content/seven-child6a-font-cycle.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "a85dbe0609facffc75bf55b28080b7fba9ad7d376254a5914c835d7f89abc015"
+  }
+}

@@ -1,0 +1,36 @@
+# Map/node fixture enters room 146, then a labelled pipe-action transfer enters 0FF.
+# No sprite, completion or HP writes. Not an unassisted traversal or fight clear.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+dump approach146
+# Existing recipient 6A room entry regression: explicit pipe-action fixture.
+# No sprite, HP, completion or invulnerability writes.
+poke 94 80004001
+poke 19b8 e4
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+dump existing_entry
+wait 180
+dump existing_later
+quit

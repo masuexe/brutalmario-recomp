@@ -26,8 +26,10 @@ indirect dispatch, shared helpers and ending/save flow remain to be adapted.
 Mazo corridor recovery must preserve the recipient's different `B0` actor.
 The [native Seven Koopalings entry](native-seven-entry.md) now implements that
 bounded mapping and a local font adaptation, with eight opening samples and
-590 unchanged regression comparisons. Later dynamic sprite `6A`, music and the
-complete fight/ending/save flow remain unqualified.
+590 unchanged regression comparisons. The
+[native Seven child checkpoint](native-seven-child.md) now names the dynamic
+child `6A` as custom `E0`, keeps the recipient `6A`, and adds the font
+lifecycle. Music and the complete fight/ending/save flow remain unqualified.
 
 ## Frozen comparison checkpoint
 
@@ -121,7 +123,8 @@ The resource-delivery milestone and the first fixed-code mapping are qualified
 separately in the [graphics report](native-content-pilot.md) and
 [sprite report](native-sprite9e.md). The first Boss mapping and opening are now
 qualified separately in the [Seven Koopalings entry report](native-seven-entry.md).
-The next concrete action is to review and namespace its dynamically spawned
-newer `6A` dependency while retaining the recipient's existing actor, then
-retest the later phase and continue toward a complete fight. The
-fixed pilots must not be treated as an automatic loader for arbitrary content.
+The dynamic child dependency now has its own checkpoint in the
+[Seven child report](native-seven-child.md). The next concrete action is to
+trace the room `0FF` music through both audio engines, then qualify a complete
+fight and the ending. The fixed pilots must not be treated as an automatic
+loader for arbitrary content.

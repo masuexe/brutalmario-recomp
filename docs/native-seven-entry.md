@@ -128,8 +128,9 @@ native game captures. Python tests reject missing deferred-call adaptations,
 unknown dispatches, changed recipient hooks and namespace collisions, and
 exercise missing/corrupt packs through the real loader.
 
-All 157 Python unit tests passed, including these five new tests. The full-run
-log is `local/reports/seven-unit-tests.log`.
+All 157 Python unit tests passed at this checkpoint, including these five new
+tests. The full-run log is `local/reports/seven-unit-tests.log`. The suite has
+162 tests after the child checkpoint.
 
 Game captures:
 
@@ -160,35 +161,27 @@ in `146`, so that capture does not qualify Seven Koopalings entry. The corrected
 `seven-entry-v2-native` reached `0FF` but still used the Demo 1-1 English glyphs.
 Only the final font target's opening captures qualify the entry here.
 
-## Open dependencies and next action
+## Child checkpoint and remaining work
 
-The longer `attack1200` sample is intentionally outside the accepted opening:
-native reaches room `174`, while the donor remains in `0FF` at a subsequent
-phase with custom `6A` actors. This is preserved failed evidence for later flow,
-not a fight clear or a qualified return/death cycle. It does not establish a
-complete causal explanation for the divergent transition.
+The newer official child dependency now has an isolated target:
+[native Seven Koopalings child](native-seven-child.md). That target names the
+child as custom `E0` and keeps the recipient `6A` actor. It also restores the
+English font after a death and reloads the Japanese font on a fight entry.
 
-The source at `$22:84D5` explicitly creates custom sprite `6A`. That dependency
-was absent from the earlier placed-sprite inventory:
+The child report uses event-aligned samples. It does not use the earlier
+fixed-time `attack1200` sample. Fixed-time probes still have different dialogue
+timing in the donor and the native host. The cause and the full-flow parity
+remain unqualified.
 
-- Newest retained Boss Demo `6A`: record
-  `013610003bab18401dc21e65c21e0000`, protected block size 3,385 bytes,
-  SHA-256 `8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb`.
-- Current restored `6A`: record `013610003b8b1840f4be203fbf200000`,
-  protected size 3,376 bytes, SHA-256
-  `03ea43204426c9e84df053724e577bfd346a07e1d98a9da281e4457b1f94518c`.
-  It is placed in `0D8`, `0E2`, `0E3`, `0E4` and must not be overwritten globally.
+The preserved `6A` actor stays in rooms `0D8`, `0E2`, `0E3`, and `0E4`. Do not
+overwrite it globally. Both external-content pilots remain unchanged.
 
-Next, review the newer child program and its resources, namespace the Boss
-Demo's dynamic child dependency, and retest the longer phase transition.
-Preserve the existing `6A` actor and both qualified external-content pilots.
-
-Music also remains open. The mapping reference identifies legacy `33` to modern
-`AC` for Last Battle, but the actual room data contains `40 60 33`. Trace the
-effective commands through both audio engines before choosing a patch; a table
-number or a surviving selection byte is not an audible match. No music change
-or audio acceptance is included here. Full fight phases, ending, map return,
-real death/re-entry for this Boss and saved completion remain to be qualified.
+Music remains open. The mapping reference identifies legacy `33` to modern `AC`
+for Last Battle. The actual room data contains `40 60 33`. The child source also
+writes music value `1E` at `$1EC7CD`. Trace the effective commands through both
+audio engines before a patch. A table number or a surviving selection byte is
+not an audible match. Later fight phases, the ending, map return for a complete
+fight, and saved completion remain open.
 
 ## Reproduction
 

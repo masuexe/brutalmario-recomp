@@ -13,7 +13,9 @@ not install Boss code, change the recipient map, or promote the accepted head.
 The subsequent [native opening checkpoint](native-seven-entry.md) implements
 A2/A6 mapping and resolves these explicit indirect tables. It also identifies
 a later dynamically spawned `6A` dependency that the placed-sprite inventory
-did not capture. Use that report for current runtime status and limitations.
+did not capture. The [Seven child report](native-seven-child.md) is the current
+runtime checkpoint. It names that child as custom `E0` and adds the font
+lifecycle.
 
 ## Reproducible official inputs
 
