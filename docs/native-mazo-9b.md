@@ -49,7 +49,7 @@ The donor capture is `local/captures/mazo-9b-entry-v2-donor`. It uses the mazo
 ROM SHA-256
 `94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1` and the
 tracked script `recomp/inputs/mazo-9b-donor-fixture.script`. The native capture
-is `local/captures/mazo-9b-entry-v2-native`. It uses the tracked script
+is `local/captures/mazo-9b-entry-v3-native`. It uses the tracked script
 `recomp/inputs/mazo-9b-native-fixture.script`.
 
 Both hosts enter room 190 in mode `14`. At `fight150` the three persistent
@@ -74,7 +74,7 @@ sprite `9E` lift route and custom `6A` rooms `0D8`, `0E2`, `0E3` and
 
 The module receipt is
 `local/native-modules/demo11-native-mazo-9b-final/preparation-receipt.json`,
-SHA-256 `30f4baea131f46718130d90207fa94227b36db1a14bd6d0816e54e566533487e`.
+SHA-256 `a7a754466dc63057fbc9b00f23f398e0b2368dd390341a04c7cb62728c0485d9`.
 The target ROM SHA-256 is
 `8ab6bd4f5cbfe149aeeb759818ff2eab4d8b6102da698ab86ef1a5e1d375b244`.
 The native binary SHA-256 is
@@ -82,11 +82,11 @@ The native binary SHA-256 is
 The generated header SHA-256 is
 `a5825cd9fd782f02ad0c493a199491fcf68fb0647006bcff30294997caae10c1`.
 The qualification report is `local/reports/native-mazo-9b-final.json`,
-SHA-256 `075859183cb94726191a592e353ad2abb7abee2d60f3259558c9fc8bac57b40b`.
+SHA-256 `4e666d89ff1be8e42413c388ad704f163573bb41186cdd56921f3dc3f5558963`.
 An independent rerun reproduces this report byte for byte.
 
 The module tests pass 8/8. The full suite passes 184/184 tests. The log is
-`local/reports/unit-tests-mazo-9b.log`.
+`local/reports/unit-tests-mazo-fork.log`.
 
 ## Limits
 

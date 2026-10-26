@@ -34,6 +34,10 @@ items:
 | Dispatch tables | `22:8048`/25, `22:8923`/13, `22:8E49`/8 |
 | Outside calls | 13 shared helpers |
 
+The mazo branch has its own identity line: `tools/native_mazo.py`,
+`tools/prepare_mazo_module.py` and `tools/audit_mazo_dependencies.py`. A change
+to this line does not relocate the Seven Koopalings or child targets.
+
 The runtime reuses the immutable external-pack runtime. The target mounts three
 packs:
 
@@ -59,7 +63,7 @@ tracked script `recomp/inputs/boss-dependency-mazo151-entry.script`. It shows
 three active 9B actors in room `190` and two active 9C actors in room `151`.
 The 9C slots are `7` and `9` at positions `(168,272)` and `(144,320)`.
 
-The native capture is `local/captures/mazo-9c-entry-v1-native`. It uses the
+The native capture is `local/captures/mazo-9c-entry-v2-native`. It uses the
 tracked script `recomp/inputs/mazo-9c-native-fixture.script`. It reaches room
 `146` first. It then enters room `151` in mode `14` with the same two 9C
 slots and positions. The A2 view reports 1,227,003 resolutions and 196,398
@@ -76,17 +80,17 @@ sprite `9E` lift route and custom `6A` rooms `0D8`, `0E2`, `0E3` and
 
 The module receipt is
 `local/native-modules/demo11-native-mazo-9c-final/preparation-receipt.json`,
-SHA-256 `5329efdb8ed9f7561b169916df4f56ea87bcb80c0a3f8eb34d82c78d4b87878b`.
+SHA-256 `cc70d1e64edcab4cfd723792c0a0da070926d11b2df3392d8f1bbed7bec0073c`.
 The target ROM SHA-256 is
 `7d690e9b35493ba49e7f98bb2d63d77ec79ac0c3a78181e4771eb1d6ce012396`.
 The native binary SHA-256 is
 `51eec706caebc4352dee1502e21d021cd51c2c9f731aa5a9ed3413ee45b17375`.
 The qualification report is `local/reports/native-mazo-9c-final.json`,
-SHA-256 `d7cbad73707c7f4ab340dff7e198f51f3eb3b87de58f7c5785bcd579f1de027f`.
+SHA-256 `a7958451f12f790e3c0f756c61ae39bf55e67b0b188f43bec0567bad2f46f42e`.
 An independent rerun reproduces this report byte for byte.
 
-The module tests pass 6/6. The full suite passes 182/182 tests. The log is
-`local/reports/unit-tests-mazo-9c.log`.
+The module tests pass 8/8. The full suite passes 184/184 tests. The log is
+`local/reports/unit-tests-mazo-fork.log`.
 
 ## Limits
 

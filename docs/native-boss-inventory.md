@@ -125,10 +125,11 @@ existing A5 sprite and B6 graphics mappings intact.
 
 The two mazo `9C` indirect dispatchers and the Seven Koopalings dispatchers are
 reviewed as inline JSR tables. The table above lists their bounds, hashes and
-dispatcher sites. The audit seeds both mazo tables. The traversal then reports
-zero unresolved indirects and records 118 mazo entry states with 3,612
-instruction variants. All 72 mazo source-bank long references are calls. No
-source-bank data reference remains.
+dispatcher sites. The mazo review uses the separate `tools/audit_mazo_dependencies.py`. This tool
+keeps the mazo dispatch review on its own identity line. It seeds both mazo
+tables. The traversal then reports zero unresolved indirects and records 118
+mazo entry states with 3,612 instruction variants. All 72 mazo source-bank long
+references are calls. No source-bank data reference remains.
 
 The mazo `9C` module still needs a recipe, an external-pack mapping, a review of
 the room `151` and `190` graphics and gameplay qualification. This review does
@@ -227,6 +228,7 @@ only until correspondence to the pinned official ROM is established.
 
 ```
 python3 tools/audit_boss_dependencies.py --output local/reports/YOUR_FRESH_inventory.json
+python3 tools/audit_mazo_dependencies.py --output local/reports/YOUR_FRESH_mazo_review.json
 python3 tools/check_boss_dependency_evidence.py --output local/reports/YOUR_FRESH_entry_check.json
 python3 tools/prepare_mazo_module.py
 python3 -m unittest discover -s tests -p test_boss_dependencies.py -v

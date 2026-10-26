@@ -18,25 +18,13 @@ ROOT = Path(__file__).resolve().parents[1]
 VERSIONS = ('cheap-demo', 'mazo', '7hero', 'boss', 'demo-only-1', 'demo-1-1')
 SLOTS = (0x2a, 0x9b, 0x9c, 0xb0, 0xc0, 0xc1, 0xc2)
 ROOMS = (0x00d, 0x0fe, 0x0ff, 0x10c, 0x151, 0x16b, 0x170, 0x190, 0x191, 0x192)
-# Reviewed inline JSR tables selected by `LDA table,x|y; STA $00; JMP ($0000)`.
-# The primary table for each candidate is the survey seed. Entries outside this
-# review stay unresolved in the report.
-REVIEWED_DISPATCH = {
-    'boss': {'primary_dispatcher': 0x228115,
-             'tables': ({'address': 0x228118, 'count': 23, 'dispatcher': 0x2281c8},
-                        {'address': 0x22bb7b, 'count': 21, 'dispatcher': 0x22bbf7})},
-    'mazo': {'primary_dispatcher': 0x2280a9,
-             'tables': ({'address': 0x228923, 'count': 13, 'dispatcher': 0x22897e},
-                        {'address': 0x228e49, 'count': 8, 'dispatcher': 0x228e7d})},
-}
 
 
-def survey_dispatch(rom, table, count, end, reviewed=None):
+def survey_dispatch(rom, table, count, end):
     """Explore explicit inline JSR tables; never infer their length from bytes."""
     sys.path.insert(0, str(ROOT / 'local/upstream/snesrecomp/recompiler'))
     from v2.decoder import decode_function
     from snes65816 import ABS, LONG, LONG_X
-    reviewed = reviewed or {'primary_dispatcher': None, 'tables': ()}
     bank = table >> 16
     offset = lorom(table)
     targets = []
@@ -45,29 +33,6 @@ def survey_dispatch(rom, table, count, end, reviewed=None):
         if len(entry) != 3 or entry[0] != 0x20:
             raise ValueError('reviewed inline JSR table differs')
         targets.append(int.from_bytes(entry[1:], 'little'))
-    tables_out = []
-    reviewed_sites = set()
-    if reviewed['primary_dispatcher'] is not None:
-        if rom[lorom(reviewed['primary_dispatcher']):
-               lorom(reviewed['primary_dispatcher'])+3] != bytes.fromhex('6c0000'):
-            raise ValueError('reviewed primary dispatcher differs')
-        reviewed_sites.add(reviewed['primary_dispatcher'])
-    for item in reviewed['tables']:
-        address, entries = item['address'], item['count']
-        data = rom[lorom(address):lorom(address)+entries*3]
-        if len(data) != entries*3 or any(data[i*3] != 0x20 for i in range(entries)):
-            raise ValueError('reviewed indirect JSR table differs')
-        indirect_targets = [int.from_bytes(data[i*3+1:i*3+3], 'little') for i in range(entries)]
-        if any(not 0x8008 <= target < end for target in indirect_targets):
-            raise ValueError('reviewed indirect target escapes the module')
-        if rom[lorom(item['dispatcher']):lorom(item['dispatcher'])+3] != bytes.fromhex('6c0000'):
-            raise ValueError('reviewed indirect dispatcher differs')
-        reviewed_sites.add(item['dispatcher'])
-        tables_out.append({'table': f'{address:06X}', 'count': entries, 'sha256': sha(data),
-                           'dispatcher': f'{item["dispatcher"]:06X}',
-                           'targets': [f'{bank << 16 | target:06X}' for target in indirect_targets]})
-        targets.extend(indirect_targets)
-    observed = set()
     todo, entries, instructions, unresolved, outside = list(targets), set(), {}, [], []
     while todo:
         pc = todo.pop()
@@ -78,18 +43,8 @@ def survey_dispatch(rom, table, count, end, reviewed=None):
             outside.append(pc)
             continue
         graph = decode_function(rom, bank, pc, 1, 1, end=end)
-        for item in graph.unresolved_indirects:
-            site = getattr(item, 'site_pc24', None)
-            if site in reviewed_sites:
-                observed.add(site)
-            else:
-                unresolved.append(str(item))
-        for item in graph.suppressed_indirect_calls:
-            site = getattr(item, 'site_pc24', None)
-            if site in reviewed_sites:
-                observed.add(site)
-            else:
-                unresolved.append(str(item))
+        unresolved.extend(str(item) for item in graph.unresolved_indirects)
+        unresolved.extend(str(item) for item in graph.suppressed_indirect_calls)
         for decoded in graph.insns.values():
             ins = decoded.insn
             instructions[(ins.addr, decoded.key.m, decoded.key.x)] = ins
@@ -103,9 +58,6 @@ def survey_dispatch(rom, table, count, end, reviewed=None):
             'targets': [f'{bank << 16 | pc:06X}' for pc in targets],
             'local_entries': len(entries), 'instruction_variants': len(instructions),
             'outside_local_entries': [f'{pc:04X}' for pc in sorted(outside)],
-            'reviewed_indirect_tables': tables_out,
-            'reviewed_dispatch_sites': [f'{site:06X}' for site in sorted(reviewed_sites)],
-            'reviewed_dispatch_sites_observed': [f'{site:06X}' for site in sorted(observed)],
             'unresolved_indirects': sorted(set(unresolved)),
             'long_calls': [f'{pc:06X}' for pc in sorted({ins.operand for ins in instructions.values()
                                                        if ins.mnem in ('JSL', 'JML')})],
@@ -246,8 +198,7 @@ def main():
     for identifier, table, count, end in (('boss', 0x228095, 35, 0xef3e),
                                           ('mazo', 0x228048, 25, 0xb07c)):
         rom = (ROOT / 'local/content-versions' / identifier / 'rom.sfc').read_bytes()
-        surveys[identifier] = survey_dispatch(rom, table, count, end,
-                                              REVIEWED_DISPATCH.get(identifier))
+        surveys[identifier] = survey_dispatch(rom, table, count, end)
     decoder = ROOT / 'local/upstream/snesrecomp/recompiler'
     report = {'scope': __doc__.strip(), 'tool_sha256': sha(Path(__file__).read_bytes()),
               'boss_manifest_sha256': sha((ROOT / 'config/boss-donor.json').read_bytes()),

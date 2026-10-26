@@ -40,9 +40,7 @@ def analyze(donor, recipe):
     first = int(code['source_address'], 16)
     end = first + code['size']
     bank = first >> 16
-    seeds = recipe.get('entry_seeds')
-    todo = ([(int(seed, 16) & 0xffff, 1, 1) for seed in seeds] if seeds
-            else [(0x800f, 1, 1), (0x808d, 1, 1)])
+    todo = [(0x800f, 1, 1), (0x808d, 1, 1)]
     reviewed = set()
     tables = []
     for table in recipe['dispatch_tables']:
@@ -97,11 +95,8 @@ def analyze(donor, recipe):
     local = {ins.addr: ins for ins in instructions.values()
              if ins.mode in (LONG, LONG_X) and ins.operand >> 16 == bank}
     expected = {int(patch['address'], 16) for patch in recipe['code_patches']
-                if len(bytes.fromhex(patch['before'])) == 4
-                and patch['before'].startswith(('22', '5c'))}
-    calls_only = all(ins.mnem in ('JSL', 'JML') or
-                     (ins.mnem == 'JMP' and ins.mode == LONG) for ins in local.values())
-    if set(local) != expected or not calls_only:
+                if len(bytes.fromhex(patch['before'])) == 4 and patch['before'].startswith('22')}
+    if set(local) != expected or any(ins.mnem != 'JSL' for ins in local.values()):
         raise ValueError('source-bank call adaptations differ from decoded sites')
     calls = sorted({f'{ins.operand:06X}' for ins in instructions.values()
                     if ins.mnem in ('JSL', 'JML') and ins.operand >> 16 != bank})

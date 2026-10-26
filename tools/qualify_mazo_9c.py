@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import re
 
-from native_seven import ROOT, identity, packs
+from native_mazo import ROOT, identity, packs
 from prepare_rom import verify
 from qualify_native_content import SIZES
 from qualify_native_seven import native_capture as validate_capture
@@ -69,10 +69,30 @@ def donor_capture():
     return receipt
 
 
+def mazo_capture(directory, script):
+    receipt = read(directory / 'receipt.json')
+    cfg = read(ROOT / 'config/restorations' / (TARGET+'.json'))
+    build = read(ROOT / 'local/build' / TARGET / 'm1-build.json')
+    require(receipt['target'] == TARGET and receipt['stage'] == 'native', 'native role differs')
+    require(receipt['rom_sha256'] == cfg['output']['sha256'] == build['rom_sha256'],
+            'native ROM differs')
+    require(receipt['host_binary_sha256'] == build['binary_sha256'], 'binary differs')
+    require(receipt['native_content'] == build['native_content'] == identity(TARGET),
+            'native module identity differs')
+    require(receipt['analysis'] == build['analysis'] and
+            receipt['runtime_patches'] == build['runtime_patches'], 'build identity differs')
+    require(receipt['route_sha256'] == sha((ROOT / script).read_bytes()), 'route differs')
+    require((directory / 'input.script').read_text() == 'turbo on\n'+(ROOT / script).read_text(),
+            'executed input copy differs')
+    log = (directory / 'run.log').read_text()
+    require('exit: script quit after' in log and 'TIMEOUT' not in log, 'capture did not complete')
+    return receipt, log
+
+
 def entry():
     donor = donor_capture()
-    native = ROOT / 'local/captures/mazo-9c-entry-v1-native'
-    receipt, log = validate_capture(native, TARGET, NATIVE_SCRIPT)
+    native = ROOT / 'local/captures/mazo-9c-entry-v2-native'
+    receipt, log = mazo_capture(native, NATIVE_SCRIPT)
     require(receipt['native_content'] == identity(TARGET) and
             identity(TARGET)['kind'] == 'immutable-mazo-entry', 'mazo module identity differs')
     require('[native-seven] rejected:' not in log, 'native startup was rejected')
@@ -138,7 +158,7 @@ def regressions(prefix, parent_prefix):
         old = ROOT / 'local/captures' / (parent_prefix+'-'+name)
         new = ROOT / 'local/captures' / (prefix+'-'+name)
         validate_capture(old, BASE, script)
-        validate_capture(new, TARGET, script)
+        mazo_capture(new, script)
         tags = sorted(path.name.removesuffix('.wram.bin') for path in old.glob('*.wram.bin'))
         require(tags == sorted(path.name.removesuffix('.wram.bin') for path in new.glob('*.wram.bin')),
                 'regression dump set differs')
@@ -183,7 +203,7 @@ def config_donor():
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--prefix', default='mazo-9c-regression-v1')
+    parser.add_argument('--prefix', default='mazo-9c-regression-v2')
     parser.add_argument('--parent-prefix', default='mazo-9c-parent')
     parser.add_argument('--output', default='local/reports/native-mazo-9c-final.json')
     qualify(parser.parse_args())
