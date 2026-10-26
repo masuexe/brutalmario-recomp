@@ -58,7 +58,7 @@ Only explicitly selected official releases are consulted.
 | Content | Newest retained program in the inspected official set | Protected size | Status |
 | --- | --- | ---: | --- |
 | Seven Koopalings `2A` | `boss`, identical to `7hero` | 28,478 bytes | Selected first integration candidate |
-| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Donor entry/attack observed; separate module review required |
+| mazo room `151`, `9C` | `mazo` | 12,412 bytes | Donor entry/attack observed. Dispatch review complete. Module recipe pending. |
 | mazo room `190`, `9B` | `mazo` | 3,399 bytes | Original map entry observed; role beyond sampled behavior remains open |
 | mazo corridor `B0` | `mazo` | 419 bytes | Conflicts with recipient `B0`; namespace adaptation required if recovered |
 
@@ -90,24 +90,52 @@ in [the sprite investigation](demo11-level-sprites.md).
 
 ## Remaining integration dependencies
 
-The reviewed primary inline dispatch table has 35 entries at `$22:8095` for
-Seven Koopalings and 25 at `$22:8048` for mazo `9C`. These are three-byte JSR
-entries; the dispatcher indexes the operand and performs `JMP ($0000)`.
-The audit validates the table opcodes and records explicit bounds and hashes.
-It does not infer the table length from adjacent data.
+The reviewed inline dispatch tables are three-byte JSR entries. Each dispatcher
+indexes the operand and performs `JMP ($0000)`. The audit validates the table
+opcodes and records explicit bounds and hashes. It does not infer a table
+length from adjacent data.
 
-Exploration seeded from these tables finds 6,399 instruction variants across
-231 local entries for Seven Koopalings, and 2,581 variants across 80 entries for
-mazo `9C`. These counts are exploratory: 8-bit entry assumptions, unexpanded
-self-bank long calls and two further unresolved indirect jumps per candidate
-prevent a complete control-flow claim.
+| Candidate | Table | Entries | Dispatcher | Table SHA-256 |
+| --- | --- | ---: | --- | --- |
+| Seven Koopalings | `$22:8095` | 35 | `$22:8115` | `230b268301db1f8298bbc4004b67710005b92434528967ebfd3e6c39c474ba40` |
+| Seven Koopalings | `$22:8118` | 23 | `$22:81C8` | `b84554289224f70205819d44616ad59c0860b081933662305fa7471db23cf2d1` |
+| Seven Koopalings | `$22:BB7B` | 21 | `$22:BBF7` | `0f4dd63099b5accb15fb52e0a380b66c509e26eb0b9393b49e7b1ca22d0e0eeb` |
+| mazo `9C` | `$22:8048` | 25 | `$22:80A9` | `713aa973453f4917dbca4d821bede453ee8c614f60bc5f6077508b51b0f6afa7` |
+| mazo `9C` | `$22:8923` | 13 | `$22:897E` | `f1e9a0065a3a15cc4a287dbfc25dba006da36eb98958c229014965efb913b0f7` |
+| mazo `9C` | `$22:8E49` | 8 | `$22:8E7D` | `238264f6b7450df57cfd04e436d03f6353b30659b425f6d3057f2c0c54e15d28` |
 
-At least 24 decoded Seven Koopalings instructions and 21 mazo instructions
-contain long references to source bank `22`. A bank-only change to the sprite
-record would leave those references pointing into the recipient's ordinary
-bank `22`. Explicit instruction patches and a complete dependency review are
-needed before choosing the native executable mapping. Keep the existing A5
-sprite and B6 graphics mappings intact.
+The mazo primary dispatcher `$22:80A9` was not reached by the traversal seed.
+The report records it as reviewed but unobserved. The other reviewed dispatchers
+appear during traversal.
+
+The expanded local JSR traversal reports 351 entry states and 10,050 instruction
+variants for Seven Koopalings, and 118 entry states and 3,612 variants for mazo
+`9C`. Both candidates report zero unresolved indirects. The counts remain
+exploratory: the audit fixes entry M/X to 8-bit and does not expand self-bank
+long calls. The Seven recipe's full decoder traversal reports 366 entry states
+and 10,353 instruction variants.
+
+The expanded traversal finds 39 source-bank long references for Seven
+Koopalings and 72 for mazo `9C`. The mazo references are 71 JSL and one JML.
+All 72 are calls, not data references. The executable mapping choice needs
+explicit instruction patches and a complete dependency review. Keep the
+existing A5 sprite and B6 graphics mappings intact.
+
+## Mazo 9C dispatch review
+
+The two mazo `9C` indirect dispatchers and the Seven Koopalings dispatchers are
+reviewed as inline JSR tables. The table above lists their bounds, hashes and
+dispatcher sites. The audit seeds both mazo tables. The traversal then reports
+zero unresolved indirects and records 118 mazo entry states with 3,612
+instruction variants. All 72 mazo source-bank long references are calls. No
+source-bank data reference remains.
+
+The mazo `9C` module still needs a recipe, an external-pack mapping, a review of
+the room `151` and `190` graphics and gameplay qualification. This review does
+not admit the module.
+
+Report: `local/reports/boss-dependencies-mazo-review.json`, SHA-256
+`89a481b5165fcf47da32a382dd534203666052c5f481b107cf58a377f063519f`.
 
 Seven Koopalings also calls outside its protected block, including `$10:D8D0`,
 `$27:FB02` and `$28:FCC0`. Shared engine/helper compatibility, dynamic graphics,
