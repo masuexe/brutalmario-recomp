@@ -66,7 +66,7 @@ The captures are `local/captures/mazo-9c-align-fine-v2-{donor,native}`,
 `local/captures/mazo-9b-entry-v3-native`.
 
 The full suite passes 184/184 tests. The log is
-`local/reports/unit-tests-mazo-attack.log`.
+`local/reports/unit-tests-mazo-phase.log`.
 
 ## Limits
 
