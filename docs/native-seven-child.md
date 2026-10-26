@@ -159,7 +159,10 @@ actor states, not the whole fight. Fixed-time probes are not asserted here. A
 local phase probe showed different dialogue timing between the donor and the
 native host. The native host also reached a real player death inside that probe
 window, and the donor capture ends before that window. The cause is not
-qualified.
+qualified. The later [hurt-learning boundary check](native-seven-learning.md)
+verifies intended random learning and attack-specific resistance with identical
+seeds; the user confirmed this mechanic. Different unseeded learning results
+alone do not establish an integration defect.
 
 The death and map-return check runs on the native host only. The donor script
 stops at the child samples. Do not claim donor parity for death or map return.

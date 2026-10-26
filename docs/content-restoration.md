@@ -54,6 +54,9 @@ The [fight-music checkpoint](native-seven-fight-music.md) now pins the room
 `0FF` request to modern slot `AC` (Last Battle). The user listening check
 identified the composition. Other fight cues, later fight phases, the ending
 and saved completion remain open.
+The [hurt-learning boundary test](native-seven-learning.md) now checks 258
+paired source/native cases. The user confirmed that random defensive learning
+and attack-specific resistance are intended mechanics.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.
