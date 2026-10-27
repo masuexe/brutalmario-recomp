@@ -1,0 +1,30 @@
+# Sprite 12 room 159 entry (matched fixture).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 59
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 160
+dump r1
+wait 100
+dump r2
+wait 100
+dump r3
+quit

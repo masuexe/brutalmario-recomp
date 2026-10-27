@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "sprite12-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 12 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "12",
+    "raw": "01361080388101046292168092160000",
+    "init": "169262",
+    "main": "169280",
+    "relative": {
+      "init": "0F",
+      "main": "2D"
+    },
+    "rooms": [
+      "155",
+      "157",
+      "159",
+      "15B",
+      "15C"
+    ],
+    "native_raw": "01361080388101046292ab8092ab0000"
+  },
+  "code": {
+    "source_address": "169253",
+    "native_address": "AB9253",
+    "size": 1358,
+    "sha256": "e644151b127d5adbca27671a1cc9242377e6fad07df8e4224ef5be51f2888c34",
+    "adapted_sha256": "e644151b127d5adbca27671a1cc9242377e6fad07df8e4224ef5be51f2888c34",
+    "pack_file": "sprite12-code.bin"
+  },
+  "entry_seeds": [
+    "169262",
+    "169280"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the AB code view",
+    "sprite graphics review",
+    "entry qualification against the cheap-demo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606546,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01361080388101046292ab8092ab0000",
+      "role": "Install the sprite 12 record and point init/main into the AB module view"
+    }
+  ]
+}
