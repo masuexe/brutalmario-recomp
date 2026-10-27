@@ -24,6 +24,12 @@ STALLED_ROOMS = {
 }
 OPEN_ROOMS = {
     '001': ('room001-donor-v1', 'room001-native-v1'),
+    '075': ('room075-donor-v1', 'room075-native-v1'),
+    '0B1': ('room0B1-donor-v1', 'room0B1-native-v1'),
+    '0B3': ('room0B3-donor-v1', 'room0B3-native-v1'),
+    '13F': ('room13F-donor-v1', 'room13F-native-v1'),
+    '15E': ('room15E-donor-v1', 'room15E-native-v1'),
+    '163': ('room163-donor-v1', 'room163-native-v1'),
     '096': ('room096-donor-v1', 'room096-native-v1'),
     '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
     '110': ('room110-donor-v1', 'room110-native-v1'),
@@ -43,6 +49,8 @@ ROOMS = {
     '15D': ('room15D-donor-v1', 'room15D-native-v1', ('r1', 'r2'), True),
     '08B': ('room08B-donor-v1', 'room08B-native-v1', ('r1', 'r2'), True),
     '160': ('room160-donor-v1', 'room160-native-v1', ('r1', 'r2'), True),
+    '0AF': ('room0AF-donor-v1', 'room0AF-native-v1', ('r1', 'r2'), True),
+    '00D': ('room00D-donor-v1', 'room00D-native-v1', ('r1', 'r2'), True),
 }
 
 
@@ -126,6 +134,8 @@ def qualify():
     require(rooms['15D']['rows_equal'], 'room 15D does not match the donor')
     require(rooms['08B']['rows_equal'], 'room 08B does not match the donor')
     require(rooms['160']['rows_equal'], 'room 160 does not match the donor')
+    require(rooms['0AF']['rows_equal'], 'room 0AF does not match the donor')
+    require(rooms['00D']['rows_equal'], 'room 00D does not match the donor')
     log = (ROOT/'local/captures'/'spritefull-155-native-v1'/'run.log').read_text()
     require('BRK' not in log, 'the target reached BRK')
     counters = {}

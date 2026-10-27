@@ -1,0 +1,26 @@
+# Room 0BB entry variant probe (19d8=07).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 bb
+poke 19d8 07
+poke 88 0000
+poke 71 06
+wait 300
+dump r1
+quit

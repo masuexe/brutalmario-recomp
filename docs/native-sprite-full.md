@@ -38,10 +38,12 @@ block and the graphics block. The code banks are `A4`, `A6` to `AF`, `B0` to
 
 | Room | Slots | Samples matched |
 | --- | --- | ---: |
+| `00D` | `92` | 2 of 2 |
 | `05D` | `3F` | 2 of 2 |
 | `083` | `A0` | 1 of 1 |
 | `087` | `20` | 1 of 1 |
 | `08B` | `32` | 2 of 2 |
+| `0AF` | `55` | 2 of 2 |
 | `142` | `3C` | 2 of 2 |
 | `147` | `4A` | 2 of 2 |
 | `155` | `11`, `12`, `31` | 4 of 4 |
@@ -85,6 +87,11 @@ compare there does not measure the module.
 | `0BA` | `0x14` | `0x12` |
 | `0BB` | `0x14` | `0x12` |
 | `0F3` | `0x14` | `0x12` |
+
+Entry sweep for room `0BB`: only `19d8 04` loads room `0x0BB`. The values `00`,
+`01`, `02`, `03` and `05` load room `0x1BB` at mode `0x14`, and `06` and `07`
+load room `0x000`. The one value that reaches the room holds mode `0x12`, so
+this fixture cannot start the room.
 
 The baseline target `demo11-native-sprite9e` shows the same stall in rooms
 `085` and `0BB`. The gap records therefore do not cause the stall. In room
@@ -150,7 +157,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`5a691481ee08255ae059738a685c8e28e0ab5ccebcb0dbd66ffbd4788ec2269a`.
+`76d19b0677347c9191c931075ab4eb0203e74e2db384a6fc2ea44dfb30da0115`.
 
 ## Limits
 
@@ -159,4 +166,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 6/6. The full suite passes
-262/262 tests. The log is `local/reports/unit-tests-stall.log`.
+262/262 tests. The log is `local/reports/unit-tests-rooms13.log`.
