@@ -91,7 +91,9 @@ The [custom sprite gap inventory](native-sprite-gaps.md) now counts the slots
 that recipient rooms place but the recipient table leaves empty. Fifty-four
 slots cover 78 rooms. Forty of them have a type-1 program in a donor, three have
 only a type-3 program, and eleven have no donor record. Record installation
-stays open.
+stays open. The [sprite 95 module review](native-sprite-95.md) pins the newest
+donor record for the largest gap, its protected block and its 17-entry dispatch
+table. The runtime mapping stays open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

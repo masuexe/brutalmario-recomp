@@ -91,7 +91,9 @@ in [the sprite investigation](demo11-level-sprites.md). The
 protected blocks and the room placements. It also records that the donor and
 the recipient constructors read different layouts after the type byte. The
 [custom sprite gap inventory](native-sprite-gaps.md) counts the 54 slots that
-recipient rooms place but the recipient table leaves empty.
+recipient rooms place but the recipient table leaves empty. The
+[sprite 95 module review](native-sprite-95.md) pins the largest gap and its
+protected program.
 
 ## Remaining integration dependencies
 

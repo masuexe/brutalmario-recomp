@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "7hero",
+  "target": "Official 7hero donor candidate verified against cheap_demo/7hero.ips",
+  "scope": "The authoritative 7hero.ips applied to the pinned SMW base with an explicit 512-byte copier prefix produces the prepared 7hero donor. The audit records structural alignment only. It does not qualify complete gameplay.",
+  "authoritative_patch": {
+    "base_path": "../roms/Super Mario World (U) [!].smc",
+    "base": {
+      "size": 524288,
+      "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+    },
+    "ips_path": "../patches/cheap_demo/7hero.ips",
+    "ips": {
+      "size": 3841447,
+      "sha256": "fbc1981c4e21cdffda785eeccca534e56da3e88ab53749afe1bf0d00f8bc8766"
+    },
+    "copier_prefix_bytes": 512
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "dd7007ad45da87647bbd7e6d3bda13b8555c05b64793a92824f12b347c7a2395"
+  }
+}
