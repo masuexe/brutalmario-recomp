@@ -54,5 +54,15 @@ class ProductTargetTests(unittest.TestCase):
         self.assertGreaterEqual(report["total"], 30)
 
 
+    def test_launcher_lists_every_pack(self):
+        import subprocess
+        result = subprocess.run([sys.executable, "tools/play_native_target.py",
+                                 "--print-env"], cwd=ROOT, capture_output=True,
+                                text=True, check=True)
+        variables = [line.split("=")[0] for line in result.stdout.splitlines()
+                     if line.startswith("BM_")]
+        self.assertEqual(len(variables), 42)
+        self.assertEqual(len(set(variables)), 42)
+
 if __name__ == "__main__":
     unittest.main()

@@ -1,0 +1,4 @@
+# Launch smoke test.
+wait 120
+dump title
+quit

@@ -77,8 +77,8 @@ record and leaves that copy out.
 | Room `155` | 4 of 4 samples equal |
 | Room `0A5` | phase-exact at a 29-frame offset |
 
-The tests are `tests/test_product_target.py` and pass 5/5. The full suite passes
-278/278 tests. The log is `local/reports/unit-tests-product2.log`. The regression
+The tests are `tests/test_product_target.py` and pass 6/6. The full suite passes
+279/279 tests. The log is `local/reports/unit-tests-launcher.log`. The regression
 report is `local/reports/native-sprite-full-regression-product.json`, SHA-256
 `76bb4a146897918b7eadcb1b7a06c95078f3394ed83cb81021057af952207f13`.
 
@@ -93,6 +93,19 @@ that module unchanged.
 The type-3 records join the target without the constructor patch. That keeps the
 crash out and installs the records.
 
+## Running the target
+
+`tools/play_native_target.py` starts the built target with a normal window. It
+checks the ROM hash and the binary hash first, then mounts all 42 packs.
+
+```
+python3 tools/play_native_target.py --target demo11-native-product
+```
+
+`--print-env` lists the pack variables and stops. `--script` runs a script file
+instead of the player input, which is how the smoke test starts the game.
+
+The smoke test starts the binary, mounts 42 packs and exits with code 0.
 ## Limits
 
 This document claims the built target, the unchanged-route regression and two
