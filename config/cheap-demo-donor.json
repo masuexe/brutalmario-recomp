@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "cheap-demo",
+  "target": "Official cheap_demo donor verified against cheap_demo.ips",
+  "scope": "The authoritative cheap_demo.ips applied to the pinned SMW base with an explicit 512-byte copier prefix produces the prepared cheap_demo donor. The audit records structural alignment only. It does not qualify complete gameplay.",
+  "authoritative_patch": {
+    "base_path": "../roms/Super Mario World (U) [!].smc",
+    "base": {
+      "size": 524288,
+      "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+    },
+    "ips_path": "../patches/cheap_demo/cheap_demo.ips",
+    "ips": {
+      "size": 3838623,
+      "sha256": "9c2ff02783ec5416988dc60c2e232b0b5dd6c31e8941f127a70d9df6e96bbae2"
+    },
+    "copier_prefix_bytes": 512
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "f4a781042cf384376db60cd83fbcc9a87e110571fcd37496f978d3c70e5e0822"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "id": "sprite10-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 10 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "10",
+    "raw": "01360080398391002ea61ad1a61a0000",
+    "init": "1AA62E",
+    "main": "1AA6D1",
+    "relative": {
+      "init": "0F",
+      "main": "B2"
+    },
+    "rooms": [
+      "12D",
+      "156",
+      "157",
+      "15B",
+      "15C"
+    ],
+    "native_raw": "01360080398391002ee6a4d1e6a40000"
+  },
+  "code": {
+    "source_address": "1AA61F",
+    "native_address": "A4E61F",
+    "size": 2589,
+    "sha256": "47a112ba1ddb0220848b32d2937ee72054a9e59b0acc94a58d6ffa993546d4dc",
+    "adapted_sha256": "47a112ba1ddb0220848b32d2937ee72054a9e59b0acc94a58d6ffa993546d4dc",
+    "pack_file": "sprite10-code.bin"
+  },
+  "entry_seeds": [
+    "1AA62E",
+    "1AA6D1"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01801A",
+    "0187A7",
+    "01A7DC",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A4 code view",
+    "sprite graphics review",
+    "entry qualification against the cheap-demo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606514,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360080398391002ee6a4d1e6a40000",
+      "role": "Install the sprite 10 record and point init/main into the A4 module view"
+    }
+  ]
+}

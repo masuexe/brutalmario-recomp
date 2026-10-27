@@ -1,0 +1,49 @@
+# Sprite 10 room 157 long entry (diagnostic pipe fixture).
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 57
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 100
+dump w0
+wait 100
+dump w1
+wait 100
+dump w2
+wait 100
+dump w3
+wait 100
+dump w4
+wait 100
+dump w5
+wait 100
+dump w6
+wait 100
+dump w7
+quit

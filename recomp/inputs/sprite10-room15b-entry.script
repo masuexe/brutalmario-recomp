@@ -1,0 +1,36 @@
+# Sprite 10 room entry (diagnostic pipe fixture).
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 5b
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 200
+dump r1
+wait 200
+dump r2
+quit

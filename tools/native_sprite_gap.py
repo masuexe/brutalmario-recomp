@@ -143,7 +143,7 @@ def configure(experiment, binary, target):
         return
     feature = identity(target)
     program = json.loads((experiment / 'src/gen/program_manifest.json').read_text())
-    forbidden = (0x22, 0xa2, 0x25, 0xa5, 0x26, 0xa6, 0x36, 0xb6, 0x23, 0xa3)
+    forbidden = (0x22, 0xa2, 0x25, 0xa5, 0x26, 0xa6, 0x36, 0xb6, 0x23, 0xa3, 0x24, 0xa4)
     if any(int(key.split(':')[0], 16) >> 16 in forbidden for key in program['nodes']):
         raise ValueError('sprite gap entry forbids AOT in mapped banks and aliases')
     directory = ROOT / 'local/native-content-runtime' / target
@@ -172,4 +172,3 @@ def configure(experiment, binary, target):
     else:
         text += '\n'+block+'\n'
     cmake.write_text(text)
-

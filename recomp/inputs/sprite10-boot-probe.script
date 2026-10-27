@@ -1,0 +1,31 @@
+# cheap-demo boot probe.
+wait 600
+dump t600
+wait 300
+dump t900
+press start 2
+wait 180
+dump t1
+press start 2
+wait 900
+dump t2
+press b 30
+wait 180
+dump t3
+press a 30
+wait 180
+dump t4
+press select 2
+wait 600
+dump t5
+press y 30
+wait 240
+dump t6
+wait 600
+dump t7
+press y 30
+wait 240
+dump t8
+wait 600
+dump t9
+quit
