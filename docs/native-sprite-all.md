@@ -57,6 +57,20 @@ graphics block. The code banks are `A4`, `AA` to `AF` and `B0` to `B3`.
 The run reports no `BRK` and 13 module views: `A4`, `A5`, `AA` to `AF`, `B0` to
 `B3` and `B6`.
 
+## Load phase
+
+A target loads a room a few frames before the donor. This section measures that
+offset with a 10-frame dump step over 240 frames. The tool reads
+`spritefine-<room>-{donor,native}-v1` and compares the row series.
+
+| Room | Offset | Frames with the same mode | Rows equal | Note |
+| --- | ---: | ---: | ---: | --- |
+| `157` | -20 | 21 | 19 | two mode-change frames differ |
+| `159` | -30 | 21 | 19 | two mode-change frames differ |
+| `15B` | -20 | 21 | 19 | two mode-change frames differ |
+| `156` | -20 | 21 | 9 | a constant 4-pixel gap remains |
+
+
 ## Reproduction
 
 ```
@@ -69,7 +83,11 @@ python3 tools/qualify_sprite_all_gap.py
 
 The qualification tool is `tools/qualify_sprite_all_gap.py`. Its report is
 `local/reports/native-sprite-all-final.json`, SHA-256
-`209fb0256191b996575e3f203f55fd18af1ba54401125113e7363645d984d383`.
+`8b7c4c52b45b53359668421be0a16125bad18d838e8acc0077bd778d441aa942`.
+
+The tool `tools/qualify_phase_alignment.py` measures an offset for any room.
+Its report is `local/reports/native-sprite-phase.json`, SHA-256
+`6f052595217ff857868edc8e60fcc86ac62f9405f45ad33238ab61d9118e7bbb`.
 
 ## Limits
 
@@ -77,5 +95,5 @@ This document claims the static review, the built target and entry parity for
 four rooms. It does not claim the other four rooms, movement, a course pass or
 a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_all.py` and pass 5/5. The full suite passes
-255/255 tests. The log is `local/reports/unit-tests-sprite-all.log`.
+The tests are `tests/test_sprite_all.py` and pass 6/6. The full suite passes
+256/256 tests. The log is `local/reports/unit-tests-phase.log`.

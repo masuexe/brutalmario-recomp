@@ -62,5 +62,17 @@ class AllGapTargetTests(unittest.TestCase):
         self.assertGreaterEqual(len(report["module_views"]), 13)
 
 
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite-all-final.json").exists(),
+                         "requires the eleven-record qualification report")
+    def test_phase_offsets_are_measured(self):
+        report = json.loads((ROOT / "local/reports/native-sprite-all-final.json").read_text())
+        phase = report["phase"]
+        self.assertEqual(sorted(phase), ["156", "157", "159", "15B"])
+        for room in ("157", "159", "15B"):
+            self.assertLess(phase[room]["offset"], 0, room)
+            self.assertGreaterEqual(phase[room]["steady_equal"], 15, room)
+        self.assertGreater(phase["156"]["residual"], phase["157"]["residual"])
+
+
 if __name__ == "__main__":
     unittest.main()

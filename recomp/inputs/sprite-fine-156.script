@@ -1,0 +1,73 @@
+# Fine phase probe (10-frame dump step).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 56
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 40
+dump f140
+wait 10
+dump f150
+wait 10
+dump f160
+wait 10
+dump f170
+wait 10
+dump f180
+wait 10
+dump f190
+wait 10
+dump f200
+wait 10
+dump f210
+wait 10
+dump f220
+wait 10
+dump f230
+wait 10
+dump f240
+wait 10
+dump f250
+wait 10
+dump f260
+wait 10
+dump f270
+wait 10
+dump f280
+wait 10
+dump f290
+wait 10
+dump f300
+wait 10
+dump f310
+wait 10
+dump f320
+wait 10
+dump f330
+wait 10
+dump f340
+wait 10
+dump f350
+wait 10
+dump f360
+wait 10
+dump f370
+quit
+
