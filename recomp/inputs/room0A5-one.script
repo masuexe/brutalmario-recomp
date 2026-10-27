@@ -1,0 +1,147 @@
+# Room 0A5 one-frame step probe around one spawn event.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 a5
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 40
+dump h460
+wait 1
+dump h461
+wait 1
+dump h462
+wait 1
+dump h463
+wait 1
+dump h464
+wait 1
+dump h465
+wait 1
+dump h466
+wait 1
+dump h467
+wait 1
+dump h468
+wait 1
+dump h469
+wait 1
+dump h470
+wait 1
+dump h471
+wait 1
+dump h472
+wait 1
+dump h473
+wait 1
+dump h474
+wait 1
+dump h475
+wait 1
+dump h476
+wait 1
+dump h477
+wait 1
+dump h478
+wait 1
+dump h479
+wait 1
+dump h480
+wait 1
+dump h481
+wait 1
+dump h482
+wait 1
+dump h483
+wait 1
+dump h484
+wait 1
+dump h485
+wait 1
+dump h486
+wait 1
+dump h487
+wait 1
+dump h488
+wait 1
+dump h489
+wait 1
+dump h490
+wait 1
+dump h491
+wait 1
+dump h492
+wait 1
+dump h493
+wait 1
+dump h494
+wait 1
+dump h495
+wait 1
+dump h496
+wait 1
+dump h497
+wait 1
+dump h498
+wait 1
+dump h499
+wait 1
+dump h500
+wait 1
+dump h501
+wait 1
+dump h502
+wait 1
+dump h503
+wait 1
+dump h504
+wait 1
+dump h505
+wait 1
+dump h506
+wait 1
+dump h507
+wait 1
+dump h508
+wait 1
+dump h509
+wait 1
+dump h510
+wait 1
+dump h511
+wait 1
+dump h512
+wait 1
+dump h513
+wait 1
+dump h514
+wait 1
+dump h515
+wait 1
+dump h516
+wait 1
+dump h517
+wait 1
+dump h518
+wait 1
+dump h519
+wait 1
+dump h520
+quit
+

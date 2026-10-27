@@ -100,6 +100,42 @@ def stalled_report():
                                               and entry['native']['frozen'])}
     return result
 
+PHASE_ROOMS = {
+    '0A5': ('room0A5-one-donor-v1', 'room0A5-one-native-v1', 460, 61, 'h'),
+}
+
+
+def oneframe_phase(room, donor_dir, native_dir, first, count, tag):
+    """Find the frame offset that aligns the actor rows of one room."""
+    def rows(directory, frame):
+        path = ROOT/'local/captures'/directory/f'{tag}{frame}.wram.bin'
+        if not path.is_file():
+            return None
+        wram = path.read_bytes()
+        return tuple((slot, wram[0x9E+slot], wram[0x1AB9E+slot],
+                      wram[0xE4+slot] | (wram[0x14E0+slot] << 8),
+                      wram[0xD8+slot] | (wram[0x14D4+slot] << 8))
+                     for slot in range(12) if wram[0x14C8+slot])
+    donor = {frame: rows(donor_dir, frame) for frame in range(first, first+count)}
+    native = {frame: rows(native_dir, frame) for frame in range(first, first+count)}
+    donor = {key: value for key, value in donor.items() if value is not None}
+    native = {key: value for key, value in native.items() if value is not None}
+    best = None
+    for offset in range(-60, 61):
+        equal = checked = 0
+        for frame, value in donor.items():
+            other = native.get(frame+offset)
+            if other is None:
+                continue
+            checked += 1
+            equal += value == other
+        if checked and (best is None or equal > best[1]):
+            best = (offset, equal, checked)
+    offset = best[0]
+    mismatched = [frame for frame in sorted(donor)
+                  if (frame+offset) in native and donor[frame] != native[frame+offset]]
+    return {'offset': offset, 'equal': best[1], 'checked': best[2],
+            'mismatch_frames': mismatched, 'residual': len(mismatched)}
 
 def require(condition, message):
     if not condition:
@@ -183,6 +219,8 @@ def qualify():
             'packs': len(manifest['module_receipt_sha256'])+2,
             'slots': [recipe['record']['slot'] for recipe in recipes],
             'module_views': len(counters),
+            'oneframe_phase': {room: oneframe_phase(room, *spec)
+                               for room, spec in PHASE_ROOMS.items()},
             'room_lists': read(ROOT/'local/reports/native-sprite-full-lists.json')
                                if (ROOT/'local/reports/native-sprite-full-lists.json').is_file()
                                else None,

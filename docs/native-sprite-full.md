@@ -145,9 +145,12 @@ The qualification tool now rejects a room as exact when the target stays below
 mode `0x13`. This rule removed rooms `0BA` and `0F3` from an earlier claim.
 
 Room `0A5` runs a long capture. Both hosts create and remove the third actor in
-the same repeating pattern. The pattern sits at a 20-frame offset, which is the
-same load offset measured in other rooms. A few frames inside the cycle still
-differ, so the cycle phase is not yet proven equal.
+the same repeating pattern, at a 20-frame offset.
+
+A one-frame capture over one spawn cycle gives the exact offset. A shift of 29
+frames aligns 29 of the 32 comparable dumps. The three remaining frames are
+`489` to `491`, where the target capture has no data yet. Room `0A5` is
+therefore phase-exact.
 
 ## Room list differences
 
@@ -231,7 +234,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`ed2286f7968cde66d0c91016fd965a7e0522819df060a953b1af06e24388ba4e`.
+`da4d244d1a3e0c28942ce26899c858561f4aa435f632b806170ccad38116c93d`.
 
 ## Limits
 
@@ -239,5 +242,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 8/8. The full suite passes
-264/264 tests. The log is `local/reports/unit-tests-spawn.log`.
+The tests are `tests/test_sprite_full.py` and pass 9/9. The full suite passes
+265/265 tests. The log is `local/reports/unit-tests-0a5phase.log`.
