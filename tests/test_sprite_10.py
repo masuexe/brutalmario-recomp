@@ -33,7 +33,7 @@ class Sprite10ModuleTests(unittest.TestCase):
     def test_record_and_native_adaptation(self):
         record = sprite.check_record(self.donor, self.recipe)
         self.assertEqual(record["raw"], "01360080398391002ea61ad1a61a0000")
-        self.assertEqual(record["native_raw"], "01360080398391002ee6a4d1e6a40000")
+        self.assertEqual(record["native_raw"], "01360080398391002ea6a4d1a6a40000")
         self.assertEqual(record["rooms"], ["12D", "156", "157", "15B", "15C"])
 
     def test_only_the_bank_byte_changes(self):
@@ -43,7 +43,7 @@ class Sprite10ModuleTests(unittest.TestCase):
         self.assertEqual(donor[:16], native[:16])
         self.assertEqual(donor[28:], native[28:])
         self.assertEqual(donor[16:22], "2ea61a")
-        self.assertEqual(native[16:22], "2ee6a4")
+        self.assertEqual(native[16:22], "2ea6a4")
 
     def test_target_carries_the_record(self):
         cfg = json.loads((ROOT / "config/restorations/demo11-native-sprite10.json").read_text())

@@ -25,11 +25,11 @@
       "15B",
       "15C"
     ],
-    "native_raw": "01360080398391002ee6a4d1e6a40000"
+    "native_raw": "01360080398391002ea6a4d1a6a40000"
   },
   "code": {
     "source_address": "1AA61F",
-    "native_address": "A4E61F",
+    "native_address": "A4A61F",
     "size": 2589,
     "sha256": "47a112ba1ddb0220848b32d2937ee72054a9e59b0acc94a58d6ffa993546d4dc",
     "adapted_sha256": "47a112ba1ddb0220848b32d2937ee72054a9e59b0acc94a58d6ffa993546d4dc",
@@ -62,7 +62,7 @@
     {
       "offset": 1606514,
       "before": "0000ffffffffffff218001218001ffff",
-      "after": "01360080398391002ee6a4d1e6a40000",
+      "after": "01360080398391002ea6a4d1a6a40000",
       "role": "Install the sprite 10 record and point init/main into the A4 module view"
     }
   ]

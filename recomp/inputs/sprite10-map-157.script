@@ -1,0 +1,35 @@
+# cheap-demo sprite 10 entry via map node 7b (room 157).
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 2401e4012401e401
+poke 1f1f 10001c0010001c00
+poke 0100 0b
+wait 240
+dump map
+poke d7e2 7b
+poke 19d8 01
+press y 2
+until 0100 == 14 900
+dump entry
+wait 100
+dump e0
+wait 100
+dump e1
+wait 100
+dump e2
+wait 100
+dump e3
+wait 100
+dump e4
+wait 100
+dump e5
+quit
