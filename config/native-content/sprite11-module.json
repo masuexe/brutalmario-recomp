@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "id": "sprite11-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 11 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "11",
+    "raw": "01360000f8a22d454bb01a06b11a0000",
+    "init": "1AB04B",
+    "main": "1AB106",
+    "relative": {
+      "init": "0F",
+      "main": "CA"
+    },
+    "rooms": [
+      "155",
+      "156",
+      "158",
+      "159"
+    ],
+    "native_raw": "01360000f8a22d454bb0aa06b1aa0000"
+  },
+  "code": {
+    "source_address": "1AB03C",
+    "native_address": "AAB03C",
+    "size": 5032,
+    "sha256": "cb09373c41521be34c7812e49dccad8a66b267470f8f5d73198144e977e27804",
+    "adapted_sha256": "cb09373c41521be34c7812e49dccad8a66b267470f8f5d73198144e977e27804",
+    "pack_file": "sprite11-code.bin"
+  },
+  "entry_seeds": [
+    "1AB04B",
+    "1AB106"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "019138",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "028086",
+    "02A9DE",
+    "03B664",
+    "03B72B",
+    "07F7D2",
+    "27FAF4",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the AA code view",
+    "sprite graphics review",
+    "entry qualification against the cheap-demo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606530,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360000f8a22d454bb0aa06b1aa0000",
+      "role": "Install the sprite 11 record and point init/main into the AA module view"
+    }
+  ]
+}

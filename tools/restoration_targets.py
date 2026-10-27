@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-sprite11': {
+        'binary': 'BrutalMarioDemo11NativeSprite11SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 11',
+    },
     'demo11-native-sprite2a': {
         'binary': 'BrutalMarioDemo11NativeSprite2ASNESRecomp',
         'title': 'Brutal Mario Demo11 Native Sprite 2A',
