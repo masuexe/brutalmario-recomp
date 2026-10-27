@@ -83,9 +83,10 @@ script on the baseline target and on this target. Then it compares every dump.
 | `demo11-forest-attack` | 20 of 20 |
 
 The tool compares the WRAM dump of each point. The dumps are byte-identical, so
-the extra records and packs leave an unchanged route as it was. The report is
+the extra records and packs leave an unchanged route as it was. Each point
+records the hash of both dumps. The report is
 `local/reports/native-sprite-full-regression.json`, SHA-256
-`bbf085981354d9ff722c48fd45ecd5f1c4988add65037d796a13019764a3648b`.
+`4c0f8d59ecf304f85be7b5d318134cc8607457992f402aebb85c483e1e86559b`.
 
 ## Frozen rooms
 

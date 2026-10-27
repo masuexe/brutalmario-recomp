@@ -47,7 +47,8 @@ def compare(route):
             points[name] = {'equal': False, 'note': 'dump absent'}
             continue
         a, b = left.read_bytes(), right.read_bytes()
-        points[name] = {'equal': a == b, 'size': len(a), 'sha256': sha(a)}
+        points[name] = {'equal': a == b, 'size': len(a),
+                        'baseline_sha256': sha(a), 'gap_sha256': sha(b)}
     equal = sum(1 for entry in points.values() if entry['equal'])
     return {'route': route, 'points': points, 'equal': equal,
             'total': len(points)}

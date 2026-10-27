@@ -92,6 +92,9 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertGreaterEqual(report["total"], 30)
         for route, entry in report["routes"].items():
             self.assertEqual(entry["equal"], entry["total"], route)
+            for name, point in entry["points"].items():
+                self.assertEqual(point["baseline_sha256"], point["gap_sha256"],
+                                 route+"/"+name)
 
 
     @unittest.skipUnless((ROOT / "local/reports/native-sprite-emu-freeze.json").exists(),
