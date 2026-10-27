@@ -15,6 +15,10 @@ from restore_star_world_1 import sha
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'demo11-native-sprite-full'
 OPEN_ROOMS = {
+    '001': ('room001-donor-v1', 'room001-native-v1'),
+    '091': ('room091-donor-v1', 'room091-native-v1'),
+    '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
+    '14E': ('room14E-donor-v1', 'room14E-native-v1'),
     '151': ('room151-donor-v1', 'room151-native-v1'),
     '190': ('room190-donor-v1', 'room190-native-v1'),
 }
@@ -24,6 +28,9 @@ ROOMS = {
     '083': ('room083-donor-v1', 'room083-native-v1', ('r1',), True),
     '087': ('room087-donor-v1', 'room087-native-v1', ('r1',), True),
     '142': ('room142-donor-v1', 'room142-native-v1', ('r1', 'r2'), True),
+    '147': ('room147-donor-v1', 'room147-native-v1', ('r1', 'r2'), True),
+    '05D': ('room05D-donor-v1', 'room05D-native-v1', ('r1', 'r2'), True),
+    '15D': ('room15D-donor-v1', 'room15D-native-v1', ('r1', 'r2'), True),
 }
 
 
@@ -93,6 +100,9 @@ def qualify():
     require(rooms['083']['rows_equal'], 'room 083 does not match the donor')
     require(rooms['087']['rows_equal'], 'room 087 does not match the donor')
     require(rooms['142']['rows_equal'], 'room 142 does not match the donor')
+    require(rooms['147']['rows_equal'], 'room 147 does not match the donor')
+    require(rooms['05D']['rows_equal'], 'room 05D does not match the donor')
+    require(rooms['15D']['rows_equal'], 'room 15D does not match the donor')
     log = (ROOT/'local/captures'/'spritefull-155-native-v1'/'run.log').read_text()
     require('BRK' not in log, 'the target reached BRK')
     counters = {}
@@ -109,6 +119,9 @@ def qualify():
             'packs': len(manifest['module_receipt_sha256'])+2,
             'slots': [recipe['record']['slot'] for recipe in recipes],
             'module_views': len(counters),
+            'room_lists': read(ROOT/'local/reports/native-sprite-full-lists.json')
+                               if (ROOT/'local/reports/native-sprite-full-lists.json').is_file()
+                               else None,
             'rooms': rooms,
             'open_rooms': {room: {
                 'donor_actors': len(actors((ROOT/'local/captures'/donor_dir/'r2.wram.bin').read_bytes())),

@@ -56,10 +56,14 @@ class FullGapTargetTests(unittest.TestCase):
         report = json.loads((ROOT / "local/reports/native-sprite-full-final.json").read_text())
         self.assertEqual(report["records"], 33)
         self.assertEqual(report["packs"], 35)
-        self.assertEqual(sorted(report["exact_rooms"]), ["083", "087", "142", "155"])
+        self.assertEqual(sorted(report["exact_rooms"]),
+                         ["05D", "083", "087", "142", "147", "155", "15D"])
         self.assertGreaterEqual(report["module_views"], 35)
-        self.assertEqual(sorted(report["open_rooms"]), ["151", "190"])
+        self.assertEqual(sorted(report["open_rooms"]),
+                         ["001", "091", "0A3", "14E", "151", "190"])
         self.assertFalse(report["open_rooms"]["151"]["rows_equal"])
+        self.assertEqual(sorted(report["room_lists"]["different_rooms"]),
+                         ["001", "075", "086", "15E"])
         self.assertEqual(report["rooms"]["155"]["matched"], 4)
 
 
