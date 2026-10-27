@@ -144,6 +144,11 @@ The baseline target `demo11-native-sprite9e` shows the same stall in rooms
 The qualification tool now rejects a room as exact when the target stays below
 mode `0x13`. This rule removed rooms `0BA` and `0F3` from an earlier claim.
 
+Room `0A5` runs a long capture. Both hosts create and remove the third actor in
+the same repeating pattern. The pattern sits at a 20-frame offset, which is the
+same load offset measured in other rooms. A few frames inside the cycle still
+differ, so the cycle phase is not yet proven equal.
+
 ## Room list differences
 
 A missing actor has two possible causes. The sprite record can be absent, or the
@@ -195,7 +200,7 @@ and both programs start, but the donor behaviour does not follow yet.
 | `0B5` | `55` | 2 | 2 | the later child differs |
 | `0B6` | `55` | 4 | 4 | one actor Y differs in the later sample |
 | `05B` | `2C` | 2 | 1 | the target actor holds X 16 and Y 0 |
-| `0A5` | `7F` | 2 | 2 | the donor creates one more actor later |
+| `0A5` | `7F` | 3 | 3 | both hosts create the third actor, and the cycle phase differs |
 | `162` | `92` | 1 | 1 | start X differs by 49 |
 | `164` | `92` | 1 | 1 | start X differs by 164 |
 | `0A3` | `7E` | 6 | 6 | positions differ |
@@ -235,4 +240,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 8/8. The full suite passes
-264/264 tests. The log is `local/reports/unit-tests-jump.log`.
+264/264 tests. The log is `local/reports/unit-tests-spawn.log`.

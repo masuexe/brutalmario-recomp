@@ -1,0 +1,115 @@
+# Room 0A5 long probe.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 a5
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 20
+dump f300
+wait 10
+dump f310
+wait 10
+dump f320
+wait 10
+dump f330
+wait 10
+dump f340
+wait 10
+dump f350
+wait 10
+dump f360
+wait 10
+dump f370
+wait 10
+dump f380
+wait 10
+dump f390
+wait 10
+dump f400
+wait 10
+dump f410
+wait 10
+dump f420
+wait 10
+dump f430
+wait 10
+dump f440
+wait 10
+dump f450
+wait 10
+dump f460
+wait 10
+dump f470
+wait 10
+dump f480
+wait 10
+dump f490
+wait 10
+dump f500
+wait 10
+dump f510
+wait 10
+dump f520
+wait 10
+dump f530
+wait 10
+dump f540
+wait 10
+dump f550
+wait 10
+dump f560
+wait 10
+dump f570
+wait 10
+dump f580
+wait 10
+dump f590
+wait 10
+dump f600
+wait 10
+dump f610
+wait 10
+dump f620
+wait 10
+dump f630
+wait 10
+dump f640
+wait 10
+dump f650
+wait 10
+dump f660
+wait 10
+dump f670
+wait 10
+dump f680
+wait 10
+dump f690
+wait 10
+dump f700
+wait 10
+dump f710
+wait 10
+dump f720
+wait 10
+dump f730
+wait 10
+dump f740
+quit
+
