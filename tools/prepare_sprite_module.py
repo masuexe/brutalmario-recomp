@@ -119,7 +119,16 @@ def analyze(donor, recipe):
                                for item in declared}
                     if (bank << 16 | ins.addr, ins.operand) not in ignored:
                         raise ValueError('bank-local operand escapes module')
-            if ins.mnem == 'JSR' and ins.mode == ABS:
+            if ins.mnem in ('JMP', 'JSR') and ins.mode in (ABS, LONG):
+                target = (bank << 16 | ins.operand) if ins.mode == ABS else ins.operand
+                if first <= target < end:
+                    if ins.mnem == 'JSR':
+                        todo.append((ins.operand, decoded.key.m, decoded.key.x))
+                elif (target >> 16) == bank:
+                    declared = {(int(item['address'], 16), int(item['operand'], 16))
+                                for item in recipe.get('external_entries', [])}
+                    if (bank << 16 | ins.addr, ins.operand) not in declared:
+                        raise ValueError('bank-local jump leaves module at %04X' % ins.addr)
                 target = bank << 16 | ins.operand
                 if first <= target < end:
                     todo.append((ins.operand, decoded.key.m, decoded.key.x))

@@ -163,6 +163,17 @@ spawn an actor there. The other three rooms hold different placement data.
 The report is `local/reports/native-sprite-full-lists.json`, SHA-256
 `028e7bb586ade29b6a18b0d4e8a8cb3963e8f7e61255b4902993a2a29ba425dd`.
 
+## Jump review
+
+An earlier review tracked `JSR` and self-bank `JSL` targets. It did not track a
+`JMP` that leaves the block. The analyzer now stops at a bank-local `JMP` or
+`JSR` target outside the block unless the recipe declares that site in
+`external_entries`.
+
+Slot `7F` tail-jumps with `JMP $C0FB` in long mode to `00:C0FB`. The donor and
+the recipient hold the same 16 bytes at that address, so both hosts call the
+same code. A scan of all 35 recipes finds no undeclared jump.
+
 ## Slot 9B branch
 
 The slot `9B` main reads `$1504` and branches on the value: `1` runs one
@@ -224,4 +235,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 8/8. The full suite passes
-264/264 tests. The log is `local/reports/unit-tests-35.log`.
+264/264 tests. The log is `local/reports/unit-tests-jump.log`.
