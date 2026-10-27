@@ -1,0 +1,289 @@
+{
+  "schema": 1,
+  "id": "sprite2A-module",
+  "scope": "Static module review for the 7hero type-1 sprite 42 program (decimal 42, hex 2A). The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/7hero-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "2A",
+    "raw": "0136000035a299440f80228d80220000",
+    "init": "22800F",
+    "main": "22808D",
+    "relative": {
+      "init": "0F",
+      "main": "8D"
+    },
+    "rooms": [
+      "0FF"
+    ],
+    "native_raw": "0136000035a299440f80a98d80a90000"
+  },
+  "code": {
+    "source_address": "228000",
+    "native_address": "A98000",
+    "size": 28478,
+    "sha256": "d070d644b5da61d4150e58f4d6603a0ccbe5d0c37b19e7a00c8ffc2d9bb1d757",
+    "adapted_sha256": "3bb788a19acd416344ba474c1dcfab278d053878e082562728dd7ae0739e70c9",
+    "pack_file": "sprite2a-code.bin"
+  },
+  "entry_seeds": [
+    "22800F",
+    "22808D"
+  ],
+  "dispatch_tables": [
+    {
+      "address": "228095",
+      "count": 35,
+      "dispatcher": "228115",
+      "sha256": "230b268301db1f8298bbc4004b67710005b92434528967ebfd3e6c39c474ba40"
+    },
+    {
+      "address": "228118",
+      "count": 23,
+      "dispatcher": "2281C8",
+      "sha256": "b84554289224f70205819d44616ad59c0860b081933662305fa7471db23cf2d1"
+    },
+    {
+      "address": "22BB7B",
+      "count": 21,
+      "dispatcher": "22BBF7",
+      "sha256": "0f4dd63099b5accb15fb52e0a380b66c509e26eb0b9393b49e7b1ca22d0e0eeb"
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "2281D3",
+      "before": "22a5a522",
+      "after": "22a5a5a9"
+    },
+    {
+      "address": "228246",
+      "before": "2218ea22",
+      "after": "2218eaa9"
+    },
+    {
+      "address": "22826A",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "2286A8",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "228824",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "228835",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "228894",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "2288A9",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "228F15",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229060",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229071",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "2291DD",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "2291ED",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "229289",
+      "before": "2244ea22",
+      "after": "2244eaa9"
+    },
+    {
+      "address": "2292B0",
+      "before": "2227a622",
+      "after": "2227a6a9"
+    },
+    {
+      "address": "229320",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229329",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22943C",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229450",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22946C",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229479",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "2294F8",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229505",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "2298AF",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229A11",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "229A99",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22A0C6",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "22AF0C",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22AF30",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "22AF3C",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22AF5C",
+      "before": "227fa622",
+      "after": "227fa6a9"
+    },
+    {
+      "address": "22B4C5",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "22BEF3",
+      "before": "2253a622",
+      "after": "2253a6a9"
+    },
+    {
+      "address": "22E004",
+      "before": "2295e222",
+      "after": "2295e2a9"
+    },
+    {
+      "address": "22E02F",
+      "before": "2295e222",
+      "after": "2295e2a9"
+    },
+    {
+      "address": "22E082",
+      "before": "22c1e222",
+      "after": "22c1e2a9"
+    },
+    {
+      "address": "22E134",
+      "before": "22c1e222",
+      "after": "22c1e2a9"
+    },
+    {
+      "address": "22EA13",
+      "before": "22ede222",
+      "after": "22ede2a9"
+    },
+    {
+      "address": "22ECFD",
+      "before": "22c4ec22",
+      "after": "22c4eca9"
+    }
+  ],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "019138",
+    "01A7DC",
+    "01AB99",
+    "01ACF9",
+    "01B7B3",
+    "0285BA",
+    "02A9DE",
+    "07F7D2",
+    "0FF780",
+    "10D8D0",
+    "27FB02",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A9 code view",
+    "sprite graphics review",
+    "entry qualification against the 7hero donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606930,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0136000035a299440f80a98d80a90000",
+      "role": "Install the sprite 42 record and point init/main into the A9 module view"
+    }
+  ]
+}
