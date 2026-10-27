@@ -57,12 +57,16 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertEqual(report["records"], 33)
         self.assertEqual(report["packs"], 35)
         self.assertEqual(sorted(report["exact_rooms"]),
-                         ["05D", "083", "087", "08B", "0BA", "0F3", "142",
-                          "147", "155", "15D", "160"])
+                         ["05D", "083", "087", "08B", "142", "147", "155",
+                          "15D", "160"])
         self.assertGreaterEqual(report["module_views"], 35)
         self.assertEqual(sorted(report["open_rooms"]),
-                         ["001", "085", "091", "096", "0A2", "0A3", "0BB",
-                          "110", "13C", "14E", "151", "190"])
+                         ["001", "096", "0A3", "110", "13C", "14E", "151", "190"])
+        self.assertEqual(sorted(report["stalled_rooms"]),
+                         ["085", "091", "0A2", "0BA", "0BB", "0F3"])
+        for room, entry in report["stalled_rooms"].items():
+            self.assertEqual(entry["native_mode"], 0x12, room)
+            self.assertEqual(entry["donor_mode"], 0x14, room)
         self.assertFalse(report["open_rooms"]["151"]["rows_equal"])
         self.assertEqual(sorted(report["room_lists"]["different_rooms"]),
                          ["001", "075", "086", "15E"])

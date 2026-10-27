@@ -42,8 +42,6 @@ block and the graphics block. The code banks are `A4`, `A6` to `AF`, `B0` to
 | `083` | `A0` | 1 of 1 |
 | `087` | `20` | 1 of 1 |
 | `08B` | `32` | 2 of 2 |
-| `0BA` | `5D` | 2 of 2 |
-| `0F3` | `38` | 2 of 2 |
 | `142` | `3C` | 2 of 2 |
 | `147` | `4A` | 2 of 2 |
 | `155` | `11`, `12`, `31` | 4 of 4 |
@@ -73,6 +71,29 @@ the extra records and packs leave an unchanged route as it was. The report is
 `local/reports/native-sprite-full-regression.json`, SHA-256
 `bbf085981354d9ff722c48fd45ecd5f1c4988add65037d796a13019764a3648b`.
 
+## Stalled rooms
+
+Six rooms never leave game mode `0x12` on the native target, while the donor
+reaches mode `0x14`. The actors stand still in both captures, so an actor
+compare there does not measure the module.
+
+| Room | Donor mode | Target mode |
+| --- | --- | ---: |
+| `085` | `0x14` | `0x12` |
+| `091` | `0x14` | `0x12` |
+| `0A2` | `0x14` | `0x12` |
+| `0BA` | `0x14` | `0x12` |
+| `0BB` | `0x14` | `0x12` |
+| `0F3` | `0x14` | `0x12` |
+
+The baseline target `demo11-native-sprite9e` shows the same stall in rooms
+`085` and `0BB`. The gap records therefore do not cause the stall. In room
+`0BB` both hosts hold the same actor rows from frames 200 to 240 in mode
+`0x12`. The donor then moves, and the target does not.
+
+The qualification tool now rejects a room as exact when the target stays below
+mode `0x13`. This rule removed rooms `0BA` and `0F3` from an earlier claim.
+
 ## Room list differences
 
 A missing actor has two possible causes. The sprite record can be absent, or the
@@ -100,12 +121,8 @@ and both programs start, but the donor behaviour does not follow yet.
 | Room | Slot | Donor actors | Target actors | Rows equal |
 | --- | --- | ---: | ---: | --- |
 | `001` | `93` | 1 | 0 | no |
-| `085` | `0F` | 3 | 2 | later sample differs |
-| `091` | `9D` | 3 | 1 | no |
 | `096` | `76` | 4 | 4 | Y differs |
-| `0A2` | `36` | 2 | 1 | later sample differs |
 | `0A3` | `7E` | 6 | 6 | positions differ |
-| `0BB` | `66` | 6 | 6 | the donor actors move, the target actors stay |
 | `110` | `0F` | 3 | 3 | one custom id differs |
 | `13C` | `3D` | 1 | 1 | first sample differs |
 | `14E` | `79` | 1 | 1 | Y differs |
@@ -133,7 +150,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`e5e32269ceb2306afa4bd968cab754a159181ce9de508cd2c8721265c79c9340`.
+`5a691481ee08255ae059738a685c8e28e0ab5ccebcb0dbd66ffbd4788ec2269a`.
 
 ## Limits
 
@@ -142,4 +159,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 6/6. The full suite passes
-262/262 tests. The log is `local/reports/unit-tests-rooms11.log`.
+262/262 tests. The log is `local/reports/unit-tests-stall.log`.

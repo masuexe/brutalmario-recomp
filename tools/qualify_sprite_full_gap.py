@@ -14,16 +14,20 @@ from restore_star_world_1 import sha
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'demo11-native-sprite-full'
-OPEN_ROOMS = {
+STALLED_ROOMS = {
     '085': ('room085-donor-v1', 'room085-native-v1'),
-    '096': ('room096-donor-v1', 'room096-native-v1'),
+    '091': ('room091-donor-v1', 'room091-native-v1'),
     '0A2': ('room0A2-donor-v1', 'room0A2-native-v1'),
+    '0BA': ('room0BA-donor-v1', 'room0BA-native-v1'),
     '0BB': ('room0BB-donor-v1', 'room0BB-native-v1'),
+    '0F3': ('room0F3-donor-v1', 'room0F3-native-v1'),
+}
+OPEN_ROOMS = {
+    '001': ('room001-donor-v1', 'room001-native-v1'),
+    '096': ('room096-donor-v1', 'room096-native-v1'),
+    '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
     '110': ('room110-donor-v1', 'room110-native-v1'),
     '13C': ('room13C-donor-v1', 'room13C-native-v1'),
-    '001': ('room001-donor-v1', 'room001-native-v1'),
-    '091': ('room091-donor-v1', 'room091-native-v1'),
-    '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
     '14E': ('room14E-donor-v1', 'room14E-native-v1'),
     '151': ('room151-donor-v1', 'room151-native-v1'),
     '190': ('room190-donor-v1', 'room190-native-v1'),
@@ -37,9 +41,7 @@ ROOMS = {
     '147': ('room147-donor-v1', 'room147-native-v1', ('r1', 'r2'), True),
     '05D': ('room05D-donor-v1', 'room05D-native-v1', ('r1', 'r2'), True),
     '15D': ('room15D-donor-v1', 'room15D-native-v1', ('r1', 'r2'), True),
-    '0BA': ('room0BA-donor-v1', 'room0BA-native-v1', ('r1', 'r2'), True),
     '08B': ('room08B-donor-v1', 'room08B-native-v1', ('r1', 'r2'), True),
-    '0F3': ('room0F3-donor-v1', 'room0F3-native-v1', ('r1', 'r2'), True),
     '160': ('room160-donor-v1', 'room160-native-v1', ('r1', 'r2'), True),
 }
 
@@ -96,16 +98,25 @@ def qualify():
             if not donor_path.is_file() or not native_path.is_file():
                 samples[tag] = {'rows_equal': None, 'note': 'capture absent'}
                 continue
-            donor = actors(donor_path.read_bytes())
-            native = actors(native_path.read_bytes())
+            donor_bytes = donor_path.read_bytes()
+            native_bytes = native_path.read_bytes()
+            donor = actors(donor_bytes)
+            native = actors(native_bytes)
             samples[tag] = {'donor': donor, 'native': native,
+                            'donor_mode': donor_bytes[0x100],
+                            'native_mode': native_bytes[0x100],
                             'rows_equal': donor == native}
         checked = [tag for tag, sample in samples.items()
                    if sample['rows_equal'] is not None]
         matched = [tag for tag in checked if samples[tag]['rows_equal']]
+        same_mode = all(samples[tag]['native_mode'] == samples[tag]['donor_mode']
+                        for tag in checked)
+        live = all(samples[tag]['native_mode'] >= 0x13 for tag in checked)
         rooms[room] = {'samples': samples, 'checked': len(checked),
                        'matched': len(matched), 'required_exact': exact,
-                       'rows_equal': len(checked) > 0 and checked == matched}
+                       'same_mode': same_mode, 'native_live': live,
+                       'rows_equal': (live and len(checked) > 0
+                                      and checked == matched)}
     require(rooms['155']['rows_equal'], 'room 155 does not match the donor')
     require(rooms['083']['rows_equal'], 'room 083 does not match the donor')
     require(rooms['087']['rows_equal'], 'room 087 does not match the donor')
@@ -113,9 +124,7 @@ def qualify():
     require(rooms['147']['rows_equal'], 'room 147 does not match the donor')
     require(rooms['05D']['rows_equal'], 'room 05D does not match the donor')
     require(rooms['15D']['rows_equal'], 'room 15D does not match the donor')
-    require(rooms['0BA']['rows_equal'], 'room 0BA does not match the donor')
     require(rooms['08B']['rows_equal'], 'room 08B does not match the donor')
-    require(rooms['0F3']['rows_equal'], 'room 0F3 does not match the donor')
     require(rooms['160']['rows_equal'], 'room 160 does not match the donor')
     log = (ROOT/'local/captures'/'spritefull-155-native-v1'/'run.log').read_text()
     require('BRK' not in log, 'the target reached BRK')
@@ -136,6 +145,10 @@ def qualify():
             'room_lists': read(ROOT/'local/reports/native-sprite-full-lists.json')
                                if (ROOT/'local/reports/native-sprite-full-lists.json').is_file()
                                else None,
+            'stalled_rooms': {room: {
+                'donor_mode': (ROOT/'local/captures'/donor_dir/'r1.wram.bin').read_bytes()[0x100],
+                'native_mode': (ROOT/'local/captures'/native_dir/'r1.wram.bin').read_bytes()[0x100],
+            } for room, (donor_dir, native_dir) in STALLED_ROOMS.items()},
             'rooms': rooms,
             'open_rooms': {room: {
                 'donor_actors': len(actors((ROOT/'local/captures'/donor_dir/'r2.wram.bin').read_bytes())),
