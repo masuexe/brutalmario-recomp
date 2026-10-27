@@ -1,0 +1,108 @@
+# Room 151 one-frame probe with a forced $1504.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 51
+poke 19d8 05
+poke 88 0000
+poke 71 06
+poke 1504 02
+wait 40
+dump h220
+wait 1
+dump h221
+wait 1
+dump h222
+wait 1
+dump h223
+wait 1
+dump h224
+wait 1
+dump h225
+wait 1
+dump h226
+wait 1
+dump h227
+wait 1
+dump h228
+wait 1
+dump h229
+wait 1
+dump h230
+wait 1
+dump h231
+wait 1
+dump h232
+wait 1
+dump h233
+wait 1
+dump h234
+wait 1
+dump h235
+wait 1
+dump h236
+wait 1
+dump h237
+wait 1
+dump h238
+wait 1
+dump h239
+wait 1
+dump h240
+wait 1
+dump h241
+wait 1
+dump h242
+wait 1
+dump h243
+wait 1
+dump h244
+wait 1
+dump h245
+wait 1
+dump h246
+wait 1
+dump h247
+wait 1
+dump h248
+wait 1
+dump h249
+wait 1
+dump h250
+wait 1
+dump h251
+wait 1
+dump h252
+wait 1
+dump h253
+wait 1
+dump h254
+wait 1
+dump h255
+wait 1
+dump h256
+wait 1
+dump h257
+wait 1
+dump h258
+wait 1
+dump h259
+wait 1
+dump h260
+quit
+

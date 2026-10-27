@@ -165,5 +165,10 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertEqual(phase["151"]["offset"], -1)
         self.assertGreaterEqual(phase["151"]["residual"], 10)
 
+    def test_second_actor_cause_is_recorded(self):
+        doc = (ROOT / "docs/native-sprite-full.md").read_text()
+        self.assertIn("## Why the second actor is missing", doc)
+        self.assertIn("`$1504` is a symptom and not the cause", doc)
+
 if __name__ == "__main__":
     unittest.main()

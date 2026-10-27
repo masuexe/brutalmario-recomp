@@ -174,6 +174,16 @@ Room `151` matches in every frame before the donor creates a second actor at
 frame 230. The target never creates it, so the child step is the only open item
 in that room.
 
+## Why the second actor is missing
+
+Room `151` reports `$1504 = 2` on the donor and `$1504 = 0` on the target at
+frames 227 to 231. Room `190` shows the same difference. A forced write of
+`$1504 = 2` right after the entry keeps the value and still creates no second
+actor, so `$1504` is a symptom and not the cause.
+
+Frames 220 to 260 of room `151` hold one actor in both hosts. The donor creates
+the second actor at frame 230 and the target does not.
+
 ## Room list differences
 
 A missing actor has two possible causes. The sprite record can be absent, or the
@@ -264,5 +274,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 12/12. The full suite passes
+The tests are `tests/test_sprite_full.py` and pass 13/13. The full suite passes
 268/268 tests. The log is `local/reports/unit-tests-phase4.log`.
