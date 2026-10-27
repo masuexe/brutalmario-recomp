@@ -115,7 +115,8 @@ The qualification tool is `tools/qualify_sprite_gap.py`. Its report is
 `local/reports/native-sprite95-final.json`, SHA-256
 `569784f3ee5dbcc48fb6f5d14f4ce3021e71ee23d76dc899cae4f125dffcaf51`. The tool
 checks the ROM and binary identities, the installed record, the module receipt
-and the entry actor set.
+and the entry actor set. The suite passes 206/206 tests, and the log is
+`local/reports/unit-tests-sprite95-target.log`.
 
 ```
 python3 tools/m1.py --target demo11-native-sprite95 scaffold
