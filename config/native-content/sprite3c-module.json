@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sprite3c-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 3C program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "3C",
+    "raw": "012800003f83994415a12227a1220000",
+    "init": "22A115",
+    "main": "22A127",
+    "relative": {
+      "init": "0F",
+      "main": "21"
+    },
+    "rooms": [
+      "142"
+    ],
+    "native_raw": "012800003f83994415a1be27a1be0000"
+  },
+  "code": {
+    "source_address": "22A106",
+    "native_address": "BEA106",
+    "size": 2932,
+    "sha256": "270bb64659e9747c467d0d3f52c3ed547231bf22348a92b3ba618aedc5f17f2b",
+    "adapted_sha256": "270bb64659e9747c467d0d3f52c3ed547231bf22348a92b3ba618aedc5f17f2b",
+    "pack_file": "sprite3c-code.bin"
+  },
+  "entry_seeds": [
+    "22A115",
+    "22A127"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01B7B3",
+    "028663",
+    "02A9DE",
+    "07F7D2",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the BE code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607218,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "012800003f83994415a1be27a1be0000",
+      "role": "Install the sprite 3C record and point init/main into the BE module view"
+    }
+  ]
+}

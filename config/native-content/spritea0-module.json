@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "spritea0-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite A0 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "A0",
+    "raw": "013600003f839964e79a25049b250000",
+    "init": "259AE7",
+    "main": "259B04",
+    "relative": {
+      "init": "0F",
+      "main": "2C"
+    },
+    "rooms": [
+      "083"
+    ],
+    "native_raw": "013600003f839964e79aa7049ba70000"
+  },
+  "code": {
+    "source_address": "259AD8",
+    "native_address": "A79AD8",
+    "size": 14550,
+    "sha256": "4079a5f3a49b213e35084c547b358fefeec8bbc15b5dff77f5bb0780c5c1994b",
+    "adapted_sha256": "4079a5f3a49b213e35084c547b358fefeec8bbc15b5dff77f5bb0780c5c1994b",
+    "pack_file": "spritea0-code.bin"
+  },
+  "entry_seeds": [
+    "259AE7",
+    "259B04"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "00F606",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AA33",
+    "01AB99",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A7 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608818,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600003f839964e79aa7049ba70000",
+      "role": "Install the sprite A0 record and point init/main into the A7 module view"
+    }
+  ]
+}

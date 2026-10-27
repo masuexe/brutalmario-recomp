@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "id": "demo11-native-sprite-full",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "native_sprite_gap": {
+    "manifests": [
+      "config/native-content/sprite10-module.json",
+      "config/native-content/sprite11-module.json",
+      "config/native-content/sprite12-module.json",
+      "config/native-content/sprite13-module.json",
+      "config/native-content/sprite14-module.json",
+      "config/native-content/sprite0f-module.json",
+      "config/native-content/sprite19-module.json",
+      "config/native-content/sprite22-module.json",
+      "config/native-content/sprite3b-module.json",
+      "config/native-content/sprite55-module.json",
+      "config/native-content/sprite92-module.json",
+      "config/native-content/spritea0-module.json",
+      "config/native-content/sprite9d-module.json",
+      "config/native-content/sprite93-module.json",
+      "config/native-content/sprite7e-module.json",
+      "config/native-content/sprite79-module.json",
+      "config/native-content/sprite76-module.json",
+      "config/native-content/sprite66-module.json",
+      "config/native-content/sprite5d-module.json",
+      "config/native-content/sprite4a-module.json",
+      "config/native-content/sprite3f-module.json",
+      "config/native-content/sprite3d-module.json",
+      "config/native-content/sprite3c-module.json",
+      "config/native-content/sprite38-module.json",
+      "config/native-content/sprite36-module.json",
+      "config/native-content/sprite32-module.json",
+      "config/native-content/sprite31-module.json",
+      "config/native-content/sprite2d-module.json",
+      "config/native-content/sprite23-module.json",
+      "config/native-content/sprite20-module.json",
+      "config/native-content/sprite1c-module.json"
+    ]
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "56795e4dc78b2fdc9482dd62fd0e6b2236218e7d744057e3e757a8f73b9423ff"
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "sprite4a-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 4A program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "4A",
+    "raw": "0101000037018904b6f71f01f81f0000",
+    "init": "1FF7B6",
+    "main": "1FF801",
+    "relative": {
+      "init": "0F",
+      "main": "5A"
+    },
+    "rooms": [
+      "147"
+    ],
+    "native_raw": "0101000037018904b6f7bb01f8bb0000"
+  },
+  "code": {
+    "source_address": "1FF7A7",
+    "native_address": "BBF7A7",
+    "size": 2002,
+    "sha256": "c6fb4da44ea9c8eedef93a6bfbf11eb8411e537e0f228b872129a8c8e74c671f",
+    "adapted_sha256": "c6fb4da44ea9c8eedef93a6bfbf11eb8411e537e0f228b872129a8c8e74c671f",
+    "pack_file": "sprite4a-code.bin"
+  },
+  "entry_seeds": [
+    "1FF7B6",
+    "1FF801"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the BB code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607442,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0101000037018904b6f7bb01f8bb0000",
+      "role": "Install the sprite 4A record and point init/main into the BB module view"
+    }
+  ]
+}

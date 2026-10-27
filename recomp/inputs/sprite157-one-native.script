@@ -1,0 +1,65 @@
+# Room 157 one-frame step probe.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 57
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 40
+dump h290
+wait 10
+dump h291
+wait 10
+dump h292
+wait 10
+dump h293
+wait 10
+dump h294
+wait 10
+dump h295
+wait 10
+dump h296
+wait 10
+dump h297
+wait 10
+dump h298
+wait 10
+dump h299
+wait 10
+dump h300
+wait 10
+dump h301
+wait 10
+dump h302
+wait 10
+dump h303
+wait 10
+dump h304
+wait 10
+dump h305
+wait 10
+dump h306
+wait 10
+dump h307
+wait 10
+dump h308
+wait 10
+dump h309
+quit
+

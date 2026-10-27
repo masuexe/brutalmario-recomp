@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "sprite31-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 31 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "31",
+    "raw": "013600003a83994494cd1cb5cd1c0000",
+    "init": "1CCD94",
+    "main": "1CCDB5",
+    "relative": {
+      "init": "0F",
+      "main": "30"
+    },
+    "rooms": [
+      "155"
+    ],
+    "native_raw": "013600003a83994494cdc2b5cdc20000"
+  },
+  "code": {
+    "source_address": "1CCD85",
+    "native_address": "C2CD85",
+    "size": 1262,
+    "sha256": "5f4a5873889d8dce995198fd58afb74020e2e97fdccd03dd08065aad6a796037",
+    "adapted_sha256": "5f4a5873889d8dce995198fd58afb74020e2e97fdccd03dd08065aad6a796037",
+    "pack_file": "sprite31-code.bin"
+  },
+  "entry_seeds": [
+    "1CCD94",
+    "1CCDB5"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "01A7DC",
+    "01B7B3",
+    "27FAF4"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the C2 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607042,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600003a83994494cdc2b5cdc20000",
+      "role": "Install the sprite 31 record and point init/main into the C2 module view"
+    }
+  ]
+}

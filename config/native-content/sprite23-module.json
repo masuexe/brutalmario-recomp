@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "sprite23-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 23 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "23",
+    "raw": "01360000f8a6a94578d01ab1d01a0000",
+    "init": "1AD078",
+    "main": "1AD0B1",
+    "relative": {
+      "init": "0F",
+      "main": "48"
+    },
+    "rooms": [
+      "160"
+    ],
+    "native_raw": "01360000f8a6a94578d0c5b1d0c50000"
+  },
+  "code": {
+    "source_address": "1AD069",
+    "native_address": "C5D069",
+    "size": 2152,
+    "sha256": "99935720f9b1577bd500e91976c941d5d46007c09e30689316dc269339b8e27c",
+    "adapted_sha256": "99935720f9b1577bd500e91976c941d5d46007c09e30689316dc269339b8e27c",
+    "pack_file": "sprite23-code.bin"
+  },
+  "entry_seeds": [
+    "1AD078",
+    "1AD0B1"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the C5 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606818,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360000f8a6a94578d0c5b1d0c50000",
+      "role": "Install the sprite 23 record and point init/main into the C5 module view"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "id": "sprite9d-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 9D program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "9D",
+    "raw": "010101063d810924508c25a38c250000",
+    "init": "258C50",
+    "main": "258CA3",
+    "relative": {
+      "init": "0F",
+      "main": "62"
+    },
+    "rooms": [
+      "091"
+    ],
+    "native_raw": "010101063d810924508ca8a38ca80000"
+  },
+  "code": {
+    "source_address": "258C41",
+    "native_address": "A88C41",
+    "size": 2444,
+    "sha256": "e1606b01c59fdbfb7e2bee7a60a0d38badc931443a4bac04014cf2ee25544fe9",
+    "adapted_sha256": "e1606b01c59fdbfb7e2bee7a60a0d38badc931443a4bac04014cf2ee25544fe9",
+    "pack_file": "sprite9d-code.bin"
+  },
+  "entry_seeds": [
+    "258C50",
+    "258CA3"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AA33",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A8 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608770,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "010101063d810924508ca8a38ca80000",
+      "role": "Install the sprite 9D record and point init/main into the A8 module view"
+    }
+  ]
+}

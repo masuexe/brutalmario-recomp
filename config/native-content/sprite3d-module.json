@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "sprite3d-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 3D program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "3D",
+    "raw": "018509bb3d8b99002afc1934fc190000",
+    "init": "19FC2A",
+    "main": "19FC34",
+    "relative": {
+      "init": "0F",
+      "main": "19"
+    },
+    "rooms": [
+      "13C"
+    ],
+    "native_raw": "018509bb3d8b99002afcbd34fcbd0000"
+  },
+  "code": {
+    "source_address": "19FC1B",
+    "native_address": "BDFC1B",
+    "size": 756,
+    "sha256": "58d4d8bcf0f8df6365f5d0d739be5df4386f71df11e7b7c4e04fea3fcf684b65",
+    "adapted_sha256": "58d4d8bcf0f8df6365f5d0d739be5df4386f71df11e7b7c4e04fea3fcf684b65",
+    "pack_file": "sprite3d-code.bin"
+  },
+  "entry_seeds": [
+    "19FC2A",
+    "19FC34"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01802A",
+    "0187A7",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the BD code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607234,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "018509bb3d8b99002afcbd34fcbd0000",
+      "role": "Install the sprite 3D record and point init/main into the BD module view"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "id": "sprite7e-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 7E program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "7E",
+    "raw": "0136093b358119245499247399240000",
+    "init": "249954",
+    "main": "249973",
+    "relative": {
+      "init": "0F",
+      "main": "2E"
+    },
+    "rooms": [
+      "0A3"
+    ],
+    "native_raw": "0136093b358119245499b57399b50000"
+  },
+  "code": {
+    "source_address": "249945",
+    "native_address": "B59945",
+    "size": 2476,
+    "sha256": "3533d1ac1fc2afc6f8661011c5904f6d033a4f08db9bf7c5761715fd1123b600",
+    "adapted_sha256": "3533d1ac1fc2afc6f8661011c5904f6d033a4f08db9bf7c5761715fd1123b600",
+    "pack_file": "sprite7e-code.bin"
+  },
+  "entry_seeds": [
+    "249954",
+    "249973"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "01A7DC",
+    "01AA33",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the B5 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608274,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0136093b358119245499b57399b50000",
+      "role": "Install the sprite 7E record and point init/main into the B5 module view"
+    }
+  ]
+}

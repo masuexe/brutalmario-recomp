@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "id": "sprite38-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 38 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "38",
+    "raw": "013600803f8319640f80224c80220000",
+    "init": "22800F",
+    "main": "22804C",
+    "relative": {
+      "init": "0F",
+      "main": "4C"
+    },
+    "rooms": [
+      "0F3"
+    ],
+    "native_raw": "013600803f8319640f80bf4c80bf0000"
+  },
+  "code": {
+    "source_address": "228000",
+    "native_address": "BF8000",
+    "size": 5511,
+    "sha256": "d08f54413facc4f95b53850a27b445f926da7229d6a32d89a8c679f0b4b520ed",
+    "adapted_sha256": "d08f54413facc4f95b53850a27b445f926da7229d6a32d89a8c679f0b4b520ed",
+    "pack_file": "sprite38-code.bin"
+  },
+  "entry_seeds": [
+    "22800F",
+    "22804C"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F606",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the BF code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607154,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600803f8319640f80bf4c80bf0000",
+      "role": "Install the sprite 38 record and point init/main into the BF module view"
+    }
+  ]
+}
