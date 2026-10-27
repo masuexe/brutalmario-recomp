@@ -47,6 +47,37 @@ patches use distinct slots, so they do not collide.
    code packs and four type-3 packs.
 4. Run the unchanged-route regression and the room sample set.
 
+## Built target
+
+The target is `demo11-native-product`. Its config is
+`config/restorations/demo11-native-product.json`.
+
+| Item | Value |
+| --- | --- |
+| ROM | `052d4ddf6add8e60eb9a1b6c2be5db1f53f79db8f188e93ab0fdbc5163732a88` |
+| Binary | `BrutalMarioDemo11NativeProductSNESRecomp` |
+| Packs | 39 |
+| Type-1 records | 35 |
+| Seven patches | the full `seven-module.json` patch list |
+
+The pack banks run from `A2` to `C9`. The Seven code pack uses `A2`, the Seven
+graphics pack uses `A6`, and the gap packs take the rest.
+
+Slot `2A` holds the Seven program in bank `A2`. A separate single-slot gap
+target holds the same program in bank `A9`, so the merged target uses the Seven
+record and leaves that copy out.
+
+| Check | Result |
+| --- | --- |
+| `BRK` count on route `demo11-s004-entry` | 0 |
+| Route `demo11-s004-entry` dump | equal to the baseline |
+| Unchanged-route regression | 32 of 32 dumps equal |
+
+The tests are `tests/test_product_target.py` and pass 5/5. The full suite passes
+278/278 tests. The log is `local/reports/unit-tests-product.log`. The regression
+report is `local/reports/native-sprite-full-regression-product.json`, SHA-256
+`76bb4a146897918b7eadcb1b7a06c95078f3394ed83cb81021057af952207f13`.
+
 ## Limits
 
 This document records a plan. No target exists yet, and this document measures

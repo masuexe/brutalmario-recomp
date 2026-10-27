@@ -33,9 +33,9 @@ def capture(target, route):
     return directory
 
 
-def compare(route):
+def compare(route, gap_target=None):
     base = capture(BASE, route)
-    gap = capture(GAP, route)
+    gap = capture(gap_target or GAP, route)
     names = sorted({path.name for path in base.glob('*.wram.bin')} |
                    {path.name for path in gap.glob('*.wram.bin')})
     if not names:
@@ -57,16 +57,19 @@ def compare(route):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--routes', nargs='+', default=list(ROUTES))
+    parser.add_argument('--gap', default=GAP)
     parser.add_argument('--output', type=Path,
                         default=ROOT/'local/reports/native-sprite-full-regression.json')
     args = parser.parse_args()
-    report = {'scope': __doc__.strip(), 'baseline': BASE, 'gap': GAP,
-              'routes': {route: compare(route) for route in args.routes}}
+    report = {'scope': __doc__.strip(), 'baseline': BASE, 'gap': args.gap,
+              'routes': {route: compare(route, args.gap) for route in args.routes}}
     total = sum(entry['total'] for entry in report['routes'].values())
     equal = sum(entry['equal'] for entry in report['routes'].values())
     report['total'] = total
     report['equal'] = equal
     args.output.parent.mkdir(parents=True, exist_ok=True)
+    if args.gap != GAP:
+        args.output = args.output.with_name(args.output.stem+'-'+args.gap.split('-')[-1]+'.json')
     args.output.write_text(json.dumps(report, indent=2)+chr(10))
     print(args.output, sha(args.output.read_bytes()))
     print('equal', equal, 'of', total)

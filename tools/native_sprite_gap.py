@@ -84,6 +84,9 @@ def packs(target):
     pins.append(("BM_NATIVE_GRAPHICS_PACK", dict(previous["graphics"]["payload"],
                  pack_file=previous["graphics"]["pack_file"]), previous["graphics"]["native_address"],
                  previous["graphics"]["payload"]["sha256"], False))
+    for extra in cfg["native_sprite_gap"].get("extra_packs", []):
+        pins.append((extra["variable"], extra, extra["address"], extra["sha256"],
+                     bool(extra.get("executable", False))))
     result = []
     for variable, item, address, digest, executable in pins:
         result.append(dict(variable=variable, pack_file=item["pack_file"], address=address,
@@ -158,6 +161,12 @@ def prepare(target):
     base = (base_dir / 'rom.sfc').read_bytes()
     verify(base, cfg['base_output'], 'sprite gap recipient base')
     out = bytearray(base)
+    for patch in cfg["native_sprite_gap"].get("extra_patches", []):
+        offset = patch["offset"]
+        before, after = bytes.fromhex(patch["before"]), bytes.fromhex(patch["after"])
+        if out[offset:offset+len(before)] != before or len(before) != len(after):
+            raise ValueError("sprite gap extra patch differs")
+        out[offset:offset+len(after)] = after
     for recipe in recipes:
         for patch in recipe['unapplied_rom_patches']:
             offset = patch['offset']
@@ -173,7 +182,16 @@ def prepare(target):
     for index, module in enumerate(directories):
         module_by_variable['BM_SEVEN_CODE_PACK' if index == 0
                            else 'BM_SEVEN_CODE_PACK_'+str(index+1)] = module
+    extra_by_variable = {extra["variable"]: extra
+                         for extra in cfg["native_sprite_gap"].get("extra_packs", [])}
     for pack in packs(target):
+        extra = extra_by_variable.get(pack['variable'])
+        if extra:
+            source = ROOT / extra["source"]
+            data = (source / pack['pack_file']).read_bytes()
+            verify(data, pack, 'sprite gap extra pack')
+            write_verified(directory / pack['pack_file'], data)
+            continue
         source = module_by_variable.get(pack['variable'], base_dir)
         data = (source / pack['pack_file']).read_bytes()
         verify(data, pack, 'sprite gap module pack')
