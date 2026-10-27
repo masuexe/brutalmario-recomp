@@ -67,4 +67,5 @@ The recipe is `config/native-content/sprite95-module.json`. The donor manifest
 is `config/7hero-donor.json`. The module receipt is
 `local/native-modules/sprite95-v1/preparation-receipt.json`, SHA-256
 `2453be33f3d128707e71b79ae416bde4cdb362deea57ed73425e49377dbdb486`. The tests
-are `tests/test_sprite_module.py` and pass 5/5.
+are `tests/test_sprite_module.py` and pass 5/5. The full suite passes 202/202
+tests. The log is `local/reports/unit-tests-sprite95.log`.
