@@ -61,4 +61,5 @@ python3 tools/audit_sprite_gaps.py
 
 The report is `local/reports/native-sprite-gaps.json`, SHA-256
 `954c6828d4d71f7415c3e8760c3068b37ff5fbacb69104d1842a5f8bb0e20f55`. The tests
-are `tests/test_sprite_gaps.py`.
+are `tests/test_sprite_gaps.py` and pass 5/5. The full suite passes 197/197
+tests. The log is `local/reports/unit-tests-gaps.log`.
