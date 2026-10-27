@@ -92,6 +92,7 @@ python3 tools/audit_sprite_type3.py
 
 The report is `local/reports/native-sprite-type3.json`, SHA-256
 `f4c42057d88c377966af1ebe764a58e7cf06221591070033471e79a4fefc1ad0`. The tests
-are `tests/test_sprite_type3.py` and pass 5/5. The captures are
+are `tests/test_sprite_type3.py` and pass 5/5. The full suite passes 192/192
+tests. The log is `local/reports/unit-tests-type3.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,
 `type3-room16b-native-v1` and `type3-room170-native-v1`.
