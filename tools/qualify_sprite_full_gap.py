@@ -15,6 +15,12 @@ from restore_star_world_1 import sha
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'demo11-native-sprite-full'
 OPEN_ROOMS = {
+    '085': ('room085-donor-v1', 'room085-native-v1'),
+    '096': ('room096-donor-v1', 'room096-native-v1'),
+    '0A2': ('room0A2-donor-v1', 'room0A2-native-v1'),
+    '0BB': ('room0BB-donor-v1', 'room0BB-native-v1'),
+    '110': ('room110-donor-v1', 'room110-native-v1'),
+    '13C': ('room13C-donor-v1', 'room13C-native-v1'),
     '001': ('room001-donor-v1', 'room001-native-v1'),
     '091': ('room091-donor-v1', 'room091-native-v1'),
     '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
@@ -31,6 +37,10 @@ ROOMS = {
     '147': ('room147-donor-v1', 'room147-native-v1', ('r1', 'r2'), True),
     '05D': ('room05D-donor-v1', 'room05D-native-v1', ('r1', 'r2'), True),
     '15D': ('room15D-donor-v1', 'room15D-native-v1', ('r1', 'r2'), True),
+    '0BA': ('room0BA-donor-v1', 'room0BA-native-v1', ('r1', 'r2'), True),
+    '08B': ('room08B-donor-v1', 'room08B-native-v1', ('r1', 'r2'), True),
+    '0F3': ('room0F3-donor-v1', 'room0F3-native-v1', ('r1', 'r2'), True),
+    '160': ('room160-donor-v1', 'room160-native-v1', ('r1', 'r2'), True),
 }
 
 
@@ -103,6 +113,10 @@ def qualify():
     require(rooms['147']['rows_equal'], 'room 147 does not match the donor')
     require(rooms['05D']['rows_equal'], 'room 05D does not match the donor')
     require(rooms['15D']['rows_equal'], 'room 15D does not match the donor')
+    require(rooms['0BA']['rows_equal'], 'room 0BA does not match the donor')
+    require(rooms['08B']['rows_equal'], 'room 08B does not match the donor')
+    require(rooms['0F3']['rows_equal'], 'room 0F3 does not match the donor')
+    require(rooms['160']['rows_equal'], 'room 160 does not match the donor')
     log = (ROOT/'local/captures'/'spritefull-155-native-v1'/'run.log').read_text()
     require('BRK' not in log, 'the target reached BRK')
     counters = {}
