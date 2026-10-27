@@ -111,7 +111,8 @@ def analyze(donor, recipe):
             if not first <= (bank << 16 | ins.addr) < end or (bank << 16 | ins.addr)+ins.length > end:
                 raise ValueError('decoded instruction escapes module')
             instructions[(ins.addr, decoded.key.m, decoded.key.x)] = ins
-            if ins.mode in (ABS, ABS_X, ABS_Y) and ins.operand >= 0x8000:
+            if (ins.mode in (ABS, ABS_X, ABS_Y) and ins.operand >= 0x8000
+                    and ins.mnem not in ('PEA', 'PER')):
                 if not first <= (bank << 16 | ins.operand) < end:
                     ignored = {(int(item['address'], 16), int(item['operand'], 16))
                                for item in recipe.get('ignored_operands', [])}

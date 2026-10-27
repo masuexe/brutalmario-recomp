@@ -103,5 +103,19 @@ class FullGapTargetTests(unittest.TestCase):
             self.assertEqual(entry["mode"], 0x12, room)
 
 
+    def test_pea_operands_are_values_not_addresses(self):
+        import prepare_sprite_module as sprite
+        recipe = sprite.read_recipe(ROOT / "config/native-content/sprite2c-module.json")
+        self.assertEqual(len(recipe["ignored_operands"]), 1)
+        entry = recipe["ignored_operands"][0]
+        self.assertEqual(entry["address"], "2193D2")
+        self.assertEqual(entry["operand"], "C6C0")
+        blocked = sprite.read_recipe(ROOT / "config/native-content/sprite7f-module.json")
+        donor = sprite.prepare_donor(ROOT / blocked["donor_manifest"])
+        base = (ROOT / "local/restoration/demo11-native-sprite9e/rom.sfc").read_bytes()
+        with self.assertRaises(ValueError):
+            sprite.build_code(donor, base, blocked)
+
+
 if __name__ == "__main__":
     unittest.main()

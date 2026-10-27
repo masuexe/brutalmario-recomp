@@ -19,8 +19,15 @@ Thirty-one blocks come from `cheap-demo` and two from `mazo`.
 
 Slot `2C` writes to one address in the module bank. A write to ROM has no
 effect, so the recipe records that operand in `ignored_operands` and needs no
-data. Slot `7F` still stays open: it reads a table and pushes a pointer outside
-the block, so its review needs the referenced data.
+data.
+
+Slot `7F` stays open. Its code reads two indexed tables that start at
+`24:BEA8` and `24:BEA9`, with the index `$1933 * 2`. The table length is not
+known yet, so the review needs the table bounds.
+
+The instruction `PEA $804C` is not a data address. It passes the custom sprite
+id `0x4C` to the SpriteTool spawn entry `00:C0FB` with the flag `0x8000`. The
+analyzer no longer treats a `PEA` or `PER` operand as an address.
 
 ## Packs
 
@@ -209,5 +216,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 7/7. The full suite passes
-263/263 tests. The log is `local/reports/unit-tests-34.log`.
+The tests are `tests/test_sprite_full.py` and pass 8/8. The full suite passes
+264/264 tests. The log is `local/reports/unit-tests-7f.log`.
