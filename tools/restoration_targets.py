@@ -5,6 +5,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeSprite12SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Sprite 12',
     },
+    'demo11-native-sprite10-14': {
+        'binary': 'BrutalMarioDemo11NativeSprites10To14SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprites 10 to 14',
+    },
     'demo11-native-sprite11': {
         'binary': 'BrutalMarioDemo11NativeSprite11SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Sprite 11',

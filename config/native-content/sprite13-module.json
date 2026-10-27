@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "sprite13-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 13 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "13",
+    "raw": "012200003b131944f3c31a17c41a0000",
+    "init": "1AC3F3",
+    "main": "1AC417",
+    "relative": {
+      "init": "0F",
+      "main": "33"
+    },
+    "rooms": [
+      "157",
+      "15C",
+      "15D"
+    ],
+    "native_raw": "012200003b131944f3c3ac17c4ac0000"
+  },
+  "code": {
+    "source_address": "1AC3E4",
+    "native_address": "ACC3E4",
+    "size": 3205,
+    "sha256": "458052f99f79bf8eedf1270b7d8e6aa76eed0537fee028a74fffe3f9748dc314",
+    "adapted_sha256": "458052f99f79bf8eedf1270b7d8e6aa76eed0537fee028a74fffe3f9748dc314",
+    "pack_file": "sprite13-code.bin"
+  },
+  "entry_seeds": [
+    "1AC3F3",
+    "1AC417"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "018022",
+    "01802A",
+    "0187A7",
+    "01B7B3",
+    "02A9DE",
+    "03B664",
+    "03B72B",
+    "07F7D2",
+    "27FAF4"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the AC code view",
+    "sprite graphics review",
+    "entry qualification against the cheap-demo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606562,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "012200003b131944f3c3ac17c4ac0000",
+      "role": "Install the sprite 13 record and point init/main into the AC module view"
+    }
+  ]
+}

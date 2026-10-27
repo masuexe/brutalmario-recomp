@@ -24,9 +24,12 @@ class SpriteGapTargetTests(unittest.TestCase):
     def test_identity_line_admits_the_recipe(self):
         pair = gap.settings("demo11-native-sprite95")
         self.assertIsNotNone(pair)
-        cfg, recipe = pair
+        cfg, pairs = pair
         self.assertEqual(cfg["id"], "demo11-native-sprite95")
+        self.assertEqual(len(pairs), 1)
+        path, recipe = pairs[0]
         self.assertEqual(recipe["id"], "sprite95-module")
+        self.assertEqual(path, "config/native-content/sprite95-module.json")
 
     def test_pack_names_are_stable(self):
         names = [pack["variable"] for pack in gap.packs("demo11-native-sprite95")]
