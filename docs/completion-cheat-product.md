@@ -39,6 +39,26 @@ engine. The capture in the verification section confirms them on the product tar
 The script uses WRAM offset `$1182C` for the last range, because both script
 readers address that page from WRAM.
 
+## Cheat build identity
+
+The cheat is a script on the product build. It is not a separate image. The
+launcher starts the same ROM and the same binary as a normal start. It writes the
+progress fields after the map appears.
+
+| Item | Value |
+| --- | --- |
+| ROM | `b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5` |
+| Packs | 43 |
+| Sprite records | 36 type-1 records and 3 type-3 records |
+
+Every content fix in the product build therefore also applies to the cheat
+session.
+One example is the slot `80` record for room `0A6`. See
+[the gap inventory](native-sprite-gaps.md).
+
+The script ends after the map reload and does not quit, because the player takes
+control at that point. A headless capture of the script therefore never stops on
+its own.
 ## Verification
 
 The script is `recomp/inputs/cheat-complete-all.script`. The capture is

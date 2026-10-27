@@ -69,5 +69,11 @@ class ProductTargetTests(unittest.TestCase):
         self.assertEqual(len(variables), 43)
         self.assertEqual(len(set(variables)), 43)
 
+    def test_cheat_uses_the_same_build(self):
+        doc = (ROOT / "docs/completion-cheat-product.md").read_text()
+        self.assertIn("## Cheat build identity", doc)
+        self.assertIn("b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5", doc)
+        self.assertIn("43", doc)
+
 if __name__ == "__main__":
     unittest.main()
