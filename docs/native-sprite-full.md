@@ -149,6 +149,15 @@ spawn an actor there. The other three rooms hold different placement data.
 The report is `local/reports/native-sprite-full-lists.json`, SHA-256
 `028e7bb586ade29b6a18b0d4e8a8cb3963e8f7e61255b4902993a2a29ba425dd`.
 
+## Slot 9B branch
+
+The slot `9B` main reads `$1504` and branches on the value: `1` runs one
+routine, `2` runs another, and any other value runs a third. The donor holds
+`$1504 = 2` and the target holds `$1504 = 0` in room `190`.
+
+A forced write of `$1504 = 2` keeps the value, does not create the missing
+actors, and makes the target set `$C2 = 1`. The branch value is therefore not
+the only cause.
 ## Open behaviour
 
 Rooms `151` and `190` hold slots `9C` and `9B`. The target carries both records
@@ -195,4 +204,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 7/7. The full suite passes
-263/263 tests. The log is `local/reports/unit-tests-emufreeze.log`.
+263/263 tests. The log is `local/reports/unit-tests-9b.log`.
