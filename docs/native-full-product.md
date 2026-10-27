@@ -104,6 +104,7 @@ python3 tools/play_native_target.py --target demo11-native-product
 
 `--print-env` lists the pack variables and stops. `--script` runs a script file
 instead of the player input, which is how the smoke test starts the game.
+A script run writes its dumps to `local/captures/play-<target>`.
 
 The smoke test starts the binary, mounts 42 packs and exits with code 0.
 ## Limits

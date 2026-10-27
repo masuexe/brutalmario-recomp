@@ -76,6 +76,10 @@ def main():
                 print(key + '=' + env[key])
         return
 
+    if args.script:
+        scratch = ROOT / 'local/captures' / ('play-' + args.target)
+        scratch.mkdir(parents=True, exist_ok=True)
+        env.update(SNESRECOMP_DUMP_DIR=str(scratch))
     command = [str(binary), '--no-launcher',
                '--config', str(ROOT / 'recomp/m1-config.ini'),
                '--rom', str(rom)]
