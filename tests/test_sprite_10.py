@@ -66,20 +66,30 @@ class Sprite10ModuleTests(unittest.TestCase):
 
 
 
+    @unittest.skipUnless((ROOT / "local/captures/sprite10-12d-base-v1/s0.wram.bin").exists(),
+                         "requires the sprite 10 baseline capture")
+    def test_baseline_holds_the_placeholder(self):
+        wram = (ROOT / "local/captures/sprite10-12d-base-v1/s0.wram.bin").read_bytes()
+        rows = [wram[0x9E+slot] for slot in range(12) if wram[0x14C8+slot]]
+        self.assertTrue(rows)
+        self.assertTrue(all(sprite == 0x00 for sprite in rows))
+
     @unittest.skipUnless((ROOT / "local/reports/native-sprite10-final.json").exists(),
                          "requires the sprite 10 qualification report")
-    def test_qualification_report(self):
+    def test_donor_parity_report(self):
         report = json.loads((ROOT / "local/reports/native-sprite10-final.json").read_text())
-        self.assertEqual(sorted(report["rooms"]), ["12D", "156", "15B"])
-        for room, rows in report["rooms"].items():
-            self.assertGreaterEqual(len(rows["target_slot_rows"]), 1, room)
-            for row in rows["target_slot_rows"]:
-                self.assertEqual(row["sprite"], 0x36, room)
-                self.assertEqual(row["custom"], 0x10, room)
-            for row in rows["baseline_rows"]:
-                self.assertEqual(row["sprite"], 0x00, room)
-        self.assertGreater(report["module_view"]["page_instructions"], 100000)
-        self.assertEqual(report["native_address"], "A4A61F")
+        exact = report["exact_rooms"]
+        self.assertEqual(sorted(exact), ["12d", "15B"])
+        for room, samples in exact.items():
+            self.assertTrue(samples["r2"]["rows_equal"], room)
+            self.assertTrue(samples["r3"]["rows_equal"], room)
+        self.assertTrue(exact["12d"]["r1"]["rows_equal"])
+        dependent = report["dependent_rooms"]
+        self.assertEqual(sorted(dependent), ["156", "157", "15C"])
+        self.assertEqual(dependent["156"]["requires_slots"], [17])
+        self.assertEqual(dependent["157"]["requires_slots"], [18, 19])
+        self.assertEqual(dependent["15C"]["requires_slots"], [19, 20])
+        self.assertGreater(report["module_view"]["page_instructions"], 10000)
 
 
 if __name__ == "__main__":

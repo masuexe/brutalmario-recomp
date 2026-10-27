@@ -85,16 +85,14 @@ a clear.
 
 ## Entry qualification
 
-The donor comparison stays open. The room numbers are version-local. The
-`7hero` preamble enters rooms `16B` and `16C` through a pipe path. The same
-preamble in `cheap-demo` reaches room `14D` and then mode `0x0E`, so it does not
-reach rooms `12D` to `15C`.
+The donor comparison is complete for rooms `12D` and `15B`. The cheap-demo pipe
+poke needs `poke 19b8 <room low>` together with `poke 19d8 05` to load a room
+above `0x100`. With `19d8 00` to `19d8 04` the game loads the room below
+`0x100` instead, which holds no slot `10` sprites.
 
-A `cheap-demo` map probe does reach rooms `12D`, `156`, `157`, `15B` and `15C`
-through node bytes `51`, `7a`, `7b`, `7f` and `80` on the intro-cleared map.
-Those donor rooms load in mode `0x14` but hold no actors, so the probe does not
-show the donor actor rows. The donor record points to the same block in both
-rooms, so the platform and the block are the same.
+Rooms `12D` and `15B` match the donor in the later samples. Room `12D` matches
+in all three samples. Rooms `156`, `157` and `15C` also place custom slots
+`11` to `14`, which the recipient still leaves empty, so those rooms stay open.
 
 The target capture `sprite10-12d-fixed-native-v1` enters room `12D` and
 holds four actors with custom id `10` in slots 4 to 7 at X `112`, `108`,
@@ -108,9 +106,17 @@ rightward move. The run reports no `BRK`.
 Rooms `156` and `15B` also execute the module view
 (`bank=A4` page instructions `12272` and `61640`).
 
-A donor fixture that spawns the donor actors stays open. This document claims
-the static review, the built target and the baseline differential. It does not
-claim donor parity.
+This document claims the static review, the built target, donor parity for rooms
+`12D` and `15B` and the baseline differential. It does not claim the other
+three rooms, movement or a course pass.
+
+| Room | Donor | Target | Rows equal |
+| --- | --- | --- | --- |
+| `12D` | `(4,36,10,112,208)`, `(5,...,108,370)`, `(6,...,108,210)`, `(7,...,108,290)` | same | yes, all samples |
+| `15B` | `(7,36,10,16,368)`, `(9,36,10,240,368)` | same | yes, samples 2 and 3 |
+| `156` | needs slot `11` | slot `11` still empty | open |
+| `157` | needs slots `12` and `13` | both empty | open |
+| `15C` | needs slots `13` and `14` | both empty | open |
 
 ## Baseline differential
 
@@ -124,11 +130,12 @@ custom id `10` in the same rooms.
 | `156` | sprite `00` rows | sprite `36`, custom `10` |
 | `15B` | sprite `00` rows | sprite `36`, custom `10` |
 
-The qualification tool is `tools/qualify_sprite10_gap.py`. Its report is
+The tool is `tools/qualify_sprite10_gap.py`. Its report is
 `local/reports/native-sprite10-final.json`, SHA-256
-`301ee125c9f463a4dfb9b53638a261140634564682d1d0c49922a23c83d16e7d`. The tool
-checks the ROM and binary identities, the installed record, the low-16-bit rule,
-the module receipt, the baseline rows and the module-view counters.
+`f7d5be7025df840856d0fbc9db67859e0ef59bf77094cdf3f9018b18f76fe97e`.
 
-The tests are `tests/test_sprite_10.py` and pass 6/6. The full suite passes
-213/213 tests. The log is `local/reports/unit-tests-sprite10-qual.log`.
+The tool checks the ROM and binary identities. It also checks the installed
+record, the low-16-bit rule, the module receipt, the two exact rooms and the
+module-view counters. The tests are `tests/test_sprite_10.py` and pass 7/7. The
+full suite passes 234/234 tests. The log is
+`local/reports/unit-tests-sprite10-donor.log`.
