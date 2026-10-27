@@ -51,6 +51,11 @@ def main():
                         help='optional script file, for a smoke test')
     parser.add_argument('--print-env', action='store_true',
                         help='print the environment and exit')
+    parser.add_argument('--complete-all', action='store_true',
+                        help='open every saved level slot, overworld event and '
+                             'switch before the player takes control')
+    parser.add_argument('--play-dir', type=Path,
+                        help='session directory for saves; default local/play/<target>')
     args = parser.parse_args()
 
     from restoration_targets import RESTORATIONS
@@ -68,6 +73,24 @@ def main():
     if receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest():
         raise SystemExit('binary differs from the build receipt; rebuild first')
 
+    if args.complete_all and args.script:
+        raise SystemExit('choose --complete-all or --script, not both')
+    script = args.script
+    if args.complete_all:
+        script = ROOT / 'recomp/inputs/cheat-complete-all.script'
+
+    play_dir = (args.play_dir or ROOT / 'local/play' / args.target).resolve()
+    saves = play_dir / 'saves'
+    saves.mkdir(parents=True, exist_ok=True)
+    if args.complete_all:
+        current = saves / 'save.srm'
+        if current.is_file():
+            aside = saves / 'save.srm.before-cheat'
+            if aside.exists():
+                aside.unlink()
+            current.rename(aside)
+            print('moved the earlier save to', aside)
+
     env = dict(os.environ)
     packs_env(args.target, cfg, env)
     if args.print_env:
@@ -76,18 +99,19 @@ def main():
                 print(key + '=' + env[key])
         return
 
-    if args.script:
+    if script:
         scratch = ROOT / 'local/captures' / ('play-' + args.target)
         scratch.mkdir(parents=True, exist_ok=True)
         env.update(SNESRECOMP_DUMP_DIR=str(scratch))
     command = [str(binary), '--no-launcher',
                '--config', str(ROOT / 'recomp/m1-config.ini'),
                '--rom', str(rom)]
-    if args.script:
-        command += ['--script', str(args.script)]
+    if script:
+        command += ['--script', str(script)]
     print('launch:', ' '.join(command))
     print('packs:', sum(1 for key in env if key.startswith('BM_')))
-    subprocess.run(command, env=env, check=False)
+    print('session directory:', play_dir)
+    subprocess.run(command, env=env, cwd=str(play_dir), check=False)
 
 
 if __name__ == '__main__':

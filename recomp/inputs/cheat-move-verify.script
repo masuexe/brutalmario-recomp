@@ -1,0 +1,27 @@
+# Fresh save, then write the completed-progress fields and reload the map.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+# Completed-progress writes: cleared level slots, overworld events, switches,
+# completion counter and the per-translevel coin bitset.
+poke 1ea2 9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f
+poke 1f02 ffffffffffffffffffffffffffffff
+poke 1f27 01010101
+poke 1f2e 60
+poke 1f2f ffffffffffffffffffffffff
+poke 1182c 000000000000000000000000000000000000000000000000
+# Map reload through the normal fade so the tiles and warp stars rebuild.
+poke 0100 0b
+wait 240
+wait 60
+dump before_move
+press right 60
+wait 60
+dump after_move
+quit

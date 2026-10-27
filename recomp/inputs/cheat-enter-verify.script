@@ -1,0 +1,35 @@
+# Completed-progress cheat: open every saved level slot, every overworld event
+# and every switch, then reload the map through the normal fade so the level
+# tiles and warp stars rebuild from the new flags.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+# Wait for the overworld so the pokes land after the save-to-WRAM copy.
+until 0100 == 0e 900
+# 96 saved level slots: clear bit plus the direction bits, no deny or midway bit.
+poke 1ea2 9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f
+# 15 overworld event bytes.
+poke 1f02 ffffffffffffffffffffffffffffff
+# Four switch palaces.
+poke 1f27 01010101
+# Synthetic completion counter.
+poke 1f2e 60
+# Saved per-translevel coin bitset.
+poke 1f2f ffffffffffffffffffffffff
+# Two custom midway masks at $7F:182C.
+poke 1182c 000000000000000000000000000000000000000000000000
+# Reload the map through loader mode $0B.
+poke 0100 0b
+wait 240# Enter the level under the player to prove that level entry still works.
+press a 30
+wait 240
+until 0100 == 14 900
+wait 60
+dump cheat_level
+quit

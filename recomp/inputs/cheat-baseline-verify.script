@@ -1,0 +1,17 @@
+# Fresh save, then write the completed-progress fields and reload the map.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+# Map reload through the normal fade so the tiles and warp stars rebuild.
+poke 0100 0b
+wait 240
+wait 120
+dump plain_map
+dump plain_after
+quit
