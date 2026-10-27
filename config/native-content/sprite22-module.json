@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sprite22-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 22 program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "22",
+    "raw": "01360000f8a62d4551e01acae01a0000",
+    "init": "1AE051",
+    "main": "1AE0CA",
+    "relative": {
+      "init": "0F",
+      "main": "88"
+    },
+    "rooms": [
+      "075",
+      "088"
+    ],
+    "native_raw": "01360000f8a62d4551e0b0cae0b00000"
+  },
+  "code": {
+    "source_address": "1AE042",
+    "native_address": "B0E042",
+    "size": 2299,
+    "sha256": "575cd09f71131086f828f1c18bacb59dcdba1594fbcb810fca1d6dc2ece5d821",
+    "adapted_sha256": "575cd09f71131086f828f1c18bacb59dcdba1594fbcb810fca1d6dc2ece5d821",
+    "pack_file": "sprite22-code.bin"
+  },
+  "entry_seeds": [
+    "1AE051",
+    "1AE0CA"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01802A",
+    "0187A7",
+    "019138",
+    "01B7B3",
+    "02A9DE",
+    "03B664",
+    "03B72B",
+    "07F7D2",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the B0 code view",
+    "sprite graphics review",
+    "entry qualification against the cheap-demo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606802,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360000f8a62d4551e0b0cae0b00000",
+      "role": "Install the sprite 22 record and point init/main into the B0 module view"
+    }
+  ]
+}
