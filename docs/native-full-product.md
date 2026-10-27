@@ -54,14 +54,16 @@ The target is `demo11-native-product`. Its config is
 
 | Item | Value |
 | --- | --- |
-| ROM | `052d4ddf6add8e60eb9a1b6c2be5db1f53f79db8f188e93ab0fdbc5163732a88` |
+| ROM | `52a4f80db23cadccfcc6cf9693a8e0b054556ae636bae3f0f58f0fb0ecde84c3` |
 | Binary | `BrutalMarioDemo11NativeProductSNESRecomp` |
-| Packs | 39 |
+| Packs | 42 |
 | Type-1 records | 35 |
 | Seven patches | the full `seven-module.json` patch list |
+| Type-3 records | `C0`, `C1`, `C2` |
 
-The pack banks run from `A2` to `C9`. The Seven code pack uses `A2`, the Seven
-graphics pack uses `A6`, and the gap packs take the rest.
+The pack banks run from `A2` to `CE`. The Seven code pack uses `A2`, the Seven
+graphics pack uses `A6`, the gap packs take the middle banks and the three
+type-3 blocks use `CB`, `CC` and `CD`.
 
 Slot `2A` holds the Seven program in bank `A2`. A separate single-slot gap
 target holds the same program in bank `A9`, so the merged target uses the Seven
@@ -72,14 +74,28 @@ record and leaves that copy out.
 | `BRK` count on route `demo11-s004-entry` | 0 |
 | Route `demo11-s004-entry` dump | equal to the baseline |
 | Unchanged-route regression | 32 of 32 dumps equal |
+| Room `155` | 4 of 4 samples equal |
+| Room `0A5` | phase-exact at a 29-frame offset |
 
 The tests are `tests/test_product_target.py` and pass 5/5. The full suite passes
-278/278 tests. The log is `local/reports/unit-tests-product.log`. The regression
+278/278 tests. The log is `local/reports/unit-tests-product2.log`. The regression
 report is `local/reports/native-sprite-full-regression-product.json`, SHA-256
 `76bb4a146897918b7eadcb1b7a06c95078f3394ed83cb81021057af952207f13`.
 
+## Room check on the merged target
+
+The merged ROM differs from the 35-record ROM. Each room compare therefore needs
+a phase alignment. Room `155` matches in all four samples without an offset.
+Room `0A5` shows the same 29-frame offset as the 35-record target. It also shows
+the same three boundary frames. The Seven and type-3 additions therefore leave
+that module unchanged.
+
+The type-3 records join the target without the constructor patch. That keeps the
+crash out and installs the records.
+
 ## Limits
 
-This document records a plan. No target exists yet, and this document measures
-no pack for this combination. A player test needs the built target and a room
-set that the player can reach without a teleport fixture.
+This document claims the built target, the unchanged-route regression and two
+room checks. It does not claim the other rooms, movement, a course pass or a
+clear. A player test needs a route that the player can reach without a teleport
+fixture.

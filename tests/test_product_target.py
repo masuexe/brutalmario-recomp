@@ -25,15 +25,17 @@ class ProductTargetTests(unittest.TestCase):
         slots = [recipe["record"]["slot"] for _, recipe in self.pairs]
         self.assertNotIn("2A", slots)
 
-    def test_pack_layout_holds_thirty_nine_packs(self):
+    def test_pack_layout_holds_forty_two_packs(self):
         packs = gap.packs("demo11-native-product")
-        self.assertEqual(len(packs), 39)
+        self.assertEqual(len(packs), 42)
         banks = sorted(int(pack["address"], 16) >> 16 for pack in packs)
-        self.assertEqual(len(set(banks)), 39)
+        self.assertEqual(len(set(banks)), 42)
         self.assertIn(0xA2, banks)
         self.assertIn(0xA6, banks)
         self.assertIn(0xA5, banks)
         self.assertIn(0xB6, banks)
+        for bank in (0xCB, 0xCC, 0xCD):
+            self.assertIn(bank, banks)
 
     def test_target_rom_identity(self):
         verify(self.rom, self.cfg["output"], "product target ROM")

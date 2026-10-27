@@ -62,6 +62,33 @@
         "sha256": "f37524950aace0fa931a051bc751b365ddea3ef6ee27fc29a8712971e0de209d",
         "executable": false,
         "source": "local/native-modules/seven-v1"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_TYPE3_C0",
+        "pack_file": "type3-c0.bin",
+        "address": "CB86D7",
+        "size": 205,
+        "sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+        "executable": true,
+        "source": "local/native-modules/demo11-native-type3b-final-type3_c0_block"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_TYPE3_C1",
+        "pack_file": "type3-c1.bin",
+        "address": "CCAE08",
+        "size": 213,
+        "sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+        "executable": true,
+        "source": "local/native-modules/demo11-native-type3b-final-type3_c1_block"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_TYPE3_C2",
+        "pack_file": "type3-c2.bin",
+        "address": "CDDD21",
+        "size": 295,
+        "sha256": "fa8c0ac51be70e188ebaf324802fd2ab9d4deec60674f6f9a3a411ec8549c509",
+        "executable": true,
+        "source": "local/native-modules/demo11-native-type3b-final-type3_c2_block"
       }
     ],
     "extra_patches": [
@@ -148,11 +175,29 @@
         "before": "ffffff",
         "after": "65d1a6",
         "role": "Previously unreferenced native graphics namespace pointer"
+      },
+      {
+        "offset": 1609330,
+        "before": "0000ffffffffffff218001218001ffff",
+        "after": "03ffffffffffffffe686cbea86cbffff",
+        "role": "Install the type-3 sprite C0 record into bank CB"
+      },
+      {
+        "offset": 1609346,
+        "before": "0000ffffffffffff218001218001ffff",
+        "after": "03ffffffffffffff17aecc1baeccffff",
+        "role": "Install the type-3 sprite C1 record into bank CC"
+      },
+      {
+        "offset": 1609362,
+        "before": "0000ffffffffffff218001218001ffff",
+        "after": "03ffffffffffffff30ddcd34ddcdffff",
+        "role": "Install the type-3 sprite C2 record into bank CD"
       }
     ]
   },
   "output": {
     "size": 4194304,
-    "sha256": "052d4ddf6add8e60eb9a1b6c2be5db1f53f79db8f188e93ab0fdbc5163732a88"
+    "sha256": "52a4f80db23cadccfcc6cf9693a8e0b054556ae636bae3f0f58f0fb0ecde84c3"
   }
 }
