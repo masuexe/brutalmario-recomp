@@ -4,7 +4,7 @@
 
 The recipient holds 54 custom sprite slots with the type-0 placeholder record.
 Forty of those slots hold a type-1 record in an official donor. This target
-carries 33 of them at once. Each record keeps its type-1
+carries 34 of them at once. Each record keeps its type-1
 layout and each code block keeps its low 16 address bits.
 
 Four sampled rooms match the donor: `083`, `087`, `142` and `155`.
@@ -13,25 +13,26 @@ Four sampled rooms match the donor: `083`, `087`, `142` and `155`.
 
 The target carries the slots `10` to `14`, `0F`, `19`, `22`, `3B`, `55`, `92`,
 `A0`, `9D`, `93`, `7E`, `79`, `76`, `66`, `5D`, `4A`, `3F`, `3D`, `3C`, `38`,
-`36`, `32`, `31`, `2D`, `23`, `20`, `1C`, `9B` and `9C`.
+`36`, `32`, `31`, `2D`, `23`, `20`, `1C`, `9B`, `9C` and `2C`.
 
 Thirty-one blocks come from `cheap-demo` and two from `mazo`.
 
-Two further slots, `7F` and `2C`, stay open. Their blocks hold a bank-local
-operand that points outside the protected block, so the review needs the
-referenced data as well.
+Slot `2C` writes to one address in the module bank. A write to ROM has no
+effect, so the recipe records that operand in `ignored_operands` and needs no
+data. Slot `7F` still stays open: it reads a table and pushes a pointer outside
+the block, so its review needs the referenced data.
 
 ## Packs
 
-The target mounts 35 packs: one code block for each record, the sprite 9E code
+The target mounts 36 packs: one code block for each record, the sprite 9E code
 block and the graphics block. The code banks are `A4`, `A6` to `AF`, `B0` to
-`B5`, `B7` to `BF` and `C0` to `C9`.
+`B5`, `B7` to `BF`, `C0` to `C9` and `C4`.
 
 ## Built target
 
 | Item | Value |
 | --- | --- |
-| Target ROM | `4fd5c0b9d9d30bd46fdb6118eb86b55fe97af23bc95e771b7110d69c2b7d7ce6` |
+| Target ROM | `f1cb7ee24262b3290b36cb39de58607c7c943b8914980fc038607953b5732e01` |
 | Binary | `BrutalMarioDemo11NativeFullSpriteGapsSNESRecomp` |
 
 ## Room result
@@ -54,7 +55,7 @@ Each row lists `(slot, sprite, custom, x, y)`. The first sample matches in
 every room, and the later samples match where the fixture keeps the player
 still.
 
-The run reports no `BRK` and 35 module views.
+The run reports no `BRK` and 36 module views.
 
 ## Unchanged routes
 
@@ -169,6 +170,7 @@ and both programs start, but the donor behaviour does not follow yet.
 | `096` | `76` | 4 | 4 | Y differs |
 | `0B5` | `55` | 2 | 2 | the later child differs |
 | `0B6` | `55` | 4 | 4 | one actor Y differs in the later sample |
+| `05B` | `2C` | 2 | 1 | the target actor holds X 16 and Y 0 |
 | `162` | `92` | 1 | 1 | start X differs by 49 |
 | `164` | `92` | 1 | 1 | start X differs by 164 |
 | `0A3` | `7E` | 6 | 6 | positions differ |
@@ -199,7 +201,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`e2666ee8984ab0f01359c58570ef4d9ea338b199a4f07bd7f98f052cde53ff21`.
+`c5f43b07e4762cb80238e2dc8ff1471965d648a407feb9535e5fb90687b78e83`.
 
 ## Limits
 
@@ -208,4 +210,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 7/7. The full suite passes
-263/263 tests. The log is `local/reports/unit-tests-rooms18.log`.
+263/263 tests. The log is `local/reports/unit-tests-34.log`.

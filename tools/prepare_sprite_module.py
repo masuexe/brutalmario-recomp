@@ -113,7 +113,10 @@ def analyze(donor, recipe):
             instructions[(ins.addr, decoded.key.m, decoded.key.x)] = ins
             if ins.mode in (ABS, ABS_X, ABS_Y) and ins.operand >= 0x8000:
                 if not first <= (bank << 16 | ins.operand) < end:
-                    raise ValueError('bank-local operand escapes module')
+                    ignored = {(int(item['address'], 16), int(item['operand'], 16))
+                               for item in recipe.get('ignored_operands', [])}
+                    if (bank << 16 | ins.addr, ins.operand) not in ignored:
+                        raise ValueError('bank-local operand escapes module')
             if ins.mnem == 'JSR' and ins.mode == ABS:
                 target = bank << 16 | ins.operand
                 if first <= target < end:

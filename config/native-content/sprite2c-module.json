@@ -64,5 +64,12 @@
       "after": "012800003fa399440f80c45580c40000",
       "role": "Install the sprite 2C record and point init/main into the C4 module view"
     }
+  ],
+  "ignored_operands": [
+    {
+      "address": "2193D2",
+      "operand": "C6C0",
+      "reason": "The instruction stores to a ROM address in the module bank. A write to ROM has no effect on either host, so the operand needs no data."
+    }
   ]
 }

@@ -33,6 +33,7 @@ OPEN_ROOMS = {
     '0B5': ('room0B5-donor-v1', 'room0B5-native-v1'),
     '0B6': ('room0B6-donor-v1', 'room0B6-native-v1'),
     '162': ('room162-donor-v1', 'room162-native-v1'),
+    '05B': ('room05B-donor-v1', 'room05B-native-v1'),
     '164': ('room164-donor-v1', 'room164-native-v1'),
     '096': ('room096-donor-v1', 'room096-native-v1'),
     '0A3': ('room0A3-donor-v1', 'room0A3-native-v1'),
@@ -112,7 +113,7 @@ def qualify():
     rom = (ROOT/'local/restoration'/TARGET/'rom.sfc').read_bytes()
     verify(rom, cfg['output'], 'full gap target ROM')
     require(build['rom_sha256'] == cfg['output']['sha256'], 'build receipt ROM differs')
-    require(len(recipes) == 33, 'the target must carry 33 records')
+    require(len(recipes) == 34, 'the target must carry 34 records')
     for recipe in recipes:
         record = bytes.fromhex(recipe['record']['native_raw'])
         offset = recipe['unapplied_rom_patches'][0]['offset']
@@ -122,10 +123,10 @@ def qualify():
                 == (int(recipe['code']['source_address'], 16) & 0xffff),
                 'a module move does not keep the low 16 address bits')
     banks = sorted(int(recipe['code']['native_address'], 16) >> 16 for recipe in recipes)
-    require(len(set(banks)) == 33, 'the recipes share a code bank')
+    require(len(set(banks)) == 34, 'the recipes share a code bank')
     manifest = read(ROOT/'local/restoration'/TARGET/'input-manifest.json')
-    require(len(manifest['module_receipt_sha256']) == 33,
-            'the input manifest must hold 33 module receipts')
+    require(len(manifest['module_receipt_sha256']) == 34,
+            'the input manifest must hold 34 module receipts')
     rooms = {}
     for room, (donor_dir, native_dir, tags, exact) in ROOMS.items():
         samples = {}
@@ -173,7 +174,7 @@ def qualify():
             parts = line.split()
             counters[parts[1]] = {'resolutions': int(parts[2].split('=')[1]),
                                   'page_instructions': int(parts[3].split('=')[1])}
-    require(len(counters) >= 35, 'fewer than 35 module views ran')
+    require(len(counters) >= 36, 'fewer than 36 module views ran')
     return {'scope': __doc__.strip(), 'target': TARGET,
             'rom_sha256': cfg['output']['sha256'],
             'binary_sha256': build['binary_sha256'],
