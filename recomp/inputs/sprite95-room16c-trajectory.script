@@ -1,0 +1,52 @@
+# Sprite 95 room 16C trajectory (diagnostic pipe fixture).
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 6c
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 160
+dump t160
+wait 20
+dump t180
+wait 20
+dump t200
+wait 20
+dump t220
+wait 20
+dump t240
+wait 20
+dump t260
+wait 20
+dump t280
+wait 20
+dump t300
+wait 20
+dump t320
+wait 20
+dump t340
+quit

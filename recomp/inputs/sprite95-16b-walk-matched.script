@@ -1,4 +1,4 @@
-# Type-3 room 16B walk (matched fixture).
+# Type-3 room 16B walk (matched fixture, position poke included).
 wait 600
 dump title
 press start 2
@@ -24,6 +24,7 @@ wait 240
 dump castle_entry
 wait 600
 dump castle_idle
+poke 94 80004001
 poke 19b8 6b
 poke 19d8 01
 poke 88 0000

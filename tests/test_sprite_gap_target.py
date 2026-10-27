@@ -55,5 +55,19 @@ class SpriteGapTargetTests(unittest.TestCase):
         self.assertEqual(native[22:28], "39e5a3")
 
 
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite95-final.json").exists(),
+                         "requires the sprite 95 qualification report")
+    def test_room_and_walk_report(self):
+        report = json.loads((ROOT / "local/reports/native-sprite95-final.json").read_text())
+        self.assertEqual(sorted(report["rooms"]), ["16B", "16C", "16D", "16F", "172", "1CC"])
+        self.assertTrue(report["rooms"]["16B"]["slot_rows_equal"])
+        self.assertFalse(report["rooms"]["16C"]["slot_rows_equal"])
+        self.assertEqual(len(report["walk_samples"]), 9)
+        modes = [sample["mode"] for sample in report["walk_samples"]]
+        self.assertEqual(modes[0], 0x14)
+        self.assertEqual(modes[2], 0x0B)
+        self.assertTrue(all(mode == 0x0E for mode in modes[3:]))
+
+
 if __name__ == "__main__":
     unittest.main()

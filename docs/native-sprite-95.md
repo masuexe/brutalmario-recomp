@@ -6,9 +6,9 @@ The new official donor `7hero` holds a type-1 record for custom sprite slot
 `95`. The recipient places that slot in seven rooms but holds the type-0
 placeholder record. This document records the review of the record, the
 protected program, the dispatch table and one built target. The target now
-carries the record and runs the donor program from the free bank `A3`. Room
-`16B` entry matches the donor. Movement, death handling and a course pass stay
-open.
+carries the record and runs the donor program from the free bank `A3`. The
+entry of six rooms matches the donor in the slot `95` rows. A course pass and a
+clear stay open.
 
 ## Record
 
@@ -92,11 +92,47 @@ The four rows hold for the donor and for the target. The run log reports
 `bank=A3 resolutions=42683 executed_page_instructions=7004`, so the module view
 runs.
 
-The capture `sprite95-16b-walk-native-v1` holds a rightward walk. The target
-drops to mode `0x0B` and then to mode `0x0E` at player X `94`. The earlier
-target `demo11-native-mazo-b0` also drops to mode `0x0E` at the same point, so
-the drop does not come from this record. The donor fixture reaches a different
-room (`0x16E`) from the same actions, so the walk comparison stays open.
+## Six-room entry table
+
+The table holds the slot `95` actors at the first sample. Each row lists
+`(slot, sprite, custom, x)`.
+
+| Room | Donor | Target | Rows equal |
+| --- | --- | --- | --- |
+| `16B` | `(9,36,95,16)` | `(9,36,95,16)` | yes |
+| `16C` | `(8,36,95,175)`, `(9,36,95,112)` | `(8,36,95,172)`, `(9,36,95,112)` | no, 3 px |
+| `16D` | `(8,36,95,80)`, `(9,36,95,16)` | `(8,36,95,80)`, `(9,36,95,16)` | yes |
+| `16F` | `(9,36,95,16)` | `(9,36,95,16)` | yes |
+| `172` | `(6,36,95,192)`, `(7,36,95,64)` | `(6,36,95,192)`, `(7,36,95,64)` | yes |
+| `1CC` | `(9,36,95,48)` | `(9,36,95,48)` | yes |
+
+The captures use `sprite95-<room>-donor-v1` and `sprite95-<room>-native-v1`.
+Room `16C` holds one slot `95` actor with a three-pixel offset. A donor
+trajectory of the same room starts at `191` in both hosts. The trajectory then
+keeps a three-pixel lag. The actor follows the same path with a small phase
+difference.
+
+Two rooms hold differences in other custom slots. Room `16D` places custom
+`34`, whose recipient record points at a different program from the `7hero`
+record. Room `172` places standard sprite `00`, whose X differs by five pixels
+at the first sample. The review does not cover those slots.
+
+## Walk result
+
+The capture pair `sprite95-16b-walk-donor-v1` and
+`sprite95-16b-walk-native-v1` uses one fixture with the entry position poke.
+
+| Sample | Mode | Room | Player X |
+| ---: | ---: | ---: | ---: |
+| `w0` | `0x14` | `16B` | 16 |
+| `w1` | `0x14` | `16B` | 94 |
+| `w2` | `0x0B` | `16B` | 94 |
+| `w3` to `w8` | `0x0E` | `16B` | 13 |
+
+Both hosts hold the same triple at all nine samples. An earlier pair of
+captures reported that the donor reached room `0x16E`. That fixture omitted the
+entry position poke, so the two hosts entered different room states. With the
+identical fixture the walk behavior matches.
 
 ## Reproduction
 
@@ -113,10 +149,10 @@ are `tests/test_sprite_module.py` and pass 5/5.
 
 The qualification tool is `tools/qualify_sprite_gap.py`. Its report is
 `local/reports/native-sprite95-final.json`, SHA-256
-`569784f3ee5dbcc48fb6f5d14f4ce3021e71ee23d76dc899cae4f125dffcaf51`. The tool
-checks the ROM and binary identities, the installed record, the module receipt
-and the entry actor set. The suite passes 206/206 tests, and the log is
-`local/reports/unit-tests-sprite95-target.log`.
+`b58379ae20656d73849488f1d13a94b29426ff31fba95728af0582585f8e1e01`. The tool
+checks the ROM and binary identities, the installed record, the module receipt,
+the six-room slot `95` rows and the nine walk states. The suite passes
+207/207 tests, and the log is `local/reports/unit-tests-sprite95-parity.log`.
 
 ```
 python3 tools/m1.py --target demo11-native-sprite95 scaffold

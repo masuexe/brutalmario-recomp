@@ -17,6 +17,15 @@ TARGET = 'demo11-native-sprite95'
 DONOR_CAPTURE = 'type3-room16b-7hero-v1'
 NATIVE_CAPTURE = 'sprite95-16b-matched-native-v1'
 SLOT = 0x95
+ROOMS = {
+    '16B': ('type3-room16b-7hero-v1', 'sprite95-16b-matched-native-v1'),
+    '16C': ('sprite95-16c-donor-v1', 'sprite95-16c-native-v1'),
+    '16D': ('sprite95-16d-donor-v1', 'sprite95-16d-native-v1'),
+    '16F': ('sprite95-16f-donor-v1', 'sprite95-16f-native-v1'),
+    '172': ('sprite95-172-donor-v1', 'sprite95-172-native-v1'),
+    '1CC': ('sprite95-1cc-donor-v1', 'sprite95-1cc-native-v1'),
+}
+WALK = ('sprite95-16b-walk-donor-v1', 'sprite95-16b-walk-native-v1')
 
 
 def read(path):
@@ -65,6 +74,28 @@ def qualify():
             'the installed slot does not appear at entry')
     run_log = (ROOT/'local/captures'/NATIVE_CAPTURE/'run.log').read_text()
     require('bank=A3' in run_log, 'the A3 module view did not report')
+    rooms = {}
+    for room, (donor_name, native_name) in ROOMS.items():
+        donor_rows = actors((ROOT/'local/captures'/donor_name/'r1.wram.bin').read_bytes())
+        native_rows = actors((ROOT/'local/captures'/native_name/'r1.wram.bin').read_bytes())
+        donor_slot = [row for row in donor_rows if row['custom'] == SLOT]
+        native_slot = [row for row in native_rows if row['custom'] == SLOT]
+        require(len(native_slot) == len(donor_slot),
+                'slot 95 actor count differs: '+room)
+        rooms[room] = {'donor_capture': donor_name, 'native_capture': native_name,
+                       'donor_slot_rows': donor_slot, 'native_slot_rows': native_slot,
+                       'slot_rows_equal': donor_slot == native_slot,
+                       'whole_row_equal': donor_rows == native_rows}
+    walk_core = []
+    for index in range(9):
+        donor = (ROOT/'local/captures'/WALK[0]/f'w{index}.wram.bin').read_bytes()
+        native = (ROOT/'local/captures'/WALK[1]/f'w{index}.wram.bin').read_bytes()
+        def state(wram):
+            return (wram[0x100], int.from_bytes(wram[0x10B:0x10D], 'little'),
+                    wram[0x94] | (wram[0x95] << 8))
+        require(state(donor) == state(native), f'walk state differs at sample {index}')
+        walk_core.append({'sample': index, 'mode': state(native)[0],
+                          'room': state(native)[1], 'player_x': state(native)[2]})
     return {'scope': __doc__.strip(), 'target': TARGET,
             'rom_sha256': cfg['output']['sha256'],
             'binary_sha256': build['binary_sha256'],
@@ -75,10 +106,15 @@ def qualify():
             'donor_capture': DONOR_CAPTURE, 'native_capture': NATIVE_CAPTURE,
             'actor_count': len(native_actors),
             'actors': native_actors,
+            'rooms': rooms,
+            'walk_samples': walk_core,
             'module_view': 'A3',
-            'limits': ['Entry actor parity only. Movement, death handling and a course',
-                       'pass are not qualified. The sprite 8C vertical position differs',
-                       'between the two hosts.']}
+            'limits': ['Entry parity only. A course pass and a clear are not qualified.',
+                       'Room 16C holds a three-pixel offset in one slot 95 actor.',
+                       'Rooms 16D and 172 hold differences in other custom slots',
+                       '(34 and a standard sprite), which the review does not cover.',
+                       'The walk fixture drops both hosts to mode 0x0B and then to',
+                       'mode 0x0E at player X 94, so the drop is shared behavior.']}
 
 
 def require(condition, message):
