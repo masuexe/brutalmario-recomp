@@ -75,10 +75,27 @@ the extra records and packs leave an unchanged route as it was. The report is
 
 ## Frozen rooms
 
-Six rooms freeze the native runtime at the room entry. The game mode holds
+Six rooms freeze at the room entry on the native target. The game mode holds
 `0x12` and the frame counter `$13` and `$14` stops. The donor reaches mode
 `0x14` and its frame counter keeps counting. The actors stand still in both
 captures, so an actor compare there does not measure the module.
+
+A control run shows the cause. The tool `tools/qualify_emu_freeze.py` runs the
+same entry script on the reference emulator with the unmodified Demo 1-1 ROM.
+Every one of the five tested rooms freezes there in the same way.
+
+| Room | Mode | Frame counter | Frozen |
+| --- | --- | ---: | --- |
+| `085` | `0x12` | 62981 | yes |
+| `0A2` | `0x12` | 62981 | yes |
+| `0BA` | `0x12` | 62981 | yes |
+| `0BB` | `0x12` | 62981 | yes |
+| `0F3` | `0x12` | 62981 | yes |
+
+The teleport fixture therefore causes the freeze. The native runtime and the
+gap records are not the cause. A map-based entry is necessary to qualify these
+rooms. The report is `local/reports/native-sprite-emu-freeze.json`, SHA-256
+`18edf8719d7f90fbd5fcfbce5cc684554a34317f59104918bfa737ede603b134`.
 
 | Room | Donor mode | Target mode | Target frame at `r1` | at `r2` |
 | --- | --- | ---: | ---: | ---: |
@@ -177,5 +194,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 6/6. The full suite passes
-262/262 tests. The log is `local/reports/unit-tests-freeze.log`.
+The tests are `tests/test_sprite_full.py` and pass 7/7. The full suite passes
+263/263 tests. The log is `local/reports/unit-tests-emufreeze.log`.

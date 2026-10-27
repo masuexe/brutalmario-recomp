@@ -91,5 +91,16 @@ class FullGapTargetTests(unittest.TestCase):
             self.assertEqual(entry["equal"], entry["total"], route)
 
 
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite-emu-freeze.json").exists(),
+                         "requires the reference-emulator freeze report")
+    def test_the_fixture_freezes_the_unmodified_rom(self):
+        report = json.loads((ROOT / "local/reports/native-sprite-emu-freeze.json").read_text())
+        self.assertEqual(report["rom"], "local/restoration/demo11-base/rom.sfc")
+        self.assertEqual(sorted(report["rooms"]), ["085", "0A2", "0BA", "0BB", "0F3"])
+        for room, entry in report["rooms"].items():
+            self.assertTrue(entry["frozen"], room)
+            self.assertEqual(entry["mode"], 0x12, room)
+
+
 if __name__ == "__main__":
     unittest.main()
