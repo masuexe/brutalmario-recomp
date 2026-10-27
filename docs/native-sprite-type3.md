@@ -88,6 +88,49 @@ is not zero it copies bytes 1 to 9 and bytes 10 to 13 as three words.
 The two constructors therefore disagree on the layout that follows the type
 byte. A record transplant must also carry the constructor contract.
 
+## Constructor patch plan
+
+The two constructors read different bytes of a type-3 record. The table below
+gives the byte each store consumes. Each read uses `LDA table,Y`, with `Y` set
+to the record offset.
+
+| Store | Donor `10:B059` | Recipient `31:8177` |
+| --- | --- | --- |
+| `$00` | record byte 8 | record word at byte 8 |
+| `$01` | record byte 9 | record word at byte 8 |
+| `$02` | record byte 10 | record byte 10 |
+| `$7FAB28` | record byte 15 | record byte 14 |
+| `$7FAB34` | record byte 16 | record byte 15 |
+
+The two paths read the same table base plus `Y`, so the one-byte shift comes
+from the number of `INY` steps, not from the table base.
+
+The donor path is `10:B0C0` to `10:B0E7`, which is 40 bytes. The recipient path
+is `31:81D1` to `31:81F0`, which is 32 bytes. The donor path does not fit in
+the recipient span.
+
+The patch therefore has two parts.
+
+1. Add the donor path to a native code pack, with the table base changed from
+   `10:B15D` to `31:8272` and the `$7FAB` stores unchanged.
+2. Replace the 4 bytes at `31:81D1` with `JML` to the pack address.
+
+The second part is a ROM patch of 4 bytes. The first part is a module of 40
+bytes. The construction ends with `PLP`, `PLB`, `PLY` and `RTL`, so a `JML`
+entry keeps the stack contract of the original path.
+
+Donor bytes from `10:B0C0`:
+
+```
+b95db18500c8b95db18501c8b95db18502c8c8c8c8
+b95db19f28ab7fc8b95db19f34ab7f28ab7a6b
+```
+
+Recipient bytes at `31:81D1`:
+
+```
+c220b97a828500e220b97c828502b980829f28ab7fb981829f34ab7f28ab7a6b
+```
 ## Reproduction
 
 ```
@@ -96,7 +139,7 @@ python3 tools/audit_sprite_type3.py
 
 The report is `local/reports/native-sprite-type3.json`, SHA-256
 `7e35f68ac13d5d65552b8b8843cb2521adb950569c05e837ce2cdb9ca3faa950`. The tests
-are `tests/test_sprite_type3.py` and pass 5/5. The full suite passes 192/192
-tests. The log is `local/reports/unit-tests-type3.log`. The captures are
+are `tests/test_sprite_type3.py` and pass 6/6. The full suite passes 270/270
+tests. The log is `local/reports/unit-tests-type3plan.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,
 `type3-room16b-native-v1` and `type3-room170-native-v1`.

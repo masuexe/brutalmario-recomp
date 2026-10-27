@@ -66,5 +66,13 @@ class SpriteType3Tests(unittest.TestCase):
             self.assertEqual(self.boss[start:end], self.seven[start:end])
 
 
+    def test_constructor_patch_plan_is_recorded(self):
+        doc = (ROOT / "docs/native-sprite-type3.md").read_text()
+        self.assertIn("## Constructor patch plan", doc)
+        self.assertIn("b95db18500c8b95db18501c8b95db18502c8c8c8c8", doc)
+        self.assertIn("c220b97a828500e220b97c828502b980829f28ab7fb981829f34ab7f28ab7a6b",
+                      doc)
+
+
 if __name__ == '__main__':
     unittest.main()
