@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "sprite94-module",
+  "scope": "Static module review for the 7hero type-1 sprite 94 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/7hero-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "94",
+    "raw": "013600073f8319645cb31771b3170000",
+    "init": "17B35C",
+    "main": "17B371",
+    "relative": {
+      "init": "0F",
+      "main": "24"
+    },
+    "rooms": [
+      "0EF"
+    ],
+    "native_raw": "013600073f8319645cb3a671b3a60000"
+  },
+  "code": {
+    "source_address": "17B34D",
+    "native_address": "A6B34D",
+    "size": 2096,
+    "sha256": "4ced2fe700c642d539ba511418d1c7e35c811cb04d2e77b01d1faa08006c7693",
+    "adapted_sha256": "4ced2fe700c642d539ba511418d1c7e35c811cb04d2e77b01d1faa08006c7693",
+    "pack_file": "sprite94-code.bin"
+  },
+  "entry_seeds": [
+    "17B35C",
+    "17B371"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01ACF9",
+    "01B7B3",
+    "028663",
+    "02A9DE",
+    "07F7D2",
+    "28FCC0",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A6 code view",
+    "sprite graphics review",
+    "entry qualification against the 7hero donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608626,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600073f8319645cb3a671b3a60000",
+      "role": "Install the sprite 94 record and point init/main into the A6 module view"
+    }
+  ]
+}
