@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "id": "type3-constructor",
+  "scope": "Native constructor continuation for type-3 SpriteTool records. The module carries the donor path with the recipient table base 31:8272, and a JML patch redirects the recipient path to it.",
+  "review_status": "static-review",
+  "code": {
+    "raw_payload": "b972828500c8b972828501c8b972828502c8c8c8c8b972829f28ab7fc8b972829f34ab7f28ab7a6b",
+    "size": 40,
+    "sha256": "501ded19cde75fba304e379c5d1fa2f739c47e26e21b1c584938cdc25976e583",
+    "native_address": "CE8000",
+    "pack_file": "type3-ctor.bin"
+  },
+  "entry_seeds": [],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "entry X and Y values are not yet proven equal on both hosts",
+    "the donor stores with X index and the recipient with an absolute address",
+    "no target carries this module yet"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606097,
+      "before": "c220b97a",
+      "after": "5c0080ce",
+      "role": "Redirect the recipient type-3 path at 31:81D1 to the module in bank CE"
+    }
+  ]
+}

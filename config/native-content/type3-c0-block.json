@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "id": "type3-c0-block",
+  "scope": "Static review for the type-3 sprite C0 block from 7hero. The block moves to bank CB with its low 16 bits kept.",
+  "review_status": "static-review",
+  "code": {
+    "raw_payload": "53544152c4003bff4d444b494e49544d41494e8b4bab20f386ab6b60bdab17d006a9509dab1760bdab17c938f00dc930f009c928f005c920f00160deab17bd8b17c51cbd9317e51dd0d1bd9b17c51abda317e51bd0c5bd9b1738e51a186910c91090b822dea90230b2a9278dfc1da90899c814dabba9959f9eab7ffabd9b1799e400bda31799e014bd8b1738e90899d800bd9317e90099d414dabb22d2f70722a78701a9889f10ab7fa9a095aaa9029d0415fabd83172940f012a91899b60022f9ac012901f005a9e899b60060",
+    "size": 205,
+    "sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+    "native_address": "CB86D7",
+    "pack_file": "type3-c0.bin"
+  },
+  "entry_seeds": [],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "entry behaviour is not yet captured"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1609330,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "03ffffffffffffffe686cbea86cbffff",
+      "role": "Install the type-3 sprite C0 record into bank CB"
+    }
+  ]
+}

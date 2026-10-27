@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "id": "type3-c1-block",
+  "scope": "Static review for the type-3 sprite C1 block from 7hero. The block moves to bank CC with its low 16 bits kept.",
+  "review_status": "static-review",
+  "code": {
+    "raw_payload": "53544152cc0033ff4d444b494e49544d41494e8b4bab2024aeab6b60bdab17d006a9909dab1760bdab17c980f009c978f00ec970f018602064aea95099ac15602064aea94099ac15a901992815602064aea93099ac15a90299281560deab17bd8b17c51cbd9317e51dd0b0bd9b17c51abda317e51bd0a4bd9b1738e51a186910c910909722dea9023091a9278dfc1da90899c814dabba9959f9eab7ffabd9b1799e400bda31799e014bd8b1738e90899d800bd9317e90099d414dabb22d2f70722a78701a9889f10ab7fa9b095aaa9039d0415fa60",
+    "size": 213,
+    "sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+    "native_address": "CCAE08",
+    "pack_file": "type3-c1.bin"
+  },
+  "entry_seeds": [],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "entry behaviour is not yet captured"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1609346,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "03ffffffffffffff17aecc1baeccffff",
+      "role": "Install the type-3 sprite C1 record into bank CC"
+    }
+  ]
+}

@@ -131,6 +131,35 @@ Recipient bytes at `31:81D1`:
 ```
 c220b97a828500e220b97c828502b980829f28ab7fb981829f34ab7f28ab7a6b
 ```
+## First install attempt
+
+A first target exists: `demo11-native-type3` with ROM
+`41ae1b0ed5546a6dde29825caee072e1bdba8e0dd6a6c912c9b1d07933ee8252`. It holds
+four packs.
+
+| Pack | Bank | Bytes | Role |
+| --- | --- | ---: | --- |
+| `type3-constructor` | `CE` | 40 | The donor path with the table base `31:8272` |
+| `type3-c0` | `CB` | 205 | Block `13:86D7` |
+| `type3-c1` | `CC` | 213 | Block `13:AE08` |
+| `type3-c2` | `CD` | 295 | Block `15:DD21` |
+
+The 4-byte patch at `31:81D1` now holds `5c 00 80 ce`, which is `JML CE:8000`.
+
+## First install result
+
+The target builds and the module runs: the capture reports `bank=CE
+resolutions=122`. The game then stops: the run log holds 8 `BRK` entries and the
+mode reads `0x36`.
+
+The cause is the register state at the branch. The donor reaches its type path
+with `Y` advanced by eight steps. The recipient reaches `31:81D1` with a
+different `Y` and a different `X`. A copied body therefore reads and writes the
+wrong record bytes and later executes a bad opcode.
+
+The next attempt must set `Y` and `X` at the module entry. One option is `TYA`,
+`AND #$F0`, `TAY` followed by `TXA`, `AND #$0F`, `TAX`. Another option copies the
+whole constructor instead of the type path alone.
 ## Reproduction
 
 ```
@@ -139,7 +168,7 @@ python3 tools/audit_sprite_type3.py
 
 The report is `local/reports/native-sprite-type3.json`, SHA-256
 `7e35f68ac13d5d65552b8b8843cb2521adb950569c05e837ce2cdb9ca3faa950`. The tests
-are `tests/test_sprite_type3.py` and pass 6/6. The full suite passes 270/270
-tests. The log is `local/reports/unit-tests-type3plan.log`. The captures are
+are `tests/test_sprite_type3.py` and pass 7/7. The full suite passes 271/271
+tests. The log is `local/reports/unit-tests-type3b.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,
 `type3-room16b-native-v1` and `type3-room170-native-v1`.

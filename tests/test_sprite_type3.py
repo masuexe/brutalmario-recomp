@@ -74,5 +74,18 @@ class SpriteType3Tests(unittest.TestCase):
                       doc)
 
 
+    @unittest.skipUnless((ROOT / "config/native-content/type3-constructor.json").exists(),
+                         "requires the type-3 constructor recipe")
+    def test_constructor_recipe_and_target_are_recorded(self):
+        import json
+        recipe = json.loads((ROOT / "config/native-content/type3-constructor.json").read_text())
+        self.assertEqual(recipe["code"]["size"], 40)
+        self.assertEqual(recipe["code"]["native_address"], "CE8000")
+        self.assertEqual(recipe["unapplied_rom_patches"][0]["before"], "c220b97a")
+        self.assertEqual(recipe["unapplied_rom_patches"][0]["after"], "5c0080ce")
+        doc = (ROOT / "docs/native-sprite-type3.md").read_text()
+        self.assertIn("## First install attempt", doc)
+        self.assertIn("8 `BRK` entries", doc)
+
 if __name__ == '__main__':
     unittest.main()

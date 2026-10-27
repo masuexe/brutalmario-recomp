@@ -20,13 +20,17 @@ def manifests(cfg):
     paths = spec.get("manifests") or [spec["manifest"]]
     recipes = [json.loads((ROOT / path).read_text()) for path in paths]
     for recipe in recipes:
-        if not recipe["id"].startswith("sprite"):
+        if not (recipe["id"].startswith("sprite")
+                or recipe["id"].startswith("type3")):
             raise ValueError("sprite gap recipe id differs")
     if not recipes:
         raise ValueError("sprite gap target holds no recipe")
     banks = [int(recipe["code"]["native_address"], 16) >> 16 for recipe in recipes]
     if len(set(banks)) != len(banks):
         raise ValueError("sprite gap recipes share a code bank")
+    for recipe in recipes:
+        if "raw_payload" in recipe["code"] and "record" in recipe:
+            raise ValueError("a raw payload recipe holds no sprite record")
     return paths, recipes
 
 
@@ -49,7 +53,13 @@ def module_dirs(target):
     recipes = [recipe for _, recipe in pairs]
     if len(recipes) == 1:
         return [ROOT / "local/native-modules" / (target+"-final")]
-    return [ROOT / "local/native-modules" / (target+"-final-"+recipe["record"]["slot"])
+    def suffix(recipe):
+        record = recipe.get("record")
+        if record:
+            return record["slot"]
+        return recipe["id"].replace("-", "_")
+
+    return [ROOT / "local/native-modules" / (target+"-final-"+suffix(recipe))
             for recipe in recipes]
 
 
@@ -60,6 +70,11 @@ def packs(target):
     pins = []
     for index, recipe in enumerate(recipes):
         variable = "BM_SEVEN_CODE_PACK" if index == 0 else "BM_SEVEN_CODE_PACK_"+str(index+1)
+        if "raw_payload" in recipe["code"]:
+            pins.append((variable, dict(recipe["code"]),
+                         recipe["code"]["native_address"],
+                         recipe["code"]["sha256"], True))
+            continue
         payload = recipe["code"].get("native_payload", {})
         pins.append((variable, dict(recipe["code"], **payload),
                      recipe["code"]["native_address"],
@@ -114,7 +129,9 @@ def identity(target):
              ROOT / 'recomp/native_seven.c', ROOT / 'recomp/native_content.h', patch]
     for path, recipe in pairs:
         paths.append(ROOT / path)
-        paths.append(ROOT / recipe['donor_manifest'])
+        donor = recipe.get('donor_manifest')
+        if donor:
+            paths.append(ROOT / donor)
     return {'kind': 'immutable-sprite-gap-entry',
             'files': {str(path.relative_to(ROOT)): sha(path.read_bytes()) for path in paths},
             'packs': packs(target),
@@ -128,7 +145,14 @@ def prepare(target):
     recipes = [recipe for _, recipe in pairs]
     directories = module_dirs(target)
     import prepare_sprite_module
-    for directory, (path, _) in zip(directories, pairs):
+    for directory, (path, recipe) in zip(directories, pairs):
+        if "raw_payload" in recipe["code"]:
+            directory.mkdir(parents=True, exist_ok=True)
+            data = bytes.fromhex(recipe["code"]["raw_payload"])
+            verify(data, {"size": recipe["code"]["size"],
+                          "sha256": recipe["code"]["sha256"]}, "raw payload")
+            write_verified(directory / recipe["code"]["pack_file"], data)
+            continue
         prepare_sprite_module.prepare(directory, ROOT / path)
     base_dir = ROOT / 'local/restoration' / cfg['base_restoration']
     base = (base_dir / 'rom.sfc').read_bytes()
@@ -154,8 +178,11 @@ def prepare(target):
         data = (source / pack['pack_file']).read_bytes()
         verify(data, pack, 'sprite gap module pack')
         write_verified(directory / pack['pack_file'], data)
-    receipts = {str(module.relative_to(ROOT)): sha((module / 'preparation-receipt.json').read_bytes())
-                for module in directories}
+    receipts = {}
+    for module in directories:
+        receipt = module / 'preparation-receipt.json'
+        if receipt.is_file():
+            receipts[str(module.relative_to(ROOT))] = sha(receipt.read_bytes())
     receipt = {'config': cfg, 'content': identity(target),
                'module_receipt_sha256': receipts}
     write_verified(directory / 'input-manifest.json',
