@@ -86,7 +86,10 @@ does not yet prove that the `151` fight itself requires `B0`.
 
 The later `7hero`/`boss` `C0`–`C2` records are type 3. They are deliberately
 excluded from type-1 constructor admission; see the failed earlier `C2` trial
-in [the sprite investigation](demo11-level-sprites.md).
+in [the sprite investigation](demo11-level-sprites.md). The
+[type-3 review](native-sprite-type3.md) now pins the three records, the
+protected blocks and the room placements. It also records that the donor and
+the recipient constructors read different layouts after the type byte.
 
 ## Remaining integration dependencies
 

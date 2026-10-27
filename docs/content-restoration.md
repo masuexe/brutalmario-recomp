@@ -83,6 +83,10 @@ corridor data pack and the built target. The four corridor rooms load
 with the custom `A9` actor. Rooms `191` and `192` enter gameplay and match the
 donor actors. Rooms `00D` and `10C` are transition steps to room `190`. The donor image shows the same transition from rooms `00D` and `10C` to room
 `190`. The attack, the relocated exits and a clear remain open.
+The [type-3 sprite review](native-sprite-type3.md) pins the newer `C0`, `C1`
+and `C2` records, their protected blocks and their room placements. It also
+records that the donor and the recipient constructors read different layouts
+after the type byte. Record installation stays open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.
