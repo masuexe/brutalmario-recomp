@@ -1,0 +1,52 @@
+# Native type-3 room (fine pipe chain).
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump castle_idle
+# Diagnostic pipe-action room fixture.
+poke 94 80004001
+poke 19b8 6b
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 4
+dump t150
+wait 4
+dump t154
+wait 4
+dump t158
+wait 4
+dump t162
+wait 4
+dump t166
+wait 4
+dump t170
+wait 4
+dump t174
+wait 4
+dump t178
+wait 4
+dump t182
+wait 4
+dump t186
+wait 4
+dump t190
+wait 4
+dump t194
+quit

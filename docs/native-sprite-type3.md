@@ -71,6 +71,10 @@ room `170` under this fixture. The room placement alone does not spawn the
 records. The type byte at `$1AB1C` reads `00` for every active actor in both
 images.
 
+The room dependency table shows the cause. Room `16B` also places slot `95`.
+The recipient holds a type-0 placeholder for `95`, while `7hero` holds a
+5,144-byte type-1 program. See [the gap inventory](native-sprite-gaps.md).
+
 ## Type admission
 
 The recipient constructor at `31:8177` reads the record type at `$7FAB1C`.
@@ -91,7 +95,7 @@ python3 tools/audit_sprite_type3.py
 ```
 
 The report is `local/reports/native-sprite-type3.json`, SHA-256
-`f4c42057d88c377966af1ebe764a58e7cf06221591070033471e79a4fefc1ad0`. The tests
+`7e35f68ac13d5d65552b8b8843cb2521adb950569c05e837ce2cdb9ca3faa950`. The tests
 are `tests/test_sprite_type3.py` and pass 5/5. The full suite passes 192/192
 tests. The log is `local/reports/unit-tests-type3.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,

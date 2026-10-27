@@ -112,6 +112,39 @@ def placements(rom, slot):
     return rooms
 
 
+def room_slots(rom, room):
+    """Return the custom slots that a room list places."""
+    pointer = (int.from_bytes(rom[lorom(0x05EC00+room*2):lorom(0x05EC00+room*2)+2], 'little') |
+               rom[lorom(0x0EF100)+room] << 16)
+    offset = lorom(pointer)
+    cursor, slots = offset+1, []
+    while rom[cursor] != 0xFF:
+        entry = rom[cursor:cursor+3]
+        if entry[0] & 8:
+            slots.append(entry[2])
+        cursor += 3
+    return slots
+
+
+def dependency_table(donor, recipient, rooms):
+    """Compare the custom slot records that each room needs."""
+    donor_table = sprite_table(donor)[2]
+    recipient_table = sprite_table(recipient)[2]
+    result = {}
+    for room in rooms:
+        rows = []
+        for slot in sorted(set(room_slots(donor, room))):
+            donor_record = donor[lorom(donor_table)+slot*16:lorom(donor_table)+slot*16+16]
+            recipient_record = recipient[lorom(recipient_table)+slot*16:
+                                        lorom(recipient_table)+slot*16+16]
+            rows.append({'slot': f'{slot:02X}', 'donor_type': donor_record[0],
+                         'recipient_type': recipient_record[0],
+                         'recipient_placeholder':
+                             recipient_record.hex() == '0000ffffffffffff218001218001ffff'})
+        result[f'{room:03X}'] = rows
+    return result
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path,
@@ -137,6 +170,7 @@ if __name__ == '__main__':
             'donor': placements(bodies['7hero'], slot),
             'recipient_slots': [p for p in placements(base, slot)],
             'recipient_record': record_of(base, sprite_table(base)[2], slot).hex()}
+    report['room_dependencies'] = dependency_table(bodies['7hero'], base, (0x16B, 0x170))
     identical = all(report['donors']['7hero']['records'][f'{slot:02X}']['raw'] ==
                     report['donors']['boss']['records'][f'{slot:02X}']['raw'] for slot in SLOTS)
     report['donor_block_identical'] = all(

@@ -87,6 +87,11 @@ The [type-3 sprite review](native-sprite-type3.md) pins the newer `C0`, `C1`
 and `C2` records, their protected blocks and their room placements. It also
 records that the donor and the recipient constructors read different layouts
 after the type byte. Record installation stays open.
+The [custom sprite gap inventory](native-sprite-gaps.md) now counts the slots
+that recipient rooms place but the recipient table leaves empty. Fifty-four
+slots cover 78 rooms. Forty of them have a type-1 program in a donor, three have
+only a type-3 program, and eleven have no donor record. Record installation
+stays open.
 The existing `demo11-sprites-orphan-cleanup` chain remains the frozen comparison
 checkpoint; this direction change does not promote the candidate or qualify
 new content. Full restoration remains open.

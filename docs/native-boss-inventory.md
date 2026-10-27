@@ -89,7 +89,9 @@ excluded from type-1 constructor admission; see the failed earlier `C2` trial
 in [the sprite investigation](demo11-level-sprites.md). The
 [type-3 review](native-sprite-type3.md) now pins the three records, the
 protected blocks and the room placements. It also records that the donor and
-the recipient constructors read different layouts after the type byte.
+the recipient constructors read different layouts after the type byte. The
+[custom sprite gap inventory](native-sprite-gaps.md) counts the 54 slots that
+recipient rooms place but the recipient table leaves empty.
 
 ## Remaining integration dependencies
 
