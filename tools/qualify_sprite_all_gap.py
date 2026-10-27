@@ -12,6 +12,7 @@ from pathlib import Path
 
 from prepare_rom import verify
 from restore_star_world_1 import sha
+import qualify_phase_alignment as phase_alignment
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'demo11-native-sprite-all'
@@ -43,54 +44,6 @@ def actors(wram):
     return rows
 
 
-PHASE_ROOMS = {'156': -20, '157': -20, '159': -30, '15B': -20}
-
-
-def phase_series(room, host):
-    """Read the fine capture of one room and return the row series."""
-    directory = ROOT/'local/captures'/f'spritefine-{room}-{host}-v1'
-    series = {}
-    for index in range(24):
-        frame = 140+index*10
-        path = directory/f'f{frame}.wram.bin'
-        if not path.is_file():
-            continue
-        wram = path.read_bytes()
-        rows = tuple((slot, wram[0x9E+slot], wram[0x1AB9E+slot],
-                      wram[0xE4+slot] | (wram[0x14E0+slot] << 8),
-                      wram[0xD8+slot] | (wram[0x14D4+slot] << 8))
-                     for slot in range(12) if wram[0x14C8+slot])
-        series[frame] = (wram[0x100], rows)
-    return series
-
-
-def phase_report():
-    """Compare each partial room at its measured load-phase offset."""
-    result = {}
-    for room, offset in PHASE_ROOMS.items():
-        donor_path = ROOT/'local/captures'/f'spritefine-{room}-donor-v1'
-        native_path = ROOT/'local/captures'/f'spritefine-{room}-native-v1'
-        if not donor_path.is_dir() or not native_path.is_dir():
-            result[room] = {'note': 'fine capture absent'}
-            continue
-        donor = phase_series(room, 'donor')
-        native = phase_series(room, 'native')
-        same_mode = steady = 0
-        transitions = []
-        for frame, value in donor.items():
-            other = native.get(frame+offset)
-            if other is None or value[0] != other[0]:
-                continue
-            same_mode += 1
-            if value[1] == other[1]:
-                steady += 1
-            else:
-                transitions.append(frame)
-        result[room] = {'offset': offset, 'same_mode_frames': same_mode,
-                        'steady_equal': steady,
-                        'transition_frames': transitions,
-                        'residual': same_mode-steady}
-    return result
 
 def require(condition, message):
     if not condition:
@@ -157,7 +110,7 @@ def qualify():
                         for recipe in recipes],
             'module_views': counters,
             'rooms': rooms, 'exact_rooms': exact_rooms,
-            'phase': phase_report(),
+            'phase': phase_alignment.measure_all(),
             'limits': ['Entry parity only. A room counts as exact when every',
                        'captured sample matches the donor. Movement and a course',
                        'pass are not qualified.']}

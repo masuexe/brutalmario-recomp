@@ -1,0 +1,145 @@
+# Two-frame step phase probe.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 59
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 40
+dump g200
+wait 2
+dump g202
+wait 2
+dump g204
+wait 2
+dump g206
+wait 2
+dump g208
+wait 2
+dump g210
+wait 2
+dump g212
+wait 2
+dump g214
+wait 2
+dump g216
+wait 2
+dump g218
+wait 2
+dump g220
+wait 2
+dump g222
+wait 2
+dump g224
+wait 2
+dump g226
+wait 2
+dump g228
+wait 2
+dump g230
+wait 2
+dump g232
+wait 2
+dump g234
+wait 2
+dump g236
+wait 2
+dump g238
+wait 2
+dump g240
+wait 2
+dump g242
+wait 2
+dump g244
+wait 2
+dump g246
+wait 2
+dump g248
+wait 2
+dump g250
+wait 2
+dump g252
+wait 2
+dump g254
+wait 2
+dump g256
+wait 2
+dump g258
+wait 2
+dump g260
+wait 2
+dump g262
+wait 2
+dump g264
+wait 2
+dump g266
+wait 2
+dump g268
+wait 2
+dump g270
+wait 2
+dump g272
+wait 2
+dump g274
+wait 2
+dump g276
+wait 2
+dump g278
+wait 2
+dump g280
+wait 2
+dump g282
+wait 2
+dump g284
+wait 2
+dump g286
+wait 2
+dump g288
+wait 2
+dump g290
+wait 2
+dump g292
+wait 2
+dump g294
+wait 2
+dump g296
+wait 2
+dump g298
+wait 2
+dump g300
+wait 2
+dump g302
+wait 2
+dump g304
+wait 2
+dump g306
+wait 2
+dump g308
+wait 2
+dump g310
+wait 2
+dump g312
+wait 2
+dump g314
+wait 2
+dump g316
+wait 2
+dump g318
+quit
+

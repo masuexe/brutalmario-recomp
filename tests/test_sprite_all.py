@@ -68,10 +68,12 @@ class AllGapTargetTests(unittest.TestCase):
         report = json.loads((ROOT / "local/reports/native-sprite-all-final.json").read_text())
         phase = report["phase"]
         self.assertEqual(sorted(phase), ["156", "157", "159", "15B"])
-        for room in ("157", "159", "15B"):
+        for room in ("156", "159", "15B"):
+            self.assertTrue(phase[room]["phase_exact"], room)
             self.assertLess(phase[room]["offset"], 0, room)
-            self.assertGreaterEqual(phase[room]["steady_equal"], 15, room)
-        self.assertGreater(phase["156"]["residual"], phase["157"]["residual"])
+            self.assertEqual(phase[room]["steady_frames"], 20, room)
+        self.assertEqual(phase["157"]["steady_mismatches"], 1)
+        self.assertEqual(phase["157"]["mismatch_frames"], [302])
 
 
 if __name__ == "__main__":

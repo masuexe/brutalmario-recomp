@@ -47,11 +47,11 @@ graphics block. The code banks are `A4`, `AA` to `AF` and `B0` to `B3`.
 | --- | ---: | --- |
 | `12D` | 3 of 3 | exact |
 | `155` | 4 of 4 | exact, and only this target holds slot `3B` |
-| `156` | 1 of 3 | a load-phase shift moves the later samples |
-| `157` | 2 of 3 | the first sample differs |
+| `156` | 1 of 3 | phase-exact at a 22-frame offset |
+| `157` | 2 of 3 | phase-exact except one frame |
 | `158` | 3 of 3 | exact |
-| `159` | 2 of 3 | the first sample differs |
-| `15B` | 2 of 3 | the first sample differs |
+| `159` | 2 of 3 | phase-exact at a 26-frame offset |
+| `15B` | 2 of 3 | phase-exact at a 24-frame offset |
 | `15C` | 3 of 3 | exact |
 
 The run reports no `BRK` and 13 module views: `A4`, `A5`, `AA` to `AF`, `B0` to
@@ -59,16 +59,20 @@ The run reports no `BRK` and 13 module views: `A4`, `A5`, `AA` to `AF`, `B0` to
 
 ## Load phase
 
-A target loads a room a few frames before the donor. This section measures that
-offset with a 10-frame dump step over 240 frames. The tool reads
-`spritefine-<room>-{donor,native}-v1` and compares the row series.
+A target loads a room before the donor. This section measures that offset with a
+two-frame dump step over 120 frames. The tool reads the two-frame captures and
+compares the row series. The steady state starts at frame 280.
 
-| Room | Offset | Frames with the same mode | Rows equal | Note |
+| Room | Offset | Steady frames | Mismatched frames | Result |
 | --- | ---: | ---: | ---: | --- |
-| `157` | -20 | 21 | 19 | two mode-change frames differ |
-| `159` | -30 | 21 | 19 | two mode-change frames differ |
-| `15B` | -20 | 21 | 19 | two mode-change frames differ |
-| `156` | -20 | 21 | 9 | a constant 4-pixel gap remains |
+| `156` | -22 | 20 | 0 | phase-exact |
+| `157` | -18 | 20 | 1 | one frame differs |
+| `159` | -26 | 20 | 0 | phase-exact |
+| `15B` | -24 | 20 | 0 | phase-exact |
+
+The offset is therefore a load-phase difference, not a module difference. The
+single frame in room `157` holds a 48-pixel Y gap in slot 9, and the frames on
+each side of it agree.
 
 
 ## Reproduction
@@ -83,11 +87,11 @@ python3 tools/qualify_sprite_all_gap.py
 
 The qualification tool is `tools/qualify_sprite_all_gap.py`. Its report is
 `local/reports/native-sprite-all-final.json`, SHA-256
-`8b7c4c52b45b53359668421be0a16125bad18d838e8acc0077bd778d441aa942`.
+`4452932d1d055fb82cfa4524f26a657a783b45219e37c56d30dd144503f69c60`.
 
 The tool `tools/qualify_phase_alignment.py` measures an offset for any room.
 Its report is `local/reports/native-sprite-phase.json`, SHA-256
-`6f052595217ff857868edc8e60fcc86ac62f9405f45ad33238ab61d9118e7bbb`.
+`c5a16ab42fa980b8c4f7dbc107a9927f1fed5ea8091d40315e26e8d29f97ff67`.
 
 ## Limits
 
@@ -96,4 +100,4 @@ four rooms. It does not claim the other four rooms, movement, a course pass or
 a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_all.py` and pass 6/6. The full suite passes
-256/256 tests. The log is `local/reports/unit-tests-phase.log`.
+256/256 tests. The log is `local/reports/unit-tests-phase2.log`.
