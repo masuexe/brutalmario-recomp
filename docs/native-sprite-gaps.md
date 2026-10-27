@@ -41,6 +41,43 @@ Slot `95` is the newest-donor case. `cheap-demo` and `mazo` hold the
 placeholder, and `7hero` holds a type-1 record with a 5,144-byte protected
 block.
 
+## Installation status
+
+All 40 type-1 slots now hold a recipe. A recipe pins the donor record, the
+protected block, the native address and the install offset.
+
+| Group | Slots |
+| --- | ---: |
+| Installed in one target | 35 |
+| Installed in an earlier single-slot target | 5 |
+| Type-3, still open | 3 (`C0`, `C1`, `C2`) |
+| No donor record | 11 |
+
+The 35-record target is `demo11-native-sprite-full`. Its ROM is
+`78c4647d9d47026d7fd3316c2efda31bb3ec71d7d21e951274b9acb658414cc0`, with 37
+packs and 37 module views. See [the full gap target review](native-sprite-full.md).
+
+## Room verification classes
+
+An actor compare needs a live room on both hosts.
+
+| Class | Rooms |
+| --- | --- |
+| Exact without an offset | `00D`, `05D`, `083`, `087`, `08B`, `0AF`, `142`, `147`, `155`, `15D`, `160` |
+| Phase-exact | `0A5`, `091`, `0A2`, `0B5` |
+| Missing second actor | `151`, `190` |
+| Different actor positions | the remaining open rooms |
+
+## Remaining causes
+
+Two rooms match in every frame before the donor creates a second actor. Those
+rooms are `151` and `190`. The target never creates that actor.
+
+Some rooms freeze with the pipe poke. The same freeze occurs on the unmodified
+Demo 1-1 image in the reference emulator, so the entry fixture causes it.
+Rooms `091` and `0A2` froze with the older two-dump fixture and ran in the
+one-frame fixture, so the freeze also depends on the fixture timing.
+
 ## Room 16B
 
 Room `16B` places slots `8C`, `95`, `C0` and `C1`. The recipient record for
@@ -61,5 +98,5 @@ python3 tools/audit_sprite_gaps.py
 
 The report is `local/reports/native-sprite-gaps.json`, SHA-256
 `954c6828d4d71f7415c3e8760c3068b37ff5fbacb69104d1842a5f8bb0e20f55`. The tests
-are `tests/test_sprite_gaps.py` and pass 5/5. The full suite passes 197/197
-tests. The log is `local/reports/unit-tests-gaps.log`.
+are `tests/test_sprite_gaps.py` and pass 6/6. The full suite passes 269/269
+tests. The log is `local/reports/unit-tests-status.log`.

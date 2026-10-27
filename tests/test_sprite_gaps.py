@@ -54,5 +54,13 @@ class SpriteGapTests(unittest.TestCase):
         self.assertEqual(row["donors"]["mazo"]["type"], 0)
 
 
+    def test_installation_status_is_recorded(self):
+        doc = (ROOT / "docs/native-sprite-gaps.md").read_text()
+        self.assertIn("## Installation status", doc)
+        self.assertIn("All 40 type-1 slots now hold a recipe", doc)
+        self.assertIn("demo11-native-sprite-full", doc)
+        self.assertIn("## Room verification classes", doc)
+
+
 if __name__ == "__main__":
     unittest.main()
