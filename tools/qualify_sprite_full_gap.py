@@ -102,6 +102,8 @@ def stalled_report():
 
 PHASE_ROOMS = {
     '0A5': ('room0A5-one-donor-v1', 'room0A5-one-native-v1', 460, 61, 'h'),
+    '091': ('room091-one-donor-v1', 'room091-one-native-v1', 160, 81, 'h'),
+    '190': ('room190-one-mazod-v1', 'room190-one-native-v1', 160, 81, 'h'),
 }
 
 

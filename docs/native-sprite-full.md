@@ -152,6 +152,20 @@ frames aligns 29 of the 32 comparable dumps. The three remaining frames are
 `489` to `491`, where the target capture has no data yet. Room `0A5` is
 therefore phase-exact.
 
+The same method gives these results.
+
+| Room | Offset | Equal dumps | Residual frames | Result |
+| --- | ---: | ---: | --- | --- |
+| `091` | -28 | 53 of 53 | none | phase-exact |
+| `190` | 18 | 58 of 63 | 199 to 203 | a 5-frame delay in the setup |
+
+Room `091` is phase-exact. Its record and its module therefore work.
+
+Room `190` matches after the setup delay. It still differs in one way: the
+donor holds three actors at frame 229 and the target holds one. The target
+never creates the two extra actors in the captured window, so room `190` stays
+open.
+
 ## Room list differences
 
 A missing actor has two possible causes. The sprite record can be absent, or the
@@ -203,7 +217,7 @@ and both programs start, but the donor behaviour does not follow yet.
 | `0B5` | `55` | 2 | 2 | the later child differs |
 | `0B6` | `55` | 4 | 4 | one actor Y differs in the later sample |
 | `05B` | `2C` | 2 | 1 | the target actor holds X 16 and Y 0 |
-| `0A5` | `7F` | 3 | 3 | both hosts create the third actor, and the cycle phase differs |
+| `0A5` | `7F` | 3 | 3 | phase-exact at a 29-frame offset |
 | `162` | `92` | 1 | 1 | start X differs by 49 |
 | `164` | `92` | 1 | 1 | start X differs by 164 |
 | `0A3` | `7E` | 6 | 6 | positions differ |
@@ -234,7 +248,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`da4d244d1a3e0c28942ce26899c858561f4aa435f632b806170ccad38116c93d`.
+`1a777f2d48a97ba0b44a30bbbc05320a3f95c26387a5cf4eadc12134bcc92cdf`.
 
 ## Limits
 
@@ -242,5 +256,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 9/9. The full suite passes
-265/265 tests. The log is `local/reports/unit-tests-0a5phase.log`.
+The tests are `tests/test_sprite_full.py` and pass 11/11. The full suite passes
+267/267 tests. The log is `local/reports/unit-tests-phase3.log`.

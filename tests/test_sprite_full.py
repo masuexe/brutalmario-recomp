@@ -132,5 +132,23 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertGreaterEqual(phase["equal"], 25)
 
 
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite-full-final.json").exists(),
+                         "requires the qualification report")
+    def test_oneframe_phase_of_room_091(self):
+        report = json.loads((ROOT / "local/reports/native-sprite-full-final.json").read_text())
+        phase = report["oneframe_phase"]["091"]
+        self.assertEqual(phase["offset"], -28)
+        self.assertEqual(phase["residual"], 0)
+        self.assertEqual(phase["mismatch_frames"], [])
+        self.assertEqual(phase["equal"], phase["checked"])
+
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite-full-final.json").exists(),
+                         "requires the qualification report")
+    def test_oneframe_phase_of_room_190(self):
+        report = json.loads((ROOT / "local/reports/native-sprite-full-final.json").read_text())
+        phase = report["oneframe_phase"]["190"]
+        self.assertEqual(phase["offset"], 18)
+        self.assertEqual(phase["residual"], 5)
+
 if __name__ == "__main__":
     unittest.main()
