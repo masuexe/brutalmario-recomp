@@ -157,14 +157,21 @@ The same method gives these results.
 | Room | Offset | Equal dumps | Residual frames | Result |
 | --- | ---: | ---: | --- | --- |
 | `091` | -28 | 53 of 53 | none | phase-exact |
+| `0A2` | -26 | 55 of 55 | none | phase-exact |
+| `0B5` | -29 | 41 of 52 | 189 to 198 | phase-exact outside the load window |
 | `190` | 18 | 58 of 63 | 199 to 203 | a 5-frame delay in the setup |
+| `151` | -1 | 69 of 80 | 230 to 240 | the target never creates the second actor |
 
-Room `091` is phase-exact. Its record and its module therefore work.
+Rooms `091`, `0A2` and `0B5` are phase-exact. Their records and modules work.
 
 Room `190` matches after the setup delay. It still differs in one way: the
 donor holds three actors at frame 229 and the target holds one. The target
 never creates the two extra actors in the captured window, so room `190` stays
 open.
+
+Room `151` matches in every frame before the donor creates a second actor at
+frame 230. The target never creates it, so the child step is the only open item
+in that room.
 
 ## Room list differences
 
@@ -214,7 +221,7 @@ and both programs start, but the donor behaviour does not follow yet.
 | --- | --- | ---: | ---: | --- |
 | `001` | `93` | 1 | 0 | no |
 | `096` | `76` | 4 | 4 | Y differs |
-| `0B5` | `55` | 2 | 2 | the later child differs |
+| `0B5` | `55` | 2 | 2 | phase-exact outside the load window |
 | `0B6` | `55` | 4 | 4 | one actor Y differs in the later sample |
 | `05B` | `2C` | 2 | 1 | the target actor holds X 16 and Y 0 |
 | `0A5` | `7F` | 3 | 3 | phase-exact at a 29-frame offset |
@@ -224,7 +231,7 @@ and both programs start, but the donor behaviour does not follow yet.
 | `110` | `0F` | 3 | 3 | one custom id differs |
 | `13C` | `3D` | 1 | 1 | first sample differs |
 | `14E` | `79` | 1 | 1 | Y differs |
-| `151` | `9C` | 3 | 1 | no |
+| `151` | `9C` | 2 | 1 | the target never creates the second actor |
 | `190` | `9B` | 5 | 1 | no |
 
 Room `001` has an empty sprite list in the recipient, so the target cannot spawn
@@ -248,7 +255,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`1a777f2d48a97ba0b44a30bbbc05320a3f95c26387a5cf4eadc12134bcc92cdf`.
+`1a04206364c2cdbf53fb8abefa7aa743f011dff4ee42fe8059d82a9c938d929e`.
 
 ## Limits
 
@@ -256,5 +263,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 11/11. The full suite passes
-267/267 tests. The log is `local/reports/unit-tests-phase3.log`.
+The tests are `tests/test_sprite_full.py` and pass 12/12. The full suite passes
+268/268 tests. The log is `local/reports/unit-tests-phase4.log`.
