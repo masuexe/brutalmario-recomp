@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "sprite33-module",
+  "scope": "Static module review for the 7hero type-1 sprite 33 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/7hero-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "33",
+    "raw": "0136000035a299440dae151dae150000",
+    "init": "15AE0D",
+    "main": "15AE1D",
+    "relative": {
+      "init": "0F",
+      "main": "1F"
+    },
+    "rooms": [
+      "0FE"
+    ],
+    "native_raw": "0136000035a299440daea71daea70000"
+  },
+  "code": {
+    "source_address": "15ADFE",
+    "native_address": "A7ADFE",
+    "size": 1328,
+    "sha256": "60831043e677facacf4d3c901226973f6d67fe1e5a92a0a9b888083d6d681895",
+    "adapted_sha256": "60831043e677facacf4d3c901226973f6d67fe1e5a92a0a9b888083d6d681895",
+    "pack_file": "sprite33-code.bin"
+  },
+  "entry_seeds": [
+    "15AE0D",
+    "15AE1D"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "0187A7",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the A7 code view",
+    "sprite graphics review",
+    "entry qualification against the 7hero donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607074,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0136000035a299440daea71daea70000",
+      "role": "Install the sprite 33 record and point init/main into the A7 module view"
+    }
+  ]
+}
