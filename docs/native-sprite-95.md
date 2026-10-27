@@ -107,10 +107,11 @@ The table holds the slot `95` actors at the first sample. Each row lists
 | `1CC` | `(9,36,95,48)` | `(9,36,95,48)` | yes |
 
 The captures use `sprite95-<room>-donor-v1` and `sprite95-<room>-native-v1`.
-Room `16C` holds one slot `95` actor with a three-pixel offset. A donor
-trajectory of the same room starts at `191` in both hosts. The trajectory then
-keeps a three-pixel lag. The actor follows the same path with a small phase
-difference.
+The room 16C slot 95 actor starts at mode 0x13 on sample frame 152. It enters
+mode 0x14 six frames later than the donor. Both actors start moving from X 191
+at the first frame that is 0x14. The actor speed equals negative 0.5 pixels per
+frame in both hosts. The six-frame gap times the pixel-per-frame rate predicts
+the 3-pixel offset exactly.
 
 Two rooms hold differences in other custom slots. Room `16D` places custom
 `34`, whose recipient record points at a different program from the `7hero`

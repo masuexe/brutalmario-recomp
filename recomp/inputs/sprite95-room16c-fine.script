@@ -1,0 +1,80 @@
+# Sprite 95 room 16C fine phase (diagnostic pipe fixture).
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 6c
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 152
+dump f152
+wait 2
+dump f154
+wait 2
+dump f156
+wait 2
+dump f158
+wait 2
+dump f160
+wait 2
+dump f162
+wait 2
+dump f164
+wait 2
+dump f166
+wait 2
+dump f168
+wait 2
+dump f170
+wait 2
+dump f172
+wait 2
+dump f174
+wait 2
+dump f176
+wait 2
+dump f178
+wait 2
+dump f180
+wait 2
+dump f182
+wait 2
+dump f184
+wait 2
+dump f186
+wait 2
+dump f188
+wait 2
+dump f190
+wait 2
+dump f192
+wait 2
+dump f194
+wait 2
+dump f196
+wait 2
+dump f198
+quit

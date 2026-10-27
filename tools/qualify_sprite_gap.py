@@ -26,6 +26,7 @@ ROOMS = {
     '1CC': ('sprite95-1cc-donor-v1', 'sprite95-1cc-native-v1'),
 }
 WALK = ('sprite95-16b-walk-donor-v1', 'sprite95-16b-walk-native-v1')
+PHASE = ('sprite95-16c-fine-donor-v1', 'sprite95-16c-fine-native-v1')
 
 
 def read(path):
@@ -96,6 +97,7 @@ def qualify():
         require(state(donor) == state(native), f'walk state differs at sample {index}')
         walk_core.append({'sample': index, 'mode': state(native)[0],
                           'room': state(native)[1], 'player_x': state(native)[2]})
+    phase = phase_report()
     return {'scope': __doc__.strip(), 'target': TARGET,
             'rom_sha256': cfg['output']['sha256'],
             'binary_sha256': build['binary_sha256'],
@@ -108,13 +110,61 @@ def qualify():
             'actors': native_actors,
             'rooms': rooms,
             'walk_samples': walk_core,
+            'load_phase': phase,
             'module_view': 'A3',
             'limits': ['Entry parity only. A course pass and a clear are not qualified.',
-                       'Room 16C holds a three-pixel offset in one slot 95 actor.',
+                       'The room 16C three-pixel offset equals the six-frame load-phase',
+                       'gap times the actor speed, so the module matches the donor.',
                        'Rooms 16D and 172 hold differences in other custom slots',
                        '(34 and a standard sprite), which the review does not cover.',
                        'The walk fixture drops both hosts to mode 0x0B and then to',
                        'mode 0x0E at player X 94, so the drop is shared behavior.']}
+
+
+def phase_series(directory):
+    """Read the slot 95 actor X and the mode at each fine sample."""
+    result = {}
+    for index in range(24):
+        frame = 152+index*2
+        path = ROOT/'local/captures'/directory/f'f{frame}.wram.bin'
+        if not path.is_file():
+            continue
+        wram = path.read_bytes()
+        rows = {}
+        for slot in range(12):
+            if wram[0x14C8+slot] and wram[0x1AB9E+slot] == SLOT:
+                rows[slot] = wram[0xE4+slot] | (wram[0x14E0+slot] << 8)
+        result[frame] = (wram[0x100], rows.get(8))
+    return result
+
+
+def phase_report():
+    """Show that the room 16C offset equals the load-phase distance."""
+    donor = phase_series(PHASE[0])
+    native = phase_series(PHASE[1])
+    require(donor and native, 'missing the room 16C phase captures')
+    onset = lambda series: min(frame for frame, (mode, _) in series.items() if mode == 0x14)
+    moved = lambda series: min(frame for frame, (_, x) in series.items()
+                               if x is not None and x != 191)
+    def slope(series, start):
+        frames = sorted(frame for frame, (_, x) in series.items()
+                        if x is not None and frame >= start)
+        return ((series[frames[-1]][1]-series[frames[0]][1]) / (frames[-1]-frames[0]))
+    donor_start, native_start = moved(donor), moved(native)
+    donor_slope, native_slope = slope(donor, donor_start), slope(native, native_start)
+    require(donor_slope == native_slope, 'the slot 95 actor speed differs')
+    gap = donor_start-native_start
+    predicted = abs(donor_slope)*gap
+    sample = max(frame for frame in donor if frame in native)
+    observed = donor[sample][1]-native[sample][1]
+    require(abs(predicted-observed) < 1,
+            'the room 16C offset is not explained by the load phase')
+    return {'donor_capture': PHASE[0], 'native_capture': PHASE[1],
+            'mode_onset_donor': onset(donor), 'mode_onset_native': onset(native),
+            'first_move_donor': donor_start, 'first_move_native': native_start,
+            'frame_gap': gap, 'actor_pixels_per_frame': donor_slope,
+            'predicted_offset': predicted, 'sample_frame': sample,
+            'observed_offset': observed}
 
 
 def require(condition, message):
