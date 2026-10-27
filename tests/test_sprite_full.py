@@ -63,5 +63,20 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertEqual(report["rooms"]["155"]["matched"], 4)
 
 
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite-full-regression.json").exists(),
+                         "requires the unchanged-route regression report")
+    def test_unchanged_routes_match_the_baseline(self):
+        report = json.loads((ROOT / "local/reports/native-sprite-full-regression.json").read_text())
+        self.assertEqual(report["baseline"], "demo11-native-sprite9e")
+        self.assertEqual(report["gap"], "demo11-native-sprite-full")
+        self.assertEqual(sorted(report["routes"]),
+                         ["demo11-forest-attack", "demo11-s004-entry",
+                          "demo11-sky-visuals"])
+        self.assertEqual(report["equal"], report["total"])
+        self.assertGreaterEqual(report["total"], 30)
+        for route, entry in report["routes"].items():
+            self.assertEqual(entry["equal"], entry["total"], route)
+
+
 if __name__ == "__main__":
     unittest.main()

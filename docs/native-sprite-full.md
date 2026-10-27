@@ -49,6 +49,23 @@ still.
 
 The run reports no `BRK` and 35 module views.
 
+## Unchanged routes
+
+The target adds 35 packs. The tool `tools/qualify_gap_regression.py` shows that
+the added packs do not change a route without a gap slot. It runs the same route
+script on the baseline target and on this target. Then it compares every dump.
+
+| Route | Equal dumps |
+| --- | ---: |
+| `demo11-s004-entry` | 1 of 1 |
+| `demo11-sky-visuals` | 11 of 11 |
+| `demo11-forest-attack` | 20 of 20 |
+
+The tool compares the WRAM dump of each point. The dumps are byte-identical, so
+the extra records and packs leave an unchanged route as it was. The report is
+`local/reports/native-sprite-full-regression.json`, SHA-256
+`bbf085981354d9ff722c48fd45ecd5f1c4988add65037d796a13019764a3648b`.
+
 ## Open behaviour
 
 Rooms `151` and `190` hold slots `9C` and `9B`. The target carries both records
@@ -83,5 +100,5 @@ This document claims the static review, the built target and entry parity for
 four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
-The tests are `tests/test_sprite_full.py` and pass 5/5. The full suite passes
-261/261 tests. The log is `local/reports/unit-tests-full2.log`.
+The tests are `tests/test_sprite_full.py` and pass 6/6. The full suite passes
+262/262 tests. The log is `local/reports/unit-tests-full3.log`.
