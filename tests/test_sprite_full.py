@@ -21,18 +21,18 @@ class FullGapTargetTests(unittest.TestCase):
         cls.rom = (ROOT / "local/restoration/demo11-native-sprite-full/rom.sfc").read_bytes()
 
     def test_records_are_admitted(self):
-        self.assertEqual(len(self.pairs), 34)
+        self.assertEqual(len(self.pairs), 35)
         slots = [recipe["record"]["slot"] for _, recipe in self.pairs]
         self.assertEqual(slots[:11], ["10", "11", "12", "13", "14",
                                       "0F", "19", "22", "3B", "55", "92"])
-        self.assertEqual(len(set(slots)), 34)
-        self.assertEqual(slots[-3:], ["9B", "9C", "2C"])
+        self.assertEqual(len(set(slots)), 35)
+        self.assertEqual(slots[-4:], ["9B", "9C", "2C", "7F"])
 
     def test_pack_layout_holds_thirty_five_packs(self):
         packs = gap.packs("demo11-native-sprite-full")
-        self.assertEqual(len(packs), 36)
+        self.assertEqual(len(packs), 37)
         banks = [int(pack["address"], 16) >> 16 for pack in packs]
-        self.assertEqual(len(set(banks)), 36)
+        self.assertEqual(len(set(banks)), 37)
         self.assertEqual(packs[-1]["variable"], "BM_NATIVE_GRAPHICS_PACK")
 
     def test_every_record_is_installed(self):
@@ -47,23 +47,25 @@ class FullGapTargetTests(unittest.TestCase):
             self.assertEqual(int(recipe["code"]["native_address"], 16) & 0xffff,
                              int(recipe["code"]["source_address"], 16) & 0xffff)
             for patch in recipe["code_patches"]:
-                self.assertEqual(patch["before"][:6], patch["after"][:6])
-                self.assertEqual(len(patch["before"]), 8)
+                if len(patch["before"]) == 8:
+                    self.assertEqual(patch["before"][:6], patch["after"][:6])
+                else:
+                    self.assertEqual(len(patch["before"]), 6)
 
     @unittest.skipUnless((ROOT / "local/reports/native-sprite-full-final.json").exists(),
                          "requires the 31-record qualification report")
     def test_qualification_report(self):
         report = json.loads((ROOT / "local/reports/native-sprite-full-final.json").read_text())
-        self.assertEqual(report["records"], 34)
-        self.assertEqual(report["packs"], 36)
+        self.assertEqual(report["records"], 35)
+        self.assertEqual(report["packs"], 37)
         self.assertEqual(sorted(report["exact_rooms"]),
                          ["00D", "05D", "083", "087", "08B", "0AF", "142",
                           "147", "155", "15D", "160"])
-        self.assertGreaterEqual(report["module_views"], 36)
+        self.assertGreaterEqual(report["module_views"], 37)
         self.assertEqual(sorted(report["open_rooms"]),
-                         ["001", "05B", "075", "096", "0A3", "0B1", "0B3",
-                          "0B5", "0B6", "110", "13C", "13F", "14E", "151",
-                          "15E", "162", "163", "164", "190"])
+                         ["001", "05B", "075", "096", "0A3", "0A5", "0B1",
+                          "0B3", "0B5", "0B6", "110", "13C", "13F", "14E",
+                          "151", "15E", "162", "163", "164", "190"])
         self.assertEqual(sorted(report["stalled_rooms"]),
                          ["085", "091", "0A2", "0BA", "0BB", "0F3"])
         for room, entry in report["stalled_rooms"].items():
@@ -110,11 +112,13 @@ class FullGapTargetTests(unittest.TestCase):
         entry = recipe["ignored_operands"][0]
         self.assertEqual(entry["address"], "2193D2")
         self.assertEqual(entry["operand"], "C6C0")
-        blocked = sprite.read_recipe(ROOT / "config/native-content/sprite7f-module.json")
-        donor = sprite.prepare_donor(ROOT / blocked["donor_manifest"])
+        appendix = sprite.read_recipe(ROOT / "config/native-content/sprite7f-module.json")
+        self.assertEqual(appendix["code"]["data_appendix"]["size"], 128)
+        self.assertEqual(len(appendix["relocated_operands"]), 2)
+        donor = sprite.prepare_donor(ROOT / appendix["donor_manifest"])
         base = (ROOT / "local/restoration/demo11-native-sprite9e/rom.sfc").read_bytes()
-        with self.assertRaises(ValueError):
-            sprite.build_code(donor, base, blocked)
+        payload, _ = sprite.build_code(donor, base, appendix)
+        self.assertEqual(len(payload), 1641)
 
 
 if __name__ == "__main__":

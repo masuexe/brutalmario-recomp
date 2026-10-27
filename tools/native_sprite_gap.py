@@ -60,8 +60,10 @@ def packs(target):
     pins = []
     for index, recipe in enumerate(recipes):
         variable = "BM_SEVEN_CODE_PACK" if index == 0 else "BM_SEVEN_CODE_PACK_"+str(index+1)
-        pins.append((variable, dict(recipe["code"], **recipe["code"].get("native_payload", {})),
-                     recipe["code"]["native_address"], recipe["code"]["adapted_sha256"], True))
+        payload = recipe["code"].get("native_payload", {})
+        pins.append((variable, dict(recipe["code"], **payload),
+                     recipe["code"]["native_address"],
+                     payload.get("sha256", recipe["code"]["adapted_sha256"]), True))
     pins.append(("BM_NATIVE_SPRITE_PACK", previous["code"], previous["code"]["native_address"],
                  previous["code"]["sha256"], True))
     pins.append(("BM_NATIVE_GRAPHICS_PACK", dict(previous["graphics"]["payload"],

@@ -114,8 +114,9 @@ def analyze(donor, recipe):
             if (ins.mode in (ABS, ABS_X, ABS_Y) and ins.operand >= 0x8000
                     and ins.mnem not in ('PEA', 'PER')):
                 if not first <= (bank << 16 | ins.operand) < end:
+                    declared = recipe.get('ignored_operands', []) + recipe.get('relocated_operands', [])
                     ignored = {(int(item['address'], 16), int(item['operand'], 16))
-                               for item in recipe.get('ignored_operands', [])}
+                               for item in declared}
                     if (bank << 16 | ins.addr, ins.operand) not in ignored:
                         raise ValueError('bank-local operand escapes module')
             if ins.mnem == 'JSR' and ins.mode == ABS:
@@ -178,7 +179,17 @@ def build_code(donor, base, recipe):
         offset = lorom(int(dependency['address'], 16))
         for image in (donor, base):
             verify(image[offset:offset+dependency['size']], dependency, 'shared helper pin')
-    return bytes(adapted), audit
+    appendix = recipe.get('code', {}).get('data_appendix')
+    payload = bytes(adapted)
+    if appendix:
+        source = lorom(int(appendix['source_address'], 16))
+        data = donor[source:source+appendix['size']]
+        verify(data, appendix, 'data appendix')
+        payload = payload+data
+    payload_pin = recipe.get('code', {}).get('native_payload')
+    if payload_pin:
+        verify(payload, payload_pin, 'module pack payload')
+    return payload, audit
 
 
 def prepare(directory, recipe_path=RECIPE):
@@ -197,7 +208,8 @@ def prepare(directory, recipe_path=RECIPE):
     receipt = {'scope': __doc__.strip(), 'recipe': recipe, 'audit': audit, 'record': record,
                'donor_manifest': recipe['donor_manifest'],
                'donor_sha256': sha(donor), 'base_sha256': sha(base),
-               'adapted_code_sha256': sha(code),
+               'adapted_code_sha256': sha(code[:int(recipe['code']['size'])]),
+               'payload_sha256': sha(code), 'payload_size': len(code),
                'input_files': {str(path.relative_to(ROOT)): sha(path.read_bytes()) for path in paths},
                'graphics': 'not prepared; the graphics review stays open'}
     for name, data in ((recipe['code']['pack_file'], code),

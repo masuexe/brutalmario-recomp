@@ -28,15 +28,36 @@
     "native_address": "B4A2F1",
     "size": 1513,
     "sha256": "7e39a5ed61fc97a9136341b086b65670699321b3835611353bfd00f598a59993",
-    "adapted_sha256": "7e39a5ed61fc97a9136341b086b65670699321b3835611353bfd00f598a59993",
-    "pack_file": "sprite7f-code.bin"
+    "adapted_sha256": "b0722e152f8c2958518530f25cf27ea36508be9b90a697c4924a828cfe71fb7f",
+    "pack_file": "sprite7f-code.bin",
+    "data_appendix": {
+      "source_address": "24BEA8",
+      "size": 128,
+      "sha256": "a34a720357e09ffded7e60cddf53e68ba4423e9506e18f4d227601146c4ffca8"
+    },
+    "native_payload": {
+      "size": 1641,
+      "sha256": "b494e1c48a481f4fb97714b414e3ad8b562360a850eaa1ea7e064e8ae36a2730",
+      "pack_file": "sprite7f-code.bin"
+    }
   },
   "entry_seeds": [
     "24A300",
     "24A30D"
   ],
   "dispatch_tables": [],
-  "code_patches": [],
+  "code_patches": [
+    {
+      "address": "24A7EF",
+      "before": "bda8be",
+      "after": "bda8da"
+    },
+    {
+      "address": "24A7F4",
+      "before": "bda9be",
+      "after": "bda8db"
+    }
+  ],
   "external_calls": [
     "01802A",
     "0187A7",
@@ -57,6 +78,18 @@
       "before": "0000ffffffffffff218001218001ffff",
       "after": "012800003f83395400a3b40da3b40000",
       "role": "Install the sprite 7F record and point init/main into the B4 module view"
+    }
+  ],
+  "relocated_operands": [
+    {
+      "address": "24A7EF",
+      "operand": "BEA8",
+      "replacement": "A8DA"
+    },
+    {
+      "address": "24A7F4",
+      "operand": "BEA9",
+      "replacement": "A8DB"
     }
   ]
 }
