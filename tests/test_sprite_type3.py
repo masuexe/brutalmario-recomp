@@ -87,5 +87,15 @@ class SpriteType3Tests(unittest.TestCase):
         self.assertIn("## First install attempt", doc)
         self.assertIn("8 `BRK` entries", doc)
 
+    @unittest.skipUnless((ROOT / "config/restorations/demo11-native-type3b.json").exists(),
+                         "requires the records-only target config")
+    def test_records_only_target_is_recorded(self):
+        import json
+        cfg = json.loads((ROOT / "config/restorations/demo11-native-type3b.json").read_text())
+        self.assertEqual(len(cfg["native_sprite_gap"]["manifests"]), 3)
+        doc = (ROOT / "docs/native-sprite-type3.md").read_text()
+        self.assertIn("## Records-only install", doc)
+        self.assertIn("d568f18f77692babfbac898b93f5e72d18e656408be918039285a36c02870b3c", doc)
+
 if __name__ == '__main__':
     unittest.main()

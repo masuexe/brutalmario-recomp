@@ -160,6 +160,31 @@ wrong record bytes and later executes a bad opcode.
 The next attempt must set `Y` and `X` at the module entry. One option is `TYA`,
 `AND #$F0`, `TAY` followed by `TXA`, `AND #$0F`, `TAX`. Another option copies the
 whole constructor instead of the type path alone.
+## Records-only install
+
+A second target holds the three records and the three blocks with no
+constructor patch: `demo11-native-type3b`, ROM
+`d568f18f77692babfbac898b93f5e72d18e656408be918039285a36c02870b3c`.
+
+| Check | Result |
+| --- | --- |
+| `BRK` count in room `16B` | 0 |
+| Game mode at the first sample | `0x13` |
+| Game mode at the second sample | `0x14` |
+
+The game reaches normal play with the three records installed. No actor carries
+a `C0`, `C1` or `C2` type byte, so the placement still does not create those
+actors.
+
+Room `16B` differs from the donor in one way: the target holds two actors with
+custom id `95`, because this target keeps the type-0 placeholder for slot `95`.
+The 35-record target carries the slot `95` program instead.
+
+## Which install to keep
+
+Keep the records-only target. It installs the three records, runs without a
+crash and leaves the room as it was. The constructor patch stays an open
+experiment: it crashes and it is not necessary to install the records.
 ## Reproduction
 
 ```
@@ -168,7 +193,7 @@ python3 tools/audit_sprite_type3.py
 
 The report is `local/reports/native-sprite-type3.json`, SHA-256
 `7e35f68ac13d5d65552b8b8843cb2521adb950569c05e837ce2cdb9ca3faa950`. The tests
-are `tests/test_sprite_type3.py` and pass 7/7. The full suite passes 271/271
-tests. The log is `local/reports/unit-tests-type3b.log`. The captures are
+are `tests/test_sprite_type3.py` and pass 8/8. The full suite passes 272/272
+tests. The log is `local/reports/unit-tests-type3c.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,
 `type3-room16b-native-v1` and `type3-room170-native-v1`.
