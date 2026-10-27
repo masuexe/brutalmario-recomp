@@ -21,21 +21,26 @@ class ProductTargetTests(unittest.TestCase):
         cls.rom = (ROOT / "local/restoration/demo11-native-product/rom.sfc").read_bytes()
 
     def test_thirty_five_records_are_admitted(self):
-        self.assertEqual(len(self.pairs), 35)
+        self.assertEqual(len(self.pairs), 36)
         slots = [recipe["record"]["slot"] for _, recipe in self.pairs]
         self.assertNotIn("2A", slots)
 
     def test_pack_layout_holds_forty_two_packs(self):
         packs = gap.packs("demo11-native-product")
-        self.assertEqual(len(packs), 42)
+        self.assertEqual(len(packs), 43)
         banks = sorted(int(pack["address"], 16) >> 16 for pack in packs)
-        self.assertEqual(len(set(banks)), 42)
+        self.assertEqual(len(set(banks)), 43)
         self.assertIn(0xA2, banks)
         self.assertIn(0xA6, banks)
         self.assertIn(0xA5, banks)
         self.assertIn(0xB6, banks)
-        for bank in (0xCB, 0xCC, 0xCD):
+        for bank in (0xCB, 0xCC, 0xCD, 0xA0):
             self.assertIn(bank, banks)
+
+    def test_slot_80_record_is_installed(self):
+        record = bytes.fromhex("012800003f039944e9a8a000aaa00000")
+        offset = 1608306
+        self.assertEqual(self.rom[offset:offset+len(record)], record)
 
     def test_target_rom_identity(self):
         verify(self.rom, self.cfg["output"], "product target ROM")
@@ -61,8 +66,8 @@ class ProductTargetTests(unittest.TestCase):
                                 text=True, check=True)
         variables = [line.split("=")[0] for line in result.stdout.splitlines()
                      if line.startswith("BM_")]
-        self.assertEqual(len(variables), 42)
-        self.assertEqual(len(set(variables)), 42)
+        self.assertEqual(len(variables), 43)
+        self.assertEqual(len(set(variables)), 43)
 
 if __name__ == "__main__":
     unittest.main()

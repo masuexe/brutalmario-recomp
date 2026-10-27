@@ -42,7 +42,8 @@
       "config/native-content/sprite9b-module.json",
       "config/native-content/sprite9c-module.json",
       "config/native-content/sprite2c-module.json",
-      "config/native-content/sprite7f-module.json"
+      "config/native-content/sprite7f-module.json",
+      "config/native-content/sprite80-module.json"
     ],
     "extra_packs": [
       {
@@ -198,6 +199,6 @@
   },
   "output": {
     "size": 4194304,
-    "sha256": "52a4f80db23cadccfcc6cf9693a8e0b054556ae636bae3f0f58f0fb0ecde84c3"
+    "sha256": "b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5"
   }
 }

@@ -150,7 +150,8 @@ def analyze(donor, recipe):
     calls = sorted({f'{ins.operand:06X}' for ins in instructions.values()
                     if ins.mnem in ('JSL', 'JML') and ins.operand >> 16 != bank})
     if calls != recipe['external_calls']:
-        raise ValueError('outside call set differs from review')
+        raise ValueError('outside call set differs from review: found %s, review %s'
+                         % (calls, recipe['external_calls']))
     return {'local_entry_states': len(entries), 'instruction_variants': len(instructions),
             'reviewed_dispatch_tables': tables,
             'source_bank_jsl_sites': [f'{pc:06X}' for pc in sorted(local)],

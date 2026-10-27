@@ -5,6 +5,14 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeFullSpriteGapsSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Full Sprite Gaps',
     },
+    'demo11-native-sprite80-spawn': {
+        'binary': 'BrutalMarioDemo11NativeSprite80SpawnSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 80 Spawn',
+    },
+    'demo11-native-sprite80': {
+        'binary': 'BrutalMarioDemo11NativeSprite80SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 80',
+    },
     'demo11-native-product': {
         'binary': 'BrutalMarioDemo11NativeProductSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Product',

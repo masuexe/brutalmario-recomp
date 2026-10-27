@@ -54,10 +54,10 @@ The target is `demo11-native-product`. Its config is
 
 | Item | Value |
 | --- | --- |
-| ROM | `52a4f80db23cadccfcc6cf9693a8e0b054556ae636bae3f0f58f0fb0ecde84c3` |
+| ROM | `b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5` |
 | Binary | `BrutalMarioDemo11NativeProductSNESRecomp` |
-| Packs | 42 |
-| Type-1 records | 35 |
+| Packs | 43 |
+| Type-1 records | 36 |
 | Seven patches | the full `seven-module.json` patch list |
 | Type-3 records | `C0`, `C1`, `C2` |
 
@@ -77,8 +77,8 @@ record and leaves that copy out.
 | Room `155` | 4 of 4 samples equal |
 | Room `0A5` | phase-exact at a 29-frame offset |
 
-The tests are `tests/test_product_target.py` and pass 6/6. The full suite passes
-279/279 tests. The log is `local/reports/unit-tests-launcher.log`. The regression
+The tests are `tests/test_product_target.py` and pass 7/7. The full suite passes
+285/285 tests. The log is `local/reports/unit-tests-sprite80b.log`. The regression
 report is `local/reports/native-sprite-full-regression-product.json`, SHA-256
 `76bb4a146897918b7eadcb1b7a06c95078f3394ed83cb81021057af952207f13`.
 
@@ -107,6 +107,13 @@ instead of the player input, which is how the smoke test starts the game.
 A script run writes its dumps to `local/captures/play-<target>`.
 
 The smoke test starts the binary, mounts 42 packs and exits with code 0.
+## Slot 80 fix in the product
+
+The product target also holds the slot `80` record and its `cheap_demo` module
+in bank `A0`. That record replaces the broken recipient record for room `0A6`.
+The module creates one actor and then one normal enemy, as the test target shows.
+A capture of room `0A6` on the product target holds no `BRK`.
+
 ## Limits
 
 This document claims the built target, the unchanged-route regression and two

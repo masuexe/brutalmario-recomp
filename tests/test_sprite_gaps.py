@@ -66,7 +66,7 @@ class SpriteGapTests(unittest.TestCase):
         doc = (ROOT / "docs/native-sprite-gaps.md").read_text()
         self.assertIn("## Room 0A6 and slot 80", doc)
         self.assertIn("012800003f039944e92822002a220000", doc)
-        self.assertIn("cannot supply this program", doc)
+        self.assertIn("The `cheap_demo` image holds the same slot", doc)
 
 if __name__ == "__main__":
     unittest.main()

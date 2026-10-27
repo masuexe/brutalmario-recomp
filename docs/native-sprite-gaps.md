@@ -71,28 +71,29 @@ An actor compare needs a live room on both hosts.
 ## Room 0A6 and slot 80
 
 Room `0A6` places twelve sprite entries, and every entry uses slot `80`. The
-slot `80` record in the recipient is `012800003f039944e92822002a220000`. Its
-init field is `0x2228E9` and its main field is `0x222A00`.
+recipient record is `012800003f039944e92822002a220000`, whose init field is
+`0x2228E9` and main field is `0x222A00`. No code lives at either address, so the
+record cannot run.
 
-Both fields point into the low half of bank `22`. The LoROM decoder in this
-project reaches bank `22` only at `0x8000` and above, so the pipeline cannot
-recompile those addresses. A capture of room `0A6` on the product target loads
-the room (`0x14`) and creates no sprite. The base ROM freezes at `0x12` with the
-same entry fixture.
+The `cheap_demo` image holds the same slot with the record
+`012800003f039944e9a82400aa240000`. Its init is `0x24A8E9` and its main is
+`0x24AA00`, and a 919-byte `STAR` block starts at `0x24A8DA`. The `demo6` and
+`demo7` images hold the same slot at their own addresses. The `ow`, `mazo`,
+`7hero` and `boss` images hold only the placeholder.
 
-No official donor carries slot `80`. The `7hero` and `boss` images hold the
-placeholder `0000ffffffffffff218001218001ffff` there, and the other demo images
-hold no record for the slot. A donor transplant cannot supply this program.
+The recipe `config/native-content/sprite80-module.json` moves the `cheap_demo`
+block to bank `A0` and keeps its low 16 bits. One inner `JSR` target moves with
+the block: a code patch changes `2A29` to `2AA9`.
 
-Slot `80` is the only record in the recipient table whose pointer falls outside
-the mapped code region. Every other slot with a recipient record reaches normal
-ROM or a mounted pack.
+A test target places one slot `80` entry at the start of room `155`. The module
+runs (`bank=A0 resolutions=110980`), the actor holds its position, and the actor
+then creates one `0x4F` actor and disappears. The run holds no `BRK`. This
+matches the reported purpose: a still actor that creates a normal enemy and
+dies.
 
-A player report showed a crash at `$22:2149` after a teleport to room `0A6`.
-The byte at the matching ROM file offset `0x112149` is `0x00`, which is `BRK`.
-The crash therefore comes from the slot `80` pointer, and a build that creates
-that actor runs the crash path.
-
+Room `0A6` itself creates no actor with the pipe fixture on either host, so the
+fixture cannot qualify that room. The product target holds the record and the
+module, and a capture of room `0A6` on it holds no `BRK`.
 ## Remaining causes
 
 Two rooms match in every frame before the donor creates a second actor. Those
