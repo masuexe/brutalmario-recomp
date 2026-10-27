@@ -14,6 +14,10 @@ from restore_star_world_1 import sha
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = 'demo11-native-sprite-full'
+OPEN_ROOMS = {
+    '151': ('room151-donor-v1', 'room151-native-v1'),
+    '190': ('room190-donor-v1', 'room190-native-v1'),
+}
 ROOMS = {
     '155': ('sprite12-155-donor-v1', 'spritefull-155-native-v1',
             ('r1', 'r2', 'r3', 'r4'), True),
@@ -52,7 +56,7 @@ def qualify():
     rom = (ROOT/'local/restoration'/TARGET/'rom.sfc').read_bytes()
     verify(rom, cfg['output'], 'full gap target ROM')
     require(build['rom_sha256'] == cfg['output']['sha256'], 'build receipt ROM differs')
-    require(len(recipes) == 31, 'the target must carry 31 records')
+    require(len(recipes) == 33, 'the target must carry 33 records')
     for recipe in recipes:
         record = bytes.fromhex(recipe['record']['native_raw'])
         offset = recipe['unapplied_rom_patches'][0]['offset']
@@ -62,10 +66,10 @@ def qualify():
                 == (int(recipe['code']['source_address'], 16) & 0xffff),
                 'a module move does not keep the low 16 address bits')
     banks = sorted(int(recipe['code']['native_address'], 16) >> 16 for recipe in recipes)
-    require(len(set(banks)) == 31, 'the recipes share a code bank')
+    require(len(set(banks)) == 33, 'the recipes share a code bank')
     manifest = read(ROOT/'local/restoration'/TARGET/'input-manifest.json')
-    require(len(manifest['module_receipt_sha256']) == 31,
-            'the input manifest must hold 31 module receipts')
+    require(len(manifest['module_receipt_sha256']) == 33,
+            'the input manifest must hold 33 module receipts')
     rooms = {}
     for room, (donor_dir, native_dir, tags, exact) in ROOMS.items():
         samples = {}
@@ -97,7 +101,7 @@ def qualify():
             parts = line.split()
             counters[parts[1]] = {'resolutions': int(parts[2].split('=')[1]),
                                   'page_instructions': int(parts[3].split('=')[1])}
-    require(len(counters) >= 33, 'fewer than 33 module views ran')
+    require(len(counters) >= 35, 'fewer than 35 module views ran')
     return {'scope': __doc__.strip(), 'target': TARGET,
             'rom_sha256': cfg['output']['sha256'],
             'binary_sha256': build['binary_sha256'],
@@ -106,6 +110,12 @@ def qualify():
             'slots': [recipe['record']['slot'] for recipe in recipes],
             'module_views': len(counters),
             'rooms': rooms,
+            'open_rooms': {room: {
+                'donor_actors': len(actors((ROOT/'local/captures'/donor_dir/'r2.wram.bin').read_bytes())),
+                'native_actors': len(actors((ROOT/'local/captures'/native_dir/'r2.wram.bin').read_bytes())),
+                'rows_equal': actors((ROOT/'local/captures'/donor_dir/'r2.wram.bin').read_bytes())
+                               == actors((ROOT/'local/captures'/native_dir/'r2.wram.bin').read_bytes()),
+            } for room, (donor_dir, native_dir) in OPEN_ROOMS.items()},
             'exact_rooms': sorted(room for room, entry in rooms.items()
                                   if entry['rows_equal']),
             'limits': ['Entry parity for four sampled rooms only. Movement and a',

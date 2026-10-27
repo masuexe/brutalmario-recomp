@@ -38,11 +38,13 @@
       "config/native-content/sprite2d-module.json",
       "config/native-content/sprite23-module.json",
       "config/native-content/sprite20-module.json",
-      "config/native-content/sprite1c-module.json"
+      "config/native-content/sprite1c-module.json",
+      "config/native-content/sprite9b-module.json",
+      "config/native-content/sprite9c-module.json"
     ]
   },
   "output": {
     "size": 4194304,
-    "sha256": "56795e4dc78b2fdc9482dd62fd0e6b2236218e7d744057e3e757a8f73b9423ff"
+    "sha256": "4fd5c0b9d9d30bd46fdb6118eb86b55fe97af23bc95e771b7110d69c2b7d7ce6"
   }
 }

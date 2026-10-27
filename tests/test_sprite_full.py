@@ -20,18 +20,19 @@ class FullGapTargetTests(unittest.TestCase):
         cls.pairs = gap.settings("demo11-native-sprite-full")[1]
         cls.rom = (ROOT / "local/restoration/demo11-native-sprite-full/rom.sfc").read_bytes()
 
-    def test_thirty_one_recipes_are_admitted(self):
-        self.assertEqual(len(self.pairs), 31)
+    def test_records_are_admitted(self):
+        self.assertEqual(len(self.pairs), 33)
         slots = [recipe["record"]["slot"] for _, recipe in self.pairs]
         self.assertEqual(slots[:11], ["10", "11", "12", "13", "14",
                                       "0F", "19", "22", "3B", "55", "92"])
-        self.assertEqual(len(set(slots)), 31)
+        self.assertEqual(len(set(slots)), 33)
+        self.assertEqual(slots[-2:], ["9B", "9C"])
 
-    def test_pack_layout_holds_thirty_three_packs(self):
+    def test_pack_layout_holds_thirty_five_packs(self):
         packs = gap.packs("demo11-native-sprite-full")
-        self.assertEqual(len(packs), 33)
+        self.assertEqual(len(packs), 35)
         banks = [int(pack["address"], 16) >> 16 for pack in packs]
-        self.assertEqual(len(set(banks)), 33)
+        self.assertEqual(len(set(banks)), 35)
         self.assertEqual(packs[-1]["variable"], "BM_NATIVE_GRAPHICS_PACK")
 
     def test_every_record_is_installed(self):
@@ -45,16 +46,20 @@ class FullGapTargetTests(unittest.TestCase):
         for _, recipe in self.pairs:
             self.assertEqual(int(recipe["code"]["native_address"], 16) & 0xffff,
                              int(recipe["code"]["source_address"], 16) & 0xffff)
-            self.assertEqual(recipe["code_patches"], [])
+            for patch in recipe["code_patches"]:
+                self.assertEqual(patch["before"][:6], patch["after"][:6])
+                self.assertEqual(len(patch["before"]), 8)
 
     @unittest.skipUnless((ROOT / "local/reports/native-sprite-full-final.json").exists(),
                          "requires the 31-record qualification report")
     def test_qualification_report(self):
         report = json.loads((ROOT / "local/reports/native-sprite-full-final.json").read_text())
-        self.assertEqual(report["records"], 31)
-        self.assertEqual(report["packs"], 33)
+        self.assertEqual(report["records"], 33)
+        self.assertEqual(report["packs"], 35)
         self.assertEqual(sorted(report["exact_rooms"]), ["083", "087", "142", "155"])
-        self.assertGreaterEqual(report["module_views"], 33)
+        self.assertGreaterEqual(report["module_views"], 35)
+        self.assertEqual(sorted(report["open_rooms"]), ["151", "190"])
+        self.assertFalse(report["open_rooms"]["151"]["rows_equal"])
         self.assertEqual(report["rooms"]["155"]["matched"], 4)
 
 
