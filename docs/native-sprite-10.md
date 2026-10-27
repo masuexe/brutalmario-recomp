@@ -108,9 +108,27 @@ rightward move. The run reports no `BRK`.
 Rooms `156` and `15B` also execute the module view
 (`bank=A4` page instructions `12272` and `61640`).
 
-A donor fixture for the `cheap-demo` map path stays open. Until that fixture
-exists, this document claims the static review, the built target and one
-module-view run. It does not claim donor parity.
+A donor fixture that spawns the donor actors stays open. This document claims
+the static review, the built target and the baseline differential. It does not
+claim donor parity.
 
-The tests are `tests/test_sprite_10.py` and pass 4/4. The full suite passes
-211/211 tests. The log is `local/reports/unit-tests-sprite10-fix.log`.
+## Baseline differential
+
+The baseline target `demo11-native-sprite9e` holds the placeholder record, so
+its rooms spawn sprite `00`. The sprite 10 target spawns sprite `36` with
+custom id `10` in the same rooms.
+
+| Room | Baseline | Target |
+| --- | --- | --- |
+| `12D` | slots 4 to 7, sprite `00` | slots 4 to 7, sprite `36`, custom `10` |
+| `156` | sprite `00` rows | sprite `36`, custom `10` |
+| `15B` | sprite `00` rows | sprite `36`, custom `10` |
+
+The qualification tool is `tools/qualify_sprite10_gap.py`. Its report is
+`local/reports/native-sprite10-final.json`, SHA-256
+`301ee125c9f463a4dfb9b53638a261140634564682d1d0c49922a23c83d16e7d`. The tool
+checks the ROM and binary identities, the installed record, the low-16-bit rule,
+the module receipt, the baseline rows and the module-view counters.
+
+The tests are `tests/test_sprite_10.py` and pass 6/6. The full suite passes
+213/213 tests. The log is `local/reports/unit-tests-sprite10-qual.log`.

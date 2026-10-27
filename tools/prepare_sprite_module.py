@@ -152,6 +152,8 @@ def build_code(donor, base, recipe):
     if ((first & 0xffff) < 0x8000 or (native & 0xffff) < 0x8000 or
             lorom(native)+code['size'] > bank_start+0x8000):
         raise ValueError('unreviewed executable mapping')
+    if (native & 0xffff) != (first & 0xffff):
+        raise ValueError('module move must keep the low 16 address bits')
     payload = donor[lorom(first):lorom(first)+code['size']]
     verify(payload, code, 'source protected program')
     if (payload[:4] != b'STAR' or int.from_bytes(payload[4:6], 'little')+9 != len(payload)

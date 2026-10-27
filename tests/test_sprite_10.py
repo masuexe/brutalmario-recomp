@@ -55,5 +55,32 @@ class Sprite10ModuleTests(unittest.TestCase):
         self.assertEqual(self.target[offset:offset+len(record)], record)
 
 
+
+    def test_mapping_must_keep_low_bits(self):
+        import copy
+        recipe = copy.deepcopy(self.recipe)
+        recipe["code"]["native_address"] = "A4E61F"
+        recipe["record"]["native_raw"] = "01360080398391002ee6a4d1e6a40000"
+        with self.assertRaisesRegex(ValueError, "low 16 address bits"):
+            sprite.build_code(self.donor, self.base, recipe)
+
+
+
+    @unittest.skipUnless((ROOT / "local/reports/native-sprite10-final.json").exists(),
+                         "requires the sprite 10 qualification report")
+    def test_qualification_report(self):
+        report = json.loads((ROOT / "local/reports/native-sprite10-final.json").read_text())
+        self.assertEqual(sorted(report["rooms"]), ["12D", "156", "15B"])
+        for room, rows in report["rooms"].items():
+            self.assertGreaterEqual(len(rows["target_slot_rows"]), 1, room)
+            for row in rows["target_slot_rows"]:
+                self.assertEqual(row["sprite"], 0x36, room)
+                self.assertEqual(row["custom"], 0x10, room)
+            for row in rows["baseline_rows"]:
+                self.assertEqual(row["sprite"], 0x00, room)
+        self.assertGreater(report["module_view"]["page_instructions"], 100000)
+        self.assertEqual(report["native_address"], "A4A61F")
+
+
 if __name__ == "__main__":
     unittest.main()

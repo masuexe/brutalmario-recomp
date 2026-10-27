@@ -1,0 +1,34 @@
+# cheap-demo pipe-poke probe into room 12D.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+poke 1f11 0606
+poke 1f17 2401e4012401e401
+poke 1f1f 10001c0010001c00
+poke 0100 0b
+wait 240
+dump map
+poke d7e2 51
+poke 19d8 01
+press y 2
+until 0100 == 14 900
+dump base
+poke 94 80004001
+poke 19b8 2d
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 60
+dump p0
+wait 120
+dump p1
+wait 240
+dump p2
+quit
