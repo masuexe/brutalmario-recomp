@@ -68,6 +68,31 @@ An actor compare needs a live room on both hosts.
 | Missing second actor | `151`, `190` |
 | Different actor positions | the remaining open rooms |
 
+## Room 0A6 and slot 80
+
+Room `0A6` places twelve sprite entries, and every entry uses slot `80`. The
+slot `80` record in the recipient is `012800003f039944e92822002a220000`. Its
+init field is `0x2228E9` and its main field is `0x222A00`.
+
+Both fields point into the low half of bank `22`. The LoROM decoder in this
+project reaches bank `22` only at `0x8000` and above, so the pipeline cannot
+recompile those addresses. A capture of room `0A6` on the product target loads
+the room (`0x14`) and creates no sprite. The base ROM freezes at `0x12` with the
+same entry fixture.
+
+No official donor carries slot `80`. The `7hero` and `boss` images hold the
+placeholder `0000ffffffffffff218001218001ffff` there, and the other demo images
+hold no record for the slot. A donor transplant cannot supply this program.
+
+Slot `80` is the only record in the recipient table whose pointer falls outside
+the mapped code region. Every other slot with a recipient record reaches normal
+ROM or a mounted pack.
+
+A player report showed a crash at `$22:2149` after a teleport to room `0A6`.
+The byte at the matching ROM file offset `0x112149` is `0x00`, which is `BRK`.
+The crash therefore comes from the slot `80` pointer, and a build that creates
+that actor runs the crash path.
+
 ## Remaining causes
 
 Two rooms match in every frame before the donor creates a second actor. Those
