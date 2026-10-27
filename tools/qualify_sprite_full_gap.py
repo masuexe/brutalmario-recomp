@@ -70,6 +70,31 @@ def actors(wram):
     return rows
 
 
+
+def stalled_report():
+    """Record the mode and the frame counter of each stalled room."""
+    result = {}
+    for room, (donor_dir, native_dir) in STALLED_ROOMS.items():
+        entry = {}
+        for host, directory in (('donor', donor_dir), ('native', native_dir)):
+            first = ROOT/'local/captures'/directory/'r1.wram.bin'
+            second = ROOT/'local/captures'/directory/'r2.wram.bin'
+            if not first.is_file():
+                entry[host] = None
+                continue
+            a = first.read_bytes()
+            b = second.read_bytes() if second.is_file() else a
+            entry[host] = {'mode': a[0x100],
+                           'frame': a[0x13] | (a[0x14] << 8),
+                           'frame_later': b[0x13] | (b[0x14] << 8),
+                           'frozen': (a[0x13] | (a[0x14] << 8)) ==
+                                     (b[0x13] | (b[0x14] << 8))}
+        result[room] = {'donor': entry.get('donor'), 'native': entry.get('native'),
+                        'native_frozen': bool(entry.get('native')
+                                              and entry['native']['frozen'])}
+    return result
+
+
 def require(condition, message):
     if not condition:
         raise ValueError(message)
@@ -155,10 +180,7 @@ def qualify():
             'room_lists': read(ROOT/'local/reports/native-sprite-full-lists.json')
                                if (ROOT/'local/reports/native-sprite-full-lists.json').is_file()
                                else None,
-            'stalled_rooms': {room: {
-                'donor_mode': (ROOT/'local/captures'/donor_dir/'r1.wram.bin').read_bytes()[0x100],
-                'native_mode': (ROOT/'local/captures'/native_dir/'r1.wram.bin').read_bytes()[0x100],
-            } for room, (donor_dir, native_dir) in STALLED_ROOMS.items()},
+            'stalled_rooms': stalled_report(),
             'rooms': rooms,
             'open_rooms': {room: {
                 'donor_actors': len(actors((ROOT/'local/captures'/donor_dir/'r2.wram.bin').read_bytes())),

@@ -73,11 +73,21 @@ the extra records and packs leave an unchanged route as it was. The report is
 `local/reports/native-sprite-full-regression.json`, SHA-256
 `bbf085981354d9ff722c48fd45ecd5f1c4988add65037d796a13019764a3648b`.
 
-## Stalled rooms
+## Frozen rooms
 
-Six rooms never leave game mode `0x12` on the native target, while the donor
-reaches mode `0x14`. The actors stand still in both captures, so an actor
-compare there does not measure the module.
+Six rooms freeze the native runtime at the room entry. The game mode holds
+`0x12` and the frame counter `$13` and `$14` stops. The donor reaches mode
+`0x14` and its frame counter keeps counting. The actors stand still in both
+captures, so an actor compare there does not measure the module.
+
+| Room | Donor mode | Target mode | Target frame at `r1` | at `r2` |
+| --- | --- | ---: | ---: | ---: |
+| `085` | `0x14` | `0x12` | 63492 | 63492 |
+| `091` | `0x14` | `0x12` | 63492 | 63492 |
+| `0A2` | `0x14` | `0x12` | 63492 | 63492 |
+| `0BA` | `0x14` | `0x12` | 63492 | 63492 |
+| `0BB` | `0x14` | `0x12` | 63492 | 63492 |
+| `0F3` | `0x14` | `0x12` | 63492 | 63492 |
 
 | Room | Donor mode | Target mode |
 | --- | --- | ---: |
@@ -88,10 +98,12 @@ compare there does not measure the module.
 | `0BB` | `0x14` | `0x12` |
 | `0F3` | `0x14` | `0x12` |
 
-Entry sweep for room `0BB`: only `19d8 04` loads room `0x0BB`. The values `00`,
-`01`, `02`, `03` and `05` load room `0x1BB` at mode `0x14`, and `06` and `07`
-load room `0x000`. The one value that reaches the room holds mode `0x12`, so
-this fixture cannot start the room.
+Entry sweep: for rooms `085`, `0A2`, `0BA`, `0BB` and `0F3`, only `19d8 04`
+loads the intended room, and that value freezes the runtime. The values `00`,
+`01`, `02` and `05` load room `<room>+0x100` at mode `0x14`.
+
+A manual write of `$0DAE = 0x0F` does not end the freeze, so the palette fade
+counter is not the cause.
 
 The baseline target `demo11-native-sprite9e` shows the same stall in rooms
 `085` and `0BB`. The gap records therefore do not cause the stall. In room
@@ -157,7 +169,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`76d19b0677347c9191c931075ab4eb0203e74e2db384a6fc2ea44dfb30da0115`.
+`cec608dd27fe6d8881ce5e07f915af7a07a38cc5862fef5a26308f30864cb5d7`.
 
 ## Limits
 
@@ -166,4 +178,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 6/6. The full suite passes
-262/262 tests. The log is `local/reports/unit-tests-rooms13.log`.
+262/262 tests. The log is `local/reports/unit-tests-freeze.log`.

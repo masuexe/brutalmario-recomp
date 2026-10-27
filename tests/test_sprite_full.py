@@ -66,8 +66,10 @@ class FullGapTargetTests(unittest.TestCase):
         self.assertEqual(sorted(report["stalled_rooms"]),
                          ["085", "091", "0A2", "0BA", "0BB", "0F3"])
         for room, entry in report["stalled_rooms"].items():
-            self.assertEqual(entry["native_mode"], 0x12, room)
-            self.assertEqual(entry["donor_mode"], 0x14, room)
+            self.assertTrue(entry["native_frozen"], room)
+            self.assertEqual(entry["native"]["mode"], 0x12, room)
+            self.assertEqual(entry["donor"]["mode"], 0x14, room)
+            self.assertFalse(entry["donor"]["frozen"], room)
         self.assertFalse(report["open_rooms"]["151"]["rows_equal"])
         self.assertEqual(sorted(report["room_lists"]["different_rooms"]),
                          ["001", "075", "086", "15E"])
