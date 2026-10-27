@@ -167,6 +167,10 @@ and both programs start, but the donor behaviour does not follow yet.
 | --- | --- | ---: | ---: | --- |
 | `001` | `93` | 1 | 0 | no |
 | `096` | `76` | 4 | 4 | Y differs |
+| `0B5` | `55` | 2 | 2 | the later child differs |
+| `0B6` | `55` | 4 | 4 | one actor Y differs in the later sample |
+| `162` | `92` | 1 | 1 | start X differs by 49 |
+| `164` | `92` | 1 | 1 | start X differs by 164 |
 | `0A3` | `7E` | 6 | 6 | positions differ |
 | `110` | `0F` | 3 | 3 | one custom id differs |
 | `13C` | `3D` | 1 | 1 | first sample differs |
@@ -195,7 +199,7 @@ python3 tools/qualify_sprite_full_gap.py
 
 The qualification tool is `tools/qualify_sprite_full_gap.py`. Its report is
 `local/reports/native-sprite-full-final.json`, SHA-256
-`cec608dd27fe6d8881ce5e07f915af7a07a38cc5862fef5a26308f30864cb5d7`.
+`e2666ee8984ab0f01359c58570ef4d9ea338b199a4f07bd7f98f052cde53ff21`.
 
 ## Limits
 
@@ -204,4 +208,4 @@ four sampled rooms. It does not claim the other rooms, movement, a course pass
 or a clear. The sprite graphics review stays open.
 
 The tests are `tests/test_sprite_full.py` and pass 7/7. The full suite passes
-263/263 tests. The log is `local/reports/unit-tests-9b.log`.
+263/263 tests. The log is `local/reports/unit-tests-rooms18.log`.
