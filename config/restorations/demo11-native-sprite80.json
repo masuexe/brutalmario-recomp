@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "id": "demo11-native-sprite80",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "native_sprite_gap": {
+    "manifests": [
+      "config/native-content/sprite80-module.json"
+    ]
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "7a330daa2e2606cb2839391b8dc5d6c2a32735ed211f0a98d94825d39fc9f962"
+  }
+}

@@ -1,0 +1,44 @@
+# Room 0A6 walk probe: enter, then walk right to spawn screen sprites.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 a6
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 120
+dump w0a
+press right 40
+wait 20
+dump w0
+press right 40
+wait 20
+dump w1
+press right 40
+wait 20
+dump w2
+press right 40
+wait 20
+dump w3
+press right 40
+wait 20
+dump w4
+press right 40
+wait 20
+dump w5
+quit

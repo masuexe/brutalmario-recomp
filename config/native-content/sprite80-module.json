@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "id": "sprite80-module",
+  "scope": "Static review for sprite 80 from cheap_demo. The block moves to a free bank and every in-block reference moves with it.",
+  "review_status": "static-review",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "code": {
+    "source_address": "24A8DA",
+    "native_address": "A0A8DA",
+    "size": 919,
+    "sha256": "990c6bef9699ec004a9920d46727c64d075b26ad4372802a7f462737c5b43846",
+    "adapted_sha256": "63cb739f8a12235de97bca2278d337e641905009cac7b7635bc0f001468cc086",
+    "pack_file": "sprite80-code.bin"
+  },
+  "entry_seeds": [
+    "24A8E9",
+    "24AA00"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [
+    {
+      "address": "24AC27",
+      "before": "2a29",
+      "after": "2aa9",
+      "reason": "rebase the inner JSR target from 24292A to A0A92A"
+    }
+  ],
+  "external_calls": [
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "record": {
+    "slot": "80",
+    "raw": "012800003f039944e9a82400aa240000",
+    "init": "24A8E9",
+    "main": "24AA00",
+    "relative": {
+      "init": "0F",
+      "main": "126"
+    },
+    "rooms": [
+      "0A6"
+    ],
+    "native_raw": "012800003f039944e9a8a000aaa00000"
+  },
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608306,
+      "before": "012800003f039944e92822002a220000",
+      "after": "012800003f039944e9a8a000aaa00000",
+      "role": "Replace the broken slot 80 record with the cheap_demo program in bank A0"
+    }
+  ],
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "external_entries": [
+    {
+      "address": "24AC26",
+      "operand": "292A",
+      "reason": "the JSR target moves with the block; a code patch rebases it"
+    }
+  ]
+}
