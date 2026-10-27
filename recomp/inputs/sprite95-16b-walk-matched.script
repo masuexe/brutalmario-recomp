@@ -1,0 +1,57 @@
+# Type-3 room 16B walk (matched fixture).
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 19b8 6b
+poke 19d8 01
+poke 88 0000
+poke 71 06
+wait 200
+dump w0
+press right 120
+wait 20
+dump w1
+press right 120
+wait 20
+dump w2
+press right 120
+wait 20
+dump w3
+press right 120
+wait 20
+dump w4
+press right 120
+wait 20
+dump w5
+press right 120
+wait 20
+dump w6
+press right 120
+wait 20
+dump w7
+press right 120
+wait 20
+dump w8
+quit

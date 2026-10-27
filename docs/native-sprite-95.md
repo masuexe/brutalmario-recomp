@@ -4,9 +4,11 @@
 
 The new official donor `7hero` holds a type-1 record for custom sprite slot
 `95`. The recipient places that slot in seven rooms but holds the type-0
-placeholder record. This document records the static review of the record, the
-protected program and the dispatch table. It does not install the record and it
-does not claim behavior.
+placeholder record. This document records the review of the record, the
+protected program, the dispatch table and one built target. The target now
+carries the record and runs the donor program from the free bank `A3`. Room
+`16B` entry matches the donor. Movement, death handling and a course pass stay
+open.
 
 ## Record
 
@@ -53,8 +55,48 @@ changes the record init and main fields to `A3:E41A` and `A3:E539`. The
 adapted record is `013600003f0399641ae4a339e5a30000`, and the install site is
 file offset `1608642` in the recipient.
 
-The plan keeps the variable name `BM_SEVEN_CODE_PACK` for the pack loader. The
-runtime mapping and the graphics review for rooms `16B` to `1CC` stay open.
+The plan keeps the variable name `BM_SEVEN_CODE_PACK` for the pack loader.
+
+## Built target
+
+The target is `demo11-native-sprite95`. Its recipe is
+`config/native-content/sprite95-module.json` and its config is
+`config/restorations/demo11-native-sprite95.json`. The identity line is
+`tools/native_sprite_gap.py`.
+
+| Item | Value |
+| --- | --- |
+| Target ROM | `1c88ac1188b5fb5eeb543931c09c51cb14f58b3340a6fd83a333e8aa682e0710` |
+| Native binary | `9cb14175f313fbdbaca46d9449f85a5dde410c83ee4869d2a3f9a2152cd22aa2` |
+| Install site | file offset `1608642` |
+| Installed record | `013600003f0399641ae4a339e5a30000` |
+
+The target mounts three packs. The pack variables keep the names
+`BM_SEVEN_CODE_PACK`, `BM_NATIVE_SPRITE_PACK` and
+`BM_NATIVE_GRAPHICS_PACK`.
+
+## Entry result
+
+The capture `sprite95-16b-matched-native-v1` uses the donor fixture
+`type3-room16b-7hero.script`. The donor capture `type3-room16b-7hero-v1`
+uses the same fixture.
+
+| Slot | Sprite | Custom | X |
+| ---: | ---: | ---: | ---: |
+| 6 | `36` | `8C` | 304 |
+| 7 | `33` | none | 144 |
+| 8 | `33` | none | 112 |
+| 9 | `36` | `95` | 16 |
+
+The four rows hold for the donor and for the target. The run log reports
+`bank=A3 resolutions=42683 executed_page_instructions=7004`, so the module view
+runs.
+
+The capture `sprite95-16b-walk-native-v1` holds a rightward walk. The target
+drops to mode `0x0B` and then to mode `0x0E` at player X `94`. The earlier
+target `demo11-native-mazo-b0` also drops to mode `0x0E` at the same point, so
+the drop does not come from this record. The donor fixture reaches a different
+room (`0x16E`) from the same actions, so the walk comparison stays open.
 
 ## Reproduction
 
@@ -67,5 +109,18 @@ The recipe is `config/native-content/sprite95-module.json`. The donor manifest
 is `config/7hero-donor.json`. The module receipt is
 `local/native-modules/sprite95-v1/preparation-receipt.json`, SHA-256
 `2453be33f3d128707e71b79ae416bde4cdb362deea57ed73425e49377dbdb486`. The tests
-are `tests/test_sprite_module.py` and pass 5/5. The full suite passes 202/202
-tests. The log is `local/reports/unit-tests-sprite95.log`.
+are `tests/test_sprite_module.py` and pass 5/5.
+
+The qualification tool is `tools/qualify_sprite_gap.py`. Its report is
+`local/reports/native-sprite95-final.json`, SHA-256
+`569784f3ee5dbcc48fb6f5d14f4ce3021e71ee23d76dc899cae4f125dffcaf51`. The tool
+checks the ROM and binary identities, the installed record, the module receipt
+and the entry actor set.
+
+```
+python3 tools/m1.py --target demo11-native-sprite95 scaffold
+python3 tools/m1.py --target demo11-native-sprite95 generate
+python3 tools/m1.py --target demo11-native-sprite95 build
+python3 tools/m1.py --target demo11-native-sprite95 native --script recomp/inputs/type3-room16b-7hero.script --capture sprite95-16b-matched-native-v1
+python3 tools/qualify_sprite_gap.py
+```
