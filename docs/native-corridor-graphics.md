@@ -1391,3 +1391,27 @@ it there.
 The next check is the graphics set that the message routine expects, and the
 level load that should place it in VRAM. A comparison needs a mazo capture of the
 window with fresh graphics, and this document does not have one.
+
+### The reference frame is from mazo
+
+The user confirms the correct message window frame comes from mazo. So mazo holds
+a Japanese font for the window, and this build does not.
+
+### Searches that found nothing
+
+| Search | Result |
+| --- | --- |
+| Base graphics 0x00 to 0x31, decoded | equal in both ROMs |
+| Extended graphics 0x0BE, 0x0D9, 0x0DA | a fill changes no pixel |
+| Glyph tile bytes taken from the reference frame | no match in either ROM |
+| The same bytes in 2305 decoded RATS blocks of mazo | no match |
+
+The glyph bytes come from a screen capture, so the alignment of the grid and the
+colour to bit mapping are estimates. A miss does not prove that the font is
+absent from a RATS block.
+
+### The reliable next step
+
+A mazo capture of the message window with fresh graphics gives the correct VRAM
+image. The product frame and that image then show the font tiles directly. The
+open question is the route that reaches the window in mazo.
