@@ -891,8 +891,8 @@ code, not a data scan.
 
 ## Layer 3 is enabled and its characters are absent
 
-Room `191` runs in mode `1` with `tm` `0x15`. That byte enables BG1, BG3 and
-objects, and `ts` `0x2` enables BG3 on the sub screen. So the Layer 3 layer is on.
+Room `191` runs in mode `1` with `tm` `0x15`. That byte turns on BG1, BG3 and
+objects. `ts` `0x2` turns on BG3 for the sub screen, so layer 3 draws.
 
 The frame outline of the picture is correct on screen. The inside of the frame is
 a grid of small marks. A correct tilemap with absent characters gives exactly
@@ -904,8 +904,8 @@ that result.
 | Layer 3 tilemap | correct, the frame edges show |
 | Layer 3 characters | absent, the inside is a grid |
 
-The VRAM patch confirms that a C write to `ppu->vram` changes the frame for room
-`191`. The patch now takes a room number from `BM_VRAM_PATCH_ROOM`.
+A C write to `ppu->vram` changes the frame for room `191`, so the patch writes
+the array that the renderer reads. The patch now takes a room number from `BM_VRAM_PATCH_ROOM`.
 
 A pack built from the mazo room `191` frame gives a noisy frame, not the picture.
 The mazo capture comes from another scene state, so its register set and its
