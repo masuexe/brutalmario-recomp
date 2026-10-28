@@ -505,9 +505,9 @@ data selects the mode. Room `190` sets Mode 7 on purpose.
 The Mode 7 tilemap of room `190` differs from mazo, and the source is not a
 plain ROM block and not a RATS block. Two candidates remain:
 
-1. the game builds the tilemap at run time from level data that this line has
-   not ported;
-2. the native PPU writes the Mode 7 tilemap area with wrong data.
+1. The game builds the tilemap at run time from level data that this line has
+   not ported.
+2. The native PPU writes the Mode 7 tilemap area with wrong data.
 
 No Mode 7 room of this line has a verified correct frame. So case 2 is
 still open. The next check is a capture of a second Mode 7 room to compare.
