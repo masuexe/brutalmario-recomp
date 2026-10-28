@@ -291,31 +291,34 @@ def main():
                             'runner/src/snes/cart.c')
             if runtime_cart.is_file():
                 text = runtime_cart.read_text()
-                helper = (
-                    '/* Diagnostic ROM read trace (env gated, BM_DIAG_ROM_TRACE). */\n'
-                    'static void bm_rom_trace(uint8_t bank, uint16_t adr) {\n'
-                    '  static FILE *f; static int init, seen[0x80000 / 4];\n'
-                    '  static long n, max = 200000;\n'
-                    '  if (!init) { init = 1; const char *p = getenv("BM_ROM_TRACE_LOG");\n'
-                    '    if (p && *p) f = fopen(p, "w");\n'
-                    '    const char *m = getenv("BM_ROM_TRACE_MAX"); if (m && *m) max = strtol(m, NULL, 0); }\n'
-                    '  if (!f || n >= max) return;\n'
-                    '  unsigned off = ((unsigned)(bank & 0x7F) << 15) | (adr & 0x7FFF);\n'
-                    '  if (off >= 0x400000u) return;\n'
-                    '  unsigned bit = off >> 5, msk = 1u << (off & 31);\n'
-                    '  if (seen[bit] & msk) return; seen[bit] |= msk;\n'
-                    '  { extern int snes_frame_counter;\n'
-                    '    fprintf(f, "%d %06X\\n", snes_frame_counter, off); }\n'
-                    '  fflush(f); ++n; }\n')
-                call = ('  bm_rom_trace(bank, adr);\n  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);')
                 if 'bm_rom_trace' not in text:
-                    text = text.replace('uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
-                                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
-                    text = text.replace('  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);', call)
+                    helper = (
+                        '/* Diagnostic ROM read trace (env gated, BM_DIAG_ROM_TRACE). */\n'
+                        'static void bm_rom_trace(uint8_t bank, uint16_t adr) {\n'
+                        '  static FILE *f; static int init, seen[0x80000 / 4];\n'
+                        '  static long n, max = 200000;\n'
+                        '  if (!init) { init = 1; const char *p = getenv("BM_ROM_TRACE_LOG");\n'
+                        '    if (p && *p) f = fopen(p, "w");\n'
+                        '    const char *m = getenv("BM_ROM_TRACE_MAX"); if (m && *m) max = strtol(m, NULL, 0); }\n'
+                        '  if (!f || n >= max) return;\n'
+                        '  unsigned off = ((unsigned)(bank & 0x7F) << 15) | (adr & 0x7FFF);\n'
+                        '  if (off >= 0x400000u) return;\n'
+                        '  unsigned bit = off >> 5, msk = 1u << (off & 31);\n'
+                        '  if (seen[bit] & msk) return; seen[bit] |= msk;\n'
+                        '  { extern int snes_frame_counter;\n'
+                        '    fprintf(f, "%d %06X\\n", snes_frame_counter, off); }\n'
+                        '  fflush(f); ++n; }\n')
+                    text = text.replace(
+                        'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
+                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
+                    text = text.replace(
+                        '  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);',
+                        '  bm_rom_trace(bank, adr);\n'
+                        '  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);')
                     runtime_cart.write_text(text)
                     print('rom trace injected into', runtime_cart)
-        # Room-scoped VRAM patch (env gated, BM_VRAM_PATCH=<pack>). Loads a
-        # packed VRAM image once, when the game enters the given room.
+        # Room-scoped VRAM patch (env gated, BM_VRAM_PATCH=<pack>). Applies the
+        # packed VRAM image once per frame while room 0x0190 holds, for 120 frames.
         if os.environ.get('BM_DIAG_VRAM_PATCH') == '1':
             runtime_cart = (ROOT / 'local/native-content-runtime' / args.target /
                             'runner/src/snes/cart.c')
@@ -325,18 +328,23 @@ def main():
                     helper = (
                         '/* Room-scoped VRAM patch (env gated, BM_VRAM_PATCH). */\n'
                         'static void bm_vram_patch(void) {\n'
-                        '  extern Snes *g_snes;\n'
-                        '  static int state;\n'
-                        '  if (state || !g_snes || !g_snes->ram || !g_snes->ppu) return;\n'
+                        '  extern Snes *g_snes; extern int snes_frame_counter;\n'
+                        '  static int last = -1, done, held;\n'
+                        '  if (done || !g_snes || !g_snes->ram || !g_snes->ppu) return;\n'
                         '  unsigned room = (unsigned)g_snes->ram[0x10B] |\n'
                         '                  ((unsigned)g_snes->ram[0x10C] << 8);\n'
                         '  if (room != 0x0190u) return;\n'
+                        '  if (last < 0) { last = snes_frame_counter; return; }\n'
+                        '  if (snes_frame_counter == last) return;\n'
+                        '  if (snes_frame_counter - last > 8) { held = 0; last = snes_frame_counter; return; }\n'
+                        '  last = snes_frame_counter; ++held;\n'
+                        '  if (held != 60) return;\n'
                         '  const char *p = getenv("BM_VRAM_PATCH");\n'
-                        '  if (!p || !*p) { state = 1; return; }\n'
+                        '  if (!p || !*p) { done = 1; return; }\n'
                         '  FILE *f = fopen(p, "rb");\n'
-                        '  if (!f) { state = 1; return; }\n'
+                        '  if (!f) { done = 1; return; }\n'
                         '  unsigned n = 0;\n'
-                        '  if (fread(&n, 4, 1, f) != 1) { fclose(f); state = 1; return; }\n'
+                        '  if (fread(&n, 4, 1, f) != 1) { fclose(f); done = 1; return; }\n'
                         '  for (unsigned i = 0; i < n; i++) {\n'
                         '    unsigned short a, c, w;\n'
                         '    if (fread(&a, 2, 1, f) != 1) break;\n'
@@ -346,18 +354,13 @@ def main():
                         '      g_snes->ppu->vram[(a + k) & 0x7FFF] = w;\n'
                         '    }\n'
                         '  }\n'
-                        '  fclose(f);\n'
-                        '  if (getenv("BM_VRAM_PATCH_M7")) {\n'
-                        '    g_snes->ppu->m7matrix[0] = 256;\n'
-                        '    g_snes->ppu->m7matrix[1] = 0;\n'
-                        '    g_snes->ppu->m7matrix[2] = 0;\n'
-                        '    g_snes->ppu->m7matrix[3] = 256;\n'
-                        '  }\n'
-                        '  state = 1; }\n')
-                    text = text.replace('uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
-                                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
-                    text = text.replace('  if (bank == 0x7e || bank == 0x7f) return NULL;',
-                                        '  if (bank == 0x7e || bank == 0x7f) return NULL;\n  bm_vram_patch();')
+                        '  fclose(f); }\n')
+                    text = text.replace(
+                        'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
+                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
+                    text = text.replace(
+                        '  if (bank == 0x7e || bank == 0x7f) return NULL;',
+                        '  if (bank == 0x7e || bank == 0x7f) return NULL;\n  bm_vram_patch();')
                     runtime_cart.write_text(text)
                     print('vram patch injected into', runtime_cart)
         cmake = EXPERIMENT / 'CMakeLists.txt'
