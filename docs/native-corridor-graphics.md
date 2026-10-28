@@ -735,6 +735,38 @@ inside a stream that an earlier frame already started. The next step is to read
 the stream start, then decode each stream in the window and compare its size with
 the Mode 7 area.
 
+## Read holes
+
+The read trace gives a stronger check. A read hole is a ROM range that the game
+reads, holds zeros in the product, and holds data in mazo. The `1E6` fix is one
+such hole, so the method has a known positive case.
+
+The room `190` run gives 29 holes of 64 bytes or more:
+
+| ROM range | Size | mazo bytes |
+| --- | ---: | ---: |
+| `0x1B0008` | 2506 | 2344 |
+| `0x23174E` | 178 | 148 |
+| `0x1BCD9B` | 149 | 122 |
+| `0x1BC5A4` | 136 | 122 |
+| `0x078089` | 131 | 99 |
+
+The first row is the `1E6` stream. So the largest read hole is the fix that is
+already known.
+
+### Bulk fill does not work
+
+Candidate `demo11-native-holes` copies mazo data into 26 of these holes. The game
+then shows a black frame. Some zero ranges are deliberate, and the loader uses
+them.
+
+The corridor entry gives the same hole set, so the room change adds no graphics
+read. A Mode 7 background needs 16384 bytes of tilemap and 32768 bytes of
+character data. No read of that size occurs.
+
+Conclusion: the game never starts a Mode 7 graphics load for room `190`. The
+missing content is not a hole that the loader reaches.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

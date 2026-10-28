@@ -85,6 +85,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeRtprobeSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Rtprobe',
     },
+    'demo11-native-holes': {
+        'binary': 'BrutalMarioDemo11NativeHolesSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Holes',
+    },
     'demo11-native-product': {
         'binary': 'BrutalMarioDemo11NativeProductSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Product',
