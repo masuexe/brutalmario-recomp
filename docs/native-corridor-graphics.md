@@ -1216,6 +1216,32 @@ The list then ends with x `0xFF`.
 One of these sprites can start the change to room `0x190`. The layer 1 stream
 holds one object at x `0xC0`, so a walk to the right does not reach it.
 
+## Every content table matches
+
+The level header tables of rooms `0x190`, `0x191` and `0x192` are equal in both
+ROMs on all nine tables:
+
+| Index | `0x5F000` | `0x5F100` | `0x5F200` | `0x5F300` | `0x5F400` | `0x5F500` | `0x5F600` | `0x5F700` | `0x5F800` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `0x190` | `0B` | `1A` | `00` | `0A` | `0A` | `00` | `00` | `00` | `00` |
+| `0x191` | `3B` | `02` | `00` | `0A` | `0A` | `00` | `00` | `00` | `00` |
+| `0x192` | `0B` | `03` | `00` | `0A` | `0A` | `00` | `00` | `00` | `00` |
+
+With the room data of `0x190` equal, the header tables equal and the graphics
+data equal, no content difference remains for room `0x190`.
+
+### The mazo reference may be the weak side
+
+The mazo capture used as a target came from a set of menu presses. That entry may
+also keep stale graphics, in the same way a room poke does.
+
+On that frame the player stands on nothing and the field is flat, which looks
+like an incomplete draw. The product frame holds a full scene: sky band, clouds,
+boss and health bar.
+
+So the product frame is more likely the complete one, and this document cannot
+treat the mazo frame as a correct target.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
