@@ -961,6 +961,25 @@ A patch that writes only the character range `0x0800`-`0x1800` leaves the frame
 unchanged. So the visible box does not read its characters from that range, and
 the estimate is wrong for this room.
 
+## The product does not carry the 1E6 stream
+
+The product ROM holds 2506 zero bytes at `0x1B0008`. The `1E6` candidate holds
+data there. The two configs differ by exactly two patches:
+
+- `mazo extended gfx 1E6 stream`
+- `extended gfx 1E6 pointer`
+
+Both configs share the base `demo11-native-sprite9e`. So the two patches move the
+product to the `1E6` image without other change.
+
+### Promotion needs a new target
+
+`write_verified` refuses to replace the product ROM, because that ROM is an
+accepted baseline. A promotion must use a new target, not an edit of the product.
+
+The verified gain is the cloud layer and the boss faces in room `190`. The line
+pattern stays.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
