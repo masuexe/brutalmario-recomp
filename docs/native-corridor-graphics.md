@@ -360,7 +360,7 @@ The level `0x30` header tables are the same in both builds. So the next step is
 the background pointer table: find the entry that the level selects and compare
 the mazo stream with the product stream.
 
-## First real fix: extended GFX 1E6
+## First result: extended GFX 1E6
 
 A mazo reference capture at mode `0x14` gives the true gameplay baseline. The
 frame shows a sunset sky, clouds, a dark floor and the boss.
@@ -389,9 +389,9 @@ Measured result:
 | `0xF000` | not equal | 0 |
 
 The frame now shows the sunset backdrop, the clouds and the HP bar. Vertical
-stripes remain in the background area, so more work is required.
+stripes remain in the background area, so more work remains.
 
-Room `192` is unchanged: its fault is the crystal-ball sprite, not this GFX.
+Room `192` keeps the same frame: its fault is the crystal-ball sprite, not this GFX.
 
 ## Port plan
 
