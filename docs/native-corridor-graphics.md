@@ -1336,34 +1336,3 @@ The colour difference between the two frames is also explained: one frame is a
 death effect and the other is the level.
 
 ## The background is correct apart from thin lines
-
-## The message is Japanese and the font is absent
-
-The user supplied a frame of the working message window. It shows two lines of
-Japanese text on black:
-
-```
-ゴールした そのなかに
-モンスターが ？
-```
-
-So the window must draw a Japanese font. The product draws a repeat of two or
-three small shapes instead, and those shapes are level artwork.
-
-### What the font is not
-
-- The base graphics set `0x00` to `0x31` decodes to the same data in both ROMs.
-- Extended graphics `0x0BE`, `0x0D9` and `0x0DA` hold a null pointer in the
-  product. A candidate that fills all three changes no pixel of room `190` and no
-  pixel of room `191`.
-- No font block loads when the window opens. The largest new read in that window
-  is 73 bytes in bank `00`.
-
-So the font is expected to be in VRAM before the window opens, and this build
-does not put it there.
-
-### What follows
-
-The next check is the graphics set that the message routine expects, and the
-level load that should place it in VRAM. A comparison needs a mazo capture of the
-window with fresh graphics, and this document does not have one.
