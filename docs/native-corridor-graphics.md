@@ -393,6 +393,29 @@ stripes remain in the background area, so more work remains.
 
 Room `192` keeps the same frame: its fault is the crystal-ball sprite, not this GFX.
 
+### The translevel mismatch
+
+At the gameplay phase the GFX selector bytes are equal in both builds:
+`$0D9A`=`37`, `$0D9B`=`C1`. An earlier reading of `02` came from the preview
+phase, not from gameplay.
+
+The real difference is the translevel:
+
+| Build | Room | Translevel `$13BF` |
+| --- | --- | --- |
+| mazo | `0x190` | `0x30` |
+| product | `0x190` | `0x6A` |
+
+Mazo reaches room `190` through its own level `0x30`. The product reaches the
+same room through a different level.
+
+The fixture `recomp/inputs/mazo-190-level6a-fixture.script` tried to force the
+product translevel on the mazo image. The map node override did not take, so
+mazo stayed at `0x30` and the test was inconclusive.
+
+Next: check the product level that owns the corridor rooms. Room `190` must run
+under the mazo level, or the level must carry the mazo background data.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
