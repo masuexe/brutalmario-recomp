@@ -108,6 +108,27 @@ A run on the built target gives these results. The player moves from
 `$0118` to `$0138`, and a press on A enters a course in mode `$14`. The map
 therefore works as a normal map with playable courses.
 
+
+### Which image lacks the center warp
+
+Three images were tested with the same script.
+
+| Image | Press on A at the center node |
+| --- | --- |
+| demoOnly1 | Warps to map `5` |
+| demo-1-1, the build base | Enters the boss course |
+| This product build | Enters the boss course |
+
+The gap is older than this build. The demo-1-1 base image also enters the boss
+course, so this build copies its base and adds no defect.
+
+The lower-inner warp works on every image. The warp code is therefore present.
+Only the center node differs.
+
+Clearing the center level-map byte to match demoOnly1 does not add the warp. The
+difference is in the base image, not in one level assignment. A repair is a
+restoration task with no measured size, so this build keeps the direct
+shortcut.
 ## Why the startup script can fail
 
 The startup input script assumes a new save file. If a save file exists at
