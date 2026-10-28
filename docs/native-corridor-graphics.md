@@ -1049,6 +1049,29 @@ wrong and it over-counts.
 So the tables are close, and the three rooms do not differ. The missing Layer 3
 image is not a difference in the Layer 2 pointer.
 
+## The black frame is a message box
+
+The user reports the visual: the red block in room `191` is a green question ball.
+When the player touches it, the game prints a message, and the dragon fight starts.
+
+So the black frame with the grid is the message window, and the grid is its text.
+The report of garbled crystal ball text matches this object.
+
+### The text data is present
+
+A read trace covers the frames where the box appears. In the last 200 frames the
+game reads 811 new addresses, and none of them points at a zero range in the
+product ROM. The mazo image holds data at all of those addresses.
+
+So the message text source is not a read hole, and a ROM fill cannot correct it.
+
+The fault is in how the message draws, or in the tiles that the message routine
+selects.
+
+Fixtures: `recomp/inputs/mazo-191-msg-fixture.script` (room poke, labelled).
+A room poke does not reload the graphics, so a capture after a poke keeps the
+previous room image and cannot serve as a reference.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

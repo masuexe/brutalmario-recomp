@@ -1,0 +1,36 @@
+# Mazo room 191: enter a level, force room 0x191, then walk right to the message.
+# Labelled fixture (room poke); no completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 240
+dump m0
+poke 10b 91
+poke 10c 01
+wait 120
+dump m1
+wait 240
+dump m2
+press right 120
+wait 60
+dump m3
+press right 180
+wait 60
+dump m4
+wait 120
+dump m5
+quit
