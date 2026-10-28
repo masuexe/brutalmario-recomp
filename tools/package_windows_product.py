@@ -27,8 +27,8 @@ def create_launcher_py():
     return '''#!/usr/bin/env python3
 """Brutal Mario Native PC Launcher.
 
-Supports both original game progression and all-levels-cleared cheat mode.
-Auto-configures all 43 content packs and mounts the native runtime.
+Supports original game progression, Special Zone warp cheat, and full overworld completion.
+Auto-configures all native content packs and mounts the runtime.
 """
 import argparse
 import os
@@ -45,8 +45,10 @@ PACKS = [
 
 def main():
     parser = argparse.ArgumentParser(description='Brutal Mario Native PC Launcher')
+    parser.add_argument('-s', '--special-zone', action='store_true',
+                        help='Open completion flags and warp straight to Special Zone (推荐：直达 Special Zone 选关)')
     parser.add_argument('-c', '--complete-all', action='store_true',
-                        help='Open every saved level slot, overworld event and switch (关卡全开作弊模式)')
+                        help='Open completion flags on the standard overworld map (大地图全开)')
     parser.add_argument('--scale', type=int, choices=[1, 2, 3, 4, 5],
                         help='Override window scale (1x - 5x)')
     parser.add_argument('--fullscreen', action='store_true',
@@ -90,16 +92,23 @@ def main():
         '--rom', str(rom.resolve()),
     ]
 
-    if args.complete_all:
+    mode_name = '【原版游玩模式】'
+    if args.special_zone:
+        script = ROOT / 'scripts' / 'cheat-special-zone.script'
+        if not script.is_file():
+            raise SystemExit('Cheat script not found at scripts/cheat-special-zone.script')
+        cmd.extend(['--script', str(script.resolve())])
+        mode_name = '【关卡全开 - Special Zone 特别区直达】'
+    elif args.complete_all:
         script = ROOT / 'scripts' / 'cheat-complete-all.script'
         if not script.is_file():
             raise SystemExit('Cheat script not found at scripts/cheat-complete-all.script')
         cmd.extend(['--script', str(script.resolve())])
+        mode_name = '【关卡全开 - 大地图解锁】'
 
     if unknown:
         cmd.extend(unknown)
 
-    mode_name = '【关卡全开作弊版】' if args.complete_all else '【原版游玩模式】'
     print('========================================')
     print('  Brutal Mario (鬼畜马里奥) 重编译原生 PC 版')
     print(f'  启动模式: {mode_name}')
@@ -119,7 +128,7 @@ if __name__ == '__main__':
 
 
 def create_bat_scripts():
-    """Return content of 启动游戏.bat and 关卡全开版.bat."""
+    """Return content of 启动游戏.bat, 关卡全开版(SpecialZone).bat, 关卡全开版(普通大地图).bat."""
     lines_normal = [
         '@echo off',
         'chcp 65001 >nul',
@@ -144,11 +153,35 @@ def create_bat_scripts():
         ')',
     ])
 
-    lines_cheat = [
+    lines_special = [
         '@echo off',
         'chcp 65001 >nul',
         'cd /d "%~dp0"',
-        'title Brutal Mario Native PC - 关卡全开作弊版',
+        'title Brutal Mario Native PC - 关卡全开版 (Special Zone 直达)',
+        'where python >nul 2>nul',
+        'if %ERRORLEVEL% equ 0 (',
+        '    python play.py --special-zone %*',
+        ') else (',
+        '    where py >nul 2>nul',
+        '    if %ERRORLEVEL% equ 0 (',
+        '        py play.py --special-zone %*',
+        '    ) else (',
+        '        echo [提示] 未检测到 Python，使用原生批处理直接加载运行...',
+        '        set "BM_DIR=%~dp0data\\packs"',
+    ]
+    for var, fn in PACKS_MAPPING:
+        lines_special.append(f'        set "{var}=%BM_DIR%\\{fn}"')
+    lines_special.extend([
+        '        start "" "%~dp0bin\\BrutalMario.exe" --no-launcher --config "%~dp0config\\config.ini" --rom "%~dp0data\\rom.sfc" --script "%~dp0scripts\\cheat-special-zone.script" %*',
+        '    )',
+        ')',
+    ])
+
+    lines_complete = [
+        '@echo off',
+        'chcp 65001 >nul',
+        'cd /d "%~dp0"',
+        'title Brutal Mario Native PC - 关卡全开版 (大地图)',
         'where python >nul 2>nul',
         'if %ERRORLEVEL% equ 0 (',
         '    python play.py --complete-all %*',
@@ -161,14 +194,18 @@ def create_bat_scripts():
         '        set "BM_DIR=%~dp0data\\packs"',
     ]
     for var, fn in PACKS_MAPPING:
-        lines_cheat.append(f'        set "{var}=%BM_DIR%\\{fn}"')
-    lines_cheat.extend([
+        lines_complete.append(f'        set "{var}=%BM_DIR%\\{fn}"')
+    lines_complete.extend([
         '        start "" "%~dp0bin\\BrutalMario.exe" --no-launcher --config "%~dp0config\\config.ini" --rom "%~dp0data\\rom.sfc" --script "%~dp0scripts\\cheat-complete-all.script" %*',
         '    )',
         ')',
     ])
 
-    return '\r\n'.join(lines_normal) + '\r\n', '\r\n'.join(lines_cheat) + '\r\n'
+    return (
+        '\r\n'.join(lines_normal) + '\r\n',
+        '\r\n'.join(lines_special) + '\r\n',
+        '\r\n'.join(lines_complete) + '\r\n',
+    )
 
 
 def create_readme():
@@ -177,26 +214,31 @@ def create_readme():
 ======================================================================
 
 【版本说明】
-  本版本为 Brutal Mario 的 PC 原生重编译完整版（Native PC Port）。
-  突破了原版 SFC 卡带的容量限制，采用 Native 扩展架构完整集成了：
+  本版本为 Brutal Mario 的 PC 原生重编译最终完整版（Native PC Port）。
+  突破了原版 SFC 卡带的物理容量限制，采用 Native 扩展架构完整集成了：
   - 经典的 Demo 1-1 / demoOnly1 主线关卡与音画
   - 完整的 Star World（星星世界）隐藏路线与全新 Boss 机制
   - 七个库巴小子（Seven Koopalings）全新战斗机制与专属音乐
-  - 完整的 Mazo 走廊与定制怪物代码（9B, 9C, B0 等全部就绪）
+  - 完整的 Mazo 走廊与定制怪物代码（9B, 9C, B0 等全部就绪，精准还原 Donor 行为）
   - 全新 SDL3 现代音频与图形渲染后端，支持超低输入延迟。
 
 ----------------------------------------------------------------------
 【快速启动指南】
 ----------------------------------------------------------------------
-本整合包提供两种方便的游玩方式：
+本整合包提供方便的游玩方式，解压即玩：
 
 1. 【直接双击运行】（推荐，无需任何复杂操作）：
-   - 双击运行【启动游戏.bat】  -> 进入【原版游玩模式】（从 1-1 开始挑战）
-   - 双击运行【关卡全开版.bat】-> 进入【关卡全开作弊版】（全关卡、星星通道全开，自由选关）
+   - 双击【启动游戏.bat】
+     -> 进入【原版模式】（从 1-1 耀西岛正常闯关）
+   - 双击【关卡全开版(SpecialZone).bat】（推荐作弊入口）
+     -> 进入【关卡全开版】，直接传送至 Special Zone 特别区，自由挑战高难度与隐藏关卡！
+   - 双击【关卡全开版(普通大地图).bat】
+     -> 进入【关卡全开版】，在普通大地图上解锁全部星星路线与关卡。
 
 2. 【通过 Python 启动】（如果您习惯命令行）：
-   - 原版模式：打开命令行执行：python play.py
-   - 全开模式：打开命令行执行：python play.py --complete-all
+   - 原版模式：python play.py
+   - Special Zone 全开：python play.py --special-zone
+   - 大地图全开：python play.py --complete-all
 
 ----------------------------------------------------------------------
 【操作按键说明】
@@ -229,7 +271,7 @@ def create_readme():
 【存档说明】
 ----------------------------------------------------------------------
   - 游戏进度会自动保存在 `saves/save.srm`。
-  - 【关卡全开版】启动时会在内存中直接激活通关数据，不会影响或破坏您的原版进度。
+  - 【关卡全开版】启动时会在内存中直接激活通关数据，不会破坏您的原版正常存档。
 
 祝您游玩愉快！
 ======================================================================
@@ -285,6 +327,9 @@ def main():
     shutil.copy2(win_bin, dest_bin)
     print(f'[+] Copied Windows executable: {dest_bin.name} ({dest_bin.stat().st_size // 1024} KB)')
 
+    # Also place rom.cfg beside the exe so double-clicking exe directly works!
+    (bin_dir / 'rom.cfg').write_text('../data/rom.sfc\n', encoding='utf-8')
+
     # 2. Copy ROM
     rom_src = ROOT / 'local/restoration' / TARGET / 'rom.sfc'
     if not rom_src.is_file():
@@ -293,7 +338,7 @@ def main():
     shutil.copy2(rom_src, dest_rom)
     print(f'[+] Copied ROM: {dest_rom.name} ({dest_rom.stat().st_size // 1024} KB)')
 
-    # 3. Copy 43 content packs
+    # 3. Copy 45 content packs
     packs_src_dir = ROOT / 'local/restoration' / TARGET
     for var, pack_file in PACKS_MAPPING:
         src = packs_src_dir / pack_file
@@ -303,9 +348,13 @@ def main():
     print(f'[+] Copied all {len(PACKS_MAPPING)} content pack files into data/packs/')
 
     # 4. Copy scripts
-    cheat_script = ROOT / 'recomp/inputs/cheat-complete-all.script'
-    shutil.copy2(cheat_script, scripts_dir / 'cheat-complete-all.script')
-    print('[+] Copied cheat script')
+    cheat_complete = ROOT / 'recomp/inputs/cheat-complete-all.script'
+    if cheat_complete.is_file():
+        shutil.copy2(cheat_complete, scripts_dir / 'cheat-complete-all.script')
+    cheat_special = ROOT / 'recomp/inputs/cheat-special-zone.script'
+    if cheat_special.is_file():
+        shutil.copy2(cheat_special, scripts_dir / 'cheat-special-zone.script')
+    print('[+] Copied cheat scripts (cheat-complete-all.script, cheat-special-zone.script)')
 
     # 5. Configs
     (config_dir / 'config.ini').write_text(create_config_ini(), encoding='utf-8')
@@ -318,11 +367,12 @@ def main():
     (out_dir / 'play.py').write_text(create_launcher_py(), encoding='utf-8')
     os.chmod(out_dir / 'play.py', 0o755)
 
-    bat_normal, bat_cheat = create_bat_scripts()
+    bat_normal, bat_special, bat_complete = create_bat_scripts()
     (out_dir / '启动游戏.bat').write_text(bat_normal, encoding='utf-8')
-    (out_dir / '关卡全开版.bat').write_text(bat_cheat, encoding='utf-8')
+    (out_dir / '关卡全开版(SpecialZone).bat').write_text(bat_special, encoding='utf-8')
+    (out_dir / '关卡全开版(普通大地图).bat').write_text(bat_complete, encoding='utf-8')
     (out_dir / '说明文档.txt').write_text(create_readme(), encoding='utf-8')
-    print('[+] Created launchers: play.py, 启动游戏.bat, 关卡全开版.bat, 说明文档.txt')
+    print('[+] Created launchers: play.py, 启动游戏.bat, 关卡全开版(SpecialZone).bat, 关卡全开版(普通大地图).bat, 说明文档.txt')
 
     # 7. Create ZIP archive
     if args.zip:
