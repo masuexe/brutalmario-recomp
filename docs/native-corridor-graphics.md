@@ -713,7 +713,7 @@ Next: restrict the trace to the level load frame window. The level load burst
 was around frame 2210, so a window there separates the load from the steady
 state.
 
-### The trace is validated
+### Trace check
 
 The room `190` capture reads 211,549 distinct ROM addresses. The load burst is
 frame `2750` with 2006 first reads. Its largest run is one contiguous block:
