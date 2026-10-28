@@ -841,6 +841,31 @@ earlier target was wrong.
 The product frame holds the sunset colours, the boss and the line pattern in mode
 `0x14`. It should hold the plain field.
 
+## Room 191 is an illustration
+
+Room `191` in mode `0x14` shows a still picture in mazo. The picture holds a
+landscape with cliffs, two waterfalls, green fields and a black machine. A text
+line sits above it.
+
+The product shows a black frame with a grid of small marks in place of the
+picture. The frame edges are correct, so the tilemap loads and the character data
+does not.
+
+The entrance view of room `191` is correct in the product: sky, brick ground,
+blocks, pipes and enemies all render. The fault starts where the picture frame
+appears.
+
+| View | Product | Mazo |
+| --- | --- | --- |
+| Entrance | correct | correct |
+| Picture area | black frame and grid | full illustration |
+
+A read trace of the room gives 33 holes, and the set matches the room `190` set.
+The illustration data is not in a read hole, so the loader does not reach it.
+
+Captures: `local/captures/w191` (product), `local/captures/mazo-191-donor`
+(reference).
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
