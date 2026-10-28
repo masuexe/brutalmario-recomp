@@ -479,8 +479,8 @@ So the missing item is the Mode 7 tilemap itself, not the base GFX.
 
 ### Mode 7 tilemap storage
 
-A search of the whole mazo ROM for 12-byte windows of the Mode 7 tilemap found
-no match, so the tilemap is compressed or generated at run time.
+The whole mazo ROM holds no 12-byte window of the Mode 7 tilemap. So the game
+compresses the tilemap, or it builds the tilemap at run time.
 
 A scan of all 1998 RATS blocks in the mazo ROM decoded each block and compared
 the result with the 16384 byte tilemap. No block matched.
