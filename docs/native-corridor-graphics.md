@@ -1242,6 +1242,27 @@ boss and health bar.
 So the product frame is more likely the complete one, and this document cannot
 treat the mazo frame as a correct target.
 
+## A dense reference for room 190
+
+Fixture `recomp/inputs/mazo-190-dense-fixture.script` samples room `190` every 30
+frames after the entry. Tags `t0` to `t6` report mode `0x14`, room `0x190`,
+translevel `0x30`. Tags `t7` to `t11` report the death modes `0x0B` and `0x0C`.
+
+Frame `t6` is the settled normal-play frame:
+
+- a dark blue diagonal pattern over the whole screen,
+- the player at the bottom centre,
+- no boss and no orange sky.
+
+The product frame for the same mode and room holds a warm sky, vertical lines and
+a boss. So the two frames differ, and the product frame is not correct.
+
+The pattern in `t6` is a Mode 7 surface at a scale, so the two builds render the
+same layer with a different matrix or a different palette.
+
+The native dump writes CGRAM (`*.cgram.bin`), and the reference dump does not, so
+the palette cannot be compared across the two hosts without a new reference dump.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

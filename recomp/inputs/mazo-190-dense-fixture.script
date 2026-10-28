@@ -1,0 +1,44 @@
+# Mazo room-190 entry with dense sampling to find a fully drawn frame.
+# Labelled fixture; menu presses only, no room pokes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 30
+dump t0
+wait 30
+dump t1
+wait 30
+dump t2
+wait 30
+dump t3
+wait 30
+dump t4
+wait 30
+dump t5
+wait 30
+dump t6
+wait 30
+dump t7
+wait 30
+dump t8
+wait 30
+dump t9
+wait 30
+dump t10
+wait 30
+dump t11
+quit
