@@ -463,12 +463,13 @@ palette field.
 
 | Build | First 32 bytes of VRAM `0x0000` |
 | --- | --- |
-| mazo | `ff00 ff00 ff00 ff00 ...` (one palette) |
-| product | `ff0a ff09 ff0b ff0b ff09 ...` (many palettes) |
+| mazo | `ff00 ff00 ff00 ff00 ...` |
+| product | `ff0a ff09 ff0b ff0b ff09 ...` |
 
-So the product paints vertical colour bands with palettes. Mazo keeps one
-palette and bakes the gradient into the tile graphics. The vertical bands are
-the vertical stripes in the capture.
+In Mode 7 each tilemap cell is one tile number, not a tile with a palette. Mazo
+uses tile `0x00` and tile `0xFF`. The product uses tiles `0x08` to `0x0B` across
+the row, so the row shows a repeat of a few tiles. That repeat is the vertical
+stripe pattern.
 
 A probe on top of the `1E6` candidate also swapped every differing base GFX
 (`00`, `01`, `02`, `10`, `28`, `2A`, `2B`) to the mazo streams. The stripes stayed.
@@ -487,6 +488,29 @@ the result with the 16384 byte tilemap. No block matched.
 
 So the tilemap comes from another path. The next step is to read the level
 loader code and find the table it uses.
+
+### Control room: 0x10C uses mode 1
+
+Room `0x10C` is in the same level and renders a clean night sky. Its PPU mode is
+`1`, not `7`. So that frame does not prove that Mode 7 rendering works.
+
+Fixture: `local/captures/walk30` (level `0x30` via the map node, then walk).
+
+Room `190` reports mode `7` when entered from level `0x30` and when entered from
+the map 6 path. Room `0x10C` in the same level reports mode `1`. So the room
+data selects the mode, and room `190` is intended to be a Mode 7 room.
+
+## Open item
+
+The Mode 7 tilemap of room `190` differs from mazo, and the source is not a
+plain ROM block and not a RATS block. Two candidates remain:
+
+1. the game builds the tilemap at run time from level data that this line has
+   not ported;
+2. the native PPU writes the Mode 7 tilemap area with wrong data.
+
+No mode 7 room of this line is known to render correctly, so case 2 is not yet
+excluded. The next check is a second mode 7 room capture to compare.
 
 ## Port plan
 
