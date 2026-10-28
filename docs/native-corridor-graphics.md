@@ -1257,11 +1257,11 @@ Frame `t6` is the settled normal-play frame:
 The product frame for the same mode and room holds a warm sky, vertical lines and
 a boss. So the two frames differ, and the product frame is not correct.
 
-The pattern in `t6` is a Mode 7 surface at a scale, so the two builds render the
+The pattern in `t6` is a Mode 7 surface at a scale. The two builds render the
 same layer with a different matrix or a different palette.
 
-The native dump writes CGRAM (`*.cgram.bin`), and the reference dump does not, so
-the palette cannot be compared across the two hosts without a new reference dump.
+The native dump writes CGRAM (`*.cgram.bin`). The reference dump does not. So a
+palette comparison across the two hosts needs a new reference dump.
 
 ## Port plan
 
