@@ -1033,6 +1033,22 @@ The strip of equal bytes does not match any RATS block in mazo after LZ2 decode
 So the whole Layer 3 image is missing, not only the character data. The loader
 for index `0x54` does not run in this build.
 
+## Layer 2 table comparison
+
+The Layer 2 pointer can hold a sentinel. The test looks at the middle byte: a
+value of `0xC0` or more marks the sentinel. A test on the whole 24 bit value is
+wrong and it over-counts.
+
+| ROM | Sentinel rooms of 512 |
+| --- | ---: |
+| product | 354 |
+| mazo | 364 |
+
+413 entries are equal. Rooms `190`, `191` and `192` hold `FFDE54` in both.
+
+So the tables are close, and the three rooms do not differ. The missing Layer 3
+image is not a difference in the Layer 2 pointer.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
