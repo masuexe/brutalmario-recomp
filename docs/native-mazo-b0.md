@@ -164,6 +164,25 @@ enforces this.
 Rule: never copy a donor level table onto a room number that the recipient
 already fills. Move the donor room to a free slot instead.
 
+## Product integration
+
+The corridor is part of `demo11-native-product`. The product already uses banks
+`A2` and `A7`, so the corridor moved to free banks.
+
+| Item | Standalone | Product |
+| --- | --- | --- |
+| Module pack | `A2:8989` | `A1:8989` |
+| Data pack | `A7:8000` | `CA:8000` |
+
+Eleven patches change: four level pointers, two layer-2 pointers, four sprite
+pointer bank bytes and the slot `A9` record. The other 22 patches keep their
+bytes. The module has no self-bank long reference, so the code bytes are the
+same in both banks.
+
+The corridor entry on the product target is `local/captures/product-room184`.
+Slot `184` loads in mode `0x0F` with two custom `A9` actors, then fades to room
+`190` in mode `0x14`. The run holds no `BRK`.
+
 ## Entry qualification
 
 `tools/qualify_mazo_b0.py` checks the target identities, the graphics

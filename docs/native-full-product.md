@@ -36,6 +36,7 @@ patches use distinct slots, so they do not collide.
 | --- | --- |
 | Type-1 records | 35 slots |
 | Type-3 records | `C0`, `C1`, `C2` |
+| Mazo corridor | module in bank `A1`, data pack in bank `CA` |
 | Seven entry | the Seven patches from `demo11-native-seven-entry` |
 
 ## Build order
@@ -54,16 +55,16 @@ The target is `demo11-native-product`. Its config is
 
 | Item | Value |
 | --- | --- |
-| ROM | `b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5` |
+| ROM | `47eca999912fc8bbc8a702a5824f7038ac4f28fe82a732f5af8a7cf6e9a34ff8` |
 | Binary | `BrutalMarioDemo11NativeProductSNESRecomp` |
-| Packs | 43 |
+| Packs | 45 |
 | Type-1 records | 36 |
 | Seven patches | the full `seven-module.json` patch list |
 | Type-3 records | `C0`, `C1`, `C2` |
 
-The pack banks run from `A2` to `CE`. The Seven code pack uses `A2`, the Seven
-graphics pack uses `A6`, the gap packs take the middle banks and the three
-type-3 blocks use `CB`, `CC` and `CD`.
+The pack banks run from `A1` to `CE`. The Seven code pack uses `A2`. The Seven
+graphics pack uses `A6`. The gap packs take the middle banks. The three type-3
+blocks use `CB`, `CC` and `CD`. The mazo corridor uses `A1` and `CA`.
 
 Slot `2A` holds the Seven program in bank `A2`. A separate single-slot gap
 target holds the same program in bank `A9`, so the merged target uses the Seven
@@ -76,9 +77,11 @@ record and leaves that copy out.
 | Unchanged-route regression | 32 of 32 dumps equal |
 | Room `155` | 4 of 4 samples equal |
 | Room `0A5` | phase-exact at a 29-frame offset |
+| Corridor slot `184` | local `184` in mode `0x0F`, two `A9` actors, fades to `190` |
+| `BRK` count on the corridor entry | 0 |
 
-The tests are `tests/test_product_target.py` and pass 7/7. The full suite passes
-285/285 tests. The log is `local/reports/unit-tests-sprite80b.log`. The regression
+The tests are `tests/test_product_target.py` and pass 12/12. The full suite
+passes 295/295 tests. The log is `local/reports/unit-tests-mazob0product.log`. The regression
 report is `local/reports/native-sprite-full-regression-product.json`, SHA-256
 `76bb4a146897918b7eadcb1b7a06c95078f3394ed83cb81021057af952207f13`.
 
@@ -96,7 +99,7 @@ crash out and installs the records.
 ## Running the target
 
 `tools/play_native_target.py` starts the built target with a normal window. It
-checks the ROM hash and the binary hash first, then mounts all 43 packs.
+checks the ROM hash and the binary hash first, then mounts all 45 packs.
 
 ```
 python3 tools/play_native_target.py --target demo11-native-product
@@ -107,6 +110,30 @@ instead of the player input, which is how the smoke test starts the game.
 A script run writes its dumps to `local/captures/play-<target>`.
 
 The smoke test starts the binary, mounts 43 packs and exits with code 0.
+## Mazo corridor in the product
+
+The product also carries the mazo corridor from `demo11-native-mazo-b0`. The
+corridor needs bank `A1` for its 419-byte module and bank `CA` for its
+288-byte data pack, because `A2` and `A7` are in use. Both banks were free.
+
+| Item | Value |
+| --- | --- |
+| Module record | slot `A9`, init `A1:8998`, main `A1:899D` |
+| Module pack | `mazo-b0-code.bin`, `A1:8989`, 419 bytes |
+| Data pack | `mazo-b0-corridor.bin`, `CA:8000`, 288 bytes |
+| Corridor slots | `183`, `184`, `191`, `192` |
+
+The eleven patches that name the old bank byte now name `CA`. The seven other
+patches keep their bytes. Rooms `00D` and `10C` keep the recipient level
+tables. The donor streams go to free slots `183` and `184`. See
+[the corridor plan](native-mazo-b0.md).
+
+The corridor entry capture is `local/captures/product-room184`. Slot `184`
+loads in mode `0x0F` with two custom `A9` actors at `(272,48)` and
+`(32,64)`. The room then fades to room `190` in mode `0x14`. The run holds no
+`BRK`. The `A1` module reports 621 resolutions and the `CA` data pack reports
+598 resolutions.
+
 ## Slot 80 fix in the product
 
 The product target also holds the slot `80` record and its `cheap_demo` module

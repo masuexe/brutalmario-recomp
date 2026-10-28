@@ -90,6 +90,24 @@
         "sha256": "fa8c0ac51be70e188ebaf324802fd2ab9d4deec60674f6f9a3a411ec8549c509",
         "executable": true,
         "source": "local/native-modules/demo11-native-type3b-final-type3_c2_block"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_MAZO_B0",
+        "pack_file": "mazo-b0-code.bin",
+        "address": "A18989",
+        "size": 419,
+        "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+        "executable": true,
+        "source": "local/native-modules/mazo-b0-v1"
+      },
+      {
+        "variable": "BM_MAZO_DATA_PACK",
+        "pack_file": "mazo-b0-corridor.bin",
+        "address": "CA8000",
+        "size": 288,
+        "sha256": "4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d",
+        "executable": false,
+        "source": "local/native-modules/mazo-b0-corridor-v1"
       }
     ],
     "extra_patches": [
@@ -194,11 +212,209 @@
         "before": "0000ffffffffffff218001218001ffff",
         "after": "03ffffffffffffff30ddcd34ddcdffff",
         "role": "Install the type-3 sprite C2 record into bank CD"
+      },
+      {
+        "offset": 189577,
+        "before": "008006",
+        "after": "0080ca",
+        "role": "level pointer"
+      },
+      {
+        "offset": 191113,
+        "before": "00d9ff",
+        "after": "2280ca",
+        "role": "layer 2 pointer"
+      },
+      {
+        "offset": 192262,
+        "before": "6de7",
+        "after": "1a80",
+        "role": "sprite pointer low bytes"
+      },
+      {
+        "offset": 488067,
+        "before": "07",
+        "after": "ca",
+        "role": "sprite pointer bank"
+      },
+      {
+        "offset": 679272,
+        "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+        "role": "room graphics and palette record"
+      },
+      {
+        "offset": 189580,
+        "before": "008006",
+        "after": "2380ca",
+        "role": "level pointer"
+      },
+      {
+        "offset": 191116,
+        "before": "00d9ff",
+        "after": "3680ca",
+        "role": "layer 2 pointer"
+      },
+      {
+        "offset": 192264,
+        "before": "6de7",
+        "after": "2e80",
+        "role": "sprite pointer low bytes"
+      },
+      {
+        "offset": 488068,
+        "before": "07",
+        "after": "ca",
+        "role": "sprite pointer bank"
+      },
+      {
+        "offset": 679304,
+        "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+        "role": "room graphics and palette record"
+      },
+      {
+        "offset": 189619,
+        "before": "008006",
+        "after": "3780ca",
+        "role": "level pointer"
+      },
+      {
+        "offset": 191155,
+        "before": "00d9ff",
+        "after": "54deff",
+        "role": "retained empty layer 2 sentinel"
+      },
+      {
+        "offset": 192290,
+        "before": "6de7",
+        "after": "a580",
+        "role": "sprite pointer low bytes"
+      },
+      {
+        "offset": 488081,
+        "before": "07",
+        "after": "ca",
+        "role": "sprite pointer bank"
+      },
+      {
+        "offset": 679720,
+        "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "after": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "role": "room graphics and palette record"
+      },
+      {
+        "offset": 192913,
+        "before": "0b",
+        "after": "3b",
+        "role": "level table 05F000"
+      },
+      {
+        "offset": 193425,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05F200"
+      },
+      {
+        "offset": 193937,
+        "before": "0a",
+        "after": "0a",
+        "role": "level table 05F400"
+      },
+      {
+        "offset": 194449,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05F600"
+      },
+      {
+        "offset": 188305,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05DE00"
+      },
+      {
+        "offset": 488609,
+        "before": "00",
+        "after": "00",
+        "role": "level table 0EF310"
+      },
+      {
+        "offset": 189622,
+        "before": "008006",
+        "after": "b080ca",
+        "role": "level pointer"
+      },
+      {
+        "offset": 191158,
+        "before": "00d9ff",
+        "after": "54deff",
+        "role": "retained empty layer 2 sentinel"
+      },
+      {
+        "offset": 192292,
+        "before": "6de7",
+        "after": "1881",
+        "role": "sprite pointer low bytes"
+      },
+      {
+        "offset": 488082,
+        "before": "07",
+        "after": "ca",
+        "role": "sprite pointer bank"
+      },
+      {
+        "offset": 679752,
+        "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "after": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+        "role": "room graphics and palette record"
+      },
+      {
+        "offset": 192914,
+        "before": "0b",
+        "after": "0b",
+        "role": "level table 05F000"
+      },
+      {
+        "offset": 193426,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05F200"
+      },
+      {
+        "offset": 193938,
+        "before": "0a",
+        "after": "0a",
+        "role": "level table 05F400"
+      },
+      {
+        "offset": 194450,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05F600"
+      },
+      {
+        "offset": 188306,
+        "before": "00",
+        "after": "00",
+        "role": "level table 05DE00"
+      },
+      {
+        "offset": 488610,
+        "before": "00",
+        "after": "00",
+        "role": "level table 0EF310"
+      },
+      {
+        "offset": 1608962,
+        "before": "0000ffffffffffff218001218001ffff",
+        "after": "01400080308300009889a19d89a10000",
+        "role": "B0 record at the free slot"
       }
     ]
   },
   "output": {
     "size": 4194304,
-    "sha256": "b8dca891b068763cdf91278a5d64bc75934754f11c7212cb3ad9f2cfed6279b5"
+    "sha256": "47eca999912fc8bbc8a702a5824f7038ac4f28fe82a732f5af8a7cf6e9a34ff8"
   }
 }
