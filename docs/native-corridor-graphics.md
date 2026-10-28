@@ -885,7 +885,7 @@ So one Layer 3 image serves all three rooms. It is the Mode 7 background of room
 This gives one target for the next step: find the table that maps Layer 3 index
 `0x54` to its data, then compare the data of the two ROMs.
 
-A scan for a pointer table with 256 entries gives 13949 candidates, so a plain
+A scan for a pointer table with 256 entries gives 13949 candidates. A plain
 valid pointer test does not isolate the table. The next check needs the loader
 code, not a data scan.
 
