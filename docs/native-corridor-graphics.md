@@ -1090,6 +1090,27 @@ a zero range that the game needs as zero, and a fill breaks execution.
 
 This is the rule to follow: fill a hole only when a pack covers it.
 
+## The natural path gives the same frame
+
+Capture `local/captures/cheat-r184` enters room `0x190` through room `0x184`, so
+the room change is the game one and not a poke. Both frames report mode `0x14`,
+room `0x190`.
+
+The frame holds the same line pattern and the same garbled boss as the poke
+entry. So the entry method does not explain the frame.
+
+Compare that with mazo in the same mode: mazo shows a plain dark field and no
+boss.
+
+| Build | Mode | Room | Frame |
+| --- | --- | --- | --- |
+| product, poke | `0x14` | `0x190` | line pattern, garbled boss |
+| product, room `0x184` | `0x14` | `0x190` | line pattern, garbled boss |
+| mazo, room poke | `0x14` | `0x190` | plain dark field |
+
+So the fault is real and the entry path is not the cause. The target for this
+mode is the plain field.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
