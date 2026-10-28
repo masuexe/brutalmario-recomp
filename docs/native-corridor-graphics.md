@@ -313,9 +313,9 @@ The product then loaded `E5`, `E7` and `E8` at the mazo VRAM addresses. So the
 selector drives the load, and the product can load the mazo set.
 
 Room metadata `0x14AD08` and the level `0x30` header tables are identical in both
-builds, so the selector is set at run time, not by a differing data byte.
+builds. So the run time sets the selector, not a data byte.
 
-## Repair direction
+## Port direction
 
 Add a room-scoped native adaptation. For rooms `190`, `191` and `192`, set the
 GFX selector bytes to the mazo values before the GFX load runs.
