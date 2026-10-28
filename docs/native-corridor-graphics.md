@@ -304,6 +304,36 @@ the selection changes.
    the mazo table with the product table for the selector that room `190` uses.
 2. Port the table entry and the GFX data together.
 3. Check rooms `191` and `192` the same way.
+### The GFX selector
+
+Work RAM bytes `$0D9A`, `$0D9B`, `$0D9D`, `$0D9F` and `$0DB1` select the GFX
+files to load. A probe pinned them to the mazo values before the load.
+
+The product then loaded `E5`, `E7` and `E8` at the mazo VRAM addresses. So the
+selector drives the load, and the product can load the mazo set.
+
+Room metadata `0x14AD08` and the level `0x30` header tables are identical in both
+builds, so the selector is set at run time, not by a differing data byte.
+
+## Repair direction
+
+Add a room-scoped native adaptation. For rooms `190`, `191` and `192`, set the
+GFX selector bytes to the mazo values before the GFX load runs.
+
+| Byte | Product | Mazo |
+| --- | ---: | ---: |
+| `$0D9A` | `37` | `30` |
+| `$0D9B` | `C1` | `02` |
+| `$0D9D` | `15` | `15` |
+| `$0D9F` | `FA` | `80` |
+| `$0DB1` | `01` | `08` |
+
+Then port the GFX data that the mazo set needs: `82`, `83`, `85`, `E5`, `E7` and
+`E8`.
+
+Check the selector at the level load phase, because the values differ by phase.
+Read the values at mode `0x14`, not at mode `0x0E`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
