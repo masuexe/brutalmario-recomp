@@ -1,0 +1,294 @@
+# Mazo: hold the candidate HP values through the room 190 fight.
+# Labelled fixture (HP lock); menu presses only, no room pokes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h0
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h1
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h2
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h3
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h4
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h5
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h6
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h7
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h8
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h9
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h10
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h11
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h12
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h13
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h14
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h15
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h16
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h17
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h18
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h19
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h20
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h21
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h22
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h23
+forcepoke 38 20
+forcepoke 39 20
+forcepoke 1df 48
+forcepoke 381 48
+forcepoke 385 48
+forcepoke d85 40
+forcepoke d8f 40
+forcepoke 15b5 33
+forcepoke 1887 12
+wait 30
+dump h24
+quit

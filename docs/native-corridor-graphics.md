@@ -1447,3 +1447,34 @@ warm sky. Either the two frames come from different rooms, or the entry in this
 fixture is not the same scene.
 
 Fixture: recomp/inputs/mazo-190-hold-fixture.script (labelled, star and water hold).
+
+## A live mazo reference for room 190
+
+The boss health bar sits at work RAM 0x1FFE0 to 0x1FFF0 in the product build, and
+the mazo build keeps its own copy elsewhere. A search over the frames of a fight
+finds the bytes that fall as the bar empties:
+
+| Address | Value at entry | Value before death |
+| --- | --- | --- |
+| 0x0D85 | 64 | 0 |
+| 0x0D8F | 64 | 0 |
+| 0x0381 | 72 | 10 |
+| 0x01DF | 72 | 10 |
+
+A fixture writes those bytes back every 30 frames. The player then stays in mode
+0x14, room 0x190, for more than 720 frames.
+
+Frame h24 shows the room in normal play:
+
+- a clean sky that runs from purple to red to orange,
+- orange clouds,
+- the black boss,
+- a blue textured floor.
+
+It holds no vertical lines. The product frame for the same room holds the same
+elements and the same colours, with a set of thin vertical lines over the sky.
+
+So both frames come from the same scene, and the product adds the lines.
+
+Fixture: recomp/inputs/mazo-190-hplock-fixture.script (labelled, health lock).
+Capture: local/captures/mhp. Image: local/reports/screenshots/room190-mazo-live.png.
