@@ -1157,6 +1157,22 @@ transition to load the room data and the graphics.
 To test the header theory, the corridor rooms must live in the level that maps to
 translevel `0x30`, and the player must walk the real transition.
 
+## The corridor graphics are present
+
+The room `0x10C` record in mazo starts `0100 C400 AF00`. Those two words are
+extended graphics IDs `0xC4` and `0xAF`.
+
+Both IDs exist in the product, and their data equals the mazo data byte for byte:
+
+| ID | mazo pointer | product pointer | Data |
+| --- | --- | --- | --- |
+| `0xC4` | `488B2C` | `2AC686` | equal |
+| `0xAF` | `46AB7C` | `28890F` | equal |
+
+So the corridor graphics are not missing. A room swap gave a field of blue and
+yellow tiles for a different reason: the entry still uses a different level
+header, and the room record is only one input to the load.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
