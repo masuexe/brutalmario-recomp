@@ -1335,35 +1335,29 @@ frame of normal play in that room.
 The colour difference between the two frames is also explained: one frame is a
 death effect and the other is the level.
 
-### Zoom of the message window
+### Zoom of the message window## User clarification
 
-The window interior, magnified four times, shows a repeat of two or three small
-shapes on black. It holds no text glyphs.
+The user reports two points:
 
-So the window draws with a small set of tiles, and those tiles carry level
-artwork. The character codes resolve to tiles that do not hold a font.
+1. The line `cannon render: this is a boss battle level` is an annotation from
+   Lunar Magic, not a game message.
+2. Apart from the garbage tiles, the frames show the correct sequence.
 
-That points to a wrong tile base or a wrong character map, not to a missing
-glyph.
+So the scene, the objects, the sprites and the order of events are correct. The
+defect is limited to the tiles that carry garbage.
 
-Image: `local/reports/screenshots/room191-messagebox-zoom.png`.
+That scope is narrower than a content port. A correct layout with wrong tile art
+points to the tile graphics a room selects, not to the room data.
 
-## Port plan
+### What is still open
 
-1. Build one native content pack that holds the mazo compressed streams for
-   GFX `01`, `28`, `2A` and `2B`.
-2. Add a room-scoped override in the cart read path. The runtime calls
-   `bm_content_resolve` while the CPU reads a ROM byte, at
-   `cart.c` line 153. The override returns a pack byte only while the current
-   room is `190`, `191` or `192` and the read address is one of the four
-   streams.
-3. Keep the level data and the base GFX table unchanged. Other rooms keep the
-   recipient streams.
-4. Mount the pack in the product target and rebuild.
-5. Capture rooms `190`, `191` and `192` with the full product pack. Compare
-   each frame to the official mazo frame.
-6. Run the unchanged-route regression and the full suite.
+The three rooms still show a repeating pattern where clean tiles should appear:
 
-A global change to GFX `01`, `28`, `2A` and `2B` is not allowed. The
-unchanged-route regression covers rooms that use these files, and a global
-change breaks those rooms.
+- room `190`: the background area holds vertical lines,
+- rooms `191` and `192`: the message window holds a repeat of two or three shapes.
+
+The graphics selectors `$0D9A`, `$0D9B` and `$0D9D` are equal in both builds, so
+the loaded graphics files are the same. The next check is the tile base that each
+layer uses, and the tile numbers that the map holds.
+
+
