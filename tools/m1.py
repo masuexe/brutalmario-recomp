@@ -297,6 +297,9 @@ def main():
         # the DMA source address of a VRAM transfer. Off unless the operator asks.
         if os.environ.get('BM_DIAG_PPU_DMA_HISTORY') == '1':
             cmake_args.append('-DSNESRECOMP_ENABLE_PPU_DMA_HISTORY=ON')
+        # Diagnostic only: compile the CPU trace facility (block/DB/ring probes).
+        if os.environ.get('BM_DIAG_CPU_TRACE') == '1':
+            cmake_args.append('-DSNESRECOMP_ENABLE_TRACE=ON')
         run(cmake_args, log=reports / 'native-configure.log')
         run(['cmake', '--build', BUILD, '--parallel', '2'], log=reports / 'native-build.log')
         (BUILD / 'm1-build.json').write_text(json.dumps({
