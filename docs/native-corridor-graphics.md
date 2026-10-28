@@ -538,6 +538,48 @@ hook (`snes_set_wram_write_log_hook`). The next step is to record which ROM
 addresses fill the work RAM range that the room load then copies to VRAM
 `0x0000`.
 
+## The real entry path (user report)
+
+The user supplied the map facts from Lunar Magic:
+
+- A new save puts Mario on the map node for level `0x10C`, translevel `0x30`.
+- Room `0x190` sends the player to room `0x191` automatically while the player
+  stays alive.
+
+So the correct way into these rooms is level `0x30`, not a map 6 teleport plus a
+room poke.
+
+Measured on the product:
+
+| Check | Result |
+| --- | --- |
+| level `0x30` entry | starts at room `0x10C` |
+| room `0x10C` frame | starfield, stone pillars, vine and a block |
+
+Room `0x10C` renders correctly, so the level and the corridor start are sound.
+The open question is the room change from `0x10C` to `0x190`.
+
+An idle capture holds room `0x10C` for 2160 frames, so the change needs input.
+A right-walk and a vine climb both end in a death mode, so the exit is not found
+yet.
+
+Captures: `local/captures/idle30`, `local/captures/vine`, `local/captures/walk30`.
+
+## Renderer check
+
+The capture configuration uses `NewRenderer=0`. A capture with
+`--renderer optimized` gives a byte-identical frame for room `190`. The fault is
+not in the renderer choice.
+
+## VRAM address writes
+
+`$2116` and `$2117` capture the VRAM word address of each write. During the room
+`190` transition only word addresses `0x1C00`, `0x6000`, `0x6100` and `0x6700`
+appear. A Mode 7 tilemap covers word addresses `0x0000` to `0x1FFF`.
+
+So the room transition does not write the Mode 7 tilemap. The visible pattern
+comes from data another scene left in that area.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
