@@ -818,6 +818,29 @@ A second point weakens the comparison with mazo. The mazo capture of room `190`
 sits in mode `0x0E`, a scene mode. The product sits in mode `0x14`, normal play.
 Two different scenes can show two different backgrounds.
 
+## Correction: the gameplay frame of room 190
+
+Fixture `recomp/inputs/mazo-190-steady-fixture.script` waits past the load phase
+and samples eight later frames.
+
+| Tag | Mode | Room | Translevel |
+| --- | --- | --- | --- |
+| `e0` | `0x14` | `0x190` | `0x30` |
+| `e1` | `0x0C` | `0x190` | `0x30` |
+| `e2`..`e7` | `0x0E` | `0x190` | `0x30` |
+
+Frame `e0` is normal play. It shows a dark blue textured field and the player.
+It has no boss, no sunset, and no ground.
+
+All earlier comparisons used a mode `0x0E` frame. That frame is a scene, and it
+holds the sunset and the boss.
+
+So the target for normal play is the plain dark field, not the sunset. The
+earlier target was wrong.
+
+The product frame holds the sunset colours, the boss and the line pattern in mode
+`0x14`. It should hold the plain field.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

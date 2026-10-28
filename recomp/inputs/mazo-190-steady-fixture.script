@@ -1,0 +1,35 @@
+# Mazo room-190 steady state: wait past the load phase and sample later frames.
+# Labelled fixture; no completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+dump e0
+wait 300
+dump e1
+wait 300
+dump e2
+wait 300
+dump e3
+wait 300
+dump e4
+wait 600
+dump e5
+wait 600
+dump e6
+wait 600
+dump e7
+quit
