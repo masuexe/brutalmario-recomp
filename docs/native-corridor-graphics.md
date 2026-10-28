@@ -922,6 +922,21 @@ reference. A reader who trusts the directory name will compare two scenes.
 The same check applies to any older capture. Read the mode and room from the work
 RAM dump before a comparison.
 
+### Room 192 repeats the room 191 frame
+
+Room `192` renders the same black frame with a grid of small marks. Its registers
+match room `191`: mode `1`, `tm` `0x15`, `ts` `0x2`.
+
+| Room | Mode | `tm` | `ts` | Frame |
+| --- | --- | --- | --- | --- |
+| `0x191` | `1` | `0x15` | `0x2` | black frame, grid inside |
+| `0x192` | `1` | `0x15` | `0x2` | black frame, grid inside |
+
+So one Layer 3 image fails for rooms `190`, `191` and `192`. A single repair
+serves all three rooms.
+
+Capture: `local/captures/r192`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
