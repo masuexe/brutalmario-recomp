@@ -980,6 +980,29 @@ accepted baseline. A promotion must use a new target, not an edit of the product
 The verified gain is the cloud layer and the boss faces in room `190`. The line
 pattern stays.
 
+## Correction: the VRAM patch does not persist
+
+Earlier this document said that a VRAM pack made the cloud layer appear. That
+claim is wrong.
+
+A pack that writes `0xFFFF` to all 32768 VRAM words leaves the frame unchanged in
+room `190` and room `192`. The captured VRAM also keeps the game data, and holds
+254 distinct byte values after that run.
+
+Two facts explain the result:
+
+1. The write point is inside `cart_getRomPtr`, so it runs at an arbitrary point
+   in the frame. The game copies its own graphics to VRAM later in the same
+   frame and overwrites the pack.
+2. Every pack gave the same frame. The frame changed once when the patch first
+   ran, so a timing change, not the content, caused that change.
+
+So the room-scoped VRAM pack needs a hook after the game finishes its VRAM
+uploads, near the end of the frame. The current hook cannot do the task.
+
+`g_ppu` is the same object as `g_snes->ppu` (`common_cpu_infra.c` line 1087), so
+the write target was correct. The frame position was not.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
