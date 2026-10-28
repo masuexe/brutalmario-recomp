@@ -1142,6 +1142,21 @@ header and the graphics context for that entry still differ.
 The test is not kept as a target. It shows that the room data swap applies, and
 that the header is the open item.
 
+### Forced reload does not settle
+
+A probe enters translevel `0x30`, writes room `0x190` to `$10B` and `$10C`, then
+sets `$0100` to `0x0E` to force a level load.
+
+The state then reports mode `0x0E`, room `0x190`, translevel `0x30`, which is the
+wanted combination. The frame stays black with only the status bar, and the mode
+never reaches `0x14`.
+
+So a write to the room register is not a room change. The game needs its own
+transition to load the room data and the graphics.
+
+To test the header theory, the corridor rooms must live in the level that maps to
+translevel `0x30`, and the player must walk the real transition.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
