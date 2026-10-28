@@ -937,6 +937,30 @@ serves all three rooms.
 
 Capture: `local/captures/r192`.
 
+### Layer 3 address estimate
+
+Room `192` reports `BG3SC` `0x53` and a tile address of `1024` words. The usual
+rule gives these VRAM positions:
+
+| Item | Value |
+| --- | --- |
+| Layer 3 tilemap base | VRAM byte `0xA000` |
+| Layer 3 character base | VRAM byte `0x0800` |
+
+Content check on the room `192` frame:
+
+| Region | Unique bytes | Zero bytes |
+| --- | ---: | ---: |
+| characters `0x0800` | 187 | 1871 of 4096 |
+| tilemap `0xA000` | 31 | 2 of 8192 |
+
+The tilemap holds data, and the character area is 46 percent zero. That ratio
+agrees with a correct map over absent characters.
+
+A patch that writes only the character range `0x0800`-`0x1800` leaves the frame
+unchanged. So the visible box does not read its characters from that range, and
+the estimate is wrong for this room.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
