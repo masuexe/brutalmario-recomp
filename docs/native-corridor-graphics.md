@@ -1173,6 +1173,35 @@ So the corridor graphics are not missing. A room swap gave a field of blue and
 yellow tiles for a different reason. The entry still uses a different level
 header. The room record is one input to the load, not the only one.
 
+## A corrected room swap
+
+The earlier room swap copied the mazo Layer 2 pointer into the product without
+copying the data that the pointer names. The product then read unrelated bytes.
+A second candidate copies the data as well: Layer 1, Layer 2, the sprite list and
+the room record.
+
+Level headers for index `0x30` are equal in both ROMs:
+
+| Table | `0x05F000` | `0x05F100` | `0x05F200` | `0x05F300` | `0x05F400` | `0x05F500` | `0x05F600` | `0x05F700` | `0x05F800` |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| both | `55` | `0F` | `02` | `01` | `0A` | `85` | `00` | `00` | `6A` |
+
+The room records differ:
+
+| Record | Bytes |
+| --- | --- |
+| product room `0x10C` | `0180 1600 AF00 AE00 1400 0500` |
+| mazo room `0x10C` | `0100 C400 AF00 AE00 1400 6102` |
+
+With the data copied, the entry at translevel `0x30` shows a uniform blue tile
+field in room `0x10C`. A walk to the right reaches mode `0x0E` and not room
+`190`.
+
+So the room content changes, and the room change to `190` is not in the Layer 1
+stream of room `0x10C`. That stream holds one object at x `0xC0`.
+
+Capture: `local/captures/rc10b`, `local/captures/rc10w`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
