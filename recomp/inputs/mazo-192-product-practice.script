@@ -1,0 +1,43 @@
+turbo on
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+
+# Practice room transfer: room 0x192.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+poke 94 80004001
+poke 19b8 92
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 180
+turbo off
+press right 120
+wait 30
+dump w1
+press right 120
+wait 30
+dump w2
+press right 120
+wait 30
+dump w3
+press right 120
+wait 60
+dump w4
+press right 180
+wait 60
+dump w5
+quit

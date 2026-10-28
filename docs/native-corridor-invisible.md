@@ -138,3 +138,33 @@ between two render paths that both hide the orb.
 The fresh full unit suite passes **313 tests**; log:
 `local/probes/room191-orb/unit-tests.log`. Default r5 preparation was also
 reproduced with no change to its tracked recipe, preserving historical inputs.
+
+## Room 192 extension (r7)
+
+The user accepted r6 and requested the same foreground repair in room 192.
+`tools/prepare_corridor_192.py` creates `demo11-native-product-r7` from pinned
+r6. The only ROM delta is room 192's 32-byte graphics record; it reuses the
+accepted FF9 foreground clone and original GFX05 sprites. No new pack, code,
+Map16, collision or sprite data changes. ROM SHA-256:
+`e18964c5b90e53eba2836f293dbb209ee4118af7649b1e7ecc6882a5892fe8b1`.
+
+`tools/qualify_corridor_192.py` passes five assisted room192 samples: mode/room,
+transparent checkpoint patterns, complete original SP4 page, unchanged actor
+states versus fresh r6, and native/interpreter framebuffer, VRAM, OAM and
+palette agreement. Room191 and room190 retain 30 byte-identical dump files
+versus their accepted r6 captures. Six existing product identity tests also
+pass; the prior 313-test suite was not rerun for this one-record extension.
+Receipts: `local/reports/corridor-192-r7.json`. Fresh captures:
+`corridor-r7-192`, `corridor-r7-192-interp`, `corridor-r6-192`,
+`corridor-r7-191`, `corridor-r7-190`. Input:
+`recomp/inputs/mazo-192-product-practice.script` (assisted pipe/movement).
+Japanese text and full course completion remain separate unresolved work.
+
+```sh
+python3 tools/prepare_corridor_192.py
+python3 -c "import sys;sys.path.insert(0,'tools');import native_sprite_gap;native_sprite_gap.prepare('demo11-native-product-r7')"
+python3 tools/m1.py --target demo11-native-product-r7 scaffold
+python3 tools/m1.py --target demo11-native-product-r7 generate
+python3 tools/m1.py --target demo11-native-product-r7 build
+python3 tools/play_native_cheats.py --target demo11-native-product-r7 --room 0x192
+```

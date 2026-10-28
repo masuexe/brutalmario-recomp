@@ -1301,3 +1301,10 @@ foreground patterns. Five samples require original orb graphics, an active orb
 actor, visible orb pixels and transparent garbage rectangles. Native/interpreter
 graphics agree; room 190's five complete dumps remain identical to r3. The r5
 claim that its orb patterns were disposable placeholders is superseded.
+
+### Room192 foreground extension
+
+The user accepted r6. The [r7 room192 extension](native-corridor-invisible.md#room-192-extension-r7)
+reuses its private foreground clone while preserving original sprite graphics.
+Five native/interpreter samples and unchanged actor states pass; rooms191/190
+retain 30 identical dump files. The Japanese message font remains open.
