@@ -111,7 +111,7 @@ therefore works as a normal map with playable courses.
 
 ### Which image lacks the center warp
 
-Three images were tested with the same script.
+I ran the same script on three images.
 
 | Image | Press on A at the center node |
 | --- | --- |
@@ -126,9 +126,8 @@ The lower-inner warp works on every image. The warp code is therefore present.
 Only the center node differs.
 
 Clearing the center level-map byte to match demoOnly1 does not add the warp. The
-difference is in the base image, not in one level assignment. A repair is a
-restoration task with no measured size, so this build keeps the direct
-shortcut.
+difference is in the base image, not in one level assignment. A fix is a restoration
+task with no measured size, so this build keeps the direct shortcut.
 ## Why the startup script can fail
 
 The startup input script assumes a new save file. If a save file exists at
