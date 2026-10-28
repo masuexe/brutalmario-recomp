@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "id": "demo11-native-r190gfx",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "native_sprite_gap": {
+    "manifests": [
+      "config/native-content/sprite9d-module.json"
+    ],
+    "extra_patches": [
+      {
+        "offset": 488592,
+        "before": "00",
+        "after": "02",
+        "role": "probe room190 EF300 set"
+      }
+    ]
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "ed89cfda8d3682f9d53d864d49b2561bfee9c7d45c74e7df0f9277a2acb4f069"
+  }
+}

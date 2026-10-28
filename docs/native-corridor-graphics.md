@@ -38,6 +38,20 @@ room can use a different Map16 set without change to other rooms. See
 The corridor plan also states that room `183` and room `184` "do not qualify
 graphics". See [the corridor plan](native-mazo-b0.md).
 
+## Selector test
+
+One header table byte differs for room `190`. The byte is at `$0EF300 + room`.
+The mazo image holds `02` and the recipient holds `00`.
+
+A probe target set the recipient byte to `02`. The render became full screen
+noise, which is worse than the stripes. So a single selector byte does not fix
+the room. The graphics data behind the selector is absent in the recipient.
+
+The probe config is `config/restorations/demo11-native-r190gfx.json`. The
+capture is `local/captures/r190gfx`.
+
+Room `190` also shows the same corrupted render when it is entered through the
+corridor transition. So the fault is not a raw teleport fixture.
 ## Fix plan
 
 1. Choose a free Map16 bank and a free ExGFX slot.
