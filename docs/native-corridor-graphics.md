@@ -38,6 +38,20 @@ room can use a different Map16 set without change to other rooms. See
 The corridor plan also states that room `183` and room `184` "do not qualify
 graphics". See [the corridor plan](native-mazo-b0.md).
 
+### Header bytes, measured again
+
+| Room | `$05F000` mazo | recipient | `$0EF300` mazo | recipient |
+| --- | --- | --- | --- | --- |
+| `190` | `0B` | `0B` | `02` | `00` |
+| `191` | `3B` | `0B` | `02` | `00` |
+| `192` | `0B` | `0B` | `00` | `C2` |
+
+Room `191` renders a normal screen although its tileset byte is the donor `3B`.
+Room `192` holds an odd recipient value `C2` in `$0EF300`.
+
+Note: another session rebuilt `local/restoration/demo11-native-sprite9e` during
+this check. One read returned a transient wrong byte. Re-read the bytes after
+the rebuild before you trust a patch recipe.
 ## Selector test
 
 One header table byte differs for room `190`. The byte is at `$0EF300 + room`.
