@@ -1291,3 +1291,13 @@ retaining actor logic and collision data. Five samples agree between native
 and interpreter graphics; room 190 retains five byte-identical dump files.
 The 313-test suite passes. The Japanese message font and broader restoration
 remain open.
+
+### Room 191 orb correction (2026-10-29)
+
+The user found that r5 also hid the rightmost question orb. The
+[r6 correction](native-corridor-invisible.md#r6-correction-retain-the-question-orb)
+restores the complete original SP4 page, retaining only the private transparent
+foreground patterns. Five samples require original orb graphics, an active orb
+actor, visible orb pixels and transparent garbage rectangles. Native/interpreter
+graphics agree; room 190's five complete dumps remain identical to r3. The r5
+claim that its orb patterns were disposable placeholders is superseded.

@@ -1,5 +1,10 @@
 # Room 191 invisible graphics adaptation
 
+> Correction: the user found that r5 also hid the rightmost question orb.
+> The SP4 suppression was incorrect. Use the r6 correction below; the r5
+> qualification did not test that the orb remained visible.
+
+
 The user accepted the room 190 r3 background repair, then identified two unwanted
 pictures in room 191 (`/tmp/Snipaste_2026-10-29_01-39-47.png`). The user states
 that the original has no visible object at either marked location.
@@ -72,3 +77,64 @@ not a real exit or a full level clear.
 ```sh
 python3 tools/play_native_cheats.py --target demo11-native-product-r5 --room 0x191
 ```
+
+
+## r6 correction: retain the question orb
+
+The user verified that the unwanted foreground pictures were gone, but reported
+that the rightmost question orb had also disappeared. The prior description of
+its tile 18C as a disposable control-marker pattern was wrong. The actor has
+visible graphics as well as room-transition logic.
+
+The new recipe `demo11-native-product-r6` keeps only the private FG2 clone FF9.
+It selects original GFX 05 for SP4, with its entire 4,096 decoded bytes unchanged.
+There is no sprite-graphics clone, no FFA pointer patch, and no change to actor
+logic, collision, object placement or input fixtures. The D0 pack contains only
+the 4,105-byte FG2 stream. Previous product/r3/r5 builds and captures remain intact.
+
+- ROM SHA-256: `5ff22880ebd044930867b4e5eb2b637cf74c2cd57abb7c4ba348eb56c56926b7`.
+- Pack SHA-256: `6dcddb8214d00d859142e5d81b0a8ad37b9e581be0a498ff39be427318435644`.
+- Room 191 graphics selection: `15,19,FF9,14,05,13,01,00`.
+
+The preparation and qualification tools retain their original r5 behavior by
+default for historical reproduction. Use `--restore-orb` for r6:
+
+```sh
+python3 tools/prepare_corridor_invisible.py --restore-orb
+python3 -c "import sys;sys.path.insert(0,'tools');import native_sprite_gap;native_sprite_gap.prepare('demo11-native-product-r6')"
+python3 tools/m1.py --target demo11-native-product-r6 scaffold
+python3 tools/m1.py --target demo11-native-product-r6 generate
+python3 tools/m1.py --target demo11-native-product-r6 build
+python3 tools/qualify_corridor_invisible.py --restore-orb
+python3 tools/play_native_cheats.py --target demo11-native-product-r6 --room 0x191
+```
+
+The corrected qualification requires the complete restored SP4 page to equal
+the original decoded GFX 05 at all five samples. It also requires visible
+non-sky pixels at the orb's OAM position, while retaining the exact sky-pixel
+assertions for both unwanted foreground rectangles. The actor's OAM descriptor
+and sprite states must still match the r3 control. This explicitly covers the
+regression that the r5 checks missed.
+
+Fresh r6 qualification passes at five samples: full SP4 agreement, active orb
+actor, both garbage rectangles transparent, and native/interpreter VRAM,
+framebuffer, OAM and palette agreement. The first orb rectangle contains 186
+non-sky pixels. The before/after image
+`local/probes/room191-orb/before-after.png` shows the r5 missing orb above the
+restored r6 green question orb. The foreground marker pictures do not return.
+Room 190 retains five byte-identical full dump files versus r3.
+
+Captures: `invisible-r6-191`, `invisible-r6-191-interp`, `invisible-r6-190`.
+Receipts are retained in `local/reports/corridor-invisible-r6.json`. As in r5,
+this is an assisted entry/movement fixture, not a complete course pass. The
+Japanese message font remains unresolved.
+
+The same visibility assertion rejects the preserved r5 negative control:
+only 14 non-sky pixels (contact sparkle) versus r6's 186. The r5 SP4 page also
+fails the original-data assertion. This checks that the added regression gate
+actually detects the user's reported failure, rather than merely agreeing
+between two render paths that both hide the orb.
+
+The fresh full unit suite passes **313 tests**; log:
+`local/probes/room191-orb/unit-tests.log`. Default r5 preparation was also
+reproduced with no change to its tracked recipe, preserving historical inputs.
