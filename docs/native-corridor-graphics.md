@@ -416,6 +416,20 @@ mazo stayed at `0x30` and the test was inconclusive.
 Next: check the product level that owns the corridor rooms. Room `190` must run
 under the mazo level, or the level must carry the mazo background data.
 
+### The stripes are a background layer
+
+A diagnostic capture clears every sprite slot (`$14C8`+0 to 11) after the room
+loads. The boss sprites leave the frame. The vertical stripes stay.
+
+So the stripes are a background layer, not a sprite. The sprite graphics gap is
+a separate item.
+
+Room `190` has no Layer 2 (`$05E600+190*3` = `FFDE54`, the sentinel). So the
+background comes from the level background path, and that path writes a blank
+tile `0x0FF` across the BG1 tilemap instead of the mazo tiles.
+
+Capture: `local/captures/nosp/s2`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
