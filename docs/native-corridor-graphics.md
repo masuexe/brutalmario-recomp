@@ -648,6 +648,37 @@ blocks in bank `00`, payloads in bank `04`, and one 1792 byte block at `10:E20B`
 So the game decodes the graphics into work RAM first. To reach the ROM stream the
 next step needs a work RAM write log, or a read of the level loader code.
 
+## Trace tooling survey
+
+These facilities exist but are not active in the current builds.
+
+| Facility | Gate | Note |
+| --- | --- | --- |
+| `SNESRECOMP_DBTRACE`, ring probes | `SNESRECOMP_ENABLE_TRACE` | off in the production build |
+| `SNESRECOMP_WRITE_WATCH` (WRAM write, logs PC) | `SNES_COSIM` | the exact tool for this task |
+| `debug_server` `get_vram_trace` | TCP client | needs a client |
+| snes9x boot trace (`BM_BOOT_TRACE`) | core patch | patch exists, core not built with it |
+
+`tools/m1.py` now accepts two opt-in build switches, both off by default:
+
+```
+BM_DIAG_PPU_DMA_HISTORY=1   -> -DSNESRECOMP_ENABLE_PPU_DMA_HISTORY=ON
+BM_DIAG_CPU_TRACE=1         -> -DSNESRECOMP_ENABLE_TRACE=ON
+```
+
+`local/upstream/snesrecomp` is a pinned checkout. `m1.py` rejects a build when a
+tracked file in it changes, so a runtime change must go through the per-target
+runtime patch, which today covers `snes/cart.c` only.
+
+The snes9x reference core is built without
+`patches/diagnostics/snes9x-boot-trace.patch`, so `BM_BOOT_TRACE` writes no file.
+
+### Next actions
+
+1. Extend the per-target runtime patch to log ROM reads in `cart_getRomPtr` for a
+   frame window, then read the address range that feeds the Mode 7 image.
+2. Or rebuild `snesref` with the boot trace patch and trace the mazo image.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
