@@ -125,6 +125,42 @@ rectangle and the striped background in the captures.
 | `2A` | `0x0981DF` | 1162 | 2048 |
 | `2B` | `0x08FE2B` | 948 | 2048 |
 
+## Implementation design
+
+The runtime gives the native layer what the override needs.
+
+- The CPU reads a ROM byte through `cart_getRomPtr`. That function calls
+  `bm_content_resolve` at `cart.c` line 153 for every read.
+- The runtime global `g_snes` points to the console. `g_snes->ram` is the
+  0x20000 byte work RAM.
+- The room number is at work RAM `$10B` and `$10C`, low byte first.
+
+So a native override can return a pack byte for a ROM read while the room is
+`190`, `191` or `192`.
+
+Target streams, by recipient file offset:
+
+| GFX | Recipient offset | Rooms |
+| --- | ---: | --- |
+| `01` | `0x0BE43E` | `191`, `192` |
+| `28` | `0x098B22` | `190`, `191`, `192` |
+| `2A` | `0x0981DF` | `190`, `191`, `192` |
+| `2B` | `0x08FE2B` | `190`, `191`, `192` |
+
+The pack holds the mazo compressed stream for each target. For a read at a
+file offset inside a target window, the override returns the pack byte at the
+same window offset. The in-game decompressor stops at the mazo terminator, so
+a longer mazo stream is safe.
+
+The design does not change the base GFX pointer table and does not change the
+level data. Other rooms read the recipient streams.
+
+## Open check
+
+The override needs the room number in work RAM before the loader decompresses
+the stream. Capture one load frame at mode `0F` or `13` and read `$10B`. If the
+room number is not set yet, latch the last seen room at the level header read.
+
 ## Fix plan
 
 1. Build one native content pack that holds the mazo compressed streams for
