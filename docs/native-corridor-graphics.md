@@ -1478,3 +1478,27 @@ So both frames come from the same scene, and the product adds the lines.
 
 Fixture: recomp/inputs/mazo-190-hplock-fixture.script (labelled, health lock).
 Capture: local/captures/mhp. Image: local/reports/screenshots/room190-mazo-live.png.
+
+### The room scoped VRAM pack now applies
+
+The pack writes inside cart_getRomPtr while the room number holds. A pack of the
+whole mazo VRAM now changes the frame for room 190, so the write does reach the
+renderer.
+
+| Pack | Content | Frame |
+| --- | --- | --- |
+| whole mazo image | 15900 runs | changed, mixed |
+| Mode 7 range only, bytes 0x0000 to 0x3FFF | 3483 runs | the sky changes, the lines stay |
+
+So the sky area of this room reads VRAM bytes 0x0000 to 0x3FFF. In Mode 7 that
+range holds the map and the character data in the same words, so one pack cannot
+replace the map alone.
+
+| Region | Product | Mazo |
+| --- | --- | --- |
+| distinct bytes, 0x0000 to 0x3FFF | 105 | 105 |
+| row 0 leading values | 10, 11 | 0, 3 |
+
+The two maps hold different tile numbers, and the frames agree on every element
+except the lines. The next check compares one region at a time, starting with the
+lowest quarter.
