@@ -542,7 +542,8 @@ addresses fill the work RAM range that the room load then copies to VRAM
 
 The user supplied the map facts from Lunar Magic:
 
-- A new save puts Mario on the map node for level `0x10C`, translevel `0x30`.
+- A new save puts Mario on the map node for level `0x10C`. That level is
+  translevel `0x30`.
 - Room `0x190` sends the player to room `0x191` automatically while the player
   stays alive.
 
@@ -564,6 +565,13 @@ A right-walk and a vine climb both end in a death mode, so the exit is not found
 yet.
 
 Captures: `local/captures/idle30`, `local/captures/vine`, `local/captures/walk30`.
+
+### Room 0x10C holds one object
+
+The room `0x10C` level stream is 11 bytes. After the two header bytes and the
+music byte, the stream holds a single object at x `0xC0`, then the terminator.
+So the room change is one object, not a walkable path. Wandering right or
+climbing the vine does not find it.
 
 ## Renderer check
 
