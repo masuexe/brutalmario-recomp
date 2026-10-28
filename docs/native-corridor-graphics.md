@@ -278,6 +278,26 @@ An earlier probe installed the mazo data for `82`, `83`, `85`, `E5`, `E7`, `E8`
 and pointed those slots at it. The frame did not change. The product never
 loads those ids, so the data alone is not sufficient.
 
+### VRAM slot test
+
+Room `190` is stable at translevel `0x30` in the product. A forced translevel
+does not change the loaded set: the product still loads `0D` and `22`.
+
+The product writes `0D` at VRAM `0xD000` and `22` at `0xF000`. Mazo writes `E5`
+at `0xD000` and `E8` at `0xF000`. A probe pointed the product slots `0D` and `22`
+at the mazo streams. The frame changed in a small area only.
+
+The product writes no data at VRAM `0x0000`, `0x1000` or `0x2000`. Mazo writes
+`82`, `83` and `85` there. These are background character areas, so the product
+background reads empty tile data.
+
+Probe target: `demo11-native-slots`.
+
+### What this establishes
+
+The fault is the GFX set selection for the room, not the GFX bytes. The product
+selects a set that omits three background files. A data port has no effect until
+the selection changes.
 ## Next concrete action
 
 1. Find the GFX set table that maps a level selector to a GFX file list. Compare
