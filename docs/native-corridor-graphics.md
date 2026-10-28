@@ -498,7 +498,7 @@ Fixture: `local/captures/walk30` (level `0x30` via the map node, then walk).
 
 Room `190` reports mode `7` when entered from level `0x30` and when entered from
 the map 6 path. Room `0x10C` in the same level reports mode `1`. So the room
-data selects the mode, so room `190` sets Mode 7 on purpose.
+data selects the mode. Room `190` sets Mode 7 on purpose.
 
 ## Open item
 
@@ -509,7 +509,8 @@ plain ROM block and not a RATS block. Two candidates remain:
    not ported;
 2. the native PPU writes the Mode 7 tilemap area with wrong data.
 
-This line has no confirmed correct Mode 7 room, so case 2 is still open. The next check is a second mode 7 room capture to compare.
+No Mode 7 room of this line has a verified correct frame. So case 2 is
+still open. The next check is a capture of a second Mode 7 room to compare.
 
 ## DMA source tracing
 
