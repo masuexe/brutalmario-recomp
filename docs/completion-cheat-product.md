@@ -81,28 +81,41 @@ flags. The images are `local/captures/cheat-baseline/plain_map.png` and
 A second script enters the level below the player. The game reaches mode `$14`
 with three actors, so level entry still works after the cheat.
 
-## Warp into the Special Zone
+## The Special Zone map
 
-The Star World map holds two different things near the middle.
+The Special Zone is overworld map `5`. The player reaches it at
+`$0118/$0128`.
 
-| Cell | Map position | Behaviour |
+| Node | Map position | Result of a press on A |
 | --- | --- | --- |
-| Center big star | `$0178/$01A8` | Enters the unfinished Giant Starman boss course `$00A` |
-| Lower-inner node | `$0178/$01C8` | A cleared node becomes a warp star to the Special Zone |
+| Center big star | `$0178/$01A8` | Enters the Giant Starman boss course `$00A` |
+| Lower-inner node | `$0178/$01C8` | Warps to map `3`, which is World 8 |
 
-With the completion flags set, the lower-inner node shows a warp star. Press A
-on it and Mario flies up. The game then loads the Special Zone map, which is
-map `3`.
+On the demoOnly1 donor image the center node warps to map `5` at
+`$0118/$0128`. The product build enters the boss course instead, so the center
+warp is an open gap in this build.
 
-Run this command to reach the Special Zone with control.
+Run this command to reach the Special Zone map with control.
 
 ```sh
 python3 tools/play_native_target.py --special-zone
 ```
 
-The launcher applies the completion flags, moves the player to the lower-inner
-node, presses A and waits for map `3`. The script then stops, so the player
-keeps control on the Special Zone map.
+The launcher applies the completion flags and moves the player to map `5` at
+`$0118/$0128`. The script then stops, so the player keeps control.
+
+A run on the built target gives these results. The player moves from
+`$0118` to `$0138`, and a press on A enters a course in mode `$14`. The map
+therefore works as a normal map with playable courses.
+
+## Why the startup script can fail
+
+The startup input script assumes a new save file. If a save file exists at
+start, the boot flow differs, the script does not reach the overworld and the
+completion flags never apply.
+
+The launcher now moves any save file aside in both cheat modes. Each cheat run
+therefore starts from a new save and applies the flags.
 
 ## Why the warp can stop working
 

@@ -17,14 +17,12 @@ poke 1f2f ffffffffffffffffffffffff
 poke 1182c 000000000000000000000000000000000000000000000000
 poke 0100 0b
 wait 300
-# Go to the Star Road lower-inner node and take the Special Zone warp.
+# Move to the Special Zone map (map 5) at the star head.
 poke 0109 00
-poke 1f11 0606
-poke 1f17 7801c8017801c801
-poke 1f1f 17001c0017001c00
+poke 1f11 0505
+poke 1f17 1801280118012801
+poke 1f1f 1100120011001200
 poke 0100 0b
 wait 300
-press a 2
-# Wait until the Special Zone map (map 3) is active.
-until 1f11 == 03 900
+until 1f11 == 05 600
 wait 60

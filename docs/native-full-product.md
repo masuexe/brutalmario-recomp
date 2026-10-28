@@ -96,7 +96,7 @@ crash out and installs the records.
 ## Running the target
 
 `tools/play_native_target.py` starts the built target with a normal window. It
-checks the ROM hash and the binary hash first, then mounts all 42 packs.
+checks the ROM hash and the binary hash first, then mounts all 43 packs.
 
 ```
 python3 tools/play_native_target.py --target demo11-native-product
@@ -106,7 +106,7 @@ python3 tools/play_native_target.py --target demo11-native-product
 instead of the player input, which is how the smoke test starts the game.
 A script run writes its dumps to `local/captures/play-<target>`.
 
-The smoke test starts the binary, mounts 42 packs and exits with code 0.
+The smoke test starts the binary, mounts 43 packs and exits with code 0.
 ## Slot 80 fix in the product
 
 The product target also holds the slot `80` record and its `cheap_demo` module
