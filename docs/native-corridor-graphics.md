@@ -512,6 +512,32 @@ plain ROM block and not a RATS block. Two candidates remain:
 No mode 7 room of this line is known to render correctly, so case 2 is not yet
 excluded. The next check is a second mode 7 room capture to compare.
 
+## DMA source tracing
+
+The runner can log every DMA with its source address. The facility is off in a
+production build. Set `BM_DIAG_PPU_DMA_HISTORY=1` at the build stage, then set
+`SNESRECOMP_DMA_LOG=1` at the native stage.
+
+```
+BM_DIAG_PPU_DMA_HISTORY=1 python3 tools/m1.py --target <t> build
+SNESRECOMP_DMA_LOG=1 python3 tools/m1.py --target <t> native --script <s> --capture <c>
+```
+
+The configure log then reports `SNES PPU/DMA history: enabled`, and `run.log`
+holds `[dma] f<frame> ch<n> A->B src=BB:AAAA dst=$21NN size=N` lines.
+
+### First result
+
+A dense capture across the room `190` transition records 33,994 DMA events.
+Almost every transfer to VRAM `$2118` reads from work RAM, for example
+`src=7E:9000`. The game builds the VRAM image in work RAM first, then copies it.
+So the DMA source does not name the ROM stream.
+
+The next link is the work RAM write. The runner already has a work RAM write log
+hook (`snes_set_wram_write_log_hook`). The next step is to record which ROM
+addresses fill the work RAM range that the room load then copies to VRAM
+`0x0000`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

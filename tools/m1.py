@@ -288,11 +288,16 @@ def main():
         support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
         if support not in cmake.read_text():
             cmake.write_text(cmake.read_text() + '\n# Instruction-paced AOT support.\n' + support + '\n')
-        run(['cmake', '-S', EXPERIMENT, '-B', BUILD, '-G', 'Ninja',
-             '-DCMAKE_BUILD_TYPE=Release', f'-DSNESRECOMP_ROOT={ENGINE}',
-             '-DSNESRECOMP_SDL_BACKEND=SDL2', '-DSNESRECOMP_SDL3_FETCH=OFF',
-             '-DSNESRECOMP_AUDIO_TRACE_HISTORY=' + ('FULL' if args.audio else 'SMALL'),
-             '-DSNESRECOMP_FRAME_IMPL=LLE'], log=reports / 'native-configure.log')
+        cmake_args = ['cmake', '-S', EXPERIMENT, '-B', BUILD, '-G', 'Ninja',
+                      '-DCMAKE_BUILD_TYPE=Release', f'-DSNESRECOMP_ROOT={ENGINE}',
+                      '-DSNESRECOMP_SDL_BACKEND=SDL2', '-DSNESRECOMP_SDL3_FETCH=OFF',
+                      '-DSNESRECOMP_AUDIO_TRACE_HISTORY=' + ('FULL' if args.audio else 'SMALL'),
+                      '-DSNESRECOMP_FRAME_IMPL=LLE']
+        # Diagnostic only: enable the PPU/DMA history rings so a capture can log
+        # the DMA source address of a VRAM transfer. Off unless the operator asks.
+        if os.environ.get('BM_DIAG_PPU_DMA_HISTORY') == '1':
+            cmake_args.append('-DSNESRECOMP_ENABLE_PPU_DMA_HISTORY=ON')
+        run(cmake_args, log=reports / 'native-configure.log')
         run(['cmake', '--build', BUILD, '--parallel', '2'], log=reports / 'native-build.log')
         (BUILD / 'm1-build.json').write_text(json.dumps({
             'rom_sha256': hashlib.sha256(ROM.read_bytes()).hexdigest(),
