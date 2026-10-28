@@ -360,6 +360,39 @@ The level `0x30` header tables are the same in both builds. So the next step is
 the background pointer table: find the entry that the level selects and compare
 the mazo stream with the product stream.
 
+## First real fix: extended GFX 1E6
+
+A mazo reference capture at mode `0x14` gives the true gameplay baseline. The
+frame shows a sunset sky, clouds, a dark floor and the boss.
+
+Fixture: `recomp/inputs/mazo-190-play-fixture.script`. Capture:
+`local/captures/mazo-190-play`.
+
+At the same phase the two builds load the same GFX files except one:
+
+| GFX | Mazo | Product |
+| --- | --- | --- |
+| `0x1E6` | valid pointer | `FFFFFF` (empty) |
+
+The product requests `0x1E6` and finds no data. The pointer slot is at file
+offset `0xA02BA`.
+
+The candidate `demo11-native-gfx1e6` installs the mazo stream (2506 bytes) at a
+free run and sets the pointer.
+
+Measured result:
+
+| VRAM region | Diffs before | Diffs after |
+| --- | ---: | ---: |
+| `0xD000` | not equal | 0 |
+| `0xE000` | 3741 | 0 |
+| `0xF000` | not equal | 0 |
+
+The frame now shows the sunset backdrop, the clouds and the HP bar. Vertical
+stripes remain in the background area, so more work is required.
+
+Room `192` is unchanged: its fault is the crystal-ball sprite, not this GFX.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
