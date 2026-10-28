@@ -1,0 +1,37 @@
+# Mazo: dump VRAM before and after the room-190 entry to locate the Mode 7 load.
+# Labelled fixture; no completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 600
+dump before0
+wait 60
+dump before1
+poke 94 80004001
+poke 19b8 90
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 30
+dump after0
+wait 30
+dump after1
+wait 60
+dump after2
+wait 120
+dump after3
+quit

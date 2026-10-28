@@ -612,6 +612,29 @@ Table of the result:
 So the room number, the room streams, the sprite list and the room record do
 not change the frame. The missing data is not room-scoped.
 
+## When the Mode 7 data loads
+
+Fixture `recomp/inputs/mazo-190-loadtiming-fixture.script` dumps the mazo VRAM
+just before and just after a room `190` entry.
+
+Result: the mazo build already sits in room `190` at mode `0x0E` before the
+entry poke, and the Mode 7 area does not change across the entry:
+
+| VRAM region | Bytes changed |
+| --- | ---: |
+| `0x0000` | 0 |
+| `0x1000` | 0 |
+| `0x2000` | 0 |
+| `0x3000` | 53 |
+| `0x4000` | 0 |
+
+So the scripted button sequence reaches room `190` on its own, and the Mode 7
+data is present before the room change finishes.
+
+Conclusion: the game loads the Mode 7 data at level load, not at room entry.
+That is why a room copy changes no pixel and a level port is the operation that
+matters.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
