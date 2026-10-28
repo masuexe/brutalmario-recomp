@@ -1111,6 +1111,37 @@ boss.
 So the fault is real and the entry path is not the cause. The target for this
 mode is the plain field.
 
+## The level context differs
+
+A work RAM comparison at mode `0x14`, room `0x190`, room state settled:
+
+| Variable | mazo | product |
+| --- | --- | --- |
+| `$0100` game mode | `14` | `14` |
+| `$10B` room | `190` | `190` |
+| **`$13BF` translevel** | **`30`** | **`6A`** |
+| `$94` player x | `0020` | `0020` |
+| `$96` player y | `FFC0` | `FFC0` |
+| `$1A` layer 1 x | `00` | `00` |
+| `$0D9A` `$0D9B` `$0D9D` | `37` `C1` `15` | `37` `C1` `15` |
+
+Every value matches except the translevel. The translevel selects the level
+header: tileset, background mode, palette and the Layer 3 settings.
+
+So the product draws room `190` with the header of translevel `0x6A`, and mazo
+draws it with the header of translevel `0x30`. Content porting cannot correct a
+header selection.
+
+### A room swap test
+
+A candidate copied the mazo room `0x10C` data into the product room `0x10C` and
+read it back at translevel `0x30`. The room does change, and the frame becomes a
+field of blue and yellow tiles. The graphics do not match, because the level
+header and the graphics context for that entry still differ.
+
+The test is not kept as a target. It shows that the room data swap applies, and
+that the header is the open item.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
