@@ -1170,8 +1170,8 @@ Both IDs exist in the product, and their data equals the mazo data byte for byte
 | `0xAF` | `46AB7C` | `28890F` | equal |
 
 So the corridor graphics are not missing. A room swap gave a field of blue and
-yellow tiles for a different reason: the entry still uses a different level
-header, and the room record is only one input to the load.
+yellow tiles for a different reason. The entry still uses a different level
+header. The room record is one input to the load, not the only one.
 
 ## Port plan
 
