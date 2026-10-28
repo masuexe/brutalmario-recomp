@@ -1202,6 +1202,20 @@ stream of room `0x10C`. That stream holds one object at x `0xC0`.
 
 Capture: `local/captures/rc10b`, `local/captures/rc10w`.
 
+### Room 0x10C holds two sprites
+
+The sprite list of mazo room `0x10C` decodes to two entries:
+
+| Index | y | x | Sprite id |
+| --- | --- | --- | --- |
+| 0 | `0x80` | `0x48` | `0x20` |
+| 1 | `0xB0` | `0x38` | `0x11` |
+
+The list then ends with x `0xFF`.
+
+One of these sprites can start the change to room `0x190`. The layer 1 stream
+holds one object at x `0xC0`, so a walk to the right does not reach it.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
