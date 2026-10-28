@@ -738,7 +738,7 @@ the Mode 7 area.
 ## Read holes
 
 The read trace gives a stronger check. A read hole is a ROM range that the game
-reads, holds zeros in the product, and holds data in mazo. The `1E6` repair is one
+reads, holds zeros in the product, and holds data in mazo. The `1E6` stream is one
 such hole, so the method has a known positive case.
 
 The room `190` run gives 29 holes of 64 bytes or more:
@@ -751,7 +751,7 @@ The room `190` run gives 29 holes of 64 bytes or more:
 | `0x1BC5A4` | 136 | 122 |
 | `0x078089` | 131 | 99 |
 
-The first row is the `1E6` stream. So the largest read hole is the repair that is
+The first row is the `1E6` stream. So the largest read hole is the one that is
 already known.
 
 ### Bulk fill does not work
