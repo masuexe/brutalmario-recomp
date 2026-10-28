@@ -73,26 +73,74 @@ Room `190` is the same room in mazo and in the recipient in header and in level
 data. So the difference is the graphics data itself. The recipient holds no
 mazo background, tile and palette data for this room.
 
+## Resource identification
+
+Two checks find the graphics files that the three rooms use.
+
+### Decoded content
+
+Decompress all base GFX files `00` to `31` and compare the decoded bytes. Only
+seven files differ. Six of them are below.
+
+| GFX | Decoded size | 2bpp or 4bpp |
+| --- | ---: | --- |
+| `00` | 4096 | 4bpp |
+| `01` | 4096 | 4bpp |
+| `02` | 4096 | 4bpp |
+| `10` | 4096 | 4bpp |
+| `28` | 2048 | 2bpp |
+| `2A` | 2048 | 2bpp |
+| `2B` | 2048 | 2bpp |
+
+The pointer addresses differ for all GFX files. The pointer address alone is
+not a difference. Only these seven files hold different decoded bytes.
+
+### VRAM content match
+
+Search the decoded bytes of each GFX file in a room 190, 191 and 192 VRAM
+dump. The search shows which files each room uses.
+
+| GFX | VRAM address | Room 190 | Room 191 | Room 192 | Content differs |
+| --- | --- | --- | --- | --- | --- |
+| `01` | `0xD000` | no | yes | yes | yes |
+| `28` | `0x8000` | yes | yes | yes | yes |
+| `2A` | `0x9000` | yes | yes | yes | yes |
+| `2B` | `0x9800` | yes | yes | yes | yes |
+| `00`,`02`,`10` | none | no | no | no | yes |
+
+So rooms `191` and `192` use GFX `01`, `28`, `2A` and `2B`. Room `190` uses
+GFX `28`, `2A` and `2B`. GFX `00`, `02` and `10` differ but do not load in
+these rooms.
+
+GFX `01` sits at VRAM `0xD000`. GFX `28`, `2A` and `2B` sit at the background
+tile addresses `0x8000`, `0x9000` and `0x9800`. This agrees with the black
+rectangle and the striped background in the captures.
+
+### Stream identities
+
+| GFX | Recipient stream | Recipient length | Baked length |
+| --- | ---: | ---: | ---: |
+| `01` | `0x0BE43E` | 3114 | 4096 |
+| `28` | `0x098B22` | 1360 | 2048 |
+| `2A` | `0x0981DF` | 1162 | 2048 |
+| `2B` | `0x08FE2B` | 948 | 2048 |
+
 ## Fix plan
 
-1. Choose a free Map16 bank and a free ExGFX slot.
-2. Copy the mazo Map16 set for tileset `0B` and tileset `3B` into that bank.
-3. Add lookup shims that apply only while a corridor or boss room runs.
-4. Copy the mazo background and ExGFX streams that room `190` uses.
-5. Capture rooms `183`, `184`, `190`, `191` and `192` and compare each frame
-   to the donor frame.
+1. Build one native content pack that holds the mazo compressed streams for
+   GFX `01`, `28`, `2A` and `2B`.
+2. Add a room-scoped override in the cart read path. The runtime calls
+   `bm_content_resolve` while the CPU reads a ROM byte, at
+   `cart.c` line 153. The override returns a pack byte only while the current
+   room is `190`, `191` or `192` and the read address is one of the four
+   streams.
+3. Keep the level data and the base GFX table unchanged. Other rooms keep the
+   recipient streams.
+4. Mount the pack in the product target and rebuild.
+5. Capture rooms `190`, `191` and `192` with the full product pack. Compare
+   each frame to the official mazo frame.
+6. Run the unchanged-route regression and the full suite.
 
-Step 4 is the large part. Map16 is `0x800` entries of eight bytes for each
-tileset.
-
-## Tools
-
-`tools/fb_to_png.py` converts a host framebuffer BMP dump to a PNG image.
-Use it to look at a capture frame.
-
-```sh
-python3 tools/fb_to_png.py local/captures/view-r190/f1.fb.bmp /tmp/r190.png 2
-```
-
-Captures for this report: `local/captures/cheat-r191`,
-`local/captures/view-r192`, `local/captures/view-r190`.
+A global change to GFX `01`, `28`, `2A` and `2B` is not allowed. The
+unchanged-route regression covers rooms that use these files, and a global
+change breaks those rooms.
