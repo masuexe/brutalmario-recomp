@@ -932,7 +932,7 @@ match room `191`: mode `1`, `tm` `0x15`, `ts` `0x2`.
 | `0x191` | `1` | `0x15` | `0x2` | black frame, grid inside |
 | `0x192` | `1` | `0x15` | `0x2` | black frame, grid inside |
 
-So one Layer 3 image fails for rooms `190`, `191` and `192`. A single repair
+So one Layer 3 image fails for rooms `190`, `191` and `192`. One change
 serves all three rooms.
 
 Capture: `local/captures/r192`.
