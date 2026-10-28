@@ -1,5 +1,10 @@
 # Corridor graphics handoff
 
+> Superseded for room 190 by [the verified r3 background repair](native-corridor-background.md).
+> The map/pixel byte roles below were reversed: the actual map is equal.
+> Resource `1E5` was missing; r3 restores it. Remaining work is the 191/192 font.
+
+
 This document gives a new agent the state of the corridor graphics work for rooms
 190, 191 and 192. It records what is correct, what is defective, which ideas I rejected and
 which action comes next.

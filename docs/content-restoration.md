@@ -1270,3 +1270,14 @@ The [orphan sprite block cleanup](demo11-orphan-sprite-cleanup.md) removes
 the two code blocks of the restored records `0x42` and `0x3D`.
 Two room frames stay byte-identical. Chain end `demo11-sprites-orphan-cleanup`
 (ROM `eccde661...`). Suite **78/78**.
+
+
+### Room 190 background recovery (2026-10-28)
+
+The [r3 background repair](native-corridor-background.md) restores official mazo
+extended graphics `1E5` on a separate product-r2 descendant. The vertical stripes
+disappear. Both the Mode 7 map and character lanes match the live donor at
+16,384 bytes each; native/interpreter VRAM and framebuffer agree. The older
+handoff confused the map and character byte lanes. The user reports r2 is
+playable apart from its background. The Japanese message font in rooms 191/192
+and broader restoration remain open.

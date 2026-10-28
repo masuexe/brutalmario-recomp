@@ -1,5 +1,10 @@
 # Mazo corridor and boss room graphics
 
+> Historical investigation. Its successive hypotheses are not current findings.
+> See [the r3 repair](native-corridor-background.md): room 190 lacks resource
+> `1E5`; its Mode 7 map is equal to mazo. High bytes are pixels, not map cells.
+
+
 ## Result
 
 The mazo corridor rooms work as code and as actor data. Their graphics do not
