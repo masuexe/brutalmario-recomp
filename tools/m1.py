@@ -314,6 +314,45 @@ def main():
                     text = text.replace('  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);', call)
                     runtime_cart.write_text(text)
                     print('rom trace injected into', runtime_cart)
+        # Room-scoped VRAM patch (env gated, BM_VRAM_PATCH=<pack>). Loads a
+        # packed VRAM image once, when the game enters the given room.
+        if os.environ.get('BM_DIAG_VRAM_PATCH') == '1':
+            runtime_cart = (ROOT / 'local/native-content-runtime' / args.target /
+                            'runner/src/snes/cart.c')
+            if runtime_cart.is_file():
+                text = runtime_cart.read_text()
+                if 'bm_vram_patch' not in text:
+                    helper = (
+                        '/* Room-scoped VRAM patch (env gated, BM_VRAM_PATCH). */\n'
+                        'static void bm_vram_patch(void) {\n'
+                        '  extern Snes *g_snes;\n'
+                        '  static int state;\n'
+                        '  if (state || !g_snes || !g_snes->ram || !g_snes->ppu) return;\n'
+                        '  unsigned room = (unsigned)g_snes->ram[0x10B] |\n'
+                        '                  ((unsigned)g_snes->ram[0x10C] << 8);\n'
+                        '  if (room != 0x0190u) return;\n'
+                        '  const char *p = getenv("BM_VRAM_PATCH");\n'
+                        '  if (!p || !*p) { state = 1; return; }\n'
+                        '  FILE *f = fopen(p, "rb");\n'
+                        '  if (!f) { state = 1; return; }\n'
+                        '  unsigned n = 0;\n'
+                        '  if (fread(&n, 4, 1, f) != 1) { fclose(f); state = 1; return; }\n'
+                        '  for (unsigned i = 0; i < n; i++) {\n'
+                        '    unsigned short a, c, w;\n'
+                        '    if (fread(&a, 2, 1, f) != 1) break;\n'
+                        '    if (fread(&c, 2, 1, f) != 1) break;\n'
+                        '    for (unsigned k = 0; k < c; k++) {\n'
+                        '      if (fread(&w, 2, 1, f) != 1) { a = 0; c = 0; break; }\n'
+                        '      g_snes->ppu->vram[(a + k) & 0x7FFF] = w;\n'
+                        '    }\n'
+                        '  }\n'
+                        '  fclose(f); state = 1; }\n')
+                    text = text.replace('uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
+                                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
+                    text = text.replace('  if (bank == 0x7e || bank == 0x7f) return NULL;',
+                                        '  if (bank == 0x7e || bank == 0x7f) return NULL;\n  bm_vram_patch();')
+                    runtime_cart.write_text(text)
+                    print('vram patch injected into', runtime_cart)
         cmake = EXPERIMENT / 'CMakeLists.txt'
         support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
         if support not in cmake.read_text():

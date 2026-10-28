@@ -767,6 +767,41 @@ character data. No read of that size occurs.
 Conclusion: the game never starts a Mode 7 graphics load for room `190`. The
 missing content is not a hole that the loader reaches.
 
+## Room-scoped VRAM patch
+
+`tools/m1.py` can inject a VRAM loader into the per-target `cart.c` copy. The
+switch is `BM_DIAG_VRAM_PATCH=1`, and the loader reads the file named by
+`BM_VRAM_PATCH` when the game enters room `0x0190`.
+
+```
+BM_DIAG_VRAM_PATCH=1 python3 tools/m1.py --target <t> build
+BM_VRAM_PATCH=<pack> python3 tools/m1.py --target <t> native ...
+```
+
+The pack holds a run-length form of a VRAM word image. The loader reads the room
+number from work RAM `$10B` and `$10C` and writes `g_snes->ppu->vram`.
+
+### Result
+
+A pack built from the mazo room `190` VRAM changes the frame. The clouds of the
+sunset appear, and the boss faces render.
+
+So the patch works, and part of the missing image was VRAM content.
+
+### The remaining fault is not in VRAM
+
+A second pack covers all 65536 bytes of the mazo VRAM image. The frame does not
+change from the partial pack. The vertical lines stay.
+
+With the whole VRAM equal to mazo, the product still draws lines where mazo draws
+a sunset. The Mode 7 matrix is valid (`A` `42`, `D` `256`, `m7sel` `0x80`).
+
+Conclusion: the remaining fault is in the native Mode 7 background path, not in
+the content. Content porting cannot correct it.
+
+Next: compare the native Mode 7 line renderer with the hardware rule. The file is
+`runner/src/snes/ppu.c`, function `PpuDrawMode7HdLine` and the default path.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
