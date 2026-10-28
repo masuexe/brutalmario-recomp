@@ -430,6 +430,32 @@ tile `0x0FF` across the BG1 tilemap instead of the mazo tiles.
 
 Capture: `local/captures/nosp/s2`.
 
+## Room 190 uses Mode 7
+
+Every product capture of room `190` reports `bgmode` = `7` in the PPU register
+dump. Mazo draws the same room with a horizon, clouds and perspective, which is
+the Mode 7 look.
+
+So the stripes are not a normal background tilemap. They are corrupted Mode 7
+data: the Mode 7 tilemap and character data in VRAM `0x0000` to `0x3FFF`.
+
+The VRAM region diffs support this. The largest differences sit in
+`0x0000` to `0x2000`, the Mode 7 tilemap and character area.
+
+The earlier statement that the background writes a blank tile `0x0FF` is
+incomplete. The BG1 and BG3 tilemaps both use tile `0x0FF` as a solid band with
+different palettes, and that is valid. The stripe pattern comes from the Mode 7
+data, not from BG1.
+
+## Mode 7 data source
+
+Room `190` has no Layer 2: `$05E600+190*3` = `FFDE54`, the sentinel. A Mode 7
+room takes its Mode 7 data from the level Layer 3 path.
+
+A search of the level pointer tables did not identify the Layer 3 table with
+confidence. The next step is to locate the Mode 7 data pointer by its decoded
+size, then compare the mazo stream with the product stream.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
