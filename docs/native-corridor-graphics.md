@@ -1307,6 +1307,34 @@ The corridor rooms must run under the level whose translevel is `0x30`. The
 correct change is a map node or an entry that sets translevel `0x30`, then a walk
 through the real room change.
 
+## Correction: the reference frame is a death effect
+
+The user reports that frame `t6` is the death effect that plays when the health
+runs out. The dark blue swirl and the lone player are the drop-out animation.
+
+So that frame is not a normal play frame, and this document must not use it as a
+target.
+
+The fixture leaves the player standing still. The health then drops to zero, and
+the after-death frames follow. Every mazo capture of room `190` in mode `0x14`
+reaches that state within a few hundred frames.
+
+| Frame | State |
+| --- | --- |
+| `t0` to `t6` | mode `0x14`, already the death sequence |
+| `t7` to `t11` | modes `0x0B` and `0x0C` |
+
+### What follows
+
+The product frame of room `190` holds a warm sky, a cloud layer, the boss and the
+health bar. A boss battle level with a given background can look like that.
+
+So this document cannot state that room `190` renders wrong. It has no valid mazo
+frame of normal play in that room.
+
+The colour difference between the two frames is also explained: one frame is a
+death effect and the other is the level.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
