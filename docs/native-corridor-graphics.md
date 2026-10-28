@@ -1301,7 +1301,7 @@ So the graphics are equal, the room data is equal, and the level header index is
 the only difference. The product is not missing content. It selects another
 level.
 
-### The repair
+### The change to make
 
 The corridor rooms must run under the level whose translevel is `0x30`. The
 correct change is a map node or an entry that sets translevel `0x30`, then a walk
