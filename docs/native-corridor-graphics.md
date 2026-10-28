@@ -456,6 +456,27 @@ A search of the level pointer tables did not identify the Layer 3 table with
 confidence. The next step is to locate the Mode 7 data pointer by its decoded
 size, then compare the mazo stream with the product stream.
 
+### The Mode 7 tilemap structure explains the stripes
+
+The Mode 7 tilemap for both builds uses tile `0x0FF`. The difference is the
+palette field.
+
+| Build | First 32 bytes of VRAM `0x0000` |
+| --- | --- |
+| mazo | `ff00 ff00 ff00 ff00 ...` (one palette) |
+| product | `ff0a ff09 ff0b ff0b ff09 ...` (many palettes) |
+
+So the product paints vertical colour bands with palettes. Mazo keeps one
+palette and bakes the gradient into the tile graphics. The vertical bands are
+the vertical stripes in the capture.
+
+A probe on top of the `1E6` fix also swapped every differing base GFX
+(`00`, `01`, `02`, `10`, `28`, `2A`, `2B`) to the mazo streams. The stripes stayed.
+
+Probe target: `demo11-native-allgfx`.
+
+So the missing item is the Mode 7 tilemap itself, not the base GFX.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
