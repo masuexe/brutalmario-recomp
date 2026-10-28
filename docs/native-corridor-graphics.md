@@ -911,6 +911,17 @@ A pack built from the mazo room `191` frame gives a noisy frame, not the picture
 The mazo capture comes from another scene state, so its register set and its
 VRAM do not pair with the product state.
 
+### Capture labels to check first
+
+The capture directory `local/captures/mazo-191-donor` does not hold room `191`.
+Every frame in it reports mode `0x0E` and room `0x190`.
+
+So the illustration in those frames is the room `190` scene, and not a room `191`
+reference. A reader who trusts the directory name will compare two scenes.
+
+The same check applies to any older capture. Read the mode and room from the work
+RAM dump before a comparison.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
