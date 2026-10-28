@@ -334,6 +334,32 @@ Then port the GFX data that the mazo set needs: `82`, `83`, `85`, `E5`, `E7` and
 Check the selector at the level load phase, because the values differ by phase.
 Read the values at mode `0x14`, not at mode `0x0E`.
 
+## Reliable evidence: the background tilemap
+
+VRAM keeps its contents across a room change. So a VRAM search can find a GFX
+file left over from an earlier room. A loaded-set result is therefore weak
+evidence. The background tilemap is stronger, because the room writes it.
+
+The captures are `local/captures/mazo-190-mode14/a5` and
+`local/captures/view-r190/f1`.
+
+| Region | Mazo distinct words | Product distinct words |
+| --- | ---: | ---: |
+| BG1 tilemap `0x2000` | 188 | 16 |
+| BG2 tilemap `0x3000` | 200 | 23 |
+| BG3 tilemap `0x5000` | 40 | 3 |
+
+Mazo holds a real background image. The product holds a two-tile pattern that
+repeats: `ff0f ff00 ff0f ff00`. That pattern is the vertical stripes in the
+screen capture.
+
+So the product writes a degenerate background tilemap for room `190`. The
+background source is absent or wrong, not only the tile graphics.
+
+The level `0x30` header tables are the same in both builds. So the next step is
+the background pointer table: find the entry that the level selects and compare
+the mazo stream with the product stream.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
