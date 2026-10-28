@@ -1335,4 +1335,32 @@ frame of normal play in that room.
 The colour difference between the two frames is also explained: one frame is a
 death effect and the other is the level.
 
-### Zoom of the message window## User clarification
+### Zoom of the message window## User clarificatio## The background is correct apart from thin lines
+
+The user supplied a reference frame of room `190`. It shows a smooth sky that
+runs from purple to red to orange, with orange clouds, the boss heads and a
+textured floor.
+
+The product frame holds the same sky, the same clouds, the same boss and the same
+floor. The only extra element is a set of thin vertical lines over the sky.
+
+| Element | Reference | Product |
+| --- | --- | --- |
+| Sky gradient | present | present |
+| Clouds | present | present |
+| Boss and health bar | present | present |
+| Thin vertical lines | absent | **present** |
+
+So the tile graphics, the palette and the tile map are correct. A thin line over
+a smooth field is a sampling artefact, not missing content.
+
+The Mode 7 path in `runner/src/snes/ppu.c` draws one sample per screen column.
+A wrong fixed point step, or a wrap at the column edge, gives one line per step.
+
+### Extended graphics slots
+
+Three extended graphics slots hold a null pointer in the product and a valid
+pointer in mazo: `0x0BE`, `0x0D9`, `0x0DA`. A candidate that fills all three
+changes no pixel of room `190`, so that room does not use them.
+
+n
