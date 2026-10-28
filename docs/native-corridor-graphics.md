@@ -1337,28 +1337,33 @@ death effect and the other is the level.
 
 ## The background is correct apart from thin lines
 
-The user supplied a reference frame of room `190`. It shows a smooth sky that
-runs from purple to red to orange, with orange clouds, the boss heads and a
-textured floor.
+## The message is Japanese and the font is absent
 
-The product frame holds the same sky, the same clouds, the same boss and the same
-floor. The only extra element is a set of thin vertical lines over the sky.
+The user supplied a frame of the working message window. It shows two lines of
+Japanese text on black:
 
-| Element | Reference | Product |
-| --- | --- | --- |
-| Sky gradient | present | present |
-| Clouds | present | present |
-| Boss and health bar | present | present |
-| Thin vertical lines | absent | present |
+```
+ゴールした そのなかに
+モンスターが ？
+```
 
-So the tile graphics, the palette and the tile map agree. A thin line over a
-smooth field is a sampling fault, not absent content.
+So the window must draw a Japanese font. The product draws a repeat of two or
+three small shapes instead, and those shapes are level artwork.
 
-The Mode 7 path in `runner/src/snes/ppu.c` draws one sample per screen column. A
-wrong scale step, or a wrap at a column edge, gives one line per step.
+### What the font is not
 
-### Extended graphics slots
+- The base graphics set `0x00` to `0x31` decodes to the same data in both ROMs.
+- Extended graphics `0x0BE`, `0x0D9` and `0x0DA` hold a null pointer in the
+  product. A candidate that fills all three changes no pixel of room `190` and no
+  pixel of room `191`.
+- No font block loads when the window opens. The largest new read in that window
+  is 73 bytes in bank `00`.
 
-Three extended graphics slots hold a null pointer in the product and a valid
-pointer in mazo: `0x0BE`, `0x0D9`, `0x0DA`. A candidate that fills all three
-changes no pixel of room `190`, so that room does not use them.
+So the font is expected to be in VRAM before the window opens, and this build
+does not put it there.
+
+### What follows
+
+The next check is the graphics set that the message routine expects, and the
+level load that should place it in VRAM. A comparison needs a mazo capture of the
+window with fresh graphics, and this document does not have one.
