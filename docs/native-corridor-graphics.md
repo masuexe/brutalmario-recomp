@@ -713,6 +713,28 @@ Next: restrict the trace to the level load frame window. The level load burst
 was around frame 2210, so a window there separates the load from the steady
 state.
 
+### The trace is validated
+
+The room `190` capture reads 211,549 distinct ROM addresses. The load burst is
+frame `2750` with 2006 first reads. Its largest run is one contiguous block:
+
+| ROM range | Size | Bank |
+| --- | ---: | --- |
+| `0x1B0008`-`0x1B09D1` | 2506 | `0x36` |
+| `0x0F74BD`-`0x0F7882` | 966 | `0x1E` |
+| `0x0F7B0D`-`0x0F7C1D` | 273 | `0x1E` |
+
+The `0x1B0008` block is the `1E6` graphics stream, which the `1E6` candidate
+placed at that address. It decodes with LZ2 to 4096 bytes.
+
+So the trace identifies a graphics stream and its reader. That is the check the
+tool needed.
+
+The bank `0x1E` runs do not decode from their first byte, so the run start is
+inside a stream that an earlier frame already started. The next step is to read
+the stream start, then decode each stream in the window and compare its size with
+the Mode 7 area.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
