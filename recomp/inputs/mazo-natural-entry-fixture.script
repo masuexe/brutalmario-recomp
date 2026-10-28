@@ -1,0 +1,35 @@
+# Mazo natural entry: new save starts on this level's map node, then enter it.
+# Labelled fixture; no teleport pokes, no completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map0
+press select 2
+wait 300
+dump map1
+# enter the level that a new save starts on
+press a 30
+wait 240
+dump enter0
+wait 240
+dump enter1
+wait 240
+dump enter2
+wait 480
+dump enter3
+wait 480
+dump enter4
+wait 480
+dump enter5
+wait 480
+dump enter6
+quit
