@@ -498,7 +498,7 @@ Fixture: `local/captures/walk30` (level `0x30` via the map node, then walk).
 
 Room `190` reports mode `7` when entered from level `0x30` and when entered from
 the map 6 path. Room `0x10C` in the same level reports mode `1`. So the room
-data selects the mode, and room `190` is intended to be a Mode 7 room.
+data selects the mode, so room `190` sets Mode 7 on purpose.
 
 ## Open item
 
@@ -509,8 +509,7 @@ plain ROM block and not a RATS block. Two candidates remain:
    not ported;
 2. the native PPU writes the Mode 7 tilemap area with wrong data.
 
-No mode 7 room of this line is known to render correctly, so case 2 is not yet
-excluded. The next check is a second mode 7 room capture to compare.
+This line has no confirmed correct Mode 7 room, so case 2 is still open. The next check is a second mode 7 room capture to compare.
 
 ## DMA source tracing
 
@@ -530,7 +529,7 @@ holds `[dma] f<frame> ch<n> A->B src=BB:AAAA dst=$21NN size=N` lines.
 
 A dense capture across the room `190` transition records 33,994 DMA events.
 Almost every transfer to VRAM `$2118` reads from work RAM, for example
-`src=7E:9000`. The game builds the VRAM image in work RAM first, then copies it.
+`src=7E:9000`. The game builds the VRAM image in work RAM first. It then copies that image.
 So the DMA source does not name the ROM stream.
 
 The next link is the work RAM write. The runner already has a work RAM write log
