@@ -1072,6 +1072,24 @@ Fixtures: `recomp/inputs/mazo-191-msg-fixture.script` (room poke, labelled).
 A room poke does not reload the graphics, so a capture after a poke keeps the
 previous room image and cannot serve as a reference.
 
+## Why only one read hole responded
+
+The product build loads 45 content packs. Each pack replaces a ROM range at run
+time. A check of the read holes against the pack ranges explains the mixed result:
+
+| Address | Inside a pack | Result of a ROM fill |
+| --- | --- | --- |
+| `0x1B0008` | `BM_NATIVE_GRAPHICS_PACK` | works |
+| `0x0F74BD` | `BM_SEVEN_CODE_PACK_32` | not tried |
+| `0x23174E` | no | breaks the game |
+| `0x1BCD9B` | no | breaks the game |
+| `0x078089` | no | breaks the game |
+
+So a hole inside a pack is a pack slot that needs data. A hole outside a pack is
+a zero range that the game needs as zero, and a fill breaks execution.
+
+This is the rule to follow: fill a hole only when a pack covers it.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
