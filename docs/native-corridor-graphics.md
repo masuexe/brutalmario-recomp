@@ -198,6 +198,41 @@ terrain show wrong tiles even when the GFX bytes match.
 
 Probe targets: `demo11-native-gfx28mazo`, `demo11-native-gfx4bpp`.
 
+## Combined Map16 and GFX probe
+
+The strongest probe changed two things at once, with the full product pack set.
+
+| Change | Detail |
+| --- | --- |
+| Map16 bank | replace `$12:8000` (32768 bytes) with the mazo block |
+| GFX | redirect `00`, `01`, `02`, `10`, `28`, `2A`, `2B` to the mazo streams |
+
+The probe ROM holds the mazo Map16 block and the mazo GFX. The check compares
+the probe ROM bytes to the mazo bytes.
+
+Captures show no change for room `190`. Room `191` frame `w4` is byte-identical
+to the unpatched product frame. So the Map16 block and the base GFX files are
+not the cause.
+
+Probe target: `demo11-native-m16probe`.
+
+## The room 191 fault is a message box
+
+A walk capture of room `191` shows a black rectangle with a white grid in the
+upper left. The rectangle stays at one screen position. The user reported this
+as garbage tiles and crystal-ball text.
+
+The rectangle is not terrain. A terrain fault would move with the camera. A
+fixed overlay uses Layer 3 or a message sprite.
+
+The room `191` sprite list holds custom ids `A9` and `77`. The corridor remapped
+the mazo id `B0` to the product slot `A9`. The product record for `A9` points to
+code at `A1:8998`, inside the mazo module, so the sprite code is present.
+
+Custom sprite and room ids are version-local. A copied id can name a different
+resource in the recipient. The graphics of the message element are the open
+item.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
