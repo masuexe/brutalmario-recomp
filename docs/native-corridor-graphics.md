@@ -866,6 +866,29 @@ The illustration data is not in a read hole, so the loader does not reach it.
 Captures: `local/captures/w191` (product), `local/captures/mazo-191-donor`
 (reference).
 
+## All three rooms share one Layer 3 index
+
+The Layer 2 pointers of rooms `190`, `191` and `192` are the sentinel `FFDE54` in
+both ROMs. The low byte of the sentinel names the Layer 3 index, `0x54`.
+
+| Room | L2 pointer | Layer 3 index |
+| --- | --- | --- |
+| `0x190` | `FFDE54` | `0x54` |
+| `0x191` | `FFDE54` | `0x54` |
+| `0x192` | `FFDE54` | `0x54` |
+
+The room graphics records are also equal, and every slot is the default `FFFF`.
+
+So one Layer 3 image serves all three rooms. It is the Mode 7 background of room
+`190` and the illustration of room `191`.
+
+This gives one target for the next step: find the table that maps Layer 3 index
+`0x54` to its data, then compare the data of the two ROMs.
+
+A scan for a pointer table with 256 entries gives 13949 candidates, so a plain
+valid pointer test does not isolate the table. The next check needs the loader
+code, not a data scan.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
