@@ -284,6 +284,36 @@ def main():
         configure_child(EXPERIMENT, TARGET, args.target)
         configure_mazo(EXPERIMENT, TARGET, args.target)
         configure_gap(EXPERIMENT, TARGET, args.target)
+        # Diagnostic only: log the first read of every ROM address so a capture
+        # can show which stream feeds a graphics buffer. Off unless asked.
+        if os.environ.get('BM_DIAG_ROM_TRACE') == '1':
+            runtime_cart = (ROOT / 'local/native-content-runtime' / args.target /
+                            'runner/src/snes/cart.c')
+            if runtime_cart.is_file():
+                text = runtime_cart.read_text()
+                helper = (
+                    '/* Diagnostic ROM read trace (env gated, BM_DIAG_ROM_TRACE). */\n'
+                    'static void bm_rom_trace(uint8_t bank, uint16_t adr) {\n'
+                    '  static FILE *f; static int init, seen[0x80000 / 4];\n'
+                    '  static long n, max = 200000;\n'
+                    '  if (!init) { init = 1; const char *p = getenv("BM_ROM_TRACE_LOG");\n'
+                    '    if (p && *p) f = fopen(p, "w");\n'
+                    '    const char *m = getenv("BM_ROM_TRACE_MAX"); if (m && *m) max = strtol(m, NULL, 0); }\n'
+                    '  if (!f || n >= max) return;\n'
+                    '  unsigned off = ((unsigned)(bank & 0x7F) << 15) | (adr & 0x7FFF);\n'
+                    '  if (off >= 0x400000u) return;\n'
+                    '  unsigned bit = off >> 5, msk = 1u << (off & 31);\n'
+                    '  if (seen[bit] & msk) return; seen[bit] |= msk;\n'
+                    '  { extern int snes_frame_counter;\n'
+                    '    fprintf(f, "%d %06X\\n", snes_frame_counter, off); }\n'
+                    '  fflush(f); ++n; }\n')
+                call = ('  bm_rom_trace(bank, adr);\n  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);')
+                if 'bm_rom_trace' not in text:
+                    text = text.replace('uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
+                                        helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
+                    text = text.replace('  uint8_t *native = bm_content_resolve(cart->rom, bank, adr);', call)
+                    runtime_cart.write_text(text)
+                    print('rom trace injected into', runtime_cart)
         cmake = EXPERIMENT / 'CMakeLists.txt'
         support = f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/aot_timing.c"}")'
         if support not in cmake.read_text():

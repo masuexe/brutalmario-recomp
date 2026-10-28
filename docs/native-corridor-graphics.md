@@ -679,6 +679,40 @@ The snes9x reference core does not include
    frame window, then read the address range that feeds the Mode 7 image.
 2. Or rebuild `snesref` with the boot trace patch and trace the mazo image.
 
+## ROM read trace (working)
+
+`tools/m1.py` can inject a read trace into the per-target `cart.c` copy. It is
+off by default and needs no change to the pinned upstream tree.
+
+```
+BM_DIAG_ROM_TRACE=1 python3 tools/m1.py --target <t> build
+BM_ROM_TRACE_LOG=/tmp/rom.log python3 tools/m1.py --target <t> native ...
+```
+
+Each line is `frame offset`, written once per distinct ROM address.
+
+A differential run compares two captures: one that enters room `190`, and one
+that stops at the map. Addresses that only the room `190` run reads are the
+room load set. The largest runs on the product:
+
+| ROM range | Size |
+| --- | ---: |
+| `0x230008`-`0x2317FF` | 6136 |
+| `0x35A157`-`0x35AF74` | 3614 |
+| `0x3D0F8B`-`0x3D1C9A` | 3344 |
+| `0x05CF33`-`0x05DAC0` | 2958 |
+| `0x14DF58`-`0x14E678` | 1825 |
+
+A probe copied the mazo bytes into the three largest ranges. The game then
+shows a black frame, because those ranges hold code as well as data. A range
+copy is not usable without separating code reads from data reads.
+
+Probe target: `demo11-native-rtprobe`.
+
+Next: restrict the trace to the level load frame window. The level load burst
+was around frame 2210, so a window there separates the load from the steady
+state.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
