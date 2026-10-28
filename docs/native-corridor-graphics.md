@@ -1263,6 +1263,50 @@ same layer with a different matrix or a different palette.
 The native dump writes CGRAM (`*.cgram.bin`). The reference dump does not. So a
 palette comparison across the two hosts needs a new reference dump.
 
+## Root cause: the wrong level header index
+
+The header tables must be read at the translevel index that each build uses, not
+at the room index. The product uses `0x6A` and mazo uses `0x30`, so the comparison
+is product `[0x6A]` against mazo `[0x30]`:
+
+| Table | product `[0x6A]` | mazo `[0x30]` | Equal |
+| --- | --- | --- | --- |
+| `0x05F000` | `02` | `55` | no |
+| `0x05F100` | `48` | `0F` | no |
+| `0x05F200` | `1C` | `02` | no |
+| `0x05F300` | `01` | `01` | yes |
+| `0x05F400` | `0A` | `0A` | yes |
+| `0x05F500` | `0A` | `85` | no |
+| `0x05F600` | `00` | `00` | yes |
+| `0x05F700` | `66` | `00` | no |
+| `0x05F800` | `0B` | `6A` | no |
+
+`0x05F000` carries the tileset and the palette for foreground and background. A
+different value there gives a different palette for the same graphics.
+
+### The palette confirms it
+
+Colour counts from the two frames:
+
+| Frame | Distinct colours | Main colours |
+| --- | ---: | --- |
+| mazo `t6` | 9 | `(41,40,90)`, `(41,40,107)`, `(41,24,90)` |
+| product room `190` | 85 | `(66,0,132)`, `(255,222,115)`, `(206,214,239)` |
+| Shared | 2 | black and the player green |
+
+mazo draws a dark blue night field. The product draws a warm sky with purple and
+orange. The two frames share no background colour.
+
+So the graphics are equal, the room data is equal, and the level header index is
+the only difference. The product is not missing content; it selects another
+level.
+
+### The repair
+
+The corridor rooms must run under the level whose translevel is `0x30`. A map
+node or an entry that sets translevel `0x30` and then walks the real room change
+is the correct repair.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
