@@ -1,0 +1,64 @@
+# Mazo: enter room 190, hold air swim so the player cannot fall, then take the auto transfer.
+# Labelled fixture (forced water physics); menu presses only, no room pokes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 120
+dump s0
+forcepoke 85 01
+forcepoke 1490 40
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s1
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s2
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s3
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s4
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s5
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s6
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s7
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s8
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s9
+wait 120
+forcepoke 85 01
+forcepoke 1490 40
+dump s10
+quit

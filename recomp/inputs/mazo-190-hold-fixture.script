@@ -1,0 +1,103 @@
+# Mazo: enter room 190 and hold star + air swim from the first frame.
+# Labelled fixture (invulnerability and forced water physics); menu presses only.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t0
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t1
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t2
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t3
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t4
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t5
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t6
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t7
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t8
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t9
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t10
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t11
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t12
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t13
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t14
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t15
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t16
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t17
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t18
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t19
+forcepoke 1490 40
+forcepoke 85 01
+wait 30
+dump t20
+quit

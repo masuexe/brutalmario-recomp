@@ -1429,3 +1429,21 @@ The route to room 191 is therefore a real play route, and no fixture in this
 document reaches it.
 
 Fixture: recomp/inputs/mazo-190-invincible-fixture.script (labelled, star hold).
+
+### Live room 190 frames in mazo
+
+A fixture holds star power and forced water physics from the first frame of room
+190. The mode then stays at 0x14 from t1 to t13, which is about 390 frames, and
+the room is 0x190 throughout.
+
+Frame t10, still mode 0x14, shows the same dark blue diagonal field as the earlier
+frame. The player is at the bottom centre.
+
+So that field is what mazo draws in room 190 while the player is alive, and not
+only in the death sequence.
+
+This does not agree with the reference frame of the boss battle, which shows a
+warm sky. Either the two frames come from different rooms, or the entry in this
+fixture is not the same scene.
+
+Fixture: recomp/inputs/mazo-190-hold-fixture.script (labelled, star and water hold).
