@@ -1502,3 +1502,28 @@ replace the map alone.
 The two maps hold different tile numbers, and the frames agree on every element
 except the lines. The next check compares one region at a time, starting with the
 lowest quarter.
+
+### The Mode 7 map differs
+
+Both frames hold a simple map, so the count of distinct tiles per row is close:
+3.1 for the product and 3.3 for mazo. The values differ.
+
+| Build | Most used tiles |
+| --- | --- |
+| product | 16, 0, 15, 31, 26 |
+| mazo | 16, 0, 9, 7, 5 |
+
+Rows 3 and 4 of the product map repeat 0 and 15 in a short cycle:
+
+    product row 3: 0 0 15 0 0 15 0 15 0 0 15 0 0 15 0 15
+
+The mazo rows carry a long run of different values:
+
+    mazo row 3: 0 3 9 5 7 12 12 12 0 4 9 7 12 11 11 11
+
+A short cycle of two tile numbers over a sky gives one line per cycle. A long run
+of decreasing numbers gives a smooth field.
+
+So the product map holds a stepped pattern where mazo holds a gradient. The next
+step is the source of that map in the level data, and why the two builds build a
+different map from equal level data.
