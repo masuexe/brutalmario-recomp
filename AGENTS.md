@@ -15,6 +15,18 @@
   compatibility and cartridge capacity are not product requirements. Prefer
   native content packs and explicit runtime adaptations when ROM limits block
   restoration; see `docs/native-content-expansion.md`.
+- SFC hardware limits are not product constraints. When the existing
+  architecture obstructs restoration, compatibility or performance, the user
+  authorizes changes to runtime code, resource loading and game code to use
+  PC capabilities, including external resources and native implementations.
+  Necessary adaptations within this scope do not require renewed permission.
+- Preserve the intended gameplay, level mechanics, physics, combat timing and
+  save semantics by default. Explain and verify any necessary behavior changes;
+  permission to exceed hardware limits does not authorize arbitrary gameplay
+  changes. Record the rationale, validation results and known limitations.
+- Prioritize content restoration and introduce native adaptations as actual
+  needs arise. Do not take detours solely to retain SFC or emulator compatibility,
+  or perform unrelated large rewrites solely to increase PC hardware usage.
 
 ## Preserve reproducibility
 
