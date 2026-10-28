@@ -980,6 +980,19 @@ accepted baseline. A promotion must use a new target, not an edit of the product
 The verified gain is the cloud layer and the boss faces in room `190`. The line
 pattern stays.
 
+The descendant target `demo11-native-product-r2` carries the two patches. Its ROM
+digest is `d7a36d90`. A capture of room `190` on that target shows the boss face,
+the cloud layer and the health bar. The same capture on the product shows a
+garbled boss.
+
+| Target | Boss face | Cloud layer |
+| --- | --- | --- |
+| `demo11-native-product` | garbled | absent |
+| `demo11-native-product-r2` | correct | present |
+
+Run the descendant with `python3 tools/play_native_target.py --target
+demo11-native-product-r2`.
+
 ## Correction: the VRAM patch does not persist
 
 Earlier this document said that a VRAM pack made the cloud layer appear. That
