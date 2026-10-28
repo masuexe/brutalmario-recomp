@@ -882,14 +882,14 @@ The room graphics records are also equal, and every slot is the default `FFFF`.
 So one Layer 3 image serves all three rooms. It is the Mode 7 background of room
 `190` and the illustration of room `191`.
 
-This gives one target for the next step: find the table that maps Layer 3 index
-`0x54` to its data, then compare the data of the two ROMs.
+This gives one target for the next step. Find the table that maps Layer 3
+index `0x54` to its data. Then compare the data of the two ROMs.
 
 A scan for a pointer table with 256 entries gives 13949 candidates. A plain
 valid pointer test does not isolate the table. The next check needs the loader
 code, not a data scan.
 
-## Layer 3 is enabled and its characters are absent
+## Layer 3 draws and its characters are absent
 
 Room `191` runs in mode `1` with `tm` `0x15`. That byte turns on BG1, BG3 and
 objects. `ts` `0x2` turns on BG3 for the sub screen, so layer 3 draws.
