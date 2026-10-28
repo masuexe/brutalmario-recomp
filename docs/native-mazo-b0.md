@@ -125,6 +125,45 @@ the mode is `20` in room `0x190`. The capture has no gameplay frame in room
 The room `184` entry matches room `183`. The capture is
 `local/captures/mazo-b0-room184-v1-native`.
 
+## Donor room override check
+
+The mazo image uses rooms `00D` and `10C` as short corridors to room `190`.
+The other demo images use both rooms as full levels. This is a mazo-only
+override, and a check must guard it.
+
+Room `10C` shows the difference in one table.
+
+| Image | L1 pointer | L1 bytes | Sprite list | Entries |
+| --- | --- | ---: | --- | ---: |
+| `demo7`, `cheap-demo`, `ow`, `7hero`, `boss` | `0x47E34F` | 509 | `0x47EAB5` | 40 |
+| `mazo` | `0x5C8222` | 5 | `0x5C8452` | 2 |
+| recipient | `0x47E34F` | 509 | `0x47EAB5` | 40 |
+
+The recipient L1 stream is byte-identical to the stream in `demo7`,
+`cheap-demo`, `ow`, `7hero` and `boss`. The mazo stream is a 5-byte stub with
+two custom `B0` actors.
+
+Do not compare a pointer value across two demo images. The same pointer value
+can hold different bytes, because each image is a different build.
+
+The check below holds on every built image.
+
+| Image | Room `00D` L1/sprite | Room `10C` L1/sprite |
+| --- | --- | --- |
+| recipient | `F19A62` / `F1A7CA` | `47E34F` / `47EAB5` |
+| `demo11-native-product` | `F19A62` / `F1A7CA` | `47E34F` / `47EAB5` |
+| `demo11-native-mazo-b0` | `F19A62` / `F1A7CA` | `47E34F` / `47EAB5` |
+| `demo11-native-mazo-9b` | `F19A62` / `F1A7CA` | `47E34F` / `47EAB5` |
+| `demo11-native-mazo-9c` | `F19A62` / `F1A7CA` | `47E34F` / `47EAB5` |
+
+Every image keeps the recipient level tables for rooms `00D` and `10C`. The
+corridor target puts the donor streams in free slots `183` and `184`. The
+policy line `"tables": "keep"` in `config/native-content/mazo-b0-corridor.json`
+enforces this.
+
+Rule: never copy a donor level table onto a room number that the recipient
+already fills. Move the donor room to a free slot instead.
+
 ## Entry qualification
 
 `tools/qualify_mazo_b0.py` checks the target identities, the graphics

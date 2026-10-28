@@ -133,5 +133,41 @@ class MazoModuleTests(unittest.TestCase):
             mazo.check_record(self.donor, recipe)
 
 
+    def test_donor_room_override_is_guarded(self):
+        from restore_star_world_1 import lorom
+        corridor = json.loads((ROOT / "config/native-content/mazo-b0-corridor.json").read_text())
+        mapping = {room["source_room"]: room for room in corridor["rooms"]}
+        # The recipient fills rooms 00D and 10C with real levels.  The donor
+        # streams must therefore move to free slots and keep the recipient tables.
+        for source, slot in (("00D", "183"), ("10C", "184")):
+            self.assertEqual(mapping[source]["target_slot"], slot)
+            self.assertEqual(mapping[source]["tables"], "keep")
+        # Rooms 191 and 192 are empty in the recipient, so a copy is safe.
+        for source in ("191", "192"):
+            self.assertEqual(mapping[source]["target_slot"], source)
+            self.assertEqual(mapping[source]["tables"], "copy")
+
+    def test_built_images_keep_the_recipient_room_10c(self):
+        import sys
+        from restore_star_world_1 import lorom
+        def room_tables(rom, room):
+            ptr = lorom(0x05E000 + room * 3)
+            low = int.from_bytes(rom[ptr:ptr + 2], "little")
+            bank = rom[ptr + 2]
+            sp = 0x05EC00 + room * 2
+            sp_low = int.from_bytes(rom[lorom(sp):lorom(sp) + 2], "little")
+            sp_bank = rom[lorom(0x0EF100) + room]
+            return (bank << 16) | low, (sp_bank << 16) | sp_low
+        base = (ROOT / "local/restoration/demo11-base/rom.sfc").read_bytes()
+        for room in (0x00D, 0x10C):
+            expected = room_tables(base, room)
+            for name in ("demo11-native-product", "demo11-native-mazo-b0",
+                         "demo11-native-mazo-9b", "demo11-native-mazo-9c"):
+                path = ROOT / "local/restoration" / name / "rom.sfc"
+                if not path.is_file():
+                    continue
+                self.assertEqual(room_tables(path.read_bytes(), room), expected,
+                                 name + " changed room " + format(room, "03X"))
+
 if __name__ == '__main__':
     unittest.main()
