@@ -1284,7 +1284,7 @@ is product `[0x6A]` against mazo `[0x30]`:
 `0x05F000` carries the tileset and the palette for foreground and background. A
 different value there gives a different palette for the same graphics.
 
-### The palette confirms it
+### The palette agrees
 
 Colour counts from the two frames:
 
@@ -1298,14 +1298,14 @@ mazo draws a dark blue night field. The product draws a warm sky with purple and
 orange. The two frames share no background colour.
 
 So the graphics are equal, the room data is equal, and the level header index is
-the only difference. The product is not missing content; it selects another
+the only difference. The product is not missing content. It selects another
 level.
 
 ### The repair
 
-The corridor rooms must run under the level whose translevel is `0x30`. A map
-node or an entry that sets translevel `0x30` and then walks the real room change
-is the correct repair.
+The corridor rooms must run under the level whose translevel is `0x30`. The
+correct change is a map node or an entry that sets translevel `0x30`, then a walk
+through the real room change.
 
 ## Port plan
 
