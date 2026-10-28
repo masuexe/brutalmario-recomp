@@ -1335,6 +1335,19 @@ frame of normal play in that room.
 The colour difference between the two frames is also explained: one frame is a
 death effect and the other is the level.
 
+### Zoom of the message window
+
+The window interior, magnified four times, shows a repeat of two or three small
+shapes on black. It holds no text glyphs.
+
+So the window draws with a small set of tiles, and those tiles carry level
+artwork. The character codes resolve to tiles that do not hold a font.
+
+That points to a wrong tile base or a wrong character map, not to a missing
+glyph.
+
+Image: `local/reports/screenshots/room191-messagebox-zoom.png`.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
