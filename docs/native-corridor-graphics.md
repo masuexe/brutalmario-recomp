@@ -1003,6 +1003,23 @@ uploads, near the end of the frame. The current hook cannot do the task.
 `g_ppu` is the same object as `g_snes->ppu` (`common_cpu_infra.c` line 1087), so
 the write target was correct. The frame position was not.
 
+## The Layer 3 map holds one tile
+
+The estimated map region `0xA000`-`0xC000` holds 4096 words with 31 distinct
+values. One word, `0x38FC`, fills 3911 of them. The next value fills 144.
+
+`0x38FC` gives priority `0`, palette `7` and tile `0xFC`. So the visible grid is a
+single repeated tile, and the map holds no picture.
+
+A picture map holds many tile indices across its area. This map does not, so the
+Layer 3 map is as absent as the characters.
+
+The strip of equal bytes does not match any RATS block in mazo after LZ2 decode
+(2305 blocks scanned).
+
+So the whole Layer 3 image is missing, not only the character data. The loader
+for index `0x54` does not run in this build.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
