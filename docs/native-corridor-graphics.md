@@ -54,18 +54,25 @@ this check. One read returned a transient wrong byte. Re-read the bytes after
 the rebuild before you trust a patch recipe.
 ## Selector test
 
-One header table byte differs for room `190`. The byte is at `$0EF300 + room`.
-The mazo image holds `02` and the recipient holds `00`.
+The first probe used a minimal pack set. Two different single byte patches
+gave the same frame. That made the probe invalid, because the missing packs
+rendered the frame blank.
 
-A probe target set the recipient byte to `02`. The render became full screen
-noise, which is worse than the stripes. So a single selector byte does not fix
-the room. The graphics data behind the selector is absent in the recipient.
+The second probe used the full product pack set. It set `$0EF300 + room` for
+room `190` from `00` to `02`, the mazo value.
 
-The probe config is `config/restorations/demo11-native-r190gfx.json`. The
-capture is `local/captures/r190gfx`.
+The frame was byte-identical to the unpatched product frame. So `$0EF300` does
+not select the background or the tile graphics of room `190`.
 
-Room `190` also shows the same corrupted render when it is entered through the
-corridor transition. So the fault is not a raw teleport fixture.
+The probe config is `config/restorations/demo11-native-r190fix.json`.
+
+The corridor transition enters room `190` and shows the same corrupted frame.
+So the fault is not a raw teleport fixture.
+
+Room `190` is the same room in mazo and in the recipient in header and in level
+data. So the difference is the graphics data itself. The recipient holds no
+mazo background, tile and palette data for this room.
+
 ## Fix plan
 
 1. Choose a free Map16 bank and a free ExGFX slot.
