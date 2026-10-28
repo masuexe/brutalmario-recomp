@@ -1,0 +1,40 @@
+# Mazo room 191 reference fixture: labelled room transfer.
+# No invulnerability, forced movement, imported saves or completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 600
+# room transfer to 0x191
+poke 94 80004001
+poke 19b8 91
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 60
+dump r191a
+wait 120
+dump r191b
+wait 120
+dump r191c
+press right 40
+wait 20
+dump r191d
+press right 40
+wait 20
+dump r191e
+quit

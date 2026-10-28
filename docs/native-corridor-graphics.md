@@ -250,15 +250,40 @@ missing (see [the sprite graphics gap](demo11-sprite-graphics-gap.md)).
 
 So the black box is a custom sprite that draws tiles this line does not hold.
 
+## Root cause: the GFX selection, not the data
+
+A pinned mazo reference capture gives a real baseline. The fixture is
+`recomp/inputs/mazo-190-mode14-fixture.script`. The captures are
+`local/captures/mazo-190-mode14` and `local/captures/mazo-191-donor`.
+
+The mazo frame shows the full boss room: castle backdrop, canyon, waterfall,
+grass and a Japanese message bubble.
+
+Compare the GFX files that each build loads in room `190`. The method searches
+the decoded stream of every GFX id in the room VRAM dump.
+
+| Build | Loaded GFX ids |
+| --- | --- |
+| mazo | `28` `29` `2A` `2B` `82` `83` `85` `E5` `E7` `E8` |
+| product | `28` `29` `2A` `2B` `0D` `22` |
+
+So the product loads a different 4bpp set. The product does not load `82`, `83`,
+`85`, `E5`, `E7` and `E8`.
+
+The level `0x30` header tables and the `0x14AD08` graphics record are identical
+in both builds. A translevel wait also does not change the result. So the
+product reads a different GFX set for the same selector.
+
+An earlier probe installed the mazo data for `82`, `83`, `85`, `E5`, `E7`, `E8`
+and pointed those slots at it. The frame did not change. The product never
+loads those ids, so the data alone is not sufficient.
+
 ## Next concrete action
 
-1. Locate the sprite tile graphics table and the mazo tile data for the corridor
-   custom ids (`A9`, `77`).
-2. Port the tile graphics with the code record.
-3. Capture rooms `190`, `191`, `192` with the full product pack and compare each
-   frame to the mazo donor frame.
-4. Run the unchanged-route regression and the full suite.
-
+1. Find the GFX set table that maps a level selector to a GFX file list. Compare
+   the mazo table with the product table for the selector that room `190` uses.
+2. Port the table entry and the GFX data together.
+3. Check rooms `191` and `192` the same way.
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

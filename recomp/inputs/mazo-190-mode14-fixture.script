@@ -1,0 +1,39 @@
+# Mazo room 190 at gameplay phase (mode 0x14) reference fixture.
+# Labelled room transfer; no invulnerability, forced movement or completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 600
+poke 94 80004001
+poke 19b8 90
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 60
+dump a0
+wait 120
+dump a1
+wait 240
+dump a2
+wait 240
+dump a3
+wait 240
+dump a4
+wait 480
+dump a5
+quit
