@@ -635,6 +635,19 @@ Conclusion: the game loads the Mode 7 data at level load, not at room entry.
 That is why a room copy changes no pixel and a level port is the operation that
 matters.
 
+## Mode and DMA results
+
+A probe sets `$0100` to `0x0E` after the room `190` entry, matching the mode that
+mazo holds. The frame changes to a different pattern of lines, so the mode alone
+does not supply the background.
+
+The DMA log gives no direct ROM source for the VRAM image. Every large transfer
+reads from work RAM (`7E:` and the `7F:` mirror). The only ROM sources are small
+blocks in bank `00`, payloads in bank `04`, and one 1792 byte block at `10:E20B`.
+
+So the game decodes the graphics into work RAM first. To reach the ROM stream the
+next step needs a work RAM write log, or a read of the level loader code.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
