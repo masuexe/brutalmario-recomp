@@ -1336,28 +1336,3 @@ The colour difference between the two frames is also explained: one frame is a
 death effect and the other is the level.
 
 ### Zoom of the message window## User clarification
-
-The user reports two points:
-
-1. The line `cannon render: this is a boss battle level` is an annotation from
-   Lunar Magic, not a game message.
-2. Apart from the garbage tiles, the frames show the correct sequence.
-
-So the scene, the objects, the sprites and the order of events are correct. The
-defect is limited to the tiles that carry garbage.
-
-That scope is narrower than a content port. A correct layout with wrong tile art
-points to the tile graphics a room selects, not to the room data.
-
-### What is still open
-
-The three rooms still show a repeating pattern where clean tiles should appear:
-
-- room `190`: the background area holds vertical lines,
-- rooms `191` and `192`: the message window holds a repeat of two or three shapes.
-
-The graphics selectors `$0D9A`, `$0D9B` and `$0D9D` are equal in both builds, so
-the loaded graphics files are the same. The next check is the tile base that each
-layer uses, and the tile numbers that the map holds.
-
-
