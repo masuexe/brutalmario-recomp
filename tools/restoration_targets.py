@@ -13,6 +13,18 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeSprite80SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Sprite 80',
     },
+    'demo11-native-sprite9c-probe': {
+        'binary': 'BrutalMarioDemo11NativeSprite9CProbeSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 9C Probe',
+    },
+    'demo11-native-sprite9c-a2-probe': {
+        'binary': 'BrutalMarioDemo11NativeSprite9CA2ProbeSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 9C A2 Probe',
+    },
+    'demo11-native-sprite9c-e0-probe': {
+        'binary': 'BrutalMarioDemo11NativeSprite9CE0ProbeSNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Sprite 9C E0 Probe',
+    },
     'demo11-native-product': {
         'binary': 'BrutalMarioDemo11NativeProductSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Product',
