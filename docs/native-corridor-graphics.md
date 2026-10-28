@@ -470,12 +470,23 @@ So the product paints vertical colour bands with palettes. Mazo keeps one
 palette and bakes the gradient into the tile graphics. The vertical bands are
 the vertical stripes in the capture.
 
-A probe on top of the `1E6` fix also swapped every differing base GFX
+A probe on top of the `1E6` candidate also swapped every differing base GFX
 (`00`, `01`, `02`, `10`, `28`, `2A`, `2B`) to the mazo streams. The stripes stayed.
 
 Probe target: `demo11-native-allgfx`.
 
 So the missing item is the Mode 7 tilemap itself, not the base GFX.
+
+### Mode 7 tilemap storage
+
+A search of the whole mazo ROM for 12-byte windows of the Mode 7 tilemap found
+no match, so the tilemap is compressed or generated at run time.
+
+A scan of all 1998 RATS blocks in the mazo ROM decoded each block and compared
+the result with the 16384 byte tilemap. No block matched.
+
+So the tilemap comes from another path. The next step is to read the level
+loader code and find the table it uses.
 
 ## Port plan
 
