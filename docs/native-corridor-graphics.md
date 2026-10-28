@@ -670,7 +670,7 @@ BM_DIAG_CPU_TRACE=1         -> -DSNESRECOMP_ENABLE_TRACE=ON
 tracked file in it changes, so a runtime change must go through the per-target
 runtime patch, which today covers `snes/cart.c` only.
 
-The snes9x reference core is built without
+The snes9x reference core does not include
 `patches/diagnostics/snes9x-boot-trace.patch`, so `BM_BOOT_TRACE` writes no file.
 
 ### Next actions
