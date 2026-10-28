@@ -161,7 +161,44 @@ The override needs the room number in work RAM before the loader decompresses
 the stream. Capture one load frame at mode `0F` or `13` and read `$10B`. If the
 room number is not set yet, latch the last seen room at the level header read.
 
-## Fix plan
+## Runtime pack overlay
+
+The corridor data is not in the product ROM image. It is a native pack at
+`CA8000`, mounted at runtime by `bm_content_load`. The loader copies the ROM and
+then writes each pack at its file offset. Every ROM read then goes through
+`bm_content_resolve`, which returns the pack byte for the mapped bank.
+
+So a static read of the product ROM at a corridor room gives the empty hole, not
+the level data. A static compare of room `191` and `192` level data is invalid.
+At runtime the room level pointers resolve through the pack, and the pack holds
+the mazo terrain at offset `55` (room `191`) and `176` (room `192`).
+
+Room `190` is not a corridor slot, so its level data is in the ROM image and
+equals the mazo level data.
+
+Result: all three rooms have the correct terrain at runtime. Only the graphics
+differ.
+
+## GFX swap probes
+
+Each probe used the full product pack set and a real capture.
+
+| Probe | Change | Room `190` frame |
+| --- | --- | --- |
+| Background set | swap GFX `28`, `2A`, `2B` to mazo | byte-identical |
+| Sprite set | swap GFX `00`, `01`, `02`, `10` to mazo | changed in one BG corner, FG still garbage |
+
+The background set swap changed no pixel. The sprite set swap changed only a
+corner. So a GFX swap alone is not sufficient for room `190`.
+
+The remaining cause is the Map16 tile set. The level tilemap gives Map16 tile
+numbers. Map16 gives the tiles and the palette for each number. The recipient
+and mazo hold different Map16 data for the same numbers. So the floor and the
+terrain show wrong tiles even when the GFX bytes match.
+
+Probe targets: `demo11-native-gfx28mazo`, `demo11-native-gfx4bpp`.
+
+## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
    GFX `01`, `28`, `2A` and `2B`.
