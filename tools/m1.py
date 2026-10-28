@@ -346,7 +346,14 @@ def main():
                         '      g_snes->ppu->vram[(a + k) & 0x7FFF] = w;\n'
                         '    }\n'
                         '  }\n'
-                        '  fclose(f); state = 1; }\n')
+                        '  fclose(f);\n'
+                        '  if (getenv("BM_VRAM_PATCH_M7")) {\n'
+                        '    g_snes->ppu->m7matrix[0] = 256;\n'
+                        '    g_snes->ppu->m7matrix[1] = 0;\n'
+                        '    g_snes->ppu->m7matrix[2] = 0;\n'
+                        '    g_snes->ppu->m7matrix[3] = 256;\n'
+                        '  }\n'
+                        '  state = 1; }\n')
                     text = text.replace('uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {',
                                         helper + 'uint8_t *cart_getRomPtr(Cart *cart, uint8_t bank, uint16_t adr) {')
                     text = text.replace('  if (bank == 0x7e || bank == 0x7f) return NULL;',

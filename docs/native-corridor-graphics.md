@@ -802,6 +802,22 @@ the content. Content porting cannot correct it.
 Next: compare the native Mode 7 line renderer with the hardware rule. The file is
 `runner/src/snes/ppu.c`, function `PpuDrawMode7HdLine` and the default path.
 
+### The matrix changes every frame
+
+The product holds `A` `42` and `D` `256` in room `190`. `A` `42` is a six times
+zoom on the horizontal axis.
+
+The loader now also sets `A` and `D` to `256` when it loads the pack. The frame
+does not change. The game writes the matrix again on the next frame, usually
+through HDMA.
+
+So an outside write cannot hold the matrix. A correction needs a change in the
+PPU register path, not a one-time write.
+
+A second point weakens the comparison with mazo. The mazo capture of room `190`
+sits in mode `0x0E`, a scene mode. The product sits in mode `0x14`, normal play.
+Two different scenes can show two different backgrounds.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for
