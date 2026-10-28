@@ -588,6 +588,30 @@ appear. A Mode 7 tilemap covers word addresses `0x0000` to `0x1FFF`.
 So the room transition does not write the Mode 7 tilemap. The visible pattern
 comes from data another scene left in that area.
 
+## Room-copy experiment
+
+A candidate copies the whole of mazo room `190` into a free room number `0x1A0`:
+
+- the Layer 1 stream (`00100040001f000100040000ff`),
+- the Layer 2 pointer `FFDE54`,
+- the sprite list `0008009BFF`,
+- the `0x14AD08` room record `0100FFFF...`,
+- the `0x0EF300` byte `02`.
+
+The candidate builds and enters room `0x1A0` at mode `0x14` with `bgmode` `7`.
+The frame is byte-identical to the room `190` frame.
+
+Table of the result:
+
+| Item | Value |
+| --- | --- |
+| target | `demo11-native-roomcopy` |
+| room reached | `0x1A0` |
+| frame hash | same as room `190` |
+
+So the room number, the room streams, the sprite list and the room record do
+not change the frame. The missing data is not room-scoped.
+
 ## Port plan
 
 1. Build one native content pack that holds the mazo compressed streams for

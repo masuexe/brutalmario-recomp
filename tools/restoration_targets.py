@@ -73,6 +73,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeAllgfxSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Allgfx',
     },
+    'demo11-native-roomcopy': {
+        'binary': 'BrutalMarioDemo11NativeRoomcopySNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Roomcopy',
+    },
     'demo11-native-product': {
         'binary': 'BrutalMarioDemo11NativeProductSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Product',
