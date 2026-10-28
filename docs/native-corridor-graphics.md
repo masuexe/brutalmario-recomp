@@ -436,8 +436,8 @@ Every product capture of room `190` reports `bgmode` = `7` in the PPU register
 dump. Mazo draws the same room with a horizon, clouds and perspective, which is
 the Mode 7 look.
 
-So the stripes are not a normal background tilemap. They are corrupted Mode 7
-data: the Mode 7 tilemap and character data in VRAM `0x0000` to `0x3FFF`.
+So the stripes are not a normal background tilemap. The Mode 7 data is wrong:
+the Mode 7 tilemap and character data in VRAM `0x0000` to `0x3FFF`.
 
 The VRAM region diffs support this. The largest differences sit in
 `0x0000` to `0x2000`, the Mode 7 tilemap and character area.
