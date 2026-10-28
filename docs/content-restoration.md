@@ -1281,3 +1281,13 @@ disappear. Both the Mode 7 map and character lanes match the live donor at
 handoff confused the map and character byte lanes. The user reports r2 is
 playable apart from its background. The Japanese message font in rooms 191/192
 and broader restoration remain open.
+
+
+### Room 191 invisible markers (2026-10-29)
+
+The user accepted the r3 background. The [room 191 marker adaptation](native-corridor-invisible.md)
+adds room-private transparent foreground and control-sprite patterns in r5,
+retaining actor logic and collision data. Five samples agree between native
+and interpreter graphics; room 190 retains five byte-identical dump files.
+The 313-test suite passes. The Japanese message font and broader restoration
+remain open.
