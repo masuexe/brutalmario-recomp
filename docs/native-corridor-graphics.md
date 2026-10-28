@@ -1415,3 +1415,17 @@ absent from a RATS block.
 A mazo capture of the message window with fresh graphics gives the correct VRAM
 image. The product frame and that image then show the font tiles directly. The
 open question is the route that reaches the window in mazo.
+
+### Room 190 needs real play
+
+A fixture holds star invincibility through room 190. The star timer reads 0x40,
+and the player still leaves normal play: the mode goes 0x14, then 0x0B, then 0x0D,
+then 0x0E.
+
+So the death is a fall, not damage, and star power does not stop it. A script that
+sends no input cannot stay alive in that room.
+
+The route to room 191 is therefore a real play route, and no fixture in this
+document reaches it.
+
+Fixture: recomp/inputs/mazo-190-invincible-fixture.script (labelled, star hold).

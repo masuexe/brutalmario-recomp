@@ -1,0 +1,53 @@
+# Mazo: enter room 190, hold star invincibility, wait for the auto transfer to 191.
+# Labelled fixture (invulnerability hold); menu presses only, no room pokes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+press y 30
+wait 240
+wait 120
+dump v0
+forcepoke 1490 40
+wait 120
+forcepoke 1490 40
+dump v1
+wait 120
+forcepoke 1490 40
+dump v2
+wait 120
+forcepoke 1490 40
+dump v3
+wait 120
+forcepoke 1490 40
+dump v4
+wait 120
+forcepoke 1490 40
+dump v5
+wait 120
+forcepoke 1490 40
+dump v6
+wait 120
+forcepoke 1490 40
+dump v7
+wait 120
+forcepoke 1490 40
+dump v8
+wait 120
+forcepoke 1490 40
+dump v9
+wait 120
+forcepoke 1490 40
+dump v10
+quit
