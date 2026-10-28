@@ -44,8 +44,36 @@ module. When the pack sits in `C9`, the read finds the original ROM bytes.
 
 This document records the evidence. It does not claim the cause is proven.
 
+## Fix applied
+
+Sprite 9B now mounts at bank `9E` and sprite 9C at bank `9F`. Both banks were
+free and do not touch the Seven pack in bank `A2`.
+
+| Sprite | Source | Old bank | New bank |
+| --- | --- | --- | --- |
+| 9B | `1EEFAE` | `C8` | `9E` |
+| 9C | `228000` | `C9` | `9F` |
+
+The product captures use the mazo fixtures.
+
+| Room | Sprite | Actors before | Actors after | Donor |
+| --- | --- | ---: | ---: | ---: |
+| `151` | 9C | 1 | 2, then 3 | 2, then 3 |
+| `190` | 9B | 1 | 3, then 5 | 3, then 5 |
+
+Both rooms return to the map or hold the settled parts. The run holds no `BRK`.
+The unchanged-route regression stays at 32 of 32.
+
+Room `151` capture: `local/captures/prod2-151`. Room `190` capture:
+`local/captures/prod2-190`.
+
+## Open item
+
+The exact bank rule is not yet known. Bank `9E` and bank `9F` work. Bank `C8`,
+bank `C9` and bank `E0` do not. Bank `A2` also works. Pick a bank in the range
+`9E` to `A2` for a future relocated module, and measure it.
 ## Next action
 
-1. Extend the module analysis to flag a long read to the source bank.
-2. Re-derive the 9B and 9C recipes from that report.
-3. Capture rooms `151` and `190` again and require the donor actor counts.
+1. Rebuild the sprite-full target from the new recipes, or retire it.
+2. Check whether other relocated modules in banks `C0` to `C9` show the same
+   lowered actor counts. If they do, move them to the `9E` to `A2` range.

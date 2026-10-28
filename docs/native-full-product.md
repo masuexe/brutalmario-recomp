@@ -55,7 +55,7 @@ The target is `demo11-native-product`. Its config is
 
 | Item | Value |
 | --- | --- |
-| ROM | `47eca999912fc8bbc8a702a5824f7038ac4f28fe82a732f5af8a7cf6e9a34ff8` |
+| ROM | `a1c9d7c8f09399b60193302e33bb1c8111ac0fe8e5b1cb5684fb6f277fddbf91` |
 | Binary | `BrutalMarioDemo11NativeProductSNESRecomp` |
 | Packs | 45 |
 | Type-1 records | 36 |
@@ -78,6 +78,8 @@ record and leaves that copy out.
 | Room `155` | 4 of 4 samples equal |
 | Room `0A5` | phase-exact at a 29-frame offset |
 | Corridor slot `184` | local `184` in mode `0x0F`, two `A9` actors, fades to `190` |
+| Room `151` (sprite 9C) | 2, then 3 actors, matches the donor |
+| Room `190` (sprite 9B) | 3, then 5 actors, matches the donor |
 | `BRK` count on the corridor entry | 0 |
 
 The tests are `tests/test_product_target.py` and pass 12/12. The full suite
@@ -133,6 +135,12 @@ loads in mode `0x0F` with two custom `A9` actors at `(272,48)` and
 `(32,64)`. The room then fades to room `190` in mode `0x14`. The run holds no
 `BRK`. The `A1` module reports 621 resolutions and the `CA` data pack reports
 598 resolutions.
+
+## Mazo 9B and 9C banks
+
+Sprite 9B mounts at bank `9E` and sprite 9C at bank `9F`. The older target used
+`C8` and `C9`, and both rooms created one actor. The new banks create the donor
+actor counts. See [the relocation check](native-mazo-9bc-relocation.md).
 
 ## Slot 80 fix in the product
 

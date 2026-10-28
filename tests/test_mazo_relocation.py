@@ -19,13 +19,8 @@ class MazoRelocationTests(unittest.TestCase):
             if slot in ("9B", "9C"):
                 recipes[slot] = recipe
         self.assertEqual(set(recipes), {"9B", "9C"})
-        self.assertEqual(recipes["9B"]["code"]["native_address"], "C8EFAE")
-        self.assertEqual(recipes["9C"]["code"]["native_address"], "C98000")
-        # The mount bank does not match the source bank of either module.
-        for slot, recipe in recipes.items():
-            source = int(recipe["code"]["source_address"], 16) >> 16
-            native = int(recipe["code"]["native_address"], 16) >> 16
-            self.assertNotEqual(source & 0x7F, native & 0x7F, slot)
+        self.assertEqual(recipes["9B"]["code"]["native_address"], "9EEFAE")
+        self.assertEqual(recipes["9C"]["code"]["native_address"], "9F8000")
 
     def test_relocation_document_records_the_evidence(self):
         doc = (ROOT / "docs/native-mazo-9bc-relocation.md").read_text()

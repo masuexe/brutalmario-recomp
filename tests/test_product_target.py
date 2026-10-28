@@ -34,7 +34,7 @@ class ProductTargetTests(unittest.TestCase):
         self.assertIn(0xA6, banks)
         self.assertIn(0xA5, banks)
         self.assertIn(0xB6, banks)
-        for bank in (0xCB, 0xCC, 0xCD, 0xA0, 0xA1, 0xCA):
+        for bank in (0xCB, 0xCC, 0xCD, 0xA0, 0xA1, 0xCA, 0x9E, 0x9F):
             self.assertIn(bank, banks)
 
     def test_mazo_corridor_is_relocated(self):
@@ -72,6 +72,12 @@ class ProductTargetTests(unittest.TestCase):
                 low = int.from_bytes(rom[ptr:ptr + 2], "little")
                 return (rom[ptr + 2] << 16) | low
             self.assertEqual(tables(self.rom), tables(base), format(room, "03X"))
+
+    def test_mazo_9b_9c_banks_and_records(self):
+        self.assertEqual(self.rom[0x188272 + 0x9B * 16:0x188272 + 0x9B * 16 + 16],
+                         bytes.fromhex("012800003fa39944bdef9eefef9e0000"))
+        self.assertEqual(self.rom[0x188272 + 0x9C * 16:0x188272 + 0x9C * 16 + 16],
+                         bytes.fromhex("0122008035a399440f809f40809f0000"))
 
     def test_slot_80_record_is_installed(self):
         record = bytes.fromhex("012800003f039944e9a8a000aaa00000")

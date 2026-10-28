@@ -1,0 +1,18 @@
+{
+  "schema": 1,
+  "id": "demo11-native-sprite9c-9f-probe",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "native_sprite_gap": {
+    "manifests": [
+      "config/native-content/sprite9c-9f-module.json"
+    ]
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "0855c536b1163dda5b7647c534660d9bc785b0b932e442193b0860b220bc8b10"
+  }
+}

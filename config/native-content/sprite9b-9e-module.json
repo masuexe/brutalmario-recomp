@@ -1,0 +1,68 @@
+{
+  "schema": 1,
+  "id": "sprite9b-9e-module",
+  "scope": "Static module review for the mazo type-1 sprite 9B program. The recipe pins the donor record and the protected block.",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "9B",
+    "raw": "012800003fa39944bdef1eefef1e0000",
+    "init": "1EEFBD",
+    "main": "1EEFEF",
+    "relative": {
+      "init": "0F",
+      "main": "41"
+    },
+    "rooms": [
+      "190"
+    ],
+    "native_raw": "012800003fa39944bdef9eefef9e0000"
+  },
+  "code": {
+    "source_address": "1EEFAE",
+    "native_address": "9EEFAE",
+    "size": 3399,
+    "sha256": "1668041b55de0a639ebc37d7742b0a378d22d005a1e6eecadccb95278d4b61af",
+    "adapted_sha256": "1668041b55de0a639ebc37d7742b0a378d22d005a1e6eecadccb95278d4b61af",
+    "pack_file": "sprite9b-code.bin"
+  },
+  "entry_seeds": [
+    "1EEFBD",
+    "1EEFEF"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F606",
+    "01801A",
+    "018022",
+    "0187A7",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "0FF780",
+    "27DD40",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the C8 code view",
+    "sprite graphics review",
+    "entry qualification against the mazo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608738,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "012800003fa39944bdef9eefef9e0000",
+      "role": "Install the sprite 9B record and point init/main into the C8 module view"
+    }
+  ]
+}
