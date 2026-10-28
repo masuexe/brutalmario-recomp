@@ -67,6 +67,17 @@ The unchanged-route regression stays at 32 of 32.
 Room `151` capture: `local/captures/prod2-151`. Room `190` capture:
 `local/captures/prod2-190`.
 
+## Frame-level check on the product
+
+The product captures compare to the standalone target captures, which the
+module documents already compare to the donor.
+
+| Room | Frames compared | Frames equal | Fields compared |
+| --- | ---: | ---: | --- |
+| `151` | 19 | 19 | mode, slot, sprite, custom id, x, y |
+| `190` | 19 | 19 | mode, slot, sprite, custom id, x, y |
+
+So the product rooms now equal the donor actor set, not only the actor count.
 ## Open item
 
 The exact bank rule is not yet known. Bank `9E` and bank `9F` work. Bank `C8`,
