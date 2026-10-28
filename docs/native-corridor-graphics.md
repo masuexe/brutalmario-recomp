@@ -222,8 +222,8 @@ A walk capture of room `191` shows a black rectangle with a white grid in the
 upper left. The rectangle stays at one screen position. The user reported this
 as garbage tiles and crystal-ball text.
 
-The rectangle is not terrain. A terrain fault would move with the camera. A
-fixed overlay uses Layer 3 or a message sprite.
+The rectangle is not terrain. A terrain fault would move with the camera. An overlay at one screen position
+uses Layer 3 or a message sprite.
 
 The room `191` sprite list holds custom ids `A9` and `77`. The corridor remapped
 the mazo id `B0` to the product slot `A9`. The product record for `A9` points to
@@ -232,6 +232,32 @@ code at `A1:8998`, inside the mazo module, so the sprite code is present.
 Custom sprite and room ids are version-local. A copied id can name a different
 resource in the recipient. The graphics of the message element are the open
 item.
+
+### Sprite placement evidence
+
+The room `191` work RAM holds one live custom sprite in slot `7`:
+
+| Field | Value |
+| --- | --- |
+| status `$14DC` | `08` |
+| sprite number | `40` |
+| custom id `$1AB9E` | `A9` |
+
+The corridor plan remapped the mazo id `B0` to the product slot `A9`. The
+record code is present at `A1:8998`. The project already records the open item:
+sprite code alone is not sufficient, because sprite tile graphics are also
+missing (see [the sprite graphics gap](demo11-sprite-graphics-gap.md)).
+
+So the black box is a custom sprite that draws tiles this line does not hold.
+
+## Next concrete action
+
+1. Locate the sprite tile graphics table and the mazo tile data for the corridor
+   custom ids (`A9`, `77`).
+2. Port the tile graphics with the code record.
+3. Capture rooms `190`, `191`, `192` with the full product pack and compare each
+   frame to the mazo donor frame.
+4. Run the unchanged-route regression and the full suite.
 
 ## Port plan
 
