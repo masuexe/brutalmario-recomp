@@ -40,5 +40,23 @@ class CompletionCheatTests(unittest.TestCase):
         self.assertIn("mode `$14`", doc)
 
 
+    def test_special_zone_script_uses_the_lower_inner_warp(self):
+        text = (ROOT / "recomp/inputs/cheat-special-zone.script").read_text()
+        self.assertIn("poke 1f17 7801c8017801c801", text)
+        self.assertIn("until 1f11 == 03 900", text)
+        self.assertNotIn("quit", text)
+
+    def test_launcher_offers_special_zone(self):
+        text = (ROOT / "tools/play_native_target.py").read_text()
+        self.assertIn("--special-zone", text)
+        self.assertIn("cheat-special-zone.script", text)
+
+    def test_document_explains_center_versus_warp(self):
+        doc = DOC.read_text()
+        self.assertIn("## Warp into the Special Zone", doc)
+        self.assertIn("$0178/$01A8", doc)
+        self.assertIn("$0178/$01C8", doc)
+        self.assertIn("--special-zone", doc)
+
 if __name__ == "__main__":
     unittest.main()

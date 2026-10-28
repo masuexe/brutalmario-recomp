@@ -54,6 +54,9 @@ def main():
     parser.add_argument('--complete-all', action='store_true',
                         help='open every saved level slot, overworld event and '
                              'switch before the player takes control')
+    parser.add_argument('--special-zone', action='store_true',
+                        help='apply the completion flags and warp straight to the '
+                             'Special Zone map')
     parser.add_argument('--play-dir', type=Path,
                         help='session directory for saves; default local/play/<target>')
     args = parser.parse_args()
@@ -73,16 +76,18 @@ def main():
     if receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest():
         raise SystemExit('binary differs from the build receipt; rebuild first')
 
-    if args.complete_all and args.script:
-        raise SystemExit('choose --complete-all or --script, not both')
+    if sum((args.complete_all, args.special_zone, bool(args.script))) > 1:
+        raise SystemExit('choose one of --complete-all, --special-zone or --script')
     script = args.script
     if args.complete_all:
         script = ROOT / 'recomp/inputs/cheat-complete-all.script'
+    if args.special_zone:
+        script = ROOT / 'recomp/inputs/cheat-special-zone.script'
 
     play_dir = (args.play_dir or ROOT / 'local/play' / args.target).resolve()
     saves = play_dir / 'saves'
     saves.mkdir(parents=True, exist_ok=True)
-    if args.complete_all:
+    if args.complete_all or args.special_zone:
         current = saves / 'save.srm'
         if current.is_file():
             aside = saves / 'save.srm.before-cheat'

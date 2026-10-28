@@ -1,0 +1,25 @@
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+until 0100 == 0e 900
+poke 0109 00
+poke 1f11 0606
+poke 1f17 7801c8017801c801
+poke 1f1f 17001c0017001c00
+poke 0100 0b
+wait 300
+dump center_stand
+press a 2
+wait 30
+dump t30
+wait 90
+dump t120
+wait 180
+dump t300
+quit

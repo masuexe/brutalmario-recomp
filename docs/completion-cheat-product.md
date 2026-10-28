@@ -81,10 +81,42 @@ flags. The images are `local/captures/cheat-baseline/plain_map.png` and
 A second script enters the level below the player. The game reaches mode `$14`
 with three actors, so level entry still works after the cheat.
 
+## Warp into the Special Zone
+
+The Star World map holds two different things near the middle.
+
+| Cell | Map position | Behaviour |
+| --- | --- | --- |
+| Center big star | `$0178/$01A8` | Enters the unfinished Giant Starman boss course `$00A` |
+| Lower-inner node | `$0178/$01C8` | A cleared node becomes a warp star to the Special Zone |
+
+With the completion flags set, the lower-inner node shows a warp star. Press A
+on it and Mario flies up. The game then loads the Special Zone map, which is
+map `3`.
+
+Run this command to reach the Special Zone with control.
+
+```sh
+python3 tools/play_native_target.py --special-zone
+```
+
+The launcher applies the completion flags, moves the player to the lower-inner
+node, presses A and waits for map `3`. The script then stops, so the player
+keeps control on the Special Zone map.
+
+## Why the warp can stop working
+
+The startup input script assumes a new save file. If a save file exists at
+start, the boot flow differs, the script does not reach the overworld and the
+completion flags never apply. The lower-inner node then stays a normal course.
+
+The launcher now moves any save file aside in both cheat modes. Each cheat run
+therefore starts from a new save and applies the flags.
+
 ## Tests
 
-The tests are `tests/test_completion_cheat.py` and pass 4/4. The full suite
-passes 284/284 tests. The log is `local/reports/unit-tests-cheat.log`.
+The tests are `tests/test_completion_cheat.py` and pass 7/7. The full suite
+passes 289/289 tests. The log is `local/reports/unit-tests-specialzone.log`.
 
 ## Limits
 
