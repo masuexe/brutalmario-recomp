@@ -61,6 +61,12 @@ translevel `094` (level `170`). The base ROMs load the same level. The
 
 ## Course coverage by world
 
+The subsequent [Forest identity checkpoint](forest-course-identity.md) corrects
+the World 2 inventory to ten actual nodes and adds the assisted Fishing Spree
+normal goal/save/reload plus the linked bridge clear and onward shack entry.
+This supersedes the old World 2 row below; the other eight Forest clears and
+complete-game acceptance remain open.
+
 **2026-10-29 qualification:** World membership and course labels in
 `config/world-map.json` are provisional. Native r13 visuals contradict the
 bridge/fire labels for rooms `121`/`126`; the community directory uses different

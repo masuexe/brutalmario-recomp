@@ -1,0 +1,28 @@
+# Course identity: map-coordinate fixture to existing node for room 113.
+# No node assignment, completion, exit, sprite, event or save edits.
+# Clean-session input route shared by reference and native hosts.
+# No WRAM pokes or imported savestates. All waits are guest-frame counts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 e800a801e800a801
+poke 1f1f 0e001a000e001a00
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+wait 120
+dump later
+quit

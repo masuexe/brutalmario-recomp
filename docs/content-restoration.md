@@ -1354,3 +1354,16 @@ position and pipe-action fixtures, not traversal, clear or save acceptance.
 The course labels in the local world catalog conflict with the community
 version-specific directory; matching recipient content to course identities
 is the next prerequisite for gimmick-specific route work.
+
+
+## Corrected Forest catalog and two linked saved exits (2026-10-29)
+
+The [Forest identity checkpoint](forest-course-identity.md) corrects the ten
+World 2 courses using version-specific names, existing native map nodes and
+pinned official-source name/sprite/layout fingerprints. All ten enter their
+actual rooms. The first course, room113 Fishing Spree, now has an assisted
+real goal-tape clear, natural onward map movement to the bridge node, both
+SRAM copies, console-reset File A reload and cleared-course re-entry. No
+completion flags or saves are written by the fixture. Full traversal, secret
+exit, Dragon Coins and the other eight course clears remain open. The catalog
+correction changes no game data or behavior.

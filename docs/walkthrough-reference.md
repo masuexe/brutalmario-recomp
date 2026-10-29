@@ -3,10 +3,11 @@
 This reference document compiles community walkthrough resources and course route
 mechanics for use by automated testing agents and restoration contributors.
 
-**2026-10-29 correction:** The stage cross-reference below is provisional.
+**2026-10-29 correction:** The stage cross-reference below is provisional except for the corrected
+World 2 identities linked below.
 Its room IDs have not been matched consistently to the recipient version.
 Fresh product-r13 captures show switch-palace graphics in room `121` and baby
-Yoshis in room `126`, rather than the bridge and fire courses named below.
+Yoshis in room `126`, contradicting the earlier bridge/fire labels.
 The community map directory also lists different IDs across its official-demo
 sections. Do not use this table or `config/world-map.json` alone to select a
 course walkthrough, infer missing mechanics, or count world acceptance. Match
@@ -94,17 +95,23 @@ secret exits.
 
 ### World 2: Forest (森林)
 
-| Map / Room | Japanese Wiki Name (`wikiwiki`) | English Fandom Name | Type / Notes |
+Corrected on 2026-10-29 against the version-specific community name table,
+actual r13 main-map nodes, 19-byte name records and official sprite lists.
+See [the identity and route report](forest-course-identity.md). These identities
+qualify node entry; they do not imply a complete course pass.
+
+| Room | Japanese Name (Demo 1-1 family) | English Alias | Role |
 | :---: | :--- | :--- | :--- |
-| `$00F` | 釣りまくり * | Fishing Spree * | Secret exit available |
-| `$124` | お水の世界 | World of Water | Hidden map |
-| `$121` | この橋渡るべからず | Thou Shalt Not Cross This Bridge | Bridge hazard stage |
-| `$122` | 僻地のボロ屋 | A Remote Shack | Cabin / house stage |
-| `$123` | ウロの中はカビはだらけ | It's Moldy Within The Hollow | Tree hollow stage |
-| `$125` | お化けの森 * | Ghost Forest * | Secret exit available |
-| `$126` | 放火魔マリオ * | Mario the Pyromaniac * | Hidden map; fire mechanics |
-| `$06F` | ニートのモートン | Morton the NEET | Morton Boss (Go! Go! Kids! BGM) |
-| `$00D` | 姉歯物件 | Aneha Estate | Scrapped / hidden map |
+| `$113` | つりまくり | Fishing Spree | First course; normal clear/save/reload checked with assistance |
+| `$111` | このはしわたるべからず | Thou Shalt Not Cross This Bridge | Donut-block bridge; assisted normal exit/save/reload checked |
+| `$015` | へきちのボロや | A Remote Shack | On/Off ghost house |
+| `$123` | まよいのもり | Lost Forest | Replaces the earlier scrapped forest course |
+| `$11F` | ウロのなかはカビだらけ | It's Moldy Within the Hollow | Tree hollow |
+| `$114` | おばけのもり | Ghost Forest | Branching course |
+| `$11C` | ニートのモートン | Morton the NEET | Castle entrance; not internal boss room `$06F` |
+| `$11B` | おミズのせかい | World of Water | Hidden branch |
+| `$11E` | ほうかまマリオ | Mario the Pyromaniac | Hidden branch |
+| `$129` | のろいのやかた | The Cursed Mansion | Replaces the earlier Aneha Estate |
 
 ### World 3: Bay (入江)
 

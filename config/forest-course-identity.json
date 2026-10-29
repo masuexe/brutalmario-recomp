@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "target": "demo11-native-product-r13",
+  "rom_sha256": "c02dc11e0c79c804740b38797463a1fc9645a8a05cdb4e18c7c09fff45760681",
+  "scope": "Forest course identities: version-specific community names, actual map nodes, official-source fingerprints and native entry. No complete route claim.",
+  "sources": [
+    "https://wikiwiki.jp/kitikumario/ステージ名一覧",
+    "https://wikiwiki.jp/kitikumario/マップ攻略",
+    "https://brutalmario.fandom.com/wiki/Forest"
+  ],
+  "donors": [
+    "demo-1-1",
+    "demo-only-1",
+    "7hero",
+    "cheap-demo"
+  ],
+  "courses": [
+    {
+      "room": "113",
+      "translevel": "37",
+      "japanese_name": "つりまくり",
+      "name": "Fishing Spree",
+      "role": "normal",
+      "map": 0,
+      "map_index": "2AE",
+      "x": "00E8",
+      "y": "01A8",
+      "name_tiles": "11371e07371f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "84c14be35c446aef394d8382a312e89569456d1a7bab378749f87490578ee713"
+      },
+      "sprite_list": {
+        "size": 68,
+        "sha256": "30ab4b99a2f330e6b953f479025750046e59c7e7bfe1200c78587d51305b3bac"
+      }
+    },
+    {
+      "room": "111",
+      "translevel": "35",
+      "japanese_name": "このはしわたるべからず",
+      "name": "Thou Shalt Not Cross This Bridge",
+      "role": "normal",
+      "map": 0,
+      "map_index": "3A2",
+      "x": "0128",
+      "y": "01A8",
+      "name_tiles": "0918190b410f381c7905360c791f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "0e97657b7660f478980702524b50d07aa9206fd8dfa1067cce1477115d80f4bc"
+      },
+      "sprite_list": {
+        "size": 53,
+        "sha256": "2be1b088cb821dd134f3a948c737c1996ab775a2139904a91dea75bdf04b2dce"
+      }
+    },
+    {
+      "room": "015",
+      "translevel": "15",
+      "japanese_name": "へきちのボロや",
+      "name": "A Remote Shack",
+      "role": "normal",
+      "map": 0,
+      "map_index": "3A6",
+      "x": "0168",
+      "y": "01A8",
+      "name_tiles": "1c0610185a79623b1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "56eaa1bc78be7adfe4642e9050c6ba9081e4f4dd3c16f94a2edef6b52ead0d66"
+      },
+      "sprite_list": {
+        "size": 5,
+        "sha256": "c52cdc59d984930843213c309ff98d4819ae5926b1066f6e557cb00a06f55499"
+      }
+    },
+    {
+      "room": "123",
+      "translevel": "47",
+      "japanese_name": "まよいのもり",
+      "name": "Lost Forest",
+      "role": "normal",
+      "map": 0,
+      "map_index": "378",
+      "x": "0188",
+      "y": "0178",
+      "name_tiles": "1e40011835371f1f1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "3ad3a9870a636d28226d37b7dd9ce53a5ec339ca29a70a304968ee28d58a8c38"
+      },
+      "sprite_list": {
+        "size": 20,
+        "sha256": "81a73bf07f48916aa6a489fed4dffd1b675a951358015aa9a263b95c1ac81619"
+      }
+    },
+    {
+      "room": "11F",
+      "translevel": "43",
+      "japanese_name": "ウロのなかはカビだらけ",
+      "name": "It’s Moldy Within the Hollow",
+      "role": "normal",
+      "map": 0,
+      "map_index": "35B",
+      "x": "01B8",
+      "y": "0158",
+      "name_tiles": "3062181405194759790f7936081f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "432f260708c9d4cc453ac700bfb0a272a9264a900aed7e366f073b39aa966ac3"
+      },
+      "sprite_list": {
+        "size": 11,
+        "sha256": "c50e105c10ee3e7a43bb070e197fe6fb5310b857abac6592b0b4ef8860bb54a5"
+      }
+    },
+    {
+      "room": "114",
+      "translevel": "38",
+      "japanese_name": "おばけのもり",
+      "name": "Ghost Forest",
+      "role": "normal",
+      "map": 0,
+      "map_index": "38E",
+      "x": "01E8",
+      "y": "0188",
+      "name_tiles": "041979081835371f1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "63dfc90c897a47c98c010aa14ef548fe6796ca43e7d2e146a23756f7cf1d7cdd"
+      },
+      "sprite_list": {
+        "size": 122,
+        "sha256": "226218f999e3581da25e562e250100e734f97d01002a2aa9ec9c6e92be036164"
+      }
+    },
+    {
+      "room": "11C",
+      "translevel": "40",
+      "japanese_name": "ニートのモートン",
+      "name": "Morton the NEET",
+      "role": "castle",
+      "map": 0,
+      "map_index": "3BE",
+      "x": "01E8",
+      "y": "01B8",
+      "name_tiles": "56a75418d4a754ff1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "71dc8a5e11e0398e23b8c2081e4ab5e766ef8e4f9e96b30259107734400d2dd5"
+      },
+      "sprite_list": {
+        "size": 32,
+        "sha256": "5518392b6f2863fb40b4c1510407e487628809c1b9da516289478cd3278cabdb"
+      }
+    },
+    {
+      "room": "11B",
+      "translevel": "3F",
+      "japanese_name": "おミズのせかい",
+      "name": "World of Water",
+      "role": "hidden",
+      "map": 0,
+      "map_index": "2DE",
+      "x": "00E8",
+      "y": "01D8",
+      "name_tiles": "049d4d79180d05011f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "7c8bb92bc5296830b8f11bfabc8c16730fc7b83232593028330a869ab8d8268c"
+      },
+      "sprite_list": {
+        "size": 38,
+        "sha256": "f6ed0a01bc2d7305f60f556b10c123d24bf544e2ce779de62bf8aaaf194ac6b6"
+      }
+    },
+    {
+      "room": "11E",
+      "translevel": "42",
+      "japanese_name": "ほうかまマリオ",
+      "name": "Mario the Pyromaniac",
+      "role": "hidden",
+      "map": 0,
+      "map_index": "38B",
+      "x": "01B8",
+      "y": "0188",
+      "name_tiles": "1d02051e5b5e461f1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "bc5fcc21d36eeeb3d788d2b56accf323299233ea63ca962d88809ca437a983b4"
+      },
+      "sprite_list": {
+        "size": 59,
+        "sha256": "ab9f9a50761a5968f0c3c67924280a8620a32ea95202a6c98de8aa6e900fdd76"
+      }
+    },
+    {
+      "room": "129",
+      "translevel": "4D",
+      "japanese_name": "のろいのやかた",
+      "name": "The Cursed Mansion",
+      "role": "hidden",
+      "map": 0,
+      "map_index": "3BB",
+      "x": "01B8",
+      "y": "01B8",
+      "name_tiles": "183a01183b050f1f1f1f1f1f1f1f1f1f1f1f1f",
+      "layout_window": {
+        "size": 256,
+        "sha256": "a1b333bec00a01197a40718812166af7555e5b2fdb51f1fbbddc0e379d54bcc7"
+      },
+      "sprite_list": {
+        "size": 17,
+        "sha256": "ab6744e96ddb28a9df6333869c22d1b6d14ec0b2a884e3909c60ca1e3d3a05fa"
+      }
+    }
+  ]
+}

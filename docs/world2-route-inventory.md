@@ -5,6 +5,12 @@ ROM SHA-256 `c02dc11e0c79c804740b38797463a1fc9645a8a05cdb4e18c7c09fff45760681`.
 
 ## Result
 
+**Superseded course catalog:** [The Forest identity checkpoint](forest-course-identity.md)
+now establishes the actual ten Forest nodes and corrects `config/world-map.json`.
+The earlier table below remains a historical list of parsed rooms; its course
+labels must not be used for route design. Its seven checked room transitions
+remain valid.
+
 This note records parsed exits for rooms assigned to World 2 by the local
 catalog. Course names and world assignments are provisional until matched to
 the recipient content. This note does not qualify a complete route.

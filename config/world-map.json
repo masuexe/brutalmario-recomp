@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "docs/walkthrough-reference.md stage table (2026-10-26)",
-  "note": "Provisional catalog, not a verified recipient world map. Course names and room IDs in the source table require version-specific matching before route design or acceptance counts. On product r13 room 121 visibly uses switch-palace graphics, and room 126 shows baby Yoshis, contrary to their Forest course labels. See docs/world2-route-inventory.md. Boss rooms 06E-072 are historical catalog labels, not verified per-world boss assignments.",
+  "note": "Forest (world2) is corrected and verified for product-r13 node identities. Other world lists remain provisional and require version-specific matching before route design or acceptance counts. This is a testing catalog, not a runtime map recipe. See docs/forest-course-identity.md.",
   "worlds": {
     "world1": {
       "name": "Grassland",
@@ -19,16 +19,18 @@
     "world2": {
       "name": "Forest",
       "rooms": [
-        "00F",
-        "124",
-        "121",
-        "122",
+        "113",
+        "111",
+        "015",
         "123",
-        "125",
-        "126",
-        "06F",
-        "00D"
-      ]
+        "11F",
+        "114",
+        "11C",
+        "11B",
+        "11E",
+        "129"
+      ],
+      "verification": "Product r13: ten original main-map nodes and room entries verified by config/forest-course-identity.json and tools/qualify_forest_course_identity.py. No whole-world clear claim."
     },
     "world3": {
       "name": "Bay",
