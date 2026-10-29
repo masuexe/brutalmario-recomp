@@ -88,6 +88,12 @@ class CheatScriptTests(unittest.TestCase):
         self.assertIn("wait 600", text)
         self.assertNotIn("until16", text)
 
+    def test_fast_entry_with_existing_save_skips_intro_wait(self):
+        text = cheats.build_script(room=0x190, fast=True, existing_save=True)
+        self.assertIn("until 0100 == 0e 3000", text)
+        self.assertNotIn("wait 780", text)
+        self.assertIn("until16 10b == 190", text)
+
 
 if __name__ == "__main__":
     unittest.main()

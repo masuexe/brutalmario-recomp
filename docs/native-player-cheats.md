@@ -84,7 +84,10 @@ level and gameplay are the same.
 - --legacy-entry keeps the original fixed-wait startup.
 - --fast forces the fast path (already the default for --room).
 
-The fast startup polls these states: title mode 0x07, file select 0x08, intro
-level mode 0x14, then overworld mode 0x0E. It then polls each level load and
+The fast startup polls title mode 0x07 and file select 0x08. With no save file it
+waits for the intro level mode 0x14, waits 780 frames, presses B to skip it, then
+polls overworld mode 0x0E. With an existing save file the game loads straight to
+the overworld, so it polls 0x0E directly. The tool picks the variant from whether
+saves/save.srm exists. It then polls each level load and
 waits for the requested room number in $10B/$10C. A missing expected state exits
 with code 3 after the per-step timeout, so a mismatch does not hang.

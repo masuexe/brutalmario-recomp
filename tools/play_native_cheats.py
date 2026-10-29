@@ -42,6 +42,15 @@ press b 30
 until 0100 == 0e 2400
 '''
 
+# Existing-save startup: a saved file loads straight to the overworld (no intro).
+FAST_STARTUP_SAVED = '''turbo on
+until 0100 == 07 4000
+press start 2
+until 0100 == 08 900
+press start 2
+until 0100 == 0e 3000
+'''
+
 # Completion writes, copied from the accepted all-levels cheat.
 COMPLETION = '''poke 1ea2 9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f
 poke 1f02 ffffffffffffffffffffffffffffff
@@ -119,8 +128,12 @@ def fast_room_teleport(room):
 
 
 def build_script(*, map_pos=None, room=None, air_swim=False, invincible=False,
-                 complete_all=False, lives=None, fast=False):
-    lines = [FAST_STARTUP if (fast and room is not None) else STARTUP]
+                 complete_all=False, lives=None, fast=False, existing_save=False):
+    if fast and room is not None:
+        startup = FAST_STARTUP_SAVED if existing_save else FAST_STARTUP
+    else:
+        startup = STARTUP
+    lines = [startup]
     if lives is not None:
         lines.append('\n# Practice only: set the life counter.\npoke 0dbe %02x\n' % lives)
     if complete_all:
@@ -241,10 +254,13 @@ def main():
     fast = room is not None and not args.legacy_entry
     if args.fast:
         fast = True
+    play_dir = (args.play_dir or ROOT / 'local/play' / args.target).resolve()
+    save_exists = (play_dir / 'saves' / 'save.srm').is_file()
     script_text = build_script(map_pos=map_pos, room=room,
                                air_swim=args.air_swim,
                                invincible=args.invincible,
-                               complete_all=args.complete_all, lives=lives, fast=fast)
+                               complete_all=args.complete_all, lives=lives, fast=fast,
+                               existing_save=save_exists)
     if args.emit:
         args.emit.write_text(script_text)
         print('wrote', args.emit)
@@ -266,7 +282,6 @@ def main():
     if receipt['binary_sha256'] != hashlib.sha256(binary.read_bytes()).hexdigest():
         raise SystemExit('binary differs from the build receipt; rebuild first')
 
-    play_dir = (args.play_dir or ROOT / 'local/play' / target).resolve()
     saves = play_dir / 'saves'
     saves.mkdir(parents=True, exist_ok=True)
     if args.complete_all:
