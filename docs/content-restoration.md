@@ -1319,3 +1319,16 @@ Seven line has no earned victory and no saved completion. The mazo attack and
 clear have no qualification. The audit also lists the open sprite, music and
 graphics items and the claims that the record does not support. The unit suite
 passes 339 tests.
+
+## Product-line load survey (2026-10-29)
+
+The [product survey](demo11-product-survey.md) runs the full-range course probe
+on the native product target `demo11-native-product-r12`. All 255 translevels
+load, 227 entries are playable and no Mario Start stall remains. Eight entries
+differ from the reference survey only in death or return timing.
+
+One entry crashes: translevel `094` (level `170`). The demo11 base ROMs load
+the same level normally. The product carries the type-3 record `C2`, and the
+[level sprite batch](demo11-level-sprites.md) already recorded this failure for
+that record. The product needs a descendant without `C2`, or the type-3
+constructor work, before a release candidate.

@@ -51,8 +51,13 @@ survey classifies them as load observations, not defects.
 
 The survey count of playable entries changes with each chain end, because
 restored sprites start to act. The last recorded counts are 207 playable
-entries on `demo11-fix-batch-p` and 231 on `demo11-gfx-boss76`. No survey
-ran on the current product target.
+entries on `demo11-fix-batch-p` and 231 on `demo11-gfx-boss76`.
+
+The [product survey](demo11-product-survey.md) now covers the current target.
+It runs the native host on `demo11-native-product-r12`. All 255 translevels
+load, 227 entries are playable and no stall remains. One entry crashes:
+translevel `094` (level `170`). The base ROMs load the same level. The
+`C2` type-3 record is the recorded cause.
 
 ## Course coverage by world
 
@@ -102,7 +107,7 @@ recipient rooms.
 | Group | Count | State |
 | --- | ---: | --- |
 | Type-1 record in a donor | 40 | A recipe exists for each slot. The product target mounts the records. |
-| Type-3 record only | 3 | Records installed. The constructor contract is open and no actor spawns. |
+| Type-3 record only | 3 | Records installed in the product. The constructor contract is open. The `C2` record breaks the normal load of level `094`. |
 | No donor record | 11 | Needs a source review. |
 
 The [type-3 review](native-sprite-type3.md) shows that the donor and recipient
@@ -152,30 +157,33 @@ post-ending restart check.
 
 ## Recommended order
 
-1. Rerun the full-range survey on `demo11-native-product-r12` and record the
-   load table for the current product.
-2. Qualify the Worlds 2 to 8 routes in world order. Start with World 2. Reuse
+1. Rerun the full-range survey on each product candidate. The first run is
+   complete. See the [product survey](demo11-product-survey.md).
+2. Remove the `C2` type-3 record from a product descendant and rerun the
+   translevel `094` capture. Then rerun the full-range survey.
+3. Qualify the Worlds 2 to 8 routes in world order. Start with World 2. Reuse
    the star route method and add one tracked script for each course.
-3. Close the Seven milestone. Prove an earned defeat, the map return and a
+4. Close the Seven milestone. Prove an earned defeat, the map return and a
    saved completion without a forced fixture.
-4. Close mazo. Qualify the attack, the clear and the save. Then playtest the
+5. Close mazo. Qualify the attack, the clear and the save. Then playtest the
    room `151` phase music.
-5. Inventory the World castle bosses `06E` to `072`. Qualify entry, phase,
+6. Inventory the World castle bosses `06E` to `072`. Qualify entry, phase,
    exit and save for each castle.
-6. Decide the 11 no-donor sprite slots. Mark each slot as a deprecated
+7. Decide the 11 no-donor sprite slots. Mark each slot as a deprecated
    placeholder or as missing content.
-7. Repair the type-3 constructor register state, or record the records-only
-   install as the accepted state.
-8. Build one music ledger for each room and each phase. Add the Japanese font
+8. Repair the type-3 constructor register state, or keep `C2` out of the
+   product.
+9. Build one music ledger for each room and each phase. Add the Japanese font
    and the empty graphics slots to the same ledger.
-9. Freeze a release candidate. Run one full route from a new save: map
-   progression, branch exits, bosses, ending, exit and restart, save reload.
+10. Freeze a release candidate. Run one full route from a new save: map
+    progression, branch exits, bosses, ending, exit and restart, save reload.
 
 ## Evidence index
 
 | Document | Supports |
 | --- | --- |
 | [Course survey](demo11-course-survey.md) | 255 translevels load. No stalls. |
+| [Product survey](demo11-product-survey.md) | Native load survey on the r12 product. One crash at level `094`. |
 | [World repair plan](world-repair-plan.md) | Scene parity triage and detection tools. |
 | [Star route reports](demo11-star1-route.md) | Route, exit and save acceptance for each star course. |
 | [Seven entry](native-seven-entry.md), [child](native-seven-child.md), [music](native-seven-fight-music.md), [ending](native-seven-ending.md) | Seven program, child actor, music and ending boundary. |

@@ -185,6 +185,25 @@ The 35-record target carries the slot `95` program instead.
 Keep the records-only target. It installs the three records, runs without a
 crash and leaves the room as it was. The constructor patch stays an open
 experiment: it crashes and it is not necessary to install the records.
+
+## Normal load of level 094
+
+The records-only install is not safe for every room. The product target
+`demo11-native-product-r12` carries the three records with adapted bank
+pointers. A normal entry to translevel `094` (level `170`) crashes. The
+native log holds eight `BRK` entries and the game state reads mode `00`.
+
+Room `170` places slot `C2` once. Room `16B` places `C0` and `C1`, and
+translevel `08F` loads normally. The [product survey](demo11-product-survey.md)
+records the captures and the base-ROM controls.
+
+The earlier [level sprite batch](demo11-level-sprites.md) recorded the same
+failure for the 7hero `C2` record. That batch kept `C2` out of the demo11
+line.
+
+Keep `C0` and `C1`. Do not include `C2` in a product candidate until the
+constructor work succeeds.
+
 ## Reproduction
 
 ```
