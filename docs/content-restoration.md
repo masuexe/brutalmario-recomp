@@ -1398,3 +1398,25 @@ unused on these limited same-image routes. The already installed sprite08
 program matches official cheap_demo; newer official records are placeholders.
 All 344 existing tests pass. No game code, ROM or pack changed. Six other
 Forest course clears and the full puzzle/collectible/experience gaps stay open.
+
+
+## Hollow normal save and missing A2 branch (2026-10-29)
+
+The [hollow checkpoint](forest-hollow-route.md) verifies the existing
+11F -> 039 -> 043 route, actual goal tape, natural Ghost Forest selection,
+both saved completion copies, console-reset File A reload and ordinary room114
+entry. Separate position-assisted Up/Down controls reproduce the accessible
+room182 branch and its missing custom A2 actor. No completion, actor or
+destination writes are used. Seventeen native/reference sample pairs satisfy
+the bounded assertions and exact Map16 comparisons; moving room043 Y positions
+permit one pixel, explicitly recorded in the report. All mounts are unused on
+these limited same-image routes. All 344 existing tests pass.
+
+The older three-source gap census did not establish global donor absence.
+Official demoOnly1 has a matching room182 placement and a protected 7,392-byte
+A2 candidate. It has not been installed or behavior-qualified; its untouched
+reference replay stops in mode12 before entering the course. Modern room182
+also has a source-data difference to preserve during review. Five Forest normal
+exit/save boundaries are now qualified; five remain. Full traversal, the A2
+branch, optional content and broader restoration remain open. No game code,
+ROM or resource pack changed in this checkpoint.

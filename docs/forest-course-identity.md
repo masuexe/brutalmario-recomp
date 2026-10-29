@@ -190,7 +190,13 @@ remain to be checked.
 
 ## Next work
 
-Continue the hollow course at room `11F` and its connected rooms.
+The [hollow checkpoint](forest-hollow-route.md) now verifies its assisted
+normal tape/save/reset route and onward Ghost Forest entry. The Up-entry branch
+to room182 still lacks A2; official demoOnly1 supplies a code candidate that
+needs dependency and behavior review. Five Forest normal-exit/save boundaries
+are qualified; five more remain. Full traversal and optional content stay open.
+
+Review A2 and continue Ghost Forest room `114` and its connected rooms.
 Resolve the actual secret routes and the remaining course chains in order.
 Use the On/Off ghost-house and other relevant guides when their mechanics are
 exercised. Keep C2 restoration, endgame acceptance and music/graphics work open.

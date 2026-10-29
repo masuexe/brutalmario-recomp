@@ -1,0 +1,59 @@
+# Assisted existing 11F -> 039 -> 043 normal exit, save/reload and onward entry.
+# Existing map node, position, pipe-action and damage-immunity fixtures bypass traversal.
+# Real goal tape; no actor, exit destination, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80026001
+poke 88 0000
+poke 71 06
+wait 360
+dump next
+until 010b == 39 0
+poke 94 80186001
+poke 88 0000
+poke 71 06
+wait 240
+dump destination
+until 010b == 43 0
+pokefor 94 a0004001 60
+dump before_goal
+# Sample the real clear at a shared goal-timer phase, not a host-frame count.
+press right 40
+until 1493 == e0 120
+dump touched
+wait 900
+dump clear_map
+until 1ee5 == 8f 0
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+until 1ee5 == 8f 0
+press y 2
+until 0100 == 14 500
+dump onward
+until 010b == 14 0
+quit

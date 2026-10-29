@@ -1,5 +1,18 @@
 # Native custom sprite gap inventory
 
+## Source-scope correction (2026-10-29)
+
+The historical inventory below checks only `7hero`, `cheap-demo` and `mazo`,
+as declared by `DONORS` in `tools/audit_sprite_gaps.py`. Its "no donor record"
+category means absent from those three sources, not absent from all official
+demos. The [hollow branch review](forest-hollow-route.md) now identifies an
+official demoOnly1 type-1 A2 record and a protected 7,392-byte candidate, with
+the same room182 placement. Its dependencies and behavior remain unqualified;
+it is not installed. A2 must no longer be treated as having no official source.
+Other slots need the same chronology-aware review before any global absence
+claim. The counts below preserve the original three-source audit, not a current
+whole-product restoration census.
+
 ## Result
 
 The recipient places 163 custom sprite slots across its rooms. Fifty-four of
