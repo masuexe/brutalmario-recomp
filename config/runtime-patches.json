@@ -57,6 +57,15 @@
       "source_sha256": "7f39dbbba673b7a3a0143745d2a7b1665a1ee6436b5dc894e23837713cc0a6e3",
       "patch_sha256": "29519fa3bc1b0343ca600a103c8d1830148caa2af0d9dbfb53c80752686a8bf6",
       "result_sha256": "9a7b8e8d8277e79d28849f05a375688721de3891c8828bb3282e539ae7c4360b"
+    },
+    {
+      "id": "live-cheat-channel",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0009-live-cheat-channel.patch",
+      "source_sha256": "caabc2c238d095a8908bd3bbad41da2e3acc5d06ee802b5e46cdb9e2020e10ee",
+      "patch_sha256": "07bc500be6054cbb86f5ddda7fc1e1bf408512de3ce32fbb41a180868c93b786",
+      "result_sha256": "d7ceee539682bf45a4cd6a5764853298b90bc1dad15550fddc3197db29bb9602",
+      "base_patch": "desktop-optional-audio"
     }
   ]
 }

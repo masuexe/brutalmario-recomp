@@ -1,0 +1,264 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -667,6 +667,11 @@
+ static ScriptForcePoke *g_script_force_pokes;
+ static int g_script_force_poke_count;
+ static int g_script_force_poke_cap;
++static int g_script_cap = 64;  // live appends share the loaded script capacity
++static ScriptForcePoke *g_live_force_pokes;
++static int g_live_force_count, g_live_force_cap;
++static char g_live_force_last[4096];
++static int g_live_force_last_len;
+ 
+ static uint32 ParseButtonMask(const char *name) {
+   const char *sep = strpbrk(name, "+,|");
+@@ -789,12 +794,165 @@
+  * The same file drives the snesref oracle (tools/snesref/README.md), with
+  * the same per-frame meaning: every hold-type entry is followed by one idle
+  * frame, and until/dump/quit consume no frames. */
++
++/* Live cheat channel: a force-write state file and an append-only command
++ * script. The Python practice console writes both files. This keeps the
++ * startup script behavior unchanged when the environment variables are unset. */
++static void AddLiveForcePoke(uint32 addr, uint8 *bytes, int count) {
++  if (g_live_force_count >= g_live_force_cap) {
++    g_live_force_cap = g_live_force_cap ? g_live_force_cap * 2 : 8;
++    g_live_force_pokes = (ScriptForcePoke *)realloc(
++        g_live_force_pokes, (size_t)g_live_force_cap * sizeof(ScriptForcePoke));
++  }
++  ScriptForcePoke *p = &g_live_force_pokes[g_live_force_count++];
++  p->addr = addr;
++  p->bytes = bytes;
++  p->count = count;
++}
++
++static void ApplyLiveForcePokes(void) {
++  for (int i = 0; i < g_live_force_count; i++) {
++    ScriptForcePoke *p = &g_live_force_pokes[i];
++    if (p->bytes && p->count > 0 && p->addr + (uint32)p->count <= 0x20000u)
++      memcpy(g_ram + p->addr, p->bytes, (size_t)p->count);
++  }
++}
++
++static void ClearLiveForcePokes(void) {
++  for (int i = 0; i < g_live_force_count; i++) free(g_live_force_pokes[i].bytes);
++  g_live_force_count = 0;
++}
++
++static void RefreshLiveForceFile(void) {
++  static int initialized;
++  static const char *path;
++  if (!initialized) { path = getenv("SNESRECOMP_FORCE_FILE"); initialized = 1; }
++  if (!path || !*path) return;
++  FILE *file = fopen(path, "rb");
++  if (!file) return;
++  char buffer[4096];
++  size_t got = fread(buffer, 1, sizeof(buffer)-1, file);
++  fclose(file);
++  buffer[got] = 0;
++  if ((int)got == g_live_force_last_len && memcmp(buffer, g_live_force_last, got) == 0)
++    return;
++  memcpy(g_live_force_last, buffer, got+1);
++  g_live_force_last_len = (int)got;
++  ClearLiveForcePokes();
++  char *line = buffer;
++  while (line && *line) {
++    char *nl = strchr(line, '\n');
++    if (nl) *nl = 0;
++    char *hash = strchr(line, '#');
++    if (hash) *hash = 0;
++    char addr_text[64], hex_text[256];
++    if (sscanf(line, "%63s %255s", addr_text, hex_text) == 2) {
++      uint32 addr = (uint32)strtoul(addr_text, NULL, 16);
++      int count = 0;
++      uint8 *bytes = ParseHexBytes(addr, hex_text, &count);
++      if (bytes) AddLiveForcePoke(addr, bytes, count);
++    }
++    line = nl ? nl + 1 : NULL;
++  }
++}
++
++static void AppendLiveScript(void) {
++  static int initialized;
++  static const char *path;
++  static long offset;
++  if (!initialized) { path = getenv("SNESRECOMP_CHEAT_SCRIPT"); initialized = 1; }
++  if (!path || !*path) return;
++  FILE *file = fopen(path, "rb");
++  if (!file) return;
++  if (fseek(file, 0, SEEK_END) != 0) { fclose(file); return; }
++  long size = ftell(file);
++  if (size <= offset) { offset = size < offset ? size : offset; fclose(file); return; }
++  fseek(file, offset, SEEK_SET);
++  long want = size - offset;
++  if (want > 8192) want = 8192;
++  char *buffer = (char *)malloc((size_t)want + 1);
++  if (!buffer) { fclose(file); return; }
++  size_t got = fread(buffer, 1, (size_t)want, file);
++  fclose(file);
++  buffer[got] = 0;
++  char *last = strrchr(buffer, '\n');
++  if (!last) { free(buffer); return; }
++  last[1] = 0;
++  offset += (long)(strlen(buffer));
++  int appended = 0;
++  char *line = buffer;
++  while (line && *line) {
++    char *nl = strchr(line, '\n');
++    if (nl) *nl = 0;
++    char *hash = strchr(line, '#');
++    if (hash) *hash = 0;
++    char cmd[64] = {0}, arg1[128] = {0};
++    int parts = sscanf(line, "%63s %127s", cmd, arg1);
++    if (parts < 1) { line = nl ? nl + 1 : NULL; continue; }
++    ScriptEntry *e = NULL;
++    if (strcmp(cmd, "wait") == 0 && parts == 2) {
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = 0;
++      e->wait_frames = atoi(arg1);
++      e->hold_frames = 0;
++    } else if (strcmp(cmd, "press") == 0 && parts == 2) {
++      int hold = 1, n = 0;
++      char btn[64] = {0};
++      sscanf(line, "%*s %63s %d", btn, &n);
++      if (n > 0) hold = n;
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = ParseButtonMask(btn);
++      if (e->mask & 0x000fffu) g_script_controllers |= 1u;
++      if (e->mask & 0xfff000u) g_script_controllers |= 2u;
++      e->hold_frames = hold;
++    } else if (strcmp(cmd, "poke") == 0 && parts == 2) {
++      char hex[256];
++      if (sscanf(line, "%*s %63s %255s", cmd, hex) != 2) { line = nl ? nl + 1 : NULL; continue; }
++      uint32 addr = (uint32)strtoul(cmd, NULL, 16);
++      int count = 0;
++      uint8 *bytes = ParseHexBytes(addr, hex, &count);
++      if (!bytes) { line = nl ? nl + 1 : NULL; continue; }
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = kScriptPoke;
++      e->poke_addr = addr; e->poke_bytes = bytes; e->poke_count = count;
++      e->hold_frames = 1;
++    } else if (strcmp(cmd, "turbo") == 0 && parts == 2) {
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = kScriptTurbo | (strcmp(arg1, "on") == 0 ? 1u : 0u);
++    } else if (strcmp(cmd, "dump") == 0 && parts == 2) {
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = kScriptDump;
++      e->dump_tag = strdup(arg1);
++    } else if (strcmp(cmd, "quit") == 0) {
++      e = NewScriptEntry(&g_script_cap);
++      e->mask = kScriptQuit;
++    }
++    if (e) appended++;
++    line = nl ? nl + 1 : NULL;
++  }
++  free(buffer);
++  if (appended && g_script_index >= g_script_count - appended) {
++    int first = g_script_count - appended;
++    if (g_script_index < first) {
++      g_script_index = first;
++      g_script_phase = 1;
++      g_script_counter = g_script_entries[first].wait_frames;
++    }
++  }
++}
++
++static void TickLiveCheats(void) {
++  RefreshLiveForceFile();
++  ApplyLiveForcePokes();
++  AppendLiveScript();
++}
++
+ static void LoadScript(const char *path) {
+   FILE *f = fopen(path, "r");
+   if (!f) { fprintf(stderr, "script: cannot open '%s'\n", path); return; }
+ 
+-  int cap = 64;
+-  g_script_entries = (ScriptEntry *)malloc(cap * sizeof(ScriptEntry));
++  g_script_cap = 64;
++  g_script_entries = (ScriptEntry *)malloc(g_script_cap * sizeof(ScriptEntry));
+   g_script_count = 0;
+ 
+   char line[256];
+@@ -816,20 +974,20 @@
+         g_script_failed = g_script_quit = 1;
+         continue;
+       }
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptTurbo | (strcmp(arg1, "on") == 0 ? 1u : 0u);
+       e->wait_frames = pending_wait;
+       pending_wait = 0;
+     } else if (strcmp(cmd, "loadstate") == 0) {
+       int slot = 0;
+       sscanf(line, "%*s %d", &slot);
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptLoadState | (slot & 0xF);
+       e->hold_frames = 1;
+       e->wait_frames = pending_wait;
+       pending_wait = 0;
+     } else if (strcmp(cmd, "reset") == 0) {
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptReset;
+       e->hold_frames = 1;
+       e->wait_frames = pending_wait;
+@@ -843,7 +1001,7 @@
+       uint8 *bytes = ParseHexBytes(addr, hex, &byte_count);
+       if (!bytes)
+         continue;
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptForcePoke;
+       e->hold_frames = 1;
+       e->wait_frames = pending_wait;
+@@ -866,7 +1024,7 @@
+       uint8 *bytes = ParseHexBytes(addr, hex, &byte_count);
+       if (!bytes)
+         continue;
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptPoke;
+       e->hold_frames = hold;
+       e->wait_frames = pending_wait;
+@@ -885,7 +1043,7 @@
+         fprintf(stderr, "script: bad %s line: %s", cmd, line);
+         continue;
+       }
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptUntil;
+       e->poke_addr = addr;
+       e->cond_width = (uint8)width;
+@@ -896,19 +1054,19 @@
+       pending_wait = 0;
+     } else if (strcmp(cmd, "dump") == 0) {
+       if (sscanf(line, "%*s %63s", arg1) != 1) continue;
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptDump;
+       e->dump_tag = strdup(arg1);
+       e->wait_frames = pending_wait;
+       pending_wait = 0;
+     } else if (strcmp(cmd, "quit") == 0) {
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = kScriptQuit;
+       e->wait_frames = pending_wait;
+       pending_wait = 0;
+     } else if (strcmp(cmd, "press") == 0) {
+       int hold = (sscanf(line, "%*s %*s %d", &n) == 1) ? n : 1;
+-      ScriptEntry *e = NewScriptEntry(&cap);
++      ScriptEntry *e = NewScriptEntry(&g_script_cap);
+       e->mask = ParseButtonMask(arg1);
+       if (e->mask & 0x000fffu) g_script_controllers |= 1u;
+       if (e->mask & 0xfff000u) g_script_controllers |= 2u;
+@@ -944,6 +1102,7 @@
+ }
+ 
+ static uint32 TickScript(void) {
++  TickLiveCheats();
+   ApplyScriptForcePokes();
+ 
+   for (;;) {

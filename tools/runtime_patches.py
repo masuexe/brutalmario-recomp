@@ -13,24 +13,33 @@ def sha(data):
 
 def patch_plan():
     manifest = json.loads((ROOT / 'config/runtime-patches.json').read_text())
+    produced = {}
     for item in manifest['patches']:
         source = ROOT / 'local/upstream/snesrecomp' / item['source']
         patch = ROOT / item['patch']
-        if sha(source.read_bytes()) != item['source_sha256']:
+        base = item.get('base_patch')
+        if base:
+            if produced.get(base) != item['source_sha256']:
+                raise ValueError(f'{item["id"]}: base patch result mismatch')
+        elif sha(source.read_bytes()) != item['source_sha256']:
             raise ValueError(f'{item["id"]}: upstream source hash mismatch')
         if sha(patch.read_bytes()) != item['patch_sha256']:
             raise ValueError(f'{item["id"]}: patch hash mismatch')
+        produced[item['id']] = item['result_sha256']
     return manifest['patches']
 
 
 def prepare_runtime():
     items = patch_plan()
+    final = {}
+    for item in items:
+        final[item['source']] = item['result_sha256']
     outputs = []
     for item in items:
         target = ROOT / 'local/runtime' / item['source']
         if target.exists():
             actual = sha(target.read_bytes())
-            if actual == item['result_sha256']:
+            if actual == final.get(item['source']):
                 outputs.append(target)
                 continue
             if actual != item['source_sha256']:

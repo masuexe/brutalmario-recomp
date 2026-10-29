@@ -94,6 +94,12 @@ class CheatScriptTests(unittest.TestCase):
         self.assertNotIn("wait 780", text)
         self.assertIn("until16 10b == 190", text)
 
+    def test_console_help_lists_the_live_commands(self):
+        text = cheats.CONSOLE_HELP
+        for command in ('invincible', 'swim', 'lives', 'music', 'teleport', 'quit'):
+            self.assertIn(command, text)
+        self.assertTrue(callable(cheats.console_loop))
+
 
 if __name__ == "__main__":
     unittest.main()

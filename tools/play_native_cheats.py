@@ -202,6 +202,99 @@ def run_menu(args):
         args.complete_all = True
 
 
+CONSOLE_HELP = '''Commands:
+  invincible        toggle star invincibility
+  swim              toggle air swim (every level is water)
+  lives N           set the life counter
+  music SLOT        request a music slot, for example music A5 (music off clears)
+  teleport ROOM     enter a room, for example teleport 0x151
+  help              show this help
+  quit              stop the game and exit
+The game reads the cheat files every frame, so changes apply while it runs.
+'''
+
+
+def console_loop(command, env, play_dir):
+    force_path = play_dir / 'cheats.force'
+    live_path = play_dir / 'cheats.script'
+    force_path.write_text('')
+    live_path.write_text('')
+    console_env = dict(env)
+    console_env['SNESRECOMP_FORCE_FILE'] = str(force_path)
+    console_env['SNESRECOMP_CHEAT_SCRIPT'] = str(live_path)
+    process = subprocess.Popen(command, env=console_env, cwd=str(play_dir))
+    state = {'invincible': False, 'swim': False, 'lives': None, 'music': None}
+
+    def write_force():
+        lines = []
+        if state['invincible']:
+            lines.append('1490 40')
+        if state['swim']:
+            lines.append('85 01')
+        if state['lives'] is not None:
+            lines.append('0dbe %02x' % state['lives'])
+        if state['music'] is not None:
+            lines.append('0dda %02x' % state['music'])
+            lines.append('1dfb %02x' % state['music'])
+        text = chr(10).join(lines) + (chr(10) if lines else '')
+        temp = force_path.with_name('cheats.force.tmp')
+        temp.write_text(text)
+        temp.replace(force_path)
+
+    def queue(lines):
+        with live_path.open('a') as handle:
+            handle.write(chr(10).join(lines) + chr(10))
+
+    write_force()
+    print(CONSOLE_HELP)
+    try:
+        for raw in sys.stdin:
+            if process.poll() is not None:
+                break
+            parts = raw.strip().split()
+            if not parts:
+                continue
+            name = parts[0].lower()
+            if name in ('q', 'quit', 'exit'):
+                break
+            if name == 'help':
+                print(CONSOLE_HELP)
+            elif name == 'invincible':
+                state['invincible'] = not state['invincible']
+                write_force()
+                print('invincible', 'on' if state['invincible'] else 'off')
+            elif name == 'swim':
+                state['swim'] = not state['swim']
+                write_force()
+                print('swim', 'on' if state['swim'] else 'off')
+            elif name == 'lives' and len(parts) == 2:
+                state['lives'] = int(parts[1], 0) & 0xFF
+                write_force()
+                print('lives', state['lives'])
+            elif name == 'music' and len(parts) == 2:
+                if parts[1].lower() in ('off', 'none', '0'):
+                    state['music'] = None
+                else:
+                    state['music'] = int(parts[1], 16) & 0xFF
+                write_force()
+                print('music', 'off' if state['music'] is None else '%02X' % state['music'])
+            elif name == 'teleport' and len(parts) == 2:
+                target_room = validate_room(int(parts[1], 0))
+                queue(room_teleport(target_room).strip().splitlines())
+                print('teleport queued for room 0x%03X' % target_room)
+            else:
+                print('unknown command; type help')
+    finally:
+        if process.poll() is None:
+            process.terminate()
+            try:
+                process.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                process.kill()
+        force_path.unlink(missing_ok=True)
+        live_path.unlink(missing_ok=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -226,6 +319,8 @@ def main():
                         help='poll game mode and skip the intro (room entry is fast by default)')
     parser.add_argument('--legacy-entry', action='store_true',
                         help='use the original fixed-wait room entry')
+    parser.add_argument('--console', action='store_true',
+                        help='live cheat console: invincible, swim, lives, music, teleport')
     parser.add_argument('--emit', type=Path,
                         help='write the host script to a path and exit')
     parser.add_argument('--play-dir', type=Path,
@@ -306,6 +401,9 @@ def main():
     print('session directory:', play_dir)
     if room is not None:
         print('room 0x%03X requested; the screen changes after the fade.' % room)
+    if args.console:
+        console_loop(command, env, play_dir)
+        return
     subprocess.run(command, env=env, cwd=str(play_dir), check=False)
 
 

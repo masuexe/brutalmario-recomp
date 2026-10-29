@@ -91,3 +91,41 @@ the overworld, so it polls 0x0E directly. The tool picks the variant from whethe
 saves/save.srm exists. It then polls each level load and
 waits for the requested room number in $10B/$10C. A missing expected state exits
 with code 3 after the per-step timeout, so a mismatch does not hang.
+## Live cheat console
+
+Use the console to change cheats while the game runs:
+
+```sh
+python3 tools/play_native_cheats.py --target demo11-native-product-r12 --room 0x151 --console
+```
+
+The game stays open and the terminal reads commands.
+
+| Command | Effect |
+| --- | --- |
+| `invincible` | Toggle star invincibility. |
+| `swim` | Toggle air swim. Every level becomes water. |
+| `lives N` | Set the life counter. |
+| `music SLOT` | Request a music slot, for example `music A5`. `music off` clears it. |
+| `teleport ROOM` | Enter a room, for example `teleport 0x151`. |
+| `help` | Show the command list. |
+| `quit` | Stop the game and exit. |
+
+### Mechanism
+
+The runtime patch `patches/runtime/0009-live-cheat-channel.patch` adds two
+small file channels to the desktop host. The host reads them every frame.
+
+- `SNESRECOMP_FORCE_FILE` holds per-frame writes, one `ADDR HEXBYTES` line per entry.
+  The console rewrites this file for each toggle.
+- `SNESRECOMP_CHEAT_SCRIPT` holds append-only commands in the host script
+  grammar (`wait`, `press`, `poke`, `dump`, `turbo`, `quit`). The console appends
+  one teleport sequence to this file.
+
+The files are not set by default. A run without `--console` behaves as before.
+
+Teleport writes the map and room fields and then presses Y. It assumes that the
+game is on the overworld. A teleport from inside a level is not supported.
+
+The `music` command writes `$0DDA` and `$1DFB` every frame. The result depends on
+the sound driver state; treat it as a probe, not a guaranteed track change.
