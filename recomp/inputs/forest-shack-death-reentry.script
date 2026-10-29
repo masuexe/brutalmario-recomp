@@ -1,0 +1,32 @@
+# Assisted pit-death boundary: existing map node and position below the floor.
+# The guest executes death and life loss; no death-mode or completion writes.
+# No node assignment, sprite, event, exit-destination or save writes.
+# Fresh session, no imported save/state; guest-frame waits shared by both hosts.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 6801a8016801a801
+poke 1f1f 16001a0016001a00
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+poke 94 70000003
+wait 600
+dump death_map
+press y 2
+until 0100 == 14 500
+dump reentry
+quit

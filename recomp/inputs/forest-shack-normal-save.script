@@ -1,0 +1,82 @@
+# Assisted shack normal clear: original node, On/Off hit and three real block impacts.
+# Map/player position, pipe-action and damage-immunity fixtures bypass traversal.
+# The On/Off state, layer collision flag, actors, boss phase/HP, exits, completion,
+# events and SRAM are never written. Only guest actions may change them.
+# Fresh session; no imported save or savestate. Not a full puzzle traversal.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 6801a8016801a801
+poke 1f1f 16001a0016001a00
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80026001
+poke 88 0000
+poke 71 06
+wait 240
+dump room44
+poke 94 60026001
+wait 45
+dump switch_before
+press b 12
+wait 45
+dump switch_after
+poke 94 80006001
+poke 88 0000
+poke 71 06
+wait 480
+dump fight_ready
+poke 94 20004001
+wait 60
+dump on_throwblock
+press left+y 8
+dump release
+wait 150
+dump hit1
+until 1534 == 01 0
+until c2 == 02 1200
+poke 94 10004001
+wait 60
+until e4 == 00 1200
+dump block2
+press left+y+b 16
+wait 150
+dump hit2
+until 1534 == 02 0
+until c2 == 02 1200
+poke 94 20005001
+wait 60
+until e4 == 00 1200
+dump block3
+press left+y+b 16
+wait 150
+dump hit3
+until 1534 == 03 0
+wait 1200
+dump clear_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+press y 2
+until 0100 == 14 500
+dump onward
+quit

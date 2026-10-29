@@ -64,8 +64,10 @@ translevel `094` (level `170`). The base ROMs load the same level. The
 The subsequent [Forest identity checkpoint](forest-course-identity.md) corrects
 the World 2 inventory to ten actual nodes and adds the assisted Fishing Spree
 normal goal/save/reload plus the linked bridge clear and onward shack entry.
-This supersedes the old World 2 row below; the other eight Forest clears and
-complete-game acceptance remain open.
+The subsequent [shack checkpoint](forest-shack-route.md) adds a real switch,
+three-hit Big Boo victory, normal save/reload, onward Lost Forest entry and
+death/re-entry. This supersedes the old World 2 row below; seven other Forest
+clears, full puzzle traversals and complete-game acceptance remain open.
 
 **2026-10-29 qualification:** World membership and course labels in
 `config/world-map.json` are provisional. Native r13 visuals contradict the

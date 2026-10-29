@@ -1367,3 +1367,18 @@ SRAM copies, console-reset File A reload and cleared-course re-entry. No
 completion flags or saves are written by the fixture. Full traversal, secret
 exit, Dragon Coins and the other eight course clears remain open. The catalog
 correction changes no game data or behavior.
+
+
+## Forest shack real switch, victory and saved exit (2026-10-29)
+
+The [shack checkpoint](forest-shack-route.md) exercises the existing room chain
+015 -> 044 -> 046. A real On/Off block hit enables Layer 2 collision; three
+original throw-block impacts defeat Big Boo and trigger the actual normal
+clear. The route returns to Lost Forest, saves both completion copies, reloads
+File A and enters room123. A separate position-assisted pit death loses one
+life and re-enters room015. Native and same-image reference checks pass at 19
+paired points with all four Map16 buffer regions exact; moving boss positions
+permit one pixel. All external mounts remain unused on these two routes, so
+the reference result is explicitly limited to this subset. No On/Off, HP,
+completion, actor or save writes are used. Complete puzzle traversal remains
+open. The existing unit suite passes 344/344. No game code or resource changes.

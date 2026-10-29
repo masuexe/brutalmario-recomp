@@ -171,9 +171,18 @@ The existing unit suite passes **344/344**, with log
 passes ten identities, two linked normal clears/saves, File A reload and onward
 shack entry. The prior identity-only reports remain preserved separately.
 
+## Subsequent shack checkpoint
+
+[The shack report](forest-shack-route.md) now qualifies a real On/Off change,
+three real Big Boo impacts and victory, normal save/reload, onward Lost Forest
+entry and a separate real death/re-entry on native and a limited same-image
+reference route. These assisted boundaries supersede its earlier entry-only
+status. Seven other course clears and the full shack puzzle traversal remain
+open.
+
 ## Next work
 
-Continue the shack room `015` On/Off route and its connected rooms.
+Continue Lost Forest room `123` and its connected rooms.
 Resolve the actual secret routes and the remaining course chains in order.
 Use the On/Off ghost-house and other relevant guides when their mechanics are
 exercised. Keep C2 restoration, endgame acceptance and music/graphics work open.
