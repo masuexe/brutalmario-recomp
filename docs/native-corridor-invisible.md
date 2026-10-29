@@ -303,3 +303,55 @@ python3 tools/m1.py --target demo11-native-product-r9 generate
 python3 tools/m1.py --target demo11-native-product-r9 build
 python3 tools/qualify_corridor_music.py
 ```
+
+## Room 190 music override (r10)
+
+After r9 the user asked to set the room 190 music to slot `A4`'s relative `9E`.
+
+### Cause
+
+Room 190 has no music object in its level data. Its song comes from the engine
+music remap table at RAM/ROM `$05:84DB`, index `0`, which holds `0x02`. That
+default is shared by about 128 levels, and rooms 191 and 192 use the same index.
+A ROM data edit therefore cannot change room 190 alone. Changing the table entry
+made rooms 190, 191 and 192 all play `9E` in a probe, so that approach is rejected.
+
+### Fix
+
+`demo11-native-product-r10` keeps the r9 ROM byte for byte and adds a rooms-scoped
+native adaptation in `recomp/native_seven.c`. `bm_room_music_override()` runs from
+`bm_content_resolve()`. When work RAM room `$10B/$10C` is `0x190`, it sets
+`$0DDA = $9E` and `$1DFB = $9E` once on entry. No other room is touched.
+
+- ROM SHA-256: `d29b121e83a4fa47e0423779feaeb66000f9806a02c89f15eeaf8a4baaf3f552`
+  (identical to r9; the change is native code, not ROM data).
+- `g_ram` uses a weak binding so the isolated boundary-test links still build;
+  the full runner provides the strong array.
+
+### Verification
+
+`tools/qualify_corridor_music2.py` passes:
+
+- The r10 ROM equals the r9 ROM, and the config declares the `room-music-override`
+  adaptation for room `0x190`, slot `0x9E`.
+- Room 190 samples hold `$0DDA = 9E` and reach gameplay mode `0x14`. The boss scene
+  still renders (Mode 7 sky, clouds, boss face, health bar).
+- Room 191 and room 192 keep `$0DDA = 02`. Room 151 keeps `$0DDA = A4`.
+- Rooms 151, 191 and 192 keep 270 byte-identical dump files versus the accepted
+  r9 captures.
+- The isolated audio capture `r10-190-audio` is non-silent (overall RMS 1,293;
+  loudest one-second RMS 4,201).
+- The full unit suite passes 325 tests.
+
+Captures: `r10-190`, `r10-190-audio`, `r10-191`, `r10-192`, `r10-151`. Report:
+`local/reports/corridor-music-r10.json`. Input is the represented
+`cheat-r184`/`corridor-*` assisted fixtures; these are not full course clears.
+
+```sh
+python3 tools/prepare_corridor_music2.py
+python3 -c "import sys;sys.path.insert(0,'tools');import native_sprite_gap;native_sprite_gap.prepare('demo11-native-product-r10')"
+python3 tools/m1.py --target demo11-native-product-r10 scaffold
+python3 tools/m1.py --target demo11-native-product-r10 generate
+python3 tools/m1.py --target demo11-native-product-r10 build
+python3 tools/qualify_corridor_music2.py
+```

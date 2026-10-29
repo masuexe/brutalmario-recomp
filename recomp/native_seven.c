@@ -8,6 +8,24 @@
 #include <stdlib.h>
 #include <string.h>
 
+/* Weak WRAM binding: the full runner provides the strong g_ram; isolated
+ * boundary-test links get a zeroed array so the override is inert. */
+__attribute__((weak)) uint8_t g_ram[0x20000];
+/* Room-scoped native music adaptation (native-content policy): room 0x190 has
+ * no music object of its own and inherits the shared default slot 0x02. Force
+ * recipient slot 0x9E whenever the game is in room 0x190. */
+static int s_music_room = -1;
+static void bm_room_music_override(void) {
+  int room = g_ram[0x10b] | (g_ram[0x10c] << 8);
+  if (room == 0x190) {
+    if (s_music_room != 0x190 || g_ram[0x0dda] != 0x9e) {
+      g_ram[0x0dda] = 0x9e;
+      g_ram[0x1dfb] = 0x9e;
+    }
+  }
+  s_music_room = room;
+}
+
 static const uint8_t *owner;
 static uint8_t *backing;
 static unsigned long long resolutions[BM_SEVEN_PACKS];
@@ -75,6 +93,7 @@ void bm_content_load(uint8_t *rom, size_t size) {
 }
 
 uint8_t *bm_content_resolve(const uint8_t *rom, uint8_t bank, uint16_t address) {
+  bm_room_music_override();
   if (rom != owner || !backing || address < 0x8000) return NULL;
   for (unsigned i = 0; i < BM_SEVEN_PACKS; ++i) {
     const BmSevenPack *pack = &bm_seven_packs[i];
