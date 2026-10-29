@@ -1,0 +1,460 @@
+{
+  "schema": 1,
+  "id": "sprite9c-9f-phasebgm2-module",
+  "scope": "Mazo sprite 9C program with phase music slots A5 (second boss) and AD (defeat).",
+  "donor_manifest": "config/mazo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "9C",
+    "raw": "0122008035a399440f80224080220000",
+    "init": "22800F",
+    "main": "228040",
+    "relative": {
+      "init": "0F",
+      "main": "40"
+    },
+    "rooms": [
+      "151"
+    ],
+    "native_raw": "0122008035a399440f809f40809f0000"
+  },
+  "code": {
+    "source_address": "228000",
+    "native_address": "9F8000",
+    "size": 12412,
+    "sha256": "08c840b5967a51742c3037a8d9cfaeda75f6604c0ed687b6f8ecf2331dcec8d1",
+    "adapted_sha256": "d3d9fc13360de8c0f509b57c9abca6bf2fe307bed53c550d70fa581062846dc4",
+    "pack_file": "sprite9c-code.bin"
+  },
+  "entry_seeds": [
+    "22800F",
+    "228040"
+  ],
+  "dispatch_tables": [
+    {
+      "address": "228048",
+      "count": 25,
+      "dispatcher": "2280A9",
+      "sha256": "713aa973453f4917dbca4d821bede453ee8c614f60bc5f6077508b51b0f6afa7"
+    },
+    {
+      "address": "228923",
+      "count": 13,
+      "dispatcher": "22897E",
+      "sha256": "f1e9a0065a3a15cc4a287dbfc25dba006da36eb98958c229014965efb913b0f7"
+    },
+    {
+      "address": "228E49",
+      "count": 8,
+      "dispatcher": "228E7D",
+      "sha256": "238264f6b7450df57cfd04e436d03f6353b30659b425f6d3057f2c0c54e15d28"
+    }
+  ],
+  "code_patches": [
+    {
+      "address": "2280C2",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "22810E",
+      "before": "22519b22",
+      "after": "22519b9f"
+    },
+    {
+      "address": "22815A",
+      "before": "22689f22",
+      "after": "22689f9f"
+    },
+    {
+      "address": "228166",
+      "before": "22a69f22",
+      "after": "22a69f9f"
+    },
+    {
+      "address": "228172",
+      "before": "221ca022",
+      "after": "221ca09f"
+    },
+    {
+      "address": "22817E",
+      "before": "226aa022",
+      "after": "226aa09f"
+    },
+    {
+      "address": "22818A",
+      "before": "22b6a022",
+      "after": "22b6a09f"
+    },
+    {
+      "address": "228208",
+      "before": "2220a122",
+      "after": "2220a19f"
+    },
+    {
+      "address": "228217",
+      "before": "2258a122",
+      "after": "2258a19f"
+    },
+    {
+      "address": "228223",
+      "before": "22aaa122",
+      "after": "22aaa19f"
+    },
+    {
+      "address": "22823E",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228289",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "2282E2",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "22835D",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228365",
+      "before": "22929722",
+      "after": "2292979f"
+    },
+    {
+      "address": "2283CF",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228995",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "2289AF",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "2289B7",
+      "before": "22a19922",
+      "after": "22a1999f"
+    },
+    {
+      "address": "2289EA",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "2289F2",
+      "before": "22909822",
+      "after": "2290989f"
+    },
+    {
+      "address": "228A85",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228A8D",
+      "before": "22349722",
+      "after": "2234979f"
+    },
+    {
+      "address": "228AC3",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228ACB",
+      "before": "22639722",
+      "after": "2263979f"
+    },
+    {
+      "address": "228ADD",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228C03",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228C0B",
+      "before": "22e39922",
+      "after": "22e3999f"
+    },
+    {
+      "address": "228C3F",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228C47",
+      "before": "226d9a22",
+      "after": "226d9a9f"
+    },
+    {
+      "address": "228CC3",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228CCB",
+      "before": "22a69a22",
+      "after": "22a69a9f"
+    },
+    {
+      "address": "228D51",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228D59",
+      "before": "22ee9a22",
+      "after": "22ee9a9f"
+    },
+    {
+      "address": "228D79",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228E1D",
+      "before": "221d9b22",
+      "after": "221d9b9f"
+    },
+    {
+      "address": "228EC1",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228EC9",
+      "before": "22349722",
+      "after": "2234979f"
+    },
+    {
+      "address": "228F7A",
+      "before": "22939b22",
+      "after": "22939b9f"
+    },
+    {
+      "address": "228F9C",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228FA5",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228FAD",
+      "before": "22cd9722",
+      "after": "22cd979f"
+    },
+    {
+      "address": "228FDF",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "228FE7",
+      "before": "22fa9822",
+      "after": "22fa989f"
+    },
+    {
+      "address": "22903A",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "229042",
+      "before": "22bf9822",
+      "after": "22bf989f"
+    },
+    {
+      "address": "2290F3",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "2290FB",
+      "before": "22619822",
+      "after": "2261989f"
+    },
+    {
+      "address": "229197",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "22919F",
+      "before": "22269822",
+      "after": "2226989f"
+    },
+    {
+      "address": "22926B",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "229273",
+      "before": "22189d22",
+      "after": "22189d9f"
+    },
+    {
+      "address": "22927F",
+      "before": "22129722",
+      "after": "2212979f"
+    },
+    {
+      "address": "22928B",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "229293",
+      "before": "22549d22",
+      "after": "22549d9f"
+    },
+    {
+      "address": "22929F",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "2292A7",
+      "before": "22969d22",
+      "after": "22969d9f"
+    },
+    {
+      "address": "2292D9",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "2292E1",
+      "before": "22ee9d22",
+      "after": "22ee9d9f"
+    },
+    {
+      "address": "2292ED",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "2292F5",
+      "before": "22589e22",
+      "after": "22589e9f"
+    },
+    {
+      "address": "229306",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "22930E",
+      "before": "22b09e22",
+      "after": "22b09e9f"
+    },
+    {
+      "address": "22931A",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "229322",
+      "before": "22ec9e22",
+      "after": "22ec9e9f"
+    },
+    {
+      "address": "229327",
+      "before": "5c789222",
+      "after": "5c78929f"
+    },
+    {
+      "address": "22934A",
+      "before": "22569622",
+      "after": "2256969f"
+    },
+    {
+      "address": "229352",
+      "before": "22419922",
+      "after": "2241999f"
+    },
+    {
+      "address": "22935E",
+      "before": "22f09622",
+      "after": "22f0969f"
+    },
+    {
+      "address": "229366",
+      "before": "222c9f22",
+      "after": "222c9f9f"
+    },
+    {
+      "address": "229372",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "2294CD",
+      "before": "22239622",
+      "after": "2223969f"
+    },
+    {
+      "address": "228E3A",
+      "before": "23",
+      "after": "ad"
+    },
+    {
+      "address": "2292FA",
+      "before": "22",
+      "after": "a5"
+    }
+  ],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "0FF780",
+    "10D8D0",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the C9 code view",
+    "sprite graphics review",
+    "entry qualification against the mazo donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608754,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0122008035a399440f809f40809f0000",
+      "role": "Install the sprite 9C record and point init/main into the C9 module view"
+    }
+  ]
+}
