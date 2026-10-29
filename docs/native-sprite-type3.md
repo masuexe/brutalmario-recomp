@@ -204,6 +204,11 @@ line.
 Keep `C0` and `C1`. Do not include `C2` in a product candidate until the
 constructor work succeeds.
 
+The candidate `demo11-native-product-r13` removes the `C2` record and its
+pack. Translevel `094` then loads room `170` in mode `14`, and the
+full-range survey reports 228 playable entries and no crash. The correct
+restoration of `C2` stays open.
+
 ## Reproduction
 
 ```

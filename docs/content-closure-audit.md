@@ -107,7 +107,7 @@ recipient rooms.
 | Group | Count | State |
 | --- | ---: | --- |
 | Type-1 record in a donor | 40 | A recipe exists for each slot. The product target mounts the records. |
-| Type-3 record only | 3 | Records installed in the product. The constructor contract is open. The `C2` record breaks the normal load of level `094`. |
+| Type-3 record only | 3 | `C0` and `C1` run in the r13 product. The constructor contract is open. `C2` is out of the candidate and its restoration stays open. |
 | No donor record | 11 | Needs a source review. |
 
 The [type-3 review](native-sprite-type3.md) shows that the donor and recipient
@@ -157,10 +157,10 @@ post-ending restart check.
 
 ## Recommended order
 
-1. Rerun the full-range survey on each product candidate. The first run is
-   complete. See the [product survey](demo11-product-survey.md).
-2. Remove the `C2` type-3 record from a product descendant and rerun the
-   translevel `094` capture. Then rerun the full-range survey.
+1. Rerun the full-range survey on each product candidate. The r12 and r13
+   runs are complete. See the [product survey](demo11-product-survey.md).
+2. Restore the `C2` type-3 record correctly. Keep it out of the product until
+   the constructor work succeeds. Translevel `094` stays in the survey.
 3. Qualify the Worlds 2 to 8 routes in world order. Start with World 2. Reuse
    the star route method and add one tracked script for each course.
 4. Close the Seven milestone. Prove an earned defeat, the map return and a
@@ -183,7 +183,7 @@ post-ending restart check.
 | Document | Supports |
 | --- | --- |
 | [Course survey](demo11-course-survey.md) | 255 translevels load. No stalls. |
-| [Product survey](demo11-product-survey.md) | Native load survey on the r12 product. One crash at level `094`. |
+| [Product survey](demo11-product-survey.md) | Native load survey on r12 and r13. `C2` causes the level `094` crash in r12. |
 | [World repair plan](world-repair-plan.md) | Scene parity triage and detection tools. |
 | [Star route reports](demo11-star1-route.md) | Route, exit and save acceptance for each star course. |
 | [Seven entry](native-seven-entry.md), [child](native-seven-child.md), [music](native-seven-fight-music.md), [ending](native-seven-ending.md) | Seven program, child actor, music and ending boundary. |

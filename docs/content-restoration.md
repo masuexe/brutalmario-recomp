@@ -1332,3 +1332,12 @@ the same level normally. The product carries the type-3 record `C2`, and the
 [level sprite batch](demo11-level-sprites.md) already recorded this failure for
 that record. The product needs a descendant without `C2`, or the type-3
 constructor work, before a release candidate.
+
+## Product r13 without C2 (2026-10-29)
+
+The [product survey](demo11-product-survey.md) found one crash in the r12
+candidate: translevel `094` (level `170`). The `C2` type-3 record is the
+cause. `demo11-native-product-r13` removes the record and its pack. The level
+loads room `170` in mode `14`, and the full-range survey reports 228
+playable entries and no crash. The unit suite passes 344 tests. The correct
+`C2` restoration stays open.

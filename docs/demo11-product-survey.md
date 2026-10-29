@@ -67,6 +67,22 @@ and not the other. Those entries are not stalls.
 | `089` | map return, one life lost | `0D`, one life lost | Same death, later state. |
 | `08A` | map return, one life lost | playable | Same class, earlier state. |
 
+## The r13 candidate without C2
+
+Target `demo11-native-product-r13` removes the `C2` type-3 record and its
+pack. The ROM is
+`c02dc11e0c79c804740b38797463a1fc9645a8a05cdb4e18c7c09fff45760681`.
+
+| Check | Result |
+| --- | --- |
+| Translevel `094` on the native host | Room `170`, mode `14`, 4 lives, no `BRK` |
+| Full-range survey | 255 loads, 228 playable, no crash |
+| Difference from r12 | Only translevel `094` |
+
+The capture is `local/captures/r13-094-check`. The survey report is
+`local/reports/demo11-course-survey-r13.json`, and the captures are
+`r13-survey-TTT`.
+
 ## The crash at translevel 094
 
 The crash is the only product-specific failure.
@@ -104,7 +120,7 @@ of level `094` on the real map is not verified by this run.
 ## Next actions
 
 1. Remove the `C2` record and pack from a product descendant. Rerun the
-   translevel `094` capture. This confirms the cause.
+   translevel `094` capture. This verifies the cause.
 2. If the removal restores the load, keep `C2` out of the product until the
    constructor work succeeds. Keep `C0` and `C1`, which room `16B` loads.
 3. Rebuild the product game with the fix and rerun the full-range survey.
