@@ -1308,3 +1308,14 @@ The user accepted r6. The [r7 room192 extension](native-corridor-invisible.md#ro
 reuses its private foreground clone while preserving original sprite graphics.
 Five native/interpreter samples and unchanged actor states pass; rooms191/190
 retain 30 identical dump files. The Japanese message font remains open.
+
+## Content closure audit (2026-10-29)
+
+The [content closure audit](content-closure-audit.md) reviews the tracked record
+at `f65169e` against the product target `demo11-native-product-r12`. It finds
+no unstarted content block with the size of `7hero` or `mazo`. It records
+three open gaps. Worlds 2 to 8 have no route, exit or save acceptance. The
+Seven line has no earned victory and no saved completion. The mazo attack and
+clear have no qualification. The audit also lists the open sprite, music and
+graphics items and the claims that the record does not support. The unit suite
+passes 339 tests.
