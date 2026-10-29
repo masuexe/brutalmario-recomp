@@ -184,6 +184,7 @@ post-ending restart check.
 | --- | --- |
 | [Course survey](demo11-course-survey.md) | 255 translevels load. No stalls. |
 | [Product survey](demo11-product-survey.md) | Native load survey on r12 and r13. `C2` causes the level `094` crash in r12. |
+| [World 2 route inventory](world2-route-inventory.md) | Parsed World 2 exits, goal tapes and the first fixture results. |
 | [World repair plan](world-repair-plan.md) | Scene parity triage and detection tools. |
 | [Star route reports](demo11-star1-route.md) | Route, exit and save acceptance for each star course. |
 | [Seven entry](native-seven-entry.md), [child](native-seven-child.md), [music](native-seven-fight-music.md), [ending](native-seven-ending.md) | Seven program, child actor, music and ending boundary. |
