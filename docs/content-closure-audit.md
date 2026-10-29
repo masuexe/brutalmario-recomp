@@ -61,6 +61,13 @@ translevel `094` (level `170`). The base ROMs load the same level. The
 
 ## Course coverage by world
 
+**2026-10-29 qualification:** World membership and course labels in
+`config/world-map.json` are provisional. Native r13 visuals contradict the
+bridge/fire labels for rooms `121`/`126`; the community directory uses different
+version-local IDs. The table below is a summary of the historical catalog,
+not a verified per-world inventory. The absence of a complete-game acceptance
+record still stands. See [the corrected route inventory](world2-route-inventory.md).
+
 `config/world-map.json` lists the rooms that the walkthrough reference assigns
 to each world. The table gives the strongest evidence in the record.
 

@@ -1341,3 +1341,16 @@ cause. `demo11-native-product-r13` removes the record and its pack. The level
 loads room `170` in mode `14`, and the full-range survey reports 228
 playable entries and no crash. The unit suite passes 344 tests. The correct
 `C2` restoration stays open.
+
+
+## Assisted exit boundaries and course identity (2026-10-29)
+
+The [route inventory](world2-route-inventory.md) now records seven native
+primary exit boundaries on product r13 and a fresh Star World control.
+The failed earlier probes selected screen 07, where neither source room has
+an exit. Correct screens reach the expected primary rooms, including `1D7`
+(the high bit was absent from the earlier low-byte-only table). These are
+position and pipe-action fixtures, not traversal, clear or save acceptance.
+The course labels in the local world catalog conflict with the community
+version-specific directory; matching recipient content to course identities
+is the next prerequisite for gimmick-specific route work.

@@ -3,6 +3,16 @@
 This reference document compiles community walkthrough resources and course route
 mechanics for use by automated testing agents and restoration contributors.
 
+**2026-10-29 correction:** The stage cross-reference below is provisional.
+Its room IDs have not been matched consistently to the recipient version.
+Fresh product-r13 captures show switch-palace graphics in room `121` and baby
+Yoshis in room `126`, rather than the bridge and fire courses named below.
+The community map directory also lists different IDs across its official-demo
+sections. Do not use this table or `config/world-map.json` alone to select a
+course walkthrough, infer missing mechanics, or count world acceptance. Match
+the actual room chain and content first. See
+[the exit inventory correction](world2-route-inventory.md#course-identity-limitation).
+
 Community walkthrough wikis:
 - **Brutal Mario Wiki (English Fandom)**: [https://brutalmario.fandom.com/](https://brutalmario.fandom.com/)
 - **Super Kitiku Mario Wiki (Japanese WikiWiki)**: [https://wikiwiki.jp/kitikumario/](https://wikiwiki.jp/kitikumario/)

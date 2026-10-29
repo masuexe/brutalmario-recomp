@@ -1,0 +1,30 @@
+# Assisted exit-boundary check for room 123, screen 04.
+# Map-node override, player position and pipe action fixtures.
+# No exit destination, completion, event or save writes.
+turbo on
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 47
+press y 2
+until 0100 == 14 400
+dump active
+poke 94 80046001
+poke 88 0000
+poke 71 06
+wait 180
+dump next
+wait 180
+dump later
+quit

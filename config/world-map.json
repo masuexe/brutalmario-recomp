@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "source": "docs/walkthrough-reference.md stage table (2026-10-26)",
-  "note": "Rooms are level IDs. Boss rooms 06E-072 load through boss doors and do not appear in the level entry list.",
+  "note": "Provisional catalog, not a verified recipient world map. Course names and room IDs in the source table require version-specific matching before route design or acceptance counts. On product r13 room 121 visibly uses switch-palace graphics, and room 126 shows baby Yoshis, contrary to their Forest course labels. See docs/world2-route-inventory.md. Boss rooms 06E-072 are historical catalog labels, not verified per-world boss assignments.",
   "worlds": {
     "world1": {
       "name": "Grassland",
