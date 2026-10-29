@@ -69,3 +69,22 @@ The script writes at the start of the session. To change the room again,
 relaunch the tool. The invincible and air-swim flags hold after the script ends.
 The room transfer uses the pipe fixture, so it moves the room and not the room
 entrance. A completion run moves the earlier save to `save.srm.before-cheat`.
+
+## Fast room entry
+
+By default a --room run now uses a fast entry. The host script polls game mode
+with the until command and holds Turbo during the transition, instead of the old
+fixed waits. It skips the intro with a timed B press after the intro level loads.
+The script turns Turbo off when the room is reached.
+
+The measured room 190 fixture drops from 2,789 frames (about 46 s at normal speed)
+to 1,807 frames (about 9-10 s with Turbo). The change only affects startup; the
+level and gameplay are the same.
+
+- --legacy-entry keeps the original fixed-wait startup.
+- --fast forces the fast path (already the default for --room).
+
+The fast startup polls these states: title mode 0x07, file select 0x08, intro
+level mode 0x14, then overworld mode 0x0E. It then polls each level load and
+waits for the requested room number in $10B/$10C. A missing expected state exits
+with code 3 after the per-step timeout, so a mismatch does not hang.

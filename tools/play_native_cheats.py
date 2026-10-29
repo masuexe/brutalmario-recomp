@@ -30,6 +30,18 @@ press a 30
 wait 180
 '''
 
+# Fast-entry startup: poll game mode instead of fixed waits, skip the intro.
+FAST_STARTUP = '''turbo on
+until 0100 == 07 4000
+press start 2
+until 0100 == 08 900
+press start 2
+until 0100 == 14 2400
+wait 780
+press b 30
+until 0100 == 0e 2400
+'''
+
 # Completion writes, copied from the accepted all-levels cheat.
 COMPLETION = '''poke 1ea2 9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f
 poke 1f02 ffffffffffffffffffffffffffffff
@@ -87,9 +99,28 @@ def room_teleport(room):
         'poke 71 06\nwait 180\n')
 
 
+def fast_room_teleport(room):
+    # Same targets as room_teleport but poll each transition instead of fixed waits.
+    return (
+        '\n# Fast room transfer: room 0x%03X.\n' % room +
+        'poke 1f11 0606\n'
+        'poke 1f17 2801e8012801e801\n'
+        'poke 1f1f 12001e0012001e00\n'
+        'poke 0100 0b\n'
+        'until 0100 == 0e 1600\n'
+        'poke d7e2 6a\n'
+        'press y 2\n'
+        'until 0100 == 14 1200\n'
+        'poke 19b8 %02x\n' % (room & 0xFF) +
+        'poke 19d8 %02x\n' % (4 + (room >> 8)) +
+        'poke 88 0000\n'
+        'poke 71 06\n'
+        'until16 10b == %x 1600\n' % room)
+
+
 def build_script(*, map_pos=None, room=None, air_swim=False, invincible=False,
-                 complete_all=False, lives=None):
-    lines = [STARTUP]
+                 complete_all=False, lives=None, fast=False):
+    lines = [FAST_STARTUP if (fast and room is not None) else STARTUP]
     if lives is not None:
         lines.append('\n# Practice only: set the life counter.\npoke 0dbe %02x\n' % lives)
     if complete_all:
@@ -99,7 +130,7 @@ def build_script(*, map_pos=None, room=None, air_swim=False, invincible=False,
     if map_pos is not None:
         lines.append(map_teleport(*map_pos))
     if room is not None:
-        lines.append(room_teleport(room))
+        lines.append(fast_room_teleport(room) if (fast and room is not None) else room_teleport(room))
     if air_swim:
         lines.append('\n# Practice only: treat every level as water.\nforcepoke 85 01\n')
     if invincible:
@@ -178,6 +209,10 @@ def main():
                         help='set the life counter')
     parser.add_argument('--menu', action='store_true',
                         help='ask for the destination and the toggles interactively')
+    parser.add_argument('--fast', action='store_true',
+                        help='poll game mode and skip the intro (room entry is fast by default)')
+    parser.add_argument('--legacy-entry', action='store_true',
+                        help='use the original fixed-wait room entry')
     parser.add_argument('--emit', type=Path,
                         help='write the host script to a path and exit')
     parser.add_argument('--play-dir', type=Path,
@@ -203,10 +238,13 @@ def main():
     lives = None
     if args.lives is not None:
         lives = args.lives & 0xFF
+    fast = room is not None and not args.legacy_entry
+    if args.fast:
+        fast = True
     script_text = build_script(map_pos=map_pos, room=room,
                                air_swim=args.air_swim,
                                invincible=args.invincible,
-                               complete_all=args.complete_all, lives=lives)
+                               complete_all=args.complete_all, lives=lives, fast=fast)
     if args.emit:
         args.emit.write_text(script_text)
         print('wrote', args.emit)

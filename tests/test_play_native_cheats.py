@@ -73,6 +73,21 @@ class CheatScriptTests(unittest.TestCase):
         wram = (ROOT / "local/captures/cheat-swim/e1.wram.bin").read_bytes()
         self.assertEqual(wram[0x85], 1)
 
+    def test_fast_room_entry_uses_polling_and_turbo(self):
+        text = cheats.build_script(room=0x190, fast=True)
+        self.assertIn("turbo on", text)
+        self.assertIn("until 0100 == 07", text)
+        self.assertIn("until 0100 == 0e", text)
+        self.assertIn("until16 10b == 190", text)
+        self.assertIn("poke 19b8 90", text)
+        self.assertIn("poke 19d8 05", text)
+        self.assertIn("turbo off", text)
+
+    def test_legacy_room_entry_stays_fixed_wait(self):
+        text = cheats.build_script(room=0x190)
+        self.assertIn("wait 600", text)
+        self.assertNotIn("until16", text)
+
 
 if __name__ == "__main__":
     unittest.main()
