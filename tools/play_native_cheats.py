@@ -214,6 +214,57 @@ The game reads the cheat files every frame, so changes apply while it runs.
 '''
 
 
+def console_command(state, parts, write_force, queue):
+    """Apply one console command. Return a status line. Never raise on bad input."""
+    if not parts:
+        return ''
+    name = parts[0].lower()
+    if name == 'help':
+        return CONSOLE_HELP.strip()
+    if name == 'invincible':
+        state['invincible'] = not state['invincible']
+        write_force()
+        return 'invincible ' + ('on' if state['invincible'] else 'off')
+    if name == 'swim':
+        state['swim'] = not state['swim']
+        write_force()
+        return 'swim ' + ('on' if state['swim'] else 'off')
+    if name == 'lives':
+        if len(parts) != 2:
+            return 'usage: lives N (for example lives 9)'
+        try:
+            value = int(parts[1], 0)
+        except ValueError:
+            return 'lives needs a number, for example lives 9'
+        state['lives'] = value & 0xFF
+        write_force()
+        return 'lives ' + str(state['lives'])
+    if name == 'music':
+        if len(parts) != 2:
+            return 'usage: music SLOT (for example music A5) or music off'
+        if parts[1].lower() in ('off', 'none', '0'):
+            state['music'] = None
+            write_force()
+            return 'music off'
+        try:
+            slot = int(parts[1], 16)
+        except ValueError:
+            return 'music needs a hex slot, for example music A5'
+        state['music'] = slot & 0xFF
+        write_force()
+        return 'music %02X' % state['music']
+    if name == 'teleport':
+        if len(parts) != 2:
+            return 'usage: teleport ROOM (for example teleport 0x151)'
+        try:
+            room = validate_room(int(parts[1], 0))
+        except ValueError:
+            return 'teleport needs a room id from 0x000 to 0x1FF'
+        queue(room_teleport(room).strip().splitlines())
+        return 'teleport queued for room 0x%03X' % room
+    return 'unknown command; type help'
+
+
 def console_loop(command, env, play_dir):
     force_path = play_dir / 'cheats.force'
     live_path = play_dir / 'cheats.script'
@@ -252,38 +303,11 @@ def console_loop(command, env, play_dir):
             if process.poll() is not None:
                 break
             parts = raw.strip().split()
-            if not parts:
-                continue
-            name = parts[0].lower()
-            if name in ('q', 'quit', 'exit'):
+            if parts and parts[0].lower() in ('q', 'quit', 'exit'):
                 break
-            if name == 'help':
-                print(CONSOLE_HELP)
-            elif name == 'invincible':
-                state['invincible'] = not state['invincible']
-                write_force()
-                print('invincible', 'on' if state['invincible'] else 'off')
-            elif name == 'swim':
-                state['swim'] = not state['swim']
-                write_force()
-                print('swim', 'on' if state['swim'] else 'off')
-            elif name == 'lives' and len(parts) == 2:
-                state['lives'] = int(parts[1], 0) & 0xFF
-                write_force()
-                print('lives', state['lives'])
-            elif name == 'music' and len(parts) == 2:
-                if parts[1].lower() in ('off', 'none', '0'):
-                    state['music'] = None
-                else:
-                    state['music'] = int(parts[1], 16) & 0xFF
-                write_force()
-                print('music', 'off' if state['music'] is None else '%02X' % state['music'])
-            elif name == 'teleport' and len(parts) == 2:
-                target_room = validate_room(int(parts[1], 0))
-                queue(room_teleport(target_room).strip().splitlines())
-                print('teleport queued for room 0x%03X' % target_room)
-            else:
-                print('unknown command; type help')
+            message = console_command(state, parts, write_force, queue)
+            if message:
+                print(message)
     finally:
         if process.poll() is None:
             process.terminate()

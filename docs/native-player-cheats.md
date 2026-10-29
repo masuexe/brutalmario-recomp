@@ -129,3 +129,6 @@ game is on the overworld. A teleport from inside a level is not supported.
 
 The `music` command writes `$0DDA` and `$1DFB` every frame. The result depends on
 the sound driver state; treat it as a probe, not a guaranteed track change.
+
+An invalid value prints a usage message and the game keeps running. For example,
+`music 0xx48` prints `music needs a hex slot, for example music A5`.

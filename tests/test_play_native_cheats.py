@@ -100,6 +100,31 @@ class CheatScriptTests(unittest.TestCase):
             self.assertIn(command, text)
         self.assertTrue(callable(cheats.console_loop))
 
+    def test_console_command_rejects_bad_values_without_raising(self):
+        state = {'invincible': False, 'swim': False, 'lives': None, 'music': None}
+        events = []
+        write = lambda: events.append('write')
+        queue = lambda lines: events.append(list(lines))
+        for parts in (['music', '0xx48'], ['lives', 'abc'], ['teleport', 'zzz'],
+                      ['music'], ['teleport', '0x200'], ['bogus']):
+            message = cheats.console_command(state, parts, write, queue)
+            self.assertIsInstance(message, str)
+            self.assertTrue(message)
+        self.assertIsNone(state['music'])
+        self.assertEqual(events, [])
+
+    def test_console_command_accepts_valid_values(self):
+        state = {'invincible': False, 'swim': False, 'lives': None, 'music': None}
+        write = lambda: None
+        queued = []
+        queue = lambda lines: queued.extend(lines)
+        self.assertEqual(cheats.console_command(state, ['music', 'A5'], write, queue),
+                         'music A5')
+        self.assertEqual(state['music'], 0xA5)
+        self.assertEqual(cheats.console_command(state, ['teleport', '0x151'], write, queue),
+                         'teleport queued for room 0x151')
+        self.assertIn('poke 19b8 51', queued)
+
 
 if __name__ == "__main__":
     unittest.main()
