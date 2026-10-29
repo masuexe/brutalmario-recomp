@@ -253,3 +253,53 @@ python3 tools/m1.py --target demo11-native-product-r8 generate
 python3 tools/m1.py --target demo11-native-product-r8 build
 python3 tools/qualify_corridor_wave.py
 ```
+
+## Room 151 music retarget (r9)
+
+After the r8 graphics repair the user asked to set the room 151 music to slot
+`A4`. Slot `A4` is The Decisive Battle (Final Fantasy VI) on this line.
+
+### Cause
+
+Room 151 level data holds the music object `40 60 61` at file `0x2DC0F1`. The
+loader subtracts one from the parameter, so the room requested slot `0x60`
+(Iceberg Ocean). The `$0DDA` record showed `0x60` in gameplay.
+
+### Fix
+
+`tools/prepare_corridor_music.py` creates `demo11-native-product-r9` from r8. The
+target changes one byte: the music-object parameter at file `0x2DC0F3` moves from
+`0x61` to `0xA5`, so the room requests slot `0xA4`. No other byte changes.
+
+- ROM SHA-256: `d29b121e83a4fa47e0423779feaeb66000f9806a02c89f15eeaf8a4baaf3f552`
+- Music object: `40 60 A5` at file `0x2DC0F1`.
+- Slot `A4` block: pointer and 17,534-byte payload equal the official demo 1-1 ROM.
+
+### Verification
+
+`tools/qualify_corridor_music.py` passes these checks:
+
+- The r9 ROM equals r8 plus the single byte at `0x2DC0F3`.
+- The `A4` upload block equals the official demo 1-1 song block byte for byte. The
+  song is therefore present, not a null slot.
+- Every room 151 sample holds `$0DDA = A4`. Gameplay reaches mode `0x14` and stays
+  there, so the room does not stall in Mario Start.
+- An isolated audio capture is non-silent in room 151: overall RMS 1,540 and
+  loudest one-second RMS 4,207. The capture is
+  `local/captures/corridor-music-r9-151-audio`.
+- Rooms 190, 191 and 192 keep 55 byte-identical dump files versus the accepted r8
+  captures.
+
+Captures: `corridor-music-r9-151`, `corridor-music-r9-151-audio`,
+`corridor-music-r9-190`, `corridor-music-r9-191`, `corridor-music-r9-192`. Report:
+`local/reports/corridor-music-r9.json`. The input is the represented
+`mazo-9c-align-fine-native.script` assisted fixture; it is not a full course clear.
+
+```sh
+python3 tools/prepare_corridor_music.py
+python3 -c "import sys;sys.path.insert(0,'tools');import native_sprite_gap;native_sprite_gap.prepare('demo11-native-product-r9')"
+python3 tools/m1.py --target demo11-native-product-r9 scaffold
+python3 tools/m1.py --target demo11-native-product-r9 generate
+python3 tools/m1.py --target demo11-native-product-r9 build
+python3 tools/qualify_corridor_music.py
+```
