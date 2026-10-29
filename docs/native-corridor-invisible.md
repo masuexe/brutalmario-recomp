@@ -168,3 +168,88 @@ python3 tools/m1.py --target demo11-native-product-r7 generate
 python3 tools/m1.py --target demo11-native-product-r7 build
 python3 tools/play_native_cheats.py --target demo11-native-product-r7 --room 0x192
 ```
+
+## Room 151 tidal-wave background (r8)
+
+The user reported that room 151 is covered by garbage vertical stripes after the
+crystal-ball teleport from room 191. The defect is a missing extended graphics
+stream, not a terrain, Map16 or collision fault.
+
+### Cause
+
+The room 151 boss is custom sprite 9C. When its attack starts, the game loads
+extended graphics 0x27D for the Tidal Wave background. The recipient pointer for
+0x27D is empty (FFFFFF). The loader then decompresses unrelated bytes into the
+buffer $7E:AD00 and copies them to VRAM $8000. Those bytes draw the vertical
+stripes.
+
+The defect is present in the accepted product r7 and in the separate
+demo11-native-mazo-9c target. The official mazo donor loads 0x27D and draws the
+correct background. Measurement:
+
+| Buffer | mazo donor, fight120 | product r7 |
+| --- | --- | --- |
+| $7E:AD00, 4,096 bytes | equals decoded mazo gfx 0x27D | unrelated bytes |
+| VRAM $8000, 4,096 bytes | equals decoded mazo gfx 0x27D | stripe pattern |
+
+The room 151 graphics record, the level header tables, and the initial room load
+(base GFX 0x28 and 0x29) are equal and correct. Only the dynamic 0x27D request
+fails. A scan of every donor room 151 capture finds 0x27D as the only requested
+extended graphics id that the recipient leaves empty. The ids 0x27E and 0x282 are
+also empty in the recipient, but no sampled frame requests them.
+
+### Fix
+
+tools/prepare_corridor_wave.py creates demo11-native-product-r8 from r7. The
+target changes two items only:
+
+- One 3-byte extended-graphics pointer at file 0x0A047F (decimal 656511). The
+  value is 00 A0 D0, which is CPU address $D1:8000.
+- One data-only pack corridor-wave.bin, 1,553 bytes, mounted at CPU $D1:8000.
+  The pack holds the exact mazo LZ2 stream for gfx 0x27D. The decoded content
+  is 4,096 bytes.
+
+The target adds no code, collision, Map16, sprite, level or input change.
+
+| Item | Value |
+| --- | --- |
+| ROM SHA-256 | 4a45955c65c30495940b69fbd4675ed41574e3ae37c4471ecc80c32adf2bd55f |
+| Pack SHA-256 | d70774e7549b1af3e368b976782b04b09aa7df84c83fd844bb39c22e5f7fa3e5 |
+| Pack size | 1,553 bytes |
+| Pointer file offset | 0x0A047F |
+
+### Verification
+
+tools/qualify_corridor_wave.py passes these checks:
+
+- The r8 ROM equals r7 plus the single 3-byte pointer. The pack equals the
+  decoded mazo 0x27D compressed stream.
+- In room 151 every sampled wave frame (fight100 to fight600) holds the mazo
+  0x27D data in both $7E:AD00 and VRAM $8000. The early fight090 sample still
+  holds the original room background (0x28), so the initial load is unchanged.
+- Native and interpreter captures agree on VRAM, OAM and CGRAM for every room
+  151 wave sample. Framebuffer output agrees at all samples except the two
+  transient frames fight145 and fight270, where only a sprite position differs.
+- Rooms 190, 191 and 192 keep 55 byte-identical dump files versus the accepted
+  r7 captures. This includes WRAM, VRAM, framebuffer, OAM and CGRAM.
+- The historical donor capture mazo-9c-align-fine-v2-donor holds the same 0x27D
+  data in $7E:AD00 and VRAM $8000 at fight120.
+
+Fresh captures: corridor-wave-r8-151, corridor-wave-r8-151-interp,
+corridor-wave-r8-190, corridor-wave-r8-191, corridor-wave-r8-192. The report is
+local/reports/corridor-wave-r8.json. The full unit suite passes 317 tests. The
+input is the represented mazo-9c-align-fine-native.script assisted pipe fixture
+with a stationary Mario. It does not prove a full fight clear. The Japanese
+message font in rooms 191 and 192 remains open.
+
+Use the fight entry to observe the background. A direct room write does not
+reload graphics.
+
+```sh
+python3 tools/prepare_corridor_wave.py
+python3 -c "import sys;sys.path.insert(0,'tools');import native_sprite_gap;native_sprite_gap.prepare('demo11-native-product-r8')"
+python3 tools/m1.py --target demo11-native-product-r8 scaffold
+python3 tools/m1.py --target demo11-native-product-r8 generate
+python3 tools/m1.py --target demo11-native-product-r8 build
+python3 tools/qualify_corridor_wave.py
+```

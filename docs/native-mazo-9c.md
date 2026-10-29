@@ -124,3 +124,11 @@ qualifier checks both capture receipts and then compares every dump file.
 Skip scaffolding an existing experiment. The runtime refuses a missing, short,
 long or corrupt pack. The target does not change ordinary saves or completion
 flags.
+
+## Product-line follow-up (r8)
+
+Room 151 also needs extended graphics `0x27D` for the boss Tidal Wave background.
+The pointer is empty in the product line, so the background renders as vertical
+stripes. `demo11-native-product-r8` restores that stream as a data pack at bank
+`D1` and sets the `0x27D` pointer. See
+[the corridor graphics record](native-corridor-invisible.md).
