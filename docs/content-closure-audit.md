@@ -66,8 +66,10 @@ the World 2 inventory to ten actual nodes and adds the assisted Fishing Spree
 normal goal/save/reload plus the linked bridge clear and onward shack entry.
 The subsequent [shack checkpoint](forest-shack-route.md) adds a real switch,
 three-hit Big Boo victory, normal save/reload, onward Lost Forest entry and
-death/re-entry. This supersedes the old World 2 row below; seven other Forest
-clears, full puzzle traversals and complete-game acceptance remain open.
+death/re-entry. [Lost Forest](forest-lost-route.md) adds eight correct maze
+choices, wrong-color reset, the real tape, normal save/reload and onward room11F
+entry. This supersedes the old World 2 row below; six other Forest clears, full
+puzzle traversals and complete-game acceptance remain open.
 
 **2026-10-29 qualification:** World membership and course labels in
 `config/world-map.json` are provisional. Native r13 visuals contradict the

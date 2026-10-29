@@ -1,0 +1,41 @@
+# Assisted maze reset control: one correct color, then an intentionally wrong color.
+# Existing map node, player position, initial pipe action and immunity fixtures.
+# No progress, palette, actor, exit-destination, completion, event or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 8801780188017801
+poke 1f1f 1800170018001700
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80046001
+poke 88 0000
+poke 71 06
+wait 240
+dump maze0
+# Color-matched round 1: up.
+poke 94 8000b000
+wait 240
+dump maze1
+until 14af == 01 0
+# Left palette03 differs from target0F after the first correct round.
+poke 94 08003001
+wait 240
+dump wrong_color
+until 14af == 00 0
+quit

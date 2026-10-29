@@ -180,9 +180,17 @@ reference route. These assisted boundaries supersede its earlier entry-only
 status. Seven other course clears and the full shack puzzle traversal remain
 open.
 
+## Subsequent Lost Forest checkpoint
+
+[The Lost Forest report](forest-lost-route.md) now checks all eight correct
+maze choices, a wrong-color reset control, the real tape, normal save/reload and
+onward hollow-course entry. This supersedes its earlier entry-only status.
+The first log/P-switch puzzle traversal remains open; six other course clears
+remain to be checked.
+
 ## Next work
 
-Continue Lost Forest room `123` and its connected rooms.
+Continue the hollow course at room `11F` and its connected rooms.
 Resolve the actual secret routes and the remaining course chains in order.
 Use the On/Off ghost-house and other relevant guides when their mechanics are
 exercised. Keep C2 restoration, endgame acceptance and music/graphics work open.

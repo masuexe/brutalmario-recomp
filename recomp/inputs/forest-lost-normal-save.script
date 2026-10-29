@@ -1,0 +1,90 @@
+# Assisted Lost Forest normal clear: existing node, maze choices, real tape and save.
+# Position, initial pipe action and immunity bypass the first log/P-switch puzzle.
+# Eight color-matched boundary choices are executed by the original sprite code.
+# No progress, palette, actor, exit-destination, completion, event or SRAM writes.
+# Fresh session; not a complete unassisted course traversal.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 8801780188017801
+poke 1f1f 1800170018001700
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80046001
+poke 88 0000
+poke 71 06
+wait 240
+dump maze0
+until 14af == 00 0
+# Color-matched round 1: up.
+poke 94 8000b000
+wait 240
+dump maze1
+until 14af == 01 0
+# Color-matched round 2: down.
+poke 94 8000a001
+wait 240
+dump maze2
+until 14af == 02 0
+# Color-matched round 3: left.
+poke 94 08003001
+wait 240
+dump maze3
+until 14af == 03 0
+# Color-matched round 4: down.
+poke 94 8000a001
+wait 240
+dump maze4
+until 14af == 04 0
+# Color-matched round 5: left.
+poke 94 08003001
+wait 240
+dump maze5
+until 14af == 05 0
+# Color-matched round 6: left.
+poke 94 08003001
+wait 240
+dump maze6
+until 14af == 06 0
+# Color-matched round 7: right.
+poke 94 e8003001
+wait 240
+dump maze7
+until 14af == 07 0
+# Color-matched round 8: down.
+poke 94 8000a001
+wait 240
+dump maze8
+until 14af == 08 0
+pokefor 94 a0004001 60
+dump before_goal
+press right 60
+dump touched
+wait 900
+dump clear_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+press y 2
+until 0100 == 14 500
+dump onward
+quit

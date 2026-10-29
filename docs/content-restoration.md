@@ -1382,3 +1382,19 @@ permit one pixel. All external mounts remain unused on these two routes, so
 the reference result is explicitly limited to this subset. No On/Off, HP,
 completion, actor or save writes are used. Complete puzzle traversal remains
 open. The existing unit suite passes 344/344. No game code or resource changes.
+
+
+## Lost Forest eight-color maze and saved normal exit (2026-10-29)
+
+The [Lost Forest checkpoint](forest-lost-route.md) verifies eight actual
+color-matched boundary choices in room042, room050's real tape, natural map
+return, both saved completion copies, console-reset File A reload and onward
+room11F entry. A wrong-color control resets progress after one correct choice
+without clearing or losing a life. The fixtures bypass the first log/P-switch
+puzzle but never write maze progress, palette, destinations or completion.
+Twenty-one native/reference paired samples match asserted semantics, actors,
+color state and four Map16 buffer regions exactly. All external mounts are
+unused on these limited same-image routes. The already installed sprite08
+program matches official cheap_demo; newer official records are placeholders.
+All 344 existing tests pass. No game code, ROM or pack changed. Six other
+Forest course clears and the full puzzle/collectible/experience gaps stay open.

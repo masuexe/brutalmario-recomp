@@ -147,6 +147,7 @@ Use fresh paths: the checker refuses to overwrite an existing report.
 ## Remaining work
 
 The complete shack puzzle traversal and its normal door/pipe activation remain
-open. Continue Lost Forest `123`, then the remaining actual Forest courses,
+open. [Lost Forest](forest-lost-route.md) now has eight-choice/reset/normal-save
+acceptance with assistance. Continue room `11F`, then the remaining Forest courses,
 secret exits, their map events and saves. The broader restoration objective,
 C2, endgame, other-world catalog review, music and graphics remain open.
