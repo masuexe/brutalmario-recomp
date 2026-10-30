@@ -127,9 +127,25 @@ The native pilot loads room `1EF` with one slot `97` actor at `(192,368)`,
 status `08`, static across 512 frames. The v1 parent loads the same fixture
 with no slot `97` actor.
 
+The native route capture `modern-route-108-1ef-native-v2` enters room `108`
+(translevel `02C`) with the map fixture and follows the room `108` screen-1
+exit. It reaches room `1EF` in mode `13` and then mode `14`. The slot `97`
+actor holds `(192,368)` and status `08` from the first sample to frame 256.
+
 The documentation describes the `ow` donor as overworld-only with no course
 data. Source entry attempts in `ow` did not reach the room. Runtime source parity, motion
 and child behaviour stay open.
+
+## Remaining slot record scan
+
+`tools/audit_remaining_sprite_slots.py` reads the seven remaining slots in
+every supplied image. All 13 images hold the type-0 placeholder in every slot:
+`96`, `A5`, `A6`, `E8`, `E9`, `EA` and `F5`.
+
+This is a record-level result only. Numeric sprite IDs are version-local, and a
+donor program for the same room content can live in a different slot. Match the
+recipient room layouts against donor rooms before any install. Do not treat the
+placeholder as proof that the content is unused.
 
 ## Limits
 
@@ -145,8 +161,7 @@ and child behaviour stay open.
 ## Next actions
 
 1. Check the `99` position offsets against the two room layouts.
-2. Reach room `1EF` from the room `108` screen exit in the native target and
-   record the real route.
+2. Check how room `108` uses the room `1EF` exit in ordinary play.
 3. Review the remaining slots `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
    `F5` before any install.
 
