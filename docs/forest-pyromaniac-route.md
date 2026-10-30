@@ -28,8 +28,15 @@ probes write no completion, event or save state.
 The goal at Y `480` lies one screen below the upper floor. No probe touches the
 goal. The completion flag stays at `05` and the life count stays at 4.
 
+## Kill boundary
+
+A deeper walk goes left to `2313,272`, then right to `2554,305`. The next step
+falls into the pit. The player reaches action `09` at Y `454` and then Y `822`.
+The kill boundary is near Y `454`. The goal sprite at Y `480` sits below that
+boundary. A normal route therefore cannot touch it.
+
 ## Next work
 
-Find the descent or pipe from the upper floor into the Y `480` band. Check the
-step at `2401` and the rooms on both sides. Get walkthrough or video evidence
-before another fixture. Do not claim a clear or a save for this room.
+Treat the Y `480` goal sprite as an author exception until a walkthrough or a
+video shows a route. Check the step at `2401` and the rooms on both sides for a
+lower entrance. Do not claim a clear or a save for this room.
