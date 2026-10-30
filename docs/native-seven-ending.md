@@ -127,6 +127,11 @@ starting progress, not ending writes. The report records this check. Standard
 save completion is therefore not a missing write in this path. An earned defeat
 is still not proven.
 
+A newer assisted probe reaches tier 6 with two remaining parts. A 20-sample
+attack-type sweep leaves both damage fields unchanged. The base part sits below
+the forced player point, so the Up attacks pass above it. See the
+[fight analysis](native-seven-fight-analysis.md).
+
 The loaded foreground tilemap matches the official room after normalization of
 the reviewed eight blank pole subtiles (two loaded copies). All eleven character
 patterns selected by the source foreground match. The adapted pole patterns are
