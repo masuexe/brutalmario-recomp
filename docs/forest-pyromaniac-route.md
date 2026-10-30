@@ -11,6 +11,7 @@ a save.
 | Map node | index `38B`, `01B8 / 0188`, translevel `42` |
 | Goal tape `7B` | `(2656,480)` |
 | Key sprites | none |
+| Screen exit | screen `19` to room `037` |
 | Other sprite ids | `13`, `1D`, `3E`, `75`, `80`, `09`, `0D`, `0E`, `0F` |
 
 ## Probes

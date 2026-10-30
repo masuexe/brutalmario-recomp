@@ -11,7 +11,7 @@ or a save.
 | Map node | index `38E`, `01E8 / 0188`, translevel `38` |
 | Goal tape `7B` | `(5232,384)` |
 | Key sprites `15` | `(4176,320)`, `(4192,320)`, `(4208,320)` |
-| Authored screen exit | screen `17`, flags `07`, low byte `14` |
+| Authored screen exit | screen `17`, flags `07`, low byte `14` (secondary) |
 
 The screen exit reloads the same room `114` (mode `13` then `14`). The switch
 state stays at 0. It is not a course exit.
