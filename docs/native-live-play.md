@@ -38,8 +38,12 @@ The runtime accepts `wait`, `press`, `poke`, `turbo` and `dump`. Dumps go to
 
 The flow starts the game, the room transfer enters live `151`, and the player
 moves and attacks under `1490 = 64`. A blind attack sequence from the right edge
-does not end the fight. The next attempt must touch the green orb and use the
-reported damage window. Do not claim a 9C clear from this session.
+does not end the fight.
+
+The player reaches `y 224` with a jump, while the green orb sits near `y 86`. A
+position write to `(168,80)` is rejected: the game returns the player to the
+floor. The orb needs a valid platform route or a working swim state before the
+damage window. Do not claim a 9C clear from this session.
 
 ## Cautions
 
