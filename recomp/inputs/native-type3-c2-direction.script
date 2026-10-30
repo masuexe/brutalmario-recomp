@@ -1,0 +1,54 @@
+# Diagnostic C2 left/right event fixture: map, pipe, immunity, position, global13/14.
+# No actor, shooter timer, progress, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80008000
+poke 19b8 70
+poke 19d8 05
+poke 88 0000
+poke 71 06
+until 010b == 70 500
+until 0100 == 14 500
+forcepoke 1497 ff
+poke 13 0000
+poke 94 40012001
+dump approach_left
+until 17b2 == 60 300
+dump fire_left
+wait 1
+dump left_1
+wait 7
+dump left_7
+wait 24
+dump left_24
+poke 94 c0012001
+dump approach_right
+until 17b2 == 60 300
+dump fire_right
+wait 1
+dump right_1
+wait 7
+dump right_7
+wait 24
+dump right_24
+quit

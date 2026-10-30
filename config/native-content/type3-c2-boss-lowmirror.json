@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "id": "type3-c2-boss-lowmirror",
+  "scope": "Newest official Boss C2 protected block, byte-identical to7hero, mapped into low-mirror bank91 with unchanged code.",
+  "review_status": "experimental",
+  "code": {
+    "raw_payload": "535441521e01e1fe4d444b494e49544d41494e8b4bab203dddab6b60bdab17d0faa9609dab17bd9b17c51abda317e51bd0e9bd9b1738e51a186910c91090dc22dea90230d6bd9b174838e594bda31748e5959016a9f048bd9b1738e9109d9b17bda317e9009da3178014a91048bd9b171869109d9b17bda31769009da317a9098dfc1da90899c814dabba9959f9eab7ffabd9b1799e400bda31799e014bd8b1738e90199d800bd9317e90099d414dabb22d2f70722a78701a9889f10ab7fa90f9d0415a9109d5616a9809d6216a91f9d6e16a9019d7a16a9209dac15fa6899b600200ede689da317689d9b1760bd8b17c51cbd9317e51dd02dbd9b17c51abda317e51bd021a003b9c017f0048810f860a90199c017bd8b1799c417a91b99cc17bd9b1799c81760",
+    "size": 295,
+    "sha256": "fa8c0ac51be70e188ebaf324802fd2ab9d4deec60674f6f9a3a411ec8549c509",
+    "native_address": "91DD21",
+    "pack_file": "type3-c2.bin"
+  },
+  "entry_seeds": [],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "entry behaviour is not yet captured"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1609362,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "03ffffffffffffff30dd9134dd91ffff",
+      "role": "Install official C2 shooter record with low-mirror bank91 pointers"
+    }
+  ]
+}

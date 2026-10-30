@@ -1,5 +1,15 @@
 # Native type-3 SpriteTool records C0, C1 and C2
 
+## Latest experimental restoration (2026-10-29)
+
+The [C2 descendant](native-type3-c2-restoration.md) supersedes the older C2
+constructor speculation and absent-record status for its own target. C2 now
+executes as a shooter in low-mirror bank91; actual two-direction generation
+matches10 source samples, and normal094 entry stays live through600 frames.
+All six16B shooter placements also load. Accepted product remains r14; the
+older rejected targets and partial captures below keep their historical scope.
+C0/late-C1 phase, E0 birth and full route acceptance remain open.
+
 ## Result
 
 The newest official donors place three type-3 records in slots `C0`, `C1` and

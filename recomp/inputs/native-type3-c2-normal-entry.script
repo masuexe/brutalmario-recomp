@@ -1,0 +1,32 @@
+# Map/node/translevel fixture; ordinary Y entry to094. No room/pipe, actor, HP, immunity, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+# Survey: override the map 6 lower-left node level and enter it.
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 94
+press y 2
+until 0100 == 14 500
+dump entry0
+wait 16
+dump entry16
+wait 32
+dump entry48
+wait 192
+dump entry240
+wait 360
+dump entry600
+quit

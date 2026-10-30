@@ -1495,3 +1495,19 @@ r14 regressions cover45 dump points: full SRAM/VRAM match, with explicitly
 recorded inactive CPU stack residue excluded from WRAM equality. All359 tests
 pass. The experimental target is not promoted: remaining loading windows,
 positive current E0 birth, other95 rooms and C2 still need qualification.
+
+
+## Official C2 shooter descendant (2026-10-29)
+
+The [C2 checkpoint](native-type3-c2-restoration.md) restores the newest official
+Boss program in low-mirror bank91 and extends the existing shooter adapter by
+three threshold bytes. Ten left/right firing samples match7hero selected actor
+and shooter state exactly. Ordinary Y entry through a map/translevel094 fixture
+stays live in170 through600 frames and actually generates phase0F custom95.
+All six16B shooter placements now load with matching positions and extra flags
+across63 live samples; the late-window fixture explicitly bypasses a corridor.
+C0 and late-C1 motion phase, positive current E0 birth and other95 rooms remain
+open. Two parent regressions retain210 complete byte-identical WRAM/SRAM/VRAM
+comparisons;363 tests pass. The experimental target is demo11-native-type3-c2-v2.
+Accepted product remains r14; r15 stays rejected. This is no course-clear,
+whole-game survey, earned-victory, visible/audio or full timing acceptance.

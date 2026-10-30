@@ -113,3 +113,12 @@ Then address C2 with its actual placement classification and low-memory needs.
 Promote a cumulative product only after those relevant acceptance boundaries
 are stated and checked. Broader Forest routes, earned Seven/mazo victories,
 music, fonts and the remaining sprites are still restoration work.
+
+
+## Subsequent C2 descendant
+
+The [C2 checkpoint](native-type3-c2-restoration.md) extends this adapter by only
+three threshold bytes, restores the original C2 program in bank91, qualifies
+actual left/right generation and normal094 loading, and exercises all six16B
+placements. Its210 full parent comparisons include this target's original16B
+route. This document's earlier identities and acceptance limits remain intact.
