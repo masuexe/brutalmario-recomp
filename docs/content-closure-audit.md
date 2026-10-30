@@ -212,3 +212,7 @@ post-ending restart check.
 | [Playtesting](playtesting.md) | User acceptances and their scope. |
 | [Listening queue](audio-acceptance-queue.md) | Deferred audio checks. |
 | [Product target](native-full-product.md) | Pack list, records and merged-target checks. |
+
+## 2026-10-30 update
+
+See [content-closure-update-2026-10-30.md](content-closure-update-2026-10-30.md) for the closed items and the current open blockers.
