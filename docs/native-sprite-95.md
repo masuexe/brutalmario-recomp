@@ -1,5 +1,16 @@
 # Native sprite 95 module review
 
+## Current cumulative room qualification (2026-10-30)
+
+The [fresh six-room and five-door checkpoint](native-sprite95-current-rooms.md)
+uses `demo11-native-seven-product-v1`, with the newest official Boss95 program
+still present unchanged. Twelve paired native/7hero cases pass86 sample
+comparisons. They cover16C child generation,16F actual layer2 movement,16E
+door loading and all five ordinary-Up branches, plus idle16D/172/1CC state.
+Room16E sprite placements match with reordered allocation slots. Trial clears,
+1CC interaction,172's real exit and complete courses remain open. This updates
+current-candidate coverage; it does not promote the rejected r15 or r14.
+
 ## Product integration update (2026-10-29)
 
 The independent target described below was not present in product r14: its95

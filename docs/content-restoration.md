@@ -1529,3 +1529,18 @@ pit death and a real hidden green mushroom/life award at source-matched samples
 byte-identical state comparisons;368 tests pass. R14 remains the accepted
 product; this experiment is not whole-game acceptance. Other95 rooms, C0/late-
 C1 phase, earned Seven/mazo victories/save and music/graphics work remain open.
+
+## Current sprite95 room mechanisms (2026-10-30)
+
+The [six-room checkpoint](native-sprite95-current-rooms.md) now qualifies the
+remaining95 rooms in the unchanged experimental Seven product candidate.
+Twenty-four completed captures provide86 paired samples:16C generates its
+phase06 child,16F actually cycles layer2, and16E loads all six doors. Ordinary
+Up enters the five trials at150/16F/170/171/172, with source-matched selected
+bits and172 switch preservation. Boss/7hero complete95 programs are identical;
+bounded foregrounds and five backgrounds match. The1CC background remains
+unqualified, and16E sprite placement order differs while placements match.
+These diagnostic entry/position/immunity fixtures do not prove trial clears,
+the172 exit,1CC interaction or full-course/visible/audio parity. The candidate
+is not promoted. Continue actual trials and earned Seven/mazo wins/save along
+with remaining content, route, music and graphics work.
