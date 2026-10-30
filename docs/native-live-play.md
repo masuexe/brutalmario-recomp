@@ -41,8 +41,10 @@ moves and attacks under `1490 = 64`. A blind attack sequence from the right edge
 does not end the fight.
 
 The player reaches `y 224` with a jump, while the green orb sits near `y 86`. A
-position write to `(168,80)` fails: the game returns the player to the floor. The orb needs a valid platform route or a working swim state before the
-damage window. Do not claim a 9C clear from this session.
+position write to `(168,80)` applies, and the player then falls through the
+orb. The sampled frame still shows the boss attack text, not a ruby prompt. The
+orb contact probably needs the ruby attack phase or a valid platform route. Do
+not claim a 9C clear from this session.
 
 ## Cautions
 
