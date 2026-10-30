@@ -145,7 +145,7 @@ every supplied image. All 13 images hold the type-0 placeholder in every slot:
 This is a record-level result only. Numeric sprite IDs are version-local, and a
 donor program for the same room content can live in a different slot. Match the
 recipient room layouts against donor rooms before any install. Do not treat the
-placeholder as proof that the content is unused.
+placeholder as proof that no room uses this content.
 
 ## Limits
 
