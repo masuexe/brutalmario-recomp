@@ -49,11 +49,19 @@ entry works after the immunity write: `seven-unlock-v6` stays in mode `14`,
 room `0FF`, with four lives. The all-ones write and the forced WP write did not
 show a new move set or tier progress.
 
+## Long fight result
+
+A plain 550-cycle run keeps the fight live in room `0FF` with four lives. It
+reaches tier `6` near cycle `300`. At that tier the parts hold fields `105` and
+`6`, and the WP grows to `25`. The fields do not fall from cycle `350` to `550`.
+Basic Up+A and Up+B attacks stop at the final form. The next probe must use the
+move conditions from the workbook.
+
 ## Next work
 
-1. Find why the current opening fixture returns to map mode at room `0FF`.
-2. Re-run the all-ones write with a working entry.
-3. Compare the HUD and the attack set with a normal fight capture.
-4. Then use the real moves against the final form and check the health table.
+1. Test the workbook move inputs on the final form: Super Jump then B, Super
+   Spin, and the Select stock action.
+2. Compare the attack set and the HUD with a normal fight capture.
+3. Re-run the all-ones move-flag write only after the basic route stops.
 
 Do not claim an unlocked move set or an earned victory yet.
