@@ -89,9 +89,11 @@ window shows a damage number.
 
 A 120-cycle return probe alternates the attack position and `(168,80)`. The
 timer stays `0` after the first touch, and the orb remains visible in the
-frames. The orb therefore does not reactivate at that point. It probably
-respawns at another position, or a boss phase gates it. The next probe must
-track the green orb in the frames and touch its current position.
+frames. A frame scan with `tools/find_green_orb.py` shows the orb at
+`(170..181, 82..93)` for the whole sample, with a two-frame pulse. The orb does
+not reactivate at that point. A contact frame still shows the boss attack text
+box, not a ruby prompt. The next probe must touch the orb during a quiet phase
+and press a button after the contact.
 
 ## Next work
 
