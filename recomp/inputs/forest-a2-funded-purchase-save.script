@@ -1,0 +1,77 @@
+# Funded purchase/save fixture: currency2222 is seeded to test a real1111-price purchase.
+# Position/pipe/immunity fixtures bypass traversal. No ownership, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 20036001
+wait 30
+dump before_branch
+press up 20
+wait 240
+dump branch
+until 010b == 82 0
+wait 360
+dump greeting
+press a 2
+wait 120
+dump menu_first
+poke 11809 ae0800
+dump funded
+press a 2
+wait 180
+dump purchased
+press a 2
+wait 60
+dump owned_menu
+press a 2
+wait 60
+dump duplicate
+press b 2
+wait 240
+dump returned
+poke 94 80026001
+poke 88 0000
+poke 71 06
+wait 360
+dump interior
+poke 94 80186001
+poke 88 0000
+poke 71 06
+wait 240
+dump goal_room
+pokefor 94 a0004001 60
+press right 40
+until 1493 == e0 120
+dump touched
+wait 900
+dump clear_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 600
+dump file_reload
+press y 2
+until 0100 == 14 500
+dump onward
+quit

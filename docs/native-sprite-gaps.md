@@ -7,8 +7,11 @@ as declared by `DONORS` in `tools/audit_sprite_gaps.py`. Its "no donor record"
 category means absent from those three sources, not absent from all official
 demos. The [hollow branch review](forest-hollow-route.md) now identifies an
 official demoOnly1 type-1 A2 record and a protected 7,392-byte candidate, with
-the same room182 placement. Its dependencies and behavior remain unqualified;
-it is not installed. A2 must no longer be treated as having no official source.
+the same room182 placement. The subsequent [r14 restoration](forest-a2-restoration.md)
+installs its reviewed native program, qualifies the menu, one funded purchase
+and saved ownership, return/re-entry and the room104 automatic exit. Other
+purchases and ability effects remain open. A2 must no longer be treated as
+having no official source or no native installation.
 Other slots need the same chronology-aware review before any global absence
 claim. The counts below preserve the original three-source audit, not a current
 whole-product restoration census.

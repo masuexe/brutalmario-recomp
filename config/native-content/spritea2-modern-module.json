@@ -1,0 +1,372 @@
+{
+  "schema": 1,
+  "id": "spritea2-modern-module",
+  "scope": "Official demoOnly1 A2 code, preserving recipient rooms and shared helpers. Static admission and native behavior are separate gates.",
+  "source": {
+    "version": "demo-only-1",
+    "output": {
+      "size": 4194304,
+      "sha256": "b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b"
+    }
+  },
+  "parent": {
+    "target": "demo11-native-product-r13",
+    "output": {
+      "size": 4194304,
+      "sha256": "c02dc11e0c79c804740b38797463a1fc9645a8a05cdb4e18c7c09fff45760681"
+    }
+  },
+  "code": {
+    "source_address": "30D7B4",
+    "native_address": "9DD7B4",
+    "size": 7400,
+    "sha256": "55eda050abab08a1442a452392fbce05494276a6eb7fde8d42f805dcdad961bb",
+    "adapted_sha256": "ccd76df8480d3c753d605720dd809db3e47739123d2f8fae8130727297eeb8fc",
+    "pack_file": "spritea2-modern-code.bin"
+  },
+  "entry_seeds": [
+    "30D7BF",
+    "30D7EC"
+  ],
+  "short_dispatch": {
+    "site": "30D85D",
+    "helper": "0086DF",
+    "table": "30D861",
+    "count": 4,
+    "sha256": "fef9f730e3cbbf42bd18c1a463ba2bff99f706a771478805641f0a62eb2b82e0",
+    "targets": [
+      "30D869",
+      "30D930",
+      "30DA46",
+      "30DB47"
+    ]
+  },
+  "relocations": [
+    {
+      "address": "30D8C7",
+      "before": "2204d930",
+      "after": "2204d99d",
+      "kind": "call"
+    },
+    {
+      "address": "30D977",
+      "before": "22a0d930",
+      "after": "22a0d99d",
+      "kind": "call"
+    },
+    {
+      "address": "30DAC8",
+      "before": "bf5bda30",
+      "after": "bf5bda9d",
+      "kind": "data"
+    },
+    {
+      "address": "30DD1D",
+      "before": "bf5bda30",
+      "after": "bf5bda9d",
+      "kind": "data"
+    },
+    {
+      "address": "30DDBB",
+      "before": "22f8d930",
+      "after": "22f8d99d",
+      "kind": "call"
+    },
+    {
+      "address": "30F040",
+      "before": "af22f030",
+      "after": "af22f09d",
+      "kind": "data"
+    },
+    {
+      "address": "30F088",
+      "before": "22ccd930",
+      "after": "22ccd99d",
+      "kind": "call"
+    },
+    {
+      "address": "30F132",
+      "before": "22ccd930",
+      "after": "22ccd99d",
+      "kind": "call"
+    },
+    {
+      "address": "30F175",
+      "before": "22ccd930",
+      "after": "22ccd99d",
+      "kind": "call"
+    },
+    {
+      "address": "30F202",
+      "before": "2207f230",
+      "after": "2207f29d",
+      "kind": "call"
+    },
+    {
+      "address": "30F46C",
+      "before": "7f09f430",
+      "after": "7f09f49d",
+      "kind": "data"
+    },
+    {
+      "address": "30F476",
+      "before": "7f18f430",
+      "after": "7f18f49d",
+      "kind": "data"
+    },
+    {
+      "address": "30F47D",
+      "before": "bf27f430",
+      "after": "bf27f49d",
+      "kind": "data"
+    }
+  ],
+  "external_calls": [
+    "0086DF",
+    "01801A",
+    "0FF780",
+    "10D8D0",
+    "28FCC0",
+    "28FD6D"
+  ],
+  "shared_dependencies": [
+    {
+      "address": "0086DF",
+      "size": 27,
+      "sha256": "65844e1789aa7c52744fce48bf826e97e4737afadfd4e18b3e289b340328fff3"
+    },
+    {
+      "address": "10D8D0",
+      "size": 149,
+      "sha256": "6fd5243e55cb41f4d8339e0f9cef5b169f73d509aa50d6015fa6fc28bb768f3d"
+    },
+    {
+      "address": "0FF780",
+      "size": 267,
+      "sha256": "7845a2ec6b63f9227e5814e7b3d09a9e8981a636e5b25eac08776555ce32b5d5"
+    },
+    {
+      "address": "0FF1B7",
+      "size": 324,
+      "sha256": "eabb802764fbce483ffa3c916bb995abb743d82ede61c80f844f20fdbd94a8c5"
+    },
+    {
+      "address": "01801A",
+      "size": 9,
+      "sha256": "2763d606be5bc840963484946f581e86afd2f08c59aacad7f880bc97384eb387"
+    },
+    {
+      "address": "01ABD8",
+      "size": 304,
+      "sha256": "468b5217eb688d403fe1ab571be42c91c5f8e4b5d8c073e48ae1b4291e125069"
+    },
+    {
+      "address": "28FCC0",
+      "size": 169,
+      "sha256": "abf4763949320274d23c85105c03c5dd96bca73f913ce99a5be9676d4f71e179"
+    }
+  ],
+  "recipient_helper": {
+    "address": "28FD6D",
+    "size": 125,
+    "source_sha256": "ad49a44a6426b66105626f93af2527c5ccdc17b1f115003fa4110dfe261a02af",
+    "recipient_sha256": "7d5a96f250a4d50c2a9bbfc8977ae3b2297d362bbdec8ee4b2af2fc9cbad365a",
+    "changes": [
+      {
+        "address": "28FDAE",
+        "source": "0080",
+        "recipient": "69fd"
+      },
+      {
+        "address": "28FDC5",
+        "source": "0280",
+        "recipient": "6bfd"
+      }
+    ],
+    "source_table": "6b000000",
+    "recipient_table": "0c1c0102",
+    "scope": "Existing recipient GetDrawInfo table relocation is preserved, not installed by this recipe."
+  },
+  "graphics": [
+    {
+      "id": "292",
+      "source": "21F01A",
+      "recipient": "58AC08",
+      "encoded": {
+        "size": 1540,
+        "sha256": "24e81ff4d0fe95d72527e84423a074dc93424773cc079ddcabc3489a67d5939f"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "7b9cee50d6a271ee3c37e460df3b3452afc8672843417b9508ac5cb2bbcca40d"
+      }
+    },
+    {
+      "id": "293",
+      "source": "22F627",
+      "recipient": "59E308",
+      "encoded": {
+        "size": 1400,
+        "sha256": "1e6aac0784555b002a3c3dbb25701c27e732468a9cc1669103ed00f1f0b0e3ba"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "2016bda07f4a5b6885343e5a61fdfa605db52b09537ffbb47157ef53d27052c1"
+      }
+    },
+    {
+      "id": "294",
+      "source": "23800F",
+      "recipient": "5AFA08",
+      "encoded": {
+        "size": 1451,
+        "sha256": "a2a7a5ee748a780da7390865e7cd6e4d0a2ee809e8c4607e275e16b449ef2290"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "6838b00c655e3aa0db72bf1d9c8e3b10186145c45b2289e47693081a849455be"
+      }
+    },
+    {
+      "id": "295",
+      "source": "2385C2",
+      "recipient": "5ECC08",
+      "encoded": {
+        "size": 1505,
+        "sha256": "b745f17f2fa70ac33b1f85206fb9b7054e7748c9d2d29cae7d4513f5b4a15399"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "d7a1a7043304bb80a1338d57bfb857eb97a0614c6101d746ba43975185ae60b4"
+      }
+    },
+    {
+      "id": "296",
+      "source": "238BAB",
+      "recipient": "618E08",
+      "encoded": {
+        "size": 1560,
+        "sha256": "fd7245b9b1d11d3f55451c3bc7681aef1f0ba8f4eb0b0371f00cd609cfeb9fd6"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "395f23c8c51e52dc7724bc2afb7d2226817c3d8bf1fa389f45ca1b64ec3ae151"
+      }
+    },
+    {
+      "id": "297",
+      "source": "2391CB",
+      "recipient": "22EFAC",
+      "encoded": {
+        "size": 1420,
+        "sha256": "22eab22939730158282c22e389729b94469a22ca4c0fa953dca75a34f03b363c"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "8dce5d6db1253ab3053982c94af0860331f6cbd188463ceb9866b9bcd74e3e83"
+      }
+    },
+    {
+      "id": "298",
+      "source": "23975F",
+      "recipient": "22F540",
+      "encoded": {
+        "size": 1595,
+        "sha256": "24e92cc35469b36afe88776de3c60a78850731c9a57fd269eeae464069b06fde"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "40176194dc19570e35f3d632afba8c1a1e628f4dc9a7671337f2eb6f8faa52aa"
+      }
+    },
+    {
+      "id": "299",
+      "source": "239DA2",
+      "recipient": "23800F",
+      "encoded": {
+        "size": 1488,
+        "sha256": "8ea04c865a22cd5f71f831250e8a65341e8693873dab1577b12a6bb0b75cf457"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "d654cbd8c4afea3baee0ac683aea8a197bf7ffd52888d67043f9eb7a4a180a53"
+      }
+    },
+    {
+      "id": "29A",
+      "source": "23A37A",
+      "recipient": "2385E7",
+      "encoded": {
+        "size": 1489,
+        "sha256": "a022be9df173dff4a9d9bbec1a5f0e15ecc4ff7f71014e8434a9adbf4642c92e"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "1457bbdfc4ba67aba4f2cef7c466d23c71c23c40cc65d48e9bd3626b75191071"
+      }
+    },
+    {
+      "id": "29B",
+      "source": "23A953",
+      "recipient": "238BC0",
+      "encoded": {
+        "size": 1382,
+        "sha256": "fdc8c185a61b8750df272edcff3d24c31707ddb66ef2e1ebc736aab8b03642f7"
+      },
+      "decoded": {
+        "size": 4096,
+        "sha256": "d7d1b341aca090f81b6c477b64ce0fe45e61d457ceba7032c5f428e66d45100e"
+      }
+    }
+  ],
+  "record": {
+    "slot": "A2",
+    "raw": "012200b735839944bfd730ecd7300000",
+    "native_raw": "012200b735839944bfd79decd79d0000",
+    "source_rooms": [
+      "104",
+      "182"
+    ],
+    "recipient_offset": 1608850,
+    "before": "0000ffffffffffff218001218001ffff"
+  },
+  "limits": [
+    "Indirect WRAM pointers and input/state-dependent behavior require native execution qualification.",
+    "Current room layouts and exits are preserved; the original source is not whole-image-equivalent."
+  ],
+  "return_adaptation": {
+    "scope": "Complete the missing hollow shop return using a new secondary entrance at the measured incoming pipe position. Only A2 variant1 is changed; room104 keeps its original special handler.",
+    "program_patch": {
+      "address": "30F3C7",
+      "before": "00",
+      "after": "ff"
+    },
+    "secondary_entrance": "1FF",
+    "destination": "11F",
+    "player_x": 800,
+    "player_y": 352,
+    "fields": [
+      {
+        "address": "05F9FF",
+        "before": "00",
+        "after": "1f"
+      },
+      {
+        "address": "05FBFF",
+        "before": "00",
+        "after": "16"
+      },
+      {
+        "address": "05FDFF",
+        "before": "00",
+        "after": "43"
+      },
+      {
+        "address": "05FFFF",
+        "before": "00",
+        "after": "68"
+      }
+    ],
+    "namespace_check": "No possible screen/07/00/FF reference in complete bounded recipient Layer1 allocations; the four original entrance bytes are zero."
+  }
+}

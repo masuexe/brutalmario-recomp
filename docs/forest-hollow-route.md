@@ -91,8 +91,10 @@ Official demoOnly1 has the same room182 sprite list and an actual type-1 record:
 
 The header at `30D7B4` is `STAR` with mutually complemented size words.
 Room182 Layer 2 matches the recipient. Its 179-byte Layer 1 allocation differs
-at offset 177: recipient `6E`, source `71`. Preserve the recipient layout and
-review that destination difference before installation. Matching an older
+at offset 177: recipient `6E`, source `71`. Preserve that difference. The later
+[A2 review](forest-a2-restoration.md) confirms that neither value is a return
+registered in the live exit table; do not interpret it as a destination merely
+from the allocation tail. Matching an older
 numeric A2 slot alone would not establish identity with this modern branch.
 
 An untouched official demoOnly1 reference replay using the branch-Up input
@@ -147,9 +149,11 @@ and with the pinned r13 `probe_reference.py` manifest before running the checker
 
 ## Next work
 
-Audit the official demoOnly1 A2 block's calls, data, graphics and constructor
-dependencies, retain modern room182 data, and build an isolated descendant only
-after the recipe is reviewed. Qualify both room182 and room104 and regress the
-saved normal route. Continue Ghost Forest `114` and the remaining Forest exits.
+The [r14 A2 checkpoint](forest-a2-restoration.md) supersedes the missing-program
+status for the newer target. It restores the shop, one funded purchase and saved
+ownership, a safe return/re-entry and the original room104 automatic route. All
+room layouts are retained; this normal route is byte-exact against r13 at nine
+full dump points. Other purchases and ability effects remain open.
+Continue Ghost Forest `114` and the remaining Forest exits.
 Full traversal, optional room03A, collectibles, audio and visible acceptance,
 other-world identity review, C2 and complete endgame acceptance remain open.

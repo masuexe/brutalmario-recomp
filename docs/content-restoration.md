@@ -1420,3 +1420,33 @@ also has a source-data difference to preserve during review. Five Forest normal
 exit/save boundaries are now qualified; five remain. Full traversal, the A2
 branch, optional content and broader restoration remain open. No game code,
 ROM or resource pack changed in this checkpoint.
+
+
+## Native product r14: official A2 shop, return and purchase save (2026-10-29)
+
+The [A2 restoration](forest-a2-restoration.md) installs the matching official
+demoOnly1 program in native bank `9D`, preserving all recipient room layouts and
+46 inherited packs. The new pack restores the hollow's Vivian shop, four menu
+selections, insufficient-funds response and one actual 1,111-price purchase
+under an explicit 2,222 balance fixture. Ownership changes through the guest
+program; duplicate purchase does not charge again. Actual normal clear saves
+the remaining currency and ownership in SRAM, and File A reload retains them.
+
+The original return table is empty. A bounded native adaptation adds secondary
+`1FF` at the measured incoming pipe position `800/352` and changes only the hollow
+variant's selector byte. Actual B return, stable standing and Up re-entry pass.
+The other placed A2 in room `104` now matches the source's automatic exit to `180`;
+the r13 placeholder control remains in `104`. Thirteen source/native menu and purchase
+sample pairs match the asserted functional state and complete 384-byte message
+buffers. This is not whole-image parity; source entry uses declared destination
+and translevel fixtures. The original source's garbled message glyphs remain.
+
+The r14 hollow normal route is byte-identical to r13 in all 27 complete
+WRAM/SRAM/VRAM dump comparisons. All 353 tests pass, including nine admission
+tests. The new module's bank must retain the source's low WRAM/IO mirrors; an
+earlier D2 prototype crashes and is retained only as ignored diagnostic evidence.
+Other mapped programs' bank assumptions need their own audit. The r13 survey's
+228 playable entries/no crash is historical and has not been relabelled as an
+r14 survey. Other purchases, ability effects, the alternate room104 flag path,
+Ghost Forest, full traversal and broader restoration remain open. r14 is the
+new working native target, not whole-game acceptance.

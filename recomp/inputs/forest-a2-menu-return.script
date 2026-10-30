@@ -1,0 +1,72 @@
+# Assisted hollow shop menu, insufficient-funds control, real B return and re-entry.
+# Existing node, position and immunity fixtures reach the authored Up entrance.
+# No menu, currency, purchase, destination, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 20036001
+wait 30
+dump before_branch
+press up 20
+wait 240
+dump branch
+until 010b == 82 0
+wait 360
+dump greeting
+press a 2
+wait 120
+dump menu_first
+press down 2
+wait 60
+dump menu_second
+press down 2
+wait 60
+dump menu_third
+press down 2
+wait 60
+dump menu_fourth
+press down 2
+wait 60
+dump menu_bottom
+press up 2
+wait 60
+press up 2
+wait 60
+press up 2
+wait 60
+dump menu_top
+press a 2
+wait 60
+dump denied
+wait 360
+press a 2
+wait 60
+dump menu_restored
+press b 2
+wait 240
+dump returned
+wait 120
+dump returned_stable
+press up 20
+wait 240
+dump reentry
+quit

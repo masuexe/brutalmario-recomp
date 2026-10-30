@@ -1,0 +1,63 @@
+# Diagnostic official demoOnly1 source entry: forced exit destination and translevel43.
+# Starts at naturally entered Baby Yoshi Hill; not ordinary hollow-course traversal.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press right 30
+wait 180
+press right 30
+wait 180
+dump hill-map
+press y 30
+wait 240
+dump hill-entry
+poke 13bf 43
+poke 19b8 82
+poke 19d8 05
+poke 94 80006001
+poke 88 0000
+poke 71 06
+wait 240
+dump branch
+wait 360
+dump greeting
+press a 2
+wait 120
+dump menu_first
+press down 2
+wait 60
+dump menu_second
+press down 2
+wait 60
+dump menu_third
+press down 2
+wait 60
+dump menu_fourth
+press down 2
+wait 60
+dump menu_bottom
+press up 2
+wait 60
+press up 2
+wait 60
+press up 2
+wait 60
+dump menu_top
+press a 2
+wait 60
+dump denied
+wait 360
+press a 2
+wait 60
+dump menu_restored
+quit
