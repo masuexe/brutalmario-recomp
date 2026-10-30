@@ -64,6 +64,15 @@ immediate request in the supplied packs. Ids `027F`, `0280` and `0281` decode to
 request in a 9C pack. The room 190 boss 9B requests `0280`. Sprite 9C requests
 `0281`. So `027E` stays unexplained rather than proven unused. Do not install it without a requester.
 
+## Attack probe
+
+An assisted attack probe `mazo-9c-attack-v1` uses the tracked align-fine prefix,
+temporary immunity and 240 Up+B/Up+A cycles with 29 samples. The room stays in
+live `151`. The boss part `1528` values stay at 0, 4, 6, 7 and 248 and never
+drop. Ids `0D85` and `0D8F` stay 0, so the room 190 health table does not apply.
+No `0282` data appears in VRAM or WRAM. The request needs a phase that these
+inputs do not reach.
+
 ## Next work
 
 Reach the 9C attack phase with a manual sample or a damage route. Then check VRAM
