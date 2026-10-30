@@ -89,7 +89,10 @@ not proven to be the green-window timer. A frame near the contact shows a damage
 number. The green-window variable stays unknown.
 
 A frame scan with `tools/find_green_orb.py` shows the orb at
-`(170..181, 82..93)` for the whole sample, with a two-frame pulse. The script
+`(170..181, 82..93)` for the whole sample, with a two-frame pulse.
+`tools/find_cgram_animation.py` shows entry `100` pulsing the same way while
+the player stands away from the orb. That entry is the orb glow, not a player
+flash. The script
 `recomp/inputs/mazo-9c-translevel-entry.script` enters the room through
 map 6 and translevel `075`, keeps the fight live and touches the orb. The
 contact samples still show the boss attack text box, not a ruby prompt. The
