@@ -1,6 +1,10 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-mazo-gfx282-v1': {
+        'binary': 'BrutalMarioDemo11NativeMazoGfx282V1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Gfx282 V1',
+    },
     'demo11-native-modern-sprites-v2': {
         'binary': 'BrutalMarioDemo11NativeModernSpritesV2SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Modern Sprites V2',

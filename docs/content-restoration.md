@@ -1590,3 +1590,12 @@ one-frame shift: 63 of 63 aligned samples. The C1 window matches every moving
 child row across 64 frames; one static placed child at X1152 differs by one
 pixel. `tools/qualify_native_type3_phase.py` reproduces both checks. The report
 is `local/reports/native-type3-phase-v1.json`.
+
+## Room 151 boss extended graphics 0x282 (2026-10-30)
+
+Sprite 9C requests extended graphics `0282` at pack offset `E0A`. The product
+pointer is empty and the mazo stream holds 4096 bytes. The candidate
+`demo11-native-mazo-gfx282-v1` mounts the official stream at `D1:9000` and
+patches the pointer; the ROM delta from r14 is three bytes. No sampled frame
+executes the request, so runtime frame acceptance stays open. See
+[native-mazo-gfx282.md](native-mazo-gfx282.md). Id `027E` stays open.
