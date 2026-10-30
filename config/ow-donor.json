@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "ow",
+  "target": "Official ow code source verified against its supplied IPS",
+  "scope": "Pinned official IPS reconstruction for source-code review and separately qualified behavior; no whole-version playability claim.",
+  "authoritative_patch": {
+    "base_path": "../roms/Super Mario World (U) [!].smc",
+    "base": {
+      "size": 524288,
+      "sha256": "0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b"
+    },
+    "ips_path": "../patches/cheap_demo/ow.ips",
+    "ips": {
+      "size": 3841216,
+      "sha256": "c65cc8be84b5b382e88a62463737380909bad7a2a7ab38b7ea9ae4b170e22117"
+    },
+    "copier_prefix_bytes": 512
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "b5116eba4d88f0b254a17aae845a44a30f7000566ac21c1fca5b1403c0296d6e"
+  }
+}

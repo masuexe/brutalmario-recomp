@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "id": "modern-sprite-integration",
+  "parent": "demo11-native-sprite-product-v1",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "1daaa9411b633fb066b2b94a8970a4f12057b391819ff90b775b89b511b4ab11"
+  },
+  "candidate": "demo11-native-modern-sprites-v1",
+  "candidate_output": {
+    "size": 4194304,
+    "sha256": "bae32d5dc0e02d95d86e856e0ec83264f8be0bdb57796564722ccf7a71e824e6"
+  },
+  "sprite99_recipe": "config/native-content/sprite99-modern-module.json",
+  "sprite99_db07_operands": [
+    {
+      "address": "13AA4B",
+      "operand": "FBF3",
+      "reason": "Explicit DB07 prelude; shared table07FBF3 pinned."
+    },
+    {
+      "address": "13AA51",
+      "operand": "FC13",
+      "reason": "Explicit DB07 prelude; shared table07FC13 pinned."
+    }
+  ],
+  "a1_pack": {
+    "variable": "BM_NATIVE_SPRITE_A1_PACK",
+    "pack_file": "spritea1-modern-code.bin",
+    "address": "8A88EB",
+    "size": 5724,
+    "sha256": "c90d51865fde2e6bad2a17e06ed92d023d9bffdaff34cb7145981fef40c7571f",
+    "executable": true,
+    "source": "local/native-modules/spritea1-modern-v1"
+  },
+  "a1_patch": {
+    "offset": 1608834,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "013600863587b944f6888a34898a0000",
+    "role": "Restore official modern A1 multi-room controller in native8A"
+  },
+  "patches": [
+    {
+      "slot": "99",
+      "offset": 1608706,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01368004e1a23d450ba78b4ea78b0000"
+    },
+    {
+      "slot": "A1",
+      "offset": 1608834,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600863587b944f6888a34898a0000"
+    }
+  ]
+}

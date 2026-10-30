@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "id": "sprite99-modern-module",
+  "scope": "Newest official demoOnly1 sprite99 moving-block program. Preserve explicit DB07 data reads and current room layouts; runtime behavior requires separate qualification.",
+  "donor_manifest": "config/demo-only-1-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "99",
+    "raw": "01368004e1a23d450ba7134ea7130000",
+    "init": "13A70B",
+    "main": "13A74E",
+    "relative": {
+      "init": "F",
+      "main": "52"
+    },
+    "rooms": [
+      "174",
+      "175",
+      "176"
+    ],
+    "native_raw": "01368004e1a23d450ba78b4ea78b0000"
+  },
+  "code": {
+    "source_address": "13A6FC",
+    "native_address": "8BA6FC",
+    "size": 1391,
+    "sha256": "4513edf074e0068e62471e931961f025d12bd3dd0caf4100cce5b98434d194c9",
+    "adapted_sha256": "4513edf074e0068e62471e931961f025d12bd3dd0caf4100cce5b98434d194c9",
+    "pack_file": "sprite99-code.bin"
+  },
+  "entry_seeds": [
+    "13A70B",
+    "13A74E"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01802A",
+    "01B44F",
+    "01B7B3",
+    "27FAF4",
+    "28FD6D"
+  ],
+  "graphics": [],
+  "shared_dependencies": [
+    {
+      "address": "07FBF3",
+      "size": 64,
+      "sha256": "4cdbd4539a4617580f5f43774e7c0075d404f32afb901c68cffe489a374673b7"
+    },
+    {
+      "address": "01DCD1",
+      "size": 64,
+      "sha256": "ee8f78b4ee4aadef7049e096316d4a0bcc9c0f213b7f668831bbd4e53036dba2"
+    }
+  ],
+  "open_dependencies": [
+    "Fresh native/source platform collision and motion, room traversal and graphics qualification."
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608706,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01368004e1a23d450ba78b4ea78b0000",
+      "role": "Restore official modern sprite99 program; DB07 shared tables retained, native code in8B"
+    }
+  ],
+  "ignored_operands": [
+    {
+      "address": "13AA4B",
+      "operand": "FBF3",
+      "reason": "Explicit DB07 prelude; shared table07FBF3 pinned."
+    },
+    {
+      "address": "13AA51",
+      "operand": "FC13",
+      "reason": "Explicit DB07 prelude; shared table07FC13 pinned."
+    }
+  ]
+}

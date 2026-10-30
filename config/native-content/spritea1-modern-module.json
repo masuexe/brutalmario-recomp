@@ -1,0 +1,519 @@
+{
+  "schema": 1,
+  "id": "spritea1-modern-module",
+  "scope": "Newest official demoOnly1 A1 multi-room program with two explicitly bounded short dispatches; adapt only52 source-bank operands to native8A.",
+  "donor_manifest": "config/demo-only-1-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "A1",
+    "raw": "013600863587b944f688303489300000",
+    "init": "3088F6",
+    "main": "308934",
+    "relative": {
+      "init": "B",
+      "main": "49"
+    },
+    "native_raw": "013600863587b944f6888a34898a0000",
+    "source_rooms": [
+      "175",
+      "176",
+      "178"
+    ],
+    "recipient_offset": 1608834,
+    "before": "0000ffffffffffff218001218001ffff"
+  },
+  "code": {
+    "source_address": "3088EB",
+    "native_address": "8A88EB",
+    "size": 5724,
+    "sha256": "0d6aa35903c299703179a2e0dbfddb914810a9cefe4314d3ef5f01baa7306bc6",
+    "adapted_sha256": "c90d51865fde2e6bad2a17e06ed92d023d9bffdaff34cb7145981fef40c7571f",
+    "pack_file": "spritea1-modern-code.bin"
+  },
+  "entry_seeds": [
+    "3088F6",
+    "308934"
+  ],
+  "external_calls": [
+    "0086DF",
+    "01801A",
+    "018022",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "028663",
+    "0FF780",
+    "10D8D0",
+    "27FB02",
+    "28FCC0",
+    "28FD6D",
+    "28FE83",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [
+    {
+      "address": "0086DF",
+      "size": 27,
+      "sha256": "65844e1789aa7c52744fce48bf826e97e4737afadfd4e18b3e289b340328fff3"
+    },
+    {
+      "address": "01801A",
+      "size": 9,
+      "sha256": "2763d606be5bc840963484946f581e86afd2f08c59aacad7f880bc97384eb387"
+    },
+    {
+      "address": "018022",
+      "size": 64,
+      "sha256": "d8b9e6cf448bb7e28a0ed79906878dab878860fea9d6415b6f202d34a6aab378"
+    },
+    {
+      "address": "01A7DC",
+      "size": 64,
+      "sha256": "bf8e21b661f6a7ea26b88381f63714e92bf3f6905a94d2b0884ab48b0b15b88f"
+    },
+    {
+      "address": "01ACF9",
+      "size": 64,
+      "sha256": "9174428e507c2689e3e4aca04aa29470f820a3cfb8361bc63a25f5bd1a2a818b"
+    },
+    {
+      "address": "01B7B3",
+      "size": 64,
+      "sha256": "467e38b7fa0cda8b38471f7d3ba771b3b134393a33f620436b0f0bdb56abc3d7"
+    },
+    {
+      "address": "028663",
+      "size": 64,
+      "sha256": "1fabd4157d7248bf8afc758e558776c39eff19f99643f8acff3b5a7dc92ef554"
+    },
+    {
+      "address": "0FF780",
+      "size": 267,
+      "sha256": "7845a2ec6b63f9227e5814e7b3d09a9e8981a636e5b25eac08776555ce32b5d5"
+    },
+    {
+      "address": "10D8D0",
+      "size": 149,
+      "sha256": "6fd5243e55cb41f4d8339e0f9cef5b169f73d509aa50d6015fa6fc28bb768f3d"
+    },
+    {
+      "address": "27FB02",
+      "size": 64,
+      "sha256": "04fc237a74efb1fa5ec2b74d875fb720c2490c71bbcf79e7f11f930d6ed08fae"
+    },
+    {
+      "address": "28FCC0",
+      "size": 169,
+      "sha256": "abf4763949320274d23c85105c03c5dd96bca73f913ce99a5be9676d4f71e179"
+    },
+    {
+      "address": "28FD6D",
+      "size": 64,
+      "sha256": "5fcfaf75a8b790130b71627227113233271ca4bcd65da9364cd1ec151c7a9ada"
+    },
+    {
+      "address": "28FE83",
+      "size": 64,
+      "sha256": "eb2d273a5a84c31775d759243e7b7c296e4a99c41e4d5e6ba104a97daa6b60e0"
+    },
+    {
+      "address": "2E8DF0",
+      "size": 64,
+      "sha256": "0b4c37425cbae9b6751c4c13325e6a58369d4d71ad64da06682d4c0b8f332821"
+    }
+  ],
+  "open_dependencies": [
+    "Fresh native/source variant motion, child generation, room-chain and graphics qualification."
+  ],
+  "short_dispatches": [
+    {
+      "site": "30893F",
+      "table": "308943",
+      "count": 8,
+      "helper": "0086DF",
+      "sha256": "44c08a33e600a188deef410744bba8ab497a36dfb46f56427826d5d8d1cba4c3",
+      "targets": [
+        "308F2E",
+        "30927B",
+        "3093D6",
+        "308953",
+        "30919C",
+        "3091ED",
+        "309262",
+        "3091DD"
+      ]
+    },
+    {
+      "site": "3089B1",
+      "table": "3089B5",
+      "count": 8,
+      "helper": "0086DF",
+      "sha256": "80be40b8e08324158a99a73c27c04c519243395987dda65186a5dc6167701377",
+      "targets": [
+        "3089C6",
+        "308A5E",
+        "308AB9",
+        "308BA1",
+        "308B5D",
+        "308C2C",
+        "308B20",
+        "3089C5"
+      ]
+    }
+  ],
+  "relocations": [
+    {
+      "address": "3089FE",
+      "before": "225e9330",
+      "after": "225e938a",
+      "kind": "call"
+    },
+    {
+      "address": "308A14",
+      "before": "22959030",
+      "after": "2295908a",
+      "kind": "call"
+    },
+    {
+      "address": "308DCD",
+      "before": "22d28d30",
+      "after": "22d28d8a",
+      "kind": "call"
+    },
+    {
+      "address": "308EAA",
+      "before": "22b18e30",
+      "after": "22b18e8a",
+      "kind": "call"
+    },
+    {
+      "address": "308F8F",
+      "before": "22059030",
+      "after": "2205908a",
+      "kind": "call"
+    },
+    {
+      "address": "3090FC",
+      "before": "225c9030",
+      "after": "225c908a",
+      "kind": "call"
+    },
+    {
+      "address": "309353",
+      "before": "22899330",
+      "after": "2289938a",
+      "kind": "call"
+    },
+    {
+      "address": "30940E",
+      "before": "22159430",
+      "after": "2215948a",
+      "kind": "call"
+    },
+    {
+      "address": "30945A",
+      "before": "22899430",
+      "after": "2289948a",
+      "kind": "call"
+    },
+    {
+      "address": "30945E",
+      "before": "22ab9430",
+      "after": "22ab948a",
+      "kind": "call"
+    },
+    {
+      "address": "309466",
+      "before": "22899430",
+      "after": "2289948a",
+      "kind": "call"
+    },
+    {
+      "address": "30946A",
+      "before": "22ab9430",
+      "after": "22ab948a",
+      "kind": "call"
+    },
+    {
+      "address": "30947C",
+      "before": "22ab9430",
+      "after": "22ab948a",
+      "kind": "call"
+    },
+    {
+      "address": "309484",
+      "before": "229a9430",
+      "after": "229a948a",
+      "kind": "call"
+    },
+    {
+      "address": "309489",
+      "before": "22d19430",
+      "after": "22d1948a",
+      "kind": "call"
+    },
+    {
+      "address": "30948D",
+      "before": "22d19430",
+      "after": "22d1948a",
+      "kind": "call"
+    },
+    {
+      "address": "309491",
+      "before": "22d19430",
+      "after": "22d1948a",
+      "kind": "call"
+    },
+    {
+      "address": "309495",
+      "before": "22d19430",
+      "after": "22d1948a",
+      "kind": "call"
+    },
+    {
+      "address": "30949A",
+      "before": "22e49430",
+      "after": "22e4948a",
+      "kind": "call"
+    },
+    {
+      "address": "30949E",
+      "before": "22e49430",
+      "after": "22e4948a",
+      "kind": "call"
+    },
+    {
+      "address": "3094A2",
+      "before": "22e49430",
+      "after": "22e4948a",
+      "kind": "call"
+    },
+    {
+      "address": "3094A6",
+      "before": "22e49430",
+      "after": "22e4948a",
+      "kind": "call"
+    },
+    {
+      "address": "3094D1",
+      "before": "22f79430",
+      "after": "22f7948a",
+      "kind": "call"
+    },
+    {
+      "address": "3094E4",
+      "before": "22f79430",
+      "after": "22f7948a",
+      "kind": "call"
+    },
+    {
+      "address": "30952A",
+      "before": "222f9530",
+      "after": "222f958a",
+      "kind": "call"
+    },
+    {
+      "address": "309555",
+      "before": "225f9530",
+      "after": "225f958a",
+      "kind": "call"
+    },
+    {
+      "address": "3096BE",
+      "before": "bfa89630",
+      "after": "bfa8968a",
+      "kind": "data"
+    },
+    {
+      "address": "3096C8",
+      "before": "bfac9630",
+      "after": "bfac968a",
+      "kind": "data"
+    },
+    {
+      "address": "3096D2",
+      "before": "bfa49630",
+      "after": "bfa4968a",
+      "kind": "data"
+    },
+    {
+      "address": "3096E1",
+      "before": "bf989630",
+      "after": "bf98968a",
+      "kind": "data"
+    },
+    {
+      "address": "3097C9",
+      "before": "bfb89730",
+      "after": "bfb8978a",
+      "kind": "data"
+    },
+    {
+      "address": "3097D1",
+      "before": "bfac9730",
+      "after": "bfac978a",
+      "kind": "data"
+    },
+    {
+      "address": "3097DE",
+      "before": "bfb09730",
+      "after": "bfb0978a",
+      "kind": "data"
+    },
+    {
+      "address": "3097F0",
+      "before": "bfb49730",
+      "after": "bfb4978a",
+      "kind": "data"
+    },
+    {
+      "address": "309829",
+      "before": "bfb89730",
+      "after": "bfb8978a",
+      "kind": "data"
+    },
+    {
+      "address": "309831",
+      "before": "bfac9730",
+      "after": "bfac978a",
+      "kind": "data"
+    },
+    {
+      "address": "309851",
+      "before": "bfb09730",
+      "after": "bfb0978a",
+      "kind": "data"
+    },
+    {
+      "address": "309866",
+      "before": "bfb49730",
+      "after": "bfb4978a",
+      "kind": "data"
+    },
+    {
+      "address": "309909",
+      "before": "7fb29830",
+      "after": "7fb2988a",
+      "kind": "data"
+    },
+    {
+      "address": "309913",
+      "before": "7fc29830",
+      "after": "7fc2988a",
+      "kind": "data"
+    },
+    {
+      "address": "30991A",
+      "before": "bfd29830",
+      "after": "bfd2988a",
+      "kind": "data"
+    },
+    {
+      "address": "309923",
+      "before": "bfe29830",
+      "after": "bfe2988a",
+      "kind": "data"
+    },
+    {
+      "address": "309993",
+      "before": "bf509930",
+      "after": "bf50998a",
+      "kind": "data"
+    },
+    {
+      "address": "3099AB",
+      "before": "bf609930",
+      "after": "bf60998a",
+      "kind": "data"
+    },
+    {
+      "address": "3099B5",
+      "before": "bf409930",
+      "after": "bf40998a",
+      "kind": "data"
+    },
+    {
+      "address": "3099BC",
+      "before": "bf709930",
+      "after": "bf70998a",
+      "kind": "data"
+    },
+    {
+      "address": "309D58",
+      "before": "bf2f9c30",
+      "after": "bf2f9c8a",
+      "kind": "data"
+    },
+    {
+      "address": "309D6D",
+      "before": "bfe29b30",
+      "after": "bfe29b8a",
+      "kind": "data"
+    },
+    {
+      "address": "309D89",
+      "before": "bfe79c30",
+      "after": "bfe79c8a",
+      "kind": "data"
+    },
+    {
+      "address": "309D9E",
+      "before": "bf7c9c30",
+      "after": "bf7c9c8a",
+      "kind": "data"
+    },
+    {
+      "address": "309E39",
+      "before": "bfe29930",
+      "after": "bfe2998a",
+      "kind": "data"
+    },
+    {
+      "address": "309E44",
+      "before": "bfe29a30",
+      "after": "bfe29a8a",
+      "kind": "data"
+    }
+  ],
+  "source": {
+    "version": "demo-only-1",
+    "output": {
+      "size": 4194304,
+      "sha256": "b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b"
+    }
+  },
+  "parent": {
+    "target": "demo11-native-sprite-product-v1",
+    "output": {
+      "size": 4194304,
+      "sha256": "1daaa9411b633fb066b2b94a8970a4f12057b391819ff90b775b89b511b4ab11"
+    }
+  },
+  "recipient_helper": {
+    "address": "28FD6D",
+    "size": 125,
+    "source_sha256": "ad49a44a6426b66105626f93af2527c5ccdc17b1f115003fa4110dfe261a02af",
+    "recipient_sha256": "7d5a96f250a4d50c2a9bbfc8977ae3b2297d362bbdec8ee4b2af2fc9cbad365a",
+    "changes": [
+      {
+        "address": "28FDAE",
+        "source": "0080",
+        "recipient": "69fd"
+      },
+      {
+        "address": "28FDC5",
+        "source": "0280",
+        "recipient": "6bfd"
+      }
+    ],
+    "source_table": "6b000000",
+    "recipient_table": "0c1c0102",
+    "scope": "Existing recipient GetDrawInfo table relocation is preserved, not installed by this recipe."
+  }
+}
