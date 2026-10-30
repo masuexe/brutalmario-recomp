@@ -1511,3 +1511,21 @@ open. Two parent regressions retain210 complete byte-identical WRAM/SRAM/VRAM
 comparisons;363 tests pass. The experimental target is demo11-native-type3-c2-v2.
 Accepted product remains r14; r15 stays rejected. This is no course-clear,
 whole-game survey, earned-victory, visible/audio or full timing acceptance.
+
+
+## Cumulative Seven feature reconciliation (2026-10-29)
+
+The [Seven integration review](native-seven-product-integration.md) finds that
+cumulative targets still carried the older7hero controller/resources and an
+empty E0 record. The previously qualified newest Boss child/font/ending1up
+feature had not survived cumulative integration. A new isolated descendant,
+demo11-native-seven-product-v1, carries forward its exact master/resources,
+adds the byte-identical official child in low-mirror bank90, and applies seven
+bounded, conflict-checked ROM spans. Normal6A and all other programs remain.
+Six fresh child actor pairs match19 source fields; real death and font/re-entry
+checks pass. Explicit ending-stage fixtures qualify the17B transition, ordinary
+pit death and a real hidden green mushroom/life award at source-matched samples
+17/28, without proving an earned win. Four parent regressions give327 complete
+byte-identical state comparisons;368 tests pass. R14 remains the accepted
+product; this experiment is not whole-game acceptance. Other95 rooms, C0/late-
+C1 phase, earned Seven/mazo victories/save and music/graphics work remain open.

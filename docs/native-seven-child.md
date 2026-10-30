@@ -1,5 +1,14 @@
 # Native Seven Koopalings child and font lifecycle
 
+## Cumulative integration update (2026-10-29)
+
+The [Seven product integration](native-seven-product-integration.md) discovers
+that this qualified feature was missing from the cumulative candidate. It now
+carries the pinned newest Boss controller/resources and child into an isolated
+current descendant, with fresh source actor, font, ending and life-award checks.
+Earlier evidence below retains its exact identities and bounded acceptance;
+no earned complete victory or saved clear is inferred from ending fixtures.
+
 ## Result
 
 The isolated target `demo11-native-seven-child-font-cycle` descends from

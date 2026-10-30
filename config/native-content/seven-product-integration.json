@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "id": "seven-product-integration",
+  "parent": "demo11-native-type3-c2-v2",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "ecc16bfd6c03222b5979bc1496a68227846a76060c488d9445c3d86a42ca17a5"
+  },
+  "source": "demo11-native-seven-ending-1up",
+  "source_output": {
+    "size": 4194304,
+    "sha256": "941f2d0c7ac3ac7ba955d26590778a665e23af1d9cdbbb546d80ec065d0e8a64"
+  },
+  "foundation": "demo11-native-sprite9e",
+  "candidate": "demo11-native-seven-product-v1",
+  "candidate_output": {
+    "size": 4194304,
+    "sha256": "0f04abec07f424c482291c2aeee082bf4c41d3468f30e2483d06a728978cd8af"
+  },
+  "patches": [
+    {
+      "offset": 29332,
+      "before": "602114f00f",
+      "after": "5c00f1a2ea",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 191089,
+      "before": "00d9",
+      "after": "54de",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 666876,
+      "before": "ffffff",
+      "after": "7deaa6",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 679017,
+      "before": "00ffffffffffffffffffffffffffffffff",
+      "after": "8015001900fc0f14000200130001000000",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 1609842,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013610003bab18401dc29065c2900000",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 3498357,
+      "before": "74",
+      "after": "7b",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    },
+    {
+      "offset": 3498360,
+      "before": "33",
+      "after": "ad",
+      "role": "Integrate qualified Seven ending/child feature delta"
+    }
+  ],
+  "child_source_bank": "9E",
+  "child_native_bank": "90",
+  "source_packs": [
+    {
+      "variable": "BM_SEVEN_CODE_PACK",
+      "pack_file": "seven-code.bin",
+      "address": "A28000",
+      "size": 28965,
+      "sha256": "e9061413696935c854f3c20cac6b8fb6e1ae00886d56cb9bdf23629cb2f6c9de",
+      "executable": true
+    },
+    {
+      "variable": "BM_SEVEN_GRAPHICS_PACK",
+      "pack_file": "seven-graphics.bin",
+      "address": "A68000",
+      "size": 31366,
+      "sha256": "43cecea3a2201336d135466e5bb160a91115fd8b6c95223fd1b01ab95cbf7cf7",
+      "executable": false
+    },
+    {
+      "variable": "BM_NATIVE_SPRITE_PACK",
+      "pack_file": "sprite9e.bin",
+      "address": "A595CD",
+      "size": 1291,
+      "sha256": "a6654d22c2dd9f146fc117ba7dca01f9389995fcb8b75f52ba6f2c4a6b1a717d",
+      "executable": true
+    },
+    {
+      "variable": "BM_NATIVE_GRAPHICS_PACK",
+      "pack_file": "star1-ffd.bin",
+      "address": "B68008",
+      "size": 3001,
+      "sha256": "3a51dd45f2df22d1f2490ca117070a68bfdab33cb03f734ad9e97c59e581a169",
+      "executable": false
+    },
+    {
+      "variable": "BM_SEVEN_CHILD_PACK",
+      "pack_file": "seven-child6a.bin",
+      "address": "9EC20E",
+      "size": 3385,
+      "sha256": "8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb",
+      "executable": true
+    }
+  ],
+  "scope": "Carry forward previously qualified newest official Seven feature delta; no unrelated overwrite."
+}

@@ -72,6 +72,10 @@
   data-bank semantics, including low WRAM and I/O accesses after `PHK/PLB`.
   Qualify motion, state changes or child generation where the program has them;
   initial actor appearance alone can hide a program that skips its main logic.
+- Before claiming a qualified feature survives in a cumulative target, reconcile
+  its selected source programs, records, packs and native hooks with the
+  qualified recipe. A regression against a parent that lacks that feature
+  does not prove its restoration. Record later overrides explicitly.
 - Label teleportation, invulnerability, forced movement, and pipe-action
   fixtures explicitly. They qualify the exercised boundary, not ordinary
   unassisted traversal. Never write completion flags to prove a real exit.
