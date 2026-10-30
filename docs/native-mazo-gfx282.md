@@ -60,10 +60,9 @@ verifies the parent ROM and the mazo stream before it writes the config.
 
 `tools/inspect_extended_graphics.py` reads the pointer and searches every
 native pack for an immediate request. Id `027E` has an empty pointer and no
-immediate request in the supplied packs. Ids `027F`, `0280` and `0281` decode to
-4096 bytes and hold no immediate request in a 9C pack either; `0280` is
-requested by the room 190 boss 9B and `0281` by 9C. So `027E` stays unexplained
-rather than proven unused. Do not install it without a requester.
+immediate request in the supplied packs. Ids `027F`, `0280` and `0281` decode to 4096 bytes. None has an immediate
+request in a 9C pack. The room 190 boss 9B requests `0280`. Sprite 9C requests
+`0281`. So `027E` stays unexplained rather than proven unused. Do not install it without a requester.
 
 ## Next work
 
