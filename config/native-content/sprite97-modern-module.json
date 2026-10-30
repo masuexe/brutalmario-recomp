@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "id": "sprite97-modern-module",
+  "scope": "Static module review for the official ow sprite 97 program. The recipe pins the donor record and the protected block. Runtime mapping, graphics and gameplay qualification stay separate gates.",
+  "donor_manifest": "config/ow-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "97",
+    "raw": "013600b73503994439a5104ba5100000",
+    "init": "10A539",
+    "main": "10A54B",
+    "relative": {
+      "init": "F",
+      "main": "21"
+    },
+    "rooms": [
+      "1EF"
+    ],
+    "native_raw": "013600b73503994439a58c4ba58c0000"
+  },
+  "code": {
+    "source_address": "10A52A",
+    "native_address": "8CA52A",
+    "size": 453,
+    "sha256": "b1f39a342a0e42eff47844f1f1b48f29fa4dfcddda5d1bc513a3e903897b92fc",
+    "adapted_sha256": "b1f39a342a0e42eff47844f1f1b48f29fa4dfcddda5d1bc513a3e903897b92fc",
+    "pack_file": "sprite97-code.bin"
+  },
+  "entry_seeds": [
+    "10A539",
+    "10A54B"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01B7B3"
+  ],
+  "graphics": [],
+  "shared_dependencies": [
+    {
+      "address": "01B7B3",
+      "size": 16,
+      "sha256": "26bb9a6abbdeefe351218ea774d77e31871c4a759b97a76fff2074acd4ebab68"
+    }
+  ],
+  "open_dependencies": [
+    "Fresh cumulative behavior and graphics qualification; the ow donor has no course entry, so runtime source parity stays open."
+  ],
+  "unapplied_rom_patches": []
+}

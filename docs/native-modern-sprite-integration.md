@@ -101,23 +101,52 @@ room `178`. The `99` actors stay static on both hosts, and their small
 offsets need a layout check. Child generation, graphics and full rooms remain
 open.
 
+## Slot 97 candidate
+
+Target `demo11-native-modern-sprites-v2` descends from v1 and installs the
+official `ow` slot `97` record and its 453-byte protected program at
+`8CA52A`. The ROM is
+`e431d5aa168a4a07b63fca7aa4f7ca9fba08333a3b521a8c5f59553c8be2c2c4`.
+The binary is
+`ddb06004447d28b3122028f970979524a3d94f484ac359f092a63b1806b2e3e9`.
+
+| Item | Value |
+| --- | --- |
+| Record | `013600b73503994439a5104ba5100000` to `013600b73503994439a58c4ba58c0000` |
+| Code | 453 bytes at `8CA52A`, SHA `b1f39a342a0e42eff47844f1f1b48f29fa4dfcddda5d1bc513a3e903897b92fc` |
+| External call | `01B7B3`, 16 bytes identical in `ow` and the recipient |
+| Code patches | none |
+| Rooms | `1EF` |
+
+Room `1EF` places slot `97` once at `(192,240)` in both images. The
+256-byte layout window and the full sprite list are byte-identical. Two rooms
+carry screen exits whose high-bit destination byte resolves to level `1EF`:
+room `108` (a World 8 course) and room `1EF` itself.
+
+The native pilot loads room `1EF` with one slot `97` actor at `(192,368)`,
+status `08`, static across 512 frames. The v1 parent loads the same fixture
+with no slot `97` actor.
+
+The documentation describes the `ow` donor as overworld-only with no course
+data. Source entry attempts in `ow` did not reach the room. Runtime source parity, motion
+and child behaviour stay open.
+
 ## Limits
 
 - This checkpoint bounds behavior: `A1` motion matches the source in `178` and follows the source trajectory in `176`. `99` stays static with small offsets. Child generation, graphics and full rooms are open.
 - Room `176` shows no `99` actor in the pilot. The fixture may not reach its
   screen. This is open.
 - Graphics, audio and a complete room pass are not checked.
-- Eight placeholder slots remain: `96`, `97`, `A5`, `A6`, `E8`, `E9`, `EA`
-  and `F5`. The project pins the official `ow` donor in `config/ow-donor.json`
-  for the slot `97` review. This checkpoint does not use it.
+- Seven placeholder slots remain: `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
+  `F5`. Slot `97` now has a v2 candidate with static and activation evidence.
 - This checkpoint does not claim whole-game acceptance or product promotion.
   The accepted product stays `demo11-native-product-r14`.
 
 ## Next actions
 
 1. Check the `99` position offsets against the two room layouts.
-2. Review slot `97` against the pinned `ow` donor with the same static
-   discipline.
+2. Reach room `1EF` from the room `108` screen exit in the native target and
+   record the real route.
 3. Review the remaining slots `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
    `F5` before any install.
 
@@ -129,7 +158,17 @@ python3 tools/m1.py --target demo11-native-modern-sprites-v1 scaffold
 python3 tools/m1.py --target demo11-native-modern-sprites-v1 generate
 python3 tools/m1.py --target demo11-native-modern-sprites-v1 build
 python3 -m unittest tests.test_modern_sprite_modules -v
+
+python3 tools/prepare_sprite_module.py \
+  --recipe $PWD/config/native-content/sprite97-modern-module.json \
+  --output-dir $PWD/local/native-modules/sprite97-modern-v1
+python3 -c "import sys; sys.path.insert(0, 'tools'); import native_sprite_gap; native_sprite_gap.prepare('demo11-native-modern-sprites-v2')"
+python3 tools/m1.py --target demo11-native-modern-sprites-v2 scaffold
+python3 tools/m1.py --target demo11-native-modern-sprites-v2 generate
+python3 tools/m1.py --target demo11-native-modern-sprites-v2 build
+python3 -m unittest tests.test_modern_sprite_97 -v
 ```
 
-The review record is
-`local/restoration/demo11-native-modern-sprites-v1/modern-sprite-review.json`.
+The review records are
+`local/restoration/demo11-native-modern-sprites-v1/modern-sprite-review.json`
+and `local/restoration/demo11-native-modern-sprites-v2/input-manifest.json`.
