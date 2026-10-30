@@ -1595,7 +1595,8 @@ is `local/reports/native-type3-phase-v1.json`.
 
 Sprite 9C requests extended graphics `0282` at pack offset `E0A`. The product
 pointer is empty and the mazo stream holds 4096 bytes. The candidate
-`demo11-native-mazo-gfx282-v1` mounts the official stream at `D1:9000` and
-patches the pointer; the ROM delta from r14 is three bytes. No sampled frame
-executes the request, so runtime frame acceptance stays open. See
+`demo11-native-mazo-gfx282-v1` mounts the official stream at `D2:8000` and
+patches the pointer; the ROM delta from r14 is three bytes. The room 151 window
+holds sibling sets 027F to 0281 in VRAM but not 0282, so the missing family
+member stays open for a runtime frame. See See
 [native-mazo-gfx282.md](native-mazo-gfx282.md). Id `027E` stays open.

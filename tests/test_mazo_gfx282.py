@@ -30,7 +30,7 @@ class MazoGfx282Tests(unittest.TestCase):
         diffs = [i for i in range(len(self.rom)) if self.rom[i] != self.parent_rom[i]]
         self.assertEqual(diffs, [OFFSET, OFFSET + 1, OFFSET + 2])
         self.assertEqual(self.parent_rom[OFFSET:OFFSET + 3], b'\xff' * 3)
-        self.assertEqual(int.from_bytes(self.rom[OFFSET:OFFSET + 3], 'little'), 0xD19000)
+        self.assertEqual(int.from_bytes(self.rom[OFFSET:OFFSET + 3], 'little'), 0xD28000)
         self.assertEqual(sha(self.rom), self.cfg['output']['sha256'])
         self.assertEqual(self.parent['output']['sha256'], sha(self.parent_rom))
 
@@ -43,7 +43,7 @@ class MazoGfx282Tests(unittest.TestCase):
         extra = [p for p in self.cfg['native_sprite_gap']['extra_packs']
                  if p['variable'] == 'BM_MAZO_GFX282_PACK']
         self.assertEqual(len(extra), 1)
-        self.assertEqual(extra[0]['address'], 'D19000')
+        self.assertEqual(extra[0]['address'], 'D28000')
         self.assertEqual(extra[0]['sha256'], sha(pack))
 
 

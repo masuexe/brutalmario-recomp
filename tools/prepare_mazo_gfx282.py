@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PARENT = 'demo11-native-product-r14'
 TARGET = 'demo11-native-mazo-gfx282-v1'
 GFX = 0x282
-PACK_ADDRESS = 0xD19000
+PACK_ADDRESS = 0xD28000
 MAZO_SHA = '94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1'
 
 

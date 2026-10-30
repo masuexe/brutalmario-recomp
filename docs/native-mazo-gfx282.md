@@ -23,17 +23,26 @@ and its stream decodes to 4096 bytes.
 Id `027E` is also empty. The mazo pointer is `3F:80D5` and decodes to 4096
 bytes. No code request for `027E` appears in the supplied packs.
 
+Capture `mazo-9c-gfx282-window-v2` shows the sibling sets in VRAM on every
+sampled fight frame: `027F` at `E000`, `0280` at `F000` and `0281` at `D000`.
+Id `0282` does not appear. The product already holds `027F` to `0281` byte equal
+to mazo, so `0282` is the only empty member of the family. The missing set likely
+fills VRAM `C000`.
+
 ## Change
 
 The candidate adds one data-only pack and one pointer patch.
 
 | Item | Value |
 | --- | --- |
-| ROM | `41390730ae6504a9bc16eb30d9eda7e24081b331313728eb54660b07f57750f4` |
-| Binary | `5301dea05ca2c06f63c05c45611705323082550f6d7de31fd5eb2a8b67017116` |
+| ROM | `626a5c5c3fee9ae54962c448e04dcb24b4b962ee87d9edfeb2279ef4a324c186` |
+| Binary | `0ee9b3ff9458b9da6e610b5ee08b0a00b6c3ee5c505f0831a650fd0e70b34dd2` |
 | Pack | `local/native-modules/mazo-gfx282-v1/gfx282.bin`, 3344 bytes |
-| Pack address | `D1:9000` |
-| Pointer | offset `0A048E`, `FFFFFF` to `0090D1` |
+| Pack address | `D2:8000` |
+| Pointer | offset `0A048E`, `FFFFFF` to `0080D2` |
+
+The first candidate used `D1:9000`. The native host rejects two packs in one bank,
+so the pack moved to `D2:8000`.
 
 `tools/prepare_mazo_gfx282.py` builds the candidate from the r14 config. It
 verifies the parent ROM and the mazo stream before it writes the config.
