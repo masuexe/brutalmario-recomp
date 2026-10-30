@@ -26,7 +26,7 @@ This note records the progress and the open blockers since the
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
-| Japanese message font 191/192 | Open. A donor room 191 fixture enters mode `0C`. The native pipe fixture enters room `1C5` on the mazo donor. No full 4096-byte graphics match appears in that frame. The next probe must find a donor-specific room id. |
+| Japanese message font 191/192 | Open. Mazo room `191` holds the same sprite list with `B0` in place of `A9`. The five-byte header table at `05F100` differs for room `192` only (`0D` versus `0C`). A live donor room `191` frame is still missing. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
 
