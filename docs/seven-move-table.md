@@ -25,6 +25,17 @@ The workbook gives the boss health per body: 2000, 4000, 5000, 6000, 7000,
 Ludwig, Iggy and Lemmy appear after Roy. Morton appears after Ludwig. The other
 order is random.
 
+## WP addresses
+
+The HUD shows the WP gauge at the top right. Two bytes at `7FFFA2` and
+`7FFFA3` hold the maximum and the current WP. A forced write of `63 63` gives
+`WP 99/99` on the HUD. The capture is `seven-wp-v2`.
+
+A forced WP value is a diagnostic cheat, not a fight route. When the probe
+holds `99/99` every frame, the tier stays at `0` and the boss does not progress.
+The plain route leaves the WP free: it grows from `4` to `12`, and the tier
+reaches `1`, `2` and `3`. The current build therefore runs the fight.
+
 ## RAM candidate
 
 The fight captures hold a 17-byte 0/1 flag block at `7FFF10..7FFF20`. The
@@ -32,11 +43,11 @@ block grows during a fight: `seven-fight-pursue-v1-native/p010` has six set
 bytes, and `seven-fight-mixed-v1-native/mixed0400` has more. This matches a
 learned-move table.
 
-A labeled probe wrote `01` to all 17 bytes. The probe is inconclusive: the
-current opening fixture lands in map mode `0E` at room `0FF`, so no fight
-starts. The historical `seven-fight-mixed-v1-native` capture entered room
-`0FF` in mode `14` with a different binary and patch identity. The next step
-is to restore a working fight entry before the unlock probe can prove the block.
+A labeled probe wrote `01` to all 17 bytes. The result is still open. An early
+probe lost the fight during an idle wait and returned to map mode. The fight
+entry works after the immunity write: `seven-unlock-v6` stays in mode `14`,
+room `0FF`, with four lives. The all-ones write and the forced WP write did not
+show a new move set or tier progress.
 
 ## Next work
 
