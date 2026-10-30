@@ -85,8 +85,13 @@ green flash. The flash expires, and the player must touch the orb again.
 A probe teleports the player to `(168,80)`, the orb position in the sampled
 frame. The byte at `1496` becomes `40` and then decays `40 -> 3 -> 0` over about
 60 frames. This byte is the green-window timer candidate. A frame during the
-window shows a damage number. Later touches at the same point do not reset the
-timer, so the orb reappearance condition stays open.
+window shows a damage number.
+
+A 120-cycle return probe alternates the attack position and `(168,80)`. The
+timer stays `0` after the first touch, and the orb remains visible in the
+frames. The orb therefore does not reactivate at that point. It probably
+respawns at another position, or a boss phase gates it. The next probe must
+track the green orb in the frames and touch its current position.
 
 ## Next work
 
