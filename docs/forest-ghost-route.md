@@ -42,6 +42,16 @@ The tape at Y `384` lies below the visible frame. The room has a lower section
 that the upper floor does not connect. The direct approaches enter the pit
 because they start below the upper floor.
 
+## Upper-route scan
+
+A drop scan every 256 pixels gives upper-floor samples at Y `144` to `272`. One
+sample at X `1792` passes Y `442` during the fall. A settled drop at X `1792`
+lands at Y `144`. A right walk steps to Y `272` at X `2351` and stops at X
+`2498` against a wall. One Up+A jump clears the wall to X `2546`, Y `208`, then
+stops again. A long right+jump run stops at X `2002`, Y `98` against a ceiling.
+No sample touches the tape, and the flag stays at `05`. The route needs timed
+jumps or a climb that a held input does not supply.
+
 ## Next work
 
 Find the vertical descent or pipe into the lower section near `(5232,384)`.
