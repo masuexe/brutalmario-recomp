@@ -1,0 +1,43 @@
+# Official7hero behavior reference, entry profile differs from recipient; held actor95 comparison only.
+# Map/position/destination/pipe/immunity fixtures; no actor, HP, progress, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 6b
+poke 19d8 01
+poke 88 0000
+poke 71 06
+until 010b == 6b 500
+until 0100 == 14 500
+pokefor 94 80024001 90
+dump entry
+pokefor 94 80024001 60
+dump mid
+pokefor 94 80024001 60
+dump motion
+pokefor 94 80024001 120
+dump after
+quit

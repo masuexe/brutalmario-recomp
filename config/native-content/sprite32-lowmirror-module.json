@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sprite32-lowmirror-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 32 program. The recipe pins the donor record and the protected block. Native low-memory mirror correction from product r14; low16 bits and donor behavior are preserved.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "32",
+    "raw": "013600003db399643dc32160c3210000",
+    "init": "21C33D",
+    "main": "21C360",
+    "relative": {
+      "init": "0F",
+      "main": "32"
+    },
+    "rooms": [
+      "08B"
+    ],
+    "native_raw": "013600003db399643dc39b60c39b0000"
+  },
+  "code": {
+    "source_address": "21C32E",
+    "native_address": "9BC32E",
+    "size": 7775,
+    "sha256": "5c82ca373b9a5bfe39afc94748aad675ca716ecc9a5c0f07308a702767902ee4",
+    "adapted_sha256": "5c82ca373b9a5bfe39afc94748aad675ca716ecc9a5c0f07308a702767902ee4",
+    "pack_file": "sprite32-code.bin"
+  },
+  "entry_seeds": [
+    "21C33D",
+    "21C360"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the 9B code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607058,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600003db399643dc39b60c39b0000",
+      "role": "Install slot 32 in native bank9B with source-compatible low WRAM/IO mirrors"
+    }
+  ]
+}

@@ -1450,3 +1450,48 @@ Other mapped programs' bank assumptions need their own audit. The r13 survey's
 r14 survey. Other purchases, ability effects, the alternate room104 flag path,
 Ghost Forest, full traversal and broader restoration remain open. r14 is the
 new working native target, not whole-game acceptance.
+
+
+## Rejected r15 candidate: low-memory mappings and sprite95 integration (2026-10-29)
+
+The [mapping correction](native-lowmirror-restoration.md) moves ten executable
+views from banks without their source programs' low WRAM/I/O mirrors into
+compatible native banks. Original program logic and low16 address bits remain.
+Fresh r14 controls reproduce a visible-but-stationary actor31 and a parent32
+that never generates its child. R15 matches official-source selected actor
+identities, motion, velocity and state in16 multi-frame pairs across08B,155,
+087 and086. Room087 uses an explicit global-frame phase fixture; the unphased
+late-fall difference remains outside full physics/timing acceptance.
+
+R14 also lacked95 in the product despite its earlier independent pilot.
+R15 installs the newest official Boss Demo program, verified byte-identical to
+7hero for the behavior reference. Its record covers seven rooms; four fresh
+room16B held-position samples match the95 actor, while the r14 control lacks
+it. The other six rooms and full95 mechanics still need current-target checks.
+Room16B's other actor8C differs from the older source; its native coordinates
+already match r14, so it remains a separate version/behavior investigation.
+
+All48 mappings and the exact record-only ROM delta are checked. All359 tests
+pass. The A2 shop, funded purchase/save and hollow normal route remain byte-
+identical to r14 across51 dump points and153 full WRAM/SRAM/VRAM comparisons.
+C0/C1 have compatible code addresses, but the initial fixtures did not execute
+their callbacks. A subsequent gradual loading probe crashes C0: the recipient
+classifies its source shooter ID as a normal actor and executes the ASCII MAIN
+label as init code. The mapping report remains component evidence only.
+The0A2/15D fixture limits and160/05B trajectory differences are recorded rather
+than treated as full actor acceptance. Other Forest routes, complete traversal,
+earned endgame victories and music/graphics work remain open. R15 is rejected;
+r14 remains the accepted working target. An isolated type3 shooter adapter is
+under qualification. No full-game or fresh whole-range survey claim is made.
+
+
+The isolated [C0/C1 shooter checkpoint](native-type3-shooters-restoration.md)
+now fixes that classification through three bounded native hooks, retaining
+normal E0 and existing native shooter/generator meanings. Forty-five fresh
+source/native live16B samples exercise actual callbacks. C0 generates phase2
+95 actors; its motion phase remains open. Twenty C1 generated-actor samples
+match selected status/XY/velocity/state after sorting slot differences. Three
+r14 regressions cover45 dump points: full SRAM/VRAM match, with explicitly
+recorded inactive CPU stack residue excluded from WRAM equality. All359 tests
+pass. The experimental target is not promoted: remaining loading windows,
+positive current E0 birth, other95 rooms and C2 still need qualification.

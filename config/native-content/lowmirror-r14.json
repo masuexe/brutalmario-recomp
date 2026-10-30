@@ -1,0 +1,206 @@
+{
+  "schema": 1,
+  "id": "native-lowmirror-r14",
+  "parent": "demo11-native-product-r14",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b"
+  },
+  "candidate": "demo11-native-lowmirror-v1",
+  "candidate_output": {
+    "size": 4194304,
+    "sha256": "fb1c09437bd9889f14e306c6b47ea3df20f9f10bd3285dd4360fef723050ee0b"
+  },
+  "scope": "Rebase ten original-code modules from banks lacking low WRAM/IO mirrors; no donor code, level layouts, physics or timing changes are intended.",
+  "changes": [
+    {
+      "slot": "36",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite36-module.json",
+      "recipe": "config/native-content/sprite36-lowmirror-module.json",
+      "source_address": "21E18D",
+      "old_address": "C0E18D",
+      "new_address": "9CE18D",
+      "size": 2709,
+      "old_record": "013600003f0399649ce1c0ace1c00000",
+      "new_record": "013600003f0399649ce19cace19c0000",
+      "record_offset": 1607122,
+      "old_pack_sha256": "bc972061bd42bb71e18c26e43579f799fe350a791a37d39b66aabc20d8d8b754",
+      "new_pack_sha256": "bc972061bd42bb71e18c26e43579f799fe350a791a37d39b66aabc20d8d8b754",
+      "rooms": [
+        "0A2"
+      ]
+    },
+    {
+      "slot": "32",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite32-module.json",
+      "recipe": "config/native-content/sprite32-lowmirror-module.json",
+      "source_address": "21C32E",
+      "old_address": "C1C32E",
+      "new_address": "9BC32E",
+      "size": 7775,
+      "old_record": "013600003db399643dc3c160c3c10000",
+      "new_record": "013600003db399643dc39b60c39b0000",
+      "record_offset": 1607058,
+      "old_pack_sha256": "5c82ca373b9a5bfe39afc94748aad675ca716ecc9a5c0f07308a702767902ee4",
+      "new_pack_sha256": "5c82ca373b9a5bfe39afc94748aad675ca716ecc9a5c0f07308a702767902ee4",
+      "rooms": [
+        "08B"
+      ]
+    },
+    {
+      "slot": "31",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite31-module.json",
+      "recipe": "config/native-content/sprite31-lowmirror-module.json",
+      "source_address": "1CCD85",
+      "old_address": "C2CD85",
+      "new_address": "9ACD85",
+      "size": 1262,
+      "old_record": "013600003a83994494cdc2b5cdc20000",
+      "new_record": "013600003a83994494cd9ab5cd9a0000",
+      "record_offset": 1607042,
+      "old_pack_sha256": "5f4a5873889d8dce995198fd58afb74020e2e97fdccd03dd08065aad6a796037",
+      "new_pack_sha256": "5f4a5873889d8dce995198fd58afb74020e2e97fdccd03dd08065aad6a796037",
+      "rooms": [
+        "155"
+      ]
+    },
+    {
+      "slot": "2D",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite2d-module.json",
+      "recipe": "config/native-content/sprite2d-lowmirror-module.json",
+      "source_address": "1DB30D",
+      "old_address": "C3B30D",
+      "new_address": "99B30D",
+      "size": 2732,
+      "old_record": "01360080380311441cb3c33ab3c30000",
+      "new_record": "01360080380311441cb3993ab3990000",
+      "record_offset": 1606978,
+      "old_pack_sha256": "0e8d35afda900dfdb0aa5908d75197fef895344e13dc3e2daf37c73a3545b44f",
+      "new_pack_sha256": "0e8d35afda900dfdb0aa5908d75197fef895344e13dc3e2daf37c73a3545b44f",
+      "rooms": [
+        "15D"
+      ]
+    },
+    {
+      "slot": "23",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite23-module.json",
+      "recipe": "config/native-content/sprite23-lowmirror-module.json",
+      "source_address": "1AD069",
+      "old_address": "C5D069",
+      "new_address": "97D069",
+      "size": 2152,
+      "old_record": "01360000f8a6a94578d0c5b1d0c50000",
+      "new_record": "01360000f8a6a94578d097b1d0970000",
+      "record_offset": 1606818,
+      "old_pack_sha256": "99935720f9b1577bd500e91976c941d5d46007c09e30689316dc269339b8e27c",
+      "new_pack_sha256": "99935720f9b1577bd500e91976c941d5d46007c09e30689316dc269339b8e27c",
+      "rooms": [
+        "160"
+      ]
+    },
+    {
+      "slot": "20",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite20-module.json",
+      "recipe": "config/native-content/sprite20-lowmirror-module.json",
+      "source_address": "18C9FF",
+      "old_address": "C6C9FF",
+      "new_address": "96C9FF",
+      "size": 1009,
+      "old_record": "012801063f0319440ecac61ccac60000",
+      "new_record": "012801063f0319440eca961cca960000",
+      "record_offset": 1606770,
+      "old_pack_sha256": "eb418f8a733d82140b02231d485d5cc23f11a2e421df62054abbd13b5c074dd3",
+      "new_pack_sha256": "eb418f8a733d82140b02231d485d5cc23f11a2e421df62054abbd13b5c074dd3",
+      "rooms": [
+        "087"
+      ]
+    },
+    {
+      "slot": "1C",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite1c-module.json",
+      "recipe": "config/native-content/sprite1c-lowmirror-module.json",
+      "source_address": "198E01",
+      "old_address": "C78E01",
+      "new_address": "958E01",
+      "size": 1567,
+      "old_record": "0128000039811944108ec7188ec70000",
+      "new_record": "0128000039811944108e95188e950000",
+      "record_offset": 1606706,
+      "old_pack_sha256": "a3777d9ebd781d0401f99ec6cf71f3957306f1098189faeb209f24903ed9a985",
+      "new_pack_sha256": "a3777d9ebd781d0401f99ec6cf71f3957306f1098189faeb209f24903ed9a985",
+      "rooms": [
+        "086"
+      ]
+    },
+    {
+      "slot": "2C",
+      "kind": "type1",
+      "parent_recipe": "config/native-content/sprite2c-module.json",
+      "recipe": "config/native-content/sprite2c-lowmirror-module.json",
+      "source_address": "218000",
+      "old_address": "C48000",
+      "new_address": "988000",
+      "size": 7430,
+      "old_record": "012800003fa399440f80c45580c40000",
+      "new_record": "012800003fa399440f80985580980000",
+      "record_offset": 1606962,
+      "old_pack_sha256": "157423abe04dee8b869228a972419730c8f7c5cfe8c5aa206bec9b4c3cdc6972",
+      "new_pack_sha256": "157423abe04dee8b869228a972419730c8f7c5cfe8c5aa206bec9b4c3cdc6972",
+      "rooms": [
+        "05B"
+      ]
+    },
+    {
+      "slot": "C0",
+      "kind": "type3",
+      "old_address": "CB86D7",
+      "new_address": "9486D7",
+      "size": 205,
+      "old_record": "03ffffffffffffffe686cbea86cbffff",
+      "new_record": "03ffffffffffffffe68694ea8694ffff",
+      "record_offset": 1609330,
+      "old_pack_sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+      "new_pack_sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+      "pack_file": "type3-c0.bin",
+      "source": "local/native-modules/demo11-native-type3b-final-type3_c0_block",
+      "rooms": [
+        "16B"
+      ],
+      "official_record": "03ffffffffffffffe68613ea8613ffff",
+      "official_block_address": "1386D7"
+    },
+    {
+      "slot": "C1",
+      "kind": "type3",
+      "old_address": "CCAE08",
+      "new_address": "93AE08",
+      "size": 213,
+      "old_record": "03ffffffffffffff17aecc1baeccffff",
+      "new_record": "03ffffffffffffff17ae931bae93ffff",
+      "record_offset": 1609346,
+      "old_pack_sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+      "new_pack_sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+      "pack_file": "type3-c1.bin",
+      "source": "local/native-modules/demo11-native-type3b-final-type3_c1_block",
+      "rooms": [
+        "16B"
+      ],
+      "official_record": "03ffffffffffffff17ae131bae13ffff",
+      "official_block_address": "13AE08"
+    }
+  ],
+  "official_type3_source": {
+    "version": "boss",
+    "output": {
+      "size": 4194304,
+      "sha256": "337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd"
+    }
+  }
+}

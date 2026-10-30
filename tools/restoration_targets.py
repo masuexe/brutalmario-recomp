@@ -1,6 +1,22 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-type3-shooters-v1': {
+        'binary': 'BrutalMarioNativeType3ShootersV1SNESRecomp',
+        'title': 'Brutal Mario Native Type3 Shooters V1',
+    },
+    'demo11-native-product-r15': {
+        'binary': 'BrutalMarioDemo11NativeProductR15SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Product R15',
+    },
+    'demo11-native-lowmirror95-v1': {
+        'binary': 'BrutalMarioDemo11NativeLowmirror95V1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Lowmirror95 V1',
+    },
+    'demo11-native-lowmirror-v1': {
+        'binary': 'BrutalMarioDemo11NativeLowmirrorV1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Lowmirror V1',
+    },
     'demo11-native-product-r14': {
         'binary': 'BrutalMarioDemo11NativeProductR14SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Product R14',

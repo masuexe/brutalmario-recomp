@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "id": "sprite95-boss-module",
+  "scope": "Newest official Boss Demo sprite95 program, byte-identical to the earlier 7hero program used for behavior reference. Preserve recipient rooms and other sprite records.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "95",
+    "raw": "013600003f0399641ae42039e5200000",
+    "init": "20E41A",
+    "main": "20E539",
+    "relative": {
+      "init": "0F",
+      "main": "12E"
+    },
+    "rooms": [
+      "16B",
+      "16C",
+      "16D",
+      "16E",
+      "16F",
+      "172",
+      "1CC"
+    ],
+    "native_raw": "013600003f0399641ae4a339e5a30000"
+  },
+  "code": {
+    "source_address": "20E40B",
+    "native_address": "A3E40B",
+    "size": 5144,
+    "sha256": "20980e341c2877b32e286cb7053450ffcb54f1ee74f55f79f7a0b0b1236a6454",
+    "adapted_sha256": "20980e341c2877b32e286cb7053450ffcb54f1ee74f55f79f7a0b0b1236a6454",
+    "pack_file": "sprite95-code.bin"
+  },
+  "entry_seeds": [
+    "20E41A",
+    "20E539"
+  ],
+  "dispatch_tables": [
+    {
+      "address": "20E541",
+      "count": 17,
+      "dispatcher": "20E587",
+      "sha256": "a4e01ed44f0046775283803db8e2b90d1794eca05c7069978cf7fd1f0094b73c"
+    }
+  ],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "019138",
+    "01A7DC",
+    "01ACF9",
+    "01B44F",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FB02",
+    "28FCC0",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "Full route, combat and clear qualification for its seven rooms remains open."
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608642,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600003f0399641ae4a339e5a30000",
+      "role": "Install the sprite 95 record and point init/main into the A3 module view"
+    }
+  ]
+}

@@ -16,6 +16,16 @@ Other slots need the same chronology-aware review before any global absence
 claim. The counts below preserve the original three-source audit, not a current
 whole-product restoration census.
 
+Product r14 also lacked the independently reviewed95 record. The subsequent
+[r15 integration](native-lowmirror-restoration.md) adds the newest official
+Boss Demo program, equal to7hero, and qualifies selected16B behavior against a
+fresh source replay. The other six placed rooms need fresh r15 checks. R15
+also corrects ten mapped programs' low-memory bank assumptions; this does not
+convert the historical tables below into a current full-game census.
+
+R15 is subsequently rejected for an actual C0 loading crash. The95 component
+checks remain valid; accepted product r14 still lacks this record.
+
 ## Result
 
 The recipient places 163 custom sprite slots across its rooms. Fifty-four of

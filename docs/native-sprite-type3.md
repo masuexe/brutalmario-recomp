@@ -209,6 +209,21 @@ pack. Translevel `094` then loads room `170` in mode `14`, and the
 full-range survey reports 228 playable entries and no crash. The correct
 restoration of `C2` stays open.
 
+## Later memory-contract review (2026-10-29)
+
+The [r15 review](native-lowmirror-restoration.md) identifies a separate mapping
+problem: CB/CC lack the source programs' low WRAM/I/O mirrors after PHK/PLB.
+C0/C1 now use94/93 with the original code and constructor retained. The tested
+native16B fixtures still do not execute those callback views, so this is static
+memory-contract correction, not complete mechanism acceptance. Sprite95 is now
+present in the product and has fresh selected actor checks.
+
+The earlier094/C2 crash is established evidence; its sole cause was not isolated
+between constructor and mapping assumptions. Future C2 work must check both
+against actual source and recipient execution rather than treating the earlier
+constructor theory as proof. C2 remains absent from r15 until a safe, source-
+qualified integration is demonstrated.
+
 ## Reproduction
 
 ```
@@ -221,3 +236,21 @@ are `tests/test_sprite_type3.py` and pass 8/8. The full suite passes 272/272
 tests. The log is `local/reports/unit-tests-type3c.log`. The captures are
 `red-c0c2-room16b-donor-v1`, `red-c0c2-room170-donor-v1`,
 `type3-room16b-native-v1` and `type3-room170-native-v1`.
+
+## Superseding actual C0 loading trace (2026-10-29)
+
+The gradual loading fixture in [the low-memory review](native-lowmirror-restoration.md)
+actually executes C0 in r15 and crashes. The recipient classifies C0 as a normal
+actor because its shooter ID range starts atE0, while7hero starts atC0.
+Normal init dispatch then jumps to the `MAIN` text label94:86E6, corrupting the
+stack. The prior recommendations to keep records-only C0/C1 are superseded:
+entry-only captures skipped loading, and r15 is rejected. R14 remains the
+accepted baseline, with this latent integration issue still open. A native
+loader/store/dispatch adapter is being checked in an isolated descendant.
+Do not infer that a constructor continuation transplant fixes this failure.
+
+
+The [isolated shooter adapter](native-type3-shooters-restoration.md) now passes
+bounded actual C0/C1 loading and generation checks. C1 has20 exact normalized
+selected-actor samples. C0 phase, remaining windows, E0 birth and C2 remain open;
+this experiment is not a promoted cumulative product.

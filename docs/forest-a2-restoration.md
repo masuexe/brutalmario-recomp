@@ -186,3 +186,11 @@ changes, helper changes, bank mirrors and return encoding. Log:
 Continue Ghost Forest `114`, other Forest routes, full traversal and remaining
 purchase/ability checks. Audit the low-memory assumptions of other mapped
 programs with concrete runtime probes; this checkpoint does not certify them.
+
+The subsequent [r15 checkpoint](native-lowmirror-restoration.md) corrects ten
+such mappings and adds the missing95 dependency. Its fresh A2 menu/purchase and
+hollow normal replays match the original r14 captures across51 dump points,
+153 full WRAM/SRAM/VRAM comparisons. The r14 evidence above retains its original
+identity. R15 was subsequently rejected for an actual C0 loading crash; r14
+remains the accepted working target. These A2 regressions remain valid bounded
+component evidence, not a safe-product claim.

@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "id": "sprite2d-lowmirror-module",
+  "scope": "Static module review for the cheap-demo type-1 sprite 2D program. The recipe pins the donor record and the protected block. Native low-memory mirror correction from product r14; low16 bits and donor behavior are preserved.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "2D",
+    "raw": "01360080380311441cb31d3ab31d0000",
+    "init": "1DB31C",
+    "main": "1DB33A",
+    "relative": {
+      "init": "0F",
+      "main": "2D"
+    },
+    "rooms": [
+      "15D"
+    ],
+    "native_raw": "01360080380311441cb3993ab3990000"
+  },
+  "code": {
+    "source_address": "1DB30D",
+    "native_address": "99B30D",
+    "size": 2732,
+    "sha256": "0e8d35afda900dfdb0aa5908d75197fef895344e13dc3e2daf37c73a3545b44f",
+    "adapted_sha256": "0e8d35afda900dfdb0aa5908d75197fef895344e13dc3e2daf37c73a3545b44f",
+    "pack_file": "sprite2d-code.bin"
+  },
+  "entry_seeds": [
+    "1DB31C",
+    "1DB33A"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the 99 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606978,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360080380311441cb3993ab3990000",
+      "role": "Install slot 2D in native bank99 with source-compatible low WRAM/IO mirrors"
+    }
+  ]
+}

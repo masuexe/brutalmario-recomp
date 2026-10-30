@@ -68,6 +68,10 @@
   and regressions; do not claim same-image parity when the images differ.
 - Check completion logs, assertions, dump sizes, and receipts. A process exit
   code alone does not prove that the route reached its intended state.
+- Match native executable mappings or adapters to the source program's
+  data-bank semantics, including low WRAM and I/O accesses after `PHK/PLB`.
+  Qualify motion, state changes or child generation where the program has them;
+  initial actor appearance alone can hide a program that skips its main logic.
 - Label teleportation, invulnerability, forced movement, and pipe-action
   fixtures explicitly. They qualify the exercised boundary, not ordinary
   unassisted traversal. Never write completion flags to prove a real exit.

@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "id": "type3-shooters-v1",
+  "scope": "Native loader/store/dispatch adapter for official C0/C1 shooter records; retains native E0..E7 classification and Seven E0 normal child.",
+  "review_status": "experimental",
+  "code": {
+    "raw_payload": "c9c09021c9c2b02188b7ce2908f013b7ce290c0a0a0a0a8f1cab7fc8a5055cd8a802c8a5055ced8031c9e090f85cb58031eaeaeaeaeaeaeaeaeaeaeaeaeaeaea9d8317a504c9c0900bc9c2b00738e9901d83176b38e9df1d83176beaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaea293fc930900bc932b0071869905c4681311869df5c468131eaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaea",
+    "size": 192,
+    "sha256": "6467576889bb31c1a47d5c75e7bc73fd042ef1e4c4e94185328d2c5ed13df4cb",
+    "native_address": "928000",
+    "pack_file": "type3-shooters.bin"
+  },
+  "entry_seeds": [
+    "928000",
+    "928040",
+    "928080"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "Actual shooter loading and callbacks require paired source/native qualification."
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1605809,
+      "before": "c9e09038",
+      "after": "5c008092",
+      "role": "Classify placed custom C0/C1 as shooters"
+    },
+    {
+      "offset": 1605908,
+      "before": "9d8317a504",
+      "after": "5c408092ea",
+      "role": "Encode restored shooters separately from native E0..E5 shooters"
+    },
+    {
+      "offset": 1605953,
+      "before": "293f1869df",
+      "after": "5c808092ea",
+      "role": "Resolve restored shooter IDs to original C0/C1 records"
+    }
+  ]
+}

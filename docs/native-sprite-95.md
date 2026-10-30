@@ -1,5 +1,20 @@
 # Native sprite 95 module review
 
+## Product integration update (2026-10-29)
+
+The independent target described below was not present in product r14: its95
+record was still a placeholder. The [r15 checkpoint](native-lowmirror-restoration.md)
+now integrates the newest official Boss Demo program through
+`config/native-content/sprite95-boss-module.json`. Its complete protected block
+and record are byte-identical to7hero, which supplies the current behavior replay.
+Four fresh r15 room16B samples match the selected95 actor; the r14 control lacks
+it. Other actors and the other six rooms are not accepted by those samples.
+The older pilot captures below retain their original identities and are not
+relabelled as current-product evidence.
+
+R15 is subsequently rejected for an actual C0 loading crash. The95 component
+checks remain valid; accepted product r14 still lacks this record.
+
 ## Result
 
 The new official donor `7hero` holds a type-1 record for custom sprite slot
