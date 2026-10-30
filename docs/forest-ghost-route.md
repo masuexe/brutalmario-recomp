@@ -31,8 +31,20 @@ All three keep the completion flag at `05`. The tape does not trigger because
 the approach crosses a pit. The room needs a platform, a climb or a state
 route.
 
+## Floor and vertical extent
+
+A drop test places the player at `(5344,128)` and releases the fixture. The
+player falls to Y `176` and stays alive. A left walk from `5344,176` passes
+`5277`, `5201` and `5191` at Y `176` without a fall. The upper floor is
+therefore continuous at Y `176`.
+
+The tape at Y `384` lies below the visible frame. The room has a lower section
+that the upper floor does not connect. The direct approaches enter the pit
+because they start below the upper floor.
+
 ## Next work
 
-Find the intended approach to `(5232,384)`. Check a moving platform, a climb
-or the room switch variants. Get walkthrough or video evidence before another
-fixture. Do not claim a clear or a save for this room.
+Find the vertical descent or pipe into the lower section near `(5232,384)`.
+Check a shaft, a drop, a climb or the room switch variants. Get walkthrough or
+video evidence before another fixture. Do not claim a clear or a save for this
+room.
