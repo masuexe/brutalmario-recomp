@@ -75,19 +75,35 @@ value. The capture inputs are under `local/captures/modern-pilot-*/input.script`
 
 | Pilot | Parent | Candidate |
 | --- | --- | --- |
-| Room `174` | no `99` actor | three `99` actors, X `0/256/257`, Y `256`, status `08` |
-| Room `175` | no `99` or `A1` actor | three `99` actors and one `A1` actor |
-| Room `176` | no `99` or `A1` actor | one `A1` actor, no `99` actor |
-| Room `178` | no `A1` actor | one `A1` actor |
+| Room `174` | no `99` actor | one `99` actor, X `130`, Y `320`, status `08` |
+| Room `175` | no `99` or `A1` actor | three `99` actors, X `143/207/290`, Y `338/306/287`, and one `A1` actor at X `64`, Y `256` |
+| Room `176` | no `99` or `A1` actor | one `A1` actor, X `64` to `369`, no `99` actor |
+| Room `178` | no `A1` actor | one `A1` actor, X `320`, Y `271` to `146` to `271` |
 
-Two checks bound this evidence. All actor positions stay fixed, and the source
-entry did not reach the room in the same-profile runs. The source captures hold
-only the title, files, intro and node samples. The pilots therefore show
-activation, not motion, child generation or behavior parity.
+## Source comparison
+
+The project retains the official demoOnly1 entries as captures
+`modern-source-{174,175,176,178}-v1`. The fixture uses the same forced exit
+destination and translevel `4A`. `tools/compare_modern_sprite_sources.py`
+pairs each native actor with the nearest source actor and classifies each
+sample.
+
+| Case | Samples | Result |
+| --- | ---: | --- |
+| `174/99` | 8 | Near match. Status and velocities equal. Constant offset `(2,4)`. Static on both hosts. |
+| `175/99` | 8 | Near match. Status and velocities equal. Offset at most `(11,3)`. Static on both hosts. |
+| `175/A1` | 8 | The source moves from `(16,304)` to `(64,256)` in the first 32 frames. Native starts at the settled point. Both hosts agree from frame 32. |
+| `176/A1` | 8 | Both hosts move on the same trajectory. Native leads by one or two samples and agrees exactly at frame 256. The native actor ends before frame 512. |
+| `178/A1` | 8 | Exact at all eight samples, including the move `Y 271` to `146` and back. |
+
+The `A1` program runs its actual motion and matches the official program in
+room `178`. The `99` actors stay static on both hosts, and their small
+offsets need a layout check. Child generation, graphics and full rooms remain
+open.
 
 ## Limits
 
-- Behavior, motion, child generation and layout parity are open.
+- This checkpoint bounds behavior: `A1` motion matches the source in `178` and follows the source trajectory in `176`. `99` stays static with small offsets. Child generation, graphics and full rooms are open.
 - Room `176` shows no `99` actor in the pilot. The fixture may not reach its
   screen. This is open.
 - Graphics, audio and a complete room pass are not checked.
@@ -99,8 +115,7 @@ activation, not motion, child generation or behavior parity.
 
 ## Next actions
 
-1. Obtain a source-side entry for rooms `174`, `175`, `176` and `178` and
-   compare actor rows and motion against the candidate.
+1. Check the `99` position offsets against the two room layouts.
 2. Review slot `97` against the pinned `ow` donor with the same static
    discipline.
 3. Review the remaining slots `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
