@@ -40,11 +40,12 @@ The flow starts the game, the room transfer enters live `151`, and the player
 moves and attacks under `1490 = 64`. A blind attack sequence from the right edge
 does not end the fight.
 
-The player reaches `y 224` with a jump, while the green orb sits near `y 86`. A
-position write to `(168,80)` applies, and the player then falls through the
-orb. The sampled frame still shows the boss attack text, not a ruby prompt. The
-orb contact probably needs the ruby attack phase or a valid platform route. Do
-not claim a 9C clear from this session.
+The frame vertical scroll is `192`, so the orb at screen `y 86` is near world
+`y 278`. Earlier position writes to `y 80` went far above the orb. The player
+can stand on the crystal platform at `(180,251)`, next to the orb. A position
+write into that platform blocks the jump. The sampled frame still shows a boss
+attack text, not the immediate ruby prompt. The next probe must overlap the orb
+hitbox while the player moves. Do not claim a 9C clear from this session.
 
 ## Cautions
 
