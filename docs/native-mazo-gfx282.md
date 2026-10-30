@@ -97,7 +97,11 @@ position. The cross is the orb and not a star sparkle.
 
 The frame vertical scroll is `192`, so screen `y 86` maps near world `y 278`.
 The player can stand on the crystal at world `(180,247)`, just below the orb. A
-position write into that crystal prevents a jump. The script
+position write into that crystal prevents a jump.
+
+A running jump from the floor reaches an apex near `(175,282)`. The frame shows
+Mario inside the green ball, but no ruby text appears. The next check is the
+orb hitbox, a required button, or a specific orb pulse. The script
 `recomp/inputs/mazo-9c-translevel-entry.script` enters the room through
 map 6 and translevel `075`, keeps the fight live and touches the orb. The
 contact samples still show the boss attack text box, not a ruby prompt. The
