@@ -35,7 +35,7 @@ route.
 
 A drop test places the player at `(5344,128)` and releases the fixture. The
 player falls to Y `176` and stays alive. A left walk from `5344,176` passes
-`5277`, `5201` and `5191` at Y `176` without a fall. The upper floor is
+`5277`, `5201`, `5191`, `5052` and `5038` at Y `176` without a fall. The upper floor is
 therefore continuous at Y `176`.
 
 The tape at Y `384` lies below the visible frame. The room has a lower section
