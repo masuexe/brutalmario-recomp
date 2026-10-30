@@ -21,7 +21,7 @@ This note records the progress and the open blockers since the
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
 | Mazo 9C attack and phase music | An assisted 240-cycle attack probe leaves the part fields unchanged and never loads `0282`. A manual attack sample is the next input. |
-| Mazo 9B attack and clear | Every assisted room 190 entry puts the player at `(32,-64)` and then dies in mode `0B` or `0C`. Health bytes `D85` and `D8F` stay 64. Two 200/240-cycle attack probes change nothing. `tools/find_falling_wram.py` finds no falling byte from `0800` to `1FFF` in the 20 attack samples. A live gameplay sample is the next input. |
+| Mazo 9B attack and clear | The official mazo donor and the native product match on the room 190 preview state. Both show mode 14, room 190, player `(32,-64)` and health 64/64. Both later return to map mode. The attack/clear item is not a recipient gap. A walkthrough or manual sample must show a real fight first. |
 | `0282` runtime frame | Needs a 9C attack phase. The pointer, pack and code request are ready. |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
@@ -29,6 +29,15 @@ This note records the progress and the open blockers since the
 | Japanese message font 191/192 | Open. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
+
+## Mazo 9B room 190 source parity
+
+Captures `mazo-9b-entry-v1/v2-{donor,native}` agree on `castle_idle` and
+`fight180`, `fight240` and `fight600`: mode `14`, room `190`, player `32/-64`,
+`D85` and `D8F` at 64. One v2 sample, `fight120`, differs in load mode (native
+`13`). Both hosts then return to map mode `0E` with health 0. The donor never
+shows a health drop. Treat the attack and clear item as an author preview until
+a walkthrough or a manual sample shows a real fight.
 
 ## Next steps
 
