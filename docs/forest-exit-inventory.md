@@ -31,3 +31,21 @@ tables are identical for these rooms.
 
 Each room also holds one or more screen jumps. The table lists primary behavior
 only. A live probe must confirm a secondary exit before a route uses it.
+
+## Live-verified additions (2026-10-30)
+
+Assisted screen-exit fixtures confirm three more destinations on r14. Each
+capture keeps mode 14, four lives and the flag at `05`. No clear or save occurs.
+
+| Entry | Screen | Destination | Capture |
+| --- | --- | --- | --- |
+| `11B` | 11 | `053` | `forest-11b-exit-v1` |
+| `11C` | 9 | `041` | `forest-11c-exit-v1` |
+| `11E` | 19 | `037` | `forest-11e-exit-v1` |
+
+Room `129` stays open. The exit probe cannot select its horizontal screens
+because the level keeps a fixed horizontal camera.
+
+Scripts are `recomp/inputs/forest-11b-screen11.script`,
+`recomp/inputs/forest-11c-screen09.script` and
+`recomp/inputs/forest-11e-screen19.script`.

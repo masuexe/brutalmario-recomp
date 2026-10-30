@@ -31,6 +31,9 @@ class LevelExitTests(unittest.TestCase):
             0x121: [(4, 0x1D7, 0)],
             0x123: [(0, 0x123, 0), (4, 0x042, 0)],
             0x124: [(2, 0x027, 0), (3, 0x027, 0), (0x0B, 0x029, 0), (0x0D, 0x030, 0)],
+            0x11B: [(0x0B, 0x053, 0)],
+            0x11C: [(9, 0x041, 0), (0x0A, 0x11C, 1)],
+            0x11E: [(0x13, 0x037, 0)],
         }
         for room, want in expected.items():
             self.assertEqual(self.screen_exits(room), want, hex(room))

@@ -1,0 +1,28 @@
+# Fixture: map node enters this room; one forced screen-exit probe.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 e801b801e801b801
+poke 1f1f 0e001a000e001a00
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80096001
+poke 88 0000
+poke 71 06
+wait 120
+dump try
+wait 200
+dump after
+quit
