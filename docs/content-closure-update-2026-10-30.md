@@ -21,7 +21,7 @@ This note records the progress and the open blockers since the
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
 | Mazo 9C attack and phase music | An assisted 240-cycle attack probe leaves the part fields unchanged and never loads `0282`. A manual attack sample is the next input. |
-| Mazo 9B attack and clear | Every assisted room 190 entry puts the player at `(32,-64)` and then dies in mode `0B` or `0C`. Health bytes `D85` and `D8F` stay 64. Two 200/240-cycle attack probes change nothing. A live gameplay sample is the next input. |
+| Mazo 9B attack and clear | Every assisted room 190 entry puts the player at `(32,-64)` and then dies in mode `0B` or `0C`. Health bytes `D85` and `D8F` stay 64. Two 200/240-cycle attack probes change nothing. `tools/find_falling_wram.py` finds no falling byte from `0800` to `1FFF` in the 20 attack samples. A live gameplay sample is the next input. |
 | `0282` runtime frame | Needs a 9C attack phase. The pointer, pack and code request are ready. |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
