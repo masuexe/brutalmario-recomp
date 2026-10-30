@@ -1561,3 +1561,23 @@ Fresh native/7hero runs pass68 paired samples. Following the earlier assisted
 switch/stomp/approach setup, ordinary carry/release, upper-passage jump, vine
 grab and door Up reach16E and award one Dragon Coin. Initial position fixtures,
 the other trials, five-coin/save behavior and full-course acceptance remain.
+
+## Cumulative recovery of omitted25/33/94 programs (2026-10-30)
+
+The [new sprite-product descendant](native-sprite-product-reconciliation.md)
+recovers three separately installed programs that never reached the cumulative
+table. It selects unchanged newest official Boss code in low-mirror banks
+8F/8E/8D, patches only three records and retains all51 prior mappings. Fresh
+native/7hero captures match19 actor fields and slots at27 live samples, with
+actual25 ascent,33 horizontal/player movement and94 motion/state cycling.
+Five existing-feature regressions retain247 unique complete-state comparisons
+(741 files), including Seven child/font/re-entry/ending1up, shop saves, C2 and
+the ordinary fifth-trial return. The experimental target is now
+`demo11-native-sprite-product-v1`; r14 acceptance and r15 rejection are unchanged.
+All377 unit tests pass, including nine new integration/census checks.
+
+A native-pack-aware static census also corrects false missing-slot reports:
+four room sprite lists reside in external CA-bank data. All512 lists resolve
+to164 used custom slots with10 placeholder records. Those remaining records
+need official-source/content review; the census does not qualify full rooms,
+prove donor absence or close earned Seven/mazo victory/save and asset work.

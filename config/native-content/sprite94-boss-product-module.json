@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "id": "sprite94-boss-product-module",
+  "scope": "Newest official Boss sprite94 program, equal to the qualified7hero program; cumulative integration preserves source low16 and low WRAM/IO mirrors in bank8D.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "94",
+    "raw": "013600073f8319645cb31771b3170000",
+    "init": "17B35C",
+    "main": "17B371",
+    "relative": {
+      "init": "0F",
+      "main": "24"
+    },
+    "rooms": [
+      "0EF"
+    ],
+    "native_raw": "013600073f8319645cb38d71b38d0000"
+  },
+  "code": {
+    "source_address": "17B34D",
+    "native_address": "8DB34D",
+    "size": 2096,
+    "sha256": "4ced2fe700c642d539ba511418d1c7e35c811cb04d2e77b01d1faa08006c7693",
+    "adapted_sha256": "4ced2fe700c642d539ba511418d1c7e35c811cb04d2e77b01d1faa08006c7693",
+    "pack_file": "sprite94-code.bin"
+  },
+  "entry_seeds": [
+    "17B35C",
+    "17B371"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01ACF9",
+    "01B7B3",
+    "028663",
+    "02A9DE",
+    "07F7D2",
+    "28FCC0",
+    "2E8DF0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "Fresh cumulative behavior and graphics qualification; recipe preparation alone is not gameplay acceptance."
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1608626,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "013600073f8319645cb38d71b38d0000",
+      "role": "Restore omitted sprite94 with official unchanged program in native low-mirror bank8D"
+    }
+  ]
+}

@@ -1,5 +1,13 @@
 # Native sprite 25 module review
 
+## Cumulative integration (2026-10-30)
+
+The [current cumulative recovery](native-sprite-product-reconciliation.md)
+installs the newest official Boss program, byte-identical to this7hero source,
+in bank8F. All nine fresh source/native samples match19 actor fields and slots,
+including actual Y240-to111 ascent. Earlier independent captures below remain
+historical; full room/boss behavior remains open.
+
 ## Result
 
 The official `7hero` holds a type-1 record for custom sprite slot `25`. The

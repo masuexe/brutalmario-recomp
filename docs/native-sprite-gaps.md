@@ -1,5 +1,16 @@
 # Native custom sprite gap inventory
 
+## Current native census (2026-10-30)
+
+The [cumulative recovery and native-aware census](native-sprite-product-reconciliation.md)
+supersede the historical counts below for `demo11-native-sprite-product-v1`.
+The previously omitted25/33/94 programs are now present, with27 source-matched
+motion samples and741 complete unchanged parent-state comparisons. Resolving
+external native sprite lists is essential: treating CA-bank pack addresses as
+raw LoROM bytes invents ED/FA gaps. The new census reads all512 lists and finds
+164 used custom slots with10 placeholder records. It does not establish global
+official-source absence or whole-course playability.
+
 ## Source-scope correction (2026-10-29)
 
 The historical inventory below checks only `7hero`, `cheap-demo` and `mazo`,

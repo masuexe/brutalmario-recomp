@@ -1,5 +1,13 @@
 # Native sprite 33 module review
 
+## Cumulative integration (2026-10-30)
+
+The [current cumulative recovery](native-sprite-product-reconciliation.md)
+installs the newest official Boss program, byte-identical to this7hero source,
+in bank8E. Nine fresh samples match all19 actor fields and slots, including
+X208-to133 movement and matching game-driven player movement. Full-room and
+exit acceptance remains open; the independent captures below are historical.
+
 ## Result
 
 The official `7hero` holds a type-1 record for custom sprite slot `33`. The

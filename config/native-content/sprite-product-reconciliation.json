@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "id": "sprite-product-reconciliation",
+  "parent": "demo11-native-seven-product-v1",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "0f04abec07f424c482291c2aeee082bf4c41d3468f30e2483d06a728978cd8af"
+  },
+  "candidate": "demo11-native-sprite-product-v1",
+  "candidate_output": {
+    "size": 4194304,
+    "sha256": "1daaa9411b633fb066b2b94a8970a4f12057b391819ff90b775b89b511b4ab11"
+  },
+  "sources": {
+    "boss": {
+      "size": 4194304,
+      "sha256": "337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd"
+    },
+    "7hero": {
+      "size": 4194304,
+      "sha256": "dd7007ad45da87647bbd7e6d3bda13b8555c05b64793a92824f12b347c7a2395"
+    }
+  },
+  "changes": [
+    {
+      "slot": "25",
+      "native_bank": "8F",
+      "recipe": "config/native-content/sprite25-boss-product-module.json",
+      "qualified_recipe": "config/native-content/sprite25-module.json",
+      "patch_role": "Restore omitted sprite25 with official unchanged program in native low-mirror bank8F"
+    },
+    {
+      "slot": "33",
+      "native_bank": "8E",
+      "recipe": "config/native-content/sprite33-boss-product-module.json",
+      "qualified_recipe": "config/native-content/sprite33-module.json",
+      "patch_role": "Restore omitted sprite33 with official unchanged program in native low-mirror bank8E"
+    },
+    {
+      "slot": "94",
+      "native_bank": "8D",
+      "recipe": "config/native-content/sprite94-boss-product-module.json",
+      "qualified_recipe": "config/native-content/sprite94-module.json",
+      "patch_role": "Restore omitted sprite94 with official unchanged program in native low-mirror bank8D"
+    }
+  ]
+}

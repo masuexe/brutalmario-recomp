@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "id": "sprite33-boss-product-module",
+  "scope": "Newest official Boss sprite33 program, equal to the qualified7hero program; cumulative integration preserves source low16 and low WRAM/IO mirrors in bank8E.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-sprite9e",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "3077bb3df00a1f26c0728deea091048be792ac1e09af9886cfdb5e36f8d05bb1"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "33",
+    "raw": "0136000035a299440dae151dae150000",
+    "init": "15AE0D",
+    "main": "15AE1D",
+    "relative": {
+      "init": "0F",
+      "main": "1F"
+    },
+    "rooms": [
+      "0FE"
+    ],
+    "native_raw": "0136000035a299440dae8e1dae8e0000"
+  },
+  "code": {
+    "source_address": "15ADFE",
+    "native_address": "8EADFE",
+    "size": 1328,
+    "sha256": "60831043e677facacf4d3c901226973f6d67fe1e5a92a0a9b888083d6d681895",
+    "adapted_sha256": "60831043e677facacf4d3c901226973f6d67fe1e5a92a0a9b888083d6d681895",
+    "pack_file": "sprite33-code.bin"
+  },
+  "entry_seeds": [
+    "15AE0D",
+    "15AE1D"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [],
+  "external_calls": [
+    "0187A7",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "Fresh cumulative behavior and graphics qualification; recipe preparation alone is not gameplay acceptance."
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1607074,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "0136000035a299440dae8e1dae8e0000",
+      "role": "Restore omitted sprite33 with official unchanged program in native low-mirror bank8E"
+    }
+  ]
+}

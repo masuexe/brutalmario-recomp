@@ -1,5 +1,13 @@
 # Native sprite 94 module review
 
+## Cumulative integration (2026-10-30)
+
+The [current cumulative recovery](native-sprite-product-reconciliation.md)
+installs the newest official Boss program, byte-identical to this7hero source,
+in bank8D. Nine fresh samples match both actors’19 fields and slots, including
+the moving actor’s phase0/1 cycle. Full-room and exit acceptance remains open;
+the earlier independent captures below retain their original identities.
+
 ## Result
 
 The official `7hero` holds a type-1 record for custom sprite slot `94`. The
