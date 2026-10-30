@@ -37,12 +37,20 @@ The base part sits at Y `383`. The player fixture puts the player top at Y
 base part. The fight shows no further damage, no defeat state and no save or
 completion write.
 
+## Position sweep
+
+A second probe repeats the 300-cycle setup. It then attacks from four forced
+points: `(120,368)`, `(120,384)`, `(120,400)` and `(112,384)`. Each point
+uses Up+A, Up+B, B and Down+B. The 16 retained samples stay at tier `6`. The
+two main damage fields stay at 64 and 6. Several samples show extra custom `2A`
+parts with value 0 or 107. The fight shows no defeat state and no room change.
+
 ## Next work
 
-Qualify a position-correct attack. Stand on or beside the base part, or find
-the intended vulnerable window. A manual play sample can identify the correct
-context if automation cannot reach it. Do not infer an earned victory from
-tier `6` alone.
+Qualify a position-correct attack. The result above shows that a reachable
+forced position and the tested input types do not damage the base part. Ask the
+user for a short manual fight sample if the next automatic attempt fails. Do
+not infer an earned victory from tier `6` alone.
 
 The local captures are `seven-fight-pursue-v1-native` and
 `seven-fight-varied-v1-native`. Their run logs report a clean exit.
