@@ -87,9 +87,11 @@ corridor. Earlier continuous/fixed-height probes die in both hosts; neither
 those probes nor the final segmented fixture qualifies ordinary traversal.
 
 All-six identity/position acceptance is separate from complete motion parity.
-C0 phase differences remain, and late-window C1 child trajectories differ in
-these fixed-time samples. The prior20 exact C1 samples retain their earlier
-identities and scope; this does not extend that claim to every C1 instance.
+The fixed-time samples show a one-frame C0 lead and late-window C1 differences.
+Dense per-frame captures resolve both: C0 matches after a one-frame shift, and
+every moving C1 child row matches across 64 frames. One static placed child at
+X1152 differs by one pixel. The prior20 exact C1 samples retain their earlier
+identities and scope.
 Other source/native8C behavior and other95 rooms remain open.
 
 ## Regressions and evidence

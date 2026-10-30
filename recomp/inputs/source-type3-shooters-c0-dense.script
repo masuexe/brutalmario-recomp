@@ -1,0 +1,359 @@
+# Diagnostic gradual position/held-window fixture for C0/C1 loading/callbacks.
+# No actor, shooter timer, progress, completion or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press select 2
+wait 600
+dump donor_map
+press y 30
+wait 240
+dump donor_entry
+wait 600
+dump donor_idle
+press y 30
+wait 240
+dump castle_entry
+wait 600
+dump castle_idle
+poke 94 80004001
+poke 19b8 6b
+poke 19d8 01
+poke 88 0000
+poke 71 06
+until 010b == 6b 500
+until 0100 == 14 500
+forcepoke 1497 ff
+poke 13 0000
+poke 94 10008000
+poke 94 14008000
+poke 94 18008000
+poke 94 1c008000
+poke 94 20008000
+poke 94 24008000
+poke 94 28008000
+poke 94 2c008000
+poke 94 30008000
+poke 94 34008000
+poke 94 38008000
+poke 94 3c008000
+poke 94 40008000
+poke 94 44008000
+poke 94 48008000
+poke 94 4c008000
+poke 94 50008000
+poke 94 54008000
+poke 94 58008000
+poke 94 5c008000
+poke 94 60008000
+poke 94 64008000
+poke 94 68008000
+poke 94 6c008000
+poke 94 70008000
+poke 94 74008000
+poke 94 78008000
+poke 94 7c008000
+poke 94 80008000
+poke 94 84008000
+poke 94 88008000
+poke 94 8c008000
+poke 94 90008000
+poke 94 94008000
+poke 94 98008000
+poke 94 9c008000
+poke 94 a0008000
+poke 94 a4008000
+poke 94 a8008000
+poke 94 ac008000
+poke 94 b0008000
+poke 94 b4008000
+poke 94 b8008000
+poke 94 bc008000
+poke 94 c0008000
+poke 94 c4008000
+poke 94 c8008000
+poke 94 cc008000
+poke 94 d0008000
+poke 94 d4008000
+poke 94 d8008000
+poke 94 dc008000
+poke 94 e0008000
+poke 94 e4008000
+poke 94 e8008000
+poke 94 ec008000
+poke 94 f0008000
+poke 94 f4008000
+poke 94 f8008000
+poke 94 fc008000
+poke 94 00018000
+poke 94 04018000
+poke 94 08018000
+poke 94 0c018000
+poke 94 10018000
+poke 94 14018000
+poke 94 18018000
+poke 94 1c018000
+poke 94 20018000
+poke 94 24018000
+poke 94 28018000
+poke 94 2c018000
+poke 94 30018000
+poke 94 34018000
+poke 94 38018000
+poke 94 3c018000
+poke 94 40018000
+poke 94 44018000
+poke 94 48018000
+poke 94 4c018000
+poke 94 50018000
+poke 94 54018000
+poke 94 58018000
+poke 94 5c018000
+poke 94 60018000
+poke 94 64018000
+poke 94 68018000
+poke 94 6c018000
+poke 94 70018000
+poke 94 74018000
+poke 94 78018000
+poke 94 7c018000
+poke 94 80018000
+poke 94 84018000
+poke 94 88018000
+poke 94 8c018000
+poke 94 90018000
+dump scan_0190
+poke 94 94018000
+poke 94 98018000
+poke 94 9c018000
+poke 94 a0018000
+poke 94 a4018000
+poke 94 a8018000
+poke 94 ac018000
+poke 94 b0018000
+poke 94 b4018000
+poke 94 b8018000
+poke 94 bc018000
+poke 94 c0018000
+poke 94 c4018000
+poke 94 c8018000
+poke 94 cc018000
+poke 94 d0018000
+poke 94 d4018000
+poke 94 d8018000
+dump scan_01d8
+poke 94 dc018000
+dump scan_01dc
+poke 94 e0018000
+poke 94 e4018000
+poke 94 e8018000
+poke 94 ec018000
+poke 94 f0018000
+poke 94 f4018000
+poke 94 f8018000
+poke 94 fc018000
+poke 94 00028000
+poke 94 04028000
+poke 94 08028000
+poke 94 0c028000
+poke 94 10028000
+poke 94 14028000
+poke 94 18028000
+poke 94 1c028000
+poke 94 20028000
+poke 94 24028000
+poke 94 28028000
+poke 94 2c028000
+poke 94 30028000
+poke 94 34028000
+poke 94 38028000
+poke 94 3c028000
+poke 94 40028000
+poke 94 44028000
+poke 94 48028000
+poke 94 4c028000
+poke 94 50028000
+poke 94 54028000
+poke 94 58028000
+dump scan_0258
+poke 94 5c028000
+poke 94 60028000
+poke 94 64028000
+poke 94 68028000
+poke 94 6c028000
+poke 94 70028000
+poke 94 74028000
+poke 94 78028000
+poke 94 7c028000
+poke 94 80028000
+poke 94 84028000
+poke 94 88028000
+poke 94 8c028000
+poke 94 90028000
+poke 94 94028000
+poke 94 98028000
+poke 94 9c028000
+poke 94 a0028000
+poke 94 a4028000
+poke 94 a8028000
+poke 94 ac028000
+poke 94 b0028000
+poke 94 b4028000
+poke 94 b8028000
+poke 94 bc028000
+poke 94 c0028000
+poke 94 c4028000
+poke 94 c8028000
+poke 94 cc028000
+poke 94 d0028000
+poke 94 d4028000
+poke 94 d8028000
+poke 94 dc028000
+poke 94 e0028000
+poke 94 e4028000
+poke 94 e8028000
+poke 94 ec028000
+poke 94 f0028000
+poke 94 f4028000
+poke 94 f8028000
+poke 94 fc028000
+poke 94 00038000
+dump scan_0300
+pokefor 94 00034001 1
+dump c0d00
+pokefor 94 00034001 1
+dump c0d01
+pokefor 94 00034001 1
+dump c0d02
+pokefor 94 00034001 1
+dump c0d03
+pokefor 94 00034001 1
+dump c0d04
+pokefor 94 00034001 1
+dump c0d05
+pokefor 94 00034001 1
+dump c0d06
+pokefor 94 00034001 1
+dump c0d07
+pokefor 94 00034001 1
+dump c0d08
+pokefor 94 00034001 1
+dump c0d09
+pokefor 94 00034001 1
+dump c0d10
+pokefor 94 00034001 1
+dump c0d11
+pokefor 94 00034001 1
+dump c0d12
+pokefor 94 00034001 1
+dump c0d13
+pokefor 94 00034001 1
+dump c0d14
+pokefor 94 00034001 1
+dump c0d15
+pokefor 94 00034001 1
+dump c0d16
+pokefor 94 00034001 1
+dump c0d17
+pokefor 94 00034001 1
+dump c0d18
+pokefor 94 00034001 1
+dump c0d19
+pokefor 94 00034001 1
+dump c0d20
+pokefor 94 00034001 1
+dump c0d21
+pokefor 94 00034001 1
+dump c0d22
+pokefor 94 00034001 1
+dump c0d23
+pokefor 94 00034001 1
+dump c0d24
+pokefor 94 00034001 1
+dump c0d25
+pokefor 94 00034001 1
+dump c0d26
+pokefor 94 00034001 1
+dump c0d27
+pokefor 94 00034001 1
+dump c0d28
+pokefor 94 00034001 1
+dump c0d29
+pokefor 94 00034001 1
+dump c0d30
+pokefor 94 00034001 1
+dump c0d31
+pokefor 94 00034001 1
+dump c0d32
+pokefor 94 00034001 1
+dump c0d33
+pokefor 94 00034001 1
+dump c0d34
+pokefor 94 00034001 1
+dump c0d35
+pokefor 94 00034001 1
+dump c0d36
+pokefor 94 00034001 1
+dump c0d37
+pokefor 94 00034001 1
+dump c0d38
+pokefor 94 00034001 1
+dump c0d39
+pokefor 94 00034001 1
+dump c0d40
+pokefor 94 00034001 1
+dump c0d41
+pokefor 94 00034001 1
+dump c0d42
+pokefor 94 00034001 1
+dump c0d43
+pokefor 94 00034001 1
+dump c0d44
+pokefor 94 00034001 1
+dump c0d45
+pokefor 94 00034001 1
+dump c0d46
+pokefor 94 00034001 1
+dump c0d47
+pokefor 94 00034001 1
+dump c0d48
+pokefor 94 00034001 1
+dump c0d49
+pokefor 94 00034001 1
+dump c0d50
+pokefor 94 00034001 1
+dump c0d51
+pokefor 94 00034001 1
+dump c0d52
+pokefor 94 00034001 1
+dump c0d53
+pokefor 94 00034001 1
+dump c0d54
+pokefor 94 00034001 1
+dump c0d55
+pokefor 94 00034001 1
+dump c0d56
+pokefor 94 00034001 1
+dump c0d57
+pokefor 94 00034001 1
+dump c0d58
+pokefor 94 00034001 1
+dump c0d59
+pokefor 94 00034001 1
+dump c0d60
+pokefor 94 00034001 1
+dump c0d61
+pokefor 94 00034001 1
+dump c0d62
+pokefor 94 00034001 1
+dump c0d63
+quit

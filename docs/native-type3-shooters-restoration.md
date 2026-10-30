@@ -66,14 +66,22 @@ Across45 retained samples both hosts stay in live, unfrozen16B. One C0 and two
 C1 instances load with corresponding positions. Native B0/B1 correspond to
 source81/82. The native94/93 views actually execute12,181/9,079 instructions.
 C0 counts down, resets, and generates phase2 custom95 at the source launch
-column656. Its fixed-time motion samples differ in phase, so they do not
-qualify cycle-exact motion or a complete mechanism match.
+column656. Dense per-frame captures
+`type3-shooters-{native,source}-c0-dense-v1` show that the native sequence
+leads the source by one frame. After that shift, all 63 aligned samples match
+the child rows and the shooter countdown exactly.
 
 For C1, all20 held-window samples match the generated phase3 actors' sorted
-status, XY, velocity and151C values exactly. Slot indices are intentionally
-retained separately in the report and not equated: another source/native8C
-actor difference already exists in r14. Animation, other actor families,
-complete courses and all remaining16B loading windows are not accepted here.
+status, XY, velocity and151C values exactly. A dense per-frame C1 replay of 64
+frames matches every moving child row exactly. The only difference is one
+static placed child at X1152 whose Y differs by one pixel. Slot indices are
+intentionally retained separately in the report and not equated: another
+source/native8C actor difference already exists in r14. Animation, other actor
+families, complete courses and all remaining16B loading windows are not
+accepted here.
+
+`tools/qualify_native_type3_phase.py` reproduces both phase checks. The report
+is `local/reports/native-type3-phase-v1.json`.
 
 Three fresh native regressions compare against r14: the hollow normal saved
 exit12 samples, the A2 funded purchase/save/reset20 samples, and a Seven fight

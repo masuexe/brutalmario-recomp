@@ -1581,3 +1581,12 @@ four room sprite lists reside in external CA-bank data. All512 lists resolve
 to164 used custom slots with10 placeholder records. Those remaining records
 need official-source/content review; the census does not qualify full rooms,
 prove donor absence or close earned Seven/mazo victory/save and asset work.
+
+## C0/C1 shooter phase alignment (2026-10-30)
+
+Dense per-frame captures resolve the open room 16B shooter phase item. The C0
+child sequence and shooter countdown match the official 7hero source after a
+one-frame shift: 63 of 63 aligned samples. The C1 window matches every moving
+child row across 64 frames; one static placed child at X1152 differs by one
+pixel. `tools/qualify_native_type3_phase.py` reproduces both checks. The report
+is `local/reports/native-type3-phase-v1.json`.
