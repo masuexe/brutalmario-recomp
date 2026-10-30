@@ -93,7 +93,7 @@ A frame scan with `tools/find_green_orb.py` shows the orb at
 `tools/find_cgram_animation.py` shows entry `100` pulsing the same way while
 the player stands away from the orb. That entry is the orb glow, not a player
 flash. A frame without the star timer still shows the cross at the same screen
-position, so the cross is the orb and not a star sparkle.
+position. The cross is the orb and not a star sparkle.
 
 The frame vertical scroll is `192`, so screen `y 86` maps near world `y 278`.
 The player can stand on the crystal at world `(180,247)`, just below the orb. A
