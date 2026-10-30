@@ -56,6 +56,9 @@ Room `129` uses vertical screens. A held Y position reaches its exits: Y `180`
 gives room `045`, and Y `280` or `380` gives room `03E`. Both captures keep four
 lives. The `03F` secondary row stays static only.
 
+Room `11C` is horizontal. An X probe for screen 10 enters the pit. A Y probe
+loads room `000`. Screen 10 stays static only.
+
 Scripts are `recomp/inputs/forest-11b-screen11.script`,
 `recomp/inputs/forest-11c-screen09.script` and
 `recomp/inputs/forest-11e-screen19.script`.

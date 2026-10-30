@@ -24,10 +24,13 @@ Id `027E` is also empty. The mazo pointer is `3F:80D5` and decodes to 4096
 bytes. No code request for `027E` appears in the supplied packs.
 
 Capture `mazo-9c-gfx282-window-v2` shows the sibling sets in VRAM on every
-sampled fight frame: `027F` at `E000`, `0280` at `F000` and `0281` at `D000`.
+sampled fight frame: `027F` at `E800`, `0280` at `F800` and `0281` at `D800`.
 Id `0282` does not appear. The product already holds `027F` to `0281` byte equal
 to mazo, so `0282` is the only empty member of the family. The missing set likely
-fills VRAM `C000`.
+fills VRAM `C800` or an adjacent slot.
+
+The VRAM check uses bytes `2048..2111` of the decoded stream. The first 64 bytes
+can match unrelated sheets. `tools/check_vram_graphics.py` applies this slice.
 
 ## Change
 
