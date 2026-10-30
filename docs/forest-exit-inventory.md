@@ -49,9 +49,12 @@ capture keeps mode 14, four lives and the flag at `05`. No clear or save occurs.
 | `11B` | 11 | `053` | `forest-11b-exit-v1` |
 | `11C` | 9 | `041` | `forest-11c-exit-v1` |
 | `11E` | 19 | `037` | `forest-11e-exit-v1` |
+| `129` | 1 | `045` | `forest-129-y1-v2` |
+| `129` | 3 | `03E` | `forest-129-y3-v2` |
 
-Room `129` stays open. The exit probe cannot select its horizontal screens
-because the level keeps a fixed horizontal camera.
+Room `129` uses vertical screens. A held Y position reaches its exits: Y `180`
+gives room `045`, and Y `280` or `380` gives room `03E`. Both captures keep four
+lives. The `03F` secondary row stays static only.
 
 Scripts are `recomp/inputs/forest-11b-screen11.script`,
 `recomp/inputs/forest-11c-screen09.script` and
