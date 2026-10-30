@@ -76,8 +76,20 @@ drop. Ids `0D85` and `0D8F` stay 0, so the room 190 health table does not apply.
 No `0282` data appears in VRAM or WRAM. The request needs a phase that these
 inputs do not reach.
 
+## Green orb damage window
+
+The user reports the room 151 damage rule. Touch the green orb above the boss.
+A ruby prompt appears, and Mario flashes green. Damage occurs only during the
+green flash. The flash expires, and the player must touch the orb again.
+
+A probe teleports the player to `(168,80)`, the orb position in the sampled
+frame. The byte at `1496` becomes `40` and then decays `40 -> 3 -> 0` over about
+60 frames. This byte is the green-window timer candidate. A frame during the
+window shows a damage number. Later touches at the same point do not reset the
+timer, so the orb reappearance condition stays open.
+
 ## Next work
 
-Reach the 9C attack phase with a manual sample or a damage route. Then check VRAM
-for the decoded `0282` data. Decide on `027E` only after a requester appears.
-Do not promote this candidate.
+Find the orb reappearance condition, then attack only while `1496` is nonzero.
+After that, check VRAM for the decoded `0282` data. Decide on `027E` only after a
+requester appears. Do not promote this candidate.

@@ -26,7 +26,7 @@ This note records the progress and the open blockers since the
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
-| Japanese message font 191/192 | The user states that only demoOnly1 and Demo 1-1 replace the Japanese font with the English font. The recipient is 1-1 based, so Japanese messages show English glyphs. Restore the donor GFX2A font for rooms `191` and `192`, using the Seven fight font adapter as the pattern. |
+| Japanese message font 191/192 | The user states that only demoOnly1 and Demo 1-1 replace the Japanese font with the English font. The recipient is 1-1 based. A diagnostic patch loads the donor GFX2A font at VRAM `9000` in room `191`. The message box stays unchanged, so the box uses another tile page or another resource. Page probes show the HUD font at `4000` and level tiles at `5000`. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
 
