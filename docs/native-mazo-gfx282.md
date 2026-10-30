@@ -83,17 +83,17 @@ A ruby prompt appears, and Mario flashes green. Damage occurs only during the
 green flash. The flash expires, and the player must touch the orb again.
 
 A probe teleports the player to `(168,80)`, the orb position in the sampled
-frame. The byte at `1496` becomes `40` and then decays `40 -> 3 -> 0` over about
-60 frames. This byte is the green-window timer candidate. A frame during the
-window shows a damage number.
+frame. A countdown at `1496` reads `43` at room entry and decays to zero. A
+contact sample read `40`, but the countdown also runs without contact, so it is
+not proven to be the green-window timer. A frame near the contact shows a damage
+number. The green-window variable stays unknown.
 
-A 120-cycle return probe alternates the attack position and `(168,80)`. The
-timer stays `0` after the first touch, and the orb remains visible in the
-frames. A frame scan with `tools/find_green_orb.py` shows the orb at
-`(170..181, 82..93)` for the whole sample, with a two-frame pulse. The orb does
-not reactivate at that point. A contact frame still shows the boss attack text
-box, not a ruby prompt. The next probe must touch the orb during a quiet phase
-and press a button after the contact.
+A frame scan with `tools/find_green_orb.py` shows the orb at
+`(170..181, 82..93)` for the whole sample, with a two-frame pulse. The script
+`recomp/inputs/mazo-9c-translevel-entry.script` enters the room through
+map 6 and translevel `075`, keeps the fight live and touches the orb. The
+contact samples still show the boss attack text box, not a ruby prompt. The
+next probe must find the green-window state and the prompt condition.
 
 ## Next work
 
