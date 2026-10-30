@@ -136,16 +136,29 @@ The documentation describes the `ow` donor as overworld-only with no course
 data. Source entry attempts in `ow` did not reach the room. Runtime source parity, motion
 and child behaviour stay open.
 
-## Remaining slot record scan
+## Remaining slot review
 
-`tools/audit_remaining_sprite_slots.py` reads the seven remaining slots in
-every supplied image. All 13 images hold the type-0 placeholder in every slot:
-`96`, `A5`, `A6`, `E8`, `E9`, `EA` and `F5`.
+`tools/audit_remaining_sprite_slots.py` closes the review of the seven
+remaining slots. For each slot and its recipient rooms it checks every supplied
+image and the Demo 1-1 baseline.
 
-This is a record-level result only. Numeric sprite IDs are version-local, and a
-donor program for the same room content can live in a different slot. Match the
-recipient room layouts against donor rooms before any install. Do not treat the
-placeholder as proof that no room uses this content.
+| Slot | Rooms | Default in all images | Baseline room match | Course |
+| --- | --- | --- | --- | --- |
+| `96` | `1F0` | yes | yes | no |
+| `A5` | `056` | yes | yes | no |
+| `A5` | `102` | yes | yes | yes |
+| `A6` | `00C` | yes | yes | yes |
+| `E8` | `111` | yes | yes | yes |
+| `E8` | `119` | yes | yes | yes |
+| `E9` | `1CF` | yes | yes | yes |
+| `EA` | `1F3` | yes | yes | no |
+| `F5` | `1E2` | yes | yes | no |
+
+A type-0 record is the default sprite path. Every supplied image holds the
+default record in these slots, and each recipient room matches Demo 1-1
+content. No donor program exists to install. Do not install. The five course
+rooms keep their default paths. Numeric IDs stay version-local, so a future
+content claim needs a room and layout match, not a slot match.
 
 ## Limits
 
@@ -153,8 +166,9 @@ placeholder as proof that no room uses this content.
 - Room `176` shows no `99` actor in the pilot. The fixture may not reach its
   screen. This is open.
 - Graphics, audio and a complete room pass are not checked.
-- Seven placeholder slots remain: `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
-  `F5`. Slot `97` now has a v2 candidate with static and activation evidence.
+- The seven remaining slots are default records in every supplied image and
+  their rooms match Demo 1-1. The slot review closes with no install. Slot `97`
+  has a v2 candidate with static, activation and route evidence.
 - This checkpoint does not claim whole-game acceptance or product promotion.
   The accepted product stays `demo11-native-product-r14`.
 
@@ -162,8 +176,8 @@ placeholder as proof that no room uses this content.
 
 1. Check the `99` position offsets against the two room layouts.
 2. Check how room `108` uses the room `1EF` exit in ordinary play.
-3. Review the remaining slots `96`, `A5`, `A6`, `E8`, `E9`, `EA` and
-   `F5` before any install.
+3. Qualify the C0 and late-C1 phase in room `16B`, then move to the earned
+   Seven victory and saved completion.
 
 ## Reproduction
 
