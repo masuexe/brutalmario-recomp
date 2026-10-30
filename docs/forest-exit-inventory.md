@@ -26,7 +26,7 @@ tables are identical for these rooms.
 | `114` | `17 -> 114` (secondary) | same-room reload, live verified |
 | `11C` | `9 -> 041`, `10 -> 11C` (secondary) | castle entrances |
 | `11B` | `11 -> 053` | hidden branch |
-| `11E` | `19 -> 037` | hidden branch; goal sprite below the kill boundary |
+| `11E` | `19 -> 037` | hidden branch. The goal sprite sits below the kill boundary |
 | `129` | `3 -> 03E`, `1 -> 045`, `2 -> 03F` (secondary) | hidden mansion |
 
 Each room also holds one or more screen jumps. The table lists primary behavior
