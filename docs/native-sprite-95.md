@@ -1,5 +1,9 @@
 # Native sprite 95 module review
 
+The [ordinary fifth-trial platform route](native-sprite95-trial5-route.md)
+now qualifies the shell/upper-passage/vine/far-door segment without immunity
+or a far-door teleport. Earlier player-position fixtures remain explicit.
+
 The [fifth-trial checkpoint](native-sprite95-trial5.md) now qualifies real
 switch/Koopa/shell interactions and the172 far door's return to16E, awarding
 one Dragon Coin. Position-assisted segments remain explicit; no full course,

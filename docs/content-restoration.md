@@ -1554,3 +1554,10 @@ where the game awards one Dragon Coin. Lives and saved five-coin flags remain
 unchanged. Earlier failed timing/loading/lava probes stay separate. Platform
 and switch-position fixtures leave ordinary traversal, other trial coins and
 five-coin/save acceptance open;1CC interaction also remains unresolved.
+
+The [ordinary fifth-trial platform route](native-sprite95-trial5-route.md)
+subsequently removes the far-door teleport and all damage-immunity writes.
+Fresh native/7hero runs pass68 paired samples. Following the earlier assisted
+switch/stomp/approach setup, ordinary carry/release, upper-passage jump, vine
+grab and door Up reach16E and award one Dragon Coin. Initial position fixtures,
+the other trials, five-coin/save behavior and full-course acceptance remain.

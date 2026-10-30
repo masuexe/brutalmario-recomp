@@ -1,5 +1,10 @@
 # Bowser Keep fifth trial: assisted mechanism and return qualification
 
+The subsequent [ordinary platform/vine route](native-sprite95-trial5-route.md)
+removes the far-door teleport and all immunity writes. Its fresh68 paired
+samples cover the shell/platform/vine/door segment through real return and
+one coin. Earlier switch/stomp/approach position fixtures still remain.
+
 ## Result (2026-10-30)
 
 The unchanged `demo11-native-seven-product-v1` candidate now exercises the
