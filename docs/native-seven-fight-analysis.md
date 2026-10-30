@@ -45,12 +45,21 @@ uses Up+A, Up+B, B and Down+B. The 16 retained samples stay at tier `6`. The
 two main damage fields stay at 64 and 6. Several samples show extra custom `2A`
 parts with value 0 or 107. The fight shows no defeat state and no room change.
 
+## Natural-floor test
+
+A third probe reaches tier `6`, then releases the player at X `120` from Y
+`32`. The player lands at Y `160`. The base part stays at Y `383` with
+damage field 64. Eight cycles each of Up+B, Up+A, B and Down+B keep both fields
+at 64 and 6. The base part is 14 tiles below the arena floor. A simple attack
+cannot reach it.
+
 ## Next work
 
-Qualify a position-correct attack. The result above shows that a reachable
-forced position and the tested input types do not damage the base part. Ask the
-user for a short manual fight sample if the next automatic attempt fails. Do
-not infer an earned victory from tier `6` alone.
+Qualify a position-correct attack. A reachable forced position, the tested
+input types and a natural floor control do not damage the base part. The base
+part sits below the arena floor. Find the lower-chamber path or the intended
+trigger. Ask the user for a short manual fight sample if the next automatic
+attempt fails. Do not infer an earned victory from tier `6` alone.
 
 The local captures are `seven-fight-pursue-v1-native` and
 `seven-fight-varied-v1-native`. Their run logs report a clean exit.
