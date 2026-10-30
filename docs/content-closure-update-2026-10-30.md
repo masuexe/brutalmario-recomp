@@ -20,7 +20,7 @@ This note records the progress and the open blockers since the
 | Item | Blocker |
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
-| Mazo 9C attack and phase music | An assisted 240-cycle attack probe leaves the part fields unchanged and never loads `0282`. A manual attack sample is the next input. |
+| Mazo 9C attack and phase music | Orb contact, cutscene, strengthening window and expiry now pass official-source/native checks (98 samples per host). `$7FFE00` is the window flag. Actual damage and later phases remain open; trace damage code next. See [orb qualification](native-mazo-gfx282.md#superseding-orb-qualification-2026-10-30). |
 | Mazo 9B room 190 | The user states that room 190 is a level before the boss fight, not a boss fight. Assisted entries die at `(32,-64)`. The `D85`/`D8F` bytes are not boss health. A real traversal, clear and save check stay open. |
 | `0282` runtime frame | Needs a 9C attack phase. The pointer, pack and code request are ready. |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
@@ -40,7 +40,7 @@ check for this level stay open.
 
 ## Next steps
 
-1. Obtain a short manual sample for the 9C attack phase and for the Seven final part.
+1. Trace official 9C damage conditions and exercise attacks during the qualified orb window. Seven final-part damage remains open.
 2. Build neighbor-entry fixtures for 11C screen 10 and 129 screens 2 and 3.
 3. Find the lower-band entry in rooms 114 and 11E.
 4. Re-run a world parity triage on the current product before more visual work.
