@@ -147,7 +147,7 @@ The per-sprite documents also leave a graphics review open for several records.
 | Item | State |
 | --- | --- |
 | Japanese message font in rooms `191` and `192` | Open. |
-| Empty graphics slots `0x27E` and `0x282` | Open. |
+| Empty graphics slots `0x27E` and `0x282` | `0x282` has candidate `demo11-native-mazo-gfx282-v1`; 9C requests it. `0x27E` has no immediate requester in the supplied packs. |
 | Per-world visual parity | The [world repair plan](world-repair-plan.md) lists persistent candidates: World 5 room `10F`, Star rooms `004`, `007` and `009`, World 1 room `120`. Later graphics batches may change this list. Re-run `tools/world_parity.py` before scheduling. |
 
 ## Product and runtime
