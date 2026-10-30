@@ -32,6 +32,13 @@ tables are identical for these rooms.
 Each room also holds one or more screen jumps. The table lists primary behavior
 only. A live probe must confirm a secondary exit before a route uses it.
 
+## Probe scope
+
+A live probe starts at the first screen of the room. It can confirm only the
+exit on that screen. A later screen needs an entry from its left neighbor. The
+probes for 11C screen 10 and 129 screens 2 and 3 returned the first-screen
+destination, so they do not confirm their own rows. Those rows stay static only.
+
 ## Live-verified additions (2026-10-30)
 
 Assisted screen-exit fixtures confirm three more destinations on r14. Each
