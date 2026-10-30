@@ -1,5 +1,10 @@
 # Native sprite 95 module review
 
+The [fifth-trial checkpoint](native-sprite95-trial5.md) now qualifies real
+switch/Koopa/shell interactions and the172 far door's return to16E, awarding
+one Dragon Coin. Position-assisted segments remain explicit; no full course,
+five-coin completion or save claim follows from this checkpoint.
+
 ## Current cumulative room qualification (2026-10-30)
 
 The [fresh six-room and five-door checkpoint](native-sprite95-current-rooms.md)

@@ -1,5 +1,10 @@
 # Sprite 95 rooms in the cumulative native candidate
 
+The subsequent [fifth-trial mechanism checkpoint](native-sprite95-trial5.md)
+adds actual switch/Koopa/shell behavior and a far-door return awarding one
+Dragon Coin. Its platform-position fixtures still leave ordinary traversal
+open. The earlier failed exploratory return observations below remain historical.
+
 ## Scope and identities (2026-10-30)
 
 This checkpoint qualifies selected behavior in the six remaining sprite95

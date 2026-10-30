@@ -1544,3 +1544,13 @@ These diagnostic entry/position/immunity fixtures do not prove trial clears,
 the172 exit,1CC interaction or full-course/visible/audio parity. The candidate
 is not promoted. Continue actual trials and earned Seven/mazo wins/save along
 with remaining content, route, music and graphics work.
+
+The [fifth-trial mechanism check](native-sprite95-trial5.md) adds59 paired
+samples on the same candidate. Real jumps operate the numbered switches,
+the protected Koopa crosses the bridge and enters its shell, and actual
+stomp/pickup/release follows. After an explicit far-corridor position fixture,
+ordinary Up at the actual far door restores switch10 and returns172 to16E,
+where the game awards one Dragon Coin. Lives and saved five-coin flags remain
+unchanged. Earlier failed timing/loading/lava probes stay separate. Platform
+and switch-position fixtures leave ordinary traversal, other trial coins and
+five-coin/save acceptance open;1CC interaction also remains unresolved.
