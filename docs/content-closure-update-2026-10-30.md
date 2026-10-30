@@ -21,23 +21,22 @@ This note records the progress and the open blockers since the
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
 | Mazo 9C attack and phase music | An assisted 240-cycle attack probe leaves the part fields unchanged and never loads `0282`. A manual attack sample is the next input. |
-| Mazo 9B attack and clear | The official mazo donor and the native product match on the room 190 preview state. Both show mode 14, room 190, player `(32,-64)` and health 64/64. Both later return to map mode. The attack/clear item is not a recipient gap. A walkthrough or manual sample must show a real fight first. |
+| Mazo 9B room 190 | The user states that room 190 is a level before the boss fight, not a boss fight. Assisted entries die at `(32,-64)`. The `D85`/`D8F` bytes are not boss health. A real traversal, clear and save check stay open. |
 | `0282` runtime frame | Needs a 9C attack phase. The pointer, pack and code request are ready. |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
-| Japanese message font 191/192 | Open. Mazo room `191` holds the same sprite list with `B0` in place of `A9`. The five-byte header table at `05F100` differs for room `192` only (`0D` versus `0C`). A live donor room `191` frame is still missing. |
+| Japanese message font 191/192 | The user states that only demoOnly1 and Demo 1-1 replace the Japanese font with the English font. The recipient is 1-1 based, so Japanese messages show English glyphs. Restore the donor GFX2A font for rooms `191` and `192`, using the Seven fight font adapter as the pattern. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
 
-## Mazo 9B room 190 source parity
+## Mazo 9B room 190 is a level
 
-Captures `mazo-9b-entry-v1/v2-{donor,native}` agree on `castle_idle` and
-`fight180`, `fight240` and `fight600`: mode `14`, room `190`, player `32/-64`,
-`D85` and `D8F` at 64. One v2 sample, `fight120`, differs in load mode (native
-`13`). Both hosts then return to map mode `0E` with health 0. The donor never
-shows a health drop. Treat the attack and clear item as an author preview until
-a walkthrough or a manual sample shows a real fight.
+The user states that room `190` is the level before the boss fight, not a boss
+fight. Captures `mazo-9b-entry-v1/v2-{donor,native}` agree on the initial state:
+mode `14`, room `190`, player `32/-64`. The `D85` and `D8F` bytes are not boss
+health. Both hosts then return to map mode. A real traversal, clear and save
+check for this level stay open.
 
 ## Next steps
 
