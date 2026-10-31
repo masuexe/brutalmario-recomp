@@ -23,4 +23,8 @@ The hook is now built into the `demo11-native-product-r15` candidate. Capture
 `map-main-node-r15-hook-v1` runs the same map position without a WRAM write.
 The map dump shows `D1F0` change from `30` to `B4`, and the A press loads room
 `190` with `13BF=B4`. The flag `BM_MAZO_190_NODE=1` enables the hook. The
-accepted r14 build is unchanged.
+hook does not change the accepted r14 build.
+
+The mazo original starts a new save at this tile. The product start differs, so
+the fixture uses a teleport to the tile. A normal route to the tile is not
+established.
