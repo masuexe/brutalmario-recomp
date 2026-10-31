@@ -117,7 +117,10 @@ to `136`. Slot 9 stays at `(128,8)`. In `mazo-190-exact-v1`, slot 7 reaches
 change. The room layer 1 stream holds only a 13-byte header, and the layer 2
 pointer is the empty sentinel `FFDE54` on both hosts. Room 190 is a special
 Mode7 scene, not a tile level. The target object and the transition condition
-stay open.
+stay open. The official donor capture `mazo-9b-entry-v2-donor` shows the same
+persistent parts at `fight150` and `fight600` and also returns to mode `0E` at
+`fight1200`. The direct entry therefore matches the official source window. No
+clear or boss transition appears on either host in that window.
 
 ## Limits
 
