@@ -26,3 +26,12 @@ current native product build and its default map behaviors.
 - The full unit suite passes 414 tests (`local/unit-tests-round94.log`).
 
 The earned Seven defeat, full 9C saved clear and later audible music stay open.
+
+## Recent route checks
+
+World 2 room `126` clears with ordinary right and A input from the entry
+fixture. The goal byte reaches `9B`, lives rise from four to five, and the SRAM
+hash changes after the map return. World 2 rooms `121` and `122` stop on their
+simple routes and need specific paths. Castle boss rooms `06E`, `06F`, `070`,
+`071` and `072` all have live entry captures. The Phase, exit and save checks
+for those rooms stay open.
