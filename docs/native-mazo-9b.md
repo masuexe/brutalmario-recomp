@@ -129,6 +129,11 @@ native pipe fixture holds `$13BF=6A`. A forced `$13BF=30` on the direct entry
 trigger the room change. The 10C course context and the internal room change
 stay open.
 
+A map-entry test changed the word at file offsets `961B8` and `20E1B8` for
+translevel `030` from `010C` to `0190` in the reference host. The map 6
+override still loaded room `10C`. The two matched tables are not the loader for
+this entry, so the map node swap needs a different table.
+
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
 immediate room `190` constant and no `19B8`, `19D8` or `13BF` write. A player
