@@ -122,6 +122,13 @@ persistent parts at `fight150` and `fight600` and also returns to mode `0E` at
 `fight1200`. The direct entry therefore matches the official source window. No
 clear or boss transition appears on either host in that window.
 
+Course context differs. The official donor room 190 holds `$13BF=30`, the 10C
+course, while the direct native translevel `0B4` entry holds `$13BF=B4`. The
+native pipe fixture holds `$13BF=6A`. A forced `$13BF=30` on the direct entry
+(`mazo-190-ctx-v1`) gives the same map-return window, so the identity does not
+trigger the room change. The 10C course context and the internal room change
+stay open.
+
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
