@@ -13,3 +13,6 @@ does not qualify entry, phase behavior or a save.
 
 Each room also holds the usual screen jump sentinel. The next checks need live
 entry, phase and exit captures for each room.
+
+Live entry check for room `06F`: capture `room06f-entry-v1` reaches mode `14`,
+room `06F`, player `(16,352)` and four lives. Phase and exit checks stay open.
