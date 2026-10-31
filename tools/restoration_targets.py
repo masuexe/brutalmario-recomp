@@ -1,6 +1,14 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-mazo-messages-v2': {
+        'binary': 'BrutalMarioDemo11NativeMazoMessagesV2SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Messages V2',
+    },
+    'demo11-native-mazo-messages-v1': {
+        'binary': 'BrutalMarioDemo11NativeMazoMessagesV1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Messages V1',
+    },
     'demo11-native-mazo-cumulative-v1': {
         'binary': 'BrutalMarioDemo11NativeMazoCumulativeV1SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Mazo Cumulative V1',

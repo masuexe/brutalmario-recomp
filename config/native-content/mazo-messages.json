@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "id": "mazo-room-messages",
+  "parent": "demo11-native-mazo-cumulative-v1",
+  "target": "demo11-native-mazo-messages-v1",
+  "scope": "Room191 message2 and room192 message1; preserve global course/save identity and all other recipient messages. Executable89 has low WRAM/I/O mirrors; D3 is data only.",
+  "parent_config": {
+    "size": 30573,
+    "sha256": "c2e7dc6edf771e339e8d26a0906dcb3e2e8b2d24dd92127b871fc48f6f77d65b"
+  },
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "47466dc5d6fd53275e042091fc57705a6d6a60356c2785bb0d9336fa3ec73757"
+  },
+  "sources": {
+    "mazo": {
+      "size": 4194304,
+      "sha256": "94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1"
+    },
+    "boss": {
+      "size": 4194304,
+      "sha256": "337fe036f943dafb0df70bdb556e588b785c58ff019b1b00c08f77743e2b3ccd"
+    },
+    "demo-1-1": {
+      "size": 4194304,
+      "sha256": "314496f67caf53d1d74873333de366a07a2b2446d7bbb5f27eeeb9aa69894f32"
+    },
+    "7hero": {
+      "size": 4194304,
+      "sha256": "dd7007ad45da87647bbd7e6d3bda13b8555c05b64793a92824f12b347c7a2395"
+    },
+    "demo-only-1": {
+      "size": 4194304,
+      "sha256": "b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b"
+    }
+  },
+  "messages": [
+    {
+      "room": "192",
+      "request": 1,
+      "source_address": "53E59A",
+      "size": 70,
+      "sha256": "12cbf62857edf08478f20802fc18f42b5f0046879324b9579756934eab4fdc8c"
+    },
+    {
+      "room": "191",
+      "request": 2,
+      "source_address": "53E5E0",
+      "size": 86,
+      "sha256": "6099121ed82b5f1b504f24736277602c812ca93ef1a52f777a1d76eb3a837f96"
+    }
+  ],
+  "fonts": {
+    "japanese": {
+      "version": "boss",
+      "size": 2048,
+      "sha256": "2f0619a305c515d72c4707dd7f18a792dcc376d3a5ac65adab35e68e75e15e1f"
+    },
+    "english": {
+      "version": "demo-1-1",
+      "size": 2048,
+      "sha256": "310facf09c5f280859dcfcf4da215c63089377af4802aabea31e49ce5f09d0fa"
+    }
+  },
+  "helper": {
+    "address": "03BBC9",
+    "size": 128,
+    "sha256": "2dc43032357012e2ad2a1d424ab00b0b72a9eead58c140dccac8f8a38d9a86a7"
+  },
+  "stripe_rows": {
+    "address": "03BC7F",
+    "size": 16,
+    "sha256": "53d17d420c0920f025a8c92b9468bd3ae3a95dc91f27bbeafe37b34fe696f71f"
+  },
+  "patches": [
+    {
+      "address": "03BB90",
+      "before": "5ca6b610",
+      "after": "5c00b089",
+      "role": "Route only room191/message2 and room192/message1 through the private official renderer; retain native selector fallback."
+    },
+    {
+      "address": "05B11D",
+      "before": "9c26149c881b",
+      "after": "5c00b189eaea",
+      "role": "Restore English font when closing messages in191/192; execute original message-close stores and continuation."
+    }
+  ],
+  "allocations": [
+    {
+      "address": "89B000",
+      "size": 3716,
+      "executable": true
+    },
+    {
+      "address": "D38000",
+      "size": 4352,
+      "executable": false
+    }
+  ],
+  "newer_text_audit": {
+    "versions": [
+      "7hero",
+      "boss",
+      "demo-only-1",
+      "demo-1-1"
+    ],
+    "result": "Neither complete encoded Mazo message occurs in these newer official images. Use pinned Mazo messages; latest Demo1-1 renderer and newest Japanese Boss font."
+  }
+}
