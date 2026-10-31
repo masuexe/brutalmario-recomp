@@ -53,6 +53,14 @@ damage field 64. Eight cycles each of Up+B, Up+A, B and Down+B keep both fields
 at 64 and 6. The base part is 14 tiles below the arena floor. A simple attack
 cannot reach it.
 
+## WP cheat check
+
+A fourth probe reaches tier `6` with the aligned opening prefix and then holds
+the WP maximum and current value at `99`. It runs 80 cycles of Down+B, B,
+Down+A and Up+B. The base part field stays at `64` and the moving part field
+stays at `6`. The transient custom `2A` parts show values `255`, `154` and
+`120`, then clear. A forced WP value does not damage the base part.
+
 ## Next work
 
 Qualify a position-correct attack. A reachable forced position, the tested
