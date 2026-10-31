@@ -73,3 +73,7 @@ The floor there is a pit, and the player falls to `y 687` without a transition.
 The external neighbor fixture stays open. A later jump attempt at the same
 point also fails: the player starts at `(521,352)`, a left jump falls to
 `y 455`, then `y 543` and `y 1068`, and the room stays `03E`.
+
+A vertical probe drops the player at X `120` from Y `0`. The player lands at
+Y `288`, then walks right to X `354` and stops at a wall. The room stays `03E`.
+The screen 1 exit needs a different route or object.
