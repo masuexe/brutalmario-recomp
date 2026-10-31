@@ -62,3 +62,12 @@ loads room `000`. Screen 10 stays static only.
 Scripts are `recomp/inputs/forest-11b-screen11.script`,
 `recomp/inputs/forest-11c-screen09.script` and
 `recomp/inputs/forest-11e-screen19.script`.
+
+## Product exit scan (2026-10-31)
+
+A full scan of rooms `000..1FF` in the product finds one external exit to
+`129`: room `03E` screen 1. It finds self-secondary exits for room `114`
+screen 17 and room `11C` screen 10. No other room points to `114`, `11C`,
+`11E` or `129`. An assisted `03E` attempt teleports the player to `(521,352)`.
+The floor there is a pit, and the player falls to `y 687` without a transition.
+The external neighbor fixture stays open.
