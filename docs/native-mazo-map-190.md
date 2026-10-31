@@ -58,7 +58,7 @@ Candidate identities: `demo11-native-product-r15` ROM
 `9f6d845b19ad24160668633e2f30d0e846662c67b135c6cbc1bca680db20716e` and
 binary `a06c50765ce8cf853d6a097e880f800645f1550559497783d5ee1c77e68cf866`.
 The accepted r14 binary is rebuilt with the default hooks. Its new binary is
-`dc7c0450f1ca98f24402686421540a8711412ea84e794764943ce91e370d9bf1` and its ROM
+`b854560490132a35343a8150a3e12cb746da50474f29544f70dc582e1ec09eed` and its ROM
 stays `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b`. Product
 captures `product-r14-yoshi-v1` and `product-r14-node-v1` show the Yoshi start
 and the 190 node.
