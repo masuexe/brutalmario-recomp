@@ -77,3 +77,7 @@ point also fails: the player starts at `(521,352)`, a left jump falls to
 A vertical probe drops the player at X `120` from Y `0`. The player lands at
 Y `288`, then walks right to X `354` and stops at a wall. The room stays `03E`.
 The screen 1 exit needs a different route or object.
+
+A later pipe probe on the r15 candidate places the player at X `0x40`, `0x80`
+and `0xC0` near Y `0x140`, then presses Down and Up. Every sample stays in
+room `129` with mode `0E`, so no pipe or door reaches screen 2 or 3.
