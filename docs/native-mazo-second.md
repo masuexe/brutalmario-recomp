@@ -5,6 +5,10 @@ The accepted product remains `demo11-native-product-r14`. The experimental
 `demo11-native-mazo-gfx282-v1` is an older r14 descendant; it must not replace
 the cumulative modern sprite candidate.
 
+The subsequent [cumulative integration](native-mazo-cumulative.md) now retains
+modern-sprites-v2's modules while qualifying the same complete graphics upload
+and eleven unchanged native regression routes.
+
 ## Grounded death and normal jump control
 
 The official mazo program's main 9C variant 1, phase 8, runs at `22:8BBE`.

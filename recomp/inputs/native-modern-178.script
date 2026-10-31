@@ -1,0 +1,49 @@
+# Diagnostic primary-room/pipe/immunity/player-position fixture.
+# No actor, HP, progression, completion or save writes.
+# Door cases test ordinary Up after assisted loading, not trial completion.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80004001
+poke 19b8 78
+poke 19d8 05
+poke 88 0000
+poke 71 06
+until 010b == 78 500
+until 0100 == 14 500
+dump entered
+forcepoke 1497 ff
+wait 1
+dump f001
+wait 15
+dump f016
+wait 16
+dump f032
+wait 32
+dump f064
+wait 64
+dump f128
+wait 128
+dump f256
+wait 256
+dump f512
+quit

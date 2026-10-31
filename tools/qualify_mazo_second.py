@@ -21,7 +21,7 @@ def read(path):
     return json.loads(path.read_text())
 
 
-def capture(name, donor, mode, hops=80):
+def capture(name, donor, mode, hops=80, target=TARGET):
     p = ROOT / 'local/captures' / name
     r = read(p / 'receipt.json')
     script = second_route(donor, mode, hops)
@@ -34,13 +34,13 @@ def capture(name, donor, mode, hops=80):
                             ('frontend_sha256', 'local/build/snesref/snesref')]:
             require(r[field] == sha((ROOT/file).read_bytes()), field)
     else:
-        b = read(ROOT/'local/build'/TARGET/'m1-build.json')
-        cfg = read(ROOT/'config/restorations'/(TARGET+'.json'))
-        require(r['stage'] == 'native' and r['target'] == TARGET, 'native role')
+        b = read(ROOT/'local/build'/target/'m1-build.json')
+        cfg = read(ROOT/'config/restorations'/(target+'.json'))
+        require(r['stage'] == 'native' and r['target'] == target, 'native role')
         require(r['rom_sha256'] == b['rom_sha256'] == cfg['output']['sha256'], 'native ROM')
         require(r['host_binary_sha256'] == b['binary_sha256'] == sha((
-            ROOT/'local/build'/TARGET/RESTORATIONS[TARGET]['binary']).read_bytes()), 'native binary')
-        require(r['native_content'] == b['native_content'] == identity(TARGET), 'native module identity')
+            ROOT/'local/build'/target/RESTORATIONS[target]['binary']).read_bytes()), 'native binary')
+        require(r['native_content'] == b['native_content'] == identity(target), 'native module identity')
         require(r['runtime_patches'] == b['runtime_patches'] == patch_plan(), 'native runtime')
         require(r['analysis'] == b['analysis'], 'native analysis')
     log = (p/'run.log').read_text()

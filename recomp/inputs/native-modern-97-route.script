@@ -1,0 +1,39 @@
+# Fixture: practice map-node override enters translevel 02C (room 108).
+# The player is placed in the screen-1 exit and the action is set to 6; the
+# existing screen exit is followed. Not an ordinary traversal.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 2c
+press y 2
+until 0100 == 14 400
+dump active
+poke 94 80016001
+poke 88 0000
+poke 71 06
+wait 120
+dump entered
+wait 1
+dump f001
+wait 15
+dump f016
+wait 16
+dump f032
+wait 32
+dump f064
+wait 64
+dump f128
+wait 128
+dump f256
+quit
