@@ -140,7 +140,10 @@ The Super Mario World overworld format gives the cause. The original game does
 not store translevels in a table. It assigns them as level tiles appear in the
 Layer 1 data. A Lunar Magic edit keeps the high byte in the Layer 1 tile row. A map node swap therefore needs an edit of that level tile or its order,
 not a translevel index patch. The next step finds the Layer 1 tile position of
-the node and changes its level value.
+the node and changes its level value. A map capture at the practice position holds
+`30` at `7ED000+1F0`. A forced `B4` there changes that byte, but the later A press
+enters room `005`. The poked map position is not the level tile, and the
+practice `D7E2` override is a separate path.
 
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
