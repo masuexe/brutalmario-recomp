@@ -132,7 +132,9 @@ stay open.
 A map-entry test changed the word at file offsets `961B8` and `20E1B8` for
 translevel `030` from `010C` to `0190` in the reference host. The map 6
 override still loaded room `10C`. The two matched tables are not the loader for
-this entry, so the map node swap needs a different table.
+this entry, so the map node swap needs a different table. The `0EF600` table
+holds three-byte pointers, and its first `0x100` entries hold no `10C` or `190`
+level word. That table is not a direct level-number map for this node either.
 
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
