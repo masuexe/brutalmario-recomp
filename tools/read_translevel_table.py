@@ -10,7 +10,7 @@ from pathlib import Path
 
 BASE = 0xD000
 SUBMAP = 0x400
-SIZE = 6 * SUBMAP
+SIZE = 7 * SUBMAP
 
 
 def entries(data, base=BASE, size=SIZE):
