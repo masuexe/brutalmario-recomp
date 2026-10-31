@@ -15,6 +15,11 @@ __attribute__((weak)) uint8_t g_ram[0x20000];
  * no music object of its own and inherits the shared default slot 0x02. Force
  * recipient slot 0x9E whenever the game is in room 0x190. */
 static int s_music_room = -1;
+static void bm_mazo_map_node_override(void) {
+  if (!getenv("BM_MAZO_190_NODE")) return;
+  if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
+  g_ram[0xd1f0] = 0xb4;
+}
 static void bm_room_music_override(void) {
   int room = g_ram[0x10b] | (g_ram[0x10c] << 8);
   if (room == 0x190) {
@@ -93,6 +98,7 @@ void bm_content_load(uint8_t *rom, size_t size) {
 }
 
 uint8_t *bm_content_resolve(const uint8_t *rom, uint8_t bank, uint16_t address) {
+  bm_mazo_map_node_override();
   bm_room_music_override();
   if (rom != owner || !backing || address < 0x8000) return NULL;
   for (unsigned i = 0; i < BM_SEVEN_PACKS; ++i) {
