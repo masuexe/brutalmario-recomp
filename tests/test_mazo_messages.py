@@ -12,6 +12,19 @@ from prepare_mazo_messages import RECIPE, build
 from restore_star_world_1 import lorom
 
 
+class MazoMessageConfigTests(unittest.TestCase):
+    def test_candidate_lineage_and_scope(self):
+        cfg = json.loads((ROOT/'config/restorations/demo11-native-mazo-messages-v2.json').read_text())
+        self.assertEqual(cfg['base_restoration'], 'demo11-native-sprite9e')
+        self.assertEqual(cfg['parent_restoration'], 'demo11-native-mazo-cumulative-v1')
+        packs = cfg['native_sprite_gap']['extra_packs']
+        self.assertEqual([p['variable'] for p in packs[-2:]],
+                         ['BM_MAZO_MESSAGE_CODE_PACK', 'BM_MAZO_MESSAGE_DATA_PACK'])
+        recipe = json.loads(RECIPE.read_text())
+        self.assertEqual([m['room'] for m in recipe['messages']], ['191', '192'])
+        self.assertEqual(set(recipe['fonts']), {'japanese', 'english'})
+
+
 @unittest.skipUnless((ROOT/'local/restoration/demo11-native-mazo-cumulative-v1/rom.sfc').exists(),
                      'requires the pinned cumulative parent and official assets')
 class MazoMessageTests(unittest.TestCase):
