@@ -17,5 +17,10 @@ player position to that tile, writes `B4` to `7ED1F0`, and presses A. Capture
 Thus the entry table byte controls the node. A native runtime adaptation in
 `recomp/native_seven.c` now holds this redirect behind the environment flag
 `BM_MAZO_190_NODE`. It writes `g_ram[0xD1F0]=0xB4` when game mode is
-`0x0E` and the map id is `0`. The accepted product stays r14. The hook needs
-a fresh candidate build and a map route check before acceptance.
+`0x0E` and the map id is `0`. The accepted product stays r14.
+
+The hook is now built into the `demo11-native-product-r15` candidate. Capture
+`map-main-node-r15-hook-v1` runs the same map position without a WRAM write.
+The map dump shows `D1F0` change from `30` to `B4`, and the A press loads room
+`190` with `13BF=B4`. The flag `BM_MAZO_190_NODE=1` enables the hook. The
+accepted r14 build is unchanged.
