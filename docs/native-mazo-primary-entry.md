@@ -175,3 +175,8 @@ The accepted r14 ROM and binary retain their release-note hashes. Source ROMs,
 accepted builds, saves and earlier captures remain intact. Next, reconcile the
 source00D corridor (relocated to183), its native recipient00D course and the
 Mazo event mapping before accepting complete world progression.
+
+
+The later [playable progress milestone](native-mazo-progress.md) suppresses the
+unrelated recipient00D flag write and qualifies the full assisted actual-node
+fight/ending/save chain. Recipient eventFF and ordinary traversal remain open.

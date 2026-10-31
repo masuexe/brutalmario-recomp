@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "id": "mazo-progress-v1",
+  "parent": "demo11-native-mazo-primary-entry-v3",
+  "target": "demo11-native-mazo-progress-v1",
+  "parent_config_sha256": "91ba86ce0b7d7c26195c2f668699e9b3f6b4373e9be04efbd59aeaf7efb63cb4",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "28da206c0bfeb7c7ed9a9c10a3eadb6377e128edb132b6984e725fb1de497ff5"
+  },
+  "donor": {
+    "size": 4194304,
+    "sha256": "94092a0fdbf9d92e8f638b7defba41b7c93e70ea0ea56d976a032e6eac6b73e1"
+  },
+  "source_program": {
+    "size": 419,
+    "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8"
+  },
+  "source_course": {
+    "room": "00D",
+    "pointer": "5BB0E0",
+    "size": 21,
+    "sha256": "c4a6daa70444322f65425d6574eca97474b5bd067c2ff75e87991cec8a0fe051",
+    "sprites_sha256": "6731827348dbb507475e7f6a073445efac40d5b5c39c9246dcb0b8e8061e95e5"
+  },
+  "recipient_course": {
+    "room": "00D",
+    "pointer": "F19A62",
+    "size": 412,
+    "sha256": "913ab67247e5b3b4c264aaf9c06875a14be2a3a5e3be0659001aa09f7b625c56",
+    "sprites_sha256": "7e1492837915083622db777febf223595b6458f12be5c8534421f77f839ab819"
+  },
+  "patch": {
+    "address": "A189AE",
+    "offset": 37,
+    "before": "8daf1e",
+    "after": "89ffea"
+  },
+  "payload": {
+    "size": 419,
+    "sha256": "4e1640cbc64d2f8fb31065db79d24cca9755e1e31ab446196a109502d43c64ed"
+  }
+}

@@ -1,0 +1,66 @@
+# Fixture: main-map coordinate placement at the product Mazo node.
+# After real node entry, a primary pipe-action fixture skips room190 to192.
+# This checks save ownership, not room190 traversal or an earned boss victory.
+# No completion, goal, translevel, node assignment or save writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 0001f000
+poke 1f1f 10000f0010000f00
+poke 0100 0b
+wait 120
+dump m0
+wait 30
+dump m1
+press a 20
+until 0100 == 14 500
+wait 60
+dump m2
+poke 94 80004001
+poke 19b8 92
+poke 19d8 05
+poke 88 0000
+poke 71 06
+wait 180
+dump room_entry
+until 1426 == 01 300
+wait 120
+dump message
+press b 2
+wait 120
+dump closed1
+press b 2
+wait 120
+dump closed
+press right 120
+dump walked
+wait 900
+dump after_goal
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+dump file_reload
+# Coordinate fixture to the existing recipient00D node after the real Mazo save/reload.
+# No node assignment, completion, event or save edits.
+poke 1f11 0606
+poke 1f17 d8012801d8012801
+poke 1f1f 1d0012001d001200
+poke 0100 0b
+wait 240
+dump recipient_node
+press y 2
+until 0100 == 14 500
+dump recipient_course
+wait 120
+dump recipient_later
+quit

@@ -115,3 +115,9 @@ reset/File A reload. The accepted r14 default B4 node override remains a
 reproduced wrong-owner control. The recipient event is stillFF, exit count
 stays0, and B0's legacy course0D flag remains unchanged. Full Mazo world/event
 integration and earned fight acceptance remain open.
+
+
+The [progress milestone](native-mazo-progress.md) then follows the actual-node
+assisted191/151 fight and ending, preserves recipient00D, and saves course30
+through reset. It provides the current native play command. EventFF/count0 and
+unassisted traversal remain separate acceptance items.

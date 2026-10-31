@@ -52,3 +52,9 @@ assisted sphere clear on r14 leaves original course30 completion unset.
 An isolated [primary-entry candidate](native-mazo-primary-entry.md) retains
 node30 and saves its completion after reset; it is not promoted into this
 package. Recipient eventFF/exit count0 and the B0 legacy flag remain open.
+
+
+The [playable Mazo progress milestone](native-mazo-progress.md) has a separate
+native launch command and profile. It carries the cumulative restored content
+and protects recipient00D while saving the actual Mazo30 goal. The r14 package
+and its recorded checksum remain unchanged.
