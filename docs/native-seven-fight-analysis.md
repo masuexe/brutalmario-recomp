@@ -71,10 +71,13 @@ Y `383`.
 
 ## Terminology
 
-The lower chamber means the area below the arena floor that holds the custom
-`2A` base part. It is not the next course after a Seven defeat. Room `0FF`
-screen 0 has a screen exit to room `174`. The ending candidate retargets that
-exit to the reserved room `17B`. Neither route proves an earned defeat. A simple diagram is at
+The lower chamber means the space below the arena floor that holds the custom
+`2A` parts. The user reports that this space is not reachable. Boss phase 2
+can move parts into it, so normal player attacks miss. Capture
+`seven-fight-pursue-v1-native/p210` has custom `2A` parts at Y `355`, `371`,
+`375`, `383` and `399`. It is not the next course after a Seven defeat. Room
+`0FF` screen 0 has a screen exit to room `174`. The ending candidate retargets
+that exit to the reserved room `17B`. Neither route proves an earned defeat. A simple diagram is at
 `local/captures/seven-floor-diagram-v2.png`.
 
 ## Next work
