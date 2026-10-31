@@ -68,7 +68,7 @@ encoded text from `53:D0D4`. The recipient instead jumps from `03:BB90` to
 entries also have different `$13BF` values. A local message adaptation must
 recover the intended source message, blank encoding and font together while
 preserving the recipient's global course/save identity and ordinary messages.
-No message or save adaptation was installed in this checkpoint.
+The later [message candidate](native-mazo-messages.md) restores those two messages and the local Japanese font. Save identity remains open.
 
 The community [official-demo map index](https://wikiwiki.jp/kitikumario/%E3%83%9E%E3%83%83%E3%83%97%E6%94%BB%E7%95%A5)
 lists the Mazo main course as `10C`, named 天空要塞 ルイージドリーム. Its numeric
