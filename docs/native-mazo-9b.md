@@ -109,6 +109,12 @@ flying actors and the green and red sphere therefore move through a camera
 scroll, not through `$94`. The sphere touch route stays open. The next check
 traces the scroll and the vehicle actor, not the player coordinate.
 
+Actor slot 7 is the green and red sphere. Directional input moves that slot:
+up changes `y 120` to `8`, left changes `x 120` to `8`, and right changes `x`
+to `136`. Slot 9 stays at `(128,8)`. In `mazo-190-exact-v1`, slot 7 reaches
+`(128,8)` and overlaps slot 9, but the room and mode do not change. The target
+object and the transition condition stay open.
+
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
