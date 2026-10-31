@@ -69,6 +69,13 @@ A tier `6` floor scan drops the player at X `64`, `96`, `112`, `120`, `128`,
 stays at `96` on the two high platforms. No opening reaches the base part at
 Y `383`.
 
+## Terminology
+
+The lower chamber means the area below the arena floor that holds the custom
+`2A` base part. It is not the next course after a Seven defeat. Room `0FF`
+screen 0 has a screen exit to room `174`. The ending candidate retargets that
+exit to the reserved room `17B`. Neither route proves an earned defeat.
+
 ## Next work
 
 Qualify a position-correct attack. A reachable forced position, the tested
