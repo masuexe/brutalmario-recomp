@@ -103,7 +103,7 @@ The assisted entry still dies at `(32,-72)` on the old target.
 Room 190 is an interactive Mode7 field on r14. The translevel `0B4` entry
 capture `mazo-190-tl-v1` keeps mode `14` and room `190`. The player world
 position stays at `(32,-64)`, but directional input moves the field. In
-`mazo-190-ship-v1`, right input moves the sphere to the right edge, up input
+`mazo-190-ship-v1`, right input moves the sphere to the right edge. Up input
 moves it to the top right, and a long left input empties the view. The four
 flying actors and the green and red sphere therefore move through a camera
 scroll, not through `$94`. The sphere touch route stays open. The next check
