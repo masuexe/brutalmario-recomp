@@ -130,6 +130,10 @@ writing a gimmick-specific route, match actual room chains, sprites and visual
 content to an official donor and the appropriate walkthrough. A failed tape
 probe in `126` cannot yet establish a defect in the named fire course.
 
+A room `122` route entry starts at `(16,336)` with four lives. Simple right
+and A cycles reach room `005` with three lives at sample `q15`. The route needs
+a different jump path.
+
 The qualifier passes all seven boundaries plus the Star control. A later rerun
 on the current tree also passes (`local/reports/world2-exit-regress-v1.json`).
 The existing unit suite passes **344/344**. The log:
