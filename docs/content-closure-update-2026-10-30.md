@@ -21,7 +21,7 @@ This note records the progress and the open blockers since the
 | Item | Blocker |
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
-| Mazo 9C attack and phase music | Assisted real attacks now reach the scripted ending, room192, ordinary sphere goal and map return on both hosts. Native guest flag persists on reset, but practice exit count differs from source; correct world/save identity and later audible music remain open. See [ending boundary](native-mazo-ending.md). |
+| Mazo 9C attack and phase music | Assisted real attacks now reach the scripted ending, room192, ordinary sphere goal and map return on both hosts. Native guest flag persists on reset, but practice exit count differs from source. Correct world/save identity and later audible music remain open. See [ending boundary](native-mazo-ending.md). |
 | Mazo 9B room 190 | The user states that room 190 is a level before the boss fight, not a boss fight. Assisted entries die at `(32,-64)`. The `D85`/`D8F` bytes are not boss health. A real traversal, clear and save check stay open. |
 | `0282` cumulative integration | Closed on experimental mazo-cumulative-v1: complete upload matches official mazo, all 45 recipes and 57 inherited packs retained, eleven fresh native regressions pass (1,156 file comparisons). See [cumulative integration](native-mazo-cumulative.md). |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
