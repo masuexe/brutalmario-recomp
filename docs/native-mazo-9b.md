@@ -88,6 +88,18 @@ An independent rerun reproduces this report byte for byte.
 The module tests pass 8/8. The full suite passes 184/184 tests. The log is
 `local/reports/unit-tests-mazo-fork.log`.
 
+## Room 190 Mode7 rendering gap
+
+The donor frame `mazo-9b-entry-v1-donor/fight180` shows the sunset Mode7
+scene, the flying ship and the green and red sphere. The native frame
+`mazo-9b-entry-v1-native/fight180` shows vertical stripe garbage. The native
+frame `fight600` keeps the same fault. The layer 1 pointer `5BB3DA` and the
+five sampled header tables are equal for both hosts. VRAM pages `0000..3FFF`
+differ, while pages `4000..FFFF` mostly match. The native Mode7 map upload is
+wrong or absent. This fault explains the assisted entry death at `(32,-72)`.
+A traversal check cannot start before the Mode7 map renders. The next step
+traces the Mode7 map DMA and the level mode path.
+
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
