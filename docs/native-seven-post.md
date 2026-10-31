@@ -10,5 +10,9 @@ directly. It holds mode `14`, four lives, course `98`, and player spawn
 and foreground terrain. The room has 31 screens and four exits: three screen 0,
 19 and 23 exits to room `323`, and one screen 30 exit to room `373`.
 
+A right walk from the spawn leaves the ledge. The player falls from Y `304`
+to Y `455`, then Y `858`, loses one life and returns at `(270,302)`. The
+route needs a jump or a different path.
+
 The entry is a practice fixture. It does not show the fight-to-room transfer,
 a saved clear or a complete route.

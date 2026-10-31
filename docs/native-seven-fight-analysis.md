@@ -74,7 +74,8 @@ Y `383`.
 The lower chamber means the area below the arena floor that holds the custom
 `2A` base part. It is not the next course after a Seven defeat. Room `0FF`
 screen 0 has a screen exit to room `174`. The ending candidate retargets that
-exit to the reserved room `17B`. Neither route proves an earned defeat.
+exit to the reserved room `17B`. Neither route proves an earned defeat. A simple diagram is at
+`local/captures/seven-floor-diagram-v2.png`.
 
 ## Next work
 
