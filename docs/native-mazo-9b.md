@@ -138,8 +138,7 @@ level word. That table is not a direct level-number map for this node either.
 
 The Super Mario World overworld format gives the cause. The original game does
 not store translevels in a table. It assigns them as level tiles appear in the
-Layer 1 data, and a Lunar Magic edit keeps the high byte in the Layer 1 tile
-row. A map node swap therefore needs an edit of that level tile or its order,
+Layer 1 data. A Lunar Magic edit keeps the high byte in the Layer 1 tile row. A map node swap therefore needs an edit of that level tile or its order,
 not a translevel index patch. The next step finds the Layer 1 tile position of
 the node and changes its level value.
 
