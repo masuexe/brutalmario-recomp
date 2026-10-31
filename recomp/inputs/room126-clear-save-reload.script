@@ -1,0 +1,78 @@
+# Fixture: map and translevel overrides enter room 126 (translevel 04A).
+# After entry: ordinary right+A traversal, real goal, reset and File A reload.
+# No position, invulnerability, completion, event or save writes.
+wait 600
+dump title
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 0100 0b
+wait 240
+poke d7e2 4a
+press y 2
+wait 120
+dump e0
+wait 120
+dump e1
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+dump j5
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+dump j10
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+dump j15
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+press right+a 40
+wait 20
+dump j20
+wait 900
+dump saved_map
+reset
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+dump file_reload
+quit

@@ -30,9 +30,18 @@ The earned Seven defeat, full 9C saved clear and later audible music stay open.
 
 ## Recent route checks
 
-World 2 room `126` clears with ordinary right and A input from the entry
+Room `126` clears with ordinary right and A input from the entry
 fixture. The goal byte reaches `9B`, lives rise from four to five, and the SRAM
-hash changes after the map return. World 2 rooms `121` and `122` stop on their
-simple routes and need specific paths. Castle boss rooms `06E`, `06F`, `070`,
-`071` and `072` all have live entry captures. The Phase, exit and save checks
-for those rooms stay open.
+hash changes after the map return. Rooms `121` and `122` stop on their
+simple routes and need specific paths. Rooms provisionally listed as castle
+boss rooms (`06E`, `06F`, `070`, `071` and `072`) all have live entry captures.
+Their identities, phase, exit and save checks stay open.
+
+The room126 probe is outside the corrected Forest World2 list. Its historical
+node override saves node05 rather than translevel04A; a changed SRAM hash is
+not sufficient evidence of correct course-save ownership. See
+[the room126 ownership check](world2-course126-route.md).
+
+The replacement room126 route uses its existing `D727=4A` node without a
+node-table edit. Real clear, `$1EEC: 0F -> 8F`, both SRAM copies and reset/File A
+reload pass. This remains a map-coordinate fixture, outside World2 acceptance.
