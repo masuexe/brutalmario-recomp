@@ -150,6 +150,11 @@ immediate `190` or `1BE`. In `mazo-190-buttons-v1`, slot 7 sits at `(128,8)`
 and A, B and Start input leave the room and mode unchanged. The room acts as a
 closed Mode7 cutscene on both hosts.
 
+A long hold repeats the check in `mazo-190-long-v1`. Room `190` stays in mode
+`14` for about 960 frames, then changes to mode `0D`, then mode `0E` with room
+`190`. Lives drop from `4` to `3`. The room is a timed cutscene that returns to
+the map and is not a softlock.
+
 The user supplied a map screenshot for the node. The `10C` tile sits at map
 tiles X `20..21`, Y `1D..1F`, and its green label is `30`. Map table reads at
 `(Y*32+X)` for those tiles return zero in captured submaps 2 to 5. The submap
