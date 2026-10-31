@@ -64,6 +64,11 @@ player to the exact base position `(119,383)` with WP `99`. It runs 80 cycles of
 Down+B, B, Down+A and Up+B. The base field stays at `64` and the moving field
 stays at `6`.
 
+A tier `6` floor scan drops the player at X `64`, `96`, `112`, `120`, `128`,
+`144`, `160` and `192` from Y `96`. The player settles at Y `154` to `160`, or
+stays at `96` on the two high platforms. No opening reaches the base part at
+Y `383`.
+
 ## Next work
 
 Qualify a position-correct attack. A reachable forced position, the tested
