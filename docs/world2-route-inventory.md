@@ -132,7 +132,8 @@ probe in `126` cannot yet establish a defect in the named fire course.
 
 A room `122` route entry starts at `(16,336)` with four lives. Simple right
 and A cycles reach room `005` with three lives at sample `q15`. The route needs
-a different jump path.
+a different jump path. Room `121` starts at `(272,352)`. Simple right and A
+cycles stop at `(338,352)` and do not reach the screen 4 exit.
 
 The qualifier passes all seven boundaries plus the Star control. A later rerun
 on the current tree also passes (`local/reports/world2-exit-regress-v1.json`).
