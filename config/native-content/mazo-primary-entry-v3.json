@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "mazo-primary-entry-v3",
+  "target": "demo11-native-mazo-primary-entry-v3",
+  "parent": "demo11-native-mazo-messages-v2",
+  "parent_config_sha256": "2be29595a51430d548c0b728a37b9857d0dc0034fd55953deda26533fdd75b76",
+  "parent_output": {
+    "size": 4194304,
+    "sha256": "f3a4ad3bfdd5fa57434e7b1f128501fedcd3b8fa6cff54e1a72f508f94400e6e"
+  },
+  "scope": {
+    "map": 0,
+    "player": 0,
+    "x": 256,
+    "y": 240,
+    "translevel": 48,
+    "room": 400
+  },
+  "address": "888000",
+  "payload": {
+    "size": 70,
+    "sha256": "210836ed144151a0e0b2ac6421f70c7a055dcbfc3b7a7cf4d57e7a6682ef6850"
+  },
+  "selector_window": {
+    "size": 37,
+    "sha256": "5242f3ce9dea2e91307dd87d6b47ee92d4844b606da06889a17297727b1779ca"
+  },
+  "patch": {
+    "address": "05D8B1",
+    "before": "22a2ed13",
+    "after": "22008088"
+  }
+}

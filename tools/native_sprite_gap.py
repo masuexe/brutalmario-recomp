@@ -109,7 +109,10 @@ def header(target):
         text += ('{"'+pack['variable']+'",'+','.join(str(n)+'u' for n in
                  (address >> 16, lorom(address), pack['size'], int(pack['executable']),
                   address >> 8, (address+pack['size']-1) >> 8))+','+digest(pack['sha256'])+'},\n')
-    return text+'};\n'
+    text += '};\n'
+    if any(pack['variable'] == 'BM_MAZO_PRIMARY_ENTRY_PACK' for pack in data):
+        text += '#define BM_MAZO_PRIMARY_ENTRY 1\n'
+    return text
 
 
 def identity(target):

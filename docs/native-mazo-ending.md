@@ -103,3 +103,15 @@ timer and a lost native flag after reset. Report:
 reports with current ROM and live goal-room checks). Python compilation and diff
 checks pass. No audible music, complete room190 route or whole-game claim is
 made.
+
+
+## Later primary-entry correction
+
+The [primary-entry candidate](native-mazo-primary-entry.md) supersedes the
+practice-node approach for a separate assisted goal/save boundary. It retains
+actual map node30 and course context30 while loading room190. A declared pipe
+fixture then skips to192 and real sphere contact sets/saves course30, including
+reset/File A reload. The accepted r14 default B4 node override remains a
+reproduced wrong-owner control. The recipient event is stillFF, exit count
+stays0, and B0's legacy course0D flag remains unchanged. Full Mazo world/event
+integration and earned fight acceptance remain open.

@@ -62,3 +62,12 @@ The accepted r14 binary is rebuilt with the default hooks. Its new binary is
 stays `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b`. Product
 captures `product-r14-yoshi-v1` and `product-r14-node-v1` show the Yoshi start
 and the 190 node.
+
+
+## Later save-identity review
+
+The default B4 table edit enters190 but also changes the completion index.
+The isolated [primary-entry V3 candidate](native-mazo-primary-entry.md) keeps
+node30 and course context30 and redirects only its primary load. An assisted
+real sphere goal now saves course30 through reset. It remains experimental;
+recipient eventFF and the legacy course0D flag still need integration review.

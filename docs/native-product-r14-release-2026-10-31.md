@@ -45,3 +45,10 @@ not sufficient evidence of correct course-save ownership. See
 The replacement room126 route uses its existing `D727=4A` node without a
 node-table edit. Real clear, `$1EEC: 0F -> 8F`, both SRAM copies and reset/File A
 reload pass. This remains a map-coordinate fixture, outside World2 acceptance.
+
+
+The default Mazo node override also changes the save index toB4. A real
+assisted sphere clear on r14 leaves original course30 completion unset.
+An isolated [primary-entry candidate](native-mazo-primary-entry.md) retains
+node30 and saves its completion after reset; it is not promoted into this
+package. Recipient eventFF/exit count0 and the B0 legacy flag remain open.

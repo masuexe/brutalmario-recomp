@@ -1,6 +1,22 @@
 """Names shared by isolated restoration builders, captures and practice launchers."""
 
 RESTORATIONS = {
+    'demo11-native-mazo-primary-entry-v3': {
+        'binary': 'BrutalMarioDemo11NativeMazoPrimaryEntryV3SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Primary Entry V3',
+    },
+    'demo11-native-mazo-primary-control-v1': {
+        'binary': 'BrutalMarioDemo11NativeMazoPrimaryControlV1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Primary Control V1',
+    },
+    'demo11-native-mazo-primary-entry-v2': {
+        'binary': 'BrutalMarioDemo11NativeMazoPrimaryEntryV2SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Primary Entry V2',
+    },
+    'demo11-native-mazo-primary-entry-v1': {
+        'binary': 'BrutalMarioDemo11NativeMazoPrimaryEntryV1SNESRecomp',
+        'title': 'Brutal Mario Demo11 Native Mazo Primary Entry V1',
+    },
     'demo11-native-mazo-messages-v2': {
         'binary': 'BrutalMarioDemo11NativeMazoMessagesV2SNESRecomp',
         'title': 'Brutal Mario Demo11 Native Mazo Messages V2',
