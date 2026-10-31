@@ -28,3 +28,13 @@ hook does not change the accepted r14 build.
 The mazo original starts a new save at this tile. The product start differs, so
 the fixture uses a teleport to the tile. A normal route to the tile is not
 established.
+
+## New save start at Yoshi's House
+
+The user asked to move the product new save start to Yoshi's House. The default
+save template holds pixel `(72,408)` and tile `(4,25)`. The Yoshi's House value
+is pixel `(104,408)` and tile `(6,25)`. A reference patch of the four template
+words moves the start to that value. Capture `new-save-yoshi-hook-v1` uses the
+runtime flag `BM_YOSHI_START=1` on the r15 candidate and starts at pixel
+`(104,408)`, tile `(6,25)`, map `0`. The flag guards the change. The accepted
+r14 build stays unchanged.

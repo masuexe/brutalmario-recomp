@@ -15,6 +15,18 @@ __attribute__((weak)) uint8_t g_ram[0x20000];
  * no music object of its own and inherits the shared default slot 0x02. Force
  * recipient slot 0x9E whenever the game is in room 0x190. */
 static int s_music_room = -1;
+static int s_yoshi_start_done;
+static void bm_yoshi_start_override(void) {
+  if (s_yoshi_start_done || !getenv("BM_YOSHI_START")) return;
+  if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
+  if ((g_ram[0x1f17] | (g_ram[0x1f18] << 8)) != 72) return;
+  if ((g_ram[0x1f19] | (g_ram[0x1f1a] << 8)) != 408) return;
+  g_ram[0x1f17] = 104;
+  g_ram[0x1f18] = 0;
+  g_ram[0x1f1f] = 6;
+  g_ram[0x1f20] = 0;
+  s_yoshi_start_done = 1;
+}
 static void bm_mazo_map_node_override(void) {
   if (!getenv("BM_MAZO_190_NODE")) return;
   if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
@@ -98,6 +110,7 @@ void bm_content_load(uint8_t *rom, size_t size) {
 }
 
 uint8_t *bm_content_resolve(const uint8_t *rom, uint8_t bank, uint16_t address) {
+  bm_yoshi_start_override();
   bm_mazo_map_node_override();
   bm_room_music_override();
   if (rom != owner || !backing || address < 0x8000) return NULL;
