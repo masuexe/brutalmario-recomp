@@ -112,8 +112,12 @@ traces the scroll and the vehicle actor, not the player coordinate.
 Actor slot 7 is the green and red sphere. Directional input moves that slot:
 up changes `y 120` to `8`, left changes `x 120` to `8`, and right changes `x`
 to `136`. Slot 9 stays at `(128,8)`. In `mazo-190-exact-v1`, slot 7 reaches
-`(128,8)` and overlaps slot 9, but the room and mode do not change. The target
-object and the transition condition stay open.
+`(128,8)` and overlaps slot 9, but the room and mode do not change. In
+`mazo-190-shiphit-v1`, slot 7 also overlaps moving ship slot 5 without a room
+change. The room layer 1 stream holds only a 13-byte header, and the layer 2
+pointer is the empty sentinel `FFDE54` on both hosts. Room 190 is a special
+Mode7 scene, not a tile level. The target object and the transition condition
+stay open.
 
 ## Limits
 
