@@ -38,3 +38,7 @@ words moves the start to that value. Capture `new-save-yoshi-hook-v1` uses the
 runtime flag `BM_YOSHI_START=1` on the r15 candidate and starts at pixel
 `(104,408)`, tile `(6,25)`, map `0`. The flag guards the change. The accepted
 r14 build stays unchanged.
+
+The hook is now active by default. The flag `BM_YOSHI_START=0` disables it for a
+diagnostic run. Capture `new-save-yoshi-default-v1` starts a new save without
+an environment variable and reports pixel `(104,408)`, tile `(6,25)`, map `0`.

@@ -17,7 +17,8 @@ __attribute__((weak)) uint8_t g_ram[0x20000];
 static int s_music_room = -1;
 static int s_yoshi_start_done;
 static void bm_yoshi_start_override(void) {
-  if (s_yoshi_start_done || !getenv("BM_YOSHI_START")) return;
+  const char *yoshi = getenv("BM_YOSHI_START");
+  if (s_yoshi_start_done || (yoshi && yoshi[0] == '0' && yoshi[1] == 0)) return;
   if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
   if ((g_ram[0x1f17] | (g_ram[0x1f18] << 8)) != 72) return;
   if ((g_ram[0x1f19] | (g_ram[0x1f1a] << 8)) != 408) return;
