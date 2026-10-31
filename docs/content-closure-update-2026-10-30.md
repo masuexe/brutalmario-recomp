@@ -20,13 +20,13 @@ This note records the progress and the open blockers since the
 | Item | Blocker |
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
-| Mazo 9C attack and phase music | Orb, strengthening expiry, five reflected impacts and second-boss arrival pass source/native checks. A normal jump now avoids the second boss's grounded forced-fall attack. Assisted jumps reach its later transformation on both hosts; whole-fight clear, save and later music remain open. See [second-boss qualification](native-mazo-second.md). |
+| Mazo 9C attack and phase music | Assisted real attacks now reach the scripted ending, room192, ordinary sphere goal and map return on both hosts. Native guest flag persists on reset, but practice exit count differs from source; correct world/save identity and later audible music remain open. See [ending boundary](native-mazo-ending.md). |
 | Mazo 9B room 190 | The user states that room 190 is a level before the boss fight, not a boss fight. Assisted entries die at `(32,-64)`. The `D85`/`D8F` bytes are not boss health. A real traversal, clear and save check stay open. |
 | `0282` cumulative integration | Closed on experimental mazo-cumulative-v1: complete upload matches official mazo, all 45 recipes and 57 inherited packs retained, eleven fresh native regressions pass (1,156 file comparisons). See [cumulative integration](native-mazo-cumulative.md). |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
-| Japanese message font 191/192 | The user states that only demoOnly1 and Demo 1-1 replace the Japanese font with the English font. The recipient is 1-1 based. A diagnostic patch loads the donor GFX2A font at VRAM `9000` in room `191`. The message box stays unchanged, so the box uses another tile page or another resource. Page probes show the HUD font at `4000` and level tiles at `5000`. |
+| Japanese message rendering 191/192 | Actual ending captures locate source GFX2A at VRAM9000 and text at tilemapA000. Native has no sentence, uses blank12F instead of11F and has a different message selector/data path at03BB90. A font-only replacement is insufficient; recover local message identity/encoding/font while preserving recipient course/save identity. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
 
@@ -40,7 +40,7 @@ check for this level stay open.
 
 ## Next steps
 
-1. Follow the Mazo transformation into room 192 toward a real goal/map/save boundary, using the cumulative candidate. Seven final-part damage remains open.
+1. Restore the room191/192 message selection, encoding and font locally. Reconcile Mazo's actual world/save assignment beyond practice entry. Seven final-part damage remains open.
 2. Build neighbor-entry fixtures for 11C screen 10 and 129 screens 2 and 3.
 3. Find the lower-band entry in rooms 114 and 11E.
 4. Re-run a world parity triage on the current product before more visual work.

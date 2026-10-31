@@ -21,10 +21,10 @@ def read(path):
     return json.loads(path.read_text())
 
 
-def capture(name, donor, mode, hops=80, target=TARGET):
+def capture(name, donor, mode, hops=80, target=TARGET, expected_script=None):
     p = ROOT / 'local/captures' / name
     r = read(p / 'receipt.json')
-    script = second_route(donor, mode, hops)
+    script = expected_script if expected_script is not None else second_route(donor, mode, hops)
     require((p/'input.script').read_text() == ('' if donor else 'turbo on\n') + script, 'executed input differs')
     require(r['script_sha256' if donor else 'route_sha256'] == sha(script.encode()), 'input digest')
     if donor:
@@ -37,7 +37,8 @@ def capture(name, donor, mode, hops=80, target=TARGET):
         b = read(ROOT/'local/build'/target/'m1-build.json')
         cfg = read(ROOT/'config/restorations'/(target+'.json'))
         require(r['stage'] == 'native' and r['target'] == target, 'native role')
-        require(r['rom_sha256'] == b['rom_sha256'] == cfg['output']['sha256'], 'native ROM')
+        require(r['rom_sha256'] == b['rom_sha256'] == cfg['output']['sha256'] == sha((
+            ROOT/'local/restoration'/target/'rom.sfc').read_bytes()), 'native ROM')
         require(r['host_binary_sha256'] == b['binary_sha256'] == sha((
             ROOT/'local/build'/target/RESTORATIONS[target]['binary']).read_bytes()), 'native binary')
         require(r['native_content'] == b['native_content'] == identity(target), 'native module identity')

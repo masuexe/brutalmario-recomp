@@ -83,15 +83,18 @@ python3 tools/qualify_mazo_cumulative.py --run-side candidate --prefix FRESH_PRE
 python3 tools/qualify_mazo_cumulative.py --capture FRESH --prefix FRESH_PREFIX --output FRESH_REPORT.json
 ```
 
-The completed report is `local/reports/mazo-cumulative-qualified-v1.json`.
+The final report is `local/reports/mazo-cumulative-qualified-v3.json`; the
+earlier v1/v2 reports are retained.
 The three modern pilot inputs are now tracked, with text verified against the
 original capture route digests before promotion. The source mazo reference,
 core, frontend and options are checked by the reused second-boss qualifier.
 
 ## Remaining work
 
-Follow the actual transformation/cutscene into room `192` and qualify the
-ordinary goal, map and save boundaries. The map override entering room `151`
+The subsequent [ending boundary](native-mazo-ending.md) qualifies the actual
+cutscene into room192, normal message dismissal, sphere goal and map return.
+It also records native guest flag persistence after reset; the practice exit
+count differs from source. The map override entering room `151`
 is a practice fixture and cannot prove ordinary world progression or the
 correct save identity. Japanese text in rooms `191/192`, later audible music,
 the room `190` level route and full unassisted play remain open. No product
