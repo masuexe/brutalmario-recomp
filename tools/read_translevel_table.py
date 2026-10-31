@@ -2,14 +2,15 @@
 """Read the assigned translevel table from a map-mode WRAM dump.
 
 Super Mario World writes one translevel byte for each Layer 1 overworld tile at
-7ED000. This tool reports the nonzero entries, so a map node can be matched to
-its tile index.
+7ED000. The six submaps use 0x400 bytes each. This tool reports the nonzero
+entries with their submap and local tile index.
 """
 import argparse
 from pathlib import Path
 
 BASE = 0xD000
-SIZE = 0x800
+SUBMAP = 0x400
+SIZE = 6 * SUBMAP
 
 
 def entries(data, base=BASE, size=SIZE):
@@ -28,7 +29,8 @@ def main():
     args = parser.parse_args()
     data = (args.capture / (args.tag + '.wram.bin')).read_bytes()
     for index, value in entries(data).items():
-        print(hex(index), hex(value))
+        print(hex(index), 'submap', index // SUBMAP,
+              'local', hex(index % SUBMAP), 'value', hex(value))
 
 
 if __name__ == '__main__':
