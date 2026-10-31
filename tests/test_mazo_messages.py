@@ -21,7 +21,7 @@ class MazoMessageConfigTests(unittest.TestCase):
         self.assertEqual([p['variable'] for p in packs[-2:]],
                          ['BM_MAZO_MESSAGE_CODE_PACK', 'BM_MAZO_MESSAGE_DATA_PACK'])
         recipe = json.loads(RECIPE.read_text())
-        self.assertEqual([m['room'] for m in recipe['messages']], ['191', '192'])
+        self.assertEqual([m['room'] for m in recipe['messages']], ['192', '191'])
         self.assertEqual(set(recipe['fonts']), {'japanese', 'english'})
 
 
