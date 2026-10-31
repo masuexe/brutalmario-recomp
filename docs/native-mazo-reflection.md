@@ -73,6 +73,10 @@ All capture identities remain in the original receipts.
 
 ## Limits and next work
 
+The subsequent [second-boss qualification](native-mazo-second.md) supersedes
+the survival investigation below. It identifies the grounded forced-fall
+attack and qualifies a normal jump across its check on both hosts.
+
 Both long routes later die: native leaves live mode at c07f25; source at
 c10f05. Neither death is a clear. The repeated orb-position fixture continues
 after the first-boss transition and is not a second-boss traversal strategy.

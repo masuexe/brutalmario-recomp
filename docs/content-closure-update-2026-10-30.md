@@ -20,9 +20,9 @@ This note records the progress and the open blockers since the
 | Item | Blocker |
 | --- | --- |
 | Earned Seven victory and saved clear | The tier 6 base part sits about 14 tiles below the arena floor. Forced points, a natural-floor control and a 36-sample attack sweep do not damage it. A short manual fight sample is the next input. |
-| Mazo 9C attack and phase music | Orb contact, cutscene, strengthening window and expiry now pass official-source/native checks (98 samples per host). `$7FFE00` is the window flag. Five reflected impacts plus a scripted marker now advance the first boss and introduce the second on both hosts. Second-boss survival and later phases remain open. See [reflection qualification](native-mazo-reflection.md). |
+| Mazo 9C attack and phase music | Orb, strengthening expiry, five reflected impacts and second-boss arrival pass source/native checks. A normal jump now avoids the second boss's grounded forced-fall attack. Assisted jumps reach its later transformation on both hosts; whole-fight clear, save and later music remain open. See [second-boss qualification](native-mazo-second.md). |
 | Mazo 9B room 190 | The user states that room 190 is a level before the boss fight, not a boss fight. Assisted entries die at `(32,-64)`. The `D85`/`D8F` bytes are not boss health. A real traversal, clear and save check stay open. |
-| `0282` runtime frame | Needs a 9C attack phase. The pointer, pack and code request are ready. |
+| `0282` cumulative integration | The complete 4096-byte upload at VRAM F000 now matches official mazo on both hosts. Qualified on the experimental r14 descendant; integration must retain modern-sprites-v2's later modules. |
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
@@ -40,7 +40,7 @@ check for this level stay open.
 
 ## Next steps
 
-1. Build a second-boss 9C route that ends the repeated orb placements after first-boss progression. Qualify its mechanics, survival and the later `0282` request. Seven final-part damage remains open.
+1. Integrate the qualified `0282` pack into the cumulative modern sprite candidate without losing its later modules; follow the Mazo transformation toward a real clear/save. Seven final-part damage remains open.
 2. Build neighbor-entry fixtures for 11C screen 10 and 129 screens 2 and 3.
 3. Find the lower-band entry in rooms 114 and 11E.
 4. Re-run a world parity triage on the current product before more visual work.

@@ -3,6 +3,13 @@
 Date: 2026-10-30. Candidate: `demo11-native-mazo-gfx282-v1`. Parent:
 `demo11-native-product-r14`. The accepted product stays r14.
 
+Subsequent [second-boss qualification](native-mazo-second.md) closes the runtime
+upload question below: full decoded `0282` matches VRAM `F000..FFFF` on native
+and official mazo during the later transformation. This supersedes the initial
+VRAM-position guess and the old automation blocker. Its native executable is
+`656a0be24ab09de7050de16d796dfbb756431d49b2302ebbe19b34cd23ef3902`;
+the binary in the historical table below belongs to earlier captures.
+
 ## Finding
 
 The room 151 boss sprite 9C code holds this sequence at pack offset `E0A`:
