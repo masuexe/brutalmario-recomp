@@ -145,6 +145,11 @@ the node and changes its level value. A map capture at the practice position hol
 enters room `005`. The poked map position is not the level tile, and the
 practice `D7E2` override is a separate path.
 
+The 9B program has no `STA 010B`, `STA 010C` or `STA 13BF` write and no
+immediate `190` or `1BE`. In `mazo-190-buttons-v1`, slot 7 sits at `(128,8)`
+and A, B and Start input leave the room and mode unchanged. The room acts as a
+closed Mode7 cutscene on both hosts.
+
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
 immediate room `190` constant and no `19B8`, `19D8` or `13BF` write. A player
