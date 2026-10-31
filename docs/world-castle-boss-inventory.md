@@ -43,3 +43,7 @@ Entry actor samples record these custom slots:
 | `070` | none in the first samples |
 | `071` | none in the first samples |
 | `072` | none in the first samples |
+
+A room `06E` input probe (`room06e-fight-v2`) leaves room `06E` for room
+`180` in mode `12`, then room `104` in mode `13`. The route is a room change,
+not a stationary boss phase.
