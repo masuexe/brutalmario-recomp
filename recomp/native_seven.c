@@ -29,7 +29,8 @@ static void bm_yoshi_start_override(void) {
   s_yoshi_start_done = 1;
 }
 static void bm_mazo_map_node_override(void) {
-  if (!getenv("BM_MAZO_190_NODE")) return;
+  const char *node = getenv("BM_MAZO_190_NODE");
+  if (node && node[0] == '0' && node[1] == 0) return;
   if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
   g_ram[0xd1f0] = 0xb4;
 }

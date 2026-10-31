@@ -40,5 +40,9 @@ runtime flag `BM_YOSHI_START=1` on the r15 candidate and starts at pixel
 r14 build stays unchanged.
 
 The hook is now active by default. The flag `BM_YOSHI_START=0` disables it for a
-diagnostic run. Capture `new-save-yoshi-default-v1` starts a new save without
-an environment variable and reports pixel `(104,408)`, tile `(6,25)`, map `0`.
+diagnostic run. Capture `new-save-yoshi-default-v2` starts a new save without an
+environment variable and reports pixel `(104,408)`, tile `(6,25)`, map `0`.
+
+The map node hook is also active by default. The flag `BM_MAZO_190_NODE=0`
+disables it. Capture `map-node-default-v1` enters the node without a WRAM write
+and loads room `190` with `13BF=B4`.
