@@ -167,3 +167,7 @@ then exercise attacks during the now-qualified `$7FFE00` window. A manual
 sample is no longer a prerequisite for establishing orb activation. This
 candidate descends from r14; any later accepted integration must preserve the
 modern-sprites-v2 modules rather than promote this older fork over them.
+
+The [reflection checkpoint](native-mazo-reflection.md) supersedes the next action
+above: five real returns plus one scripted marker now introduce the second boss
+on both hosts. Later survival and the `0282` request remain open.
