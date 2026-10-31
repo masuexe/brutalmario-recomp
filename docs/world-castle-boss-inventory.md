@@ -16,3 +16,6 @@ entry, phase and exit captures for each room.
 
 Live entry check for room `06F`: capture `room06f-entry-v1` reaches mode `14`,
 room `06F`, player `(16,352)` and four lives. Phase and exit checks stay open.
+
+Live entry check for room `06E`: capture `room06e-entry-v1` reaches mode `14`,
+room `06E`, player `(48,176)` and four lives.
