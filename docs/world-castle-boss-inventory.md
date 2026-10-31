@@ -22,3 +22,6 @@ room `06E`, player `(48,176)` and four lives.
 
 Live entry check for room `070`: capture `room070-entry-v1` reaches mode `14`,
 room `070`, player `(128,352)` and four lives.
+
+Live entry check for room `071`: capture `room071-entry-v1` reaches mode `14`,
+room `071`, player `(32,336)` and four lives.
