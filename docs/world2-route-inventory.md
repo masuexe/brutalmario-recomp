@@ -7,7 +7,7 @@ ROM SHA-256 `c02dc11e0c79c804740b38797463a1fc9645a8a05cdb4e18c7c09fff45760681`.
 
 **Superseded course catalog:** [The Forest identity checkpoint](forest-course-identity.md)
 now establishes the actual ten Forest nodes and corrects `config/world-map.json`.
-The earlier table below remains a historical list of parsed rooms; its course
+The earlier table below remains a historical list of parsed rooms. Its course
 labels must not be used for route design. Its seven checked room transitions
 remain valid.
 
@@ -41,7 +41,7 @@ at `$05EC00` with the bank byte at `$0EF100`. The parse reads the test ROM
 at `local/restoration/demo11-native-product-r13/rom.sfc`.
 
 The screen exit uses extended object `00` and four bytes. The fourth byte is
-the destination low byte; the flag byte carries the destination high bit. The parse checks one known case: room `48` exits to level
+the destination low byte. The flag byte carries the destination high bit. The parse checks one known case: room `48` exits to level
 `51` at screen `1`, which matches the accepted Star World side-exit check.
 
 ## Historical probe blockers (superseded where noted below)
@@ -70,7 +70,7 @@ Both runs reached room `100`. The historical record calls room `100` a boss room
 neither destination matches the parsed exit. The fixture therefore is not a
 valid World 2 exit test in this form.
 
-The corrected checks below supersede this failed fixture; screen 07 was wrong.
+The corrected checks below supersede this failed fixture. Screen 07 was wrong.
 
 ## Checked exit boundaries (2026-10-29)
 
@@ -89,16 +89,16 @@ boundaries**, with four lives retained and no `BRK`:
 
 The earlier probes placed Mario at X `0700` in rooms `121` and `124`.
 Neither room has an exit on screen `07`. Their room `100` result does not
-establish an exit defect. Selecting the actual exit screen fixes the probe.
+establish an exit defect. Selecting the actual exit screen settles the probe.
 Each corrected case increments `$141A` once, including the room `123` reload.
-The first destination sample for `124 -> 027` is mode `13`; the later sample
+The first destination sample for `124 -> 027` is mode `13`. The later sample
 reaches mode `14`. Every other destination sample is already mode `14`.
 
 The recipient routine at `$05:DC50..DC6E` checks flag bit 2 for an explicit
-exit, stores bit 1 in `$1B93` (secondary selection), stores bit 3 shifted left
-three in `$192A`, and returns bit 0 as the destination high bit. Thus `D7/05`
+exit. It stores bit 1 in `$1B93` (secondary selection) and stores bit 3 shifted
+left three in `$192A`. It returns bit 0 as the destination high bit. Thus `D7/05`
 names primary room `1D7`, not `0D7`. The qualifier pins those instruction bytes.
-All seven cases are primary exits; secondary and water behavior remain open.
+All seven cases are primary exits. Secondary and water behavior remain open.
 
 The fresh Star control follows `005 -> 048 -> 051` and reaches the overworld
 with four lives. Scripts label map-node, position and pipe-action fixtures.
@@ -123,7 +123,7 @@ Fresh native screenshot `w2-126-walk/cross.fb.bgrx` shows baby Yoshis, and
 `w2-r13-121-04-v1/active.fb.bgrx` shows switch-palace graphics. These contradict
 the fire and bridge labels directly, independently of historical wiki IDs.
 Its base listing calls `126` the baby-Yoshi course, `122` Storm Lake and `00D`
-Thunder Valley; its Cheap Demo section records more changes. Fandom's directory
+Thunder Valley. Its Cheap Demo section records more changes. Fandom's directory
 and the attempted course pages were inaccessible. The earlier table's course
 names are local catalog labels, not verified recipient identities. Before
 writing a gimmick-specific route, match actual room chains, sprites and visual
@@ -132,12 +132,12 @@ probe in `126` cannot yet establish a defect in the named fire course.
 
 The qualifier passes all seven boundaries plus the Star control. A later rerun
 on the current tree also passes (`local/reports/world2-exit-regress-v1.json`).
-The existing unit suite passes **344/344**; log:
+The existing unit suite passes **344/344**. The log:
 `local/reports/unit-tests-exit-boundaries-v1.log`. No game code, ROM or resource
 pack changed in this checkpoint. Final report SHA-256:
 `e7c5884805dd5f5978b2da2199feb88d150d87ebfd8ff666946f13e3b1830a52`.
 The reused room126 screenshot receipt pins the same r13 ROM and native binary
-as the new boundary captures; its source script SHA-256 is
+as the new boundary captures. Its source script SHA-256 is
 `3371dc0a56b317763b5c825339d1240777afa60f8d2ee1708015b10e69416bc6`.
 Its framebuffer SHA-256 is
 `82adf6fc34f7eec6e8213f1467e07b60e3a43f6344479fa67b49965f76344322`.
