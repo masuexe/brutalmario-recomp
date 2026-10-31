@@ -43,6 +43,11 @@ The hook is now active by default. The flag `BM_YOSHI_START=0` disables it for a
 diagnostic run. Capture `new-save-yoshi-default-v2` starts a new save without an
 environment variable and reports pixel `(104,408)`, tile `(6,25)`, map `0`.
 
+A map route probe starts at tile `(6,25)`. Holding right reaches tile `(8,25)`
+and stops. Up and down do not move the player. Left returns to `(6,25)`. The
+main-map path in this fixture does not connect the Yoshi's House start to the
+10C node, so the node proof uses the teleport fixture.
+
 The map node hook is also active by default. The flag `BM_MAZO_190_NODE=0`
 disables it. Capture `map-node-default-v1` enters the node without a WRAM write
 and loads room `190` with `13BF=B4`.
