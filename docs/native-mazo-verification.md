@@ -10,6 +10,10 @@ current tracked recipes and existing captures. The accepted product stays r14.
 | Ending | `qualify_mazo_ending.py --native mazo-ending-cumulative-v2 --source mazo-ending-source-v2` | PASS: cutscene transfer, message dismissal, sphere goal, bounded flag persistence |
 
 The message candidate also passes its own qualifier on the same tree.
+After codex commit `ac260b3`, a fresh recheck passes
+`tools/qualify_mazo_progress.py` for the actual-node assisted fight and ending,
+the Mazo30 save and the intact recipient00D. The full unit suite passes 420
+tests (`local/unit-tests-round-after-codex.log`).
 
 A later check adds two default map behaviors. Captures
 `new-save-yoshi-default-v2` and `map-node-default-v1` show the Yoshi House start
