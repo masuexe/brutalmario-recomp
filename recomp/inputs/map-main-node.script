@@ -1,0 +1,24 @@
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 0001f000
+poke 1f1f 10000f0010000f00
+poke 0100 0b
+wait 120
+dump m0
+forcepoke D1F0 b4
+wait 30
+dump m1
+press a 20
+wait 120
+dump m2
+wait 120
+dump m3
+quit
