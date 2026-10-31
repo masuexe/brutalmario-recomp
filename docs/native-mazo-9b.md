@@ -129,6 +129,12 @@ native pipe fixture holds `$13BF=6A`. A forced `$13BF=30` on the direct entry
 trigger the room change. The 10C course context and the internal room change
 stay open.
 
+The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
+bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
+immediate room `190` constant and no `19B8`, `19D8` or `13BF` write. A player
+placement on the actor leaves the room and mode unchanged. The 10C to 190 event
+is not a direct path in this sprite code.
+
 ## Limits
 
 The entry window ends at the first map return. It does not prove attack damage,
