@@ -130,8 +130,9 @@ writing a gimmick-specific route, match actual room chains, sprites and visual
 content to an official donor and the appropriate walkthrough. A failed tape
 probe in `126` cannot yet establish a defect in the named fire course.
 
-The qualifier passes all seven boundaries plus the Star control. The existing
-unit suite passes **344/344**; log:
+The qualifier passes all seven boundaries plus the Star control. A later rerun
+on the current tree also passes (`local/reports/world2-exit-regress-v1.json`).
+The existing unit suite passes **344/344**; log:
 `local/reports/unit-tests-exit-boundaries-v1.log`. No game code, ROM or resource
 pack changed in this checkpoint. Final report SHA-256:
 `e7c5884805dd5f5978b2da2199feb88d150d87ebfd8ff666946f13e3b1830a52`.
