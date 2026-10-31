@@ -136,6 +136,13 @@ this entry, so the map node swap needs a different table. The `0EF600` table
 holds three-byte pointers, and its first `0x100` entries hold no `10C` or `190`
 level word. That table is not a direct level-number map for this node either.
 
+The Super Mario World overworld format gives the cause. The original game does
+not store translevels in a table. It assigns them as level tiles appear in the
+Layer 1 data, and a Lunar Magic edit keeps the high byte in the Layer 1 tile
+row. A map node swap therefore needs an edit of that level tile or its order,
+not a translevel index patch. The next step finds the Layer 1 tile position of
+the node and changes its level value.
+
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
 immediate room `190` constant and no `19B8`, `19D8` or `13BF` write. A player
