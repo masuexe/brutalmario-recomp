@@ -10,5 +10,7 @@ the goal byte `$1493` is `9B` and lives rise from four to five. At sample
 room `126`) with five lives.
 
 Capture: `w2-126-run-v1`. Script: `recomp/inputs/world2-room126-run.script`.
-The run does not write completion flags, events or saves. It qualifies the
-course traversal from the entry fixture, not the full map route.
+The run does not write completion flags, events or saves. The SRAM hash changes
+from `38e21fcf...` at entry to `8b77ee69...` after the map return, so the clear
+updates the save through the game routine. It qualifies the course traversal
+from the entry fixture, not the full map route.
