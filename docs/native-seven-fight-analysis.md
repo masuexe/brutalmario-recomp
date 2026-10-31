@@ -78,7 +78,7 @@ can move parts into it, so normal player attacks miss. Capture
 `375`, `383` and `399`. It is not the next course after a Seven defeat. Room
 `0FF` screen 0 has a screen exit to room `174`. The ending candidate retargets
 that exit to the reserved room `17B`. Neither route proves an earned defeat. A simple diagram is at
-`local/captures/seven-floor-diagram-v2.png`.
+`local/captures/seven-floor-diagram-v3.png`.
 
 ## Next work
 
