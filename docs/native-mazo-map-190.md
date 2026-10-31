@@ -53,3 +53,9 @@ tile is a map warp, not a course entry.
 The map node hook is also active by default. The flag `BM_MAZO_190_NODE=0`
 disables it. Capture `map-node-default-v1` enters the node without a WRAM write
 and loads room `190` with `13BF=B4`.
+
+Candidate identities: `demo11-native-product-r15` ROM
+`9f6d845b19ad24160668633e2f30d0e846662c67b135c6cbc1bca680db20716e` and
+binary `a06c50765ce8cf853d6a097e880f800645f1550559497783d5ee1c77e68cf866`.
+The accepted r14 binary stays published, and a rebuild of any target includes
+the default hooks.
