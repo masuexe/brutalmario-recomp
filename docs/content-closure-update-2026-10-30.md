@@ -12,6 +12,7 @@ This note records the progress and the open blockers since the
 | Modern sprite slots | The project restored programs for 25, 33, 94, 99, A1 and 97, with fresh behavior checks. Slot 97 has a route from room 108 to room 1EF. The other seven slots are default records in every supplied image, so their review closes with no install. |
 | Forest exits | 11B screen 11 to 053, 11C screen 9 to 041 and 11E screen 19 to 037 pass live probes. The bounded exit table covers all ten Forest rooms. |
 | Ghost Forest and Pyromaniac | Room 114 holds tape `(5232,384)` and keys at `(4176..4208,320)`. Room 11E holds tape `(2656,480)`, which sits below the kill boundary near Y 454. |
+| Japanese message rendering 191/192 | Candidate `demo11-native-mazo-messages-v2` restores room191/message2 and room192/message1 with the official mazo records and Japanese GFX2A. It restores the English font on close. Room messages and pixels match official mazo, and the full ending plus eleven regressions pass. See [messages](native-mazo-messages.md). |
 | Extended graphics | Sprite 9C requests `0282` and the product pointer is empty. Candidate `demo11-native-mazo-gfx282-v1` mounts the official mazo stream at `D2:8000` and patches three bytes. Id `027E` has no immediate requester in any pack. |
 | Seven ending | Entry, child, font, music, ending, hidden 1-up, pit death and map return hold bounded evidence. |
 
@@ -26,7 +27,6 @@ This note records the progress and the open blockers since the
 | Room 129 exits | The first screen gives `045`. Screens 2 and 3 need an entry from their left neighbor. |
 | Room 11C screen 10 | The first screen gives `041`. Screen 10 needs a neighbor entry. |
 | Rooms 114 and 11E lower bands | The project knows the tape positions. It did not find the vertical descent or pipe. |
-| Japanese message rendering 191/192 | Actual ending captures locate source GFX2A at VRAM9000 and text at tilemapA000. Native has no sentence, uses blank12F instead of11F and has a different message selector/data path at03BB90. A font-only replacement is insufficient; recover local message identity/encoding/font while preserving recipient course/save identity. |
 | Audible music acceptance | Needs listening. |
 | World routes 2 to 8 | No route, exit or save acceptance outside Forest. |
 
@@ -40,7 +40,7 @@ check for this level stay open.
 
 ## Next steps
 
-1. Restore the room191/192 message selection, encoding and font locally. Reconcile Mazo's actual world/save assignment beyond practice entry. Seven final-part damage remains open.
+1. Reconcile Mazo's actual world/save assignment beyond practice entry. Seven final-part damage remains open.
 2. Build neighbor-entry fixtures for 11C screen 10 and 129 screens 2 and 3.
 3. Find the lower-band entry in rooms 114 and 11E.
 4. Re-run a world parity triage on the current product before more visual work.
