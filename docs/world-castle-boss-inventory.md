@@ -33,3 +33,13 @@ have a live entry on the product. Phase, exit and save checks stay open.
 A room `06F` idle watch (`room06f-idle-v1`) stays in mode `14`, room `06F`,
 with four lives for the first 400 frames. No phase or exit starts without
 input.
+
+Entry actor samples record these custom slots:
+
+| Room | Live custom actors |
+| --- | --- |
+| `06E` | slot 7 custom `06`, slots 8 and 9 custom `37` |
+| `06F` | slot 9 custom `A2` at `(224,368)` |
+| `070` | none in the first samples |
+| `071` | none in the first samples |
+| `072` | none in the first samples |
