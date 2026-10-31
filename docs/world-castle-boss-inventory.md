@@ -25,3 +25,7 @@ room `070`, player `(128,352)` and four lives.
 
 Live entry check for room `071`: capture `room071-entry-v1` reaches mode `14`,
 room `071`, player `(32,336)` and four lives.
+
+Live entry check for room `072`: capture `room072-entry-v1` reaches mode `14`,
+room `072`, player `(32,352)` and four lives. All five castle boss rooms now
+have a live entry on the product. Phase, exit and save checks stay open.
