@@ -150,6 +150,11 @@ immediate `190` or `1BE`. In `mazo-190-buttons-v1`, slot 7 sits at `(128,8)`
 and A, B and Start input leave the room and mode unchanged. The room acts as a
 closed Mode7 cutscene on both hosts.
 
+The user supplied a map screenshot for the node. The `10C` tile sits at map
+tiles X `20..21`, Y `1D..1F`, and its green label is `30`. Map table reads at
+`(Y*32+X)` for those tiles return zero in captured submaps 2 to 5. The submap
+identity is still needed before a Layer 1 tile edit.
+
 The room 10C top actor is custom sprite `64` at `(144,64)`. Its record points to
 bank `3E` code at `3E859F` and `3E85C5`. A bounded scan of that code finds no
 immediate room `190` constant and no `19B8`, `19D8` or `13BF` write. A player
