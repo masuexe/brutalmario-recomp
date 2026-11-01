@@ -105,12 +105,17 @@ def saved_goal(states):
                 'recipient00D or its WRAM backup changed: ' + tag)
     for tag in ('after_goal', 'file_reload'):
         w, s = states[tag]
-        require(w[0x100] == 0x0e and w[0x1ed2] == w[0x1f79] == s[0x30] == s[0x1dd] == 0x80,
+        completion = w[0x1ed2]
+        require(w[0x100] == 0x0e and completion in (0x80, 0x88) and
+                w[0x1f79] == s[0x30] == s[0x1dd] == completion,
                 'actual Mazo30 completion did not survive: ' + tag)
-        require(s[0xd] == s[0x1ba] == 0x0f and w[0x1f2e] == 0,
+        event = completion == 0x88
+        require(s[0xd] == s[0x1ba] == 0x0f and w[0x1f2e] == int(event) and
+                bool(w[0x1f08] & 0x80) == event,
                 'foreign completion or observed event count differs')
-    return dict(original_course=0x30, flag=0x80, save_offsets=[0x30, 0x1dd],
-                recipient_course=0x0d, recipient_flag=0x0f, exit_count=0)
+    return dict(original_course=0x30, flag=states['after_goal'][0][0x1ed2],
+                save_offsets=[0x30, 0x1dd], recipient_course=0x0d,
+                recipient_flag=0x0f, exit_count=states['after_goal'][0][0x1f2e])
 
 
 def boundary(name):
@@ -125,7 +130,9 @@ def boundary(name):
         w, s = states[tag]
         require(w[0x100] == 0x14 and word(w, 0x10b) == 0x00d and w[0x13bf] == 0x0d,
                 'recipient course is no longer enterable')
-        require(w[0x1ed2] == s[0x30] == s[0x1dd] == 0x80, 'Mazo save lost after recipient re-entry')
+        completion = w[0x1ed2]
+        require(completion in (0x80, 0x88) and s[0x30] == s[0x1dd] == completion,
+                'Mazo save lost after recipient re-entry')
     result.update(capture=name, message=message_lifecycle(p, states),
                   receipt_sha256=sha((p / 'receipt.json').read_bytes()))
     return result
