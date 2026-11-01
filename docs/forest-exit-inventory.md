@@ -81,3 +81,8 @@ The screen 1 exit needs a different route or object.
 A later pipe probe on the r15 candidate places the player at X `0x40`, `0x80`
 and `0xC0` near Y `0x140`, then presses Down and Up. Every sample stays in
 room `129` with mode `0E`, so no pipe or door reaches screen 2 or 3.
+
+A fresh product probe (`forest129-keyhole-v1`) enters from the actual node at
+`(01B8,01B8)`. The player starts at `(96,224)`. Down input does not move. Right
+input reaches `(354,720)`. Down input then does not move. Room `129` and
+`$141A=0` stay unchanged, so the secondary03F exit is not a simple boundary.
