@@ -96,3 +96,7 @@ Room `11C` screen9 position `(2432,352)` has no floor under the player. Right
 input falls to Y `584`. Right and A jumps also stay at X `2432` and fall to
 `811`, then lose a life and return to the map. Screen10 needs a safe landing
 platform or a different object.
+
+A screen9 floor scan finds a solid landing at X `2302`, Y `195`. Right and A
+input keeps X `2302`, then falls through Y `413` and `636`. A life is lost and
+the map returns. The platform has a right wall, so screen10 needs another path.
