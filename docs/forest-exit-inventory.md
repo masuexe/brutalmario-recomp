@@ -144,7 +144,10 @@ falls to Y `470`. The route needs another action. A Y+B run-jump reaches X `307`
 the skull platform. The next 60-frame press falls to Y `610`. A timed short
 jump onto the brick platform is the next action. A short B press at X `307`
 does not move the player. Right input falls to Y `531`. The player is stuck at
-X `307`, Y `353` in that sample.
+X `307`, Y `353` in that sample. The working route is to stand on the skull
+raft at X `273`, Y `340`. A 120-frame wait moves the player to X `374`, and a
+second wait moves to X `464`, with four lives. Two right+B presses then reach
+X `506`, Y `328` and X `530`, Y `346` without a life loss.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
