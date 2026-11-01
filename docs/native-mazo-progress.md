@@ -99,6 +99,12 @@ match the qualified primary-entry parent exactly at 49 paired samples: 196 full
 WRAM/SRAM/VRAM/framebuffer comparisons. All 45 recipes, 61 packs, 67 ROM patches
 and native hooks reconcile; one B0 pack override is recorded explicitly.
 The full unit suite passes 420 tests (`local/reports/unit-tests-mazo-progress-v1.log`).
+
+After the DSH hooks rebuild, the old pinned captures no longer match the current
+progress binary. `qualify_mazo_progress.py` stops at the regression binary pin.
+The candidate needs fresh paired captures for its boundary and integrated route
+before the report can run again. This is an evidence-pin mismatch, not a code
+failure.
 A DSH recheck reruns `tools/qualify_mazo_progress.py` and passes the actual-node
 assisted fight and ending, the Mazo30 save, and the intact recipient00D
 (`local/reports/mazo-progress-recheck-v1.json`).
