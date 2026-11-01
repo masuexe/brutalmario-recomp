@@ -54,3 +54,11 @@ Python console. They do not write a file.
 The console needs a desktop keyboard. It has no gamepad text entry. The
 teleport, completion and music writes need a human playtest for visual and
 audible acceptance. The overlay dump proves the panel, not every command.
+## Status
+
+The console is an experimental Windows build. Use the normal r14 package for
+play. The experimental package is
+`local/release/product-r14-cheat-console-experimental-win.zip`.
+
+The experimental build opens the console, but its guest stage runs at about
+3 FPS. See [the performance report](windows-console-performance.md).

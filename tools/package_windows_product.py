@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Package the native product target into a self-contained Windows release bundle."""
+"""Build the experimental Windows bundle with the built-in cheat console.
+
+Do not use this bundle for normal play. The normal play package is
+local/release/product-r14-event30-v2.zip. The experimental guest stage runs at
+about 3 FPS; see docs/windows-console-performance.md.
+"""
 import argparse
 import hashlib
 import json
@@ -298,7 +303,7 @@ RunAhead=0
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--out-dir', type=Path, default=ROOT / 'dist' / 'BrutalMario-Native-Windows',
+    parser.add_argument('--out-dir', type=Path, default=ROOT / 'dist' / 'BrutalMario-Native-Windows-Console-Experiment',
                         help='Destination folder for the unpacked release bundle')
     parser.add_argument('--zip', action='store_true', default=True,
                         help='Create a zip archive of the release bundle')

@@ -8,10 +8,13 @@ current native product build and its default map behaviors.
 | Item | Value |
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
-| Binary SHA-256 | `7683d891d3900c545f3a009be64aa259a309093543a5299cc89527f11d87b808` |
-| Windows package | `local/release/product-r14-cheat-console-win.zip` |
-| Package SHA-256 | `2c028dc1495cc3b695352d9590a92c0c35fb9c28e4374d831939658da57f6bca` |
-| Windows binary SHA-256 | `10772a6e2297d68871a932a81723d7e0cd215bf0d5ac3a591098df3d05af67ff` |
+| Linux binary SHA-256 | `7683d891d3900c545f3a009be64aa259a309093543a5299cc89527f11d87b808` |
+| Normal Windows package | `local/release/product-r14-event30-v2.zip` |
+| Normal package SHA-256 | `057c2b433a0c6da735868f39a284cf14f2d22e9d62cc3d952653349d288af010` |
+| Normal Windows binary SHA-256 | `d43be6fac1255c131ccf8028e710c5bc8fd460e9d9d1912a42c49a1265efef20` |
+| Experimental console package | `local/release/product-r14-cheat-console-experimental-win.zip` |
+| Experimental package SHA-256 | `2c028dc1495cc3b695352d9590a92c0c35fb9c28e4374d831939658da57f6bca` |
+| Experimental Windows binary SHA-256 | `10772a6e2297d68871a932a81723d7e0cd215bf0d5ac3a591098df3d05af67ff` |
 
 ## Default behaviors
 
@@ -23,8 +26,11 @@ current native product build and its default map behaviors.
 - The built-in practice console opens with the backquote key. It carries the
   old Python console commands without external files. The runtime patch is
   `0010-builtin-cheat-console.patch`.
-- The Windows binary is a Visual Studio build of the same r14 runtime. The
-  package checker rejects a binary without the `PRACTICE CHEAT CONSOLE` marker.
+- The console is an experimental Windows build. The normal Windows package
+  does not contain it. The experimental build runs the guest at about 3 FPS,
+  as recorded in [the performance report](windows-console-performance.md).
+- The package checker rejects an experimental binary without the
+  `PRACTICE CHEAT CONSOLE` marker.
 
 ## Verification
 
