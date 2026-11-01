@@ -180,7 +180,11 @@ position: index `4A` is `000c000000000000`, and index `44A` is
 `45ff04ff04ff04ff` on both images. The target tile is already present in the
 recipient map. A zero visual difference is therefore expected, and event30 is
 not obviously wrong. The remaining question is whether the event path unlocks
-the intended route elsewhere.
+the intended route elsewhere. The current data says it does not. Event30 defines
+one tile reveal at position `2A`. The recipient and Mazo hold the same map tile
+at the target index. The event bit and count save correctly, but no direction or
+path field changes. Event30 therefore behaves as an official flag/tile event,
+not as a route unlock.
 
 A direct memory diff is not clean. `after_goal` differs from the baseline in 39
 WRAM bytes and 9 SRAM bytes. `file_reload` differs in 10 WRAM bytes and 9 SRAM
