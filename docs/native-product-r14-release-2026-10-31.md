@@ -9,8 +9,9 @@ current native product build and its default map behaviors.
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
 | Binary SHA-256 | `7683d891d3900c545f3a009be64aa259a309093543a5299cc89527f11d87b808` |
-| Windows package | `local/release/product-r14-cheat-console.zip` |
-| Package SHA-256 | `b2e94658bc955085ca72d398e30589ab5d72fb73c570b87b6cc8ea0ac73362e1` |
+| Windows package | `local/release/product-r14-cheat-console-win.zip` |
+| Package SHA-256 | `2c028dc1495cc3b695352d9590a92c0c35fb9c28e4374d831939658da57f6bca` |
+| Windows binary SHA-256 | `10772a6e2297d68871a932a81723d7e0cd215bf0d5ac3a591098df3d05af67ff` |
 
 ## Default behaviors
 
@@ -22,6 +23,8 @@ current native product build and its default map behaviors.
 - The built-in practice console opens with the backquote key. It carries the
   old Python console commands without external files. The runtime patch is
   `0010-builtin-cheat-console.patch`.
+- The Windows binary is a Visual Studio build of the same r14 runtime. The
+  package checker rejects a binary without the `PRACTICE CHEAT CONSOLE` marker.
 
 ## Verification
 

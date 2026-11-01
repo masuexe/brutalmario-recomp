@@ -10,7 +10,11 @@
 
 /* Weak WRAM binding: the full runner provides the strong g_ram; isolated
  * boundary-test links get a zeroed array so the override is inert. */
+#if defined(_MSC_VER)
+extern uint8_t g_ram[0x20000];
+#else
 __attribute__((weak)) uint8_t g_ram[0x20000];
+#endif
 /* Room-scoped native music adaptation (native-content policy): room 0x190 has
  * no music object of its own and inherits the shared default slot 0x02. Force
  * recipient slot 0x9E whenever the game is in room 0x190. */

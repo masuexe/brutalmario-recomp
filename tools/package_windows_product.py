@@ -15,7 +15,8 @@ sys.path.insert(0, str(ROOT / 'tools'))
 
 import native_sprite_gap
 
-TARGET = 'demo11-native-product'
+TARGET = 'demo11-native-product-r14'
+WIN_BINARY = 'BrutalMarioDemo11NativeProductR14SNESRecomp.exe'
 
 PACKS_MAPPING = [
     (p['variable'], p['pack_file']) for p in native_sprite_gap.packs(TARGET)
@@ -57,7 +58,7 @@ def main():
 
     # Determine binary
     exe_win = ROOT / 'bin' / 'BrutalMario.exe'
-    exe_linux = ROOT / 'bin' / 'BrutalMarioDemo11NativeProductSNESRecomp'
+    exe_linux = ROOT / 'bin' / 'BrutalMarioDemo11NativeProductR14SNESRecomp'
     if exe_win.is_file() and sys.platform.startswith('win'):
         binary = exe_win
     elif exe_linux.is_file():
@@ -320,9 +321,11 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
 
     # 1. Copy Windows binary
-    win_bin = ROOT / 'local/build-windows/demo11-native-product/BrutalMarioDemo11NativeProductSNESRecomp.exe'
+    win_bin = ROOT / 'local/build-windows' / TARGET / WIN_BINARY
     if not win_bin.is_file():
         raise SystemExit(f'Windows binary missing at: {win_bin}')
+    if b'PRACTICE CHEAT CONSOLE' not in win_bin.read_bytes():
+        raise SystemExit('Windows binary is stale: it has no built-in cheat console')
     dest_bin = bin_dir / 'BrutalMario.exe'
     shutil.copy2(win_bin, dest_bin)
     print(f'[+] Copied Windows executable: {dest_bin.name} ({dest_bin.stat().st_size // 1024} KB)')
@@ -358,7 +361,9 @@ def main():
 
     # 5. Configs
     (config_dir / 'config.ini').write_text(create_config_ini(), encoding='utf-8')
-    keybinds_src = ROOT / 'local/build/demo11-native-product/keybinds.ini'
+    keybinds_src = ROOT / 'local/build-windows' / TARGET / 'keybinds.ini'
+    if not keybinds_src.is_file():
+        keybinds_src = ROOT / 'local/build' / TARGET / 'keybinds.ini'
     if keybinds_src.is_file():
         shutil.copy2(keybinds_src, config_dir / 'keybinds.ini')
     print('[+] Created configuration files (config.ini, keybinds.ini)')
