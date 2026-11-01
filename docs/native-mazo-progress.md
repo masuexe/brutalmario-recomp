@@ -164,7 +164,10 @@ default.
 The `after_goal` and `file_reload` framebuffers are byte-identical to the
 baseline route in both captures (229,376 bytes each, zero differences). The
 event bit changes, but this sample shows no visible map tile or path change.
-Event30 alone is therefore not proof of the correct route unlock.
+Event30 alone is therefore not proof of the correct route unlock. The map Layer
+1 tilemap at `7EC800` and its high-byte range at `7FC800` also stay byte-equal.
+The event reveals no tile on the recipient map, so a donor event value is not
+the product fix.
 
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
