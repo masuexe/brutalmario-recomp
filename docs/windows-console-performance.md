@@ -33,3 +33,14 @@ before the bounce override. the old build reports 60 and 817753. With
 
 Open. The Windows package with the console is not a normal-play package until
 the new build matches the old executable's speed.
+## Host profile
+
+`SNESRECOMP_HOST_PROFILE=1` isolates the slow stage on the new Windows build.
+
+- Old package: guest mean 3.36 ms per frame.
+- New package: guest mean 351 ms per frame.
+- Raster, compose, upload and deadline wait stay below 2 ms.
+
+The guest stage is about 100 times slower in the new build. Audio off and
+`SNESRECOMP_APU_MASTER_CLOCK=0` do not change it. The next step is a compiled
+object and link comparison, not a presentation fix.
