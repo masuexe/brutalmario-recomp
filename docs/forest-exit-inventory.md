@@ -140,7 +140,9 @@ edge costs a life. No platform arrives. Right and B input works where A failed.
 Six cycles move the player to X `91`, `172`, `273` and `354` without a life loss.
 The route crosses the first gap. A further jump from X `354` falls to Y `641`. The X `354` position is a
 skull platform over lava. A wait costs a life, and B or right+B input still
-falls to Y `470`. The route needs another action.
+falls to Y `470`. The route needs another action. A Y+B run-jump reaches X `307` at Y `301`, above
+the skull platform. The next 60-frame press falls to Y `610`. A timed short
+jump onto the brick platform is the next action.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
