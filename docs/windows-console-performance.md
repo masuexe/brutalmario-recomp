@@ -26,7 +26,7 @@ The new executable takes about 21 seconds.
 
 Both runs report the same guest frame and master clock at frame 60. The new
 build reports `aot_bridge_entries=3974` and `interpreted_opcodes=8037440`
-before the bounce override; the old build reports 60 and 817753. With
+before the bounce override. the old build reports 60 and 817753. With
 `SNESRECOMP_LLE_BOUNCE=0` the new build reports 0 and 820072, but remains slow.
 
 ## Status
