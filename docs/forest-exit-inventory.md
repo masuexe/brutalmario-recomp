@@ -143,7 +143,7 @@ skull platform over lava. A wait costs a life, and B or right+B input still
 falls to Y `470`. The route needs another action. A Y+B run-jump reaches X `307` at Y `301`, above
 the skull platform. The next 60-frame press falls to Y `610`. A timed short
 jump onto the brick platform is the next action. A short B press at X `307`
-does not move the player; right input falls to Y `531`. The player is stuck at
+does not move the player. Right input falls to Y `531`. The player is stuck at
 X `307`, Y `353` in that sample.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
