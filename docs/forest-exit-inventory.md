@@ -86,3 +86,8 @@ A fresh product probe (`forest129-keyhole-v1`) enters from the actual node at
 `(01B8,01B8)`. The player starts at `(96,224)`. Down input does not move. Right
 input reaches `(354,720)`. Down input then does not move. Room `129` and
 `$141A=0` stay unchanged, so the secondary03F exit is not a simple boundary.
+
+A second position probe targets the live custom `78` actor at `(432,240)` and
+the custom `2F` actor at `(128,448)`. The player moves to `(431,416)`, then
+`(128,400)`, then falls to `(128,907)`. Room `129` and `$141A=0` stay
+unchanged. The secondary exit needs the actual key/keyhole interaction.
