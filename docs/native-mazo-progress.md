@@ -161,6 +161,11 @@ unrelated course00D stays `0F`. This is strong event/save evidence, but the map
 tile and path change still need review before the switch becomes a product
 default.
 
+The `after_goal` and `file_reload` framebuffers are byte-identical to the
+baseline route in both captures (229,376 bytes each, zero differences). The
+event bit changes, but this sample shows no visible map tile or path change.
+Event30 alone is therefore not proof of the correct route unlock.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
