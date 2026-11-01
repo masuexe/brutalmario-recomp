@@ -182,6 +182,14 @@ recipient map. A zero visual difference is therefore expected, and event30 is
 not obviously wrong. The remaining question is whether the event path unlocks
 the intended route elsewhere.
 
+A direct memory diff is not clean. `after_goal` differs from the baseline in 39
+WRAM bytes and 9 SRAM bytes. `file_reload` differs in 10 WRAM bytes and 9 SRAM
+bytes. Some entries are timing, stack or route artefacts, such as low WRAM and
+`1C3..1D9`. File reload shows the expected `1ED2`, `1F08`, `1F2E` and `1F79`
+changes plus `1DEB/1DED=16`. SRAM also changes at `8C/8D` and `81C`; the event
+or path meaning of those bytes stays open. A same-input baseline rerun or a
+save-field audit is the next check.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
