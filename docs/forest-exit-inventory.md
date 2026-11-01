@@ -130,3 +130,7 @@ Y `144`. The door sits left of the screen10 reach point. A position fixture at t
 door and Up input enters room `41` with mode `11`, `$141A=1`, four lives and
 player `(16,352)`. The screen9 door is the secondary exit boundary. Natural
 reach from the landing at X `2336`, Y `320` remains to be shown.
+
+The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
+the player from Y `320`. The door at Y `144` needs another mechanic or a hidden
+platform. The door boundary is verified; ordinary traversal is still open.
