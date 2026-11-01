@@ -19,6 +19,8 @@ class NativeMapHookTests(unittest.TestCase):
         self.assertIn('bm_seven_return_override', text)
         self.assertIn('BM_SEVEN_RETURN', text)
         self.assertIn('g_ram[0x100] = 0x0b', text)
+        self.assertIn('BM_MAZO_EVENT30', text)
+        self.assertIn('rom[0x2d638] = 0x30', text)
 
 
 if __name__ == '__main__':
