@@ -57,3 +57,10 @@ The old and new Windows objects for `bank00_v2.c`, `interp_bridge.c`,
 
 The 100 times guest slowdown is therefore not in the generated guest code.
 The remaining difference is the host call path or the link inputs.
+## Render and SDL exclusion
+
+A test build forced `g_snes->disableRender = true` on every frame. The guest
+stage stayed at 487 ms per frame. A test build linked the old SDL3 library. The
+guest stage stayed at 443 ms per frame.
+
+The guest slowdown does not come from PPU rendering or the SDL3 library.
