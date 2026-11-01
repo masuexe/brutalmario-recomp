@@ -133,7 +133,9 @@ reach from the landing at X `2336`, Y `320` remains to be shown. After the
 load settles, room `41` shows the castle interior at mode `14`, player
 `(16,352)`, with `$141A=1` and four lives. Right input from that entry moves
 to Y `664`, then falls to Y `843` and costs a life. The room041 route needs a
-precise entry action.
+precise entry action. Right and A input moves to X `190` on the same floor, then
+X `194` at Y `326`. The next steps fall to Y `438` and `662`. A running jump
+over the gap is the next check.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
