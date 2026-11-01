@@ -49,3 +49,11 @@ object and link comparison, not a presentation fix.
 A Windows process counter sampled the new executable at about 100 percent of
 one CPU core during the slow guest stage. The guest stage is compute-bound, not
 a sleep or deadline wait.
+## Object comparison
+
+The old and new Windows objects for `bank00_v2.c`, `interp_bridge.c`,
+`common_rtl.c` and `snes.c` have the same instruction stream. Only the
+`.debug$S` section and the embedded source path differ.
+
+The 100 times guest slowdown is therefore not in the generated guest code.
+The remaining difference is the host call path or the link inputs.
