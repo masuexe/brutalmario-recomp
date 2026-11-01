@@ -147,7 +147,10 @@ does not move the player. Right input falls to Y `531`. The player is stuck at
 X `307`, Y `353` in that sample. The working route is to stand on the skull
 raft at X `273`, Y `340`. A 120-frame wait moves the player to X `374`, and a
 second wait moves to X `464`, with four lives. Two right+B presses then reach
-X `506`, Y `328` and X `530`, Y `346` without a life loss.
+X `506`, Y `328` and X `530`, Y `346` without a life loss. From X `464`, two
+left+B presses land on the brick platform at X `358`, Y `288`. Right input to
+X `374`, then two right+B jumps, reaches X `436` and X `498` at Y `284`. A third
+jump reaches X `517`, Y `341`. The brick route stays alive.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
