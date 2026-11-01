@@ -135,6 +135,11 @@ window. The next candidate test changes only the event-table byte and checks
 whether the Mazo event and exit count become valid. This note does not apply the
 change.
 
+Event value `30` already appears in the recipient table at translevels `0D`,
+`129`, `131`, `192`, `1D2`, `1EB` and `1F9`. The Mazo value would join that set.
+The candidate must compare the affected map tiles and paths before it claims a
+correct unlock.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
