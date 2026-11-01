@@ -136,7 +136,9 @@ to Y `664`, then falls to Y `843` and costs a life. The room041 route needs a
 precise entry action. Right and A input moves to X `190` on the same floor, then
 X `194` at Y `326`. The next steps fall to Y `438` and `662`. A running jump reaches X `194` at
 Y `347`, then falls to Y `701`. The gap needs a platform or a different action. Waiting 300 frames at the
-edge costs a life. No platform arrives.
+edge costs a life. No platform arrives. Right and B input works where A failed.
+Six cycles move the player to X `91`, `172`, `273` and `354` without a life loss.
+The first gap is crossed. A further jump from X `354` falls to Y `641`.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
