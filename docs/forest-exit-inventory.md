@@ -101,6 +101,14 @@ bits still need decoding. A forced `$1B93=1` before translevel `45` entry does
 not select a secondary start. The game still loads room `121`, and the byte is
 zero at the first live sample. The route needs an actual secondary exit or pipe.
 
+Codex decoded the r14 extended loader for the two records. Index `0x45` starts
+room `129` at vertical screen `01`, X `00A0`, Y `01B0` with `1B93=0`. Index
+`0x129` starts room `129` at vertical screen `0B`, X `0110`, Y `0B30` with
+`1B93=3`. Neither record selects screen `2` or `3`. The full exit scan finds one
+inbound secondary reference: room `045` screen 0 leads to index `0x45`, which
+lands on screen `01`. Screens `2` and `3` therefore have no known normal entry.
+Treat them as static-only until a custom object or new exit shows otherwise.
+
 Room `11C` screen9 position `(2432,352)` has no floor under the player. Right
 input falls to Y `584`. Right and A jumps also stay at X `2432` and fall to
 `811`, then lose a life and return to the map. Screen10 needs a safe landing
