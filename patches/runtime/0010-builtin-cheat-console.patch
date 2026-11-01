@@ -1,0 +1,395 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -419,6 +419,20 @@
+ /* Set by the hotkeys; consumed once in the frame loop. */
+ static int g_savestate_menu_hotkey;
+ static int g_rewind_hotkey;
++
++/* Built-in practice cheat console. The host owns the panel and the WRAM
++ * writes; the guest never needs an external script or a Python terminal. */
++#define kCheatPanelW 512
++#define kCheatPanelH 448
++static int g_cheat_hotkey;
++static int g_cheat_autostart = -1;
++static int g_cheat_batch_done;
++static int g_cheat_console_open;
++static int g_cheat_invincible;
++static int g_cheat_swim;
++static char g_cheat_input[64];
++static char g_cheat_status[256] = "Type help and press Enter.";
++static uint32_t g_cheat_panel[kCheatPanelW * kCheatPanelH];
+ static int g_open_launcher_hotkey;   /* in_game_launcher only */
+ static uint64_t g_state_generation;
+ 
+@@ -1189,6 +1203,202 @@
+   }
+ }
+ 
++static void CheatEnsureScript(void) {
++  if (!g_script_entries) {
++    g_script_cap = 64;
++    g_script_entries = (ScriptEntry *)malloc((size_t)g_script_cap * sizeof(ScriptEntry));
++    g_script_count = 0;
++  }
++}
++
++static void CheatQueuePoke(uint32_t addr, const uint8_t *bytes, int count) {
++  CheatEnsureScript();
++  ScriptEntry *e = NewScriptEntry(&g_script_cap);
++  e->mask = kScriptPoke;
++  e->poke_addr = addr;
++  e->poke_bytes = (uint8_t *)malloc((size_t)count);
++  if (e->poke_bytes) memcpy(e->poke_bytes, bytes, (size_t)count);
++  e->poke_count = count;
++  e->hold_frames = 1;
++}
++
++static void CheatQueueWait(int frames) {
++  CheatEnsureScript();
++  ScriptEntry *e = NewScriptEntry(&g_script_cap);
++  e->mask = 0;
++  e->wait_frames = frames;
++  e->hold_frames = 0;
++}
++
++static void CheatQueuePress(uint32_t mask, int frames) {
++  CheatEnsureScript();
++  ScriptEntry *e = NewScriptEntry(&g_script_cap);
++  e->mask = mask;
++  e->hold_frames = frames;
++  if (mask & 0x000fffu) g_script_controllers |= 1u;
++  if (mask & 0xfff000u) g_script_controllers |= 2u;
++}
++
++static void CheatQueueBegin(void) {
++  CheatEnsureScript();
++  const int first = g_script_count;
++  (void)first;
++}
++
++static void CheatQueueFinish(int first) {
++  if (g_script_index >= first) {
++    g_script_index = first;
++    g_script_phase = 1;
++    g_script_counter = g_script_entries[first].wait_frames;
++    g_script_quit = 0;
++  }
++}
++
++static void CheatQueueMap(int map, int x, int y) {
++  const int first = g_script_count;
++  const uint8_t map_bytes[2] = {(uint8_t)map, (uint8_t)map};
++  const uint8_t coords[4] = {(uint8_t)x, (uint8_t)(x >> 8), (uint8_t)y, (uint8_t)(y >> 8)};
++  const uint8_t tiles[4] = {(uint8_t)(x >> 4), (uint8_t)(x >> 12),
++                            (uint8_t)(y >> 4), (uint8_t)(y >> 12)};
++  const uint8_t mode[1] = {0x0b};
++  CheatQueuePoke(0x1f11, map_bytes, 2);
++  CheatQueuePoke(0x1f17, coords, 4);
++  CheatQueuePoke(0x1f1f, tiles, 4);
++  CheatQueuePoke(0x0100, mode, 1);
++  CheatQueueWait(240);
++  CheatQueueFinish(first);
++}
++
++static void CheatQueueRoom(int room) {
++  const int first = g_script_count;
++  static const uint8_t map_value[2] = {0x06, 0x06};
++  static const uint8_t map_coords[8] = {0x28, 0x01, 0xe8, 0x01, 0x28, 0x01, 0xe8, 0x01};
++  static const uint8_t map_tiles[8] = {0x12, 0x00, 0x1e, 0x00, 0x12, 0x00, 0x1e, 0x00};
++  static const uint8_t mode[1] = {0x0b};
++  static const uint8_t transition[1] = {0x6a};
++  static const uint8_t player[4] = {0x80, 0x00, 0x40, 0x01};
++  static const uint8_t zero[2] = {0x00, 0x00};
++  static const uint8_t action[1] = {0x06};
++  const uint8_t room_bytes[2] = {(uint8_t)(room & 0xFF), (uint8_t)(4 + (room >> 8))};
++  CheatQueuePoke(0x1f11, map_value, 2);
++  CheatQueuePoke(0x1f17, map_coords, 8);
++  CheatQueuePoke(0x1f1f, map_tiles, 8);
++  CheatQueuePoke(0x0100, mode, 1);
++  CheatQueueWait(240);
++  CheatQueuePoke(0xd7e2, transition, 1);
++  CheatQueuePress(0x0002, 2);
++  CheatQueueWait(240);
++  CheatQueuePoke(0x94, player, 4);
++  CheatQueuePoke(0x19b8, room_bytes, 2);
++  CheatQueuePoke(0x88, zero, 2);
++  CheatQueuePoke(0x71, action, 1);
++  CheatQueueWait(180);
++  CheatQueueFinish(first);
++}
++
++static void CheatExecute(void) {
++  char command[sizeof(g_cheat_input)];
++  memcpy(command, g_cheat_input, sizeof(command));
++  command[sizeof(command) - 1] = 0;
++  char *name = strtok(command, " ");
++  if (!name) return;
++  fprintf(stderr, "[cheat] %s\n", name);
++  if (strcmp(name, "help") == 0) {
++    snprintf(g_cheat_status, sizeof(g_cheat_status),
++             "invincible | swim | lives N | music HEX | map M X Y | teleport ROOM | complete | close");
++  } else if (strcmp(name, "invincible") == 0) {
++    g_cheat_invincible = !g_cheat_invincible;
++    snprintf(g_cheat_status, sizeof(g_cheat_status), "invincible %s",
++             g_cheat_invincible ? "on" : "off");
++  } else if (strcmp(name, "swim") == 0) {
++    g_cheat_swim = !g_cheat_swim;
++    snprintf(g_cheat_status, sizeof(g_cheat_status), "swim %s",
++             g_cheat_swim ? "on" : "off");
++  } else if (strcmp(name, "lives") == 0) {
++    char *value = strtok(NULL, " ");
++    if (!value) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "usage: lives N");
++    } else {
++      g_ram[0x0dbe] = (uint8_t)strtol(value, NULL, 0);
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "lives %u", g_ram[0x0dbe]);
++    }
++  } else if (strcmp(name, "music") == 0) {
++    char *value = strtok(NULL, " ");
++    if (!value) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "usage: music HEX or music off");
++    } else if (strcmp(value, "off") == 0 || strcmp(value, "none") == 0) {
++      g_ram[0x0dda] = 0;
++      g_ram[0x1dfb] = 0;
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "music off");
++    } else {
++      const uint8_t slot = (uint8_t)strtol(value, NULL, 16);
++      g_ram[0x0dda] = slot;
++      g_ram[0x1dfb] = slot;
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "music %02X", slot);
++    }
++  } else if (strcmp(name, "map") == 0) {
++    char *m = strtok(NULL, " ");
++    char *x = strtok(NULL, " ");
++    char *y = strtok(NULL, " ");
++    if (!m || !x || !y) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "usage: map MAP X Y");
++    } else {
++      CheatQueueMap((int)strtol(m, NULL, 0) & 0xFF,
++                    (int)strtol(x, NULL, 0) & 0x1FF,
++                    (int)strtol(y, NULL, 0) & 0x1FF);
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "map queued");
++    }
++  } else if (strcmp(name, "teleport") == 0) {
++    char *room = strtok(NULL, " ");
++    if (!room) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "usage: teleport ROOM");
++    } else {
++      const long value = strtol(room, NULL, 0);
++      if (value < 0 || value > 0x1FF) {
++        snprintf(g_cheat_status, sizeof(g_cheat_status), "room must be 0x000..0x1FF");
++      } else {
++        CheatQueueRoom((int)value);
++        snprintf(g_cheat_status, sizeof(g_cheat_status), "teleport queued for 0x%03lX", value);
++      }
++    }
++  } else if (strcmp(name, "complete") == 0) {
++    static const uint8_t flags[0x60] = {
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++      0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f, 0x9f,
++    };
++    static const uint8_t events[15] = {
++      0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++      0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++    };
++    static const uint8_t switches[4] = {1, 1, 1, 1};
++    CheatQueuePoke(0x1ea2, flags, (int)sizeof(flags));
++    CheatQueuePoke(0x1f02, events, (int)sizeof(events));
++    CheatQueuePoke(0x1f27, switches, (int)sizeof(switches));
++    CheatQueueMap(6, 0x128, 0x1E8);
++    snprintf(g_cheat_status, sizeof(g_cheat_status), "completion queued");
++  } else if (strcmp(name, "close") == 0) {
++    g_cheat_console_open = 0;
++  } else {
++    snprintf(g_cheat_status, sizeof(g_cheat_status), "unknown command; type help");
++  }
++  g_cheat_input[0] = 0;
++}
++
++static void TickCheatHolds(void) {
++  if (g_cheat_invincible) g_ram[0x1490] = 0x40;
++  if (g_cheat_swim) g_ram[0x85] = 0x01;
++}
++
+ void NORETURN Die(const char *error) {
+   /* Record the message before exiting: the atexit post-mortem dump
+    * includes it and preserves a timestamped crash copy (see
+@@ -2001,6 +2211,41 @@
+   }
+ }
+ 
++static bool CheatOverlayImage(const uint32_t **out, int *out_w, int *out_h) {
++  if (!g_cheat_console_open) return false;
++  uint32_t *panel = g_cheat_panel;
++  memset(panel, 0, sizeof(g_cheat_panel));
++  snes_ovl_fill_rect(panel, kCheatPanelW, kCheatPanelH, 0, 0,
++                     kCheatPanelW, kCheatPanelH, 0xE0101820u);
++  snes_ovl_stroke_rect(panel, kCheatPanelW, kCheatPanelH, 8, 8,
++                       kCheatPanelW - 16, kCheatPanelH - 16, 0xFFFFD24Du);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 20,
++                     "PRACTICE CHEAT CONSOLE", 0xFFFFD24Du, 2);
++  char line[64];
++  snprintf(line, sizeof(line), "> %s", g_cheat_input);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 72, line, 0xFFFFFFFFu, 2);
++  snprintf(line, sizeof(line), "%.30s", g_cheat_status);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 112, line, 0xFF8FE3FFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 160,
++                     "invincible  swim", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 188,
++                     "lives N  music HEX", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 216,
++                     "map M X Y", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 244,
++                     "teleport ROOM", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 272,
++                     "complete  close", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 316,
++                     "help  show commands", 0xFFFFFFFFu, 2);
++  snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 356,
++                     "ESC CLOSES", 0xFFFFB0B0u, 2);
++  *out = panel;
++  *out_w = kCheatPanelW;
++  *out_h = kCheatPanelH;
++  return true;
++}
++
+ /* Present a frozen field with an overlay on top, WITHOUT running guest code.
+  *
+  * The draw buffer is requested at the panel's own resolution (512x448, twice
+@@ -2016,9 +2261,14 @@
+ static void PresentFrozenWithOverlay(void) {
+   const uint32_t *panel = NULL;
+   int pw = 0, ph = 0;
+-  int is_menu = snes_savestate_menu_overlay_image(&panel, &pw, &ph) && panel;
+-  if (!is_menu && !(snes_rewind_overlay_image(&panel, &pw, &ph) && panel))
+-    panel = NULL;
++  int is_menu = 0;
++  if (CheatOverlayImage(&panel, &pw, &ph)) {
++    is_menu = 1;
++  } else {
++    is_menu = snes_savestate_menu_overlay_image(&panel, &pw, &ph) && panel;
++    if (!is_menu && !(snes_rewind_overlay_image(&panel, &pw, &ph) && panel))
++      panel = NULL;
++  }
+ 
+   /* The draw buffer is the FROZEN FRAME at twice its size, whichever panel
+    * is up. It used to be the panel's own size, which is right for the
+@@ -2092,6 +2342,69 @@
+   g_renderer_funcs.EndDraw();
+ }
+ 
++static void CheatKeyDown(int key, int repeat) {
++  (void)repeat;
++  if (key == SDLK_ESCAPE || key == SDLK_BACKQUOTE) {
++    g_cheat_console_open = 0;
++    return;
++  }
++  if (key == SDLK_BACKSPACE) {
++    const size_t len = strlen(g_cheat_input);
++    if (len) g_cheat_input[len - 1] = 0;
++    return;
++  }
++  if (key == SDLK_RETURN || key == SDLK_KP_ENTER) {
++    CheatExecute();
++    return;
++  }
++  char c = 0;
++  if (key >= SDLK_a && key <= SDLK_z) c = (char)('a' + (key - SDLK_a));
++  else if (key >= SDLK_0 && key <= SDLK_9) c = (char)('0' + (key - SDLK_0));
++  else if (key == SDLK_SPACE) c = ' ';
++  else if (key == SDLK_MINUS) c = '-';
++  if (!c) return;
++  const size_t len = strlen(g_cheat_input);
++  if (len + 1 < sizeof(g_cheat_input)) {
++    g_cheat_input[len] = c;
++    g_cheat_input[len + 1] = 0;
++  }
++}
++
++static void RunCheatConsoleLoop(bool *running) {
++  g_cheat_console_open = 1;
++  g_cheat_input[0] = 0;
++  if (!g_cheat_batch_done) {
++    g_cheat_batch_done = 1;
++    const char *batch = HostGetenv("CHEAT_CONSOLE_COMMANDS");
++    if (batch && *batch) {
++      char copy[512];
++      snprintf(copy, sizeof(copy), "%s", batch);
++      char *part = copy;
++      while (part && *part) {
++        char *sep = strchr(part, ';');
++        if (sep) *sep = 0;
++        snprintf(g_cheat_input, sizeof(g_cheat_input), "%s", part);
++        CheatExecute();
++        if (!g_cheat_console_open) break;
++        part = sep ? sep + 1 : NULL;
++      }
++    }
++  }
++  g_overlay_modal = true;
++  SetAudioPaused(true);
++  host_report_breadcrumb("practice cheat console OPEN - guest frozen until it closes");
++  while (g_cheat_console_open && *running) {
++    PumpOverlayEvents(running, &CheatKeyDown);
++    PresentFrozenWithOverlay();
++    SDL_Delay(8);
++  }
++  g_cheat_console_open = 0;
++  g_overlay_modal = false;
++  ResetAudioTimeline();
++  SetAudioPaused(g_paused);
++  host_report_breadcrumb("practice cheat console CLOSED - guest resuming");
++}
++
+ /* Save-state browser's modal pump. The guest is FROZEN throughout: this loop
+  * never calls RtlRunFrame and never calls the game's draw_ppu_frame, which is
+  * what makes "save right here" a definite point in time. */
+@@ -4462,6 +4775,19 @@
+       continue;   /* guest was frozen: no frame to run or present */
+     }
+     g_open_launcher_hotkey = 0;
++    if (g_cheat_hotkey && !g_overlay_modal) {
++      g_cheat_hotkey = 0;
++      RunCheatConsoleLoop(&running);
++      if (!running) break;
++      continue;   /* guest was frozen: no frame to run or present */
++    }
++    g_cheat_hotkey = 0;
++    if (g_cheat_autostart == -1)
++      g_cheat_autostart = HostGetenv("CHEAT_CONSOLE") ? 1 : 0;
++    if (g_cheat_autostart == 1) {
++      g_cheat_autostart = 2;
++      g_cheat_hotkey = 1;
++    }
+     if ((g_rewind_hotkey || PadGesturePressed(&g_rewind_gesture)) && !snes_rewind_is_open() &&
+         !snes_savestate_menu_is_open()) {
+       /* Refused during netplay by snes_rewind_open() itself: one machine
+@@ -4491,6 +4817,7 @@
+      * iteration that opened a panel consumed a script frame the guest never
+      * saw, and every later scripted press landed a frame early. */
+     inputs |= TickScript();
++    TickCheatHolds();
+     if (g_script_quit) {
+       running = false;
+       exit_reason = g_script_failed ? "script until timed out" : "script quit";
+@@ -4875,6 +5202,10 @@
+ }
+ 
+ static void HandleInput(int keyCode, int keyMod, bool pressed) {
++  if (keyCode == SDLK_BACKQUOTE && pressed && !g_overlay_modal) {
++    g_cheat_hotkey = 1;
++    return;
++  }
+   int j = FindCmdForSdlKey(keyCode, (SDL_Keymod)keyMod);
+   if (j != 0)
+     HandleCommand(j, pressed);

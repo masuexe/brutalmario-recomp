@@ -66,6 +66,15 @@
       "patch_sha256": "07bc500be6054cbb86f5ddda7fc1e1bf408512de3ce32fbb41a180868c93b786",
       "result_sha256": "d7ceee539682bf45a4cd6a5764853298b90bc1dad15550fddc3197db29bb9602",
       "base_patch": "desktop-optional-audio"
+    },
+    {
+      "id": "builtin-cheat-console",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0010-builtin-cheat-console.patch",
+      "source_sha256": "d7ceee539682bf45a4cd6a5764853298b90bc1dad15550fddc3197db29bb9602",
+      "patch_sha256": "3e8b1308083c4dbeb63ff6bf1d62b323d9ddaad52c607feeac919166754a4020",
+      "result_sha256": "b3f626005c52c45b6b425a13bec94d480a08207a95e458e5f139e55ac724db68",
+      "base_patch": "live-cheat-channel"
     }
   ]
 }

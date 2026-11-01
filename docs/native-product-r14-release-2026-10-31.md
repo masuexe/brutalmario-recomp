@@ -8,9 +8,9 @@ current native product build and its default map behaviors.
 | Item | Value |
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
-| Binary SHA-256 | `e75b707217cccc6e3ab575ef3ec1b8612c931639a615522cb67db844622aefc3` |
-| Windows package | `local/release/product-r14-event30-v2.zip` |
-| Package SHA-256 | `057c2b433a0c6da735868f39a284cf14f2d22e9d62cc3d952653349d288af010` |
+| Binary SHA-256 | `7683d891d3900c545f3a009be64aa259a309093543a5299cc89527f11d87b808` |
+| Windows package | `local/release/product-r14-cheat-console.zip` |
+| Package SHA-256 | `b2e94658bc955085ca72d398e30589ab5d72fb73c570b87b6cc8ea0ac73362e1` |
 
 ## Default behaviors
 
@@ -19,13 +19,16 @@ current native product build and its default map behaviors.
 - The room `174` post-Seven transition returns to the main map 10C node.
 - The map hook does not change the Seven boss code.
 - The Mazo event switch selects event30 by default. `BM_MAZO_EVENT30=0` disables it.
+- The built-in practice console opens with the backquote key. It carries the
+  old Python console commands without external files. The runtime patch is
+  `0010-builtin-cheat-console.patch`.
 
 ## Verification
 
 - Capture `product-r14-yoshi-v1`: Yoshi start.
 - Capture `product-r14-node-v1`: 10C node to room `190`.
 - Capture `mazo-174-return-hook-v2`: room `174` to main map.
-- The full unit suite passes 425 tests (`local/unit-tests-round186.log`).
+- The full unit suite passes 427 tests (`local/unit-tests-cheat-console-final.log`).
 - `tests/test_product_r14.py` guards the event30 default, the opt-in B4 map
   shortcut, the Yoshi start and the 9C phase music recipe.
 
