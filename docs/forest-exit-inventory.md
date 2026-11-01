@@ -162,7 +162,8 @@ falling state, not a jump point. At X `530`, a right tap moves the player to
 Y `295`, then B moves to Y `324`. The switch state `1F27` stays zero, so this
 position still misses the ON block. A position fixture at X `565`, Y `355` also
 leaves `1F27` zero after a B jump to Y `315`. The ON block does not react to a
-head hit in these samples.
+head hit in these samples. Right input at X `565` moves Y to `315`, then falls
+to `451` and `626` without changing X. The X `565` platform is a dead end.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
