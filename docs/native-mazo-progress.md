@@ -140,6 +140,12 @@ Event value `30` already appears in the recipient table at translevels `0D`,
 The candidate must compare the affected map tiles and paths before it claims a
 correct unlock.
 
+A reference-host test confirms the table wiring. Entry to translevel `30`
+reaches room `10C` with `13BF=30`. The unpatched product holds `1DEA=FF`. A
+one-byte patch at `05:D638` changes `1DEA` to `30` in the same entry, and the
+`1F02..1F10` event bytes stay zero. The patch changes the selection, not yet a
+map unlock or exit count. Native candidate integration remains the next step.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
