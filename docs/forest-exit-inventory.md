@@ -94,6 +94,11 @@ unchanged. The sprite IDs show a 1-Up mushroom (`78`) and a portable
 springboard (`2F`), not a keyhole or key. The secondary exit therefore needs a
 different object, not the key/keyhole path.
 
+A static scan of the secondary entrance tables finds two records for room `129`:
+index `0x45` with flag `58` and index `0x129` with flag `6B`. Both have the
+secondary bit set. These are the next input candidates for the screen2/3 entry;
+the screen bits still need decoding.
+
 Room `11C` screen9 position `(2432,352)` has no floor under the player. Right
 input falls to Y `584`. Right and A jumps also stay at X `2432` and fall to
 `811`, then lose a life and return to the map. Screen10 needs a safe landing
