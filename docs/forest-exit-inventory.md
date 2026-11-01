@@ -132,7 +132,8 @@ player `(16,352)`. The screen9 door is the secondary exit boundary. Natural
 reach from the landing at X `2336`, Y `320` remains to be shown.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
-the player from Y `320`. The door at Y `144` needs another mechanic or a hidden
+the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
+falls to Y `446` and `669`; the ledge does not continue left. The door at Y `144` needs another mechanic or a hidden
 platform. The test verifies the door boundary, but ordinary traversal remains open.
 The same scan finds a second door at screen `20`, X `176`, Y `320`. That door
 is far right of the tested route and stays unvisited.
