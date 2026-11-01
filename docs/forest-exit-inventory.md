@@ -122,4 +122,5 @@ Codex decoded secondary index `041` as room11C screen09 at X `2336`, Y `320`.
 From that landing, right and A input crosses X `2560` and reaches X `2610` at
 Y `267` on screen10. The next right jump falls through Y `446` and `669` into
 lava. The room stays `11C` and `$141A=0`, so screen10 is reachable but its exit
-is still open.
+is still open. Up and down input at X `2610`, Y `267` both fall to Y `442` with
+no door or pipe action. The exit needs a different object or position.
