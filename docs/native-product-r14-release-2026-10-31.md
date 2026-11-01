@@ -8,7 +8,7 @@ current native product build and its default map behaviors.
 | Item | Value |
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
-| Binary SHA-256 | `b854560490132a35343a8150a3e12cb746da50474f29544f70dc582e1ec09eed` |
+| Binary SHA-256 | `2a1a9a39c2bbc0f738fae91c73744e986c539ea01e6a1e752b30bda25a1adf79` |
 | Windows package | `local/release/product-r14-2026-10-31.zip` |
 | Package SHA-256 | `6234e7485cbeba2f01a25a9216fdeba3b1618fd426ca3cb08be098a5f2d1f445` |
 
@@ -18,6 +18,7 @@ current native product build and its default map behaviors.
 - The main-map 10C node at tile `(16,15)` enters room `190`.
 - The room `174` post-Seven transition returns to the main map 10C node.
 - The map hook does not change the Seven boss code.
+- The Mazo event switch selects event30 by default; `BM_MAZO_EVENT30=0` disables it.
 
 ## Verification
 
