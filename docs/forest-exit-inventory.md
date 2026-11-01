@@ -131,7 +131,9 @@ door and Up input enters room `41` with mode `11`, `$141A=1`, four lives and
 player `(16,352)`. The screen9 door is the secondary exit boundary. Natural
 reach from the landing at X `2336`, Y `320` remains to be shown. After the
 load settles, room `41` shows the castle interior at mode `14`, player
-`(16,352)`, with `$141A=1` and four lives.
+`(16,352)`, with `$141A=1` and four lives. Right input from that entry moves
+to Y `664`, then falls to Y `843` and costs a life. The room041 route needs a
+precise entry action.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
