@@ -18,7 +18,7 @@ current native product build and its default map behaviors.
 - The main-map 10C node at tile `(16,15)` enters room `190`.
 - The room `174` post-Seven transition returns to the main map 10C node.
 - The map hook does not change the Seven boss code.
-- The Mazo event switch selects event30 by default; `BM_MAZO_EVENT30=0` disables it.
+- The Mazo event switch selects event30 by default. `BM_MAZO_EVENT30=0` disables it.
 
 ## Verification
 
@@ -39,7 +39,7 @@ boss rooms (`06E`, `06F`, `070`, `071` and `072`) all have live entry captures.
 Their identities, phase, exit and save checks stay open.
 
 The room126 probe is outside the corrected Forest World2 list. Its historical
-node override saves node05 rather than translevel04A; a changed SRAM hash is
+node override saves node05 rather than translevel04A. A changed SRAM hash is
 not sufficient evidence of correct course-save ownership. See
 [the room126 ownership check](world2-course126-route.md).
 
@@ -51,11 +51,11 @@ reload pass. This remains a map-coordinate fixture, outside World2 acceptance.
 The default Mazo node override also changes the save index toB4. A real
 assisted sphere clear on r14 leaves original course30 completion unset.
 An isolated [primary-entry candidate](native-mazo-primary-entry.md) retains
-node30 and saves its completion after reset; it is not promoted into this
+node30 and saves its completion after reset. It is not promoted into this
 package. Recipient eventFF/exit count0 and the B0 legacy flag remain open.
 
 
 The [playable Mazo progress milestone](native-mazo-progress.md) has a separate
-native launch command and profile. It carries the cumulative restored content
+native command and profile. It carries the cumulative restored content
 and protects recipient00D while saving the actual Mazo30 goal. The r14 package
 and its recorded checksum remain unchanged.
