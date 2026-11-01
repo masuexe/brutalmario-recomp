@@ -146,6 +146,21 @@ one-byte patch at `05:D638` changes `1DEA` to `30` in the same entry, and the
 `1F02..1F10` event bytes stay zero. The patch changes the selection, not yet a
 map unlock or exit count. Native candidate integration remains the next step.
 
+A native runtime switch `BM_MAZO_EVENT30` now applies the same byte in the
+loaded ROM. The full assisted route `mazo-progress-event30-v1` then reports a
+real event path:
+
+| Sample | `1DEA` | `1F08` | `1F2E` | `1ED2` | `1EAF` |
+| --- | --- | --- | --- | --- | --- |
+| Baseline ending v2, after goal | `FF` | `00` | `0` | `80` | `0F` |
+| Event30 ending, after goal | `30` | `80` | `1` | `88` | `0F` |
+| Event30 File A reload | `FF` | `80` | `1` | `88` | `0F` |
+
+The event bit, exit count and Mazo completion persist over File A reload. The
+unrelated course00D stays `0F`. This is strong event/save evidence, but the map
+tile and path change still need review before the switch becomes a product
+default.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
