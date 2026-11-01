@@ -15,6 +15,11 @@ After codex commit `ac260b3`, a fresh recheck passes
 the Mazo30 save and the intact recipient00D. The full unit suite passes 420
 tests (`local/unit-tests-round-after-codex.log`).
 
+The later event30 runtime switch keeps the suite green at 421 tests
+(`local/unit-tests-event30.log`). Its assisted route sets `1F08=80`, `1F2E=1`
+and `1ED2=88`, keeps course00D at `0F`, and persists those fields over File A
+reload. The map field check remains open.
+
 A later check adds two default map behaviors. Captures
 `new-save-yoshi-default-v2` and `map-node-default-v1` show the Yoshi House start
 and the 10C node entry to room 190. The full unit suite passes 413 tests
