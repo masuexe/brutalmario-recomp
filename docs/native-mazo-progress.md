@@ -175,6 +175,13 @@ map difference may mean the recipient already shows that target tile. The next
 check compares the tile at that position and the affected route before the team
 rejects or accepts the event value.
 
+The product and Mazo ROM also hold the same Layer 1 map bytes at the event
+position: index `4A` is `000c000000000000`, and index `44A` is
+`45ff04ff04ff04ff` on both images. The target tile is already present in the
+recipient map. A zero visual difference is therefore expected, and event30 is
+not obviously wrong. The remaining question is whether the event path unlocks
+the intended route elsewhere.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
