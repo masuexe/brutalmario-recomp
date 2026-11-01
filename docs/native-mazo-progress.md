@@ -103,10 +103,13 @@ The full unit suite passes 420 tests (`local/reports/unit-tests-mazo-progress-v1
 After the DSH hooks rebuild, the old pinned captures no longer match the current
 progress binary. Fresh captures now exist for the boundary (`mazo-progress-
 boundary-v2`), the integrated route (`mazo-progress-int-v2-current`) and the
-three candidate regressions. The qualifier now stops at the parent
-`mazo-primary-reg-v1-*-candidate` module pin. The parent captures and build
-receipts need the same refresh before the report can run. This is an
-evidence-pin mismatch, not a code failure.
+three candidate regressions. Fresh parent captures
+`mazo-primary-reg-v1-*-candidate` and a rebuilt parent target complete the pair.
+
+The refreshed qualifier now passes the actual-node assisted fight and ending,
+the Mazo30 save and the intact recipient00D
+(`local/reports/mazo-progress-refresh-v3.json`). The event30 fields are accepted
+as `1ED2=88` and `1F2E=1` in that report.
 A DSH recheck reruns `tools/qualify_mazo_progress.py` and passes the actual-node
 assisted fight and ending, the Mazo30 save, and the intact recipient00D
 (`local/reports/mazo-progress-recheck-v1.json`).
