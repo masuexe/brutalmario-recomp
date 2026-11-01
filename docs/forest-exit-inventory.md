@@ -91,3 +91,8 @@ A second position probe targets the live custom `78` actor at `(432,240)` and
 the custom `2F` actor at `(128,448)`. The player moves to `(431,416)`, then
 `(128,400)`, then falls to `(128,907)`. Room `129` and `$141A=0` stay
 unchanged. The secondary exit needs the actual key/keyhole interaction.
+
+Room `11C` screen9 position `(2432,352)` has no floor under the player. Right
+input falls to Y `584`. Right and A jumps also stay at X `2432` and fall to
+`811`, then lose a life and return to the map. Screen10 needs a safe landing
+platform or a different object.
