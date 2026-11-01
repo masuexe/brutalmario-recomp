@@ -25,7 +25,9 @@ current native product build and its default map behaviors.
 - Capture `product-r14-yoshi-v1`: Yoshi start.
 - Capture `product-r14-node-v1`: 10C node to room `190`.
 - Capture `mazo-174-return-hook-v2`: room `174` to main map.
-- The full unit suite passes 414 tests (`local/unit-tests-round94.log`).
+- The full unit suite passes 425 tests (`local/unit-tests-round186.log`).
+- `tests/test_product_r14.py` guards the event30 default, the opt-in B4 map
+  shortcut, the Yoshi start and the 9C phase music recipe.
 
 The earned Seven defeat, full 9C saved clear and later audible music stay open.
 
