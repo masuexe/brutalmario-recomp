@@ -117,3 +117,9 @@ platform or a different object.
 A screen9 floor scan finds a solid landing at X `2302`, Y `195`. Right and A
 input keeps X `2302`, then falls through Y `413` and `636`. A life is lost and
 the map returns. The platform has a right wall, so screen10 needs another path.
+
+Codex decoded secondary index `041` as room11C screen09 at X `2336`, Y `320`.
+From that landing, right and A input crosses X `2560` and reaches X `2610` at
+Y `267` on screen10. The next right jump falls through Y `446` and `669` into
+lava. The room stays `11C` and `$141A=0`, so screen10 is reachable but its exit
+is still open.
