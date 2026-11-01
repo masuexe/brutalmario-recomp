@@ -166,8 +166,14 @@ baseline route in both captures (229,376 bytes each, zero differences). The
 event bit changes, but this sample shows no visible map tile or path change.
 Event30 alone is therefore not proof of the correct route unlock. The map Layer
 1 tilemap at `7EC800` and its high-byte range at `7FC800` also stay byte-equal.
-The event reveals no tile on the recipient map, so a donor event value is not
-the product fix.
+
+A later static check corrects the “missing tile” reading. The Layer 1 event
+tables at `04D85D`, `04D93D`, `04DA1D` and `04DA33` are byte-identical between
+product and Mazo at event index `30`: position `2A`, VRAM `28`, before tile `29`
+and after tile `F0`. Event30 has the same definition in both images. The zero
+map difference may mean the recipient already shows that target tile. The next
+check compares the tile at that position and the affected route before the team
+rejects or accepts the event value.
 
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
