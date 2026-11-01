@@ -50,18 +50,21 @@ main-map path in this fixture does not connect the Yoshi's House start to the
 `(8,25)` moves the player to map tile `(23,10)` and stays on the map. That
 tile is a map warp, not a course entry.
 
-The map node hook is also active by default. The flag `BM_MAZO_190_NODE=0`
-disables it. Capture `map-node-default-v1` enters the node without a WRAM write
-and loads room `190` with `13BF=B4`.
+The B4 map-node hook is now opt-in only. The flag `BM_MAZO_190_NODE=1` enables
+it. Without the flag, product r14 enters room `10C` at course `30`
+(`product-r14-node-default-v2`). The codex primary-entry candidate
+`demo11-native-mazo-progress-v1` enters room `190` with `13BF=30` by default
+(`progress-node-default-v1`). The B4 alternative remains a diagnostic fixture,
+not the default product path.
 
 Candidate identities: `demo11-native-product-r15` ROM
 `9f6d845b19ad24160668633e2f30d0e846662c67b135c6cbc1bca680db20716e` and
 binary `a06c50765ce8cf853d6a097e880f800645f1550559497783d5ee1c77e68cf866`.
 The accepted r14 binary is rebuilt with the default hooks. Its new binary is
-`b854560490132a35343a8150a3e12cb746da50474f29544f70dc582e1ec09eed` and its ROM
+`e75b707217cccc6e3ab575ef3ec1b8612c931639a615522cb67db844622aefc3` and its ROM
 stays `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b`. Product
-captures `product-r14-yoshi-v1` and `product-r14-node-v1` show the Yoshi start
-and the 190 node.
+capture `product-r14-yoshi-v1` shows the Yoshi start. `product-r14-node-default-v2`
+shows the default 10C entry.
 
 
 ## Later save-identity review
