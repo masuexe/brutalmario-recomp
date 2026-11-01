@@ -128,6 +128,13 @@ python3 tools/qualify_mazo_progress.py --output local/reports/FRESH.json
 
 ## Remaining scope
 
+A direct table comparison narrows the event gap. The recipient event table at
+`$05D608 + 0x30` holds `FF`. The official Mazo image holds `30` at the same
+index. The `04EA1E` completion routine also differs by one byte in the sampled
+window. The next candidate test changes only the event-table byte and checks
+whether the Mazo event and exit count become valid. This note does not apply the
+change.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
