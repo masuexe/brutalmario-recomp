@@ -126,7 +126,7 @@ is still open. Up and down input at X `2610`, Y `267` both fall to Y `442` with
 no door or pipe action. The exit needs a different object or position.
 
 A level object scan finds a door (extended object `47`) on screen9 at X `2512`,
-Y `144`. The door is left of the screen10 reach point. A position fixture at the
+Y `144`. The door sits left of the screen10 reach point. A position fixture at the
 door and Up input enters room `41` with mode `11`, `$141A=1`, four lives and
 player `(16,352)`. The screen9 door is the secondary exit boundary. Natural
 reach from the landing at X `2336`, Y `320` remains to be shown.
