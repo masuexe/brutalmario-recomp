@@ -202,6 +202,12 @@ The differences are expected event, count and checksum updates, not unrelated
 course progress. Event30 is therefore a consistent event/save candidate; the
 map route still needs a field check.
 
+The runtime switch is now active by default. The flag `BM_MAZO_EVENT30=0`
+disables it. A fresh no-variable route (`mazo-progress-default-v1`) reports
+`1F08=80`, `1F2E=1`, `1ED2=88` and 00D `0F` after the goal, and the same fields
+survive File A reload. The event wall stays `30` before map load and `FF` after
+reload, as the map routine expects.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is

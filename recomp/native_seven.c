@@ -113,7 +113,8 @@ void bm_content_load(uint8_t *rom, size_t size) {
   if (owner) bm_content_clear(owner);
   if (size != BM_SEVEN_ROM_SIZE || !matches(rom, size, bm_seven_rom_sha))
     fail("ROM identity differs");
-  if (getenv("BM_MAZO_EVENT30")) rom[0x2d638] = 0x30;
+  const char *event30 = getenv("BM_MAZO_EVENT30");
+  if (!(event30 && event30[0] == '0' && event30[1] == 0)) rom[0x2d638] = 0x30;
   backing = calloc(size+1, 1);
   if (!backing) fail("backing allocation failed");
   memcpy(backing, rom, size);
