@@ -98,8 +98,8 @@ A static scan of the secondary entrance tables finds two records for room `129`:
 index `0x45` with flag `58` and index `0x129` with flag `6B`. Both have the
 secondary bit set. These are the next input candidates for the screen2/3 entry. The screen
 bits still need decoding. A forced `$1B93=1` before translevel `45` entry does
-not select a secondary start: the game still loads room `121`, and the byte is
-zero at the first live sample. An actual secondary exit or pipe is required.
+not select a secondary start. The game still loads room `121`, and the byte is
+zero at the first live sample. The route needs an actual secondary exit or pipe.
 
 Room `11C` screen9 position `(2432,352)` has no floor under the player. Right
 input falls to Y `584`. Right and A jumps also stay at X `2432` and fall to
