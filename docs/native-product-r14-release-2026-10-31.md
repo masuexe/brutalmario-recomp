@@ -9,8 +9,8 @@ current native product build and its default map behaviors.
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
 | Binary SHA-256 | `e75b707217cccc6e3ab575ef3ec1b8612c931639a615522cb67db844622aefc3` |
-| Windows package | `local/release/product-r14-event30.zip` |
-| Package SHA-256 | `4dc376f199c38529d73d863d1fb258970941812bf410050c9e4c14828f98ebf7` |
+| Windows package | `local/release/product-r14-event30-v2.zip` |
+| Package SHA-256 | `057c2b433a0c6da735868f39a284cf14f2d22e9d62cc3d952653349d288af010` |
 
 ## Default behaviors
 
