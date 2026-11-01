@@ -44,3 +44,8 @@ the new build matches the old executable's speed.
 The guest stage is about 100 times slower in the new build. Audio off and
 `SNESRECOMP_APU_MASTER_CLOCK=0` do not change it. The next step is a compiled
 object and link comparison, not a presentation fix.
+## CPU load
+
+A Windows process counter sampled the new executable at about 100 percent of
+one CPU core during the slow guest stage. The guest stage is compute-bound, not
+a sleep or deadline wait.
