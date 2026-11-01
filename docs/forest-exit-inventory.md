@@ -154,7 +154,9 @@ jump reaches X `517`, Y `341`. The brick route stays alive. At X `519`, a B
 jump raises the player to Y `294`. A right input then falls to Y `510`. The ON
 block above this position is the next target. Y+B reaches the same Y `294`,
 and the ON/OFF state at `1F27` stays zero. The switch needs a different X
-position or jump.
+position or jump. The pink ON block occupies screen X `108..182`, Y `32..184`
+in the X `530` frame. Right+B from X `519` falls to Y `375`, `598` and `830`.
+The switch is still not hit.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
