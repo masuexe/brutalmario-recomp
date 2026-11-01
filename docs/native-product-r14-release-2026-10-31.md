@@ -9,9 +9,9 @@ current native product build and its default map behaviors.
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
 | Linux binary SHA-256 | `7683d891d3900c545f3a009be64aa259a309093543a5299cc89527f11d87b808` |
-| Normal Windows package | `local/release/product-r14-event30-v2.zip` |
-| Normal package SHA-256 | `057c2b433a0c6da735868f39a284cf14f2d22e9d62cc3d952653349d288af010` |
-| Normal Windows binary SHA-256 | `d43be6fac1255c131ccf8028e710c5bc8fd460e9d9d1912a42c49a1265efef20` |
+| Playable Windows package | `local/release/product-r14-event30-v2.zip` (base target bundle) |
+| Playable package SHA-256 | `057c2b433a0c6da735868f39a284cf14f2d22e9d62cc3d952653349d288af010` |
+| Playable Windows binary SHA-256 | `d43be6fac1255c131ccf8028e710c5bc8fd460e9d9d1912a42c49a1265efef20` |
 | Experimental console package | `local/release/product-r14-cheat-console-experimental-win.zip` |
 | Experimental package SHA-256 | `2c028dc1495cc3b695352d9590a92c0c35fb9c28e4374d831939658da57f6bca` |
 | Experimental Windows binary SHA-256 | `10772a6e2297d68871a932a81723d7e0cd215bf0d5ac3a591098df3d05af67ff` |
@@ -73,3 +73,21 @@ The [playable Mazo progress milestone](native-mazo-progress.md) has a separate
 native command and profile. It carries the cumulative restored content
 and protects recipient00D while saving the actual Mazo30 goal. The r14 package
 and its recorded checksum remain unchanged.
+## Windows package identity
+
+Measurements on the shipped Windows bundles give these identities.
+
+- `product-r14-event30-v2.zip` carries the base target binary and the base
+  target ROM. The binary title is `Brutal Mario Demo11 Native Product`. The
+  bundle has 45 packs. The packaged executable has no `BM_YOSHI_START` and no
+  `BM_MAZO_EVENT30` text. Its ROM SHA-256 is
+  `a1c9d7c8f09399b60193302e33bb1c8111ac0fe8e5b1cb5684fb6f277fddbf91`.
+- The r14 Windows binary in
+  `local/build-windows/demo11-native-product-r14/` carries the r14 title and
+  both hook names. It runs the guest at about 3 FPS on Windows.
+- The r14 Linux binary carries both hook names and the r14 ROM.
+
+The fast Windows bundle is therefore the base target bundle. It runs at
+normal speed. It does not contain the r14 default map behaviors above. Use it
+for play. Treat the r14 map defaults as Linux-only until the Windows r14
+guest speed returns to normal.
