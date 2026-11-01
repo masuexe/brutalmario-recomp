@@ -8,14 +8,14 @@ current native product build and its default map behaviors.
 | Item | Value |
 | --- | --- |
 | ROM SHA-256 | `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b` |
-| Binary SHA-256 | `2a1a9a39c2bbc0f738fae91c73744e986c539ea01e6a1e752b30bda25a1adf79` |
+| Binary SHA-256 | `e75b707217cccc6e3ab575ef3ec1b8612c931639a615522cb67db844622aefc3` |
 | Windows package | `local/release/product-r14-event30.zip` |
 | Package SHA-256 | `4dc376f199c38529d73d863d1fb258970941812bf410050c9e4c14828f98ebf7` |
 
 ## Default behaviors
 
 - A new save starts at Yoshi's House: pixel `(104,408)`, tile `(6,25)`.
-- The main-map 10C node at tile `(16,15)` enters room `190`.
+- The main-map 10C node keeps course `30` and enters room `10C` by default. The B4 shortcut to room `190` needs `BM_MAZO_190_NODE=1`.
 - The room `174` post-Seven transition returns to the main map 10C node.
 - The map hook does not change the Seven boss code.
 - The Mazo event switch selects event30 by default. `BM_MAZO_EVENT30=0` disables it.
