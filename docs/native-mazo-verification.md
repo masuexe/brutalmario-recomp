@@ -17,7 +17,9 @@ tests (`local/unit-tests-round-after-codex.log`).
 
 The later event30 runtime switch keeps the suite green at 421 tests
 (`local/unit-tests-event30.log`). The default event30 build also passes 421
-tests (`local/unit-tests-event30-default.log`). Its assisted route sets `1F08=80`, `1F2E=1`
+tests (`local/unit-tests-event30-default.log`). The refreshed progress evidence
+passes 421 tests (`local/unit-tests-round149.log`) and
+`qualify_mazo_progress.py` (`local/reports/mazo-progress-refresh-v3.json`). Its assisted route sets `1F08=80`, `1F2E=1`
 and `1ED2=88`, keeps course00D at `0F`, and persists those fields over File A
 reload. The map field check remains open.
 
