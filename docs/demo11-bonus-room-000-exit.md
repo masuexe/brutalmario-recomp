@@ -1,0 +1,120 @@
+# Bonus room 000 exit repair
+
+## Summary
+
+The bonus room `$000` did not start its exit after the last 1-up appeared.
+The player stayed in the room with no way to leave. The cause is one
+undefined register read in the bonus sprite program. One reviewed code patch
+repairs it.
+
+## Symptom and reproduction
+
+The user reported the symptom in the current build. The room is entered when
+the player collects 100 stars. The last 1-up spawns, and then the room does
+not end.
+
+The fixture `recomp/inputs/bonus-room000-pickup2.script` reproduces the
+symptom. The fixture is labelled. It pokes room `$000`, sets the bonus-game
+entry flag `$1425`, sets one pending 1-up, and clears the spawned 1-up slot
+as a real pickup does. It writes no completion flag.
+
+## Cause
+
+The level loop at `$00:A1E4` starts the exit only when three conditions hold:
+
+1. `$1425` is non-zero.
+2. `$14AB` is non-zero.
+3. `$14AB` is below `#$40`.
+
+`$14AB` is the bonus-game end timer. The bonus sprite writes it in the
+function at `$18:FB01`:
+
+```
+18FAFE  200EFB     JSR $FB0E      ; scan slots for a 1-up sprite
+18FB01  98         TYA            ; Y = 1 when a 1-up is present
+18FB02  F001       BEQ $FB05      ; write the timer only when Y = 0
+18FB04  60         RTS
+18FB05  A960       LDA #$60
+18FB07  8DAB14     STA $14AB
+18FB0A  9EC814     STZ $14C8
+18FB0D  60         RTS
+```
+
+The scan function at `$18:FB0E` sets `Y = 1` when it finds a 1-up. It does
+not set `Y` when it finds nothing, so `Y` keeps the value of the caller.
+That value is not defined by this code.
+
+In demo6 and demo7 the caller left `Y = 0`. The timer write ran, and the
+room ended. In cheap_demo the caller leaves `Y` non-zero. The branch skips
+the timer write, `$14AB` stays zero, and the exit never starts.
+
+## Evidence
+
+Reference host, fixture `bonus-room000-pickup2.script`, samples at
+frames 150, 210, 330 and 570 after the room load:
+
+| Version | `$14AB` after the pickup | Result |
+| --- | --- | --- |
+| demo6 | `58`, `49`, `2B`, then 0 | mode `0C`, left the room |
+| demo7 | `58`, `49`, `2B`, then 0 | mode `0C`, left the room |
+| cheap_demo | `00` at all samples | mode stays `14`, stuck |
+
+The disassembled bonus blocks of demo6, demo7 and cheap_demo are the same
+program. Only the `JSR` targets differ, because the blocks are at different
+addresses. The level header, the sprite list, the engine exit code and the
+pickup handler are also byte-identical. The difference is only the value of
+`Y` at the scan.
+
+A patch probe confirms the cause. When the timer write runs on every pass
+(`BEQ` changed to `BRA`), the room ends. When the scan clears `Y` first,
+the room also ends, and the timer value matches demo6.
+
+## Repair
+
+The recipe `config/native-content/sprite19-yfix-module.json` pins the
+cheap_demo record and the protected program. It adds one patch of the same
+length at `$18:FB0E`:
+
+```
+before: DA A2 09 BD C8 14 F0 09 B5 9E C9 78 D0 03 A9 01 A8 CA 10 EF FA 60 60
+after:  DA A0 00 A2 09 BD C8 14 F0 08 B5 9E C9 78 D0 02 A0 01 CA 10 F0 FA 60
+```
+
+The patch adds `LDY #$00` at entry, so `Y` is defined for every return.
+The two branch displacements change by one byte to keep the same targets.
+The length is 23 bytes before and after, so no code moves.
+
+The recipe is a separate file. The original `sprite19-module.json` is
+unchanged, so the earlier targets keep their pinned hashes.
+
+## Target
+
+The repair is in the target `demo11-native-product-r16`. This target is a
+child of `demo11-native-product-r15` and adds only the reviewed patch.
+
+Identities:
+
+- ROM: `9f6d845b19ad24160668633e2f30d0e846662c67b135c6cbc1bca680db20716e`
+- binary: `50a062e58e56776338ea1d506bc84184acbbb275f36ca1e1453a75ebb148cd5f`
+- sprite 19 pack: `ae73cf2577e20c4d659507c30d93a5268c1f7d011c55021ffe66437d9e745803`
+
+## Verification
+
+Native run, fixture `bonus-room000-pickup2.script`, samples at the same
+frames:
+
+| Target | `$14AB` after the pickup | Result |
+| --- | --- | --- |
+| r14 (before) | `00` at all samples | mode stays `14`, stuck |
+| r16 (after) | `58`, `49`, `2C`, then 0 | mode `0C`, then `0E` |
+
+The reference host cannot run this ROM because the sprite program is in the
+native `$AF` module view. The native runtime is the correct check for this
+target.
+
+## Limitations
+
+- The fixture sets `$1425` and `$1890` directly. It qualifies the exit
+  boundary, not a full star-collection route.
+- The route from the room exit to the map is not followed in this receipt.
+- The sprite graphics of the bonus room are not reviewed here.

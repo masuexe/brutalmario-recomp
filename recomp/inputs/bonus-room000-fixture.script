@@ -1,0 +1,42 @@
+# Bonus room 000 fixture: enter a level, then force room 0x000 through the
+# game's own room-exit fixture. Labelled fixture; no completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump pre
+poke 94 80004001
+poke 19b8 00
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 60
+dump e000
+wait 60
+dump e120
+wait 120
+dump e240
+wait 240
+dump e480
+wait 240
+dump e720
+wait 240
+dump e960
+wait 300
+dump e1260
+wait 300
+dump e1560
+wait 600
+dump e2160
+quit

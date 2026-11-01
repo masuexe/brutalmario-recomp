@@ -1,0 +1,53 @@
+# Bonus room 000: win the roulette, then clear the spawned 1-ups as a
+# collected pickup would. Labelled fixture: room poke, entry flag, 1-up count,
+# and a status clear that stands in for the pickup. No completion writes.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+press select 2
+wait 600
+press y 30
+wait 240
+press y 30
+wait 600
+dump pre
+poke 94 80004001
+poke 19b8 00
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 240
+dump w000
+# Fixture: 100-star entry flag and one pending 1-up.
+poke 1425 ff
+poke 1890 01
+poke 1531 09
+wait 30
+dump w030
+wait 60
+dump w090
+# Fixture: the spawned 1-up leaves slot 5, as a real pickup does.
+poke 14cd 00
+wait 30
+dump w120
+wait 60
+dump w180
+wait 120
+dump w300
+wait 240
+dump w540
+wait 240
+dump w780
+wait 300
+dump w1080
+wait 600
+dump w1680
+wait 600
+dump w2280
+quit
