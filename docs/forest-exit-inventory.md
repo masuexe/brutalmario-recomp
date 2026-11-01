@@ -138,4 +138,6 @@ sprite at X `224`, Y `48` (ID `09`). No springboard or vine sits near the door.
 The natural route needs terrain or another mechanic, not an actor. The door at Y `144` needs another mechanic or a hidden
 platform. The test verifies the door boundary, but ordinary traversal remains open.
 The same scan finds a second door at screen `20`, X `176`, Y `320`. That door
-is far right of the tested route and stays unvisited.
+is far right of the tested route and stays unvisited. A position fixture at
+X `5296`, Y `320` falls to Y `437` and then `773`. The second door coordinate
+is not yet confirmed.
