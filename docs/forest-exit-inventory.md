@@ -163,7 +163,7 @@ Y `295`, then B moves to Y `324`. The switch state `1F27` stays zero, so this
 position still misses the ON block. A position fixture at X `565`, Y `355` also
 leaves `1F27` zero after a B jump to Y `315`. The ON block does not react to a
 head hit in these samples. Right input at X `565` moves Y to `315`, then falls
-to `451` and `626` without changing X. The X `565` platform is a dead end. The boundary result is complete: the 11C
+to `451` and `626` without changing X. The X `565` platform is a dead end. Up input also falls to Y `490` and `753`. The boundary result is complete: the 11C
 secondary exit enters room041, and the room041 entry segment reaches the ON
 block and the X `565` dead end. A full room041 pass stays open.
 
