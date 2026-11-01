@@ -1,0 +1,532 @@
+# Demo 1-1 line: World 1-1 goal and save qualification.
+# Assisted route: air-swim and invulnerability fixtures carry Mario to the level's
+# far end, where the goal tape stands on the end platform at x~0x16DC, y=0x140.
+# Goal contact, course-clear event writes and the map return are performed by the
+# game, not injected. This is not an unassisted traversal.
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 0109 00
+
+# Practice map transfer: map 0, X=0x048, Y=0x198 (the 1-1 node).
+poke 1f11 0000
+poke 1f17 4800980148009801
+poke 1f1f 0400190004001900
+poke 0100 0b
+wait 240
+press y 2
+until 0100 == 14 480
+
+# Assisted flight to the far end; the fixture is labelled and disabled before
+# the goal walk so the tape contact happens with normal physics.
+# Labelled cheat: seed the bonus star counter to 99 so the goal tape star must
+# supply the 100th. No other writes.
+poke 0f48 63
+wait 30
+dump s99
+forcepoke 85 01
+poke 1490 60
+poke 1497 ff
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+press right 25
+press b 6
+forcepoke 85 00
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+wait 20
+dump at_end
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+press left 30
+until 1493 != 00 0
+dump at_goal
+forcepoke 1490 00
+wait 4
+dump t0
+wait 4
+dump t1
+wait 4
+dump t2
+wait 4
+dump t3
+wait 4
+dump t4
+wait 4
+dump t5
+wait 4
+dump t6
+wait 4
+dump t7
+wait 8
+dump t8
+wait 8
+dump t9
+wait 16
+dump u0
+wait 16
+dump u1
+wait 32
+dump u2
+wait 32
+dump u3
+wait 64
+dump u4
+wait 64
+dump u5
+wait 128
+dump u6
+wait 128
+dump u7
+wait 256
+dump u8
+wait 256
+dump u9
+wait 512
+dump v0
+wait 512
+dump v1
+wait 1500
+dump completed_map
+until 0100 == 0e 0
+until 1ecb == 8a 0
+dump on_map
+wait 120
+dump settled
+quit

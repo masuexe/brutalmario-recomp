@@ -118,3 +118,51 @@ target.
   boundary, not a full star-collection route.
 - The route from the room exit to the map is not followed in this receipt.
 - The sprite graphics of the bonus room are not reviewed here.
+
+## Correction: the goal tape does award bonus stars
+
+An earlier draft of this report claimed that the goal tape never awards
+bonus stars in this ROM. That claim was wrong. It came from fixtures that
+never touched the tape, so the tape program never ran.
+
+The correct behaviour, measured on the reference host with the 1-1 goal
+route:
+
+1. The player touches the tape. The tape writes the star count to `$1900`.
+2. The routine at `$13:5CF12` moves the stars into `$0F48`, one star per
+   four frames.
+3. The stock handler at `$00:8F5E` sees `$0F48 >= #$64`, sets `$1425`
+   to `#$FF`, and subtracts `#$64`.
+4. The bonus game then starts and writes `$14AB`.
+
+Measured samples for a 1-1 clear with the counter seeded to 99:
+
+| Sample | `$1900` | `$0F48` | `$1425` | `$14AB` |
+| --- | --- | --- | --- | --- |
+| tape contact | `08` | `63` | `00` | `00` |
+| transfer | `07` | `00` | `FF` | `00` |
+| bonus game | `00` | `07` | `85` | `25` |
+
+The star count wraps because 99 plus 8 passes 100. The stock code subtracts
+100 and keeps the remainder.
+
+Only the tape contact awards stars. A level clear without a tape contact
+awards coins instead.
+
+### Fixture rule
+
+The star counter must be seeded to 99, not 100. A value of 100 is consumed
+by the stock handler at once, and the flag is cleared again before the bonus
+game can start.
+
+## Route qualification
+
+The 1-1 goal route qualifies the entry path. The fixture
+`recomp/inputs/bonus-room000-w1-1-transfer.script` enters World 1-1, seeds
+99 stars, flies to the far end with labelled swim and invulnerability
+fixtures, disables those fixtures, and then touches the tape with normal
+physics.
+
+The exit path is qualified separately by
+`recomp/inputs/bonus-room000-pickup2.script`, because the native product
+cannot play the bonus room program through the reference host.
