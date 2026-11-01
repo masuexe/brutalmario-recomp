@@ -7,10 +7,10 @@ starts at about 3 FPS.
 
 The console is not the cause. These cases stay at about 3 FPS:
 
-- r14 Windows build with the console code removed;
-- old runtime objects relinked with the current host;
-- VSync off, audio off and window scale 1;
-- `SNESRECOMP_LLE_BOUNCE=0`;
+- r14 Windows build with the console code removed.
+- old runtime objects relinked with the current host.
+- VSync off, audio off and window scale 1.
+- `SNESRECOMP_LLE_BOUNCE=0`.
 - a script with `turbo on`.
 
 The old package executable runs the same 60-frame script in about 2 seconds.
@@ -18,10 +18,10 @@ The new executable takes about 21 seconds.
 
 ## Evidence
 
-- Old package: `product-r14-event30-v2.zip`;
-- New package: `product-r14-cheat-console-win.zip`;
-- New Windows binary: `local/build-windows/demo11-native-product-r14/`;
-- Test script: `wait 60 / dump / quit`;
+- Old package: `product-r14-event30-v2.zip`.
+- New package: `product-r14-cheat-console-win.zip`.
+- New Windows binary: `local/build-windows/demo11-native-product-r14/`.
+- Test script: `wait 60 / dump / quit`.
 - Logs: `tmp/old60.log`, `tmp/new60.log`, `tmp/fresh.log`.
 
 Both runs report the same guest frame and master clock at frame 60. The new
