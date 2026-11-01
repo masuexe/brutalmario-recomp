@@ -190,6 +190,14 @@ changes plus `1DEB/1DED=16`. SRAM also changes at `8C/8D` and `81C`; the event
 or path meaning of those bytes stays open. A same-input baseline rerun or a
 save-field audit is the next check.
 
+A fresh same-input baseline (`mazo-progress-baseline-v3`) reproduces the same
+difference set. The SRAM pairs now resolve as save fields: `66/213` is the event
+bitmap (`80`), `8C/239` is the exit count (`1`) and `8D/23A` is the file checksum
+(`CE` to `45`). `81C` changes from `24` to `27`, consistent with a checksum.
+The differences are expected event, count and checksum updates, not unrelated
+course progress. Event30 is therefore a consistent event/save candidate; the
+map route still needs a field check.
+
 The recipient's Mazo event is stillFF and the exit count remains0. Its existing
 world events and paths are preserved. Full map/event integration, ordinary190
 traversal, unassisted fights and audible music acceptance remain open. This is
