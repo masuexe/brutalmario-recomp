@@ -72,5 +72,5 @@ shows the default 10C entry.
 The default B4 table edit enters190 but also changes the completion index.
 The isolated [primary-entry V3 candidate](native-mazo-primary-entry.md) keeps
 node30 and course context30 and redirects only its primary load. An assisted
-real sphere goal now saves course30 through reset. It remains experimental;
-recipient eventFF and the legacy course0D flag still need integration review.
+real sphere goal now saves course30 through reset. It remains experimental.
+Recipient eventFF and the legacy course0D flag still need integration review.
