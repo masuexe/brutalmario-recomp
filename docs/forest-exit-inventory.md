@@ -152,7 +152,9 @@ left+B presses land on the brick platform at X `358`, Y `288`. Right input to
 X `374`, then two right+B jumps, reaches X `436` and X `498` at Y `284`. A third
 jump reaches X `517`, Y `341`. The brick route stays alive. At X `519`, a B
 jump raises the player to Y `294`. A right input then falls to Y `510`. The ON
-block above this position is the next target.
+block above this position is the next target. Y+B reaches the same Y `294`,
+and the ON/OFF state at `1F27` stays zero. The switch needs a different X
+position or jump.
 
 The natural approach reaches X `2510`, Y `320`. A, B and Up input do not raise
 the player from Y `320`. A left jump from the screen10 ledge at Y `223` also
