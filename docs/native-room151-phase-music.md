@@ -11,7 +11,8 @@ legacy donor engine. The music IDs are version-local. Slots `$23` and `$22` hold
 valid payloads, but they are not the intended songs.
 
 Playtest of the first candidate (r11) showed that the second-boss arrival played
-`$AD`. Candidate r11 had the two slots in the wrong order. Candidate r12 swaps them.
+`$AD`. Candidate r11 had the two slots in the wrong order. Candidate r12 swaps them. The accepted r14 target keeps the same recipe and
+adaptation entry. The later audible check remains open.
 
 ## Fix
 
