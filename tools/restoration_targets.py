@@ -1140,4 +1140,8 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11FixBatchPSNESRecomp',
         'title': 'Brutal Mario Demo11 Fix Batch P',
     },
+    'demo11-overworld-music': {
+        'binary': 'BrutalMarioDemo11OverworldMusicSNESRecomp',
+        'title': 'BrutalMario Demo11 Overworld Music',
+    },
 }

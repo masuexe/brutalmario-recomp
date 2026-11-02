@@ -1600,3 +1600,16 @@ patches the pointer; the ROM delta from r14 is three bytes. The room 151 window
 holds sibling sets 027F to 0281 in VRAM but not 0282, so the missing family
 member stays open for a runtime frame. See See
 [native-mazo-gfx282.md](native-mazo-gfx282.md). Id `027E` stays open.
+
+## Overworld map music World 4 and World 6 (2026-11-02)
+
+The [overworld music correction](demo11-overworld-music.md) fixes the map
+themes for World 4 (Cave) and World 6 (Sky). The recipient `OverworldMusic`
+table and its `OverworldMusic2` duplicate stored `0x27`, the Special World
+theme, at submap 2 (World 4) and `0x22`, the World 4 theme, at submap 1
+(World 6). The newest official demo stores `0x22` at submap 2 and `0x23` at
+submap 1. The target `demo11-overworld-music` changes four table bytes only.
+Reference and native captures show submap 1 -> `0x23` and submap 2 -> `0x22`,
+while submaps 3 and 5 keep their values. `tools/qualify_demo11_overworld_music.py`
+replays the checks. This proves the song selection only; it is not an audible
+match and does not change any song payload.
