@@ -1,0 +1,56 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -1396,9 +1396,29 @@
+   g_cheat_input[0] = 0;
+ }
+ 
++/* Scope air-swim to a simulated frame. Keep the genuine level-water byte
++ * outside guest execution, so native tile collision decides swimming again
++ * on the first frame after the cheat is disabled. Never clear player $75. */
++static int g_cheat_swim_applied;
++static uint8_t g_cheat_water_natural;
++static uint16_t g_cheat_water_room;
++static void FinishCheatHolds(void) {
++  if (!g_cheat_swim_applied) return;
++  const uint16_t room = g_ram[0x10b] | (g_ram[0x10c] << 8);
++  /* A room loader owns the new room's water flag. Preserve its writes. */
++  if (room == g_cheat_water_room && g_ram[0x85] == 1)
++    g_ram[0x85] = g_cheat_water_natural;
++  g_cheat_swim_applied = 0;
++}
++
+ static void TickCheatHolds(void) {
+   if (g_cheat_invincible) g_ram[0x1490] = 0x40;
+-  if (g_cheat_swim) g_ram[0x85] = 0x01;
++  if (g_cheat_swim && g_ram[0x100] == 0x14) {
++    g_cheat_water_natural = g_ram[0x85];
++    g_cheat_water_room = g_ram[0x10b] | (g_ram[0x10c] << 8);
++    g_cheat_swim_applied = 1;
++    g_ram[0x85] = 1;
++  }
+ }
+ 
+ void NORETURN Die(const char *error) {
+@@ -4819,7 +4839,6 @@
+      * iteration that opened a panel consumed a script frame the guest never
+      * saw, and every later scripted press landed a frame early. */
+     inputs |= TickScript();
+-    TickCheatHolds();
+     if (g_script_quit) {
+       running = false;
+       exit_reason = g_script_failed ? "script until timed out" : "script quit";
+@@ -4855,12 +4874,14 @@
+      * being skipped costs work for a picture nobody is reading. */
+     bool runahead_captured = false;
+     {
++      TickCheatHolds();
+       const uint32 word = inputs | GetActiveControllers() | debug_server_get_controller_active_mask();
+       if (g_turbo || !snes_runahead_run_frame(word))
+         RtlRunFrame(word);
+       else
+         runahead_captured = true;   /* it rasterised the speculated frame */
+     }
++    FinishCheatHolds();
+     if (paced_realtime && g_audio_device) {
+       uint32_t discarded = RtlAudioTrimBacklog(g_audio_high_water, g_audio_prefill);
+       if (discarded) {

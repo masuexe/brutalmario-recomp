@@ -84,6 +84,15 @@
       "patch_sha256": "1a4eaa9aa1e5232c36df5cc88499e073ca3c91cee9f9700523dce91174b78d6f",
       "result_sha256": "44fbeac4e7e99d1f65643eee941b560b207bb724e2e0686bd01cf634cfbec540",
       "base_patch": "builtin-cheat-console"
+    },
+    {
+      "id": "frame-scoped-swim",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0012-scope-swim-to-guest-frame.patch",
+      "source_sha256": "44fbeac4e7e99d1f65643eee941b560b207bb724e2e0686bd01cf634cfbec540",
+      "patch_sha256": "7e2311d215fea1f2a990455ad20473d7829b39d1e9c13b5167afa64f3e75f83c",
+      "result_sha256": "dada1c89f7c0c2598903e9980ad2e4d9ae20e1ad275dff6f4f4cdb9dd9ab8134",
+      "base_patch": "console-room-exit-tables"
     }
   ]
 }

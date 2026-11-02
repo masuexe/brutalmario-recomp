@@ -1651,3 +1651,16 @@ entry into gameplay. Shared product verification passes at 3.085/3.488 ms per
 guest frame; new isolated bundles preserve prior artifacts and saves. This is
 an assisted transfer-boundary qualification, not a course clear. The broader
 restoration and separate map-music integration remain open.
+
+## Console swim restoration (2026-11-02)
+
+The user reported that toggling swim off left swimming active and required
+preservation of genuine water behavior. The [frame-scoped repair](native-console-swim.md)
+restores the real level-water flag after each simulated frame and lets native
+collision update player swimming after disabling the cheat. Actual r14 water
+code checks cover dry land, full-water levels, local water and leaving local
+water. Eleven targeted tests and both product verifications pass; 12 parent
+startup dump files remain exact on each platform. Earlier eight stale-host
+full-suite failures are still deferred. Fresh Windows folder and ZIP copies
+are hash-verified at the requested `D:/tmp` location. Teleport repair remains;
+map-music integration and broader restoration remain open.

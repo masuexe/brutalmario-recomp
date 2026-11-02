@@ -86,3 +86,12 @@ Use the `product-r14-teleport-fix-*-v1.zip` bundles listed in
 [the transfer report](native-console-teleport.md); the earlier console packages
 remain historical artifacts with this defect. Linux and Windows fresh captures
 confirm 00F and 10F remain distinct, with no startup performance regression.
+
+## Swim correction (2026-11-02)
+
+The second `swim` command now removes only the temporary air-swim override.
+The game recalculates player water state from the genuine level and tile
+conditions: dry land returns to normal, while real water retains swimming.
+See [the swim report](native-console-swim.md) for interpreter checks, package
+identities and Windows delivery to `D:/tmp/product-r14-swim-fix-windows-v1`.
+These bundles include the prior teleport repair.
