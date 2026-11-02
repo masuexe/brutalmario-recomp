@@ -221,3 +221,49 @@ cleared. Both cases show r16 leaving the room and r14 staying inside.
 
 World 1-1 leads to bonus room `$100`, not `$000`. Both rooms use the same
 sprite 19 record, so the same patch covers both.
+
+## Regression use
+
+Three fixtures cover the repair. Two of them need a native build, because the
+bonus sprite program lives in the native code view.
+
+| Fixture | Covers | Build |
+| --- | --- | --- |
+| `bonus-room000-full-route.script` | Goal tape, star award, bonus room entry, room exit | native |
+| `bonus-room000-pickup2.script` | The case with pending 1-ups | native |
+| `bonus-room000-w1-1-transfer.script` | The star transfer chain in detail | reference host |
+
+Run one fixture against a patched target and one against an unpatched target:
+
+```
+python3 tools/play_native_target.py \
+    --target demo11-native-product-r16 \
+    --script "$PWD/recomp/inputs/bonus-room000-full-route.script" \
+    --play-dir "$PWD/local/play/full-r16"
+
+python3 tools/play_native_target.py \
+    --target demo11-native-product-r14 \
+    --script "$PWD/recomp/inputs/bonus-room000-full-route.script" \
+    --play-dir "$PWD/local/play/full-r14"
+```
+
+The launcher writes its dumps to `local/captures/play-<target>`. Clear that
+directory before each run. A stale dump from an earlier run reads as a
+current result and gives a wrong answer.
+
+Then check the pair:
+
+```
+python3 tools/qualify_bonus_room_exit.py \
+    --patched   local/captures/play-demo11-native-product-r16 \
+    --unpatched local/captures/play-demo11-native-product-r14
+```
+
+The check asserts four conditions:
+
+1. Both runs set the bonus-game flag `$1425`.
+2. The patched run writes the end timer `$14AB`.
+3. The patched run reaches the map mode `$0E`.
+4. The unpatched run keeps `$14AB` at zero and stays in the level mode.
+
+A control run with the same directory on both sides fails on condition 4.
