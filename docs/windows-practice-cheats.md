@@ -122,3 +122,11 @@ The two music rows match the corrected overworld table. See
 | `tools/play_windows_target.py` | The Windows launcher and digest rewrite |
 | `tests/test_play_windows_target.py` | Review gates for the script text and the rewrite |
 | `tools/play_native_cheats.py` | The shared cheat encoding |
+
+## Later console repair (2026-11-02)
+
+The console-unavailable and rebuilt-binary performance limits above describe
+the earlier packages. Isolated new Linux/Windows console bundles now avoid
+per-ROM-access environment queries and pass fresh state/performance checks.
+See [the repair report](windows-console-performance.md). This launcher still
+uses the preserved shipped executable; its identity-rewrite restrictions remain.

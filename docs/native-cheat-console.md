@@ -54,11 +54,17 @@ Python console. They do not write a file.
 The console needs a desktop keyboard. It has no gamepad text entry. The
 teleport, completion and music writes need a human playtest for visual and
 audible acceptance. The overlay dump proves the panel, not every command.
-## Status
+## Status (2026-11-02)
 
-The console is an experimental Windows build. Use the normal r14 package for
-play. The experimental package is
-`local/release/product-r14-cheat-console-experimental-win.zip`.
+The earlier Windows roughly 3 FPS defect is repaired. Launch-setting environment
+queries were on the ROM bus path; they now run once per content load. The
+console code itself is unchanged. Fresh Linux and Windows checks qualify the
+performance repair and console open/close lifecycle; see
+[the performance report](windows-console-performance.md) for exact identities,
+regressions, bundle paths and remaining limits.
 
-The experimental build opens the console, but its guest stage runs at about
-3 FPS. See [the performance report](windows-console-performance.md).
+Use the new `product-r14-console-fixed-*20261102.zip` bundles recorded there.
+The older `product-r14-cheat-console-experimental-win.zip` remains a preserved
+slow historical build. These packages do not include the separate overworld
+music ROM fix. Full command and desktop/audio acceptance remain distinct from
+the headless regression results.

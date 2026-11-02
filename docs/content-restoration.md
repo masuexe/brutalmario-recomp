@@ -1613,3 +1613,18 @@ Reference and native captures show submap 1 -> `0x23` and submap 2 -> `0x22`,
 while submaps 3 and 5 keep their values. `tools/qualify_demo11_overworld_music.py`
 replays the checks. This proves the song selection only; it is not an audible
 match and does not change any song payload.
+
+
+## Native console performance repair (2026-11-02)
+
+The [console repair](windows-console-performance.md) removes repeated launch
+setting queries from the ROM bus path. The isolated r14 Windows candidate drops
+from 471.193 ms to 3.320 ms per guest frame in a 60-frame probe; Linux drops
+from 25.664 ms to 3.112 ms. Each platform retains 12 exact before/after dump files.
+A 3,122-frame Linux room190 diagnostic retains 36 exact files; the repaired
+Windows run matches the Linux binary dumps and text after CRLF normalization.
+The map/pipe fixture is assisted and does not qualify an earned clear. The
+three existing hooks retain their access boundaries and writes; settings now
+refresh at content load. All 439 tests pass. Fresh console bundles preserve all
+older artifacts and user saves. These r14 packages omit the separate map-music
+ROM fix; desktop/audio/full-command and whole-game acceptance remain open.

@@ -21,12 +21,27 @@ __attribute__((weak)) uint8_t g_ram[0x20000];
 static int s_music_room = -1;
 static int s_yoshi_start_done;
 static int s_seven_return_done;
+static int s_seven_return_enabled = 1;
+static int s_yoshi_start_enabled = 1;
+static int s_mazo_node_enabled;
+
+/* These are launch settings. Resolve them once per content load: this file's
+ * resolver runs on ROM bus accesses, where Windows CRT environment lookups
+ * can cost far more than the emulated instruction itself. */
+static void bm_load_launch_settings(void) {
+  const char *flag = getenv("BM_SEVEN_RETURN");
+  const char *yoshi = getenv("BM_YOSHI_START");
+  const char *node = getenv("BM_MAZO_190_NODE");
+  s_seven_return_enabled = !(flag && flag[0] == '0' && flag[1] == 0);
+  s_yoshi_start_enabled = !(yoshi && yoshi[0] == '0' && yoshi[1] == 0);
+  s_mazo_node_enabled = node && node[0] == '1' && node[1] == 0;
+}
+
 static void bm_seven_return_override(void) {
   int room = g_ram[0x10b] | (g_ram[0x10c] << 8);
   if (room != 0x174) { s_seven_return_done = 0; return; }
   if (g_ram[0x100] != 0x14) return;
-  const char *flag = getenv("BM_SEVEN_RETURN");
-  if (flag && flag[0] == '0' && flag[1] == 0) return;
+  if (!s_seven_return_enabled) return;
   if (s_seven_return_done) return;
   s_seven_return_done = 1;
   g_ram[0x100] = 0x0b;
@@ -42,8 +57,7 @@ static void bm_seven_return_override(void) {
   g_ram[0x1f22] = 0;
 }
 static void bm_yoshi_start_override(void) {
-  const char *yoshi = getenv("BM_YOSHI_START");
-  if (s_yoshi_start_done || (yoshi && yoshi[0] == '0' && yoshi[1] == 0)) return;
+  if (s_yoshi_start_done || !s_yoshi_start_enabled) return;
   if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
   if ((g_ram[0x1f17] | (g_ram[0x1f18] << 8)) != 72) return;
   if ((g_ram[0x1f19] | (g_ram[0x1f1a] << 8)) != 408) return;
@@ -59,8 +73,7 @@ static void bm_mazo_map_node_override(void) {
    * node and its completion/save index. The legacy B4 table edit must not run. */
   return;
 #else
-  const char *node = getenv("BM_MAZO_190_NODE");
-  if (!(node && node[0] == '1' && node[1] == 0)) return;
+  if (!s_mazo_node_enabled) return;
   if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
   g_ram[0xd1f0] = 0xb4;
 #endif
@@ -117,6 +130,7 @@ void bm_content_load(uint8_t *rom, size_t size) {
   if (owner) bm_content_clear(owner);
   if (size != BM_SEVEN_ROM_SIZE || !matches(rom, size, bm_seven_rom_sha))
     fail("ROM identity differs");
+  bm_load_launch_settings();
   const char *event30 = getenv("BM_MAZO_EVENT30");
   if (!(event30 && event30[0] == '0' && event30[1] == 0)) rom[0x2d638] = 0x30;
   backing = calloc(size+1, 1);

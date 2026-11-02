@@ -1,4 +1,85 @@
-# Windows cheat console performance regression
+# Windows cheat console performance repair
+
+## Current finding (2026-11-02)
+
+The roughly 3 FPS regression is resolved in isolated Linux and Windows
+candidates. The cause was repeated CRT `getenv` calls in
+`recomp/native_seven.c`, on the ROM bus resolution path. The Yoshi-start and
+Mazo-node helpers queried launch settings on every access; the Seven-return
+helper did so in its selected room. These calls were especially expensive on
+Windows. The console overlay was not the cause.
+
+The repair reads the three settings once during `bm_content_load`, then keeps
+the existing hook conditions, write ordering and values. Settings refresh on a
+subsequent content load. Changing the process environment while content is
+already loaded no longer changes these settings; these are launcher options,
+not runtime cheat commands. Defaults and exact-string option semantics remain.
+The hooks still execute at their original ROM access boundaries.
+
+This finding supersedes the earlier attribution to the build host. Matching
+selected generated objects did not exclude the project content resolver.
+
+## Fresh measurements
+
+All runs use isolated saves and headless SDL. These are mean **guest-stage
+milliseconds per simulated frame**, not displayed FPS. Turbo is enabled.
+
+| Probe | Before | Repaired |
+| --- | ---: | ---: |
+| Windows, first 60 frames | 471.193 | 3.320 |
+| Linux, first 60 frames | 25.664 | 3.112 |
+| Windows, console `help;close`, first 60 frames | — | 3.508 |
+| Linux, console `help;close`, first 60 frames | 25.432 | 3.011 |
+| Linux, 3,122-frame room190 fixture | 25.144 | 3.115 |
+| Windows, same room190 fixture | — | 3.652 |
+
+The Windows and Linux 60-frame before/after checks each retain 12 byte-identical
+files: complete WRAM/SRAM/VRAM/CGRAM/OAM, framebuffers and register/trace dumps.
+The Linux gameplay regression retains 36 byte-identical files at three samples.
+The repaired Windows gameplay run matches all binary dumps and the text dumps
+after explicit CRLF/LF normalization against repaired Linux. Room 190 is in
+mode 14 and requests slot 9E at all three samples. The map/pipe placement is an
+assisted diagnostic fixture; it does not prove ordinary traversal or a win.
+
+The Windows console actually logs OPEN and CLOSED and completes the script.
+The C regression checks all three hooks, exact option strings, refresh on load,
+and no environment queries across 10,000 resolver calls per case. All 439 tests
+pass; the two packaging tests also pass after the packaging tool update.
+
+## Identities and evidence
+
+- Target: `demo11-native-product-r14`.
+- ROM: `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b`.
+- Windows candidate: `4f9250135e28f49fe28f441df4bba7ca051619b804d8326d784620d0146598cc`.
+- Linux candidate: `bee36989fa7719890c41d8c2c4efe67531faf45a8cea515836d23fa95be28ae8`.
+- Evidence: `local/diagnostics/console-perf-20261102/`, with fresh capture
+  directories, input identities, scripts, profiles, qualification reports,
+  compile/relink commands and unit-test output. Existing builds were preserved;
+  each candidate reuses its platform's old link objects, replacing only the
+  content resolver object with the patched source.
+- Gameplay input: `recomp/inputs/native-console-runtime-smoke.script`.
+- Qualifier: `tools/qualify_console_performance.py BEFORE AFTER --output REPORT`.
+  Use `--normalize-text-newlines` only for explicit cross-platform comparisons.
+- Windows bundle: `local/release/product-r14-console-fixed-windows-qualified-20261102.zip`,
+  SHA-256 `c8466922d52938b1379c394712b650d6354948841a5c715cce1290d5db45868c`.
+- Linux bundle: `local/release/product-r14-console-fixed-linux-20261102.zip`,
+  SHA-256 `fa11dbd9cead16d06e0e9237f5e302ce2bb5e4042e47fd355487f297de9d0c1f`.
+
+Rebuilds use the ordinary project runtime source. To package an isolated Windows
+candidate without overwriting old artifacts:
+
+```
+python3 tools/package_windows_product.py --binary PATH_TO_EXE --out-dir FRESH_DIRECTORY
+```
+
+These bundles carry r14 and its console, not the separately qualified overworld
+music ROM fix. Normal desktop presentation, audible output, every console
+command and a whole-game playthrough are not qualified by these headless runs.
+The broader content restoration remains open.
+
+## Historical investigation (superseded where it conflicts above)
+
+### Earlier performance investigation
 
 ## Finding
 

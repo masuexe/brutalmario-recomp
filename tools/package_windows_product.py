@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Build the experimental Windows bundle with the built-in cheat console.
+"""Package the Windows product with the built-in cheat console.
 
-Do not use this bundle for normal play. The normal play package is
-local/release/product-r14-event30-v2.zip. The experimental guest stage runs at
-about 3 FPS; see docs/windows-console-performance.md.
+Use --binary to select an isolated, qualified build. Historical console
+binaries have a resolved performance defect; see docs/windows-console-performance.md.
 """
 import argparse
 import hashlib
@@ -307,13 +306,15 @@ def main():
                         help='Destination folder for the unpacked release bundle')
     parser.add_argument('--zip', action='store_true', default=True,
                         help='Create a zip archive of the release bundle')
+    parser.add_argument('--binary', type=Path,
+                        help='Use an isolated Windows build instead of the cached target binary')
     args = parser.parse_args()
 
     out_dir = args.out_dir.resolve()
     print(f'[*] Staging Windows release bundle at: {out_dir}')
 
     if out_dir.exists():
-        shutil.rmtree(out_dir)
+        raise SystemExit('destination already exists; choose a fresh --out-dir')
 
     bin_dir = out_dir / 'bin'
     data_dir = out_dir / 'data'
@@ -326,7 +327,7 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
 
     # 1. Copy Windows binary
-    win_bin = ROOT / 'local/build-windows' / TARGET / WIN_BINARY
+    win_bin = args.binary or ROOT / 'local/build-windows' / TARGET / WIN_BINARY
     if not win_bin.is_file():
         raise SystemExit(f'Windows binary missing at: {win_bin}')
     if b'PRACTICE CHEAT CONSOLE' not in win_bin.read_bytes():
