@@ -95,3 +95,12 @@ conditions: dry land returns to normal, while real water retains swimming.
 See [the swim report](native-console-swim.md) for interpreter checks, package
 identities and Windows delivery to `D:/tmp/product-r14-swim-fix-windows-v1`.
 These bundles include the prior teleport repair.
+
+## Coordinate teleport (2026-11-02)
+
+`xy X Y` (alias `tp X Y`) moves to world-pixel coordinates in the current room,
+using decimal or explicit `0x` hexadecimal values. It requires normal in-level
+play and rejects maps, loading, pipe/death/goal actions and locks. It resets
+movement speed and fractions while preserving the room and real water flags.
+See [coordinate command details](native-console-xy.md) for gates, tests and
+fresh bundles. The user accepted the previous swim fix before this addition.

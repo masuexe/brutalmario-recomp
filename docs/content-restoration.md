@@ -1664,3 +1664,15 @@ startup dump files remain exact on each platform. Earlier eight stale-host
 full-suite failures are still deferred. Fresh Windows folder and ZIP copies
 are hash-verified at the requested `D:/tmp` location. Teleport repair remains;
 map-music integration and broader restoration remain open.
+
+## In-level coordinate command (2026-11-02)
+
+The user accepted the swim repair and requested a coordinate teleport available
+only inside a course. [The xy command](native-console-xy.md) adds `xy X Y` and
+`tp X Y`, with strict decimal/hex parsing, gameplay/action gates, coherent player
+position writes and cleared momentum. Twelve targeted tests and both product
+verifications pass; startup states remain exact against the swim parent. An
+assisted coordinate-write fixture checks subsequent gravity, movement and camera
+behavior, separately from compiled-handler tests. Earlier stale-host suite
+failures remain deferred. These r14 packages retain teleport/swim fixes;
+map-music integration and broader restoration remain open.

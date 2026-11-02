@@ -1,0 +1,51 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -1307,7 +1307,7 @@
+   fprintf(stderr, "[cheat] %s\n", name);
+   if (strcmp(name, "help") == 0) {
+     snprintf(g_cheat_status, sizeof(g_cheat_status),
+-             "invincible | swim | lives N | music HEX | map M X Y | teleport ROOM | complete | close");
++             "invincible | swim | xy X Y | lives N | music HEX | map M X Y | teleport ROOM | complete | close");
+   } else if (strcmp(name, "invincible") == 0) {
+     g_cheat_invincible = !g_cheat_invincible;
+     snprintf(g_cheat_status, sizeof(g_cheat_status), "invincible %s",
+@@ -1316,6 +1316,30 @@
+     g_cheat_swim = !g_cheat_swim;
+     snprintf(g_cheat_status, sizeof(g_cheat_status), "swim %s",
+              g_cheat_swim ? "on" : "off");
++  } else if (strcmp(name, "xy") == 0 || strcmp(name, "tp") == 0) {
++    char *xs = strtok(NULL, " ");
++    char *ys = strtok(NULL, " ");
++    char *extra = strtok(NULL, " ");
++    char *xe = NULL, *ye = NULL;
++    long x = xs ? strtol(xs, &xe, xs[0] == '0' && (xs[1] == 'x' || xs[1] == 'X') ? 16 : 10) : -1;
++    long y = ys ? strtol(ys, &ye, ys[0] == '0' && (ys[1] == 'x' || ys[1] == 'X') ? 16 : 10) : -1;
++    if (!xs || !ys || extra || xe == xs || ye == ys || *xe || *ye ||
++        x < 0 || x > 65535 || y < 0 || y > 65535) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "usage: xy X Y (0..65535)");
++    } else if (g_ram[0x100] != 0x14 || g_ram[0x71] || g_ram[0x9d] ||
++               g_ram[0x13d4] || g_ram[0x1493]) {
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "xy needs active level gameplay");
++    } else {
++      /* Current and next world-pixel positions must agree before resuming. */
++      g_ram[0x94] = g_ram[0xd1] = (uint8_t)x;
++      g_ram[0x95] = g_ram[0xd2] = (uint8_t)(x >> 8);
++      g_ram[0x96] = g_ram[0xd3] = (uint8_t)y;
++      g_ram[0x97] = g_ram[0xd4] = (uint8_t)(y >> 8);
++      /* Arrive at the requested pixel without inherited momentum/fractions. */
++      g_ram[0x7a] = g_ram[0x7b] = g_ram[0x7c] = g_ram[0x7d] = 0;
++      g_ram[0x13da] = g_ram[0x13dc] = 0;
++      snprintf(g_cheat_status, sizeof(g_cheat_status), "xy %ld %ld", x, y);
++    }
+   } else if (strcmp(name, "lives") == 0) {
+     char *value = strtok(NULL, " ");
+     if (!value) {
+@@ -2249,7 +2273,7 @@
+   snprintf(line, sizeof(line), "%.30s", g_cheat_status);
+   snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 112, line, 0xFF8FE3FFu, 2);
+   snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 160,
+-                     "invincible  swim", 0xFFFFFFFFu, 2);
++                     "invincible swim xy X Y", 0xFFFFFFFFu, 2);
+   snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 188,
+                      "lives N  music HEX", 0xFFFFFFFFu, 2);
+   snes_ovl_draw_text(panel, kCheatPanelW, kCheatPanelH, 24, 216,

@@ -1,0 +1,44 @@
+# Assisted room entry and coordinate-write boundary fixture.
+turbo on
+wait 600
+press start 2
+wait 180
+press start 2
+wait 900
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0606
+poke 1f17 2801e8012801e801
+poke 1f1f 12001e0012001e00
+poke 100 0b
+wait 240
+poke d7e2 6a
+press y 2
+wait 240
+poke 94 80004001
+poke 19b8 0f
+poke 19d8 04
+poke 88 0000
+poke 71 06
+wait 180
+until 0100 == 14 900
+until 71 == 00 900
+wait 30
+dump before_xy
+# Coordinate-write fixture equivalent to xy 256 320, with no forced movement.
+# Script writes span boundaries; atomic handler writes are checked in C tests.
+poke 7a 00000000
+poke 13da 00
+poke 13dc 00
+poke 94 00014001
+poke d1 00014001
+dump xy_boundary
+wait 1
+dump after1
+press right 30
+dump moved
+wait 60
+dump later
+quit
