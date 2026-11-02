@@ -166,3 +166,58 @@ physics.
 The exit path is qualified separately by
 `recomp/inputs/bonus-room000-pickup2.script`, because the native product
 cannot play the bonus room program through the reference host.
+
+## Full end-to-end verification
+
+The route is now qualified from the real goal tape to the room exit, on the
+native product builds.
+
+Fixture: `recomp/inputs/bonus-room000-full-route.script`. It enters World
+1-1, seeds 99 bonus stars (labelled cheat), flies to the far end with
+labelled swim and invulnerability fixtures, disables those fixtures, and then
+touches the tape with normal physics.
+
+Measured samples for the patched target r16:
+
+| Sample | Mode | Room | `$0F48` | `$1425` | `$14AB` |
+| --- | --- | --- | --- | --- | --- |
+| tape contact | `14` | `105` | `63` | `00` | `00` |
+| star transfer | `14` | `105` | `08` | `FF` | `00` |
+| bonus room | `14` | `100` | `08` | `FF` | `00` |
+| timer set | `14` | `100` | `08` | `FF` | `39` |
+| room exit | `0E` | `100` | `08` | `00` | `00` |
+
+The same fixture on the unpatched target r14 stops at the bonus room:
+
+| Sample | Mode | Room | `$0F48` | `$1425` | `$14AB` |
+| --- | --- | --- | --- | --- | --- |
+| tape contact | `14` | `105` | `63` | `00` | `00` |
+| star transfer | `14` | `105` | `07` | `FF` | `00` |
+| bonus room | `14` | `100` | `07` | `FF` | `00` |
+| final sample | `14` | `100` | `07` | `FF` | `00` |
+
+The room does not change and the timer stays at zero. This is the reported
+symptom.
+
+### The sprite slot evidence
+
+The bonus room uses sprite 19 in slots 8 and 9. At the moment the bonus
+sprite reaches state 9 with no 1-up pending:
+
+- r16: slot 9 is removed, and `$14AB` becomes non-zero.
+- r14: slot 9 stays alive in state 9, and `$14AB` stays zero.
+
+The patch changes exactly that branch, so this is a direct confirmation of
+the cause.
+
+### Both 1-up cases are covered
+
+This route awards no 1-up, so `$1890` is zero when the scan runs. The
+fixture `recomp/inputs/bonus-room000-pickup2.script` covers the other case:
+it seeds three pending 1-ups, and the room exits only after the last one is
+cleared. Both cases show r16 leaving the room and r14 staying inside.
+
+### The bonus room here is room 100
+
+World 1-1 leads to bonus room `$100`, not `$000`. Both rooms use the same
+sprite 19 record, so the same patch covers both.
