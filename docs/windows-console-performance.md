@@ -64,3 +64,21 @@ stage stayed at 487 ms per frame. A test build linked the old SDL3 library. The
 guest stage stayed at 443 ms per frame.
 
 The guest slowdown does not come from PPU rendering or the SDL3 library.
+
+## Local rebuild exclusion
+
+A local Windows rebuild of the same target shows the same slow rate. This
+result excludes the console patch as the cause.
+
+| Binary | Guest stage mean |
+| --- | --- |
+| Shipped package executable | 3.6 ms per frame |
+| Local rebuild, optimized flags | 592 ms per frame |
+| Relinked fast build directory | 547 ms per frame |
+
+The local rebuild uses the same compiler, the same flags and the same generated
+guest code. The shipped executable stays fast. The slowdown therefore comes from
+the build host, not from the cheat console patch.
+
+The 60-frame script reports the same guest state in every case. The difference
+is the time to reach it.
