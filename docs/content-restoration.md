@@ -1640,3 +1640,14 @@ The first shared launchers complete fresh 60-frame checks on both platforms.
 Initial CMake configuration and clean toolchain setup remain existing workflows;
 Python 3 is required by the generated launchers. These r14 packages still omit
 the separate map-music ROM repair. Broader restoration remains open.
+
+## Console teleport table repair (2026-11-02)
+
+The user found low-room teleport 00F could enter 10F. The
+[transfer repair](native-console-teleport.md) separates the $19B8 low byte from
+the $19D8 high flag and preserves neighboring exit records. Compiled queue tests
+cover repeated low/high transfers and fresh Linux/Windows runs confirm 00F/10F
+entry into gameplay. Shared product verification passes at 3.085/3.488 ms per
+guest frame; new isolated bundles preserve prior artifacts and saves. This is
+an assisted transfer-boundary qualification, not a course clear. The broader
+restoration and separate map-music integration remain open.

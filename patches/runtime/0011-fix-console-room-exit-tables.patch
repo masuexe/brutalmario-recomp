@@ -1,0 +1,13 @@
+--- a/runner/src/desktop/host_main.c
++++ b/runner/src/desktop/host_main.c
+@@ -1289,7 +1289,9 @@
+   CheatQueuePress(0x0002, 2);
+   CheatQueueWait(240);
+   CheatQueuePoke(0x94, player, 4);
+-  CheatQueuePoke(0x19b8, room_bytes, 2);
++  /* Room bytes belong to two separate exit tables, 0x20 bytes apart. */
++  CheatQueuePoke(0x19b8, room_bytes, 1);
++  CheatQueuePoke(0x19d8, room_bytes + 1, 1);
+   CheatQueuePoke(0x88, zero, 2);
+   CheatQueuePoke(0x71, action, 1);
+   CheatQueueWait(180);

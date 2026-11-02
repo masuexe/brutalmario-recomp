@@ -31,15 +31,18 @@ def patch_plan():
 
 def prepare_runtime():
     items = patch_plan()
-    final = {}
+    stages = {}
     for item in items:
-        final[item['source']] = item['result_sha256']
+        stages.setdefault(item['source'], []).append(item['result_sha256'])
     outputs = []
     for item in items:
         target = ROOT / 'local/runtime' / item['source']
         if target.exists():
             actual = sha(target.read_bytes())
-            if actual == final.get(item['source']):
+            # A prior run may have stopped at a verified intermediate stage,
+            # or a new patch may extend an already materialized chain.
+            remaining = stages[item['source']]
+            if actual in remaining[remaining.index(item['result_sha256']):]:
                 outputs.append(target)
                 continue
             if actual != item['source_sha256']:

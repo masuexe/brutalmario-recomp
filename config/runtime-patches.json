@@ -75,6 +75,15 @@
       "patch_sha256": "3e8b1308083c4dbeb63ff6bf1d62b323d9ddaad52c607feeac919166754a4020",
       "result_sha256": "b3f626005c52c45b6b425a13bec94d480a08207a95e458e5f139e55ac724db68",
       "base_patch": "live-cheat-channel"
+    },
+    {
+      "id": "console-room-exit-tables",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0011-fix-console-room-exit-tables.patch",
+      "source_sha256": "b3f626005c52c45b6b425a13bec94d480a08207a95e458e5f139e55ac724db68",
+      "patch_sha256": "1a4eaa9aa1e5232c36df5cc88499e073ca3c91cee9f9700523dce91174b78d6f",
+      "result_sha256": "44fbeac4e7e99d1f65643eee941b560b207bb724e2e0686bd01cf634cfbec540",
+      "base_patch": "builtin-cheat-console"
     }
   ]
 }

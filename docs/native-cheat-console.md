@@ -76,3 +76,13 @@ accepted this checkpoint. This supersedes the pending console playtest status
 for those delivered binaries. It does not assert separate acceptance of every
 command, audible output, or a complete game playthrough. The new
 [product tool](product-tool.md) reuses these binaries as its first verified inputs.
+
+## Teleport correction (2026-11-02)
+
+A later user test found `teleport 0x00f` could enter 10F. The console incorrectly
+wrote the room high flag to the adjacent low-byte exit record instead of the
+separate high-byte table. Both platforms now use the corrected queue writes.
+Use the `product-r14-teleport-fix-*-v1.zip` bundles listed in
+[the transfer report](native-console-teleport.md); the earlier console packages
+remain historical artifacts with this defect. Linux and Windows fresh captures
+confirm 00F and 10F remain distinct, with no startup performance regression.
