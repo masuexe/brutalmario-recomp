@@ -68,3 +68,11 @@ The older `product-r14-cheat-console-experimental-win.zip` remains a preserved
 slow historical build. These packages do not include the separate overworld
 music ROM fix. Full command and desktop/audio acceptance remain distinct from
 the headless regression results.
+
+## User acceptance (2026-11-02)
+
+The user reported no issues after testing the repaired console packages and
+accepted this checkpoint. This supersedes the pending console playtest status
+for those delivered binaries. It does not assert separate acceptance of every
+command, audible output, or a complete game playthrough. The new
+[product tool](product-tool.md) reuses these binaries as its first verified inputs.

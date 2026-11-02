@@ -1,0 +1,9 @@
+{
+  "target": "demo11-native-product-r14",
+  "features": {"console": true},
+  "verification": {"frames": 60, "max_guest_mean_ms": 16.667},
+  "platforms": {
+    "linux": {"binary": "BrutalMarioDemo11NativeProductR14SNESRecomp", "output_method": "SDL-Software"},
+    "windows": {"binary": "BrutalMarioDemo11NativeProductR14SNESRecomp.exe", "output_method": "Direct3D11"}
+  }
+}

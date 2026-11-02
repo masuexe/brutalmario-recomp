@@ -1628,3 +1628,15 @@ three existing hooks retain their access boundaries and writes; settings now
 refresh at content load. All 439 tests pass. Fresh console bundles preserve all
 older artifacts and user saves. These r14 packages omit the separate map-music
 ROM fix; desktop/audio/full-command and whole-game acceptance remain open.
+
+## Unified product tool and console acceptance (2026-11-02)
+
+The user accepted the delivered r14 console repair after playtesting.
+[The product tool](product-tool.md) now unifies configured CMake builds,
+headless console/performance verification and Linux/Windows packaging. Releases
+require a verification receipt bound to the executable, ROM, product config
+and all pack hashes; existing archives and output directories are preserved.
+The first shared launchers complete fresh 60-frame checks on both platforms.
+Initial CMake configuration and clean toolchain setup remain existing workflows;
+Python 3 is required by the generated launchers. These r14 packages still omit
+the separate map-music ROM repair. Broader restoration remains open.
