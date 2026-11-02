@@ -128,7 +128,7 @@ def fast_room_teleport(room):
 
 
 def build_script(*, map_pos=None, room=None, air_swim=False, invincible=False,
-                 complete_all=False, lives=None, fast=False, existing_save=False):
+                 complete_all=False, lives=None, stars=None, fast=False, existing_save=False):
     if fast and room is not None:
         startup = FAST_STARTUP_SAVED if existing_save else FAST_STARTUP
     else:
@@ -144,12 +144,17 @@ def build_script(*, map_pos=None, room=None, air_swim=False, invincible=False,
         lines.append(map_teleport(*map_pos))
     if room is not None:
         lines.append(fast_room_teleport(room) if (fast and room is not None) else room_teleport(room))
+    if stars is not None:
+        # One-shot write. A force write would pin the counter and the stock
+        # 100-star test could never fire.
+        lines.append('\n# Practice only: seed the bonus star counter once.\n'
+                     'poke 0f48 %02x\n' % (stars & 0xFF))
     if air_swim:
         lines.append('\n# Practice only: treat every level as water.\nforcepoke 85 01\n')
     if invincible:
         lines.append('\n# Practice only: hold the star invincibility timer.\nforcepoke 1490 40\n')
     if not (map_pos or room is not None or air_swim or invincible or complete_all
-            or lives is not None):
+            or lives is not None or stars is not None):
         lines.append('\n# No cheat selected. The game starts at the title screen.\n')
     lines.append('turbo off\n')
     return ''.join(lines)
@@ -206,6 +211,7 @@ CONSOLE_HELP = '''Commands:
   invincible        toggle star invincibility
   swim              toggle air swim (every level is water)
   lives N           set the life counter
+  stars N           seed the bonus star counter once (use 99, not 100)
   music SLOT        request a music slot, for example music A5 (music off clears)
   teleport ROOM     enter a room, for example teleport 0x151
   help              show this help
@@ -239,6 +245,15 @@ def console_command(state, parts, write_force, queue):
         state['lives'] = value & 0xFF
         write_force()
         return 'lives ' + str(state['lives'])
+    if name == 'stars':
+        if len(parts) != 2:
+            return 'usage: stars N (for example stars 99)'
+        try:
+            value = int(parts[1], 0)
+        except ValueError:
+            return 'stars needs a number, for example stars 99'
+        queue(['poke 0f48 %02x' % (value & 0xFF)])
+        return 'stars seeded once to ' + str(value & 0xFF)
     if name == 'music':
         if len(parts) != 2:
             return 'usage: music SLOT (for example music A5) or music off'
@@ -337,6 +352,8 @@ def main():
                         help='open every saved level slot, event and switch')
     parser.add_argument('--lives', type=coordinate, metavar='N',
                         help='set the life counter')
+    parser.add_argument('--stars', type=coordinate, metavar='N',
+                        help='seed the bonus star counter once; use 99, not 100')
     parser.add_argument('--menu', action='store_true',
                         help='ask for the destination and the toggles interactively')
     parser.add_argument('--fast', action='store_true',
@@ -370,6 +387,9 @@ def main():
     lives = None
     if args.lives is not None:
         lives = args.lives & 0xFF
+    stars = None
+    if args.stars is not None:
+        stars = args.stars & 0xFF
     fast = room is not None and not args.legacy_entry
     if args.fast:
         fast = True
@@ -378,7 +398,8 @@ def main():
     script_text = build_script(map_pos=map_pos, room=room,
                                air_swim=args.air_swim,
                                invincible=args.invincible,
-                               complete_all=args.complete_all, lives=lives, fast=fast,
+                               complete_all=args.complete_all, lives=lives, stars=stars,
+                               fast=fast,
                                existing_save=save_exists)
     if args.emit:
         args.emit.write_text(script_text)

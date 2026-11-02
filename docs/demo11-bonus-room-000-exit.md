@@ -267,3 +267,53 @@ The check asserts four conditions:
 4. The unpatched run keeps `$14AB` at zero and stays in the level mode.
 
 A control run with the same directory on both sides fails on condition 4.
+
+## Playtest
+
+Start the game normally:
+
+```
+python3 tools/play_native_target.py --target demo11-native-product-r16
+```
+
+The launcher checks the ROM and binary identities first, mounts the content
+packs, and opens a normal window.
+
+To reach the bonus room, start the practice console and seed the star
+counter:
+
+```
+python3 tools/play_native_cheats.py --target demo11-native-product-r16 --console
+```
+
+Then type this in the console, play World 1-1 to the goal tape, and touch the
+tape:
+
+```
+stars 99
+```
+
+The tape award supplies the remaining stars, so the counter passes 100 and
+the bonus game starts.
+
+Use 99, not 100. A value of 100 is consumed by the stock handler at once, and
+the flag clears again before the bonus game can start.
+
+To jump straight into a room:
+
+```
+python3 tools/play_native_cheats.py --target demo11-native-product-r16 --room 0x100 --stars 99
+```
+
+A direct room jump does not set the bonus-game flag, so the bonus sprite
+stays idle. Use the goal tape for a real bonus game.
+
+### What to look for
+
+The bonus room must end on its own after the last 1-up is gone:
+
+1. The 1-ups appear and the player collects them.
+2. The screen fades and the game returns to the map.
+3. The game does not stay in the bonus room.
+
+On the unpatched build the game stays in the bonus room with no way to leave.
