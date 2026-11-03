@@ -74,7 +74,7 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
 | ROM SHA-256 | `05e28398c9c516f77ca0fea61f184bb1978cb3ff85931f757e9342c43bc3aeec` |
-| Native binary SHA-256 | `81d551dbd600b2e5864259175fb6470ec303dd5e8b7f7426088613e62f71251f` |
+| Native binary SHA-256 | `d2f5db75042f892ad56274ad776a51fe9657adbd5ff97ad8a52afa76833e6667` |
 | Changed bytes | 10,800 |
 | Selection bytes | 202 |
 | Installed songs | 4 |
@@ -92,6 +92,11 @@ legacy songs at free Demo 1-1 slots:
 Each song uses the reviewed `adapt_music` walk. The walk relocates every
 sequence and pattern pointer to ARAM `$5400`. The tool rejects a song with a
 command outside the reviewed subset.
+
+The target inherits the `native_sprite_gap` content of its base, because
+the base ROM runs those native modules. The prepare step copies the base
+pack files into the target directory and verifies every hash. The play
+launcher then mounts them.
 
 The song numbers and the intended slots are in
 `config/music-level-targets.json`. The file records the user report and the
@@ -165,6 +170,15 @@ These samples prove the selection bytes and one installed song. They are not an 
 ```sh
 python3 tools/prepare_music_retarget.py all
 python3 tools/qualify_demo11_music_retarget.py
+python3 tools/m1.py scaffold --target demo11-music-retarget
+python3 tools/m1.py generate --target demo11-music-retarget
+python3 tools/m1.py build --target demo11-music-retarget
+```
+
+## Play the courses
+
+```sh
+python3 tools/play_native_target.py --target demo11-music-retarget
 ```
 
 ## Next steps

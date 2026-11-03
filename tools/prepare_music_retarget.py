@@ -260,6 +260,10 @@ def recipe(base, result):
     }
 
 
+def base_recipe():
+    return json.loads((ROOT / 'config/restorations' / (BASE + '.json')).read_text())
+
+
 def build(base, donor, config):
     out = bytearray(base)
     for track in config['music_tracks']:
@@ -275,6 +279,11 @@ def generate():
     verify(donor, DONOR_OUTPUT, DONOR)
     result = plan(base, donor)
     config = recipe(base, result)
+    inherited = base_recipe().get('native_sprite_gap')
+    if inherited:
+        # The base ROM runs the base native content, so this target mounts the
+        # same packs.  The pack files are data, not ROM-derived.
+        config['native_sprite_gap'] = inherited
     rom = build(base, donor, config)
     config['output'] = {'size': len(rom), 'sha256': sha(rom)}
     RECIPE.write_text(json.dumps(config, indent=1) + '\n')
@@ -304,6 +313,13 @@ def prepare(target=TARGET):
     directory = ROOT / 'local/restoration' / target
     directory.mkdir(parents=True, exist_ok=True)
     write_verified(directory / 'rom.sfc', rom)
+    if config.get('native_sprite_gap'):
+        import native_sprite_gap
+        source = ROOT / 'local/restoration' / BASE
+        for pack in native_sprite_gap.packs(target):
+            data = (source / pack['pack_file']).read_bytes()
+            verify(data, pack, pack['variable'])
+            write_verified(directory / pack['pack_file'], data)
     manifest = dict(config, recipe_sha256=sha(Path(__file__).read_bytes()),
                     input_sha256={'base': sha(base), 'donor': sha(donor)})
     (directory / 'input-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
