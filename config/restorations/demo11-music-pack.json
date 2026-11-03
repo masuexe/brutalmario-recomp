@@ -1534,7 +1534,7 @@
  ],
  "output": {
   "size": 4194304,
-  "sha256": "6f9fa7434dbf1029b32061e8f0509e92dd00d99e306625c7da1191f193de9b2e"
+  "sha256": "f552b384b149a9d2b43c48d596e6a468dbd6182aaaac9ead2698a81dcf8bdf76"
  },
  "native_sprite_gap": {
   "manifests": [
@@ -1971,13 +1971,13 @@
   "id": "demo11-music-pack",
   "pack_file": "music-pack.bin",
   "pack_size": 26516,
-  "pack_sha256": "5c1894140b0249dd3c9d2e2484a6f654b310679275fcad96b4cbbe4e540d8a03",
+  "pack_sha256": "586036ea0d89e7840a661ac18e6ebbfec8a474e443e8ddf5f8fc285aa7f85cd1",
   "regions": [
    {
-    "slot": "02",
+    "slot": "4F",
     "offset": 2293760,
     "size": 6144,
-    "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+    "block_sha256": "2c8fe09da90afe653b410e685fec2bcc638497edcd6bdb671b5b474649647bce"
    },
    {
     "slot": "03",
@@ -2011,5 +2011,26 @@
    }
   ],
   "manifest": "config/native-content/music-region.json"
- }
+ },
+ "music_tracks_extra": [
+  {
+   "id": "4F",
+   "raw": true,
+   "source_address": "3FE008",
+   "sequence_offset": 24,
+   "pointer_address": "07E0ED",
+   "before": "000000",
+   "allocation": {
+    "offset": 2476346,
+    "size": 6144
+   },
+   "adapted": {
+    "size": 6136,
+    "sha256": "4da5153a5286086dad0db32c130b57ba168cee2be6921736a1d5b02a5b5634a1"
+   },
+   "block_sha256": "2c8fe09da90afe653b410e685fec2bcc638497edcd6bdb671b5b474649647bce",
+   "pointer": "4BC942",
+   "role": "X vs. Zero (Mega Man X5) for room 0A2"
+  }
+ ]
 }

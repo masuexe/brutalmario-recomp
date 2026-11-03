@@ -54,7 +54,7 @@ requests:
 
 | Slot | Image offset | Bytes |
 | --- | --- | --- |
-| `02` | `230000` | 6,144 |
+| `4F` | `230000` | 6,144 |
 | `03` | `25C940` | 6,144 |
 | `05` | `260000` | 6,144 |
 | `06` | `269E58` | 6,144 |
@@ -64,8 +64,8 @@ requests:
 | Identity | Value |
 | --- | --- |
 | Base ROM SHA-256 | `82741528f9d8c335901157184a6398eb1f05d4ec7395f7ec3c6c72249168e9fa` |
-| ROM SHA-256 | `6f9fa7434dbf1029b32061e8f0509e92dd00d99e306625c7da1191f193de9b2e` |
-| Pack | 26,516 bytes, `5c1894140b0249dd3c9d2e2484a6f654b310679275fcad96b4cbbe4e540d8a03` |
+| ROM SHA-256 | `f552b384b149a9d2b43c48d596e6a468dbd6182aaaac9ead2698a81dcf8bdf76` |
+| Pack | 26,516 bytes, `586036ea0d89e7840a661ac18e6ebbfec8a474e443e8ddf5f8fc285aa7f85cd1` |
 | Native binary | `3c9491762fcb9397f156d03f796daaeac2a45857394305f3d7532955f70be9a2` |
 
 A capture mounts both providers:
@@ -74,6 +74,19 @@ A capture mounts both providers:
 [native-seven] mounted immutable A2/A5/A6/B6 views
 [native-region] mounted demo11-music-pack regions=6 bytes=26516
 ```
+
+## Song 4F for room 0A2
+
+Room `0A2` requests song `0x4F`, and slot `4F` was null, so the room
+stalled in mode `0x12` with a black screen. The song needs a 6,144-byte
+block, and the image held no such range.
+
+The music pilot freed one. Slot `02` is not requested by any level music
+object, so its block moved into the pack and its image range became zero.
+Song `4F` now fills that range as a region, and slot `4F` points at it.
+
+A capture enters room `0A2` and reads gameplay mode `0x14` with
+`$0DDA` `0x4F`. The black screen is gone.
 
 ## Pilot result
 
