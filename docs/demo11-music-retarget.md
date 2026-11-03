@@ -1,0 +1,178 @@
+# Demo 1-1 level music retarget
+
+Date: 2026-11-03. Status: candidate checkpoint. The user listening check is
+open.
+
+## Report
+
+The user played the current build and listed one wrong music entry for each
+course. The list is at `local/wrongmusiclist.md`. It gives the level number,
+the song the build plays, and the song that the course must play. Some rows
+give only the song title because no Demo 1-1 slot holds that song.
+
+The list has two defect classes:
+
+1. The course requests a legacy-family song number. That number selects a
+   different song in the Demo 1-1 song table, so the course plays the wrong
+   track. Most rows are in this class.
+2. The intended song has no Demo 1-1 slot. The course can not play it at all
+   until the song data arrives.
+
+## Root cause
+
+The Demo 1-1 level data came from the legacy demo family. Each level holds a
+music object with the legacy song number. The music object is three bytes:
+
+| Byte | Meaning |
+| --- | --- |
+| 0 | `0x40` plus the screen number |
+| 1 | `0x60` plus the vertical position |
+| 2 | Song number plus one |
+
+The object number is `((b0 >> 5) & 3) * 16 + (b1 >> 4)`, so a music object
+has object number `0x26`. The level loader decrements byte 2 and writes the
+result to `$0DDA`.
+
+A legacy number selects a different Demo 1-1 slot because the two song tables
+are version-local. `docs/music-mapping.md` gives the cross-version map.
+
+## Donor selection
+
+The user asked to port the missing songs from the newest version that holds
+them. A scan of every pinned official ROM finds the legacy four-song upload
+groups only in `cheap-demo`. The groups sit at these addresses:
+
+| Bank group | Addresses |
+| --- | --- |
+| `$29`-$`2B` | `298008` to `2BA008` |
+| `$3E`-$`3F` | `3EB008` to `3FE008` |
+| `$44` | `448008` to `44E008` |
+
+`7hero`, `mazo`, `ow`, `demo7`, `demo8`, `boss`, `demo-only-1` and
+`demo-1-1` hold no such group. A content search for the same payload bytes
+finds them only in `cheap-demo`. Therefore `cheap-demo` is the donor for
+every legacy-exclusive song.
+
+The song number gives the group and the slot:
+
+```
+group = (song - 0x20) >> 2
+slot  = (song - 0x20) & 3
+```
+
+The group address follows this order: `298008`, `29A008`, `29C008`,
+`29E008`, `2A8008`, `2AA008`, `2AC008`, `2AE008`, then `3F8008`,
+`3FA008`, `3FC008`, `3FE008`, then `448008`, `44A008`, `44C008`,
+`44E008`.
+
+## Recipe
+
+The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
+
+| Item | Value |
+| --- | --- |
+| Target | `demo11-music-retarget` |
+| Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
+| ROM SHA-256 | `05e28398c9c516f77ca0fea61f184bb1978cb3ff85931f757e9342c43bc3aeec` |
+| Native binary SHA-256 | `81d551dbd600b2e5864259175fb6470ec303dd5e8b7f7426088613e62f71251f` |
+| Changed bytes | 10,800 |
+| Selection bytes | 202 |
+| Installed songs | 4 |
+
+The recipe changes one byte per reviewed music object. It also installs four
+legacy songs at free Demo 1-1 slots:
+
+| Legacy song | Demo 1-1 slot | Payload | Rooms |
+| --- | --- | --- | --- |
+| `31` Go Red Team (Treasure Hunter G) | `35` | 3,110 | `013`, `014`, `06D`, `112`, `121` |
+| `37` unnamed | `37` | 3,848 | `0AA`, `0AB` |
+| `49` Sky Sands (Kirby Air Ride) | `3A` | 2,806 | `047`, `111`, `13A` |
+| `51` Dr. Wily Stage 2 (Mega Man 3) | `3D` | 1,397 | `061`, `115`, `156` |
+
+Each song uses the reviewed `adapt_music` walk. The walk relocates every
+sequence and pattern pointer to ARAM `$5400`. The tool rejects a song with a
+command outside the reviewed subset.
+
+The song numbers and the intended slots are in
+`config/music-level-targets.json`. The file records the user report and the
+decision for each level.
+
+## Skipped entries
+
+The tool reports every entry that it does not change. Reasons:
+
+| Reason | Rooms |
+| --- | --- |
+| No music object; the room inherits the parent song | `020`, `02E`, `033`, `034`, `036`, `03C`, `062`, `06C`, `081` |
+| Ambiguous music object | `02F`, `032`, `035`, `05D`, `05E`, `0D3`, `102`, `107`, `122`, `173` |
+| No Demo 1-1 slot for the intended song | `0A2` |
+| Already correct | `018`, `01B`, `066`, `068`, `069`, `070`, `074`, `0A9`, `0AA`, `0AB`, `0BD`, `0F5`, `10B`, `116` |
+
+A room without a music object plays the song of the room that leads to it.
+These rooms become correct when the parent room is correct. The room list does
+not record the parent, so this claim stays open for the playtest.
+
+Room `0A2` needs legacy song `4F` (X vs. Zero, Mega Man X5). That song uses
+a command outside the reviewed subset, so the tool can not install it. The
+slot `4F` is null.
+
+Room `107` requests slot `0x47` from outside its own music object. A reference capture confirms that request. The report expects slot `0x6B`. The music object in the room does not control the entry song, so this entry stays open.
+
+## Legacy songs that stay on the raw path
+
+Music batch G installed songs `3F`, `43` and `53` as raw group slices.
+A raw slice keeps the donor base `$6800`. The Demo 1-1 driver expects a
+relocated payload at `$5400`. The audible result of a raw slice is not
+qualified. The courses that request `3F`, `43` and `53` keep that path
+because the reviewed walk rejects those songs:
+
+| Song | Reviewed walk result |
+| --- | --- |
+| `3F` | no reviewed song size fits |
+| `43` | unsupported command `DC` |
+| `53` | unsupported command `E8` |
+
+## Verification
+
+`tools/qualify_demo11_music_retarget.py` checks:
+
+- the base, donor and candidate identities;
+- every selection site: the site holds a music object, the byte changes, and
+  the result byte is the intended song number plus one;
+- every installed song: the slot was null, the RATS block and checksum match,
+  and the payload hash matches the reviewed walk;
+- every reviewed target slot holds a song in the candidate;
+- the ROM delta stays inside the reviewed sites and the installed blocks.
+
+The qualifier passes with 202 selection bytes and 4 installed songs.
+
+This evidence proves song selection only. It is not an audible match. The user
+must listen to the courses before this checkpoint is accepted.
+
+Reference-host captures enter four translevels with the map-node override and read `$0DDA`:
+
+| Translevel | Room | Before | After | Target |
+| --- | --- | --- | --- | --- |
+| `012` | `012` | `24` | `51` | `51` |
+| `013` | `013` | `31` | `35` | `35` |
+| `018` | `018` | `53` | `53` | `53` |
+| `046` | `122` | `03` | `03` | `03` |
+
+These samples prove the selection bytes and one installed song. They are not an audible match. The user must listen to the courses before this checkpoint is accepted.
+
+## Reproduce
+
+```sh
+python3 tools/prepare_music_retarget.py all
+python3 tools/qualify_demo11_music_retarget.py
+```
+
+## Next steps
+
+1. Build the native target and play the courses. Listen for each row of the
+   user list.
+2. Extend the reviewed command subset for songs `3F`, `43`, `49`, `4F`
+   and `53`, or capture the donor ARAM image at `$6800` and rebase it to
+   `$5400`.
+3. Find the parent room of each inherited-music room and confirm the fix.
+4. Resolve the two ambiguous rooms.

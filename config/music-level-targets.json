@@ -1,0 +1,1423 @@
+{
+ "schema": 1,
+ "source": "User-supplied level music corrections (local/wrongmusiclist.md), 2026-11-03.",
+ "note": "room is the internal level number. wrong is the id the level data currently requests. target is the intended Demo 1-1 slot. A null target means no slot exists on this line.",
+ "entries": [
+  {
+   "room": "00B",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "00F",
+   "wrong": "25",
+   "target": "33",
+   "note": ""
+  },
+  {
+   "room": "012",
+   "wrong": "24",
+   "target": "51",
+   "note": ""
+  },
+  {
+   "room": "013",
+   "wrong": "31",
+   "target": "35",
+   "note": "(Go Red Team! Go White Team! Rah Rah Rah! from Treasure Hunter G.)"
+  },
+  {
+   "room": "014",
+   "wrong": "31",
+   "target": "35",
+   "note": "(Go Red Team! Go White Team! Rah Rah Rah! from Treasure Hunter G.)"
+  },
+  {
+   "room": "015",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "016",
+   "wrong": "20",
+   "target": "48",
+   "note": ""
+  },
+  {
+   "room": "017",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "018",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "019",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "01A",
+   "wrong": "36",
+   "target": "61",
+   "note": ""
+  },
+  {
+   "room": "01B",
+   "wrong": "3F",
+   "target": "3F",
+   "note": "(\"On With The Vanguard! (Pt2)\" from Romancing SaGa 3)"
+  },
+  {
+   "room": "01C",
+   "wrong": "40",
+   "target": "60",
+   "note": ""
+  },
+  {
+   "room": "020",
+   "wrong": "23",
+   "target": null,
+   "note": "no new-family slot; needs a donor port"
+  },
+  {
+   "room": "021",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "023",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "027",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "028",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "029",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "02D",
+   "wrong": "46",
+   "target": "AA",
+   "note": ""
+  },
+  {
+   "room": "02E",
+   "wrong": null,
+   "target": "02",
+   "note": ""
+  },
+  {
+   "room": "02F",
+   "wrong": null,
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "030",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "032",
+   "wrong": null,
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "033",
+   "wrong": null,
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "034",
+   "wrong": null,
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "035",
+   "wrong": null,
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "036",
+   "wrong": "1E",
+   "target": null,
+   "note": "no new-family slot; needs a donor port"
+  },
+  {
+   "room": "03B",
+   "wrong": "29",
+   "target": "B0",
+   "note": "(KRACKO\u8840\u6761\u7f3a\u5931)"
+  },
+  {
+   "room": "03C",
+   "wrong": "1E",
+   "target": "51",
+   "note": "(\u4e14\u5f00\u5934\u5377\u8f74\u7cbe\u7075\u9519\u8bef\uff0c\u53d8\u6210\u5403\u4e86\u6709\u5e3d\u5b50\u6548\u679c\uff1f)"
+  },
+  {
+   "room": "03D",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "03E",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "03F",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "041",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "042",
+   "wrong": "48",
+   "target": "40",
+   "note": ""
+  },
+  {
+   "room": "044",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "045",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "046",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "047",
+   "wrong": "49",
+   "target": "3A",
+   "note": "(Sky Sands from Kirby Air Ride)"
+  },
+  {
+   "room": "04B",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "04C",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "04D",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "050",
+   "wrong": "48",
+   "target": "40",
+   "note": ""
+  },
+  {
+   "room": "053",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "054",
+   "wrong": "4A",
+   "target": "38",
+   "note": ""
+  },
+  {
+   "room": "057",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "058",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "059",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "05A",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "05C",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "05D",
+   "wrong": "34",
+   "target": "A4",
+   "note": "\uff08\u5f00\u5934\u65e0\u58f0\u662f\u6b63\u5e38\u73b0\u8c61\uff0c\u9700\u8981\u5f80\u53f3\u8d70\u628aboss\u89e6\u53d1\u51fa\u6765\u624d\u4f1a\u64ad\u653e\u97f3\u4e50\uff09"
+  },
+  {
+   "room": "05E",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "05F",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "060",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "061",
+   "wrong": "51",
+   "target": "3D",
+   "note": "\uff08Dr. Wily Stage 2 from Mega Man 3\uff09"
+  },
+  {
+   "room": "062",
+   "wrong": null,
+   "target": "06",
+   "note": "\uff08\u8fd9\u4e2a\u623f\u95f4\u7684\u5730\u9762\u6709\u8d34\u56fe\u9519\u8bef\u3002\u4e0d\u662f\u8fd9\u4e2a\u9879\u76ee\u7684\u79fb\u690d\u95ee\u9898\uff1b1-1demo\u4e5f\u6709\u540c\u6837\u7684\u95ee\u9898\uff09"
+  },
+  {
+   "room": "063",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "064",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "065",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "066",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "067",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "068",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "069",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "06B",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "06C",
+   "wrong": null,
+   "target": "01",
+   "note": "\uff08\u8fd9\u4e2a\u623f\u95f4\u7684\u5730\u9762\u6709\u8d34\u56fe\u9519\u8bef\u3002\u4e0d\u662f\u8fd9\u4e2a\u9879\u76ee\u7684\u79fb\u690d\u95ee\u9898\uff1b1-1demo\u4e5f\u6709\u540c\u6837\u7684\u95ee\u9898\uff09"
+  },
+  {
+   "room": "06D",
+   "wrong": "31",
+   "target": "35",
+   "note": "(Go Red Team! Go White Team! Rah Rah Rah! from Treasure Hunter G.)"
+  },
+  {
+   "room": "06E",
+   "wrong": "98",
+   "target": "B0",
+   "note": "?"
+  },
+  {
+   "room": "06F",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "070",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "071",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "074",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "075",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "07A",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "07B",
+   "wrong": "29",
+   "target": "B0",
+   "note": ""
+  },
+  {
+   "room": "07C",
+   "wrong": "46",
+   "target": "AA",
+   "note": ""
+  },
+  {
+   "room": "07D",
+   "wrong": "24",
+   "target": "51",
+   "note": ""
+  },
+  {
+   "room": "07F",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "081",
+   "wrong": null,
+   "target": "05",
+   "note": ""
+  },
+  {
+   "room": "082",
+   "wrong": "52",
+   "target": "A3",
+   "note": ""
+  },
+  {
+   "room": "083",
+   "wrong": "2A",
+   "target": "9F",
+   "note": "\uff08\u53ea\u6709mario\u8840\u6761\uff0cMARX\u8840\u6761\u7f3a\u5931\uff0c\u4e14HUD\u8c03\u8272\u677f\u6709\u9519\u4e71\uff09"
+  },
+  {
+   "room": "084",
+   "wrong": "24",
+   "target": "51",
+   "note": ""
+  },
+  {
+   "room": "085",
+   "wrong": "3D",
+   "target": "9B",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "086",
+   "wrong": "46",
+   "target": "AA",
+   "note": "\uff08\u8fdb\u53bb\u6ca1\u770b\u89c1boss\uff09"
+  },
+  {
+   "room": "087",
+   "wrong": "46",
+   "target": "AA",
+   "note": "\uff08\u53ea\u6709boss\u7684\u6b7b\u9c7c\u5e73\u53f0\uff0c\u6ca1\u6709boss\u4e5f\u6ca1\u6709boss\u653b\u51fb\uff09"
+  },
+  {
+   "room": "088",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "089",
+   "wrong": "58",
+   "target": "A0",
+   "note": ""
+  },
+  {
+   "room": "08A",
+   "wrong": "3A",
+   "target": "A2",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "091",
+   "wrong": "3A",
+   "target": "A2",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "094",
+   "wrong": "4F",
+   "target": "9D",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "095",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "096",
+   "wrong": "58",
+   "target": "A0",
+   "note": ""
+  },
+  {
+   "room": "09C",
+   "wrong": "3A",
+   "target": "A2",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "09E",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "09F",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "0A0",
+   "wrong": "3A",
+   "target": "A2",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0A1",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "0A2",
+   "wrong": "4F",
+   "target": null,
+   "note": "(X vs. Zero from Mega Man X5) \u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0A3",
+   "wrong": "58",
+   "target": "A0",
+   "note": ""
+  },
+  {
+   "room": "0A9",
+   "wrong": "43",
+   "target": "43",
+   "note": ""
+  },
+  {
+   "room": "0AA",
+   "wrong": "37",
+   "target": "37",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0AB",
+   "wrong": "37",
+   "target": "37",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0AC",
+   "wrong": "21",
+   "target": "34",
+   "note": ""
+  },
+  {
+   "room": "0AD",
+   "wrong": "21",
+   "target": "34",
+   "note": ""
+  },
+  {
+   "room": "0B6",
+   "wrong": "38",
+   "target": "A4",
+   "note": ""
+  },
+  {
+   "room": "0B7",
+   "wrong": "46",
+   "target": "AA",
+   "note": ""
+  },
+  {
+   "room": "0B8",
+   "wrong": "40",
+   "target": "60",
+   "note": ""
+  },
+  {
+   "room": "0B9",
+   "wrong": "58",
+   "target": "A0",
+   "note": ""
+  },
+  {
+   "room": "0BA",
+   "wrong": "3D",
+   "target": "9B",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0BB",
+   "wrong": "2D",
+   "target": "A9",
+   "note": ""
+  },
+  {
+   "room": "0BD",
+   "wrong": "3F",
+   "target": "3F",
+   "note": "(\"On With The Vanguard! (Pt2)\" from Romancing SaGa 3)"
+  },
+  {
+   "room": "0BE",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0BF",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0C0",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0C2",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0C3",
+   "wrong": "36",
+   "target": "61",
+   "note": ""
+  },
+  {
+   "room": "0C6",
+   "wrong": "36",
+   "target": "61",
+   "note": ""
+  },
+  {
+   "room": "0CB",
+   "wrong": "20",
+   "target": "48",
+   "note": ""
+  },
+  {
+   "room": "0CC",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0CD",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0CE",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0CF",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D0",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D1",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D2",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D3",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D4",
+   "wrong": "35",
+   "target": "8C",
+   "note": ""
+  },
+  {
+   "room": "0D5",
+   "wrong": "26",
+   "target": "89",
+   "note": ""
+  },
+  {
+   "room": "0D6",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0D7",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0D8",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0D9",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DA",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DB",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DC",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DD",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DE",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0DF",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0E0",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0E1",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0E2",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0E3",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "0E4",
+   "wrong": "3D",
+   "target": "9B",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0E8",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "0E9",
+   "wrong": "34",
+   "target": "8B",
+   "note": ""
+  },
+  {
+   "room": "0EA",
+   "wrong": "3E",
+   "target": "8D",
+   "note": ""
+  },
+  {
+   "room": "0EB",
+   "wrong": "3E",
+   "target": "8D",
+   "note": ""
+  },
+  {
+   "room": "0EC",
+   "wrong": "3E",
+   "target": "8D",
+   "note": ""
+  },
+  {
+   "room": "0ED",
+   "wrong": "3E",
+   "target": "8D",
+   "note": ""
+  },
+  {
+   "room": "0EF",
+   "wrong": "58",
+   "target": "A0",
+   "note": ""
+  },
+  {
+   "room": "0F3",
+   "wrong": "3D",
+   "target": "9B",
+   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+  },
+  {
+   "room": "0F5",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "0F7",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0F8",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0F9",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0FA",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0FB",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0FC",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "0FE",
+   "wrong": "32",
+   "target": "AC",
+   "note": ""
+  },
+  {
+   "room": "101",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "102",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "103",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "107",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "108",
+   "wrong": "3E",
+   "target": "8D",
+   "note": ""
+  },
+  {
+   "room": "10A",
+   "wrong": "40",
+   "target": "60",
+   "note": ""
+  },
+  {
+   "room": "10B",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "10D",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "10F",
+   "wrong": "24",
+   "target": "51",
+   "note": ""
+  },
+  {
+   "room": "110",
+   "wrong": "43",
+   "target": "59",
+   "note": ""
+  },
+  {
+   "room": "111",
+   "wrong": "49",
+   "target": "3A",
+   "note": "(Sky Sands from Kirby Air Ride)"
+  },
+  {
+   "room": "112",
+   "wrong": "31",
+   "target": "35",
+   "note": "(Go Red Team! Go White Team! Rah Rah Rah! from Treasure Hunter G.)"
+  },
+  {
+   "room": "115",
+   "wrong": "51",
+   "target": "3D",
+   "note": "\uff08Dr. Wily Stage 2 from Mega Man 3\uff09"
+  },
+  {
+   "room": "116",
+   "wrong": "53",
+   "target": "53",
+   "note": "(\"Haunted Chase\" from Donkey Kong Country 2)"
+  },
+  {
+   "room": "118",
+   "wrong": "36",
+   "target": "61",
+   "note": ""
+  },
+  {
+   "room": "11A",
+   "wrong": "20",
+   "target": "48",
+   "note": ""
+  },
+  {
+   "room": "11B",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "11C",
+   "wrong": "3C",
+   "target": "85",
+   "note": ""
+  },
+  {
+   "room": "11D",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "11E",
+   "wrong": "48",
+   "target": "40",
+   "note": ""
+  },
+  {
+   "room": "121",
+   "wrong": "31",
+   "target": "35",
+   "note": "(Go Red Team! Go White Team! Rah Rah Rah! from Treasure Hunter G.)"
+  },
+  {
+   "room": "122",
+   "wrong": null,
+   "target": "03",
+   "note": ""
+  },
+  {
+   "room": "123",
+   "wrong": "48",
+   "target": "40",
+   "note": ""
+  },
+  {
+   "room": "124",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "125",
+   "wrong": "28",
+   "target": "49",
+   "note": ""
+  },
+  {
+   "room": "129",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "12A",
+   "wrong": "42",
+   "target": "71",
+   "note": ""
+  },
+  {
+   "room": "12D",
+   "wrong": "5B",
+   "target": "78",
+   "note": ""
+  },
+  {
+   "room": "12E",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "12F",
+   "wrong": "28",
+   "target": "49",
+   "note": ""
+  },
+  {
+   "room": "130",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "131",
+   "wrong": "43",
+   "target": "59",
+   "note": ""
+  },
+  {
+   "room": "132",
+   "wrong": "43",
+   "target": "59",
+   "note": ""
+  },
+  {
+   "room": "133",
+   "wrong": "40",
+   "target": "60",
+   "note": ""
+  },
+  {
+   "room": "13A",
+   "wrong": "49",
+   "target": "3A",
+   "note": "(Sky Sands from Kirby Air Ride)"
+  },
+  {
+   "room": "13C",
+   "wrong": "38",
+   "target": "A4",
+   "note": ""
+  },
+  {
+   "room": "13D",
+   "wrong": "2B",
+   "target": "50",
+   "note": ""
+  },
+  {
+   "room": "13E",
+   "wrong": "36",
+   "target": "61",
+   "note": ""
+  },
+  {
+   "room": "13F",
+   "wrong": "52",
+   "target": "A3",
+   "note": ""
+  },
+  {
+   "room": "140",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "141",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "142",
+   "wrong": "46",
+   "target": "AA",
+   "note": ""
+  },
+  {
+   "room": "143",
+   "wrong": "23",
+   "target": "83",
+   "note": ""
+  },
+  {
+   "room": "146",
+   "wrong": "22",
+   "target": "8A",
+   "note": ""
+  },
+  {
+   "room": "147",
+   "wrong": "38",
+   "target": "A4",
+   "note": ""
+  },
+  {
+   "room": "148",
+   "wrong": "47",
+   "target": "6B",
+   "note": ""
+  },
+  {
+   "room": "14A",
+   "wrong": "1E",
+   "target": "51",
+   "note": ""
+  },
+  {
+   "room": "14E",
+   "wrong": "29",
+   "target": "B0",
+   "note": ""
+  },
+  {
+   "room": "150",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "153",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "155",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "156",
+   "wrong": "51",
+   "target": "3D",
+   "note": "\uff08Dr. Wily Stage 2 from Mega Man 3\uff09"
+  },
+  {
+   "room": "158",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "159",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "15A",
+   "wrong": "50",
+   "target": "81",
+   "note": ""
+  },
+  {
+   "room": "15B",
+   "wrong": "50",
+   "target": "81",
+   "note": "\uff08boss\u66f2\u5e94\u8be5\u6539\u6210a3\uff09"
+  },
+  {
+   "room": "15E",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "160",
+   "wrong": "39",
+   "target": "98",
+   "note": ""
+  },
+  {
+   "room": "162",
+   "wrong": "30",
+   "target": "7A",
+   "note": ""
+  },
+  {
+   "room": "163",
+   "wrong": "30",
+   "target": "7A",
+   "note": ""
+  },
+  {
+   "room": "164",
+   "wrong": "30",
+   "target": "7A",
+   "note": ""
+  },
+  {
+   "room": "165",
+   "wrong": "30",
+   "target": "7A",
+   "note": ""
+  },
+  {
+   "room": "166",
+   "wrong": "30",
+   "target": "7A",
+   "note": ""
+  },
+  {
+   "room": "167",
+   "wrong": "27",
+   "target": "8E",
+   "note": "\u81ea\u5b9a\u4e49\u7cbe\u7075\u8fd0\u4f5c\u6b63\u5e38\u4f46\u672a\u5bfc\u5165\u81ea\u5b9a\u4e49\u8d34\u56fe"
+  },
+  {
+   "room": "169",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "16A",
+   "wrong": "27",
+   "target": "8E",
+   "note": "\u81ea\u5b9a\u4e49\u7cbe\u7075\u672a\u8fd0\u4f5c\uff1f"
+  },
+  {
+   "room": "16B",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "16C",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "16D",
+   "wrong": "27",
+   "target": "8E",
+   "note": ""
+  },
+  {
+   "room": "16E",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "16F",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "170",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "171",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "172",
+   "wrong": "33",
+   "target": "68",
+   "note": ""
+  },
+  {
+   "room": "173",
+   "wrong": null,
+   "target": "1A",
+   "note": "\u81ea\u5b9a\u4e49\u7cbe\u7075\u672a\u8fd0\u4f5c\uff1f\u4e14\u8d34\u56fe\u9519\u8bef"
+  },
+  {
+   "room": "182",
+   "wrong": "6D",
+   "target": "70",
+   "note": ""
+  },
+  {
+   "room": "1EF",
+   "wrong": "38",
+   "target": "A4",
+   "note": ""
+  },
+  {
+   "room": "1F0",
+   "wrong": "29",
+   "target": "B0",
+   "note": ""
+  }
+ ]
+}

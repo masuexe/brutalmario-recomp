@@ -1676,3 +1676,24 @@ assisted coordinate-write fixture checks subsequent gravity, movement and camera
 behavior, separately from compiled-handler tests. Earlier stale-host suite
 failures remain deferred. These r14 packages retain teleport/swim fixes;
 map-music integration and broader restoration remain open.
+
+## Level music retarget (2026-11-03)
+
+The user reported one wrong music entry for each course and asked to port the
+missing songs from the newest version that holds them. The
+[music retarget checkpoint](demo11-music-retarget.md) records the analysis.
+The level music objects still request legacy-family song numbers, so most
+courses play a different Demo 1-1 slot. A scan of every pinned official ROM
+finds the legacy four-song upload groups only in `cheap-demo`, so that version
+is the donor for the legacy-exclusive songs.
+
+The recipe `demo11-music-retarget` descends from `demo11-overworld-music`. It
+changes 209 one-byte music parameters and installs four legacy songs at free
+Demo 1-1 slots: `31` to `35`, `37` to `37`, `49` to `3A` and `51` to `3D`.
+ROM SHA-256 is `cbe10b14c316ad5c59c7c3a17458d296a61133c569633093ff930a50271ec05a`;
+10,807 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
+selection sites, the installed payloads, the target slots and the ROM delta.
+
+The checkpoint proves song selection only. The audible match, the four songs
+that use unreviewed commands (`3F`, `43`, `49`, `4F`, `53`), the inherited-music
+rooms and the native build stay open.

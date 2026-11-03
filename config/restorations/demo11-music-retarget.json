@@ -1,0 +1,1486 @@
+{
+ "schema": 1,
+ "id": "demo11-music-retarget",
+ "target": "Brutal Mario Demo11 Level Music Retarget",
+ "recipient": "demo-1-1",
+ "donor": "cheap-demo",
+ "base_restoration": "demo11-overworld-music",
+ "base_output": {
+  "size": 4194304,
+  "sha256": "4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b"
+ },
+ "music_retarget": {
+  "tool": "prepare_music_retarget.py",
+  "targets": "config/music-level-targets.json"
+ },
+ "scope": "Rewrite the course music parameter of every reviewed level music object from the legacy-family song number to the intended Demo 1-1 slot, and install the four legacy songs that Demo 1-1 does not carry. No level layout, exit, sprite or engine code changes.",
+ "gfx_record": {
+  "address": "14B188",
+  "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+ },
+ "allocation": {
+  "offset": 4190232,
+  "size": 3856,
+  "fill": 0
+ },
+ "assets": [],
+ "music_tracks": [
+  {
+   "id": "35",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 3102,
+   "pattern_count": 2,
+   "relocations": [
+    0,
+    2,
+    6,
+    2380,
+    2436,
+    2446,
+    2480,
+    2491,
+    2544,
+    2552,
+    2576,
+    2654,
+    2676,
+    2697,
+    2701,
+    2705,
+    2720,
+    3070,
+    3072,
+    3074,
+    3076,
+    3086,
+    3088,
+    3090,
+    3092
+   ],
+   "source_address": "2A8008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "55ee1aecb69464d1dc94cd9d175bda0869a331f430a866e1e97dece85d1b9520"
+   },
+   "pointer_address": "0FE09F",
+   "before": "000000",
+   "adapted": {
+    "size": 3110,
+    "sha256": "5f783affbd9faaa3a1226c0ada79dd2bc1bcf1969be19ec94ac938a08651759a"
+   },
+   "allocation": {
+    "offset": 4154103,
+    "size": 3118
+   }
+  },
+  {
+   "id": "37",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 24,
+   "source_data_offset": 64,
+   "song_size": 3840,
+   "pattern_count": 2,
+   "relocations": [
+    0,
+    2,
+    6,
+    2915,
+    2919,
+    2959,
+    2981,
+    3044,
+    3074,
+    3121,
+    3135,
+    3307,
+    3311,
+    3315,
+    3319,
+    3323,
+    3327,
+    3331,
+    3335,
+    3339,
+    3343,
+    3347,
+    3351,
+    3355,
+    3412,
+    3422,
+    3442,
+    3454,
+    3474,
+    3523,
+    3550,
+    3808,
+    3810,
+    3812,
+    3814,
+    3824,
+    3826,
+    3828,
+    3830
+   ],
+   "source_address": "2AA008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "921809486b31f809e2cf8fe4e77c1e362fbee00dfa981f27a654ad9fe7cc3269"
+   },
+   "pointer_address": "0FE0A5",
+   "before": "000000",
+   "adapted": {
+    "size": 3848,
+    "sha256": "c4d52afb3059cd7cbbd05f2122f64a6481a8954d98907e5f73697dc2f4fb418d"
+   },
+   "allocation": {
+    "offset": 4190232,
+    "size": 3856
+   }
+  },
+  {
+   "id": "3A",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 2798,
+   "pattern_count": 1,
+   "relocations": [
+    0,
+    2,
+    6,
+    1607,
+    1633,
+    1745,
+    1752,
+    1759,
+    1766,
+    1798,
+    1893,
+    1937,
+    1945,
+    1960,
+    2090,
+    2106,
+    2148,
+    2161,
+    2174,
+    2214,
+    2227,
+    2231,
+    2235,
+    2257,
+    2270,
+    2283,
+    2287,
+    2328,
+    2340,
+    2352,
+    2389,
+    2402,
+    2406,
+    2410,
+    2430,
+    2443,
+    2455,
+    2459,
+    2782,
+    2784,
+    2786,
+    2788,
+    2790
+   ],
+   "source_address": "3FC008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "bbc1a58470c2645e46a2cc1bdf20ed1e70d49295111bcba44fd0cf0cb2702cb1"
+   },
+   "pointer_address": "0FE0AE",
+   "before": "000000",
+   "adapted": {
+    "size": 2806,
+    "sha256": "81939c14a1b162f9db13b668775cfe330896d73c16afa33786e928b67b4e33c5"
+   },
+   "allocation": {
+    "offset": 4157221,
+    "size": 2814
+   }
+  },
+  {
+   "id": "3D",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 1389,
+   "pattern_count": 2,
+   "relocations": [
+    0,
+    2,
+    6,
+    988,
+    998,
+    1002,
+    1017,
+    1028,
+    1055,
+    1068,
+    1083,
+    1111,
+    1115,
+    1119,
+    1123,
+    1127,
+    1131,
+    1135,
+    1139,
+    1143,
+    1147,
+    1151,
+    1357,
+    1359,
+    1361,
+    1373,
+    1375,
+    1377
+   ],
+   "source_address": "448008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "ef90102d48360c375758a2d0a5b6076e1f73d221a55fc25010829c114455c72b"
+   },
+   "pointer_address": "0FE0B7",
+   "before": "000000",
+   "adapted": {
+    "size": 1397,
+    "sha256": "81dacfb1f7d1081e60628a44ec32018b95057bd06af5e484611de99d9d050109"
+   },
+   "allocation": {
+    "offset": 1074189,
+    "size": 1405
+   }
+  }
+ ],
+ "code_patches": [
+  {
+   "address": "F1D815",
+   "before": "24",
+   "after": "84",
+   "role": "Room 00B course music: 23 -> 83."
+  },
+  {
+   "address": "3DB8D5",
+   "before": "26",
+   "after": "34",
+   "role": "Room 00F course music: 25 -> 33."
+  },
+  {
+   "address": "6FAE37",
+   "before": "25",
+   "after": "52",
+   "role": "Room 012 course music: 24 -> 51."
+  },
+  {
+   "address": "5DB012",
+   "before": "32",
+   "after": "36",
+   "role": "Room 013 course music: 31 -> 35."
+  },
+  {
+   "address": "58E010",
+   "before": "32",
+   "after": "36",
+   "role": "Room 014 course music: 31 -> 35."
+  },
+  {
+   "address": "67FA40",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 015 course music: 47 -> 6B."
+  },
+  {
+   "address": "F78CFD",
+   "before": "21",
+   "after": "49",
+   "role": "Room 016 course music: 20 -> 48."
+  },
+  {
+   "address": "64BE32",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 017 course music: 2B -> 50."
+  },
+  {
+   "address": "F8FF6F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 019 course music: 22 -> 8A."
+  },
+  {
+   "address": "1EE7B2",
+   "before": "37",
+   "after": "62",
+   "role": "Room 01A course music: 36 -> 61."
+  },
+  {
+   "address": "F8E941",
+   "before": "41",
+   "after": "61",
+   "role": "Room 01C course music: 40 -> 60."
+  },
+  {
+   "address": "5A8AE3",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 021 course music: 47 -> 6B."
+  },
+  {
+   "address": "1F87BF",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 023 course music: 34 -> 8B."
+  },
+  {
+   "address": "6DF61A",
+   "before": "43",
+   "after": "72",
+   "role": "Room 027 course music: 42 -> 71."
+  },
+  {
+   "address": "6EF35E",
+   "before": "43",
+   "after": "72",
+   "role": "Room 028 course music: 42 -> 71."
+  },
+  {
+   "address": "6EFCD6",
+   "before": "43",
+   "after": "72",
+   "role": "Room 029 course music: 42 -> 71."
+  },
+  {
+   "address": "668E9A",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 02D course music: 46 -> AA."
+  },
+  {
+   "address": "6F88E3",
+   "before": "43",
+   "after": "72",
+   "role": "Room 030 course music: 42 -> 71."
+  },
+  {
+   "address": "62FB95",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 03B course music: 29 -> B0."
+  },
+  {
+   "address": "339304",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 03D course music: 39 -> 98."
+  },
+  {
+   "address": "349D6E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 03E course music: 47 -> 6B."
+  },
+  {
+   "address": "51B18F",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 03F course music: 34 -> 8B."
+  },
+  {
+   "address": "19C9DF",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 041 course music: 3C -> 85."
+  },
+  {
+   "address": "67CD64",
+   "before": "49",
+   "after": "41",
+   "role": "Room 042 course music: 48 -> 40."
+  },
+  {
+   "address": "67F98C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 044 course music: 47 -> 6B."
+  },
+  {
+   "address": "349DE5",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 045 course music: 39 -> 98."
+  },
+  {
+   "address": "67F90D",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 046 course music: 39 -> 98."
+  },
+  {
+   "address": "6FE55E",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 047 course music: 49 -> 3A."
+  },
+  {
+   "address": "518C95",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04B course music: 34 -> 8B."
+  },
+  {
+   "address": "51848E",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04C course music: 34 -> 8B."
+  },
+  {
+   "address": "50E86F",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04D course music: 34 -> 8B."
+  },
+  {
+   "address": "5AA5F8",
+   "before": "49",
+   "after": "41",
+   "role": "Room 050 course music: 48 -> 40."
+  },
+  {
+   "address": "FFF016",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 053 course music: 2B -> 50."
+  },
+  {
+   "address": "19F81D",
+   "before": "4b",
+   "after": "39",
+   "role": "Room 054 course music: 4A -> 38."
+  },
+  {
+   "address": "33ED2E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 057 course music: 47 -> 6B."
+  },
+  {
+   "address": "33EF8A",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 058 course music: 47 -> 6B."
+  },
+  {
+   "address": "33F224",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 059 course music: 47 -> 6B."
+  },
+  {
+   "address": "33F484",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 05A course music: 47 -> 6B."
+  },
+  {
+   "address": "10FAD0",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 05C course music: 47 -> 6B."
+  },
+  {
+   "address": "FFD618",
+   "before": "24",
+   "after": "84",
+   "role": "Room 05F course music: 23 -> 83."
+  },
+  {
+   "address": "65DBD7",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 060 course music: 3C -> 85."
+  },
+  {
+   "address": "59C41A",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 061 course music: 51 -> 3D."
+  },
+  {
+   "address": "69FC57",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 063 course music: 3C -> 85."
+  },
+  {
+   "address": "6BFD46",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 064 course music: 3C -> 85."
+  },
+  {
+   "address": "42B8E7",
+   "before": "3c",
+   "after": "86",
+   "role": "Room 065 course music: 3B -> 85."
+  },
+  {
+   "address": "58DB6A",
+   "before": "24",
+   "after": "84",
+   "role": "Room 067 course music: 23 -> 83."
+  },
+  {
+   "address": "32C880",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 06B course music: 2B -> 50."
+  },
+  {
+   "address": "358176",
+   "before": "32",
+   "after": "36",
+   "role": "Room 06D course music: 31 -> 35."
+  },
+  {
+   "address": "35AD49",
+   "before": "99",
+   "after": "b1",
+   "role": "Room 06E course music: 98 -> B0."
+  },
+  {
+   "address": "68C05D",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 06F course music: 39 -> 98."
+  },
+  {
+   "address": "51EC04",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 071 course music: 34 -> 8B."
+  },
+  {
+   "address": "5C9AD3",
+   "before": "43",
+   "after": "72",
+   "role": "Room 075 course music: 42 -> 71."
+  },
+  {
+   "address": "50D9BC",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 07A course music: 34 -> 8B."
+  },
+  {
+   "address": "6FC190",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 07B course music: 29 -> B0."
+  },
+  {
+   "address": "618ABA",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 07C course music: 46 -> AA."
+  },
+  {
+   "address": "6FBB39",
+   "before": "25",
+   "after": "52",
+   "role": "Room 07D course music: 24 -> 51."
+  },
+  {
+   "address": "39A1EC",
+   "before": "51",
+   "after": "82",
+   "role": "Room 07F course music: 50 -> 81."
+  },
+  {
+   "address": "56FD0B",
+   "before": "53",
+   "after": "a4",
+   "role": "Room 082 course music: 52 -> A3."
+  },
+  {
+   "address": "F9889F",
+   "before": "2b",
+   "after": "a0",
+   "role": "Room 083 course music: 2A -> 9F."
+  },
+  {
+   "address": "6FC630",
+   "before": "25",
+   "after": "52",
+   "role": "Room 084 course music: 24 -> 51."
+  },
+  {
+   "address": "F186C5",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 085 course music: 3D -> 9B."
+  },
+  {
+   "address": "579332",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 086 course music: 46 -> AA."
+  },
+  {
+   "address": "68F352",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 087 course music: 46 -> AA."
+  },
+  {
+   "address": "66A84B",
+   "before": "43",
+   "after": "72",
+   "role": "Room 088 course music: 42 -> 71."
+  },
+  {
+   "address": "6ABD72",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 089 course music: 58 -> A0."
+  },
+  {
+   "address": "F7E1A4",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 08A course music: 3A -> A2."
+  },
+  {
+   "address": "F4B272",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 091 course music: 3A -> A2."
+  },
+  {
+   "address": "62AE06",
+   "before": "50",
+   "after": "9e",
+   "role": "Room 094 course music: 4F -> 9D."
+  },
+  {
+   "address": "63824A",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 095 course music: 39 -> 98."
+  },
+  {
+   "address": "6395E5",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 096 course music: 58 -> A0."
+  },
+  {
+   "address": "62FEAD",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 09C course music: 3A -> A2."
+  },
+  {
+   "address": "61CBB5",
+   "before": "24",
+   "after": "84",
+   "role": "Room 09E course music: 23 -> 83."
+  },
+  {
+   "address": "61E68C",
+   "before": "24",
+   "after": "84",
+   "role": "Room 09F course music: 23 -> 83."
+  },
+  {
+   "address": "61EEE5",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 0A0 course music: 3A -> A2."
+  },
+  {
+   "address": "61D0A9",
+   "before": "24",
+   "after": "84",
+   "role": "Room 0A1 course music: 23 -> 83."
+  },
+  {
+   "address": "61F48F",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0A3 course music: 58 -> A0."
+  },
+  {
+   "address": "61B003",
+   "before": "22",
+   "after": "35",
+   "role": "Room 0AC course music: 21 -> 34."
+  },
+  {
+   "address": "61B48F",
+   "before": "22",
+   "after": "35",
+   "role": "Room 0AD course music: 21 -> 34."
+  },
+  {
+   "address": "F2BC94",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 0B6 course music: 38 -> A4."
+  },
+  {
+   "address": "F3B90F",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 0B7 course music: 46 -> AA."
+  },
+  {
+   "address": "16C384",
+   "before": "41",
+   "after": "61",
+   "role": "Room 0B8 course music: 40 -> 60."
+  },
+  {
+   "address": "F3FCD1",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0B9 course music: 58 -> A0."
+  },
+  {
+   "address": "F384DC",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0BA course music: 3D -> 9B."
+  },
+  {
+   "address": "18F129",
+   "before": "2e",
+   "after": "aa",
+   "role": "Room 0BB course music: 2D -> A9."
+  },
+  {
+   "address": "F3C918",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0BE course music: 35 -> 8C."
+  },
+  {
+   "address": "F487AD",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0BF course music: 35 -> 8C."
+  },
+  {
+   "address": "F4C7AA",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0C0 course music: 35 -> 8C."
+  },
+  {
+   "address": "F4D40A",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0C2 course music: 35 -> 8C."
+  },
+  {
+   "address": "43C788",
+   "before": "37",
+   "after": "62",
+   "role": "Room 0C3 course music: 36 -> 61."
+  },
+  {
+   "address": "18C6A1",
+   "before": "37",
+   "after": "62",
+   "role": "Room 0C6 course music: 36 -> 61."
+  },
+  {
+   "address": "698A50",
+   "before": "21",
+   "after": "49",
+   "role": "Room 0CB course music: 20 -> 48."
+  },
+  {
+   "address": "15ECDE",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0CC course music: 26 -> 89."
+  },
+  {
+   "address": "18E614",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0CD course music: 35 -> 8C."
+  },
+  {
+   "address": "18EA9A",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0CE course music: 35 -> 8C."
+  },
+  {
+   "address": "1685C4",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0CF course music: 26 -> 89."
+  },
+  {
+   "address": "168F3C",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D0 course music: 26 -> 89."
+  },
+  {
+   "address": "16E3BB",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D1 course music: 26 -> 89."
+  },
+  {
+   "address": "16EBA7",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D2 course music: 26 -> 89."
+  },
+  {
+   "address": "17C85F",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0D4 course music: 35 -> 8C."
+  },
+  {
+   "address": "16F99D",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D5 course music: 26 -> 89."
+  },
+  {
+   "address": "F9C487",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D6 course music: 22 -> 8A."
+  },
+  {
+   "address": "FA8B2F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D7 course music: 22 -> 8A."
+  },
+  {
+   "address": "15C6EE",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D8 course music: 22 -> 8A."
+  },
+  {
+   "address": "FACA03",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D9 course music: 22 -> 8A."
+  },
+  {
+   "address": "FACE5F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DA course music: 22 -> 8A."
+  },
+  {
+   "address": "FAE679",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DB course music: 22 -> 8A."
+  },
+  {
+   "address": "FAF566",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DC course music: 22 -> 8A."
+  },
+  {
+   "address": "FAFB50",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DD course music: 22 -> 8A."
+  },
+  {
+   "address": "FCDB65",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DE course music: 22 -> 8A."
+  },
+  {
+   "address": "FCEA10",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DF course music: 22 -> 8A."
+  },
+  {
+   "address": "FCFC3E",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E0 course music: 22 -> 8A."
+  },
+  {
+   "address": "FD8E2E",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E1 course music: 22 -> 8A."
+  },
+  {
+   "address": "FEAEB1",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E2 course music: 22 -> 8A."
+  },
+  {
+   "address": "68C6D6",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E3 course music: 22 -> 8A."
+  },
+  {
+   "address": "FED6A2",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0E4 course music: 3D -> 9B."
+  },
+  {
+   "address": "FE84BE",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 0E8 course music: 34 -> 8B."
+  },
+  {
+   "address": "FEFF32",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 0E9 course music: 34 -> 8B."
+  },
+  {
+   "address": "4CCCC5",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EA course music: 3E -> 8D."
+  },
+  {
+   "address": "4CD700",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EB course music: 3E -> 8D."
+  },
+  {
+   "address": "4CF230",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EC course music: 3E -> 8D."
+  },
+  {
+   "address": "4CFEC7",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0ED course music: 3E -> 8D."
+  },
+  {
+   "address": "579CDF",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0EF course music: 58 -> A0."
+  },
+  {
+   "address": "F79371",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0F3 course music: 3D -> 9B."
+  },
+  {
+   "address": "1AA08E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F7 course music: 47 -> 6B."
+  },
+  {
+   "address": "10F540",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F8 course music: 47 -> 6B."
+  },
+  {
+   "address": "10F86C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F9 course music: 47 -> 6B."
+  },
+  {
+   "address": "FB870E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FA course music: 47 -> 6B."
+  },
+  {
+   "address": "FB8F62",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FB course music: 47 -> 6B."
+  },
+  {
+   "address": "FB83B9",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FC course music: 47 -> 6B."
+  },
+  {
+   "address": "6AF56D",
+   "before": "33",
+   "after": "ad",
+   "role": "Room 0FE course music: 32 -> AC."
+  },
+  {
+   "address": "1C9754",
+   "before": "24",
+   "after": "84",
+   "role": "Room 101 course music: 23 -> 83."
+  },
+  {
+   "address": "1FC0F0",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 103 course music: 3C -> 85."
+  },
+  {
+   "address": "6AE9DD",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 108 course music: 3E -> 8D."
+  },
+  {
+   "address": "45B391",
+   "before": "41",
+   "after": "61",
+   "role": "Room 10A course music: 40 -> 60."
+  },
+  {
+   "address": "57D21A",
+   "before": "51",
+   "after": "82",
+   "role": "Room 10D course music: 50 -> 81."
+  },
+  {
+   "address": "1CB1DC",
+   "before": "25",
+   "after": "52",
+   "role": "Room 10F course music: 24 -> 51."
+  },
+  {
+   "address": "F9A00F",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 110 course music: 43 -> 59."
+  },
+  {
+   "address": "4D9B16",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 111 course music: 49 -> 3A."
+  },
+  {
+   "address": "34F4D4",
+   "before": "32",
+   "after": "36",
+   "role": "Room 112 course music: 31 -> 35."
+  },
+  {
+   "address": "599DCE",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 115 course music: 51 -> 3D."
+  },
+  {
+   "address": "16DA24",
+   "before": "37",
+   "after": "62",
+   "role": "Room 118 course music: 36 -> 61."
+  },
+  {
+   "address": "6986F9",
+   "before": "21",
+   "after": "49",
+   "role": "Room 11A course music: 20 -> 48."
+  },
+  {
+   "address": "FDC08E",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 11B course music: 2B -> 50."
+  },
+  {
+   "address": "53B95D",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 11C course music: 3C -> 85."
+  },
+  {
+   "address": "50FD7C",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 11D course music: 2B -> 50."
+  },
+  {
+   "address": "33FA04",
+   "before": "49",
+   "after": "41",
+   "role": "Room 11E course music: 48 -> 40."
+  },
+  {
+   "address": "45C9AB",
+   "before": "32",
+   "after": "36",
+   "role": "Room 121 course music: 31 -> 35."
+  },
+  {
+   "address": "67FB96",
+   "before": "49",
+   "after": "41",
+   "role": "Room 123 course music: 48 -> 40."
+  },
+  {
+   "address": "58A5DC",
+   "before": "43",
+   "after": "72",
+   "role": "Room 124 course music: 42 -> 71."
+  },
+  {
+   "address": "69C4E2",
+   "before": "29",
+   "after": "4a",
+   "role": "Room 125 course music: 28 -> 49."
+  },
+  {
+   "address": "5CA70C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 129 course music: 47 -> 6B."
+  },
+  {
+   "address": "FBE817",
+   "before": "43",
+   "after": "72",
+   "role": "Room 12A course music: 42 -> 71."
+  },
+  {
+   "address": "1CC813",
+   "before": "5c",
+   "after": "79",
+   "role": "Room 12D course music: 5B -> 78."
+  },
+  {
+   "address": "10F035",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 12E course music: 47 -> 6B."
+  },
+  {
+   "address": "FFB005",
+   "before": "29",
+   "after": "4a",
+   "role": "Room 12F course music: 28 -> 49."
+  },
+  {
+   "address": "1FF505",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 130 course music: 47 -> 6B."
+  },
+  {
+   "address": "5D8E10",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 131 course music: 43 -> 59."
+  },
+  {
+   "address": "62D766",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 132 course music: 43 -> 59."
+  },
+  {
+   "address": "51B4E3",
+   "before": "41",
+   "after": "61",
+   "role": "Room 133 course music: 40 -> 60."
+  },
+  {
+   "address": "59EE8C",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 13A course music: 49 -> 3A."
+  },
+  {
+   "address": "F5A7DA",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 13C course music: 38 -> A4."
+  },
+  {
+   "address": "5998D1",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 13D course music: 2B -> 50."
+  },
+  {
+   "address": "578E9A",
+   "before": "37",
+   "after": "62",
+   "role": "Room 13E course music: 36 -> 61."
+  },
+  {
+   "address": "F6F6B9",
+   "before": "53",
+   "after": "a4",
+   "role": "Room 13F course music: 52 -> A3."
+  },
+  {
+   "address": "F5F885",
+   "before": "24",
+   "after": "84",
+   "role": "Room 140 course music: 23 -> 83."
+  },
+  {
+   "address": "F6EB00",
+   "before": "24",
+   "after": "84",
+   "role": "Room 141 course music: 23 -> 83."
+  },
+  {
+   "address": "F6C454",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 142 course music: 46 -> AA."
+  },
+  {
+   "address": "F6F93A",
+   "before": "24",
+   "after": "84",
+   "role": "Room 143 course music: 23 -> 83."
+  },
+  {
+   "address": "FEDF4B",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 146 course music: 22 -> 8A."
+  },
+  {
+   "address": "FCCBCB",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 147 course music: 38 -> A4."
+  },
+  {
+   "address": "FCC3F9",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 148 course music: 47 -> 6B."
+  },
+  {
+   "address": "F4DAFC",
+   "before": "1f",
+   "after": "52",
+   "role": "Room 14A course music: 1E -> 51."
+  },
+  {
+   "address": "F798F1",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 14E course music: 29 -> B0."
+  },
+  {
+   "address": "6AD8BF",
+   "before": "34",
+   "after": "69",
+   "role": "Room 150 course music: 33 -> 68."
+  },
+  {
+   "address": "52BDF8",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 153 course music: 27 -> 8E."
+  },
+  {
+   "address": "F0A511",
+   "before": "51",
+   "after": "82",
+   "role": "Room 155 course music: 50 -> 81."
+  },
+  {
+   "address": "F7FE98",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 156 course music: 51 -> 3D."
+  },
+  {
+   "address": "F5BED9",
+   "before": "51",
+   "after": "82",
+   "role": "Room 158 course music: 50 -> 81."
+  },
+  {
+   "address": "F5CFAE",
+   "before": "51",
+   "after": "82",
+   "role": "Room 159 course music: 50 -> 81."
+  },
+  {
+   "address": "F9F67A",
+   "before": "51",
+   "after": "82",
+   "role": "Room 15A course music: 50 -> 81."
+  },
+  {
+   "address": "F5E694",
+   "before": "51",
+   "after": "82",
+   "role": "Room 15B course music: 50 -> 81."
+  },
+  {
+   "address": "F499BC",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 15E course music: 27 -> 8E."
+  },
+  {
+   "address": "1DAFC6",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 160 course music: 39 -> 98."
+  },
+  {
+   "address": "F1ABDC",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 162 course music: 30 -> 7A."
+  },
+  {
+   "address": "6DFFC8",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 163 course music: 30 -> 7A."
+  },
+  {
+   "address": "57EDA7",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 164 course music: 30 -> 7A."
+  },
+  {
+   "address": "57E6FC",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 165 course music: 30 -> 7A."
+  },
+  {
+   "address": "F1F540",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 166 course music: 30 -> 7A."
+  },
+  {
+   "address": "67E945",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 167 course music: 27 -> 8E."
+  },
+  {
+   "address": "60AE4C",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 169 course music: 27 -> 8E."
+  },
+  {
+   "address": "65F73A",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16A course music: 27 -> 8E."
+  },
+  {
+   "address": "65A657",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16B course music: 27 -> 8E."
+  },
+  {
+   "address": "6BE071",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16C course music: 27 -> 8E."
+  },
+  {
+   "address": "F4F116",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16D course music: 27 -> 8E."
+  },
+  {
+   "address": "68A55E",
+   "before": "34",
+   "after": "69",
+   "role": "Room 16E course music: 33 -> 68."
+  },
+  {
+   "address": "68D61E",
+   "before": "34",
+   "after": "69",
+   "role": "Room 16F course music: 33 -> 68."
+  },
+  {
+   "address": "6A99BA",
+   "before": "34",
+   "after": "69",
+   "role": "Room 170 course music: 33 -> 68."
+  },
+  {
+   "address": "6A9F9A",
+   "before": "34",
+   "after": "69",
+   "role": "Room 171 course music: 33 -> 68."
+  },
+  {
+   "address": "6ACD88",
+   "before": "34",
+   "after": "69",
+   "role": "Room 172 course music: 33 -> 68."
+  },
+  {
+   "address": "2FE857",
+   "before": "6e",
+   "after": "71",
+   "role": "Room 182 course music: 6D -> 70."
+  },
+  {
+   "address": "6A8200",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 1EF course music: 38 -> A4."
+  },
+  {
+   "address": "59DC7D",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 1F0 course music: 29 -> B0."
+  }
+ ],
+ "output": {
+  "size": 4194304,
+  "sha256": "05e28398c9c516f77ca0fea61f184bb1978cb3ff85931f757e9342c43bc3aeec"
+ }
+}

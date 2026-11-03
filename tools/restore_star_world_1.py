@@ -493,6 +493,9 @@ def prepare(target='star-world-1', ancestors=()):
     if 'native_sprite' in config:
         from native_sprite import prepare as prepare_sprite
         return prepare_sprite(target)
+    if 'music_retarget' in config:
+        from prepare_music_retarget import prepare as prepare_music
+        return prepare_music(target)
     versions = {v['id']: v for v in json.loads((ROOT / 'config/content-versions.json').read_text())['versions']}
     bodies = []
     for role in ('recipient', 'donor'):
