@@ -1,0 +1,44 @@
+{
+ "schema": 1,
+ "id": "demo11-product-r17-music",
+ "pack_file": "music-pack.bin",
+ "payload": {
+  "size": 27431,
+  "sha256": "e08645db7fc4222fd531b2b24096e2f757f7cbe63e54baa39c7c371b66b69d6d"
+ },
+ "regions": [
+  {
+   "offset": 2293760,
+   "size": 6144,
+   "block_sha256": "2e7a5f5b0e1a5635531668a1c9c6d7ea105c4ddfa7a52aecfbb0bddab8fc6091"
+  },
+  {
+   "offset": 2476352,
+   "size": 6144,
+   "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+  },
+  {
+   "offset": 2490368,
+   "size": 6144,
+   "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+  },
+  {
+   "offset": 2530904,
+   "size": 6144,
+   "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+  },
+  {
+   "offset": 624165,
+   "size": 961,
+   "block_sha256": "3c84f7eb4ae2a60d243fa9c783265b521dbb9929e6cbef1fbb1c2cf0fe71aadb"
+  },
+  {
+   "offset": 625126,
+   "size": 1894,
+   "block_sha256": "ae65e20168c2d2ed90a64cd9045e7e2d1a36cb44329cf98a2c837318fbaabec8"
+  }
+ ],
+ "runtime_patch": "patches/runtime/0008-native-content-bank.patch",
+ "runtime_source_sha256": "fb79e160529feb156e93ddeb435e4e52929d9423cbb78f39462c2b9a311d2225",
+ "runtime_patch_sha256": "bde213969435f20652e747986f2fffae700ef196a677250559940282dfc8ecd9"
+}
