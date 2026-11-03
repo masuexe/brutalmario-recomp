@@ -213,6 +213,33 @@ screen 0 and height 0. An added object uses the same prefix.
 
 A new audit of the seven moved rooms reads the reviewed song on arrival.
 
+## Cartridge space
+
+The image is a 4 MB LoROM cartridge, which is the LoROM ceiling. Music is not the
+largest user of that space, but the free space is fragmented.
+
+| Measure | Value |
+| --- | --- |
+| Image size | 4,194,304 bytes (4 MB) |
+| Free bytes | 275,670 |
+| Free ranges of 64 bytes or more | 571 |
+| Largest free range | 4,072 bytes |
+| Free 32 KB banks | 0 |
+| Present song slots | 133 of 256 |
+| Song payload bytes | 286,158 |
+| Slots that no level music object requests | 60 |
+| Bytes in those unused slots | 148,459 |
+
+A legacy raw song needs 6,136 payload bytes and a 6,144-byte RATS block. A LoROM
+block must stay inside one 32 KB bank, so the block needs a contiguous range.
+No free range of 6,144 bytes exists in the current image.
+
+Room `0A2` needs song `4F`, and slot `4F` was null. The region pack
+solved it: the target `demo11-music-pack` moves song `02` into a pack, which
+frees a 6,144-byte range, and song `4F` fills that range as a region.
+
+See `docs/native-region-packs.md` for the region provider and the pilot.
+
 ## Silence convention
 
 The user reported that slot `0x1E` is the legacy convention for "play no
