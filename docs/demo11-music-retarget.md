@@ -75,7 +75,7 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
 | ROM SHA-256 | `e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1` |
 | Native binary SHA-256 | `4137f04a972f5309eafd543ae1758c8fe770728040b5b72887a3fb1974918120` |
-| Changed bytes | 10,812 |
+| Changed bytes | 10,800 |
 | Selection bytes | 202 |
 | Installed songs | 4 |
 

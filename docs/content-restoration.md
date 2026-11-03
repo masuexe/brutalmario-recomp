@@ -1691,7 +1691,7 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`. It
 changes 209 one-byte music parameters and installs four legacy songs at free
 Demo 1-1 slots: `31` to `35`, `37` to `37`, `49` to `3A` and `51` to `3D`.
 ROM SHA-256 is `e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1`;
-10,812 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
+10,800 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
 selection sites, the installed payloads, the target slots and the ROM delta.
 
 The song table entry must use the `0x80`-`0xFF` mirror for file banks
