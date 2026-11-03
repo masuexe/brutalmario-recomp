@@ -1677,6 +1677,23 @@ behavior, separately from compiled-handler tests. Earlier stale-host suite
 failures remain deferred. These r14 packages retain teleport/swim fixes;
 map-music integration and broader restoration remain open.
 
+## External content packs (2026-11-03)
+
+A LoROM data block must stay inside one 32 KB bank. The free space of the
+image is 327,746 bytes in 39,943 ranges, and the largest range is 4,072
+bytes, so a 6,144-byte song block has no place to go.
+
+A region provider now replaces a byte range with bytes from a pack file.
+It shares the backing map with the sprite-gap runtime, so both providers
+write into the same copy of the image.
+
+The first pilot is target `demo11-music-pack`. It moves six song slots that
+no level music object requests (26,516 bytes) into one pack. A capture
+mounts both providers, and a console-teleport audit reads the moved song
+in all nine rooms that request it.
+
+See `docs/native-region-packs.md` for the mechanism and the identities.
+
 ## Level music retarget (2026-11-03)
 
 The user reported one wrong music entry for each course and asked to port the
