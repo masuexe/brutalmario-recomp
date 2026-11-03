@@ -158,6 +158,13 @@ void bm_content_load(uint8_t *rom, size_t size) {
   fprintf(stderr, "[native-seven] mounted immutable A2/A5/A6/B6 views\n");
 }
 
+/* The region runtime reads the same backing map. It must not copy the image,
+ * because that copy would miss the sprite packs mounted above. */
+uint8_t *bm_content_backing(uint8_t *rom, size_t size) {
+  if (rom != owner || !backing || size != BM_SEVEN_ROM_SIZE) return NULL;
+  return backing;
+}
+
 uint8_t *bm_content_resolve(const uint8_t *rom, uint8_t bank, uint16_t address) {
   bm_seven_return_override();
   bm_yoshi_start_override();

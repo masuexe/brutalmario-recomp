@@ -321,6 +321,10 @@ RESTORATIONS = {
         'binary': 'BrutalMarioDemo11NativeSprite9ESNESRecomp',
         'title': 'Brutal Mario Demo11 Native Sprite9E',
     },
+    'demo11-music-pack': {
+        'binary': 'BrutalMarioDemo11MusicPackSNESRecomp',
+        'title': 'Brutal Mario Demo11 Music Pack',
+    },
     'demo11-native-pack-pilot': {
         'binary': 'BrutalMarioDemo11NativePackPilotSNESRecomp',
         'title': 'Brutal Mario Demo11 Native Pack Pilot',

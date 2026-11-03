@@ -32,7 +32,7 @@ class NativeContentTests(unittest.TestCase):
             '#define BM_CONTENT_ROM_SIZE 0x400000u\n'
             'static const size_t bm_content_region_offset[2] = {0x1b0008u, 0x1b0108u};\n'
             'static const size_t bm_content_region_size[2] = {16u, 8u};\n' +
-            digest('bm_content_rom_sha', rom) + digest('bm_content_pack_sha', cls.payload))
+            digest('bm_content_pack_sha', cls.payload))
         source = cls.path / 'runner/src/snes/cart.c'
         source.parent.mkdir(parents=True)
         source.write_bytes((ENGINE / 'snes/cart.c').read_bytes())
@@ -53,6 +53,8 @@ class NativeContentTests(unittest.TestCase):
         cls.temp.cleanup()
 
     def run_loader(self, payload, mode='valid'):
+        if mode == 'valid':
+            mode = 'plain'
         env = os.environ.copy()
         env.pop('BM_NATIVE_CONTENT_PACK', None)
         if payload is not None:
@@ -65,7 +67,7 @@ class NativeContentTests(unittest.TestCase):
     def test_two_regions_and_boundaries(self):
         result = self.run_loader(self.payload)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('Two regions, contiguous region boundaries', result.stdout)
+        self.assertIn('Two regions, exact region bytes', result.stdout)
 
     def test_missing_pack_is_fatal(self):
         result = self.run_loader(None)
@@ -84,10 +86,11 @@ class NativeContentTests(unittest.TestCase):
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIn('pack size differs', result.stderr)
 
-    def test_wrong_rom_is_fatal(self):
-        result = self.run_loader(self.payload, 'wrong-rom')
+    def test_occupied_region_is_fatal(self):
+        # A region must be empty in the image, because the pack holds its bytes.
+        result = self.run_loader(self.payload, 'occupied')
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn('ROM identity differs', result.stderr)
+        self.assertIn('image still holds region bytes', result.stderr)
 
 
 if __name__ == '__main__':

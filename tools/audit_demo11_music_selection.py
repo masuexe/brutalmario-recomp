@@ -19,7 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 
-TARGET = 'demo11-music-retarget'
+DEFAULT_TARGET = 'demo11-music-retarget'
 PROBE_DIR = ROOT / 'local/probes/music-audit'
 REPORT = ROOT / 'local/reports/demo11-music-audit.json'
 CAPTURE_PREFIX = 'd11-music-audit-'
@@ -71,7 +71,7 @@ def prepare(rooms):
     print(f'prepared {len(rooms)} scripts in {PROBE_DIR.relative_to(ROOT)}')
 
 
-def run(rooms):
+def run(rooms, target):
     failures = []
     for room in rooms:
         name = f'{CAPTURE_PREFIX}{room:03X}'
@@ -83,7 +83,7 @@ def run(rooms):
         if directory.exists():
             import shutil
             shutil.rmtree(directory)
-        command = [sys.executable, str(ROOT / 'tools/m1.py'), 'native', '--target', TARGET,
+        command = [sys.executable, str(ROOT / 'tools/m1.py'), 'native', '--target', target,
                    '--script', str(PROBE_DIR / f'room-{room:03X}.script'),
                    '--capture', name]
         try:
@@ -111,10 +111,10 @@ def sample(room, tag):
             'song': f'{body[0x0dda]:02X}'}
 
 
-def report(rooms):
+def report(rooms, target):
     targets = {int(entry['room'], 16): entry
                for entry in json.loads((ROOT / 'config/music-level-targets.json').read_text())['entries']}
-    recipe = json.loads((ROOT / 'config/restorations' / (TARGET + '.json')).read_text())
+    recipe = json.loads((ROOT / 'config/restorations' / (target + '.json')).read_text())
     patched = {int(patch['role'].split()[1], 16) for patch in recipe['code_patches']}
     entries = []
     for room in rooms:
@@ -142,7 +142,7 @@ def report(rooms):
     for item in entries:
         counts[item['status']] = counts.get(item['status'], 0) + 1
     REPORT.parent.mkdir(parents=True, exist_ok=True)
-    REPORT.write_text(json.dumps({'target': TARGET, 'host': 'native',
+    REPORT.write_text(json.dumps({'target': target, 'host': 'native',
                                   'kind': 'console-teleport-assisted-entry',
                                   'counts': counts, 'entries': entries}, indent=2) + '\n')
     width = max(len(item['room']) for item in entries)
@@ -159,16 +159,17 @@ def main():
     parser.add_argument('action', choices=('prepare', 'run', 'report', 'all'))
     parser.add_argument('--rooms', nargs='+', required=True,
                         help='internal room numbers, for example 0AA')
+    parser.add_argument('--target', default=DEFAULT_TARGET)
     args = parser.parse_args()
     rooms = sorted({int(value, 16) for value in args.rooms})
     if args.action in ('prepare', 'all'):
         prepare(rooms)
     if args.action in ('run', 'all'):
-        failures = run(rooms)
+        failures = run(rooms, args.target)
         if failures:
             return 1
     if args.action in ('report', 'all'):
-        report(rooms)
+        report(rooms, args.target)
     return 0
 
 

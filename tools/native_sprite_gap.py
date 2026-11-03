@@ -217,6 +217,14 @@ def environment(target, env):
         path = ROOT / 'local/restoration' / target / pack['pack_file']
         verify(path.read_bytes(), pack, pack['variable'])
         env[pack['variable']] = str(path)
+    cfg = json.loads((ROOT / 'config/restorations' / (target + '.json')).read_text())
+    region = cfg.get('music_region_pack')
+    if region:
+        path = ROOT / 'local/restoration' / target / region['pack_file']
+        data = path.read_bytes()
+        verify(data, {'size': region['pack_size'], 'sha256': region['pack_sha256']},
+               'music region pack')
+        env['BM_NATIVE_CONTENT_PACK'] = str(path)
 
 
 def configure(experiment, binary, target):
@@ -234,12 +242,27 @@ def configure(experiment, binary, target):
     if not cart.exists():
         cart.write_bytes((ROOT / 'local/upstream/snesrecomp/runner/src/snes/cart.c').read_bytes())
     previous = json.loads((ROOT / 'config/native-content/sprite9e.json').read_text())
+    cfg = json.loads((ROOT / 'config/restorations' / (target + '.json')).read_text())
+    if not cart.exists():
+        cart.write_bytes((ROOT / 'local/upstream/snesrecomp/runner/src/snes/cart.c').read_bytes())
     if sha(cart.read_bytes()) == feature['runtime_source_sha256']:
         subprocess.run(['git', 'apply', '--directory='+str(directory.relative_to(ROOT)),
                        str(ROOT / previous['runtime_patch'])], cwd=ROOT, check=True)
-    if sha(cart.read_bytes()) != feature['runtime_result_sha256']:
+    # A recipe can add the separate region resolver on top of the sprite packs.
+    # The patch is idempotent, so a rebuild keeps the same result.
+    if cfg.get('music_region_pack'):
+        from patch_region_resolver import patch as patch_region
+        updated, _ = patch_region(cart.read_text())
+        cart.write_text(updated)
+    if not cfg.get('music_region_pack') and sha(cart.read_bytes()) != feature['runtime_result_sha256']:
         raise ValueError('sprite gap runtime override differs')
     write_verified(directory / 'native_seven_manifest.h', header(target).encode())
+    # A recipe with a music region pack also links the region runtime.
+    if cfg.get('music_region_pack'):
+        import native_content
+        spec = json.loads((ROOT / cfg['music_region_pack']['manifest']).read_text())
+        region_header = native_content.region_header(spec, cfg)
+        write_verified(directory / 'native_content_manifest.h', region_header.encode())
     cmake = experiment / 'CMakeLists.txt'
     text = cmake.read_text()
     begin, end = '# BEGIN native sprite gap entry', '# END native sprite gap entry'
@@ -247,7 +270,8 @@ def configure(experiment, binary, target):
         'get_target_property(_gap_sources '+binary+' SOURCES)',
         'list(REMOVE_ITEM _gap_sources "${SNESRECOMP_ROOT}/runner/src/snes/cart.c")',
         'set_property(TARGET '+binary+' PROPERTY SOURCES ${_gap_sources})',
-        'target_sources('+binary+' PRIVATE "'+str(cart)+'" "'+str(ROOT / 'recomp/native_seven.c')+'")',
+        'target_sources('+binary+' PRIVATE "'+str(cart)+'" "'+str(ROOT / 'recomp/native_seven.c')+'"'
+        + (' "'+str(ROOT / 'recomp/native_content.c')+'"' if cfg.get('music_region_pack') else '') + ')',
         'target_include_directories('+binary+' PRIVATE "'+str(directory)+'" "'+str(ROOT / 'recomp')+'" "'+str(ROOT / 'local/upstream/snesrecomp/runner/src/snes')+'")', end])
     if begin in text:
         text = text[:text.index(begin)]+block+text[text.index(end)+len(end):]

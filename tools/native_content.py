@@ -41,17 +41,28 @@ def identity(target):
             raise ValueError('native content runtime pin differs: ' + str(path))
     paths = [ROOT / 'config/restorations' / (target + '.json'),
              ROOT / cfg['native_content']['manifest'], patch,
-             ROOT / spec['source_recipe'], ROOT / 'tools/native_content.py',
+             ROOT / 'tools/native_content.py',
              ROOT / 'recomp/native_content.c', ROOT / 'recomp/native_content.h']
-    return {'files': {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in paths},
-            'payload': spec['payload'], 'native_address': spec['native_address'],
+    if 'source_recipe' in spec:
+        paths.append(ROOT / spec['source_recipe'])
+    info = {'files': {str(p.relative_to(ROOT)): sha(p.read_bytes()) for p in paths},
+            'payload': spec['payload'],
             'runtime_source_sha256': spec['runtime_source_sha256'],
-            'runtime_result_sha256': spec['runtime_result_sha256'],
+            'runtime_result_sha256': spec.get('runtime_result_sha256'),
             'generated_header_sha256': sha(header(target).encode())}
+    if 'native_address' in spec:
+        info['native_address'] = spec['native_address']
+    return info
 
 
 def prepare(target=TARGET):
     from prepare_rom import verify
+    cfg, spec = settings(target)
+    if spec.get('regions'):
+        # A region pack is produced by its own recipe tool, so this step only
+        # confirms that the pinned files exist.
+        identity(target)
+        return
     from restore_star_world_1 import graphics_pointer, lorom, lz2, write_verified
     cfg, spec = settings(target)
     identity(target)
@@ -104,9 +115,13 @@ def header(target):
     regions = spec.get('regions') or [spec]
     offsets, sizes, cursor = [], [], 0
     for region in regions:
-        offsets.append(lorom(int(region['original_address'], 16)))
-        sizes.append(region['payload']['size'])
-        cursor += region['payload']['size']
+        # A region starts at its block, which can be eight bytes before the
+        # payload address in original_address. An explicit offset wins.
+        offsets.append(region['offset'] if 'offset' in region
+                       else lorom(int(region['original_address'], 16)))
+        size = region['size'] if 'size' in region else region['payload']['size']
+        sizes.append(size)
+        cursor += size
     return ('/* Generated from pinned native content recipes. */\n'
             '#include <stdint.h>\n'
             f'#define BM_CONTENT_ID "{spec["id"]}"\n'
@@ -118,6 +133,26 @@ def header(target):
             'static const size_t bm_content_region_size[BM_CONTENT_REGION_COUNT] = {'
             + ', '.join(f'{value}u' for value in sizes) + '};\n'
             + digest('bm_content_rom_sha', cfg['output']['sha256'])
+            + digest('bm_content_pack_sha', spec['payload']['sha256']))
+
+
+def region_header(spec, cfg):
+    """Return the region manifest header for a sprite-gap target."""
+    def digest(name, value):
+        return 'static const uint8_t ' + name + '[32] = {' + ','.join(
+            '0x' + value[i:i + 2] for i in range(0, 64, 2)) + '};\n'
+    offsets = [region['offset'] for region in spec['regions']]
+    sizes = [region['size'] for region in spec['regions']]
+    return ('/* Generated from a pinned music region recipe. */\n'
+            '#include <stdint.h>\n'
+            f'#define BM_CONTENT_ID "{spec["id"]}"\n'
+            f'#define BM_CONTENT_REGION_COUNT {len(offsets)}u\n'
+            f'#define BM_CONTENT_PACK_SIZE {spec["payload"]["size"]}u\n'
+            f'#define BM_CONTENT_ROM_SIZE {cfg["output"]["size"]}u\n'
+            'static const size_t bm_content_region_offset[BM_CONTENT_REGION_COUNT] = {'
+            + ', '.join(f'{value}u' for value in offsets) + '};\n'
+            'static const size_t bm_content_region_size[BM_CONTENT_REGION_COUNT] = {'
+            + ', '.join(f'{value}u' for value in sizes) + '};\n'
             + digest('bm_content_pack_sha', spec['payload']['sha256']))
 
 
@@ -136,12 +171,14 @@ def configure(experiment, binary, target):
     if not temporary.exists():
         temporary.write_bytes(source.read_bytes())
     actual = sha(temporary.read_bytes())
-    if actual not in (spec['runtime_source_sha256'], spec['runtime_result_sha256']):
+    accepted = {spec['runtime_source_sha256'], spec.get('runtime_result_sha256')} - {None}
+    if actual not in accepted:
         raise ValueError('refusing to replace an unknown native runtime override')
     if actual == spec['runtime_source_sha256']:
         subprocess.run(['git', 'apply', '--directory=' + str(directory.relative_to(ROOT)),
                         str(ROOT / spec['runtime_patch'])], cwd=ROOT, check=True)
-    if sha(temporary.read_bytes()) != spec['runtime_result_sha256']:
+    expected = spec.get('runtime_result_sha256')
+    if expected and sha(temporary.read_bytes()) != expected:
         raise ValueError('patched native runtime identity differs')
     write_verified(directory / 'native_content_manifest.h', header(target).encode())
     cmake = experiment / 'CMakeLists.txt'
