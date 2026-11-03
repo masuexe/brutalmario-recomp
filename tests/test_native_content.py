@@ -19,17 +19,20 @@ class NativeContentTests(unittest.TestCase):
         cls.temp = tempfile.TemporaryDirectory(prefix='bm-native-content-')
         cls.addClassCleanup(cls.temp.cleanup)
         cls.path = Path(cls.temp.name)
-        cls.payload = bytes(range(1, 17))
+        cls.payload = bytes(range(1, 25))
         rom = bytearray([0x5a]) * 0x400000
         rom[0x1b0008:0x1b0018] = bytes(16)
+        rom[0x1b0108:0x1b0110] = bytes(8)
         def digest(name, data):
             return f'static const uint8_t {name}[32] = {{' + ','.join(
                 str(x) for x in hashlib.sha256(data).digest()) + '};\n'
         (cls.path / 'native_content_manifest.h').write_text(
             '#include <stdint.h>\n#define BM_CONTENT_ID "synthetic"\n'
-            '#define BM_CONTENT_BANK 0xb6u\n#define BM_CONTENT_OFFSET 0x1b0008u\n'
-            '#define BM_CONTENT_SIZE 16u\n#define BM_CONTENT_ROM_SIZE 0x400000u\n' +
-            digest('bm_content_rom_sha', rom) + digest('bm_content_payload_sha', cls.payload))
+            '#define BM_CONTENT_REGION_COUNT 2u\n#define BM_CONTENT_PACK_SIZE 24u\n'
+            '#define BM_CONTENT_ROM_SIZE 0x400000u\n'
+            'static const size_t bm_content_region_offset[2] = {0x1b0008u, 0x1b0108u};\n'
+            'static const size_t bm_content_region_size[2] = {16u, 8u};\n' +
+            digest('bm_content_rom_sha', rom) + digest('bm_content_pack_sha', cls.payload))
         source = cls.path / 'runner/src/snes/cart.c'
         source.parent.mkdir(parents=True)
         source.write_bytes((ENGINE / 'snes/cart.c').read_bytes())
@@ -59,11 +62,10 @@ class NativeContentTests(unittest.TestCase):
         return subprocess.run([str(self.binary), mode], env=env,
                               text=True, capture_output=True, timeout=10)
 
-    def test_independent_bank_and_boundaries(self):
+    def test_two_regions_and_boundaries(self):
         result = self.run_loader(self.payload)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn('mount lifecycle passed', result.stdout)
-        self.assertIn('first_asset_resolution=B68008', result.stderr)
+        self.assertIn('Two regions, contiguous region boundaries', result.stdout)
 
     def test_missing_pack_is_fatal(self):
         result = self.run_loader(None)
@@ -71,7 +73,7 @@ class NativeContentTests(unittest.TestCase):
         self.assertIn('BM_NATIVE_CONTENT_PACK is required', result.stderr)
 
     def test_corrupt_pack_is_fatal(self):
-        result = self.run_loader(bytes(16))
+        result = self.run_loader(bytes(24))
         self.assertNotEqual(result.returncode, 0)
         self.assertIn('pack SHA-256 differs', result.stderr)
 

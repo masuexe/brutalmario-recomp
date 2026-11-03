@@ -96,18 +96,29 @@ def prepare(target=TARGET):
 def header(target):
     from restore_star_world_1 import lorom
     cfg, spec = settings(target)
+
     def digest(name, value):
         return 'static const uint8_t ' + name + '[32] = {' + ','.join(
             '0x' + value[i:i + 2] for i in range(0, 64, 2)) + '};\n'
+
+    regions = spec.get('regions') or [spec]
+    offsets, sizes, cursor = [], [], 0
+    for region in regions:
+        offsets.append(lorom(int(region['original_address'], 16)))
+        sizes.append(region['payload']['size'])
+        cursor += region['payload']['size']
     return ('/* Generated from pinned native content recipes. */\n'
             '#include <stdint.h>\n'
             f'#define BM_CONTENT_ID "{spec["id"]}"\n'
-            f'#define BM_CONTENT_BANK 0x{int(spec["native_address"], 16) >> 16:02X}u\n'
-            f'#define BM_CONTENT_OFFSET {lorom(int(spec["original_address"], 16))}u\n'
-            f'#define BM_CONTENT_SIZE {spec["payload"]["size"]}u\n'
-            f'#define BM_CONTENT_ROM_SIZE {cfg["output"]["size"]}u\n' +
-            digest('bm_content_rom_sha', cfg['output']['sha256']) +
-            digest('bm_content_payload_sha', spec['payload']['sha256']))
+            f'#define BM_CONTENT_REGION_COUNT {len(regions)}u\n'
+            f'#define BM_CONTENT_PACK_SIZE {cursor}u\n'
+            f'#define BM_CONTENT_ROM_SIZE {cfg["output"]["size"]}u\n'
+            'static const size_t bm_content_region_offset[BM_CONTENT_REGION_COUNT] = {'
+            + ', '.join(f'{value}u' for value in offsets) + '};\n'
+            'static const size_t bm_content_region_size[BM_CONTENT_REGION_COUNT] = {'
+            + ', '.join(f'{value}u' for value in sizes) + '};\n'
+            + digest('bm_content_rom_sha', cfg['output']['sha256'])
+            + digest('bm_content_pack_sha', spec['payload']['sha256']))
 
 
 def configure(experiment, binary, target):

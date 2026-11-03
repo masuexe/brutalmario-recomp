@@ -4,6 +4,7 @@
 #include "snes/sa1.h"
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /* Unused coprocessor paths retained by cart_getRomPtr's mapper switch. */
@@ -17,11 +18,12 @@ uint8_t *sa1_cpu_memory_ptr(Sa1 *s, uint8_t b, uint16_t a) {
 
 int main(int argc, char **argv) {
   assert(argc == 2);
-  const size_t size = 0x400000, offset = 0x1b0008;
+  const size_t size = 0x400000, offset = 0x1b0008, second = 0x1b0108;
   uint8_t *rom = malloc(size);
   assert(rom);
   memset(rom, 0x5a, size);
   memset(rom + offset, 0, 16);
+  memset(rom + second, 0, 8);
   if (!strcmp(argv[1], "wrong-rom")) rom[0] ^= 1;
   bm_content_load(rom, size);
   Cart cart = {0};
@@ -29,13 +31,19 @@ int main(int argc, char **argv) {
   cart.rom = rom;
   cart.romSize = size;
   cart.ramSize = 0x2000;
+  /* Region one covers bytes 1..16 at bank B6 offset 8008. */
   uint8_t *external = cart_getRomPtr(&cart, 0xb6, 0x8008);
   assert(external && external != rom + offset);
   for (unsigned i = 0; i < 16; ++i) {
     assert(external[i] == i + 1);
-    assert(*cart_getRomPtr(&cart, 0x36, 0x8008 + i) == 0);
+    /* The low mirror bank reads the same bytes, as on a real cartridge. */
+    assert(*cart_getRomPtr(&cart, 0x36, 0x8008 + i) == i + 1);
   }
-  /* Pointers on either side of the asset keep contiguous span semantics. */
+  /* Region two covers bytes 17..24 at bank B6 offset 8108. */
+  uint8_t *other = cart_getRomPtr(&cart, 0xb6, 0x8108);
+  assert(other && other != rom + second);
+  for (unsigned i = 0; i < 8; ++i) assert(other[i] == 17 + i);
+  /* Pointers on either side of a region keep contiguous span semantics. */
   uint8_t *before = cart_getRomPtr(&cart, 0xb6, 0x8007);
   assert(before[0] == 0x5a && before[1] == 1);
   assert(external[15] == 16 && external[16] == 0x5a);
@@ -45,6 +53,8 @@ int main(int argc, char **argv) {
   assert(cart_getRomPtr(&cart, 0x7e, 0x8008) == NULL);
   assert(*cart_getRomPtr(&cart, 0xb5, 0x8008) == 0x5a);
   assert(*cart_getRomPtr(&cart, 0xb7, 0x8008) == 0x5a);
+  /* A byte between the two regions is still the image byte. */
+  assert(*cart_getRomPtr(&cart, 0xb6, 0x8018) == 0x5a);
   bm_content_clear(rom + 1); /* An unrelated owner cannot clear this mount. */
   assert(bm_content_resolve(rom, 0xb6, 0x8008) == external);
   bm_content_load(rom, size); /* Reload discards the old backing. */
@@ -53,6 +63,6 @@ int main(int argc, char **argv) {
   assert(bm_content_resolve(rom, 0xb6, 0x8008) == NULL);
   assert(*cart_getRomPtr(&cart, 0xb6, 0x8008) == 0);
   free(rom);
-  puts("Independent native bank, contiguous asset boundaries and mount lifecycle passed");
+  puts("Two regions, contiguous region boundaries and mount lifecycle passed");
   return 0;
 }
