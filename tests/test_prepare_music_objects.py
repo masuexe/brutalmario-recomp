@@ -36,6 +36,20 @@ class WalkTests(unittest.TestCase):
         self.assertEqual(objects.object_size(bytes.fromhex('000001'), 0), 3)
 
 
+class SizeTableTests(unittest.TestCase):
+    def test_object_28_is_three_bytes(self):
+        # Object 0x28 is a three-byte record. A four-byte reading consumes the
+        # stream terminator and desynchronises the walk.
+        self.assertEqual(objects.object_size(bytes.fromhex('408000'), 0), 3)
+
+    def test_a_block_ending_in_object_28_terminates_exactly(self):
+        # Header, one 0x28 object, terminator. The walk must stop on the last byte.
+        data = bytes.fromhex('0000000000') + bytes.fromhex('408009') + b'\xff'
+        found, terminator = objects.walk(data)
+        self.assertEqual(terminator, len(data) - 1)
+        self.assertEqual(len(found), 1)
+
+
 class PlanTests(unittest.TestCase):
     def test_the_plan_reports_one_move_per_room(self):
         # A synthetic image: one level block with room 0x02F selected, plus free space.

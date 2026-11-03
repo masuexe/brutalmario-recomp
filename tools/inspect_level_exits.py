@@ -87,7 +87,10 @@ def exits(rom, room):
             require(i + 3 < len(data), 'truncated object 27/29')
             i += obj27_size(data[i + 2], data[i + 3])
         elif objnum == 0x28:
-            i += 4
+            # Object 0x28 is three bytes. A four-byte reading consumes the
+            # stream terminator; with three bytes all 403 level blocks of the
+            # shipped image terminate at the end of their RATS payload.
+            i += 3
         elif objnum == 0x2D:
             i += 5
         else:

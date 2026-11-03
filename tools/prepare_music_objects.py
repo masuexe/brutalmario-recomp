@@ -21,14 +21,16 @@ from restore_star_world_1 import file_to_lorom, lorom, sha, write_verified
 
 TARGET = 'demo11-music-retarget'
 RECIPE = ROOT / 'config/restorations' / (TARGET + '.json')
-# room -> (song slot, screen, vertical)
+# room -> song slot. Every music object in the shipped image uses the
+# 0x40 0x60 prefix (screen 0, height 0), so an added object uses it too.
 OBJECTS = {
-    0x02F: (0x6B, 0x07, 0x00),
-    0x032: (0x6B, 0x03, 0x00),
-    0x033: (0x6B, 0x04, 0x00),
-    0x034: (0x6B, 0x03, 0x00),
-    0x035: (0x6B, 0x03, 0x00),
-    0x03C: (0x51, 0x0C, 0x08),
+    0x02F: 0x6B,
+    0x032: 0x6B,
+    0x033: 0x6B,
+    0x034: 0x6B,
+    0x035: 0x6B,
+    0x03C: 0x51,
+    0x107: 0x6B,
 }
 # Room 107 is left out. Its RATS block is 261 bytes but the object stream
 # needs 326, so the level data is truncated in the base image. The move
@@ -44,7 +46,7 @@ def object_size(data, i):
     number = ((b0 >> 5) & 3) * 16 + (b1 >> 4)
     if number == 0:
         return 4 if b2 == 0 else 5 if b2 == 2 else 3
-    if number in (0x22, 0x23, 0x28):
+    if number in (0x22, 0x23):
         return 4
     if number == 0x2D:
         return 5
@@ -109,7 +111,7 @@ def apply(out, config):
     """
     segments = free_segments(bytes(out), 512)
     moves = []
-    for room, (song, screen, height) in sorted(OBJECTS.items()):
+    for room, song in sorted(OBJECTS.items()):
         slot = lorom(0x05E000) + room * 3
         pointer = pointer3(out, slot)
         start = lorom(pointer)
@@ -122,7 +124,7 @@ def apply(out, config):
         numbers = [((item[0] >> 5) & 3) * 16 + (item[1] >> 4) for _, item in objects]
         if 0x26 in numbers:
             raise ValueError(f'room {room:03X} already holds a music object')
-        object_bytes = bytes([0x40 | (screen & 0x1F), 0x60 | (height & 0x0F), song + 1])
+        object_bytes = bytes([0x40, 0x60, song + 1])
         body = data[:terminator] + object_bytes + b'\xFF'
         count = len(body) - 1
         blob = b'STAR' + count.to_bytes(2, 'little') + (count ^ 0xffff).to_bytes(2, 'little') + body

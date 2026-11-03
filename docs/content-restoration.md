@@ -1690,8 +1690,8 @@ is the donor for the legacy-exclusive songs.
 The recipe `demo11-music-retarget` descends from `demo11-overworld-music`. It
 changes 208 one-byte music parameters and installs three legacy songs at free
 Demo 1-1 slots: `31` to `35`, `49` to `3A` and `51` to `3D`.
-ROM SHA-256 is `986d470f0f731aec74a036f44a2c2f2c92fbe2e3b0f6c47d91b6338c855779f7`;
-9,001 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
+ROM SHA-256 is `82741528f9d8c335901157184a6398eb1f05d4ec7395f7ec3c6c72249168e9fa`;
+9,258 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
 selection sites, the installed payloads, the target slots and the ROM delta.
 
 The song table entry must use the `0x80`-`0xFF` mirror for file banks
@@ -1703,12 +1703,13 @@ The user reported that the legacy `0x37` track is an older arrangement of slot
 
 A console-teleport audit reads `$0DDA` on arrival for the rooms that the
 recipe could not identify. Rooms `05D`, `05E`, `0D3` and `102`
-are retargeted from that evidence. Six of those rooms hold no level music object, so they inherit the parent
+are retargeted from that evidence. Seven of those rooms hold no level music object, so they inherit the parent
 song. `tools/prepare_music_objects.py` moves the level block into free
 space, appends the music object and repoints the level table; a new audit
-reads the reviewed song on arrival. Room `107` stays open: its RATS
-block is truncated in the base image. Slot `0x1E` is the legacy silence
-convention, so rooms `020` and `036` are correct.
+reads the reviewed song on arrival. Room `107` needed one correction to
+the object size table: object `0x28` is three bytes. With that table all
+403 level blocks terminate at the end of their RATS payload. Slot `0x1E` is
+the legacy silence convention, so rooms `020` and `036` are correct.
 
 The checkpoint proves song selection only. The audible match, the four songs
 that use unreviewed commands (`3F`, `43`, `49`, `4F`, `53`), the inherited-music

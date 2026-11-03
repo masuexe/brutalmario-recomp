@@ -73,9 +73,9 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | --- | --- |
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
-| ROM SHA-256 | `986d470f0f731aec74a036f44a2c2f2c92fbe2e3b0f6c47d91b6338c855779f7` |
-| Native binary SHA-256 | `d1f944643acc0d5adec2f3dfecf1b91785728f60c344fdd267c879edb56def07` |
-| Changed bytes | 9,001 |
+| ROM SHA-256 | `82741528f9d8c335901157184a6398eb1f05d4ec7395f7ec3c6c72249168e9fa` |
+| Native binary SHA-256 | `981b9ab8a081f287d265092845e6984a0026e3b414a12ca7541ee94c72a52da1` |
+| Changed bytes | 9,258 |
 | Selection bytes | 208 |
 | Installed songs | 3 |
 
@@ -140,7 +140,9 @@ Room `0A2` needs legacy song `4F` (X vs. Zero, Mega Man X5). That song uses
 a command outside the reviewed subset, so the tool can not install it. The
 slot `4F` is null.
 
-Room `107` requests slot `0x47` from outside its own music object. A reference capture confirms that request. The report expects slot `0x6B`. The music object in the room does not control the entry song, so this entry stays open.
+Room `107` holds a music object that does not control its entry song.
+The console audit reads slot `0x47`. The object move recipe adds an
+object with slot `0x6B`, and a new audit reads `0x6B`.
 
 ## Console teleport song audit
 
@@ -157,18 +159,16 @@ Result of the first audit:
 | --- | --- |
 | The single music object controls the song; retargeted now | `05D`, `05E`, `0D3`, `102` |
 | Correct with no patch | `018`, `01B`, `02E`, `062`, `066`, `068`, `069`, `06C`, `070`, `074`, `081`, `0A9`, `0BD`, `0F5`, `10B`, `116`, `122` |
-| Inherited song; object added | `02F`, `032`, `033`, `034`, `035`, `03C` |
-| Truncated level data | `107` |
+| Inherited song; object added | `02F`, `032`, `033`, `034`, `035`, `03C`, `107` |
 | Silent by convention | `020`, `036` |
 | Stalls on entry | `0A2` |
 | Leaves gameplay | `173` |
 
 Rooms `02F`, `032`, `033`, `034`, `035` and
-`107` all play slot `0x47` although their level data holds a different
-parameter, and room `03C` plays slot `0x1E`. The song therefore comes
-from outside the level music object for those rooms. A level header table
-scan over six candidate tables found no matching entry, so the source is
-still unknown.
+`107` all played slot `0x47`, and room `03C` played slot `0x1E`.
+Those rooms hold no level music object, so they keep the parent song. The
+user report marks the same rooms with `*`, which means "play the song of the
+previous scene". The section below records the fix.
 
 After the retarget, rooms `05D`, `05E`, `0D3` and `102`
 play `0xA4`, `0x83`, `0x89` and `0x6B` on arrival.
@@ -194,18 +194,24 @@ the qualifier re-parses the moved stream.
 
 | Room | Song | Object | Destination |
 | --- | --- | --- | --- |
-| `02F` | `6B` | `47 60 6C` | `06BD20` |
-| `032` | `6B` | `43 60 6C` | `06BEDD` |
-| `033` | `6B` | `44 60 6C` | `06BF23` |
-| `034` | `6B` | `43 60 6C` | `06BF85` |
-| `035` | `6B` | `43 60 6C` | `06BFA5` |
-| `03C` | `51` | `4C 68 52` | `108000` |
+| `02F` | `6B` | `40 60 6C` | `0DBD68` |
+| `032` | `6B` | `40 60 6C` | `0DBE45` |
+| `033` | `6B` | `40 60 6C` | `0DBEAB` |
+| `034` | `6B` | `40 60 6C` | `0DBF2D` |
+| `035` | `6B` | `40 60 6C` | `0DBF4D` |
+| `03C` | `51` | `40 60 52` | `218008` |
+| `107` | `6B` | `40 60 6C` | `0DC990` |
 
-Room `107` stays unchanged. Its RATS block is 261 bytes, but the object
-stream needs 326, so the level data is truncated in the base image. The tool
-refuses a stream that does not terminate inside its own block.
+Room `107` first failed the object walk. The cause was the object size
+table, not the level data. Object `0x28` is three bytes, and the table
+said four, so the walk consumed the terminator. With the corrected table all
+403 level blocks of the image terminate exactly at the end of their RATS
+payload. Room `107` then takes the same move recipe as the others.
 
-A new audit of the six moved rooms reads the reviewed song on arrival.
+Every music object in the shipped image uses the prefix `40 60`, which is
+screen 0 and height 0. An added object uses the same prefix.
+
+A new audit of the seven moved rooms reads the reviewed song on arrival.
 
 ## Silence convention
 

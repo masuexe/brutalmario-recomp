@@ -1890,9 +1890,9 @@
    "destination_pointer": "0DBD68",
    "destination_offset": 441696,
    "blob_size": 221,
-   "blob_sha256": "df040730f95e18d89cd898c8ba17e5b72524aba6f55f7daf118bc3fdbe1afcf7",
+   "blob_sha256": "6bf065b5dc6972602850a2a1159a8c0e5aec2318fa3c24028efa3162d6771331",
    "song": "6B",
-   "object": "47606c"
+   "object": "40606c"
   },
   {
    "room": "032",
@@ -1902,9 +1902,9 @@
    "destination_pointer": "0DBE45",
    "destination_offset": 441917,
    "blob_size": 102,
-   "blob_sha256": "1750d6d352c5c4a3a73aaa48784486de396e8c1442a1c37ab327ed39c5b1f00b",
+   "blob_sha256": "ea31926e5851937bc6cb2c994c26f56536c4a52b81d65428ecffc70050b4afba",
    "song": "6B",
-   "object": "43606c"
+   "object": "40606c"
   },
   {
    "room": "033",
@@ -1914,9 +1914,9 @@
    "destination_pointer": "0DBEAB",
    "destination_offset": 442019,
    "blob_size": 130,
-   "blob_sha256": "c4345503ac304f52f673cff9c93c3547d4d8030386002761ea643cd0d7d89b76",
+   "blob_sha256": "e5d87a4d2f3db59922d5b792a59d1a7f936542d0281780ea8f6a8c273bb9d4f6",
    "song": "6B",
-   "object": "44606c"
+   "object": "40606c"
   },
   {
    "room": "034",
@@ -1926,9 +1926,9 @@
    "destination_pointer": "0DBF2D",
    "destination_offset": 442149,
    "blob_size": 32,
-   "blob_sha256": "a56c0300dcff39dbcdaf91d2dfb93aef097336a363e30c21d9348d66d8e2860f",
+   "blob_sha256": "dab1cca0ab0afce135c8d83c7d606ef0ce7861725c7869981a951950fe57f25a",
    "song": "6B",
-   "object": "43606c"
+   "object": "40606c"
   },
   {
    "room": "035",
@@ -1938,9 +1938,9 @@
    "destination_pointer": "0DBF4D",
    "destination_offset": 442181,
    "blob_size": 36,
-   "blob_sha256": "640d3d569112bc03099dfc8c2a0ec68f7813697260af55057e5a4cf7ad02d4ab",
+   "blob_sha256": "15d6d39084b90163006cd93cd2ef7370e47dd4fb0354fd0ff52e6bde858fa906",
    "song": "6B",
-   "object": "43606c"
+   "object": "40606c"
   },
   {
    "room": "03C",
@@ -1950,13 +1950,25 @@
    "destination_pointer": "218008",
    "destination_offset": 1081344,
    "blob_size": 1465,
-   "blob_sha256": "528e4e3571b827f76f71ff1e3472de960fd090cc3d6f0814efd58064adc3d4b8",
+   "blob_sha256": "103e4f54bf691ef5a4d1d3d66d832650a915cbf1f9dee5a9dfedf27611d35f74",
    "song": "51",
-   "object": "4c6852"
+   "object": "406052"
+  },
+  {
+   "room": "107",
+   "source_pointer": "F2D8EB",
+   "source_size": 261,
+   "source_offset": 3758315,
+   "destination_pointer": "0DC990",
+   "destination_offset": 444808,
+   "blob_size": 272,
+   "blob_sha256": "ab733805acc489f081ecd2ea5eafe13c5d05d97cd028eca68f71836a385804a1",
+   "song": "6B",
+   "object": "40606c"
   }
  ],
  "output": {
   "size": 4194304,
-  "sha256": "986d470f0f731aec74a036f44a2c2f2c92fbe2e3b0f6c47d91b6338c855779f7"
+  "sha256": "82741528f9d8c335901157184a6398eb1f05d4ec7395f7ec3c6c72249168e9fa"
  }
 }

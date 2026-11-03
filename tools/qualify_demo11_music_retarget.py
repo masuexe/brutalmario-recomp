@@ -86,6 +86,11 @@ def main():
         if entry['target'] is None:
             continue
         slot = int(entry['target'], 16)
+        if entry.get('silent'):
+            # Slot 0x1E is the legacy convention for "play no music", so a null
+            # slot is correct for a silent entry.
+            require(slot == 0x1E, f"room {entry['room']} silent entry is not slot 1E")
+            continue
         require(slot in present, f"room {entry['room']} target slot {entry['target']} is null")
 
     for move in cfg.get('level_music_objects', []):
