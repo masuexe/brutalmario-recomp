@@ -5,7 +5,7 @@ The level data of the Demo 1-1 line came from the legacy demo family, so the
 course music objects still request legacy-family song numbers.  The intended
 Demo 1-1 slot for each course comes from config/music-level-targets.json.
 This tool rewrites the one-byte music parameter of each reviewed music object
-and installs the four legacy songs that Demo 1-1 does not carry.
+and installs the three legacy songs that Demo 1-1 does not carry.
 
 The tool never invents a slot.  A target slot must already hold a song after
 the installs, or the entry stays unchanged and is reported.
@@ -40,7 +40,6 @@ RECORD_TABLE = 0x14AD08
 # Legacy song -> Demo 1-1 slot.  (legacy id, group address, group slot, new slot)
 PORTS = (
     (0x31, 0x2A8008, 1, 0x35),   # Go Red Team! (Treasure Hunter G)
-    (0x37, 0x2AA008, 3, 0x37),   # unnamed legacy track
     (0x49, 0x3FC008, 1, 0x3A),   # Sky Sands (Kirby Air Ride)
     (0x51, 0x448008, 1, 0x3D),   # Dr. Wily Stage 2 (Mega Man 3)
 )

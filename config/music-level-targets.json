@@ -600,14 +600,14 @@
   {
    "room": "0AA",
    "wrong": "37",
-   "target": "37",
-   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+   "target": "30",
+   "note": "User listening: the legacy 0x37 track is an older arrangement of Demo 1-1 slot 0x30, so the course uses 0x30 and no port is needed."
   },
   {
    "room": "0AB",
    "wrong": "37",
-   "target": "37",
-   "note": "\u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+   "target": "30",
+   "note": "User listening: the legacy 0x37 track is an older arrangement of Demo 1-1 slot 0x30, so the course uses 0x30 and no port is needed."
   },
   {
    "room": "0AC",

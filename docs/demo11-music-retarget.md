@@ -73,11 +73,11 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | --- | --- |
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
-| ROM SHA-256 | `e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1` |
-| Native binary SHA-256 | `4137f04a972f5309eafd543ae1758c8fe770728040b5b72887a3fb1974918120` |
-| Changed bytes | 10,800 |
-| Selection bytes | 202 |
-| Installed songs | 4 |
+| ROM SHA-256 | `35cb69a1d44142add60b571cccee84293ee34f41aa49b759807d54323342f6c5` |
+| Native binary SHA-256 | `89093db403cda93882423bdf89435a19f609df03f4da350eb3e515b8151be16b` |
+| Changed bytes | 7,158 |
+| Selection bytes | 204 |
+| Installed songs | 3 |
 
 The recipe changes one byte per reviewed music object. It also installs four
 legacy songs at free Demo 1-1 slots:
@@ -85,9 +85,13 @@ legacy songs at free Demo 1-1 slots:
 | Legacy song | Demo 1-1 slot | Payload | Rooms |
 | --- | --- | --- | --- |
 | `31` Go Red Team (Treasure Hunter G) | `35` | 3,110 | `013`, `014`, `06D`, `112`, `121` |
-| `37` unnamed | `37` | 3,848 | `0AA`, `0AB` |
 | `49` Sky Sands (Kirby Air Ride) | `3A` | 2,806 | `047`, `111`, `13A` |
 | `51` Dr. Wily Stage 2 (Mega Man 3) | `3D` | 1,397 | `061`, `115`, `156` |
+
+The user listened to the `0AA` and `0AB` courses and reported that the
+legacy song `0x37` is an older arrangement of Demo 1-1 slot `0x30`. Those two
+courses now request `0x30`, so no port is needed and the earlier `0x37`
+install is gone.
 
 Each song uses the reviewed `adapt_music` walk. The walk relocates every
 sequence and pattern pointer to ARAM `$5400`. The tool rejects a song with a
@@ -114,8 +118,8 @@ screen.
 The first build of this recipe used plain bank bytes for three songs. A
 console teleport to room `013` and to room `0AA` showed the stall.
 The tool now emits the mirror form for those banks, and the qualifier rejects
-a plain `0x7E`/`0x7F` entry. Rooms `013` and `0AA` then enter
-gameplay with `$0DDA` `0x35` and `0x37`.
+a plain `0x7E`/`0x7F` entry. Room `013` then enters
+gameplay with `$0DDA` `0x35`.
 
 ## Skipped entries
 
@@ -126,7 +130,7 @@ The tool reports every entry that it does not change. Reasons:
 | No music object; the room inherits the parent song | `020`, `02E`, `033`, `034`, `036`, `03C`, `062`, `06C`, `081` |
 | Ambiguous music object | `02F`, `032`, `035`, `05D`, `05E`, `0D3`, `102`, `107`, `122`, `173` |
 | No Demo 1-1 slot for the intended song | `0A2` |
-| Already correct | `018`, `01B`, `066`, `068`, `069`, `070`, `074`, `0A9`, `0AA`, `0AB`, `0BD`, `0F5`, `10B`, `116` |
+| Already correct | `018`, `01B`, `066`, `068`, `069`, `070`, `074`, `0A9`, `0BD`, `0F5`, `10B`, `116` |
 
 A room without a music object plays the song of the room that leads to it.
 These rooms become correct when the parent room is correct. The room list does
@@ -164,12 +168,12 @@ because the reviewed walk rejects those songs:
 - every reviewed target slot holds a song in the candidate;
 - the ROM delta stays inside the reviewed sites and the installed blocks.
 
-The qualifier passes with 202 selection bytes and 4 installed songs.
+The qualifier passes with 204 selection bytes and 3 installed songs.
 
 `tests/test_prepare_music_retarget.py` adds 16 bounded checks for the
 music object pattern, the site choice rule, the first-fit allocator, the
 protected RATS ranges, the bank boundary and the graphics record choice.
-The suite reports 464 tests with the same 8 stale host-audio failures that
+The suite reports 467 tests with the same 8 stale host-audio failures that
 the previous session deferred.
 
 This evidence proves song selection only. It is not an audible match. The user
@@ -184,7 +188,8 @@ Reference-host captures enter four translevels with the map-node override and re
 | `018` | `018` | `53` | `53` | `53` |
 | `046` | `122` | `03` | `03` | `03` |
 | `013` (teleport) | `013` | stall `12` | `35` | `35` |
-| `0AA` (teleport) | `0AA` | stall `12` | `37` | `37` |
+| `0AA` (teleport) | `0AA` | `37` | `30` | `30` |
+| `0AB` (teleport) | `0AB` | `37` | `30` | `30` |
 
 These samples prove the selection bytes and one installed song. They are not an audible match. The user must listen to the courses before this checkpoint is accepted.
 

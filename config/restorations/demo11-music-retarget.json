@@ -19,8 +19,8 @@
   "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
  },
  "allocation": {
-  "offset": 4190232,
-  "size": 3856,
+  "offset": 4154103,
+  "size": 3118,
   "fill": 0
  },
  "assets": [],
@@ -74,71 +74,6 @@
    "allocation": {
     "offset": 4154103,
     "size": 3118
-   }
-  },
-  {
-   "id": "37",
-   "source_base": 26624,
-   "destination_base": 21504,
-   "sequence_offset": 24,
-   "source_data_offset": 64,
-   "song_size": 3840,
-   "pattern_count": 2,
-   "relocations": [
-    0,
-    2,
-    6,
-    2915,
-    2919,
-    2959,
-    2981,
-    3044,
-    3074,
-    3121,
-    3135,
-    3307,
-    3311,
-    3315,
-    3319,
-    3323,
-    3327,
-    3331,
-    3335,
-    3339,
-    3343,
-    3347,
-    3351,
-    3355,
-    3412,
-    3422,
-    3442,
-    3454,
-    3474,
-    3523,
-    3550,
-    3808,
-    3810,
-    3812,
-    3814,
-    3824,
-    3826,
-    3828,
-    3830
-   ],
-   "source_address": "2AA008",
-   "source_group": {
-    "size": 6136,
-    "sha256": "921809486b31f809e2cf8fe4e77c1e362fbee00dfa981f27a654ad9fe7cc3269"
-   },
-   "pointer_address": "0FE0A5",
-   "before": "000000",
-   "adapted": {
-    "size": 3848,
-    "sha256": "c4d52afb3059cd7cbbd05f2122f64a6481a8954d98907e5f73697dc2f4fb418d"
-   },
-   "allocation": {
-    "offset": 4190232,
-    "size": 3856
    }
   },
   {
@@ -721,6 +656,18 @@
    "before": "59",
    "after": "a1",
    "role": "Room 0A3 course music: 58 -> A0."
+  },
+  {
+   "address": "53C72A",
+   "before": "38",
+   "after": "31",
+   "role": "Room 0AA course music: 37 -> 30."
+  },
+  {
+   "address": "53CD4C",
+   "before": "38",
+   "after": "31",
+   "role": "Room 0AB course music: 37 -> 30."
   },
   {
    "address": "61B003",
@@ -1912,6 +1859,6 @@
  },
  "output": {
   "size": 4194304,
-  "sha256": "e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1"
+  "sha256": "35cb69a1d44142add60b571cccee84293ee34f41aa49b759807d54323342f6c5"
  }
 }
