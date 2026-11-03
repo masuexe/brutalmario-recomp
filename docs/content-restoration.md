@@ -1690,9 +1690,13 @@ is the donor for the legacy-exclusive songs.
 The recipe `demo11-music-retarget` descends from `demo11-overworld-music`. It
 changes 209 one-byte music parameters and installs four legacy songs at free
 Demo 1-1 slots: `31` to `35`, `37` to `37`, `49` to `3A` and `51` to `3D`.
-ROM SHA-256 is `cbe10b14c316ad5c59c7c3a17458d296a61133c569633093ff930a50271ec05a`;
-10,807 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
+ROM SHA-256 is `e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1`;
+10,812 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
 selection sites, the installed payloads, the target slots and the ROM delta.
+
+The song table entry must use the `0x80`-`0xFF` mirror for file banks
+`0x7E` and `0x7F`, because a plain pointer there names WRAM and the SPC
+upload stalls. Rooms `013` and `0AA` enter gameplay after that fix.
 
 The checkpoint proves song selection only. The audible match, the four songs
 that use unreviewed commands (`3F`, `43`, `49`, `4F`, `53`), the inherited-music

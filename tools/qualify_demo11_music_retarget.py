@@ -12,7 +12,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'tools'))
 from prepare_music_retarget import (BASE, BASE_OUTPUT, DONOR, DONOR_OUTPUT,
-                                    TARGET, TARGETS, level_block, music_objects)
+                                    TARGET, TARGETS, level_block, music_objects,
+                                    song_pointer)
 from prepare_rom import verify
 from restore_star_world_1 import lorom, sha
 
@@ -51,11 +52,18 @@ def main():
     for track in cfg['music_tracks']:
         slot = int(track['id'], 16)
         pointer = lorom(int(track['pointer_address'], 16))
-        require(base[pointer:pointer + 3] == bytes(3), 'song slot was not null')
-        require(candidate[pointer:pointer + 3] != bytes(3), 'song slot stays null')
-        require(int.from_bytes(candidate[pointer:pointer + 3], 'big') != 0, 'song pointer is zero')
         start = track['allocation']['offset']
         size = track['allocation']['size']
+        require(base[pointer:pointer + 3] == bytes(3), 'song slot was not null')
+        require(candidate[pointer:pointer + 3] != bytes(3), 'song slot stays null')
+        entry = candidate[pointer:pointer + 3]
+        require(int.from_bytes(entry, 'big') != 0, 'song pointer is zero')
+        # The cartridge reaches banks 0x7E/0x7F only through the mirror, so a
+        # plain 0x7E/0x7F pointer names WRAM and the upload never completes.
+        require(entry[0] not in (0x7E, 0x7F), 'song pointer names a WRAM bank')
+        require(entry == song_pointer(track), 'song pointer differs from the allocation')
+        require(lorom(int.from_bytes(entry, 'big')) == start + 8,
+                'song pointer does not address the installed payload')
         require(size >= track['adapted']['size'] + 8, 'song allocation is too small')
         require(base[start:start + size] == bytes(size), 'song allocation was occupied')
         header = candidate[start:start + 8]

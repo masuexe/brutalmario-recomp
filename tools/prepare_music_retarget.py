@@ -264,10 +264,26 @@ def base_recipe():
     return json.loads((ROOT / 'config/restorations' / (BASE + '.json')).read_text())
 
 
+def song_pointer(track):
+    """Return the 3-byte song table entry for one installed track.
+
+    The cartridge reaches file banks 0x7E and 0x7F only through the
+    0x80-0xFF mirror, the same way the level data pointers do.
+    """
+    start = track['allocation']['offset']
+    bank = (start + 8) // 0x8000
+    if bank >= 0x7E:
+        bank |= 0x80
+    address = (bank << 16) | 0x8000 | ((start + 8) & 0x7fff)
+    return address.to_bytes(3, 'big')
+
+
 def build(base, donor, config):
     out = bytearray(base)
     for track in config['music_tracks']:
         restore_music(donor, out, track)
+        pointer = lorom(int(track['pointer_address'], 16))
+        out[pointer:pointer + 3] = song_pointer(track)
     apply_code_patches(out, config)
     return bytes(out)
 

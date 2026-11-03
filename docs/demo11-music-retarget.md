@@ -73,9 +73,9 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | --- | --- |
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
-| ROM SHA-256 | `05e28398c9c516f77ca0fea61f184bb1978cb3ff85931f757e9342c43bc3aeec` |
-| Native binary SHA-256 | `d2f5db75042f892ad56274ad776a51fe9657adbd5ff97ad8a52afa76833e6667` |
-| Changed bytes | 10,800 |
+| ROM SHA-256 | `e0b68bc1d414db04e07c13e95f047fe09827816853d05f72604a8350497871b1` |
+| Native binary SHA-256 | `4137f04a972f5309eafd543ae1758c8fe770728040b5b72887a3fb1974918120` |
+| Changed bytes | 10,812 |
 | Selection bytes | 202 |
 | Installed songs | 4 |
 
@@ -101,6 +101,21 @@ launcher then mounts them.
 The song numbers and the intended slots are in
 `config/music-level-targets.json`. The file records the user report and the
 decision for each level.
+
+## Song table pointer banks
+
+The song table entry is a 24-bit LoROM pointer: bank, high byte, low byte. The
+cartridge reaches file banks `0x7E` and `0x7F` only through the
+`0x80`-`0xFF` mirror. A plain `0x7E` or `0x7F` pointer names
+WRAM, so the DMA reads the wrong bytes and the SPC upload never completes.
+The game then stays in Mario Start mode `0x12` with no sound and a black
+screen.
+
+The first build of this recipe used plain bank bytes for three songs. A
+console teleport to room `013` and to room `0AA` showed the stall.
+The tool now emits the mirror form for those banks, and the qualifier rejects
+a plain `0x7E`/`0x7F` entry. Rooms `013` and `0AA` then enter
+gameplay with `$0DDA` `0x35` and `0x37`.
 
 ## Skipped entries
 
@@ -168,6 +183,8 @@ Reference-host captures enter four translevels with the map-node override and re
 | `013` | `013` | `31` | `35` | `35` |
 | `018` | `018` | `53` | `53` | `53` |
 | `046` | `122` | `03` | `03` | `03` |
+| `013` (teleport) | `013` | stall `12` | `35` | `35` |
+| `0AA` (teleport) | `0AA` | stall `12` | `37` | `37` |
 
 These samples prove the selection bytes and one installed song. They are not an audible match. The user must listen to the courses before this checkpoint is accepted.
 

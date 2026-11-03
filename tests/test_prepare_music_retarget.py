@@ -94,6 +94,24 @@ class AllocationTests(unittest.TestCase):
         self.assertEqual(segments, [(0x7f00, 0x100), (0x8000, 0x1000)])
 
 
+class SongPointerTests(unittest.TestCase):
+    def test_a_low_bank_keeps_the_plain_form(self):
+        track = {'allocation': {'offset': 0x10640D}}
+        self.assertEqual(retarget.song_pointer(track), bytes.fromhex('20e415'))
+
+    def test_bank_7e_and_7f_use_the_mirror(self):
+        # Banks 0x7E and 0x7F are WRAM, so the table entry must use the mirror.
+        self.assertEqual(retarget.song_pointer({'allocation': {'offset': 0x3F62F7}}),
+                         bytes.fromhex('fee2ff'))
+        self.assertEqual(retarget.song_pointer({'allocation': {'offset': 0x3FF018}}),
+                         bytes.fromhex('fff020'))
+
+    def test_the_pointer_addresses_the_payload(self):
+        for offset in (0x10640D, 0x3F62F7, 0x3FF018, 0x27B448):
+            entry = retarget.song_pointer({'allocation': {'offset': offset}})
+            self.assertEqual(retarget.lorom(int.from_bytes(entry, 'big')), offset + 8)
+
+
 class RecordTableTests(unittest.TestCase):
     def test_a_record_without_the_selection_flag_is_free(self):
         rom = bytearray(b'\x01' * 0x400000)
