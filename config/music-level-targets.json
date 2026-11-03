@@ -84,8 +84,9 @@
   {
    "room": "020",
    "wrong": "23",
-   "target": null,
-   "note": "no new-family slot; needs a donor port"
+   "target": "1E",
+   "note": "User: slot 0x1E is the legacy silence convention. The room plays 0x1E on entry, so the current selection is correct.",
+   "silent": true
   },
   {
    "room": "021",
@@ -168,8 +169,9 @@
   {
    "room": "036",
    "wrong": "1E",
-   "target": null,
-   "note": "no new-family slot; needs a donor port"
+   "target": "1E",
+   "note": "User: slot 0x1E is the legacy silence convention. The room plays 0x1E on entry, so the current selection is correct.",
+   "silent": true
   },
   {
    "room": "03B",

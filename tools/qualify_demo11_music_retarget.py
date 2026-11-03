@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT / 'tools'))
 from prepare_music_retarget import (BASE, BASE_OUTPUT, DONOR, DONOR_OUTPUT,
                                     TARGET, TARGETS, level_block, music_objects,
                                     song_pointer)
+import prepare_music_objects
 from prepare_rom import verify
 from restore_star_world_1 import lorom, sha
 
@@ -86,6 +87,33 @@ def main():
             continue
         slot = int(entry['target'], 16)
         require(slot in present, f"room {entry['room']} target slot {entry['target']} is null")
+
+    for move in cfg.get('level_music_objects', []):
+        start = move['destination_offset']
+        size = move['blob_size']
+        require(base[start:start + size] == bytes(size),
+                'level block destination was occupied: ' + move['room'])
+        require(sha(candidate[start:start + size]) == move['blob_sha256'],
+                'moved level block differs: ' + move['room'])
+        slot = lorom(0x05E000) + int(move['room'], 16) * 3
+        require(base[slot:slot + 3] == bytes.fromhex(move['source_pointer'])[:3] or
+                int.from_bytes(base[slot:slot + 3], 'little') == int(move['source_pointer'], 16),
+                'level pointer was not the reviewed source: ' + move['room'])
+        require(int.from_bytes(candidate[slot:slot + 3], 'little') ==
+                int(move['destination_pointer'], 16),
+                'level pointer does not name the moved block: ' + move['room'])
+        # The moved stream must parse to the original objects plus one music object.
+        objects, terminator = prepare_music_objects.walk(
+            candidate[start + 8:start + 8 + size - 8])
+        numbers = [((item[0] >> 5) & 3) * 16 + (item[1] >> 4) for _, item in objects]
+        require(numbers.count(0x26) == 1, 'moved block does not hold one music object')
+        music = [item for index, item in objects
+                 if ((item[0] >> 5) & 3) * 16 + (item[1] >> 4) == 0x26][0]
+        require(music == bytes.fromhex(move['object']), 'music object bytes differ')
+        require(terminator == len(candidate[start + 8:start + 8 + size - 8]) - 1,
+                'moved block terminator differs')
+        expected.update(range(start, start + size))
+        expected.update(range(slot, slot + 3))
 
     changed = {index for index, (a, b) in enumerate(zip(base, candidate)) if a != b}
     require(changed <= expected, 'unreviewed ROM difference: '

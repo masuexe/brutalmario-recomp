@@ -73,9 +73,9 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | --- | --- |
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
-| ROM SHA-256 | `91ace3ba5f5b1c8d4f0975790108ccb726b189c53f30e076f076754b6755c97a` |
-| Native binary SHA-256 | `9fcdc2f8452edaf1399fb488bc0ff98a5751475d8feea75602e4db8139d04bc8` |
-| Changed bytes | 7,162 |
+| ROM SHA-256 | `986d470f0f731aec74a036f44a2c2f2c92fbe2e3b0f6c47d91b6338c855779f7` |
+| Native binary SHA-256 | `d1f944643acc0d5adec2f3dfecf1b91785728f60c344fdd267c879edb56def07` |
+| Changed bytes | 9,001 |
 | Selection bytes | 208 |
 | Installed songs | 3 |
 
@@ -157,8 +157,9 @@ Result of the first audit:
 | --- | --- |
 | The single music object controls the song; retargeted now | `05D`, `05E`, `0D3`, `102` |
 | Correct with no patch | `018`, `01B`, `02E`, `062`, `066`, `068`, `069`, `06C`, `070`, `074`, `081`, `0A9`, `0BD`, `0F5`, `10B`, `116`, `122` |
-| Still wrong | `02F`, `032`, `033`, `034`, `035`, `03C`, `107` |
-| No reviewed target | `020`, `036` |
+| Inherited song; object added | `02F`, `032`, `033`, `034`, `035`, `03C` |
+| Truncated level data | `107` |
+| Silent by convention | `020`, `036` |
 | Stalls on entry | `0A2` |
 | Leaves gameplay | `173` |
 
@@ -176,6 +177,42 @@ The audit tool is `tools/audit_demo11_music_selection.py`. It writes
 `local/reports/demo11-music-audit.json`. The teleport is an assisted
 fixture: it proves the song selection of a direct room entry, not an ordinary
 course route and not an audible match.
+
+## Rooms that inherit their song
+
+The user report marks several courses with `*`, which means "play the song of
+the previous scene". Those rooms hold no level music object, so the level
+loader keeps the parent song. The user also reported that the correct song for
+them is `0x6B` (`02F`, `032`, `033`, `034`, `035`, `107`)
+and `0x51` (`03C`).
+
+The tool `tools/prepare_music_objects.py` adds a music object to those
+rooms. A level block has no spare byte, so the tool moves the whole block into
+a free within-bank range, appends the object before the terminator, and
+repoints the level table. The destination must be empty and unprotected, and
+the qualifier re-parses the moved stream.
+
+| Room | Song | Object | Destination |
+| --- | --- | --- | --- |
+| `02F` | `6B` | `47 60 6C` | `06BD20` |
+| `032` | `6B` | `43 60 6C` | `06BEDD` |
+| `033` | `6B` | `44 60 6C` | `06BF23` |
+| `034` | `6B` | `43 60 6C` | `06BF85` |
+| `035` | `6B` | `43 60 6C` | `06BFA5` |
+| `03C` | `51` | `4C 68 52` | `108000` |
+
+Room `107` stays unchanged. Its RATS block is 261 bytes, but the object
+stream needs 326, so the level data is truncated in the base image. The tool
+refuses a stream that does not terminate inside its own block.
+
+A new audit of the six moved rooms reads the reviewed song on arrival.
+
+## Silence convention
+
+The user reported that slot `0x1E` is the legacy convention for "play no
+music". Some versions use `0x00` for the same purpose. Rooms `020` and `036`
+play `0x1E` on entry, so their current selection is correct and the
+recording marks them as silent instead of wrong.
 
 ## Legacy songs that stay on the raw path
 

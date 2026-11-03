@@ -284,6 +284,9 @@ def build(base, donor, config):
         pointer = lorom(int(track['pointer_address'], 16))
         out[pointer:pointer + 3] = song_pointer(track)
     apply_code_patches(out, config)
+    if config.get('level_music_objects'):
+        import prepare_music_objects
+        prepare_music_objects.apply(out, config)
     return bytes(out)
 
 
@@ -299,6 +302,10 @@ def generate():
         # The base ROM runs the base native content, so this target mounts the
         # same packs.  The pack files are data, not ROM-derived.
         config['native_sprite_gap'] = inherited
+    # The object moves depend on the song installs and the selection patches,
+    # so they are planned on the built image and recorded in the recipe.
+    import prepare_music_objects
+    config['level_music_objects'] = prepare_music_objects.plan(bytearray(build(base, donor, dict(config, level_music_objects=[]))))
     rom = build(base, donor, config)
     config['output'] = {'size': len(rom), 'sha256': sha(rom)}
     RECIPE.write_text(json.dumps(config, indent=1) + '\n')

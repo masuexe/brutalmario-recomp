@@ -1881,8 +1881,82 @@
    }
   ]
  },
+ "level_music_objects": [
+  {
+   "room": "02F",
+   "source_pointer": "4AC208",
+   "source_size": 210,
+   "source_offset": 2441736,
+   "destination_pointer": "0DBD68",
+   "destination_offset": 441696,
+   "blob_size": 221,
+   "blob_sha256": "df040730f95e18d89cd898c8ba17e5b72524aba6f55f7daf118bc3fdbe1afcf7",
+   "song": "6B",
+   "object": "47606c"
+  },
+  {
+   "room": "032",
+   "source_pointer": "FB91F4",
+   "source_size": 91,
+   "source_offset": 4035060,
+   "destination_pointer": "0DBE45",
+   "destination_offset": 441917,
+   "blob_size": 102,
+   "blob_sha256": "1750d6d352c5c4a3a73aaa48784486de396e8c1442a1c37ab327ed39c5b1f00b",
+   "song": "6B",
+   "object": "43606c"
+  },
+  {
+   "room": "033",
+   "source_pointer": "FB94C3",
+   "source_size": 119,
+   "source_offset": 4035779,
+   "destination_pointer": "0DBEAB",
+   "destination_offset": 442019,
+   "blob_size": 130,
+   "blob_sha256": "c4345503ac304f52f673cff9c93c3547d4d8030386002761ea643cd0d7d89b76",
+   "song": "6B",
+   "object": "44606c"
+  },
+  {
+   "room": "034",
+   "source_pointer": "FB97A5",
+   "source_size": 21,
+   "source_offset": 4036517,
+   "destination_pointer": "0DBF2D",
+   "destination_offset": 442149,
+   "blob_size": 32,
+   "blob_sha256": "a56c0300dcff39dbcdaf91d2dfb93aef097336a363e30c21d9348d66d8e2860f",
+   "song": "6B",
+   "object": "43606c"
+  },
+  {
+   "room": "035",
+   "source_pointer": "FB99EA",
+   "source_size": 25,
+   "source_offset": 4037098,
+   "destination_pointer": "0DBF4D",
+   "destination_offset": 442181,
+   "blob_size": 36,
+   "blob_sha256": "640d3d569112bc03099dfc8c2a0ec68f7813697260af55057e5a4cf7ad02d4ab",
+   "song": "6B",
+   "object": "43606c"
+  },
+  {
+   "room": "03C",
+   "source_pointer": "68D715",
+   "source_size": 1454,
+   "source_offset": 3430165,
+   "destination_pointer": "218008",
+   "destination_offset": 1081344,
+   "blob_size": 1465,
+   "blob_sha256": "528e4e3571b827f76f71ff1e3472de960fd090cc3d6f0814efd58064adc3d4b8",
+   "song": "51",
+   "object": "4c6852"
+  }
+ ],
  "output": {
   "size": 4194304,
-  "sha256": "91ace3ba5f5b1c8d4f0975790108ccb726b189c53f30e076f076754b6755c97a"
+  "sha256": "986d470f0f731aec74a036f44a2c2f2c92fbe2e3b0f6c47d91b6338c855779f7"
  }
 }
