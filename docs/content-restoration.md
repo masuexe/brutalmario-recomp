@@ -1688,10 +1688,10 @@ finds the legacy four-song upload groups only in `cheap-demo`, so that version
 is the donor for the legacy-exclusive songs.
 
 The recipe `demo11-music-retarget` descends from `demo11-overworld-music`. It
-changes 204 one-byte music parameters and installs three legacy songs at free
+changes 208 one-byte music parameters and installs three legacy songs at free
 Demo 1-1 slots: `31` to `35`, `49` to `3A` and `51` to `3D`.
-ROM SHA-256 is `35cb69a1d44142add60b571cccee84293ee34f41aa49b759807d54323342f6c5`;
-7,158 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
+ROM SHA-256 is `91ace3ba5f5b1c8d4f0975790108ccb726b189c53f30e076f076754b6755c97a`;
+7,162 bytes change. `tools/qualify_demo11_music_retarget.py` checks the
 selection sites, the installed payloads, the target slots and the ROM delta.
 
 The song table entry must use the `0x80`-`0xFF` mirror for file banks
@@ -1700,6 +1700,11 @@ upload stalls. Rooms `013` and `0AA` enter gameplay after that fix.
 
 The user reported that the legacy `0x37` track is an older arrangement of slot
 `0x30`, so rooms `0AA` and `0AB` request `0x30` and the port is gone.
+
+A console-teleport audit reads `$0DDA` on arrival for the rooms that the
+recipe could not identify. Rooms `05D`, `05E`, `0D3` and `102`
+are retargeted from that evidence. Seven rooms (`02F`, `032`, `033`, `034`, `035`, `03C`,
+`107`) still play slot `0x47` or `0x1E` from an unidentified source.
 
 The checkpoint proves song selection only. The audible match, the four songs
 that use unreviewed commands (`3F`, `43`, `49`, `4F`, `53`), the inherited-music

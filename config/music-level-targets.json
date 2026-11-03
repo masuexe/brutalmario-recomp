@@ -305,15 +305,15 @@
   },
   {
    "room": "05D",
-   "wrong": "34",
+   "wrong": "38",
    "target": "A4",
-   "note": "\uff08\u5f00\u5934\u65e0\u58f0\u662f\u6b63\u5e38\u73b0\u8c61\uff0c\u9700\u8981\u5f80\u53f3\u8d70\u628aboss\u89e6\u53d1\u51fa\u6765\u624d\u4f1a\u64ad\u653e\u97f3\u4e50\uff09"
+   "note": "Console-teleport audit: the single music object controls this room. Retarget the object parameter to the reviewed slot."
   },
   {
    "room": "05E",
-   "wrong": "23",
+   "wrong": "53",
    "target": "83",
-   "note": ""
+   "note": "Console-teleport audit: the single music object controls this room. Retarget the object parameter to the reviewed slot."
   },
   {
    "room": "05F",
@@ -749,9 +749,9 @@
   },
   {
    "room": "0D3",
-   "wrong": "26",
+   "wrong": "39",
    "target": "89",
-   "note": ""
+   "note": "Console-teleport audit: the single music object controls this room. Retarget the object parameter to the reviewed slot."
   },
   {
    "room": "0D4",
@@ -959,9 +959,9 @@
   },
   {
    "room": "102",
-   "wrong": "47",
+   "wrong": "1E",
    "target": "6B",
-   "note": ""
+   "note": "Console-teleport audit: the single music object controls this room. Retarget the object parameter to the reviewed slot."
   },
   {
    "room": "103",

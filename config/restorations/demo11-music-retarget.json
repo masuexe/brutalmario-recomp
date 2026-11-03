@@ -436,6 +436,18 @@
    "role": "Room 05C course music: 47 -> 6B."
   },
   {
+   "address": "FDEBB1",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 05D course music: 38 -> A4."
+  },
+  {
+   "address": "5E9835",
+   "before": "54",
+   "after": "84",
+   "role": "Room 05E course music: 53 -> 83."
+  },
+  {
    "address": "FFD618",
    "before": "24",
    "after": "84",
@@ -802,6 +814,12 @@
    "role": "Room 0D2 course music: 26 -> 89."
   },
   {
+   "address": "16F329",
+   "before": "3a",
+   "after": "8a",
+   "role": "Room 0D3 course music: 39 -> 89."
+  },
+  {
    "address": "17C85F",
    "before": "36",
    "after": "8d",
@@ -998,6 +1016,12 @@
    "before": "24",
    "after": "84",
    "role": "Room 101 course music: 23 -> 83."
+  },
+  {
+   "address": "3CB110",
+   "before": "1f",
+   "after": "6c",
+   "role": "Room 102 course music: 1E -> 6B."
   },
   {
    "address": "1FC0F0",
@@ -1859,6 +1883,6 @@
  },
  "output": {
   "size": 4194304,
-  "sha256": "35cb69a1d44142add60b571cccee84293ee34f41aa49b759807d54323342f6c5"
+  "sha256": "91ace3ba5f5b1c8d4f0975790108ccb726b189c53f30e076f076754b6755c97a"
  }
 }

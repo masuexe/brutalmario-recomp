@@ -73,10 +73,10 @@ The recipe `demo11-music-retarget` descends from `demo11-overworld-music`.
 | --- | --- |
 | Target | `demo11-music-retarget` |
 | Base ROM SHA-256 | `4ee6d47e0f3a6bfb5395d7531f683ab8aaedf6b29de15ab877341adbd0b71e8b` |
-| ROM SHA-256 | `35cb69a1d44142add60b571cccee84293ee34f41aa49b759807d54323342f6c5` |
-| Native binary SHA-256 | `89093db403cda93882423bdf89435a19f609df03f4da350eb3e515b8151be16b` |
-| Changed bytes | 7,158 |
-| Selection bytes | 204 |
+| ROM SHA-256 | `91ace3ba5f5b1c8d4f0975790108ccb726b189c53f30e076f076754b6755c97a` |
+| Native binary SHA-256 | `9fcdc2f8452edaf1399fb488bc0ff98a5751475d8feea75602e4db8139d04bc8` |
+| Changed bytes | 7,162 |
+| Selection bytes | 208 |
 | Installed songs | 3 |
 
 The recipe changes one byte per reviewed music object. It also installs four
@@ -142,6 +142,41 @@ slot `4F` is null.
 
 Room `107` requests slot `0x47` from outside its own music object. A reference capture confirms that request. The report expects slot `0x6B`. The music object in the room does not control the entry song, so this entry stays open.
 
+## Console teleport song audit
+
+The first recipe could not identify the music object of some rooms, so those
+rooms stayed unchanged. A native audit now enters each of them with the
+built-in console teleport and reads `$0DDA` on arrival.
+
+The arrival sample is the reliable one. A short jingle can finish inside a
+later wait, and `$0DDA` then reads `FF`.
+
+Result of the first audit:
+
+| Result | Rooms |
+| --- | --- |
+| The single music object controls the song; retargeted now | `05D`, `05E`, `0D3`, `102` |
+| Correct with no patch | `018`, `01B`, `02E`, `062`, `066`, `068`, `069`, `06C`, `070`, `074`, `081`, `0A9`, `0BD`, `0F5`, `10B`, `116`, `122` |
+| Still wrong | `02F`, `032`, `033`, `034`, `035`, `03C`, `107` |
+| No reviewed target | `020`, `036` |
+| Stalls on entry | `0A2` |
+| Leaves gameplay | `173` |
+
+Rooms `02F`, `032`, `033`, `034`, `035` and
+`107` all play slot `0x47` although their level data holds a different
+parameter, and room `03C` plays slot `0x1E`. The song therefore comes
+from outside the level music object for those rooms. A level header table
+scan over six candidate tables found no matching entry, so the source is
+still unknown.
+
+After the retarget, rooms `05D`, `05E`, `0D3` and `102`
+play `0xA4`, `0x83`, `0x89` and `0x6B` on arrival.
+
+The audit tool is `tools/audit_demo11_music_selection.py`. It writes
+`local/reports/demo11-music-audit.json`. The teleport is an assisted
+fixture: it proves the song selection of a direct room entry, not an ordinary
+course route and not an audible match.
+
 ## Legacy songs that stay on the raw path
 
 Music batch G installed songs `3F`, `43` and `53` as raw group slices.
@@ -168,7 +203,7 @@ because the reviewed walk rejects those songs:
 - every reviewed target slot holds a song in the candidate;
 - the ROM delta stays inside the reviewed sites and the installed blocks.
 
-The qualifier passes with 204 selection bytes and 3 installed songs.
+The qualifier passes with 208 selection bytes and 3 installed songs.
 
 `tests/test_prepare_music_retarget.py` adds 16 bounded checks for the
 music object pattern, the site choice rule, the first-fit allocator, the
