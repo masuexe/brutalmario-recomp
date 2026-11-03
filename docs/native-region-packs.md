@@ -104,6 +104,31 @@ song is a short jingle that finishes inside the wait.
 The teleport is an assisted fixture. It proves the song selection of a direct
 room entry, not an ordinary course route and not an audible match.
 
+## Level data read path
+
+Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
+block has exactly one reference in the level tables, so a move recipe has a
+clean input. Before any move, the read path needs proof.
+
+A diagnostic ROM trace logs the first read of every cartridge byte through
+cart_getRomPtr. Two rooms were sampled:
+
+| Room | Block | Payload bytes | Read through the hook |
+| --- | --- | --- | --- |
+| `0AA` | `29C701` | 35 | 35 |
+| `008` | `36A841` | 6,071 | 6,071 |
+
+Both payloads are read in full through the cartridge hook. The sprite-gap
+runtime already serves that hook, so the region provider can replace a level
+block without a code change.
+
+A second check moves the `0AA` block into the pack and compares the
+course entry against the parent image. Both runs reach gameplay mode `0x14`,
+and the WRAM images differ by zero bytes.
+
+These checks prove the read path and one small room. They do not prove every
+course, and they do not prove an audible or complete course pass.
+
 ## What this opens
 
 The pilot shows that music no longer needs a free 6,144-byte range inside one
