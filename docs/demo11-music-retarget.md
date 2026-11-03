@@ -151,6 +151,12 @@ because the reviewed walk rejects those songs:
 
 The qualifier passes with 202 selection bytes and 4 installed songs.
 
+`tests/test_prepare_music_retarget.py` adds 16 bounded checks for the
+music object pattern, the site choice rule, the first-fit allocator, the
+protected RATS ranges, the bank boundary and the graphics record choice.
+The suite reports 464 tests with the same 8 stale host-audio failures that
+the previous session deferred.
+
 This evidence proves song selection only. It is not an audible match. The user
 must listen to the courses before this checkpoint is accepted.
 
