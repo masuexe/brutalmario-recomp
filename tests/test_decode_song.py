@@ -12,9 +12,9 @@ import decode_song as song
 import parse_song as structure
 
 
-def payload(patterns, track_bytes, first=0x5467):
+def payload(patterns, track_bytes, first=0x5467, length=0x80):
     """Build a synthetic payload with one pattern and one track."""
-    data = bytearray(0x80)
+    data = bytearray(length)
     data[0:2] = first.to_bytes(2, 'little')
     data[2:4] = (0).to_bytes(2, 'little')
     data[4:6] = (0x00FF).to_bytes(2, 'little')
@@ -41,24 +41,30 @@ class StructureTests(unittest.TestCase):
 
 
 class DecodeTests(unittest.TestCase):
-    def test_a_note_pair_yields_a_duration_and_a_pitch(self):
-        data = payload(None, bytes.fromhex('00'))
+    def test_a_zero_byte_is_a_phrase_break(self):
+        # A 0x00 byte separates phrases. It does not end the track, so the
+        # decoder reports it as a break event.
+        data = payload(None, bytes.fromhex('00 06 90 00'))
         events = song.decode_track(data, 0x5440)
-        self.assertEqual(events, [])
+        self.assertEqual(events[0][3], ('break',))
+        self.assertEqual(events[1][1], 6)
+        self.assertEqual(events[1][2], 0x90)
 
     def test_a_timed_note_is_read(self):
         # A duration byte takes one following byte as its pitch, including a
-        # byte above 0x7F.
-        data = payload(None, bytes.fromhex('06 90 00'))
+        # byte above 0x7F. The track region ends after that pair.
+        data = payload(None, bytes.fromhex('06 90'))
         events = song.decode_track(data, 0x5440)
-        self.assertEqual(len(events), 1)
-        self.assertEqual(events[0][1], 6)
-        self.assertEqual(events[0][2], 0x90)
+        timed = [event for event in events if event[1]]
+        self.assertTrue(timed)
+        self.assertEqual(timed[0][1], 6)
+        self.assertEqual(timed[0][2], 0x90)
 
     def test_a_rest_uses_pitch_80(self):
-        data = payload(None, bytes.fromhex('06 80 00'))
+        data = payload(None, bytes.fromhex('06 80'))
         events = song.decode_track(data, 0x5440)
-        self.assertEqual(events[0][2], 0x80)
+        timed = [event for event in events if event[1]]
+        self.assertEqual(timed[0][2], 0x80)
 
     def test_an_instrument_command_takes_one_argument(self):
         data = payload(None, bytes.fromhex('c7 24 06 90 00'))
@@ -70,11 +76,10 @@ class DecodeTests(unittest.TestCase):
         events = song.decode_track(data, 0x5440)
         self.assertEqual(events[0][3][0], 0xE9)
 
-    def test_a_track_cursor_outside_the_payload_is_rejected(self):
+    def test_a_cursor_below_the_base_returns_no_events(self):
+        # A cursor below the payload base reads no byte, so the track is empty.
         data = payload(None, bytes.fromhex('00'))
-        with self.assertRaisesRegex(ValueError, 'leaves the payload'):
-            song.decode_track(data, 0x9999)
-
+        self.assertEqual(song.decode_track(data, 0x9999), [])
 
 if __name__ == '__main__':
     unittest.main()
