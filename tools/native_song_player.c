@@ -23,6 +23,7 @@ typedef struct {
   uint16_t cursor;
   uint8_t instrument;
   uint8_t volume;
+  uint8_t tuning;
   uint32_t wait;
   uint16_t return_to[MAX_DEPTH];
   int depth;
@@ -39,38 +40,59 @@ static uint16_t word(size_t at) {
   return (uint16_t)(song[at] | (song[at + 1] << 8));
 }
 
-/* The pitch register is a sample-rate multiplier, not a note number. A value
- * of 0x1000 reads one BRR sample per DSP cycle, which is the sample's own
- * rate. A note raises or lowers that rate by a semitone ratio. The song byte
- * is 0x80 + semitones above the sample base, so the register is
- * 0x1000 * 2^(semitones/12). */
-static uint16_t pitch_register(uint8_t note) {
-  int semitones = note >= 0x80 ? (int)(note - 0x80) : (int)note;
-  double rate = 4096.0;
-  while (semitones >= 12) { rate *= 2.0; semitones -= 12; }
-  while (semitones <= -12) { rate *= 0.5; semitones += 12; }
-  static const double ratios[12] = {
-    1.0000, 1.0595, 1.1225, 1.1892, 1.2599, 1.3348,
-    1.4142, 1.4983, 1.5874, 1.6818, 1.7818, 1.8877};
-  rate *= ratios[semitones < 0 ? semitones + 12 : semitones];
-  if (semitones < 0) rate *= 0.5;
-  if (rate > 0x3fff) rate = 0x3fff;
-  if (rate < 1) rate = 1;
-  return (uint16_t)rate;
+/* Pitch conversion from the AddmusicK SPC engine.
+ *
+ * PitchTable spans one octave. SetPitch indexes it by the integer octave,
+ * interpolates with the fractional part, and multiplies by the sample base
+ * pitch from the instrument tuning byte. Writing the raw note byte gives a
+ * sub-audio rate, which sounds like a rumble and not a note. */
+/* InstrumentTable from the AddmusicK SPC engine: sample, ADSR1, ADSR2, GAIN,
+ * tuning. The song selects this table index, and byte 0 is the real SRCN. */
+static const uint8_t kInstrumentTable[20][5] = {
+  {0x00, 0xFE, 0x6A, 0xB8, 0x06}, {0x01, 0xFA, 0x6A, 0xB8, 0x03},
+  {0x02, 0xAE, 0x2F, 0xB8, 0x04}, {0x03, 0xFE, 0x6A, 0xB8, 0x03},
+  {0x04, 0xA9, 0x6A, 0xB8, 0x03}, {0x07, 0xAE, 0x26, 0xB8, 0x07},
+  {0x08, 0xFA, 0x6A, 0xB8, 0x03}, {0x09, 0x9E, 0x1F, 0xB8, 0x03},
+  {0x05, 0xAE, 0x26, 0xB8, 0x1E}, {0x0A, 0xEE, 0x6A, 0xB8, 0x02},
+  {0x0B, 0xFE, 0x6A, 0xB8, 0x08}, {0x01, 0xF7, 0x6A, 0xB8, 0x03},
+  {0x10, 0x0E, 0x6A, 0x7F, 0x04}, {0x0C, 0xFE, 0x6A, 0xB8, 0x03},
+  {0x0D, 0xAE, 0x26, 0xB8, 0x07}, {0x12, 0x8E, 0xE0, 0xB8, 0x03},
+  {0x0C, 0xFE, 0x70, 0xB8, 0x03}, {0x11, 0xFE, 0x6A, 0xB8, 0x05},
+  {0x01, 0xE9, 0x6A, 0xB8, 0x03}, {0x0F, 0x0F, 0x6A, 0x7F, 0x03},
+};
+
+static const uint16_t kPitchTable[13] = {
+  0x085F, 0x08DE, 0x0965, 0x09F4, 0x0A8C, 0x0B2C, 0x0BD6,
+  0x0C8B, 0x0D4A, 0x0E14, 0x0EEA, 0x0FCD, 0x10BE};
+
+static uint16_t pitch_register(uint8_t note, uint8_t tuning) {
+  int index = note >= 0x80 ? (int)(note - 0x80) : (int)note;
+  int octave = index / 12;
+  int remainder = index % 12;
+  if (octave > 12) octave = 12;
+  int low = kPitchTable[octave];
+  int high = octave + 1 < 13 ? kPitchTable[octave + 1] : low * 2;
+  int value = low + (high - low) * remainder / 12;
+  /* The table value is already the rate for this octave at the sample base.
+   * The tuning byte adjusts it by a small amount, not a multiple. */
+  int scaled = value + (int)tuning;
+  if (scaled > 0x3FFF) scaled = 0x3FFF;
+  return (uint16_t)scaled;
 }
 
 static void write_channel(Dsp *dsp, int index, const Voice *voice, uint8_t pitch) {
   uint8_t base = (uint8_t)(10 * index);
-  uint16_t reg = pitch_register(pitch);
+  int entry = voice->instrument < 20 ? voice->instrument : 0;
+  uint16_t reg = pitch_register(pitch, kInstrumentTable[entry][4]);
   dsp_write(dsp, (uint8_t)(base + 0x00), (uint8_t)(reg & 0xFF));
   dsp_write(dsp, (uint8_t)(base + 0x01), (uint8_t)(reg >> 8));
   dsp_write(dsp, (uint8_t)(base + 0x02), voice->volume);
   dsp_write(dsp, (uint8_t)(base + 0x03), voice->volume);
-  dsp_write(dsp, (uint8_t)(base + 0x04),
-            (uint8_t)(voice->instrument ? voice->instrument : 1));
-  dsp_write(dsp, (uint8_t)(base + 0x05), 0x00);
-  dsp_write(dsp, (uint8_t)(base + 0x06), 0x00);
-  dsp_write(dsp, (uint8_t)(base + 0x07), 0x7F);
+  const uint8_t *inst = kInstrumentTable[entry];
+  dsp_write(dsp, (uint8_t)(base + 0x04), inst[0]);   /* SRCN */
+  dsp_write(dsp, (uint8_t)(base + 0x05), inst[1]);   /* ADSR1 */
+  dsp_write(dsp, (uint8_t)(base + 0x06), inst[2]);   /* ADSR2 */
+  dsp_write(dsp, (uint8_t)(base + 0x07), inst[3]);   /* GAIN */
 }
 
 /* Run one command. Return the frames to wait, or -1 when the voice is done. */
@@ -180,6 +202,7 @@ int main(int argc, char **argv) {
       voice->cursor = track;
       voice->instrument = 1;
       voice->volume = 0x7F;
+      voice->tuning = 0x03;
       voice->wait = 0;
       voice->depth = 0;
       voice_count += 1;

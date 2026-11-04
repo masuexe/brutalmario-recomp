@@ -213,13 +213,29 @@ a note.
 
 A second attempt converted the byte with a plain semitone ratio. The output
 is still noise, because the conversion needs the driver table, which is
-indexed by sample as well as by note. A search of the image for a 13-entry
-run that spans one octave found 166 candidates and none of them has clean
-semitone steps, so the table was not located.
+indexed by sample as well as by note. The table is not in the game image as a plain list. It is in the AddmusicK
+SPC engine, which reimplements the same driver:
+https://github.com/HertzDevil/AddmusicK, `test/asm/main.asm`.
+
+That source gives the two pieces this project was missing:
+
+- `PitchTable`: thirteen words, `085F 08DE 0965 09F4 0A8C 0B2C
+  `0BD6 0C8B 0D4A 0E14 0EEA 0FCD 10BE`, one octave.
+- `SetPitch`: divide the note by `0x18` to pick the octave, interpolate
+  with the remainder, then multiply by the sample base pitch in `$02f0`.
+
+The same repository gives `InstrumentData.asm`: twenty music instruments of
+six bytes, sample, ADSR1, ADSR2, GAIN, tuning, subtuning.
+
+Those tables are copied into `tools/spc_reference.py
+and into the player. The output is still not a melody: the rendered file
+reaches a constant clipped level instead of a note sequence. The conversion
+still differs from `SetPitch`, most likely in the `$02f0` base-pitch term,
+which the engine derives per sample and this player does not.
 
 The parser and the sequencer are sound: the command stream, the phrase rule
 and the subroutine return all match the reference corpus. The audio stage is
-not. The player does not reproduce a melody until the note table is found.
+not solved.
 
 ## Level data read path
 
