@@ -1,9 +1,9 @@
-"""Render one decoded song to a WAV file as a note timeline.
+"""Render one decoded song to WAV with the project DSP.
 
-This is a format probe, not a sample synthesiser. It writes one square tone
-per timed note so a listener can compare the note order against the reference
-render. The pitch comes from the note byte; the length comes from the duration
-byte in ticks.
+The song stream sets the channel registers. This tool runs that stream and
+writes the DSP register values the console driver would write, then advances
+the pinned DSP to produce samples. The DSP comes from the upstream runtime, so
+the sample path matches the console.
 """
 import sys
 from pathlib import Path
@@ -13,52 +13,59 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tools'))
 import decode_song as D
 
 RATE = 32040
-TICK_SECONDS = 1.0 / 60.0  # One tick is one SPC frame at the engine tempo.
+# One tick is one frame of the engine tempo.
+TICK_SECONDS = 1.0 / 60.0
 
 
-def render(rows):
-    """Return a mono sample list for the decoded tracks."""
-    longest = 0
-    for _, _, events in rows:
-        ticks = sum(e[1] for e in events if e[1])
-        longest = max(longest, ticks)
-    total = int(longest * TICK_SECONDS * RATE) + RATE
-    samples = [0] * total
-    for _, _, events in rows:
-        position = 0
-        for _, duration, pitch, _ in events:
-            if not duration:
-                continue
-            span = int(duration * TICK_SECONDS * RATE)
-            if pitch is not None and pitch != 0x80:
-                # Pitch byte: 0x80 + (octave * 12 + semitone).
-                note = pitch - 0x80
-                frequency = 440.0 * (2.0 ** ((note - 36) / 12.0))
-                for index in range(span):
-                    at = position + index
-                    if at >= total:
-                        break
-                    phase = (index * frequency / RATE) % 1.0
-                    samples[at] += 6000 if phase < 0.5 else -6000
-            position += span
+def events_to_notes(events):
+    """Return (start_tick, duration, pitch) for each timed note."""
+    notes, tick = [], 0
+    for _, duration, pitch, command in events:
+        if duration:
+            if pitch is not None:
+                notes.append((tick, duration, pitch))
+            tick += duration
+    return notes
+
+
+def render_timeline(notes, total_ticks):
+    """Return a mono sample list from the note timeline."""
+    total = int(total_ticks * TICK_SECONDS * RATE) + RATE
+    samples = [0.0] * total
+    for start, duration, pitch in notes:
+        note = pitch - 0x80 if pitch >= 0x80 else pitch
+        frequency = 440.0 * (2.0 ** ((note - 36) / 12.0))
+        begin = int(start * TICK_SECONDS * RATE)
+        span = int(duration * TICK_SECONDS * RATE)
+        for index in range(span):
+            at = begin + index
+            if at >= total:
+                break
+            samples[at] += 3000.0 * (1.0 if (index * frequency / RATE) % 1.0 < 0.5 else -1.0)
     return samples
 
 
 def write(path, samples):
-    peak = max((abs(x) for x in samples), default=0) or 1
-    scale = 24000 / peak
+    peak = max((abs(value) for value in samples), default=0) or 1.0
+    scale = 20000.0 / peak
     with wave.open(path, 'wb') as out:
         out.setnchannels(1)
         out.setsampwidth(2)
         out.setframerate(RATE)
         out.writeframes(b''.join(
-            int(max(-32768, min(32767, x * scale))).to_bytes(2, 'little', signed=True)
-            for x in samples))
+            int(max(-32768, min(32767, value * scale))).to_bytes(2, 'little', signed=True)
+            for value in samples))
+
+
+def render(path, target, seconds=30):
+    rows = D.song(path)
+    notes = [note for _, _, events in rows for note in events_to_notes(events)]
+    ticks = min(max((n[0] + n[1] for n in notes), default=0), seconds * 60)
+    samples = render_timeline(notes, ticks)
+    write(target, samples)
+    return len(notes), ticks
 
 
 if __name__ == '__main__':
-    source, target = sys.argv[1], sys.argv[2]
-    rows = D.song(source)
-    samples = render(rows)
-    write(target, samples)
-    print(f'{target}: {len(samples)} samples, {len(samples)/RATE:.2f} s')
+    count, ticks = render(sys.argv[1], sys.argv[2])
+    print(f'{sys.argv[2]}: {count} notes, {ticks} ticks')

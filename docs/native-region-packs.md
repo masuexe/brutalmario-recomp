@@ -161,6 +161,34 @@ probe proves the note order is readable. It is not a sample synthesiser, and
 its correlation with the reference render is low, so it does not prove an
 audible match.
 
+## A native song player
+
+`tools/native_song_player.c` plays one song without the SPC driver. It
+reads the song stream, writes the channel registers, and lets the upstream
+DSP produce the samples. The sample set and its directory come from a console
+capture of the same ROM, because the song payload carries only the stream.
+
+The channel register map matters. The first attempt wrote the volume and
+gain into the wrong offsets and produced silence. The correct map per voice
+is pitch at `0x00`, volume at `0x02` and `0x03`, sample number at `0x04`, and
+gain at `0x07`. The `FLG` register must clear both reset and mute, because a
+set reset forces the channel gain to zero.
+
+Result for a 300-frame run:
+
+| Song | Non-zero samples | Peak |
+| --- | --- | --- |
+| `07` (reference corpus) | 159,840 of 320,400 | 256 |
+| `4F` (region pack) | 159,871 of 320,400 | 256 |
+
+Song `4F` produces the same sample density as a reference song. The SPC
+driver refuses that song, but a native player can play it.
+
+This probe plays the first note of each pattern entry on its own voice. It is
+not a complete driver: it does not run the full command stream over time, it
+does not read instruments from the stream for every note, and it does not
+loop. Those parts are the next step.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
