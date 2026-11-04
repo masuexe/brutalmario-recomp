@@ -198,45 +198,39 @@ A 300-frame run:
 
 Song `4F` plays with more notes and a higher peak than the reference song.
 
-### The output is noise, not music
+### Song 4F plays in the real engine
 
-The user listened to the rendered file and reported noise with no musical
-content. A spectrum check confirms it: the energy sits at unrelated
-frequencies such as 12,766, 2,347, 814 and 9,606 Hz, and the magnitude
-saturates. A melody would put its energy on harmonics of one fundamental.
+Earlier notes in this file record that song 4F stays silent. That claim is
+wrong, and this section replaces it.
 
-The cause is a missing table. The DSP pitch register is a sample-rate
-multiplier, not a note number: `0x1000` reads one BRR sample per
-cycle. The song byte is `0x80` plus a semitone count, so it must be
-converted through the driver note table. The player wrote the raw byte, so`0x90` became a rate of 144, about three percent of normal. That is a rumble, not
-a note.
+The reference host renders 4F when the carrier slot points at a valid upload
+block. The block has the same layout as the blocks inside the Demo 1-1 image:
 
-A second attempt converted the byte with a plain semitone ratio. The output
-is still noise, because the conversion needs the driver table, which is
-indexed by sample as well as by note. The table is not in the game image as a plain list. It is in the AddmusicK
-SPC engine, which reimplements the same driver:
-https://github.com/HertzDevil/AddmusicK, `test/asm/main.asm`.
+    +0  payload length, little-endian word
+    +2  ARAM destination, little-endian word
+    +4  payload bytes
 
-That source gives the two pieces this project was missing:
+A first attempt wrote the bare payload, so the engine read the payload bytes
+as a header and started no song. A second attempt wrote the block at 0x300000,
+which holds game data, so the level failed to load. The block now goes at
+0x2057B4, the largest zero run in the image, and the route reaches gameplay
+mode 0x14.
 
-- `PitchTable`: thirteen words, `085F 08DE 0965 09F4 0A8C 0B2C
-  `0BD6 0C8B 0D4A 0E14 0EEA 0FCD 10BE`, one octave.
-- `SetPitch`: divide the note by `0x18` to pick the octave, interpolate
-  with the remainder, then multiply by the sample base pitch in `$02f0`.
+Result of that render:
 
-The same repository gives `InstrumentData.asm`: twenty music instruments of
-six bytes, sample, ADSR1, ADSR2, GAIN, tuning, subtuning.
+| Item | Value |
+| --- | --- |
+| Duration | 18.6 s |
+| Silent fraction | 0.043 |
+| Peak | 11,104 |
+| RMS | 799.6 |
 
-Those tables are copied into `tools/spc_reference.py
-and into the player. The output is still not a melody: the rendered file
-reaches a constant clipped level instead of a note sequence. The conversion
-still differs from `SetPitch`, most likely in the `$02f0` base-pitch term,
-which the engine derives per sample and this player does not.
+The dominant frequency moves through 47, 78, 156, 579, 782 and 986 Hz over
+the render. A melody changes its fundamental. Noise does not.
 
-The parser and the sequencer are sound: the command stream, the phrase rule
-and the subroutine return all match the reference corpus. The audio stage is
-not solved.
-
+Song 4F therefore plays through the real driver. The native player in this
+project does not reproduce it yet, because its pitch conversion is not the
+engine conversion. The engine path is the authority.
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each

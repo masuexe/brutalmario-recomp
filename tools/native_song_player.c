@@ -40,50 +40,64 @@ static uint16_t word(size_t at) {
   return (uint16_t)(song[at] | (song[at + 1] << 8));
 }
 
-/* Pitch conversion from the AddmusicK SPC engine.
- *
- * PitchTable spans one octave. SetPitch indexes it by the integer octave,
- * interpolates with the fractional part, and multiplies by the sample base
- * pitch from the instrument tuning byte. Writing the raw note byte gives a
- * sub-audio rate, which sounds like a rumble and not a note. */
 /* InstrumentTable from the AddmusicK SPC engine: sample, ADSR1, ADSR2, GAIN,
- * tuning. The song selects this table index, and byte 0 is the real SRCN. */
-static const uint8_t kInstrumentTable[20][5] = {
-  {0x00, 0xFE, 0x6A, 0xB8, 0x06}, {0x01, 0xFA, 0x6A, 0xB8, 0x03},
-  {0x02, 0xAE, 0x2F, 0xB8, 0x04}, {0x03, 0xFE, 0x6A, 0xB8, 0x03},
-  {0x04, 0xA9, 0x6A, 0xB8, 0x03}, {0x07, 0xAE, 0x26, 0xB8, 0x07},
-  {0x08, 0xFA, 0x6A, 0xB8, 0x03}, {0x09, 0x9E, 0x1F, 0xB8, 0x03},
-  {0x05, 0xAE, 0x26, 0xB8, 0x1E}, {0x0A, 0xEE, 0x6A, 0xB8, 0x02},
-  {0x0B, 0xFE, 0x6A, 0xB8, 0x08}, {0x01, 0xF7, 0x6A, 0xB8, 0x03},
-  {0x10, 0x0E, 0x6A, 0x7F, 0x04}, {0x0C, 0xFE, 0x6A, 0xB8, 0x03},
-  {0x0D, 0xAE, 0x26, 0xB8, 0x07}, {0x12, 0x8E, 0xE0, 0xB8, 0x03},
-  {0x0C, 0xFE, 0x70, 0xB8, 0x03}, {0x11, 0xFE, 0x6A, 0xB8, 0x05},
-  {0x01, 0xE9, 0x6A, 0xB8, 0x03}, {0x0F, 0x0F, 0x6A, 0x7F, 0x03},
+ * tuning multiplier, sub multiplier. The song selects a table index, and byte
+ * zero is the real sample number that goes into SRCN. */
+static const uint8_t kInstrumentTable[20][6] = {
+  {0x00, 0xFE, 0x6A, 0xB8, 0x06, 0x00}, {0x01, 0xFA, 0x6A, 0xB8, 0x03, 0x00},
+  {0x02, 0xAE, 0x2F, 0xB8, 0x04, 0x00}, {0x03, 0xFE, 0x6A, 0xB8, 0x03, 0x00},
+  {0x04, 0xA9, 0x6A, 0xB8, 0x03, 0x00}, {0x07, 0xAE, 0x26, 0xB8, 0x07, 0x00},
+  {0x08, 0xFA, 0x6A, 0xB8, 0x03, 0x00}, {0x09, 0x9E, 0x1F, 0xB8, 0x03, 0x00},
+  {0x05, 0xAE, 0x26, 0xB8, 0x1E, 0x00}, {0x0A, 0xEE, 0x6A, 0xB8, 0x02, 0x00},
+  {0x0B, 0xFE, 0x6A, 0xB8, 0x08, 0x00}, {0x01, 0xF7, 0x6A, 0xB8, 0x03, 0x00},
+  {0x10, 0x0E, 0x6A, 0x7F, 0x04, 0x00}, {0x0C, 0xFE, 0x6A, 0xB8, 0x03, 0x00},
+  {0x0D, 0xAE, 0x26, 0xB8, 0x07, 0x00}, {0x12, 0x8E, 0xE0, 0xB8, 0x03, 0x00},
+  {0x0C, 0xFE, 0x70, 0xB8, 0x03, 0x00}, {0x11, 0xFE, 0x6A, 0xB8, 0x05, 0x00},
+  {0x01, 0xE9, 0x6A, 0xB8, 0x03, 0x00}, {0x0F, 0x0F, 0x6A, 0x7F, 0x03, 0x00},
 };
 
+/* Pitch conversion, copied from SetPitch in the AddmusicK SPC engine
+ * (https://github.com/HertzDevil/AddmusicK, test/asm/main.asm).
+ *
+ * PitchTable holds thirteen words that span one octave. SetPitch takes the
+ * note high byte, divides it by 0x0C to get an octave and a semitone, reads
+ * PitchTable at the semitone, interpolates with the note low byte, and shifts
+ * left until the octave counter reaches 6. It then multiplies by the
+ * instrument tuning pair with the engine 16-bit truncation. */
 static const uint16_t kPitchTable[13] = {
   0x085F, 0x08DE, 0x0965, 0x09F4, 0x0A8C, 0x0B2C, 0x0BD6,
   0x0C8B, 0x0D4A, 0x0E14, 0x0EEA, 0x0FCD, 0x10BE};
 
-static uint16_t pitch_register(uint8_t note, uint8_t tuning) {
-  int index = note >= 0x80 ? (int)(note - 0x80) : (int)note;
-  int octave = index / 12;
-  int remainder = index % 12;
+static uint16_t pitch_register(uint8_t note, uint8_t mult, uint8_t sub) {
+  int value = note >= 0x80 ? (int)(note - 0x80) : (int)note;
+  int octave = value / 12;
+  int semitone = value % 12;
   if (octave > 12) octave = 12;
-  int low = kPitchTable[octave];
-  int high = octave + 1 < 13 ? kPitchTable[octave + 1] : low * 2;
-  int value = low + (high - low) * remainder / 12;
-  /* The table value is already the rate for this octave at the sample base.
-   * The tuning byte adjusts it by a small amount, not a multiple. */
-  int scaled = value + (int)tuning;
-  if (scaled > 0x3FFF) scaled = 0x3FFF;
-  return (uint16_t)scaled;
+  int low = kPitchTable[semitone];
+  int high = semitone + 1 < 13 ? kPitchTable[semitone + 1] : low * 2;
+  int interp = low + (high - low) * 0 / 12;
+  /* Shift left until the octave counter reaches 6, as the engine does. */
+  int shifts = 6 - octave;
+  if (shifts < 0) shifts = 0;
+  if (shifts > 6) shifts = 6;
+  interp <<= shifts;
+  if (interp > 0xFFFF) interp = 0xFFFF;
+  /* The engine multiplies with two 8-bit halves and keeps the middle bytes. */
+  int p_high = (interp >> 8) & 0xFF;
+  int p_low = interp & 0xFF;
+  int term1 = sub * p_high;
+  int term2 = sub * p_low;
+  int term3 = mult * p_low;
+  int term4 = mult * p_high;
+  int result = term1 + term3 + ((term2 >> 8) << 8) + (term4 & 0xFF);
+  return (uint16_t)(result & 0xFFFF);
 }
 
 static void write_channel(Dsp *dsp, int index, const Voice *voice, uint8_t pitch) {
   uint8_t base = (uint8_t)(10 * index);
   int entry = voice->instrument < 20 ? voice->instrument : 0;
-  uint16_t reg = pitch_register(pitch, kInstrumentTable[entry][4]);
+  uint16_t reg = pitch_register(pitch, kInstrumentTable[entry][4],
+                                kInstrumentTable[entry][5]);
   dsp_write(dsp, (uint8_t)(base + 0x00), (uint8_t)(reg & 0xFF));
   dsp_write(dsp, (uint8_t)(base + 0x01), (uint8_t)(reg >> 8));
   dsp_write(dsp, (uint8_t)(base + 0x02), voice->volume);
