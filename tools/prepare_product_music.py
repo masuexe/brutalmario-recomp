@@ -17,20 +17,33 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+
+# Rooms whose existing music object selects the wrong song.
+OVERRIDES = [{'room': '043', 'song': '41'}]
 sys.path.insert(0, str(ROOT / 'tools'))
 from prepare_rom import verify
 from restore_star_world_1 import (apply_code_patches, check_allocation, lorom,
                                   raw_group_song, sha, write_verified)
 import prepare_music_objects
+import prepare_music_override
 import prepare_music_retarget as music
 
 BASE_TARGET = 'demo11-native-product-r16'
-TARGET = 'demo11-native-product-r17'
-TITLE = 'Brutal Mario Demo11 Product R17'
+TARGET = 'demo11-native-product-r18'
+TITLE = 'Brutal Mario Demo11 Product R18'
 
 
 def build_layer(base, donor, config):
-    return music.build(base, donor, config)
+    out = music.build(base, donor, config)
+    overrides = config.get('music_overrides') or []
+    if overrides:
+        # Patch the image that this call returns, not a copy of it.
+        if not isinstance(out, bytearray):
+            out = bytearray(out)
+        prepare_music_override.prepare(
+            out,
+            [(int(entry['room'], 16), int(entry['song'], 16)) for entry in overrides])
+    return out
 
 
 def main():
@@ -53,6 +66,7 @@ def main():
         'assets': [],
         'music_tracks': result['tracks'],
         'code_patches': result['patches'],
+        'music_overrides': OVERRIDES,
     }
     # Inherit the product packs, since they make the game boot.
     config['native_sprite_gap'] = json.loads(json.dumps(base_cfg['native_sprite_gap']))
@@ -61,11 +75,11 @@ def main():
     config['level_music_objects'] = level_moves
     rom = build_layer(base, donor, config)
     print(f'stage 1: {len(config["code_patches"])} patches, {len(level_moves)} level moves, sha {sha(rom)[:16]}')
-    (ROOT / 'local/music-audit/product-r17-stage1.json').write_text(json.dumps(
+    (ROOT / 'local/music-audit/product-r18-stage1.json').write_text(json.dumps(
         {'sha': sha(rom), 'patches': len(config['code_patches']),
          'moves': level_moves}, indent=1) + '\n')
-    (ROOT / 'local/music-audit/product-r17-stage1.sfc').write_bytes(rom)
-    (ROOT / 'local/music-audit/product-r17-recipe.json').write_text(json.dumps(config, indent=1) + '\n')
+    (ROOT / 'local/music-audit/product-r18-stage1.sfc').write_bytes(rom)
+    (ROOT / 'local/music-audit/product-r18-recipe.json').write_text(json.dumps(config, indent=1) + '\n')
 
 
 if __name__ == '__main__':

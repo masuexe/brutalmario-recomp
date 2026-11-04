@@ -347,6 +347,36 @@ Open questions: the room should play 0x41 per the list and plays 0x44 today,
 and the list also reports a sound problem in 0x41. The cause of that sound
 problem is not known.
 
+### Room 0x43 now plays song 0x41 (product r18)
+
+Room 0x43 held the music object 40 60 45, which selects song 0x44. That song
+came from the legacy donor through adapt_music. The port is faithful: of the
+825 payload bytes, the only differences from the donor are the relocated
+pointer high bytes and the zeroed headers of the other songs in the group. The
+score is therefore the donor score, and it is not the score the level wants.
+
+Product r18 changes the music object to 40 60 42, which selects song 0x41.
+Song 0x41 is a Demo 1-1 song, 854 bytes, with the same payload in demo-only-1
+and demo-1-1.
+
+The change is one byte in place. The level block keeps its size, so the level
+table keeps its pointer and no free range is needed.
+
+| Item | Before | After |
+| --- | --- | --- |
+| Room 0x43 music object | 40 60 45 | 40 60 42 |
+| Song requested | 0x44 | 0x41 |
+| 0DDA in a console capture | 0x44 | 0x41 |
+| Room audio, RMS | not measured | 761.7 |
+
+`tools/prepare_music_override.py` performs the change. It walks the level
+block, finds the one music object, and rewrites the song byte. It refuses a
+room with no pointer, no bounded block, or a number of music objects that is
+not one.
+
+The override list is `music_overrides` in the product recipe. `build_layer` in
+`tools/prepare_product_music.py` applies it to the image that it returns.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
