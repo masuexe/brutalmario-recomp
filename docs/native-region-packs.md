@@ -258,32 +258,49 @@ register before the song started. It did not measure the audio output.
 Two conclusions follow. Song 4F is valid, and the region pack delivers it.
 The native player in this project still does not reproduce it, because its
 pitch conversion is not the engine conversion.
-### User acceptance and the remaining silent rooms
+### User acceptance and a correction about the silent rooms
 
 The user listened to product r17 in room 0A2 and reports that the music is
 correct. Room 0A2 is accepted.
 
-A wider measurement uses the same audio dump for six rooms. Each capture
-reaches gameplay mode 0x14 with the expected room and song, and each uses the
-same output window.
+An earlier table in this file lists rooms 066 and 0A9 as digitally silent. That
+result is a measurement artifact, and this section replaces it.
 
-| Room | Song | Peak | RMS | Non-zero samples | Result |
-| --- | --- | --- | --- | --- | --- |
-| 013 | 35 | 3,643 | 646.1 | 120,850 | audio |
-| 0A2 | 4F | 4,592 | 630.7 | 113,008 | audio, accepted |
-| 018 | 53 | 4,848 | 696.2 | 98,424 | audio |
-| 01B | 3F | 4,857 | 642.5 | 74,346 | audio |
-| 066 | 53 | 0 | 0.0 | 0 | silent |
-| 0A9 | 43 | 0 | 0.0 | 0 | silent |
+The native runtime dumps its audio through the M1_AUDIO_WAV environment
+variable. The dump keeps the last 65,536 samples of the run. The standard room
+probe waits 180 frames after the arrival dump and then quits, so the dump
+window can land after the quit, where the output is silent. A probe with a
+900-frame tail moves the window over the playing music.
 
-Song 53 plays in room 018 and stays silent in room 066. The song is therefore
-not the cause, and the cause of the two silent rooms is not known.
+Room 0A9 with the longer tail gives peak 4,340 and RMS 1,112.5, so the room
+carries audio. Rooms 018, 01B, 013 and 0A2 carry audio in both probes.
 
-Earlier notes claimed that every room on a raw-base song is silent. That claim
-is wrong: rooms 018 and 01B carry audio.
+A spectral flatness check gives similar values for all measured rooms, between
+0.08 and 0.43. A flatness near 1 means noise. No room shows a noise signature,
+so the audio of these rooms is tonal.
 
-The native player in this project does not reproduce any song. It stays as a
-research probe and is not part of the product.
+### The legacy songs added by earlier restorations
+
+Slots 3F, 43 and 53 are NULL in the Demo 1-1 image. The product image holds a
+block for each of them:
+
+| Slot | Block offset | Payload size | ARAM destination |
+| --- | --- | --- | --- |
+| 3F | 0x1EDCF8 | 6,128 | 0x6800 |
+| 43 | 0x22CF68 | 6,128 | 0x6800 |
+| 53 | 0x213E70 | 6,128 | 0x6800 |
+
+The destination is 0x6800, not the 0x5400 that the Demo 1-1 songs use. These
+blocks come from an earlier restoration, and the retarget recipe does not
+create them.
+
+Both the native runtime and the reference host play these blocks. A capture of
+room 0A9 shows the upload matches the image byte for byte, 6,128 of 6,128
+bytes.
+
+The user reports that song 43 sounds wrong, and that other songs also sound
+wrong. The measured level and tonality of the room audio do not show a fault,
+so the defect is not a silence and not noise. The cause is not known.
 
 ## Level data read path
 
