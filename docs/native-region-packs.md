@@ -113,6 +113,29 @@ song is a short jingle that finishes inside the wait.
 The teleport is an assisted fixture. It proves the song selection of a direct
 room entry, not an ordinary course route and not an audible match.
 
+## The raw base does not play
+
+A raw slice keeps the donor ARAM base `$6800`. Every room that requests a
+raw song stays silent. The APU trace shows two key-on writes for those rooms and
+six for a room whose song plays:
+
+| Slots | Rooms sampled | Key-on writes |
+| --- | --- | --- |
+| `3F`, `43`, `53` | `018`, `0Bd`, `0A9`, `066`, `01B` | 2 |
+
+A control run proves the room is not the cause. Room `0A2` with song `35`
+reaches six key-on writes in the same fixture, and the same room with song `4F`
+reaches two. The song decides the result, not the room.
+
+Song `4F` relocated to `$5400` still stays silent. Its upload matches the
+pack byte for byte and its sequence header matches the songs that play. Its
+pattern table sits 5,112 bytes above the base, and every song that plays keeps
+that table between 593 and 3,070 bytes. The engine state at ARAM `$14` then
+holds `0x0053` instead of a song address.
+
+The cause is not proven. The engine layout assumption is not in the reviewed
+material, and a deeper analysis needs a disassembly of the driver.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
