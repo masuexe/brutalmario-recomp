@@ -198,16 +198,28 @@ A 300-frame run:
 
 Song `4F` plays with more notes and a higher peak than the reference song.
 
-A longer run of 1,200 frames plays 272 notes for song `4F` and every 0.1
-second window carries sound, with a mean level of 129 and a peak of 17,240.
+### The output is noise, not music
 
-A subroutine call pushes a return address, and a zero byte inside the
-subroutine returns to the caller. A zero byte in the caller stream separates
-phrases and the stream continues. Without the return rule the shared phrases
-replayed from the start and the song stopped advancing.
+The user listened to the rendered file and reported noise with no musical
+content. A spectrum check confirms it: the energy sits at unrelated
+frequencies such as 12,766, 2,347, 814 and 9,606 Hz, and the magnitude
+saturates. A melody would put its energy on harmonics of one fundamental.
 
-The player is still a probe. It does not apply the per-note volume envelope,
-it does not handle echo, and it does not loop. Those parts are the next step.
+The cause is a missing table. The DSP pitch register is a sample-rate
+multiplier, not a note number: `0x1000` reads one BRR sample per
+cycle. The song byte is `0x80` plus a semitone count, so it must be
+converted through the driver note table. The player wrote the raw byte, so`0x90` became a rate of 144, about three percent of normal. That is a rumble, not
+a note.
+
+A second attempt converted the byte with a plain semitone ratio. The output
+is still noise, because the conversion needs the driver table, which is
+indexed by sample as well as by note. A search of the image for a 13-entry
+run that spans one octave found 166 candidates and none of them has clean
+semitone steps, so the table was not located.
+
+The parser and the sequencer are sound: the command stream, the phrase rule
+and the subroutine return all match the reference corpus. The audio stage is
+not. The player does not reproduce a melody until the note table is found.
 
 ## Level data read path
 

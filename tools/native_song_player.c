@@ -39,10 +39,31 @@ static uint16_t word(size_t at) {
   return (uint16_t)(song[at] | (song[at + 1] << 8));
 }
 
+/* The pitch register is a sample-rate multiplier, not a note number. A value
+ * of 0x1000 reads one BRR sample per DSP cycle, which is the sample's own
+ * rate. A note raises or lowers that rate by a semitone ratio. The song byte
+ * is 0x80 + semitones above the sample base, so the register is
+ * 0x1000 * 2^(semitones/12). */
+static uint16_t pitch_register(uint8_t note) {
+  int semitones = note >= 0x80 ? (int)(note - 0x80) : (int)note;
+  double rate = 4096.0;
+  while (semitones >= 12) { rate *= 2.0; semitones -= 12; }
+  while (semitones <= -12) { rate *= 0.5; semitones += 12; }
+  static const double ratios[12] = {
+    1.0000, 1.0595, 1.1225, 1.1892, 1.2599, 1.3348,
+    1.4142, 1.4983, 1.5874, 1.6818, 1.7818, 1.8877};
+  rate *= ratios[semitones < 0 ? semitones + 12 : semitones];
+  if (semitones < 0) rate *= 0.5;
+  if (rate > 0x3fff) rate = 0x3fff;
+  if (rate < 1) rate = 1;
+  return (uint16_t)rate;
+}
+
 static void write_channel(Dsp *dsp, int index, const Voice *voice, uint8_t pitch) {
   uint8_t base = (uint8_t)(10 * index);
-  dsp_write(dsp, (uint8_t)(base + 0x00), pitch);
-  dsp_write(dsp, (uint8_t)(base + 0x01), 0x00);
+  uint16_t reg = pitch_register(pitch);
+  dsp_write(dsp, (uint8_t)(base + 0x00), (uint8_t)(reg & 0xFF));
+  dsp_write(dsp, (uint8_t)(base + 0x01), (uint8_t)(reg >> 8));
   dsp_write(dsp, (uint8_t)(base + 0x02), voice->volume);
   dsp_write(dsp, (uint8_t)(base + 0x03), voice->volume);
   dsp_write(dsp, (uint8_t)(base + 0x04),
