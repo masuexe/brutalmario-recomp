@@ -231,6 +231,33 @@ the render. A melody changes its fundamental. Noise does not.
 Song 4F therefore plays through the real driver. The native player in this
 project does not reproduce it yet, because its pitch conversion is not the
 engine conversion. The engine path is the authority.
+### Room 0A2 is not silent in the native runtime
+
+Earlier notes record that room 0A2 enters gameplay but plays no music.
+That claim is also wrong, and this section replaces it.
+
+The native runtime can dump its own DSP output through the
+`M1_AUDIO_WAV` environment variable. A capture of room 0A2 in the
+product r17 target gives the following result. A capture of room 013, whose
+song is known to play, is the control.
+
+| Room | Song | Frames | Peak | RMS | Non-zero samples |
+| --- | --- | --- | --- | --- | --- |
+| 0A2 | 4F | 65,536 | 4,592 | 630.7 | 113,008 of 131,072 |
+| 013 | 35 | 65,536 | 3,643 | 646.1 | 120,850 of 131,072 |
+
+The two rooms carry the same audio level. Room 0A2 is therefore not silent.
+
+The dominant frequency moves in both captures: 156, 63, 1,314 and 94 Hz in
+room 0A2, and 375, 563, 876 and 782 Hz in room 013. Both carry musical
+content.
+
+The earlier silence claim came from a trace sample that read the APU key-on
+register before the song started. It did not measure the audio output.
+
+Two conclusions follow. Song 4F is valid, and the region pack delivers it.
+The native player in this project still does not reproduce it, because its
+pitch conversion is not the engine conversion.
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
