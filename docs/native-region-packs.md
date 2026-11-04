@@ -88,6 +88,15 @@ Song `4F` now fills that range as a region, and slot `4F` points at it.
 A capture enters room `0A2` and reads gameplay mode `0x14` with
 `$0DDA` `0x4F`. The black screen is gone.
 
+The song does not play. The upload is correct: the pack holds a 6,132-byte
+payload at ARAM `$5400` that matches the pack byte for byte, and its
+sequence header reads `ff 00 02 54` like the songs that do play. The APU
+trace shows two key-on writes for room `0A2` and six for a room whose
+song plays, so the driver does not start the tracks.
+
+Song `4F` uses instrument `154`, which no playing song uses. The
+cause is not proven. Room `0A2` keeps song `4F` and stays silent.
+
 ## Pilot result
 
 Nine rooms request the moved slots. A console-teleport audit enters each one and

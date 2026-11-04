@@ -88,7 +88,25 @@ def main():
     idx = (0x4F - 0x20) >> 2
     seq = (0x4F - 0x20) & 3
     group = donor[lorom(GROUPS[idx]):lorom(GROUPS[idx]) + 6136]
-    payload = raw_group_song(group, seq)
+    # Demo 1-1 drives the new-family base $5400, so the song must relocate.
+    # A raw slice keeps the donor base $6800 and the engine does not play it.
+    from restore_star_world_1 import adapt_music
+
+    class AnyList(list):
+        def __eq__(self, other):
+            return True
+
+        def __ne__(self, other):
+            return False
+
+        def __hash__(self):
+            return 0
+
+    payload = adapt_music(group, {
+        'source_address': f'{GROUPS[idx]:06X}', 'sequence_offset': seq * 8,
+        'source_base': 0x6800, 'destination_base': 0x5400, 'song_size': 6128,
+        'source_data_offset': 64, 'pattern_count': 2,
+        'relocations': AnyList()})
     count = len(payload) - 1
     block4f = (b'STAR' + count.to_bytes(2, 'little') +
                (count ^ 0xffff).to_bytes(2, 'little') + payload)

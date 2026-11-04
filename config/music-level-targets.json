@@ -585,7 +585,7 @@
    "room": "0A2",
    "wrong": "4F",
    "target": null,
-   "note": "(X vs. Zero from Mega Man X5) \u8fdb\u53bb\u540e\u9ed1\u5c4f\u6b7b\u673a"
+   "note": "(X vs. Zero from Mega Man X5) The region pack gives the room gameplay mode and slot 4F, so the black screen is gone. The song still does not play: the upload matches the pack byte for byte and the driver starts no tracks. Cause not proven."
   },
   {
    "room": "0A3",
