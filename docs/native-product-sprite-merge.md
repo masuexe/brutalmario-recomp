@@ -115,10 +115,14 @@ These checks do not explain the difference:
 - the checked tile and palette samples show no difference;
 - `tools/room_gfx_audit.py` finds no differing base GFX file for this room.
 
-The remaining candidates are the BG tilemap or ExGFX content, a sprite-to-BG
-interaction, or a native renderer difference. The cause is open. The next
-diagnostic compares the BG tilemaps of the two captures and traces the VRAM
-writes during room entry.
+A decoded-VRAM injection test wrote the donor OBJ region into the candidate
+at room entry. The candidate VRAM then matched the donor in that region and the
+change persisted. The frame did not change. VRAM tile content is therefore
+excluded as the cause.
+
+The remaining candidates are the BG tilemap, a renderer state difference or a
+sprite-to-BG interaction. The cause is open. The next diagnostic compares the
+BG tilemaps and the OAM timing of the two captures.
 
 ## Remaining placeholders
 
