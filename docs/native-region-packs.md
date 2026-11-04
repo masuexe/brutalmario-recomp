@@ -198,6 +198,14 @@ A 300-frame run:
 
 Song `4F` plays with more notes and a higher peak than the reference song.
 
+A longer run of 1,200 frames plays 272 notes for song `4F` and every 0.1
+second window carries sound, with a mean level of 129 and a peak of 17,240.
+
+A subroutine call pushes a return address, and a zero byte inside the
+subroutine returns to the caller. A zero byte in the caller stream separates
+phrases and the stream continues. Without the return rule the shared phrases
+replayed from the start and the song stopped advancing.
+
 The player is still a probe. It does not apply the per-note volume envelope,
 it does not handle echo, and it does not loop. Those parts are the next step.
 

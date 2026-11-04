@@ -60,6 +60,12 @@ static int step(Dsp *dsp, int index) {
     if (at >= song_size) return -1;
     uint8_t byte = song[at];
     if (byte == 0) {
+      /* A zero byte ends a subroutine and returns to the caller. In the
+       * caller stream it separates phrases and the stream continues. */
+      if (voice->depth > 0) {
+        voice->cursor = voice->return_to[--voice->depth];
+        continue;
+      }
       voice->cursor += 1;
       continue;
     }
@@ -69,6 +75,8 @@ static int step(Dsp *dsp, int index) {
       write_channel(dsp, index, voice, pitch);
       dsp_write(dsp, 0x4C, (uint8_t)(1u << index));
       voice->cursor += 2;
+      /* The duration is in engine ticks. One tick is one frame at the
+       * console tempo, so a note of 96 ticks holds for 96 frames. */
       return byte ? byte : 1;
     }
     switch (byte) {
