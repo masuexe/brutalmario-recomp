@@ -302,6 +302,51 @@ The user reports that song 43 sounds wrong, and that other songs also sound
 wrong. The measured level and tonality of the room audio do not show a fault,
 so the defect is not a silence and not noise. The cause is not known.
 
+### Song 0x41 and room 0x43
+
+The wrong-music list records one line without a table row:
+
+    43关卡的音乐（41）正确但是听感有问题
+
+That line says the music for room 43 is song 0x41, that the choice is correct,
+and that the sound quality has a problem.
+
+The room data does not agree with that line. Room 0x43 holds one music object
+at offset 17 of its level block:
+
+| Image | Music object | Song |
+| --- | --- | --- |
+| demo-1-1 | 40 60 45 | 0x44 |
+| product r17 | 40 60 45 | 0x44 |
+
+A console capture of room 0x43 in product r17 reads 0DDA as 0x44, so the game
+starts song 0x44 and not song 0x41. The object encoding is calibrated on three
+rooms whose song is known: room 0AA holds 40 60 31 and plays 0x30, room 018
+holds 40 60 54 and plays 0x53, and room 01B holds 40 60 40 and plays 0x3F.
+
+Song 0x41 itself is present and well formed:
+
+| Item | Value |
+| --- | --- |
+| Payload size | 854 bytes |
+| ARAM destination | 0x5400 |
+| Pattern table | 0x5746 |
+| Tracks | 10, five per pattern |
+| Notes | 226, 177, 135, 110, 92 |
+| SHA-256 prefix, demo-only-1 and demo-1-1 | e4a3969593484db4, identical |
+
+The reference host renders slot 0x41 with RMS 830.6 and a silent fraction of
+0.032, so the payload plays.
+
+The retarget tool cannot change this room. prepare_music_objects.apply appends
+a music object to a room that has none, and it rejects a room that already
+holds one. Room 0x43 already holds one, so a change to song 0x41 needs a
+different patch.
+
+Open questions: the room should play 0x41 per the list and plays 0x44 today,
+and the list also reports a sound problem in 0x41. The cause of that sound
+problem is not known.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
