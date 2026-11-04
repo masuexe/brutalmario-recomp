@@ -136,6 +136,31 @@ holds `0x0053` instead of a song address.
 The cause is not proven. The engine layout assumption is not in the reviewed
 material, and a deeper analysis needs a disassembly of the driver.
 
+## A native song parser
+
+A native player can bypass the SPC driver, so the format needs a parser that
+does not depend on the engine layout. `tools/parse_song.py` reads the
+structure and `tools/decode_song.py` reads the command stream.
+
+The reference material is the 100 extracted payloads under
+`local/music/demo-1-1`, each with a rendered WAV from the pinned
+Snes9x host. That gives a known-good corpus for the parser.
+
+| Check | Result |
+| --- | --- |
+| Payloads whose structure parses | 100 of 100 |
+| Payloads whose tracks decode | 100 of 100 |
+| Song `4F` from the region pack | 12 tracks, 266.5 s of music |
+
+Song `4F` decodes with the same parser that reads all 100 reference songs.
+The SPC driver refuses it, but the data is complete and well formed. A native
+player can therefore play it.
+
+`tools/render_song.py` writes a square-wave probe of the note timeline. The
+probe proves the note order is readable. It is not a sample synthesiser, and
+its correlation with the reference render is low, so it does not prove an
+audible match.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
