@@ -1,8 +1,9 @@
-/* Native song player probe: run one song stream against the pinned DSP.
+/* Native song player: run one song stream over time against the pinned DSP.
  *
- * The song stream sets the channel registers that the console driver would
- * write. The sample set and its directory come from a real capture of the same
- * ROM, because the song payload alone does not carry the samples.
+ * The song stream sets channel registers. This program runs that stream
+ * frame by frame, so every note of the song sounds in order, and lets the
+ * upstream DSP produce the samples. The sample set and its directory come from
+ * a console capture of the same ROM.
  *
  * Usage: player <song.bin> <engine-aram.bin> <out.wav> <frames>
  */
@@ -15,12 +16,94 @@
 #define RATE 32040
 #define BASE 0x5400u
 #define DIRECTORY 0x5B00u
+#define MAX_VOICES 8
+#define MAX_DEPTH 4
+
+typedef struct {
+  uint16_t cursor;
+  uint8_t instrument;
+  uint8_t volume;
+  uint32_t wait;
+  uint16_t return_to[MAX_DEPTH];
+  int depth;
+} Voice;
 
 static uint8_t aram[ARAM_SIZE];
+static const uint8_t *song;
+static size_t song_size;
+static Voice voices[MAX_VOICES];
+static int voice_count;
 
-static uint16_t word(const uint8_t *data, size_t size, size_t at) {
-  if (at + 1 >= size) return 0;
-  return (uint16_t)(data[at] | (data[at + 1] << 8));
+static uint16_t word(size_t at) {
+  if (at + 1 >= song_size) return 0;
+  return (uint16_t)(song[at] | (song[at + 1] << 8));
+}
+
+static void write_channel(Dsp *dsp, int index, const Voice *voice, uint8_t pitch) {
+  uint8_t base = (uint8_t)(10 * index);
+  dsp_write(dsp, (uint8_t)(base + 0x00), pitch);
+  dsp_write(dsp, (uint8_t)(base + 0x01), 0x00);
+  dsp_write(dsp, (uint8_t)(base + 0x02), voice->volume);
+  dsp_write(dsp, (uint8_t)(base + 0x03), voice->volume);
+  dsp_write(dsp, (uint8_t)(base + 0x04),
+            (uint8_t)(voice->instrument ? voice->instrument : 1));
+  dsp_write(dsp, (uint8_t)(base + 0x05), 0x00);
+  dsp_write(dsp, (uint8_t)(base + 0x06), 0x00);
+  dsp_write(dsp, (uint8_t)(base + 0x07), 0x7F);
+}
+
+/* Run one command. Return the frames to wait, or -1 when the voice is done. */
+static int step(Dsp *dsp, int index) {
+  Voice *voice = &voices[index];
+  for (int guard = 0; guard < 64; ++guard) {
+    size_t at = voice->cursor - BASE;
+    if (at >= song_size) return -1;
+    uint8_t byte = song[at];
+    if (byte == 0) {
+      voice->cursor += 1;
+      continue;
+    }
+    if (byte < 0x80) {
+      if (at + 1 >= song_size) return -1;
+      uint8_t pitch = song[at + 1];
+      write_channel(dsp, index, voice, pitch);
+      dsp_write(dsp, 0x4C, (uint8_t)(1u << index));
+      voice->cursor += 2;
+      return byte ? byte : 1;
+    }
+    switch (byte) {
+      case 0xC6: case 0xC7:
+        voice->instrument = song[at + 1];
+        voice->cursor += 2;
+        continue;
+      case 0xDA:
+        voice->cursor += 2;
+        continue;
+      case 0xE0:
+        voice->volume = song[at + 1];
+        voice->cursor += 2;
+        continue;
+      case 0xE1:
+        voice->volume = song[at + 1];
+        voice->cursor += 3;
+        continue;
+      case 0xE9: {
+        uint16_t target = (uint16_t)(song[at + 1] | (song[at + 2] << 8));
+        if (voice->depth < MAX_DEPTH) {
+          voice->return_to[voice->depth++] = (uint16_t)(voice->cursor + 4);
+          voice->cursor = target;
+        } else {
+          voice->cursor += 4;
+        }
+        continue;
+      }
+      default:
+        voice->cursor += (byte >= 0xE9 && byte <= 0xF2) ? 4
+                       : ((byte >= 0xCB) ? 3 : 2);
+        continue;
+    }
+  }
+  return -1;
 }
 
 int main(int argc, char **argv) {
@@ -30,98 +113,77 @@ int main(int argc, char **argv) {
   }
   FILE *in = fopen(argv[1], "rb");
   if (!in) { perror("song"); return 1; }
-  uint8_t data[0x10000];
+  static uint8_t data[0x10000];
   size_t size = fread(data, 1, sizeof(data), in);
   fclose(in);
   if (size < 8) { fprintf(stderr, "song too small\n"); return 1; }
+  song = data;
+  song_size = size;
 
-  /* The sample set and the directory come from a console capture. */
   FILE *engine = fopen(argv[2], "rb");
   if (!engine) { perror("engine"); return 1; }
-  size_t got = fread(aram, 1, ARAM_SIZE, engine);
+  if (fread(aram, 1, ARAM_SIZE, engine) != ARAM_SIZE) {
+    fprintf(stderr, "engine image size differs\n");
+    return 1;
+  }
   fclose(engine);
-  if (got != ARAM_SIZE) { fprintf(stderr, "engine image size differs\n"); return 1; }
-
-  /* Replace the song region with this song's payload. */
   memcpy(aram + BASE, data, size);
 
   Dsp *dsp = dsp_init(aram);
   if (!dsp) { fprintf(stderr, "dsp init failed\n"); return 1; }
   dsp_reset(dsp);
-  dsp_write(dsp, 0x5D, (uint8_t)(DIRECTORY >> 8)); /* DIR */
-  /* FLG must clear both reset and mute. A set reset forces gain 0. */
+  dsp_write(dsp, 0x5D, (uint8_t)(DIRECTORY >> 8));
   dsp_write(dsp, 0x6C, 0x00);
-  dsp_write(dsp, 0x0C, 0x7F);  /* MVOLL */
-  dsp_write(dsp, 0x1C, 0x7F);  /* MVOLR */
+  dsp_write(dsp, 0x0C, 0x7F);
+  dsp_write(dsp, 0x1C, 0x7F);
+
+  memset(voices, 0, sizeof(voices));
+  voice_count = 0;
+  for (int pattern_index = 0; pattern_index < 2; ++pattern_index) {
+    uint16_t pattern = word((size_t)(2 * pattern_index));
+    if (!pattern) continue;
+    size_t off = pattern - BASE;
+    if (off + 16 > size) continue;
+    for (int i = 0; i < 8 && voice_count < MAX_VOICES; ++i) {
+      uint16_t track = word(off + 2 * i);
+      if (!track) continue;
+      Voice *voice = &voices[voice_count];
+      voice->cursor = track;
+      voice->instrument = 1;
+      voice->volume = 0x7F;
+      voice->wait = 0;
+      voice->depth = 0;
+      voice_count += 1;
+    }
+  }
 
   uint32_t frames = (uint32_t)strtoul(argv[4], NULL, 0);
   uint32_t samples = frames * 534u;
-
-  uint16_t patterns[2] = { word(data, size, 0), word(data, size, 2) };
-  int voice = 0;
-  for (int p = 0; p < 2 && voice < 8; ++p) {
-    if (!patterns[p]) continue;
-    size_t off = patterns[p] - BASE;
-    if (off + 16 > size) continue;
-    for (int i = 0; i < 8 && voice < 8; ++i) {
-      uint16_t track = word(data, size, off + 2 * i);
-      if (!track) continue;
-      size_t t = track - BASE;
-      if (t >= size) continue;
-      int instrument = 0;
-      while (t + 1 < size) {
-        uint8_t byte = data[t];
-        if (byte == 0) { t += 1; continue; }
-        if (byte < 0x80) {
-          uint8_t pitch = data[t + 1];
-          /* Channel registers: pitch, srcn, adsr1, adsr2, gain. */
-          dsp_write(dsp, (uint8_t)(0x00 + 10 * voice), (uint8_t)(pitch & 0xFF));
-          dsp_write(dsp, (uint8_t)(0x01 + 10 * voice), 0x00);
-          dsp_write(dsp, (uint8_t)(0x02 + 10 * voice), 0x7F);  /* VOL(L) */
-          dsp_write(dsp, (uint8_t)(0x03 + 10 * voice), 0x7F);  /* VOL(R) */
-          dsp_write(dsp, (uint8_t)(0x04 + 10 * voice),
-                    (uint8_t)(instrument ? instrument : 1));   /* SRCN */
-          dsp_write(dsp, (uint8_t)(0x05 + 10 * voice), 0x00);  /* ADSR1 */
-          dsp_write(dsp, (uint8_t)(0x06 + 10 * voice), 0x00);  /* ADSR2 */
-          /* GAIN: a value below 0x80 selects direct gain. 0x7F is full. */
-          dsp_write(dsp, (uint8_t)(0x07 + 10 * voice), 0x7F);
-          voice += 1;
-          break;
-        }
-        if (byte == 0xC6 || byte == 0xC7) { instrument = data[t + 1]; t += 2; continue; }
-        t += (byte >= 0xE9 && byte <= 0xF2) ? 4 : ((byte >= 0xCB) ? 3 : 2);
-      }
-    }
-  }
-  dsp_write(dsp, 0x4C, (uint8_t)((1u << voice) - 1u));
-  fprintf(stderr, "kon=%02X voices=%d dir=%02X\n",
-          (unsigned)((1u << voice) - 1u), voice, (unsigned)(DIRECTORY >> 8));
-  /* Diagnostic: show the channel registers the probe wrote. */
-  for (int c = 0; c < voice; ++c)
-    fprintf(stderr, "  ch%d pitch=%02X vol=%02X srcn=%02X\n", c,
-            (unsigned)dsp_read(dsp, (uint8_t)(0x00 + 10 * c)),
-            (unsigned)dsp_read(dsp, (uint8_t)(0x02 + 10 * c)),
-            (unsigned)dsp_read(dsp, (uint8_t)(0x04 + 10 * c)));
-
-  FILE *out = fopen(argv[3], "wb");
-  if (!out) { perror("out"); return 1; }
   int16_t *pcm = malloc(sizeof(int16_t) * samples * 2);
   if (!pcm) { fprintf(stderr, "alloc failed\n"); return 1; }
-  uint32_t nonzero = 0, first_at = 0;
-  for (uint32_t i = 0; i < samples; ++i) {
-    dsp_cycle(dsp);
-    int16_t l = 0, r = 0;
-    dsp_peek(dsp, 0, &l, &r);
-    pcm[2 * i] = l;
-    pcm[2 * i + 1] = r;
-    if (l || r) { if (!nonzero) first_at = i; ++nonzero; }
-    dsp_advance(dsp, 1);
+
+  uint32_t notes = 0;
+  for (uint32_t frame = 0; frame < frames; ++frame) {
+    for (int index = 0; index < voice_count; ++index) {
+      if (voices[index].wait) { voices[index].wait -= 1; continue; }
+      int wait = step(dsp, index);
+      if (wait < 0) continue;
+      voices[index].wait = (uint32_t)wait;
+      notes += 1;
+    }
+    for (uint32_t i = 0; i < 534u; ++i) {
+      dsp_cycle(dsp);
+      int16_t l = 0, r = 0;
+      dsp_peek(dsp, 0, &l, &r);
+      uint32_t at = frame * 534u + i;
+      if (at < samples) { pcm[2 * at] = l; pcm[2 * at + 1] = r; }
+      dsp_advance(dsp, 1);
+    }
   }
-  fprintf(stderr, "nonzero samples %u, first at %u\n", nonzero, first_at);
-  fprintf(stderr, "gain ch0=%02X state=%02X mute=%d reset=%d mvolL=%02X\n",
-          (unsigned)dsp_read(dsp, 0x07), (unsigned)dsp_read(dsp, 0x06),
-          (int)dsp->mute, (int)dsp->reset, (unsigned)dsp->masterVolumeL);
+
   uint32_t data_bytes = samples * 4u;
+  FILE *out = fopen(argv[3], "wb");
+  if (!out) { perror("out"); return 1; }
   fwrite("RIFF", 1, 4, out);
   uint32_t riff = 36u + data_bytes; fwrite(&riff, 4, 1, out);
   fwrite("WAVEfmt ", 1, 8, out);
@@ -137,6 +199,6 @@ int main(int argc, char **argv) {
   fclose(out);
   free(pcm);
   dsp_free(dsp);
-  printf("voices=%d frames=%u\n", voice, frames);
+  printf("voices=%d frames=%u notes=%u\n", voice_count, frames, notes);
   return 0;
 }

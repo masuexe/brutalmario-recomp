@@ -184,10 +184,22 @@ Result for a 300-frame run:
 Song `4F` produces the same sample density as a reference song. The SPC
 driver refuses that song, but a native player can play it.
 
-This probe plays the first note of each pattern entry on its own voice. It is
-not a complete driver: it does not run the full command stream over time, it
-does not read instruments from the stream for every note, and it does not
-loop. Those parts are the next step.
+The player now runs the whole command stream over time. Each voice keeps its
+own cursor, instrument, volume and wait counter, so every note of the song
+sounds in order. A subroutine call pushes a return address and runs the
+target, so a shared phrase plays from every track that calls it.
+
+A 300-frame run:
+
+| Song | Notes played | Non-zero samples | Peak |
+| --- | --- | --- | --- |
+| `07` (reference corpus) | 49 | 160,039 | 14,848 |
+| `4F` (region pack) | 63 | 159,778 | 15,721 |
+
+Song `4F` plays with more notes and a higher peak than the reference song.
+
+The player is still a probe. It does not apply the per-note volume envelope,
+it does not handle echo, and it does not loop. Those parts are the next step.
 
 ## Level data read path
 
