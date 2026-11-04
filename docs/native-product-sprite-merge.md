@@ -100,6 +100,26 @@ change in VRAM, so the graphics for this slot stay open.
 This check is a frame delta, not a visual match. The donor frame is not
 compared pixel by pixel.
 
+### Slot 99 frame investigation
+
+The donor frame is `local/captures/modern-source-175-v1`. A native capture of
+the donor image, `donor175-native-oam-v2`, renders the same three yellow
+platforms. The candidate frame does not show them.
+
+These checks do not explain the difference:
+
+- the donor and the candidate hold the same sprite entries in room `175`;
+- both draw the three platforms with OAM tiles `168` to `170` and attribute
+  `0x37` at the same positions;
+- the room level block and the sprite list are byte-identical;
+- the checked tile and palette samples show no difference;
+- `tools/room_gfx_audit.py` finds no differing base GFX file for this room.
+
+The remaining candidates are the BG tilemap or ExGFX content, a sprite-to-BG
+interaction, or a native renderer difference. The cause is open. The next
+diagnostic compares the BG tilemaps of the two captures and traces the VRAM
+writes during room entry.
+
 ## Remaining placeholders
 
 Seven slots stay placeholders: `96`, `A5`, `A6`, `E8`, `E9`, `EA`
