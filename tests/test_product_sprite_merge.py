@@ -104,6 +104,8 @@ class QualificationTests(unittest.TestCase):
         self.assertIn('Product r20', doc)
         self.assertIn('f4185fe22f57c66c338b800bbe423dcd915860c87cc2ec395baa7236cad5e567', doc)
         self.assertIn('BM_SEVEN_RETURN=0', doc)
+        self.assertIn('## Rendering check', doc)
+        self.assertIn('Slot `99` runs in', doc)
 
 
 if __name__ == '__main__':

@@ -76,6 +76,30 @@ The room 174 fixture needs `BM_SEVEN_RETURN=0`. The Seven return hook moves
 room 174 to the overworld. Without the setting, the fixture never reaches
 gameplay.
 
+## Rendering check
+
+The checker compares the framebuffer and the VRAM of each candidate sample
+with the same sample of the parent.
+
+| Room/slot | Framebuffer pixels | VRAM bytes |
+| --- | ---: | ---: |
+| `154`/`25` | 116,267 | 20,222 |
+| `0EF`/`94` | 7,893 | 186 |
+| `0FE`/`33` | 81,859 | 1,079 |
+| `174`/`99` | 0 | 4 |
+| `175`/`99` | 149 | 3,609 |
+| `176`/`A1` | 99,662 | 2,415 |
+| `178`/`A1` | 60,650 | 4,632 |
+| `1EF`/`97` | 1,643 | 197 |
+
+Slots `25`, `33`, `94`, `97` and `A1` change the frame. Slot `99` runs in
+WRAM but its drawing stays wrong. Room `174` keeps an identical frame.
+Room `175` changes 149 pixels only. The sprite tiles of slot `99` do not
+change in VRAM, so the graphics for this slot stay open.
+
+This check is a frame delta, not a visual match. The donor frame is not
+compared pixel by pixel.
+
 ## Remaining placeholders
 
 Seven slots stay placeholders: `96`, `A5`, `A6`, `E8`, `E9`, `EA`
@@ -86,7 +110,8 @@ slots. Their rooms match the Demo 1-1 layout. Do not install a program.
 
 - The captures use assisted room entry and immunity fixtures. They do not
   prove a normal route, a boss fight or a course clear.
-- The merge does not check sprite graphics. The graphics gap remains open.
+- The merge checks frame deltas only. Slot `99` does not change the frame in
+  room `174`, so its graphics stay open.
 - The `99` position offsets and the missing `99` actor in room 176 remain
   open from the modern sprite line.
 - The C2 check reads generated actors in room 170 only. The `16B` shooter
