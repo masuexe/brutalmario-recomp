@@ -1,0 +1,2090 @@
+{
+ "schema": 1,
+ "id": "demo11-native-product-r19",
+ "target": "Brutal Mario Demo11 Product R19",
+ "recipient": "demo-1-1",
+ "donor": "cheap-demo",
+ "base_restoration": "demo11-native-product-r16",
+ "base_output": {
+  "size": 4194304,
+  "sha256": "9f6d845b19ad24160668633e2f30d0e846662c67b135c6cbc1bca680db20716e"
+ },
+ "music_retarget": {
+  "tool": "prepare_music_retarget.py",
+  "targets": "config/music-level-targets.json"
+ },
+ "scope": "Product r16 plus the reviewed course music retarget, three ported legacy songs, a region pack for the songs that do not fit the image, three room music overrides that point rooms 043, 114 and 11F at song 41, and the retirement of song 44.",
+ "assets": [],
+ "music_tracks": [
+  {
+   "id": "35",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 3102,
+   "pattern_count": 2,
+   "relocations": [
+    0,
+    2,
+    6,
+    2380,
+    2436,
+    2446,
+    2480,
+    2491,
+    2544,
+    2552,
+    2576,
+    2654,
+    2676,
+    2697,
+    2701,
+    2705,
+    2720,
+    3070,
+    3072,
+    3074,
+    3076,
+    3086,
+    3088,
+    3090,
+    3092
+   ],
+   "source_address": "2A8008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "55ee1aecb69464d1dc94cd9d175bda0869a331f430a866e1e97dece85d1b9520"
+   },
+   "pointer_address": "0FE09F",
+   "before": "000000",
+   "adapted": {
+    "size": 3110,
+    "sha256": "5f783affbd9faaa3a1226c0ada79dd2bc1bcf1969be19ec94ac938a08651759a"
+   },
+   "allocation": {
+    "offset": 4154103,
+    "size": 3118
+   }
+  },
+  {
+   "id": "3A",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 2798,
+   "pattern_count": 1,
+   "relocations": [
+    0,
+    2,
+    6,
+    1607,
+    1633,
+    1745,
+    1752,
+    1759,
+    1766,
+    1798,
+    1893,
+    1937,
+    1945,
+    1960,
+    2090,
+    2106,
+    2148,
+    2161,
+    2174,
+    2214,
+    2227,
+    2231,
+    2235,
+    2257,
+    2270,
+    2283,
+    2287,
+    2328,
+    2340,
+    2352,
+    2389,
+    2402,
+    2406,
+    2410,
+    2430,
+    2443,
+    2455,
+    2459,
+    2782,
+    2784,
+    2786,
+    2788,
+    2790
+   ],
+   "source_address": "3FC008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "bbc1a58470c2645e46a2cc1bdf20ed1e70d49295111bcba44fd0cf0cb2702cb1"
+   },
+   "pointer_address": "0FE0AE",
+   "before": "000000",
+   "adapted": {
+    "size": 2806,
+    "sha256": "81939c14a1b162f9db13b668775cfe330896d73c16afa33786e928b67b4e33c5"
+   },
+   "allocation": {
+    "offset": 4157221,
+    "size": 2814
+   }
+  },
+  {
+   "id": "3D",
+   "source_base": 26624,
+   "destination_base": 21504,
+   "sequence_offset": 8,
+   "source_data_offset": 64,
+   "song_size": 1389,
+   "pattern_count": 2,
+   "relocations": [
+    0,
+    2,
+    6,
+    988,
+    998,
+    1002,
+    1017,
+    1028,
+    1055,
+    1068,
+    1083,
+    1111,
+    1115,
+    1119,
+    1123,
+    1127,
+    1131,
+    1135,
+    1139,
+    1143,
+    1147,
+    1151,
+    1357,
+    1359,
+    1361,
+    1373,
+    1375,
+    1377
+   ],
+   "source_address": "448008",
+   "source_group": {
+    "size": 6136,
+    "sha256": "ef90102d48360c375758a2d0a5b6076e1f73d221a55fc25010829c114455c72b"
+   },
+   "pointer_address": "0FE0B7",
+   "before": "000000",
+   "adapted": {
+    "size": 1397,
+    "sha256": "81dacfb1f7d1081e60628a44ec32018b95057bd06af5e484611de99d9d050109"
+   },
+   "allocation": {
+    "offset": 1074189,
+    "size": 1405
+   }
+  }
+ ],
+ "code_patches": [
+  {
+   "address": "F1D815",
+   "before": "24",
+   "after": "84",
+   "role": "Room 00B course music: 23 -> 83."
+  },
+  {
+   "address": "3DB8D5",
+   "before": "26",
+   "after": "34",
+   "role": "Room 00F course music: 25 -> 33."
+  },
+  {
+   "address": "6FAE37",
+   "before": "25",
+   "after": "52",
+   "role": "Room 012 course music: 24 -> 51."
+  },
+  {
+   "address": "5DB012",
+   "before": "32",
+   "after": "36",
+   "role": "Room 013 course music: 31 -> 35."
+  },
+  {
+   "address": "58E010",
+   "before": "32",
+   "after": "36",
+   "role": "Room 014 course music: 31 -> 35."
+  },
+  {
+   "address": "67FA40",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 015 course music: 47 -> 6B."
+  },
+  {
+   "address": "F78CFD",
+   "before": "21",
+   "after": "49",
+   "role": "Room 016 course music: 20 -> 48."
+  },
+  {
+   "address": "64BE32",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 017 course music: 2B -> 50."
+  },
+  {
+   "address": "F8FF6F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 019 course music: 22 -> 8A."
+  },
+  {
+   "address": "1EE7B2",
+   "before": "37",
+   "after": "62",
+   "role": "Room 01A course music: 36 -> 61."
+  },
+  {
+   "address": "F8E941",
+   "before": "41",
+   "after": "61",
+   "role": "Room 01C course music: 40 -> 60."
+  },
+  {
+   "address": "5A8AE3",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 021 course music: 47 -> 6B."
+  },
+  {
+   "address": "1F87BF",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 023 course music: 34 -> 8B."
+  },
+  {
+   "address": "6DF61A",
+   "before": "43",
+   "after": "72",
+   "role": "Room 027 course music: 42 -> 71."
+  },
+  {
+   "address": "6EF35E",
+   "before": "43",
+   "after": "72",
+   "role": "Room 028 course music: 42 -> 71."
+  },
+  {
+   "address": "6EFCD6",
+   "before": "43",
+   "after": "72",
+   "role": "Room 029 course music: 42 -> 71."
+  },
+  {
+   "address": "668E9A",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 02D course music: 46 -> AA."
+  },
+  {
+   "address": "6F88E3",
+   "before": "43",
+   "after": "72",
+   "role": "Room 030 course music: 42 -> 71."
+  },
+  {
+   "address": "62FB95",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 03B course music: 29 -> B0."
+  },
+  {
+   "address": "339304",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 03D course music: 39 -> 98."
+  },
+  {
+   "address": "349D6E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 03E course music: 47 -> 6B."
+  },
+  {
+   "address": "51B18F",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 03F course music: 34 -> 8B."
+  },
+  {
+   "address": "19C9DF",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 041 course music: 3C -> 85."
+  },
+  {
+   "address": "67CD64",
+   "before": "49",
+   "after": "41",
+   "role": "Room 042 course music: 48 -> 40."
+  },
+  {
+   "address": "67F98C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 044 course music: 47 -> 6B."
+  },
+  {
+   "address": "349DE5",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 045 course music: 39 -> 98."
+  },
+  {
+   "address": "67F90D",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 046 course music: 39 -> 98."
+  },
+  {
+   "address": "6FE55E",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 047 course music: 49 -> 3A."
+  },
+  {
+   "address": "518C95",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04B course music: 34 -> 8B."
+  },
+  {
+   "address": "51848E",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04C course music: 34 -> 8B."
+  },
+  {
+   "address": "50E86F",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 04D course music: 34 -> 8B."
+  },
+  {
+   "address": "5AA5F8",
+   "before": "49",
+   "after": "41",
+   "role": "Room 050 course music: 48 -> 40."
+  },
+  {
+   "address": "FFF016",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 053 course music: 2B -> 50."
+  },
+  {
+   "address": "19F81D",
+   "before": "4b",
+   "after": "39",
+   "role": "Room 054 course music: 4A -> 38."
+  },
+  {
+   "address": "33ED2E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 057 course music: 47 -> 6B."
+  },
+  {
+   "address": "33EF8A",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 058 course music: 47 -> 6B."
+  },
+  {
+   "address": "33F224",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 059 course music: 47 -> 6B."
+  },
+  {
+   "address": "33F484",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 05A course music: 47 -> 6B."
+  },
+  {
+   "address": "10FAD0",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 05C course music: 47 -> 6B."
+  },
+  {
+   "address": "FDEBB1",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 05D course music: 38 -> A4."
+  },
+  {
+   "address": "5E9835",
+   "before": "54",
+   "after": "84",
+   "role": "Room 05E course music: 53 -> 83."
+  },
+  {
+   "address": "FFD618",
+   "before": "24",
+   "after": "84",
+   "role": "Room 05F course music: 23 -> 83."
+  },
+  {
+   "address": "65DBD7",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 060 course music: 3C -> 85."
+  },
+  {
+   "address": "59C41A",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 061 course music: 51 -> 3D."
+  },
+  {
+   "address": "69FC57",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 063 course music: 3C -> 85."
+  },
+  {
+   "address": "6BFD46",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 064 course music: 3C -> 85."
+  },
+  {
+   "address": "42B8E7",
+   "before": "3c",
+   "after": "86",
+   "role": "Room 065 course music: 3B -> 85."
+  },
+  {
+   "address": "58DB6A",
+   "before": "24",
+   "after": "84",
+   "role": "Room 067 course music: 23 -> 83."
+  },
+  {
+   "address": "32C880",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 06B course music: 2B -> 50."
+  },
+  {
+   "address": "358176",
+   "before": "32",
+   "after": "36",
+   "role": "Room 06D course music: 31 -> 35."
+  },
+  {
+   "address": "35AD49",
+   "before": "99",
+   "after": "b1",
+   "role": "Room 06E course music: 98 -> B0."
+  },
+  {
+   "address": "68C05D",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 06F course music: 39 -> 98."
+  },
+  {
+   "address": "51EC04",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 071 course music: 34 -> 8B."
+  },
+  {
+   "address": "5C9AD3",
+   "before": "43",
+   "after": "72",
+   "role": "Room 075 course music: 42 -> 71."
+  },
+  {
+   "address": "50D9BC",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 07A course music: 34 -> 8B."
+  },
+  {
+   "address": "6FC190",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 07B course music: 29 -> B0."
+  },
+  {
+   "address": "618ABA",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 07C course music: 46 -> AA."
+  },
+  {
+   "address": "6FBB39",
+   "before": "25",
+   "after": "52",
+   "role": "Room 07D course music: 24 -> 51."
+  },
+  {
+   "address": "39A1EC",
+   "before": "51",
+   "after": "82",
+   "role": "Room 07F course music: 50 -> 81."
+  },
+  {
+   "address": "56FD0B",
+   "before": "53",
+   "after": "a4",
+   "role": "Room 082 course music: 52 -> A3."
+  },
+  {
+   "address": "F9889F",
+   "before": "2b",
+   "after": "a0",
+   "role": "Room 083 course music: 2A -> 9F."
+  },
+  {
+   "address": "6FC630",
+   "before": "25",
+   "after": "52",
+   "role": "Room 084 course music: 24 -> 51."
+  },
+  {
+   "address": "F186C5",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 085 course music: 3D -> 9B."
+  },
+  {
+   "address": "579332",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 086 course music: 46 -> AA."
+  },
+  {
+   "address": "68F352",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 087 course music: 46 -> AA."
+  },
+  {
+   "address": "66A84B",
+   "before": "43",
+   "after": "72",
+   "role": "Room 088 course music: 42 -> 71."
+  },
+  {
+   "address": "6ABD72",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 089 course music: 58 -> A0."
+  },
+  {
+   "address": "F7E1A4",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 08A course music: 3A -> A2."
+  },
+  {
+   "address": "F4B272",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 091 course music: 3A -> A2."
+  },
+  {
+   "address": "62AE06",
+   "before": "50",
+   "after": "9e",
+   "role": "Room 094 course music: 4F -> 9D."
+  },
+  {
+   "address": "63824A",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 095 course music: 39 -> 98."
+  },
+  {
+   "address": "6395E5",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 096 course music: 58 -> A0."
+  },
+  {
+   "address": "62FEAD",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 09C course music: 3A -> A2."
+  },
+  {
+   "address": "61CBB5",
+   "before": "24",
+   "after": "84",
+   "role": "Room 09E course music: 23 -> 83."
+  },
+  {
+   "address": "61E68C",
+   "before": "24",
+   "after": "84",
+   "role": "Room 09F course music: 23 -> 83."
+  },
+  {
+   "address": "61EEE5",
+   "before": "3b",
+   "after": "a3",
+   "role": "Room 0A0 course music: 3A -> A2."
+  },
+  {
+   "address": "61D0A9",
+   "before": "24",
+   "after": "84",
+   "role": "Room 0A1 course music: 23 -> 83."
+  },
+  {
+   "address": "61F48F",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0A3 course music: 58 -> A0."
+  },
+  {
+   "address": "53C72A",
+   "before": "38",
+   "after": "31",
+   "role": "Room 0AA course music: 37 -> 30."
+  },
+  {
+   "address": "53CD4C",
+   "before": "38",
+   "after": "31",
+   "role": "Room 0AB course music: 37 -> 30."
+  },
+  {
+   "address": "61B003",
+   "before": "22",
+   "after": "35",
+   "role": "Room 0AC course music: 21 -> 34."
+  },
+  {
+   "address": "61B48F",
+   "before": "22",
+   "after": "35",
+   "role": "Room 0AD course music: 21 -> 34."
+  },
+  {
+   "address": "F2BC94",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 0B6 course music: 38 -> A4."
+  },
+  {
+   "address": "F3B90F",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 0B7 course music: 46 -> AA."
+  },
+  {
+   "address": "16C384",
+   "before": "41",
+   "after": "61",
+   "role": "Room 0B8 course music: 40 -> 60."
+  },
+  {
+   "address": "F3FCD1",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0B9 course music: 58 -> A0."
+  },
+  {
+   "address": "F384DC",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0BA course music: 3D -> 9B."
+  },
+  {
+   "address": "18F129",
+   "before": "2e",
+   "after": "aa",
+   "role": "Room 0BB course music: 2D -> A9."
+  },
+  {
+   "address": "F3C918",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0BE course music: 35 -> 8C."
+  },
+  {
+   "address": "F487AD",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0BF course music: 35 -> 8C."
+  },
+  {
+   "address": "F4C7AA",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0C0 course music: 35 -> 8C."
+  },
+  {
+   "address": "F4D40A",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0C2 course music: 35 -> 8C."
+  },
+  {
+   "address": "43C788",
+   "before": "37",
+   "after": "62",
+   "role": "Room 0C3 course music: 36 -> 61."
+  },
+  {
+   "address": "18C6A1",
+   "before": "37",
+   "after": "62",
+   "role": "Room 0C6 course music: 36 -> 61."
+  },
+  {
+   "address": "698A50",
+   "before": "21",
+   "after": "49",
+   "role": "Room 0CB course music: 20 -> 48."
+  },
+  {
+   "address": "15ECDE",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0CC course music: 26 -> 89."
+  },
+  {
+   "address": "18E614",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0CD course music: 35 -> 8C."
+  },
+  {
+   "address": "18EA9A",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0CE course music: 35 -> 8C."
+  },
+  {
+   "address": "1685C4",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0CF course music: 26 -> 89."
+  },
+  {
+   "address": "168F3C",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D0 course music: 26 -> 89."
+  },
+  {
+   "address": "16E3BB",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D1 course music: 26 -> 89."
+  },
+  {
+   "address": "16EBA7",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D2 course music: 26 -> 89."
+  },
+  {
+   "address": "16F329",
+   "before": "3a",
+   "after": "8a",
+   "role": "Room 0D3 course music: 39 -> 89."
+  },
+  {
+   "address": "17C85F",
+   "before": "36",
+   "after": "8d",
+   "role": "Room 0D4 course music: 35 -> 8C."
+  },
+  {
+   "address": "16F99D",
+   "before": "27",
+   "after": "8a",
+   "role": "Room 0D5 course music: 26 -> 89."
+  },
+  {
+   "address": "F9C487",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D6 course music: 22 -> 8A."
+  },
+  {
+   "address": "FA8B2F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D7 course music: 22 -> 8A."
+  },
+  {
+   "address": "15C6EE",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D8 course music: 22 -> 8A."
+  },
+  {
+   "address": "FACA03",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0D9 course music: 22 -> 8A."
+  },
+  {
+   "address": "FACE5F",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DA course music: 22 -> 8A."
+  },
+  {
+   "address": "FAE679",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DB course music: 22 -> 8A."
+  },
+  {
+   "address": "FAF566",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DC course music: 22 -> 8A."
+  },
+  {
+   "address": "FAFB50",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DD course music: 22 -> 8A."
+  },
+  {
+   "address": "FCDB65",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DE course music: 22 -> 8A."
+  },
+  {
+   "address": "FCEA10",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0DF course music: 22 -> 8A."
+  },
+  {
+   "address": "FCFC3E",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E0 course music: 22 -> 8A."
+  },
+  {
+   "address": "FD8E2E",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E1 course music: 22 -> 8A."
+  },
+  {
+   "address": "FEAEB1",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E2 course music: 22 -> 8A."
+  },
+  {
+   "address": "68C6D6",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 0E3 course music: 22 -> 8A."
+  },
+  {
+   "address": "FED6A2",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0E4 course music: 3D -> 9B."
+  },
+  {
+   "address": "FE84BE",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 0E8 course music: 34 -> 8B."
+  },
+  {
+   "address": "FEFF32",
+   "before": "35",
+   "after": "8c",
+   "role": "Room 0E9 course music: 34 -> 8B."
+  },
+  {
+   "address": "4CCCC5",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EA course music: 3E -> 8D."
+  },
+  {
+   "address": "4CD700",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EB course music: 3E -> 8D."
+  },
+  {
+   "address": "4CF230",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0EC course music: 3E -> 8D."
+  },
+  {
+   "address": "4CFEC7",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 0ED course music: 3E -> 8D."
+  },
+  {
+   "address": "579CDF",
+   "before": "59",
+   "after": "a1",
+   "role": "Room 0EF course music: 58 -> A0."
+  },
+  {
+   "address": "F79371",
+   "before": "3e",
+   "after": "9c",
+   "role": "Room 0F3 course music: 3D -> 9B."
+  },
+  {
+   "address": "1AA08E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F7 course music: 47 -> 6B."
+  },
+  {
+   "address": "10F540",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F8 course music: 47 -> 6B."
+  },
+  {
+   "address": "10F86C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0F9 course music: 47 -> 6B."
+  },
+  {
+   "address": "FB870E",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FA course music: 47 -> 6B."
+  },
+  {
+   "address": "FB8F62",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FB course music: 47 -> 6B."
+  },
+  {
+   "address": "FB83B9",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 0FC course music: 47 -> 6B."
+  },
+  {
+   "address": "6AF56D",
+   "before": "33",
+   "after": "ad",
+   "role": "Room 0FE course music: 32 -> AC."
+  },
+  {
+   "address": "1C9754",
+   "before": "24",
+   "after": "84",
+   "role": "Room 101 course music: 23 -> 83."
+  },
+  {
+   "address": "3CB110",
+   "before": "1f",
+   "after": "6c",
+   "role": "Room 102 course music: 1E -> 6B."
+  },
+  {
+   "address": "1FC0F0",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 103 course music: 3C -> 85."
+  },
+  {
+   "address": "6AE9DD",
+   "before": "3f",
+   "after": "8e",
+   "role": "Room 108 course music: 3E -> 8D."
+  },
+  {
+   "address": "45B391",
+   "before": "41",
+   "after": "61",
+   "role": "Room 10A course music: 40 -> 60."
+  },
+  {
+   "address": "57D21A",
+   "before": "51",
+   "after": "82",
+   "role": "Room 10D course music: 50 -> 81."
+  },
+  {
+   "address": "1CB1DC",
+   "before": "25",
+   "after": "52",
+   "role": "Room 10F course music: 24 -> 51."
+  },
+  {
+   "address": "F9A00F",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 110 course music: 43 -> 59."
+  },
+  {
+   "address": "4D9B16",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 111 course music: 49 -> 3A."
+  },
+  {
+   "address": "34F4D4",
+   "before": "32",
+   "after": "36",
+   "role": "Room 112 course music: 31 -> 35."
+  },
+  {
+   "address": "599DCE",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 115 course music: 51 -> 3D."
+  },
+  {
+   "address": "16DA24",
+   "before": "37",
+   "after": "62",
+   "role": "Room 118 course music: 36 -> 61."
+  },
+  {
+   "address": "6986F9",
+   "before": "21",
+   "after": "49",
+   "role": "Room 11A course music: 20 -> 48."
+  },
+  {
+   "address": "FDC08E",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 11B course music: 2B -> 50."
+  },
+  {
+   "address": "53B95D",
+   "before": "3d",
+   "after": "86",
+   "role": "Room 11C course music: 3C -> 85."
+  },
+  {
+   "address": "50FD7C",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 11D course music: 2B -> 50."
+  },
+  {
+   "address": "33FA04",
+   "before": "49",
+   "after": "41",
+   "role": "Room 11E course music: 48 -> 40."
+  },
+  {
+   "address": "45C9AB",
+   "before": "32",
+   "after": "36",
+   "role": "Room 121 course music: 31 -> 35."
+  },
+  {
+   "address": "67FB96",
+   "before": "49",
+   "after": "41",
+   "role": "Room 123 course music: 48 -> 40."
+  },
+  {
+   "address": "58A5DC",
+   "before": "43",
+   "after": "72",
+   "role": "Room 124 course music: 42 -> 71."
+  },
+  {
+   "address": "69C4E2",
+   "before": "29",
+   "after": "4a",
+   "role": "Room 125 course music: 28 -> 49."
+  },
+  {
+   "address": "5CA70C",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 129 course music: 47 -> 6B."
+  },
+  {
+   "address": "FBE817",
+   "before": "43",
+   "after": "72",
+   "role": "Room 12A course music: 42 -> 71."
+  },
+  {
+   "address": "1CC813",
+   "before": "5c",
+   "after": "79",
+   "role": "Room 12D course music: 5B -> 78."
+  },
+  {
+   "address": "10F035",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 12E course music: 47 -> 6B."
+  },
+  {
+   "address": "FFB005",
+   "before": "29",
+   "after": "4a",
+   "role": "Room 12F course music: 28 -> 49."
+  },
+  {
+   "address": "1FF505",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 130 course music: 47 -> 6B."
+  },
+  {
+   "address": "5D8E10",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 131 course music: 43 -> 59."
+  },
+  {
+   "address": "62D766",
+   "before": "44",
+   "after": "5a",
+   "role": "Room 132 course music: 43 -> 59."
+  },
+  {
+   "address": "51B4E3",
+   "before": "41",
+   "after": "61",
+   "role": "Room 133 course music: 40 -> 60."
+  },
+  {
+   "address": "59EE8C",
+   "before": "4a",
+   "after": "3b",
+   "role": "Room 13A course music: 49 -> 3A."
+  },
+  {
+   "address": "F5A7DA",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 13C course music: 38 -> A4."
+  },
+  {
+   "address": "5998D1",
+   "before": "2c",
+   "after": "51",
+   "role": "Room 13D course music: 2B -> 50."
+  },
+  {
+   "address": "578E9A",
+   "before": "37",
+   "after": "62",
+   "role": "Room 13E course music: 36 -> 61."
+  },
+  {
+   "address": "F6F6B9",
+   "before": "53",
+   "after": "a4",
+   "role": "Room 13F course music: 52 -> A3."
+  },
+  {
+   "address": "F5F885",
+   "before": "24",
+   "after": "84",
+   "role": "Room 140 course music: 23 -> 83."
+  },
+  {
+   "address": "F6EB00",
+   "before": "24",
+   "after": "84",
+   "role": "Room 141 course music: 23 -> 83."
+  },
+  {
+   "address": "F6C454",
+   "before": "47",
+   "after": "ab",
+   "role": "Room 142 course music: 46 -> AA."
+  },
+  {
+   "address": "F6F93A",
+   "before": "24",
+   "after": "84",
+   "role": "Room 143 course music: 23 -> 83."
+  },
+  {
+   "address": "FEDF4B",
+   "before": "23",
+   "after": "8b",
+   "role": "Room 146 course music: 22 -> 8A."
+  },
+  {
+   "address": "FCCBCB",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 147 course music: 38 -> A4."
+  },
+  {
+   "address": "FCC3F9",
+   "before": "48",
+   "after": "6c",
+   "role": "Room 148 course music: 47 -> 6B."
+  },
+  {
+   "address": "F4DAFC",
+   "before": "1f",
+   "after": "52",
+   "role": "Room 14A course music: 1E -> 51."
+  },
+  {
+   "address": "F798F1",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 14E course music: 29 -> B0."
+  },
+  {
+   "address": "6AD8BF",
+   "before": "34",
+   "after": "69",
+   "role": "Room 150 course music: 33 -> 68."
+  },
+  {
+   "address": "52BDF8",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 153 course music: 27 -> 8E."
+  },
+  {
+   "address": "F0A511",
+   "before": "51",
+   "after": "82",
+   "role": "Room 155 course music: 50 -> 81."
+  },
+  {
+   "address": "F7FE98",
+   "before": "52",
+   "after": "3e",
+   "role": "Room 156 course music: 51 -> 3D."
+  },
+  {
+   "address": "F5BED9",
+   "before": "51",
+   "after": "82",
+   "role": "Room 158 course music: 50 -> 81."
+  },
+  {
+   "address": "F5CFAE",
+   "before": "51",
+   "after": "82",
+   "role": "Room 159 course music: 50 -> 81."
+  },
+  {
+   "address": "F9F67A",
+   "before": "51",
+   "after": "82",
+   "role": "Room 15A course music: 50 -> 81."
+  },
+  {
+   "address": "F5E694",
+   "before": "51",
+   "after": "82",
+   "role": "Room 15B course music: 50 -> 81."
+  },
+  {
+   "address": "F499BC",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 15E course music: 27 -> 8E."
+  },
+  {
+   "address": "1DAFC6",
+   "before": "3a",
+   "after": "99",
+   "role": "Room 160 course music: 39 -> 98."
+  },
+  {
+   "address": "F1ABDC",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 162 course music: 30 -> 7A."
+  },
+  {
+   "address": "6DFFC8",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 163 course music: 30 -> 7A."
+  },
+  {
+   "address": "57EDA7",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 164 course music: 30 -> 7A."
+  },
+  {
+   "address": "57E6FC",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 165 course music: 30 -> 7A."
+  },
+  {
+   "address": "F1F540",
+   "before": "31",
+   "after": "7b",
+   "role": "Room 166 course music: 30 -> 7A."
+  },
+  {
+   "address": "67E945",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 167 course music: 27 -> 8E."
+  },
+  {
+   "address": "60AE4C",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 169 course music: 27 -> 8E."
+  },
+  {
+   "address": "65F73A",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16A course music: 27 -> 8E."
+  },
+  {
+   "address": "65A657",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16B course music: 27 -> 8E."
+  },
+  {
+   "address": "6BE071",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16C course music: 27 -> 8E."
+  },
+  {
+   "address": "F4F116",
+   "before": "28",
+   "after": "8f",
+   "role": "Room 16D course music: 27 -> 8E."
+  },
+  {
+   "address": "68A55E",
+   "before": "34",
+   "after": "69",
+   "role": "Room 16E course music: 33 -> 68."
+  },
+  {
+   "address": "68D61E",
+   "before": "34",
+   "after": "69",
+   "role": "Room 16F course music: 33 -> 68."
+  },
+  {
+   "address": "6A99BA",
+   "before": "34",
+   "after": "69",
+   "role": "Room 170 course music: 33 -> 68."
+  },
+  {
+   "address": "6A9F9A",
+   "before": "34",
+   "after": "69",
+   "role": "Room 171 course music: 33 -> 68."
+  },
+  {
+   "address": "6ACD88",
+   "before": "34",
+   "after": "69",
+   "role": "Room 172 course music: 33 -> 68."
+  },
+  {
+   "address": "2FE857",
+   "before": "6e",
+   "after": "71",
+   "role": "Room 182 course music: 6D -> 70."
+  },
+  {
+   "address": "6A8200",
+   "before": "39",
+   "after": "a5",
+   "role": "Room 1EF course music: 38 -> A4."
+  },
+  {
+   "address": "59DC7D",
+   "before": "2a",
+   "after": "b1",
+   "role": "Room 1F0 course music: 29 -> B0."
+  }
+ ],
+ "music_overrides": [
+  {
+   "room": "043",
+   "song": "41"
+  },
+  {
+   "room": "114",
+   "song": "41"
+  },
+  {
+   "room": "11F",
+   "song": "41"
+  }
+ ],
+ "music_retired": [
+  {
+   "slot": "44"
+  }
+ ],
+ "native_sprite_gap": {
+  "manifests": [
+   "config/native-content/sprite10-module.json",
+   "config/native-content/sprite11-module.json",
+   "config/native-content/sprite12-module.json",
+   "config/native-content/sprite13-module.json",
+   "config/native-content/sprite14-module.json",
+   "config/native-content/sprite0f-module.json",
+   "config/native-content/sprite19-yfix-module.json",
+   "config/native-content/sprite22-module.json",
+   "config/native-content/sprite3b-module.json",
+   "config/native-content/sprite55-module.json",
+   "config/native-content/sprite92-module.json",
+   "config/native-content/spritea0-module.json",
+   "config/native-content/sprite9d-module.json",
+   "config/native-content/sprite93-module.json",
+   "config/native-content/sprite7e-module.json",
+   "config/native-content/sprite79-module.json",
+   "config/native-content/sprite76-module.json",
+   "config/native-content/sprite66-module.json",
+   "config/native-content/sprite5d-module.json",
+   "config/native-content/sprite4a-module.json",
+   "config/native-content/sprite3f-module.json",
+   "config/native-content/sprite3d-module.json",
+   "config/native-content/sprite3c-module.json",
+   "config/native-content/sprite38-module.json",
+   "config/native-content/sprite36-lowmirror-module.json",
+   "config/native-content/sprite32-lowmirror-module.json",
+   "config/native-content/sprite31-lowmirror-module.json",
+   "config/native-content/sprite2d-lowmirror-module.json",
+   "config/native-content/sprite23-lowmirror-module.json",
+   "config/native-content/sprite20-lowmirror-module.json",
+   "config/native-content/sprite1c-lowmirror-module.json",
+   "config/native-content/sprite9b-9e-module.json",
+   "config/native-content/sprite9c-9f-phasebgm2-module.json",
+   "config/native-content/sprite2c-lowmirror-module.json",
+   "config/native-content/sprite7f-module.json",
+   "config/native-content/sprite80-module.json",
+   "config/native-content/sprite95-boss-module.json"
+  ],
+  "extra_packs": [
+   {
+    "variable": "BM_SEVEN_CODE_PACK_EXTRA",
+    "pack_file": "seven-code.bin",
+    "address": "A28000",
+    "size": 28478,
+    "sha256": "24a58ba8e1c2ad716d73428795164d36c1b808efa53ea141854085b807318787",
+    "executable": true,
+    "source": "local/native-modules/seven-v1"
+   },
+   {
+    "variable": "BM_SEVEN_GRAPHICS_PACK_EXTRA",
+    "pack_file": "seven-graphics.bin",
+    "address": "A68000",
+    "size": 23165,
+    "sha256": "f37524950aace0fa931a051bc751b365ddea3ef6ee27fc29a8712971e0de209d",
+    "executable": false,
+    "source": "local/native-modules/seven-v1"
+   },
+   {
+    "variable": "BM_SEVEN_CODE_PACK_TYPE3_C0",
+    "pack_file": "type3-c0.bin",
+    "address": "9486D7",
+    "size": 205,
+    "sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+    "executable": true,
+    "source": "local/native-modules/demo11-native-type3b-final-type3_c0_block"
+   },
+   {
+    "variable": "BM_SEVEN_CODE_PACK_TYPE3_C1",
+    "pack_file": "type3-c1.bin",
+    "address": "93AE08",
+    "size": 213,
+    "sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+    "executable": true,
+    "source": "local/native-modules/demo11-native-type3b-final-type3_c1_block"
+   },
+   {
+    "variable": "BM_SEVEN_CODE_PACK_MAZO_B0",
+    "pack_file": "mazo-b0-code.bin",
+    "address": "A18989",
+    "size": 419,
+    "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+    "executable": true,
+    "source": "local/native-modules/mazo-b0-v1"
+   },
+   {
+    "variable": "BM_MAZO_DATA_PACK",
+    "pack_file": "mazo-b0-corridor.bin",
+    "address": "CA8000",
+    "size": 288,
+    "sha256": "4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d",
+    "executable": false,
+    "source": "local/native-modules/mazo-b0-corridor-v1"
+   },
+   {
+    "variable": "BM_CORRIDOR_INVISIBLE_PACK",
+    "pack_file": "corridor-invisible.bin",
+    "address": "D08000",
+    "size": 4105,
+    "sha256": "6dcddb8214d00d859142e5d81b0a8ad37b9e581be0a498ff39be427318435644",
+    "executable": false,
+    "source": "local/native-modules/corridor-orb-v2"
+   },
+   {
+    "variable": "BM_CORRIDOR_WAVE_PACK",
+    "pack_file": "corridor-wave.bin",
+    "address": "D18000",
+    "size": 1553,
+    "sha256": "d70774e7549b1af3e368b976782b04b09aa7df84c83fd844bb39c22e5f7fa3e5",
+    "executable": false,
+    "source": "local/native-modules/corridor-wave-v1"
+   },
+   {
+    "variable": "BM_FOREST_A2_CODE_PACK",
+    "pack_file": "spritea2-modern-code.bin",
+    "address": "9DD7B4",
+    "size": 7400,
+    "sha256": "ccd76df8480d3c753d605720dd809db3e47739123d2f8fae8130727297eeb8fc",
+    "executable": true,
+    "source": "local/native-modules/forest-a2-v3"
+   }
+  ],
+  "extra_patches": [
+   {
+    "offset": 1606930,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "0136000035a299440f80a28d80a20000",
+    "role": "Enable only recipient 2A through its own generic constructor"
+   },
+   {
+    "offset": 675048,
+    "before": "01808b028a028c028d02e3015c0119018e027f00ffffffffffffffffffffffff",
+    "after": "0180e00fe10fe20fe30fe40fe50fe60fe70f7f00ffffffffffffffffffffffff",
+    "role": "Namespace eight static graphics selections in recipient room 0FF only"
+   },
+   {
+    "offset": 666792,
+    "before": "ffffff",
+    "after": "0880a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666795,
+    "before": "ffffff",
+    "after": "be88a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666798,
+    "before": "ffffff",
+    "after": "ed8ba6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666801,
+    "before": "ffffff",
+    "after": "ba8ea6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666804,
+    "before": "ffffff",
+    "after": "1593a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666807,
+    "before": "ffffff",
+    "after": "0c9da6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666810,
+    "before": "ffffff",
+    "after": "17a4a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666813,
+    "before": "ffffff",
+    "after": "13ada6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666816,
+    "before": "ffffff",
+    "after": "80b3a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666819,
+    "before": "ffffff",
+    "after": "b8bda6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666822,
+    "before": "ffffff",
+    "after": "01c7a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 666825,
+    "before": "ffffff",
+    "after": "65d1a6",
+    "role": "Previously unreferenced native graphics namespace pointer"
+   },
+   {
+    "offset": 1609330,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "03ffffffffffffffe68694ea8694ffff",
+    "role": "Type3 slotC0 low-WRAM/IO mirror correction to bank94"
+   },
+   {
+    "offset": 1609346,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "03ffffffffffffff17ae931bae93ffff",
+    "role": "Type3 slotC1 low-WRAM/IO mirror correction to bank93"
+   },
+   {
+    "offset": 189577,
+    "before": "008006",
+    "after": "0080ca",
+    "role": "level pointer"
+   },
+   {
+    "offset": 191113,
+    "before": "00d9ff",
+    "after": "2280ca",
+    "role": "layer 2 pointer"
+   },
+   {
+    "offset": 192262,
+    "before": "6de7",
+    "after": "1a80",
+    "role": "sprite pointer low bytes"
+   },
+   {
+    "offset": 488067,
+    "before": "07",
+    "after": "ca",
+    "role": "sprite pointer bank"
+   },
+   {
+    "offset": 679272,
+    "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+    "role": "room graphics and palette record"
+   },
+   {
+    "offset": 189580,
+    "before": "008006",
+    "after": "2380ca",
+    "role": "level pointer"
+   },
+   {
+    "offset": 191116,
+    "before": "00d9ff",
+    "after": "3680ca",
+    "role": "layer 2 pointer"
+   },
+   {
+    "offset": 192264,
+    "before": "6de7",
+    "after": "2e80",
+    "role": "sprite pointer low bytes"
+   },
+   {
+    "offset": 488068,
+    "before": "07",
+    "after": "ca",
+    "role": "sprite pointer bank"
+   },
+   {
+    "offset": 679304,
+    "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "after": "0100c400af00ae00140061026002010000006202ffffffffffffffffffffffff",
+    "role": "room graphics and palette record"
+   },
+   {
+    "offset": 189619,
+    "before": "008006",
+    "after": "3780ca",
+    "role": "level pointer"
+   },
+   {
+    "offset": 191155,
+    "before": "00d9ff",
+    "after": "54deff",
+    "role": "retained empty layer 2 sentinel"
+   },
+   {
+    "offset": 192290,
+    "before": "6de7",
+    "after": "a580",
+    "role": "sprite pointer low bytes"
+   },
+   {
+    "offset": 488081,
+    "before": "07",
+    "after": "ca",
+    "role": "sprite pointer bank"
+   },
+   {
+    "offset": 679720,
+    "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "after": "018015001900f90f14000500130001000000ffffffffffffffffffffffffffff",
+    "role": "Room191 private foreground graphics; preserve orb"
+   },
+   {
+    "offset": 192913,
+    "before": "0b",
+    "after": "3b",
+    "role": "level table 05F000"
+   },
+   {
+    "offset": 193425,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05F200"
+   },
+   {
+    "offset": 193937,
+    "before": "0a",
+    "after": "0a",
+    "role": "level table 05F400"
+   },
+   {
+    "offset": 194449,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05F600"
+   },
+   {
+    "offset": 188305,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05DE00"
+   },
+   {
+    "offset": 488609,
+    "before": "00",
+    "after": "00",
+    "role": "level table 0EF310"
+   },
+   {
+    "offset": 189622,
+    "before": "008006",
+    "after": "b080ca",
+    "role": "level pointer"
+   },
+   {
+    "offset": 191158,
+    "before": "00d9ff",
+    "after": "54deff",
+    "role": "retained empty layer 2 sentinel"
+   },
+   {
+    "offset": 192292,
+    "before": "6de7",
+    "after": "1881",
+    "role": "sprite pointer low bytes"
+   },
+   {
+    "offset": 488082,
+    "before": "07",
+    "after": "ca",
+    "role": "sprite pointer bank"
+   },
+   {
+    "offset": 679752,
+    "before": "0100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "after": "018015001900f90f14000500130001000000ffffffffffffffffffffffffffff",
+    "role": "Room192 private foreground graphics; preserve original sprites"
+   },
+   {
+    "offset": 192914,
+    "before": "0b",
+    "after": "0b",
+    "role": "level table 05F000"
+   },
+   {
+    "offset": 193426,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05F200"
+   },
+   {
+    "offset": 193938,
+    "before": "0a",
+    "after": "0a",
+    "role": "level table 05F400"
+   },
+   {
+    "offset": 194450,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05F600"
+   },
+   {
+    "offset": 188306,
+    "before": "00",
+    "after": "00",
+    "role": "level table 05DE00"
+   },
+   {
+    "offset": 488610,
+    "before": "00",
+    "after": "00",
+    "role": "level table 0EF310"
+   },
+   {
+    "offset": 1608962,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "01400080308300009889a19d89a10000",
+    "role": "B0 record at the free slot"
+   },
+   {
+    "offset": 1769480,
+    "before": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "after": "27000703030e0f0c071d13290000014400032700078080e0e060c070902b004380002600060200070003000196003f0a0005010b0c0a9608c000e025000606001000a100d887006e86000303060707052900030202050489005c070000c0c060e0e0a02900034040a02088003e3c0009404060601a1a010100008300ea8700142b00091b1fcb3b2263d4b791ae2500080400ff04ff1c7f087f28000768f898f08d8d46c723000b0c0018009000fc00fe70ff38e4bf0008131f111f06020f0c0386001e430f00030b02040427000890f010f0c080e0608086003e43e00003a0804040290022010900030205020201070506840217000284011383021709010000700038009c808c2700067000b8001c000c88003d03050706068702082300040300070602830254260005a0e06020c0c0290003c000a0208b02362b008900ee29000f0302030307061f1d2f24bf80b686181883004d08010002001b007f007922000aee81f901fd0dfd15fe0660840227087f00fe00f000e800f886003d078872616190907070270004ff018000603000230304090d0108268a013f0506000f06110f250008b8b866825d825f803f88023707fc18e13ee03f80ff2900048080c040208b007e0300800040f02500bee43a00110f0f1f1f3e3f785fa09fb887fbc3c3ff0c0c830018e0280700cf80d78007003f00e0e0f8f87cfc12f21ee21ec2bbc3c7ff202008088404ee02f800f000c501f984004d0b07071f1f3c3f180f58477b6323000a04041010232027006f40078600a508e0e068e830e03080fc840267830236069808c800e800848602170907070f0f080f302f3d232500830216031700272087001e8304640520e018e878888700b4050000d000c8088e00be22012b0085001e0d0f0f6140445a7d428ed15fe05ed123000b3f1e213f201f603fc03ff02f83002609a0600818046c020a040c8402590e00c000f0e098f0fcf0f8f0fff80101620022020706040700090e898c83001823010103014304030306031f204dff0000c04eff004fff004f00ff1f9030b868a010b626c40cd10bf801f90560c030c078c07cc034f826fc07fe03fe8300060a010103031c1df9fa4648808604af84028e0300bf01ff84045e8300280778f80cec3a46010b89003405f000fc80f6fc2d00870228880217e04000c3ff83bfb0bf5c507f663b381f1f03033f007f00ffb0331046462c2810100303c7ff83fb0ee27e46f414d898f0f0c0c0f901fd01f000c6461810a0801010c0c043637f0750473c201f181d1d830208431f00076f40030008081311830208438cfc0510d06808f07085030a43f40406f81090006060808405ed43333f06382f1f100b080784045e430f00012f288402568402174398f80438e8f090a08602a343e00004e82880804084047301000062028a02958504122b0003c0c185958b028404ff3e7a001c2400000824000108c8870228250000f02e00117478d7e0c7d21f1a07010700070401010f0343380f45040383001e43ff0008fbc0fe58ff30fd80e08305ed00ff8301170501ff08f73dc083006f43ff0007fe0ac502f901f087240008ff00ff0bf538ff07fe85011e0bfd05eb036b17282ff3f34c4c23000a07fa17fc87f8ffd0fc00b0240009c4fcc2fe01ce7c7dc1c1250006ff03ff01ff008328000b2c515d22948a4ed1a0cc696923000a83fe81fae57fe0357b141624000b6060f0f01090c8281050363685003883022e02f000ec8c02c1010303830486031b1b353185023e0d02020404080814102a200f0f7f7f25ff09fcfff0ffc0ff0f0f70708502280403000f003f260023ff85076d290086056af02408418508020203030f86035f850812020000088406fa89082000f084037f89083085035f03e0e0fcfc25ff001f84037f03e0e01c1c8502088b007e238000e08a007e8302280120209d02be8900ee030f0f3f3f8708468503fc0130302b0083042001fefe89092e03e0e018189502cae439000207077f89011e84044100608c033403c0c0f8f88d09c085089e3b00012f20436e61056f60efe0f7f022f802ff31204352400451409080884480871680ff807f40bfc01fe30fe70f0f1f0fff7f00ff007f00bf44001f89085a89092c8d087a87084c990a4603191917104336310b373077707b787c7c16101910432a20082920484044404340c043ff808a0a238406108a0a331807ff03fe02fd04fb07f08fe0cfe0e0f0f800fd00fe00fc00fb4400f005ff003030d01045d81809dc1cbc3c7c7cd010301043a8080d2808240444048404030305040300430b08051b181d1c1e1e220202000400430c0812141012101110fcffe0ffc07f40bf20dff30ff7220f0803001f00bf007f003f44000f0eff007fff0ffe07fc05fa09f69fe0df22e08305d804fa00fc00f84400e007ff0080804040800043a02005b0307070f0f02280020040004360200250109022108500042502230785009601030243010023040f7f7ffcffe07fe03f807fe00ff70707ff83028e061f005f001f007f840b3b83094a0b1df90ff117e91fc1bdc1c3ff83009803e301f90183031401c2008905df27808b08e2230045f8ff09e0e76a636f6577753b39458780099f80574255454d452d29450fff0907ff03ff007f800ff8084bff00127f000f080006070f0e190e110c130b140f38278a03348305b80b1f000060e0f0b05010e0e01843f80401b44a270007e000d800e800a400457c7f097073363337313b391f1d454340094f402b222921252115159f0c2045e0ff830aa00501fd03e13f214aff000401fd01e121457cfc091c9cd898d818b838f07045840409e404a888280848085050451e1f0518190b090d0d23064511100517100d090b09830b96870c200780bfc08ff888ff4448ff000680bf808f884444870cc00603fb07e33e22fe890d2f0603fb03e322454425f0053030a020606023c0251005d0106020a02083022823070306060202230385045001040485009c8502944507ff09c0dfe0c77f2cbfb0e7e046ff0008c0dfc0ac2c7030988043c3ff0b81fd0ffd0dcdfb83f626dc1c43fc000bfe00fc0cfe0c85812a22341429808d05e2870228073b381d1c0e0e07078305a2230009242012100908040402028500ee44ff940aa2cfc2f1f1ffff7f7f0f0f2394e020a2a272420f01808070700f0f5bc07fc43984324e1b27041b010e02093f0033006388004c01040043fc0206f802f8040004f083043800e045fc0043f8002500031f1c0d0c23038700ee0310100a088300988700ee43ff94890e260100002394890e3601000043ff5207e7871f1ffffffcfc8308ee2352079c84e00003031c1c8308ee850668890702031010a0208905ec8505a02b00890e962500077f52efe2f1f13f3f87088e07d25232220f01303087088e07fd95ef8f1e1ef8f88708ee0796949989e00018188708ee8d0702910f5e3f00037f7f1f1f2b0001606083095a290002f8f8f08c07100108088d093a3f00ff",
+    "role": "mazo extended gfx 1E6 stream"
+   },
+   {
+    "offset": 656058,
+    "before": "ffffff",
+    "after": "088036",
+    "role": "extended gfx 1E6 pointer"
+   },
+   {
+    "offset": 1081352,
+    "before": "000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "after": "25000901010302000007040f0c27000101004302011d060105001b100a000e063e2f1f0c3f013e070906010e110e17080d102b10430f308700000702020100050503018900104303001a0700784837173f1ffd9dfb53f7d7eddc745c1f27582f57284f30cf4430cb0dd72807010f0b0504070607070f05430f03430700070e010c010f020d0243030c1fdbbfdfbfef1f930fbf1cfd30f222f9213867bfe03ff07f9c7c83738c6f906e902700010202230000032a00430200010300434f410b0f011f136961b7837f06ef4e43030ce043430c470817086d10ee13de21fb437f03fdc0fbc0f32bff33f76cff6055a9916d433cc7b82fd037c86c93689707040f000f031f173e263c243b077d4700030807020d050a431b04e0283a041d22ff19fff8fff0fdf0fff4fbf0b7b2efea39c6f80731ced32ce219e6196e11de29ed48dfd3fd4303ffe02100fe46fd4df6555aa5f10c21dc639c609fc138c2304ca202026060808001013030038400ce0201001f2400000f260011fe03efc367413100fd05bf841d0d00009e61431f20e049ef108778740b3e001f00dfd0efc4fedef434f3f0ff79fff9dfc43cd3fc03fd00bb40cf003b847b04e718ed63cb865b1df75dee72ef60f551fb4a5b847f00fe00fa00518c508f4aa454a1850002080707050c0d1c1010132800430300e0630f001f003c3cefe59f8d7f59ff060f00ff0efd3e03001c027d03b906c639ff00fe013fc2f820ff20b1006e00df40fbb1d1206e1f1fc060bfce3f917fee319f601fe08071ff897e44bf06f6007404b3835a83dd079867dd236f900ff08ff44cb064986199270003101008082f00e02d040042000e0203000f081f100f011f003b033f050d00040306010e01190616094f30d922fd22be819b01f860bf41437f80e0516f84e31d710e7f80679861fec0ffd0efdce3b100db0a1beaf50eff8eff00ff80ff12ce3be49be47be41ba45b00ff807f12edad237f19fb0aff071be1ebf2b539ca0ed10da84604f107f805fa04f942fc33fc2900030300060285018a2600040303050d0e8300cc1f0f013f03ff07bf3fffff9f9f2100150207080f300ef141fe7982e1027b14ff6222ff10cfff9ffffeffb97d01f00be21dc73839c643fe0143ff001bb753f918df69ff0cffacfa88ff876a876fe037e079a61de2bc431de2431ae0e046ff00ff0aff43ffd3ffd1ff52ff10ff1200ff0af543bcdb24d926da2554ab36c9e707b800df00f790ff04ff00ff08ff31db3c679f38c78c6300fb807fc8377a840e060c050107078800cd0817081609190e08070686004f13017f7ebdffe1fefcff1efe843f200f00817e3cc343ff00e08e1fe04738100f08077d01fec77dfe8ffc7f20ef3bed71f6faff00ba014483807fe01f0ff047b8e11c6f82f730fb48ffe08f00efe0fff0ff011fe02fc046b1e01f708ff10ef00ff10eff03e739e718bd00a518665aff39ff1867987f885bbcc33cdb2c993c39c6b847bf00efa0f7f1fe60ff20ff10ff00ff0178869846e806e11ee01f708e30ce00fe030005000c000844001000202200080403020506080408188404a90d2000fb7dfd2e7e07770139001e02430f00e023708e38c71c634f302718130c0807000f9f82df447e80fde0ff213f23dec7fe67730c37884307f80dce30cd31ea126a9256006e2aff8323ff0f00ff7effc3c3b9469344027c0100ffff2300e0213c00fe80ff087f08ff80ffacffcc7fe63ee0817e8877c837e11e2d528db2475827388700003700054000404080808b05562d000108008704b883057008800007080c100810308405871840008000fd0f998f2b2f1a1e0a0e0f0e0706030204f46010104a000105bd813e087f1c437f1e063f1e3e1ebe0e7e4e00ff1fbdf0d9f05f705f783f302e201c047d0427280609800f8906c30cd30cef10cf308f05478f0547069c0c9d085e083c280043ff00017f00890626e020fc00fe02f9013c045e4247433f390605bb449f608f7063183904380404020002034600028300c623020101028300c7850664e583000e502e07420a830d3e18c0080112d2075000ff0f957e0c916aa488400e593e40346950ce4fff000fed700f86804c1001032d99243d78c5a94fff000f9d0ada4001a220bb98f71032836eb81b4fff00e7ff00e77f00ff",
+    "role": "mazo extended gfx 1E5 Mode 7 background stream"
+   },
+   {
+    "offset": 656055,
+    "before": "ffffff",
+    "after": "088021",
+    "role": "extended gfx 1E5 pointer"
+   },
+   {
+    "offset": 666867,
+    "before": "ffffff",
+    "after": "0080d0",
+    "role": "Private room191 transparent graphics FF9"
+   },
+   {
+    "offset": 656511,
+    "before": "ffffff",
+    "after": "0080d1",
+    "role": "Extended graphics 27D for the room 151 tidal-wave background"
+   },
+   {
+    "offset": 2998515,
+    "before": "61",
+    "after": "a5",
+    "role": "Room 151 music: request recipient slot A4 (parameter A5)"
+   },
+   {
+    "offset": 1608850,
+    "before": "0000ffffffffffff218001218001ffff",
+    "after": "012200b735839944bfd79decd79d0000",
+    "role": "Official demoOnly1 A2 program in native 9D bank; preserve all recipient room data"
+   },
+   {
+    "offset": 195071,
+    "before": "00",
+    "after": "1f",
+    "role": "New bounded hollow shop return secondary1FF"
+   },
+   {
+    "offset": 195583,
+    "before": "00",
+    "after": "16",
+    "role": "New bounded hollow shop return secondary1FF"
+   },
+   {
+    "offset": 196095,
+    "before": "00",
+    "after": "43",
+    "role": "New bounded hollow shop return secondary1FF"
+   },
+   {
+    "offset": 196607,
+    "before": "00",
+    "after": "68",
+    "role": "New bounded hollow shop return secondary1FF"
+   }
+  ]
+ },
+ "level_music_objects": [
+  {
+   "room": "02F",
+   "source_pointer": "4AC208",
+   "source_size": 210,
+   "source_offset": 2441736,
+   "destination_pointer": "0DBD68",
+   "destination_offset": 441696,
+   "blob_size": 221,
+   "blob_sha256": "6bf065b5dc6972602850a2a1159a8c0e5aec2318fa3c24028efa3162d6771331",
+   "song": "6B",
+   "object": "40606c"
+  },
+  {
+   "room": "032",
+   "source_pointer": "FB91F4",
+   "source_size": 91,
+   "source_offset": 4035060,
+   "destination_pointer": "0DBE45",
+   "destination_offset": 441917,
+   "blob_size": 102,
+   "blob_sha256": "ea31926e5851937bc6cb2c994c26f56536c4a52b81d65428ecffc70050b4afba",
+   "song": "6B",
+   "object": "40606c"
+  },
+  {
+   "room": "033",
+   "source_pointer": "FB94C3",
+   "source_size": 119,
+   "source_offset": 4035779,
+   "destination_pointer": "0DBEAB",
+   "destination_offset": 442019,
+   "blob_size": 130,
+   "blob_sha256": "e5d87a4d2f3db59922d5b792a59d1a7f936542d0281780ea8f6a8c273bb9d4f6",
+   "song": "6B",
+   "object": "40606c"
+  },
+  {
+   "room": "034",
+   "source_pointer": "FB97A5",
+   "source_size": 21,
+   "source_offset": 4036517,
+   "destination_pointer": "0DBF2D",
+   "destination_offset": 442149,
+   "blob_size": 32,
+   "blob_sha256": "dab1cca0ab0afce135c8d83c7d606ef0ce7861725c7869981a951950fe57f25a",
+   "song": "6B",
+   "object": "40606c"
+  },
+  {
+   "room": "035",
+   "source_pointer": "FB99EA",
+   "source_size": 25,
+   "source_offset": 4037098,
+   "destination_pointer": "0DBF4D",
+   "destination_offset": 442181,
+   "blob_size": 36,
+   "blob_sha256": "15d6d39084b90163006cd93cd2ef7370e47dd4fb0354fd0ff52e6bde858fa906",
+   "song": "6B",
+   "object": "40606c"
+  },
+  {
+   "room": "03C",
+   "source_pointer": "68D715",
+   "source_size": 1454,
+   "source_offset": 3430165,
+   "destination_pointer": "21D7E6",
+   "destination_offset": 1103838,
+   "blob_size": 1465,
+   "blob_sha256": "103e4f54bf691ef5a4d1d3d66d832650a915cbf1f9dee5a9dfedf27611d35f74",
+   "song": "51",
+   "object": "406052"
+  },
+  {
+   "room": "107",
+   "source_pointer": "F2D8EB",
+   "source_size": 261,
+   "source_offset": 3758315,
+   "destination_pointer": "0DC990",
+   "destination_offset": 444808,
+   "blob_size": 272,
+   "blob_sha256": "ab733805acc489f081ecd2ea5eafe13c5d05d97cd028eca68f71836a385804a1",
+   "song": "6B",
+   "object": "40606c"
+  }
+ ],
+ "music_region_pack": {
+  "id": "demo11-product-r19-music",
+  "pack_file": "music-pack.bin",
+  "regions": [
+   {
+    "slot": "4F",
+    "offset": 2293760,
+    "size": 6144,
+    "block_sha256": "e1c53f0268890430c47e95dbe692a84392dbb637da14bc5ecff164e22abc3083"
+   },
+   {
+    "slot": "03",
+    "offset": 2476352,
+    "size": 6144,
+    "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+   },
+   {
+    "slot": "05",
+    "offset": 2490368,
+    "size": 6144,
+    "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+   },
+   {
+    "slot": "06",
+    "offset": 2530904,
+    "size": 6144,
+    "block_sha256": "d9bd8454ad26e76ce303e3d12d17c0307541c5ac9e6fdc7aa230e04932262ec0"
+   },
+   {
+    "slot": "07",
+    "offset": 624165,
+    "size": 961,
+    "block_sha256": "3c84f7eb4ae2a60d243fa9c783265b521dbb9929e6cbef1fbb1c2cf0fe71aadb"
+   },
+   {
+    "slot": "08",
+    "offset": 625126,
+    "size": 1894,
+    "block_sha256": "ae65e20168c2d2ed90a64cd9045e7e2d1a36cb44329cf98a2c837318fbaabec8"
+   }
+  ],
+  "pack_size": 27431,
+  "pack_sha256": "c1384906aef7ff1928f0b16570e0b0d791af1a327933b35b4d656c7823bf3a73",
+  "manifest": "config/native-content/product-r19-music.json"
+ },
+ "output": {
+  "size": 4194304,
+  "sha256": "c1210084cdaeacf6858fd0144b2f6b6959225dbdd6fcab31867aa39291f8a266"
+ }
+}

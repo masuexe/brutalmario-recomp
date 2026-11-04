@@ -17,7 +17,11 @@ POINTER = 0x108008
 
 
 def image(body):
-    """Return an image whose room 0x43 holds the given level stream."""
+    """Return an image whose room 0x43 holds the given level stream.
+
+    The song table holds a block for slot 0x44, so a retirement has something
+    to clear.
+    """
     rom = bytearray(0x200000)
     count = len(body) - 1
     blob = (b'STAR' + count.to_bytes(2, 'little') +
@@ -25,6 +29,8 @@ def image(body):
     rom[BLOCK:BLOCK + len(blob)] = blob
     slot = lorom(0x05E000) + 0x43 * 3
     rom[slot:slot + 3] = POINTER.to_bytes(3, 'little')
+    song_slot = lorom(0x0FE000) + 0x44 * 3
+    rom[song_slot:song_slot + 3] = POINTER.to_bytes(3, 'little')
     return rom
 
 
@@ -64,6 +70,27 @@ class PlanTests(unittest.TestCase):
     def test_a_room_without_a_pointer_is_rejected(self):
         with self.assertRaisesRegex(ValueError, 'no level pointer'):
             override.plan(bytearray(0x200000), 0x43, 0x41)
+
+
+class RetireTests(unittest.TestCase):
+    def test_retire_refuses_while_a_room_requests_the_song(self):
+        rom = image(with_music(0x44))
+        with self.assertRaisesRegex(ValueError, 'still requested'):
+            override.retire(rom, 0x44)
+
+    def test_retire_clears_the_slot_after_the_room_moves(self):
+        rom = image(with_music(0x44))
+        override.prepare(rom, [(0x43, 0x41)])
+        record = override.retire(rom, 0x44)
+        self.assertEqual(record['slot'], '44')
+        slot = lorom(0x0FE000) + 0x44 * 3
+        self.assertTrue(all(byte == 0 for byte in rom[slot:slot + 3]))
+
+    def test_a_slot_without_a_block_is_rejected(self):
+        # The fixture gives slot 0x44 a block, so slot 0x45 has none.
+        rom = image(with_music(0x41))
+        with self.assertRaisesRegex(ValueError, 'already has no block'):
+            override.retire(rom, 0x45)
 
 
 if __name__ == '__main__':

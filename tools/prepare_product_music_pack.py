@@ -17,8 +17,8 @@ sys.path.insert(0, str(ROOT / 'tools'))
 from restore_star_world_1 import lorom, raw_group_song, sha, write_verified
 import prepare_music_objects as objects
 
-STAGE1 = ROOT / 'local/music-audit/product-r18-stage1.sfc'
-RECIPE = ROOT / 'local/music-audit/product-r18-recipe.json'
+STAGE1 = ROOT / 'local/music-audit/product-r19-stage1.sfc'
+RECIPE = ROOT / 'local/music-audit/product-r19-recipe.json'
 DONOR = ROOT / 'local/content-versions/cheap-demo/rom.sfc'
 GROUPS = [0x298008, 0x29A008, 0x29C008, 0x29E008, 0x2A8008, 0x2AA008,
           0x2AC008, 0x2AE008, 0x3F8008, 0x3FA008, 0x3FC008, 0x3FE008,
@@ -131,15 +131,15 @@ def main():
             regions.append({'slot': f'{slot:02X}', 'offset': start, 'size': size,
                             'block_sha256': sha(block)})
             pack.extend(block)
-    spec = {'id': 'demo11-product-r18-music', 'pack_file': 'music-pack.bin',
+    spec = {'id': 'demo11-product-r19-music', 'pack_file': 'music-pack.bin',
             'regions': regions, 'pack_size': len(pack), 'pack_sha256': sha(bytes(pack))}
     config['music_region_pack'] = spec
     config['output'] = {'size': len(out), 'sha256': sha(bytes(out))}
     RECIPE.write_text(json.dumps(config, indent=1) + '\n')
     directory = ROOT / 'local/restoration' / config['id']
     directory.mkdir(parents=True, exist_ok=True)
-    (ROOT / 'local/music-audit/product-r18-final.sfc').write_bytes(bytes(out))
-    (ROOT / 'local/music-audit/product-r18-music-pack.bin').write_bytes(bytes(pack))
+    (ROOT / 'local/music-audit/product-r19-final.sfc').write_bytes(bytes(out))
+    (ROOT / 'local/music-audit/product-r19-music-pack.bin').write_bytes(bytes(pack))
     print('moved slots:', [f'{s:02X}' for s, _, _, _ in moved])
     print('4F at', f'{placed:06X}', 'pointer', f'{address:06X}')
     print('pack', len(pack), 'rom', config['output']['sha256'][:16])

@@ -86,3 +86,39 @@ def prepare(rom, overrides):
     patches = [plan(rom, room, song) for room, song in overrides]
     return apply(rom, patches)
 
+
+SONG_TABLE = 0x0FE000
+
+
+def rooms_requesting(rom, song):
+    """Return the rooms whose music object selects the given song."""
+    found = []
+    for room in range(0x200):
+        try:
+            patch = plan(rom, room, song)
+        except ValueError:
+            continue
+        if patch['before'] == '%02X' % song:
+            found.append(room)
+    return found
+
+
+def retire(rom, song):
+    """Clear one song-table slot, and refuse when a room still requests it.
+
+    The slot keeps no block, so the game can no longer start that song. A room
+    that still selects it would go silent, so the call fails instead.
+    """
+    users = rooms_requesting(rom, song)
+    if users:
+        raise ValueError('song %02X is still requested by rooms %s'
+                         % (song, ' '.join('%03X' % room for room in users)))
+    slot = lorom(SONG_TABLE) + song * 3
+    before = bytes(rom[slot:slot + 3])
+    if before == bytes(3):
+        raise ValueError('song %02X already has no block' % song)
+    rom[slot:slot + 3] = bytes(3)
+    return {'slot': '%02X' % song,
+            'pointer_address': '%06X' % (SONG_TABLE + song * 3),
+            'before': before.hex()}
+

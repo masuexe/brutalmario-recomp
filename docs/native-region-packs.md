@@ -377,6 +377,35 @@ not one.
 The override list is `music_overrides` in the product recipe. `build_layer` in
 `tools/prepare_product_music.py` applies it to the image that it returns.
 
+### Song 0x44 is retired (product r19)
+
+Room 0x43 no longer selects song 0x44, but two other rooms did: 0x114 and
+0x11F. Both held the music object 40 60 45. Product r19 points all three rooms
+at song 0x41 and then retires slot 0x44.
+
+| Room | Object before | Object after | Song after |
+| --- | --- | --- | --- |
+| 0x043 | 40 60 45 | 40 60 42 | 0x41 |
+| 0x114 | 40 60 45 | 40 60 42 | 0x41 |
+| 0x11F | 40 60 45 | 40 60 42 | 0x41 |
+
+A console capture of each room in r19 reads mode 0x14, the expected room, song
+0x41, and carries audio:
+
+| Room | Peak | RMS |
+| --- | --- | --- |
+| 0x043 | 3,635 | 761.7 |
+| 0x114 | 3,555 | 825.9 |
+| 0x11F | 3,441 | 765.0 |
+
+`prepare_music_override.retire` clears the three-byte song-table entry, so the
+game cannot start the song. It refuses when any room still selects that song.
+That guard is the reason the two extra rooms are changed first.
+
+The block that slot 0x44 held stays in the image as dead data. It came from an
+earlier restoration, so reclaiming the space needs a change to that recipe and
+not to this one.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
