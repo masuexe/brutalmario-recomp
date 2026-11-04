@@ -163,3 +163,13 @@ The report is `local/reports/native-sprite-gaps.json`, SHA-256
 `954c6828d4d71f7415c3e8760c3068b37ff5fbacb69104d1842a5f8bb0e20f55`. The tests
 are `tests/test_sprite_gaps.py` and pass 6/6. The full suite passes 269/269
 tests. The log is `local/reports/unit-tests-status.log`.
+
+## Product merge (2026-11-05)
+
+The [product merge checkpoint](native-product-sprite-merge.md) installs seven
+reviewed records on the product line: `25`, `33`, `94`, `97`, `99`, `A1`
+and `C2`. Product r20 lists seven placeholder slots: `96`, `A5`, `A6`,
+`E8`, `E9`, `EA` and `F5`. Every supplied official image holds the
+default record in those seven slots, so the review closes with no install.
+The counts above describe the historical three-source audit, not the current
+product census.

@@ -125,6 +125,14 @@ content, or absence from every official donor:
 These slots need a chronology-aware official-source and room-mechanism review.
 The old three-donor “no record” label cannot establish global source absence.
 
+### Product merge (2026-11-05)
+
+The [product merge checkpoint](native-product-sprite-merge.md) installs slots
+`97`, `99` and `A1` on the product line, together with `25`, `33`, `94`
+and `C2` from the other isolated lines. Product r20 lists seven placeholders:
+`96`, `A5`, `A6`, `E8`, `E9`, `EA` and `F5`. The review of those seven
+slots finds the default record in every supplied official image.
+
 ## Reproduction and scope
 
 ```

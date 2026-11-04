@@ -148,10 +148,16 @@ def identity(target):
 
 def prepare(target):
     cfg, pairs = settings(target)
+    # A descendant target can inherit recipes that its base image already
+    # holds. Those recipes still mount their packs, but they must not apply
+    # their record patches a second time.
+    frozen = set(cfg["native_sprite_gap"].get("frozen_manifests") or [])
     recipes = [recipe for _, recipe in pairs]
     directories = module_dirs(target)
     import prepare_sprite_module
     for directory, (path, recipe) in zip(directories, pairs):
+        if path in frozen:
+            continue
         if "raw_payload" in recipe["code"]:
             directory.mkdir(parents=True, exist_ok=True)
             data = bytes.fromhex(recipe["code"]["raw_payload"])
@@ -170,7 +176,9 @@ def prepare(target):
         if out[offset:offset+len(before)] != before or len(before) != len(after):
             raise ValueError("sprite gap extra patch differs")
         out[offset:offset+len(after)] = after
-    for recipe in recipes:
+    for path, recipe in pairs:
+        if path in frozen:
+            continue
         for patch in recipe['unapplied_rom_patches']:
             offset = patch['offset']
             before, after = bytes.fromhex(patch['before']), bytes.fromhex(patch['after'])
@@ -182,7 +190,9 @@ def prepare(target):
     directory.mkdir(parents=True, exist_ok=True)
     write_verified(directory / 'rom.sfc', out)
     module_by_variable = {}
-    for index, module in enumerate(directories):
+    for index, (module, (path, _)) in enumerate(zip(directories, pairs)):
+        if path in frozen:
+            continue
         module_by_variable['BM_SEVEN_CODE_PACK' if index == 0
                            else 'BM_SEVEN_CODE_PACK_'+str(index+1)] = module
     extra_by_variable = {extra["variable"]: extra

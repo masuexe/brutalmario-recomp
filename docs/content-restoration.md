@@ -1731,3 +1731,22 @@ the legacy silence convention, so rooms `020` and `036` are correct.
 The checkpoint proves song selection only. The audible match, the four songs
 that use unreviewed commands (`3F`, `43`, `49`, `4F`, `53`), the inherited-music
 rooms and the native build stay open.
+
+## Product sprite merge (2026-11-05)
+
+The [sprite merge checkpoint](native-product-sprite-merge.md) moves seven
+reviewed custom sprite records onto the product line. Product r20 descends
+from r19 and installs slots `25`, `33`, `94`, `97`, `99`, `A1` and `C2`.
+The placement census drops from 14 placeholder slots to 7. The other seven
+slots hold no official program in any supplied image.
+
+ROM SHA-256 is `f4185fe22f57c66c338b800bbe423dcd915860c87cc2ec395baa7236cad5e567`.
+The merge adds 2 record patches, 7 recipes and 1 raw pack. It keeps the 61
+inherited patches, the music region pack and every room layout. Native
+captures show each new actor in its room and no actor on the parent.
+The room 174 fixture needs `BM_SEVEN_RETURN=0`.
+
+The captures use assisted entry fixtures. Boss fights, ordinary routes,
+sprite graphics and the `99` position offsets stay open. The doc is
+`docs/native-product-sprite-merge.md`. The tests are
+`tests/test_product_sprite_merge.py`.
