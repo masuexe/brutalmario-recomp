@@ -258,6 +258,33 @@ register before the song started. It did not measure the audio output.
 Two conclusions follow. Song 4F is valid, and the region pack delivers it.
 The native player in this project still does not reproduce it, because its
 pitch conversion is not the engine conversion.
+### User acceptance and the remaining silent rooms
+
+The user listened to product r17 in room 0A2 and reports that the music is
+correct. Room 0A2 is accepted.
+
+A wider measurement uses the same audio dump for six rooms. Each capture
+reaches gameplay mode 0x14 with the expected room and song, and each uses the
+same output window.
+
+| Room | Song | Peak | RMS | Non-zero samples | Result |
+| --- | --- | --- | --- | --- | --- |
+| 013 | 35 | 3,643 | 646.1 | 120,850 | audio |
+| 0A2 | 4F | 4,592 | 630.7 | 113,008 | audio, accepted |
+| 018 | 53 | 4,848 | 696.2 | 98,424 | audio |
+| 01B | 3F | 4,857 | 642.5 | 74,346 | audio |
+| 066 | 53 | 0 | 0.0 | 0 | silent |
+| 0A9 | 43 | 0 | 0.0 | 0 | silent |
+
+Song 53 plays in room 018 and stays silent in room 066. The song is therefore
+not the cause, and the cause of the two silent rooms is not known.
+
+Earlier notes claimed that every room on a raw-base song is silent. That claim
+is wrong: rooms 018 and 01B carry audio.
+
+The native player in this project does not reproduce any song. It stays as a
+research probe and is not part of the product.
+
 ## Level data read path
 
 Level data is the largest block class: 1,110,761 bytes in 744 blocks. Each
