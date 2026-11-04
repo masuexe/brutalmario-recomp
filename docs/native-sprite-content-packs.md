@@ -96,9 +96,11 @@ Rules:
 
 - The cause of the slot `99` frame difference stays open. The VRAM content is
   excluded.
-- No slot has a reviewed graphics pack yet. Slot `99` is the first candidate
-  after the frame difference is resolved.
-- The hook is diagnostic. A production hook needs a manifest, a hash check and
-  a room scope.
-- The test gates are not written: pack hash, range overlap, room scope and a
-  donor frame comparison.
+- Slot `99` now holds the first reviewed graphics pack. See
+  [the graphics provider checkpoint](native-sprite-graphics-provider.md).
+- The production hook exists: it needs a manifest, a hash check and a room
+  scope, and it holds all three.
+- The test gates exist in `tests/test_sprite_graphics_packs.py`: pack hash,
+  range bounds, range overlap, room scope, header identity and patch
+  idempotence.
+- The remaining gap is the frame difference, not the delivery.

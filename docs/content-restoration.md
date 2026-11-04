@@ -1750,3 +1750,19 @@ The captures use assisted entry fixtures. Boss fights, ordinary routes,
 sprite graphics and the `99` position offsets stay open. The doc is
 `docs/native-product-sprite-merge.md`. The tests are
 `tests/test_product_sprite_merge.py`.
+
+## External sprite graphics provider (2026-11-05)
+
+The [graphics provider checkpoint](native-sprite-graphics-provider.md) moves
+custom sprite graphics out of the image. Product r21 descends from r20 and
+mounts one reviewed VRAM pack. The provider writes the pack when the game
+enters a room that the manifest names.
+
+The r21 ROM SHA-256 equals the r20 ROM SHA-256: the provider is a runtime
+feature, not an image change. One pack covers room `175`. Its qualification
+shows one application in that room, none in room `154`, zero bytes outside
+the range and an exact match with the donor VRAM inside it.
+
+The candidate frame still equals the parent frame. The reviewed VRAM does not
+change the picture, so the frame difference stays open. The design and the
+next work are in `docs/native-sprite-content-packs.md`.

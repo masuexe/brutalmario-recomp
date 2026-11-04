@@ -138,12 +138,22 @@ def identity(target):
         donor = recipe.get('donor_manifest')
         if donor:
             paths.append(ROOT / donor)
-    return {'kind': 'immutable-sprite-gap-entry',
-            'files': {str(path.relative_to(ROOT)): sha(path.read_bytes()) for path in paths},
-            'packs': packs(target),
-            'generated_header_sha256': sha(header(target).encode()),
-            'runtime_source_sha256': previous['runtime_source_sha256'],
-            'runtime_result_sha256': previous['runtime_result_sha256']}
+    import native_sprite_graphics as graphics
+    pair = graphics.settings(target)
+    graphics_packs = graphics.packs(target)
+    if pair is not None:
+        paths.extend(ROOT / item['manifest'] for item in pair[1])
+    result = {'kind': 'immutable-sprite-gap-entry',
+              'files': {str(path.relative_to(ROOT)): sha(path.read_bytes()) for path in paths},
+              'packs': packs(target),
+              'generated_header_sha256': sha(header(target).encode()),
+              'runtime_source_sha256': previous['runtime_source_sha256'],
+              'runtime_result_sha256': previous['runtime_result_sha256']}
+    if graphics_packs:
+        result['sprite_graphics'] = dict(
+            packs=graphics_packs,
+            generated_header_sha256=sha(graphics.header(target).encode()))
+    return result
 
 
 def prepare(target):
@@ -209,6 +219,8 @@ def prepare(target):
         data = (source / pack['pack_file']).read_bytes()
         verify(data, pack, 'sprite gap module pack')
         write_verified(directory / pack['pack_file'], data)
+    import native_sprite_graphics as graphics
+    graphics.prepare(target)
     receipts = {}
     for module in directories:
         receipt = module / 'preparation-receipt.json'
@@ -235,6 +247,8 @@ def environment(target, env):
         verify(data, {'size': region['pack_size'], 'sha256': region['pack_sha256']},
                'music region pack')
         env['BM_NATIVE_CONTENT_PACK'] = str(path)
+    import native_sprite_graphics as graphics
+    graphics.environment(target, env)
 
 
 def configure(experiment, binary, target):
@@ -288,3 +302,5 @@ def configure(experiment, binary, target):
     else:
         text += '\n'+block+'\n'
     cmake.write_text(text)
+    import native_sprite_graphics as graphics
+    graphics.configure(experiment, binary, target)

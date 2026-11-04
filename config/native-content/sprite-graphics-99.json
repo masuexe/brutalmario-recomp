@@ -1,0 +1,25 @@
+{
+ "schema": 1,
+ "id": "sprite-graphics-99",
+ "slot": "99",
+ "scope": "Reviewed decoded VRAM for custom sprite 99 in room 175; pilot for the external graphics provider.",
+ "donor": "demo-only-1",
+ "source": {
+  "kind": "decoded-vram",
+  "capture": "donor175-native-oam-v2",
+  "frame": "f512"
+ },
+ "rooms": [
+  "175"
+ ],
+ "ranges": [
+  {
+   "vram": "3000",
+   "words": 4096
+  }
+ ],
+ "pack_file": "sprite99-vram.bin",
+ "size": 8200,
+ "sha256": "f1c825da2c3008c19ba3dc00bc89937b0d68bdf4b8bb894f20f44e131d3d1ed4",
+ "source_directory": "local/native-modules/sprite-graphics-99"
+}
