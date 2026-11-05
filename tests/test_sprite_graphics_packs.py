@@ -160,5 +160,106 @@ class TargetTests(unittest.TestCase):
         self.assertEqual(rows[0]['persist'], True)
 
 
+R22_TARGET = "demo11-native-product-r22"
+R167_MANIFEST = ROOT / "config/native-content/sprite-graphics-167-obj.json"
+
+
+class Room167ManifestTests(unittest.TestCase):
+    """The room 167 pack supplies the object character slot at VRAM word 7800."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.spec = json.loads(R167_MANIFEST.read_text())
+
+    def test_manifest_pins_the_payload(self):
+        self.assertEqual(self.spec["schema"], 1)
+        self.assertEqual(self.spec["slot"], "167")
+        self.assertEqual(self.spec["rooms"], ["167"])
+        self.assertEqual(self.spec["ranges"], [{"vram": "7800", "words": 2048}])
+        self.assertEqual(self.spec["size"], 4 + 4 + 2048 * 2)
+        self.assertTrue(self.spec["persist"])
+
+    def test_pack_matches_its_pin(self):
+        import hashlib
+        directory = ROOT / self.spec["source_directory"]
+        data = (directory / self.spec["pack_file"]).read_bytes()
+        self.assertEqual(len(data), self.spec["size"])
+        self.assertEqual(hashlib.sha256(data).hexdigest(), self.spec["sha256"])
+        count = struct.unpack_from("<I", data, 0)[0]
+        self.assertEqual(count, 1)
+        address, words = struct.unpack_from("<HH", data, 4)
+        self.assertEqual((address, words), (0x7800, 2048))
+
+    def test_pack_holds_graphics_11_object_tiles(self):
+        import room_gfx_audit
+        directory = ROOT / self.spec["source_directory"]
+        data = (directory / self.spec["pack_file"]).read_bytes()
+        rom = (ROOT / "local/restoration/demo11-native-product-r20/rom.sfc").read_bytes()
+        expected = room_gfx_audit.load_gfx(rom, 0x11)
+        self.assertEqual(len(expected), 4096)
+        self.assertEqual(data[8:], expected)
+
+    def test_graphics_11_is_identical_in_the_donor(self):
+        import room_gfx_audit
+        product = (ROOT / "local/restoration/demo11-native-product-r20/rom.sfc").read_bytes()
+        donor = (ROOT / "local/content-versions/cheap-demo/rom.sfc").read_bytes()
+        self.assertEqual(room_gfx_audit.load_gfx(product, 0x11),
+                         room_gfx_audit.load_gfx(donor, 0x11))
+
+    def test_graphics_02_differs_from_the_donor(self):
+        import room_gfx_audit
+        product = (ROOT / "local/restoration/demo11-native-product-r20/rom.sfc").read_bytes()
+        donor = (ROOT / "local/content-versions/cheap-demo/rom.sfc").read_bytes()
+        self.assertNotEqual(room_gfx_audit.load_gfx(product, 0x02),
+                            room_gfx_audit.load_gfx(donor, 0x02))
+
+    def test_review_accepts_the_manifest(self):
+        row = graphics.reviewed(self.spec)
+        self.assertEqual(row["rooms"], [0x167])
+        self.assertEqual(row["ranges"], [[0x7800, 0x7800 + 2048]])
+        self.assertTrue(row["persist"])
+        bitmap = bytes.fromhex(row["bitmap"])
+        self.assertEqual(bitmap[0x167 >> 3], 1 << (0x167 & 7))
+
+
+@unittest.skipUnless((ROOT / "config/restorations" / (R22_TARGET + ".json")).exists(),
+                     "requires the prepared r22 target")
+class Room167TargetTests(unittest.TestCase):
+    def test_target_inherits_the_parent_image(self):
+        config = json.loads((ROOT / "config/restorations" / (R22_TARGET + ".json")).read_text())
+        parent = json.loads((ROOT / "config/restorations/demo11-native-product-r21.json").read_text())
+        self.assertEqual(config["base_restoration"], "demo11-native-product-r21")
+        self.assertEqual(config["output"], parent["output"])
+        self.assertEqual(config["native_sprite_graphics"], [
+            "config/native-content/sprite-graphics-175-obj.json",
+            "config/native-content/sprite-graphics-167-obj.json",
+        ])
+
+    def test_both_packs_are_named(self):
+        rows = graphics.packs(R22_TARGET)
+        self.assertEqual(len(rows), 2)
+        self.assertEqual(rows[0]["variable"], "BM_SPRITE_GRAPHICS_PACK")
+        self.assertEqual(rows[1]["variable"], "BM_SPRITE_GRAPHICS_PACK_2")
+        self.assertEqual(rows[0]["rooms"], [0x175])
+        self.assertEqual(rows[1]["rooms"], [0x167])
+
+    def test_header_declares_two_packs(self):
+        text = graphics.header(R22_TARGET)
+        self.assertIn("BM_SPRITE_GRAPHICS_PACKS 2u", text)
+        self.assertIn('"BM_SPRITE_GRAPHICS_PACK",16392u,1u', text)
+        self.assertIn('"BM_SPRITE_GRAPHICS_PACK_2",4104u,1u', text)
+
+    def test_overlapping_ranges_name_different_rooms(self):
+        # The room 175 pack covers words 6000 to 7FFF and the room 167 pack
+        # covers words 7800 to 7FFF. The ranges overlap, so the packs must
+        # never apply in the same room.
+        rows = graphics.packs(R22_TARGET)
+        for index, first in enumerate(rows):
+            for second in rows[index + 1:]:
+                if set(first["rooms"]) & set(second["rooms"]):
+                    raise AssertionError("packs with overlapping ranges name one room")
+
+
+
 if __name__ == '__main__':
     unittest.main()

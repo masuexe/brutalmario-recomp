@@ -1,0 +1,27 @@
+{
+ "schema": 1,
+ "id": "sprite-graphics-167-obj",
+ "slot": "167",
+ "donor": "cheap-demo",
+ "scope": "Object character slot for room 167 at VRAM word 7800 (byte F000). The product image loads graphics 02 there and the reference image loads graphics 11. Graphics 11 is identical in both ROMs, so this pack supplies donor bytes without a donor image.",
+ "source": {
+  "kind": "decoded-graphics",
+  "graphics": "11",
+  "rom": "demo11-native-product-r20",
+  "note": "graphics 11 is identical in cheap-demo"
+ },
+ "rooms": [
+  "167"
+ ],
+ "ranges": [
+  {
+   "vram": "7800",
+   "words": 2048
+  }
+ ],
+ "pack_file": "sprite167-vram.bin",
+ "size": 4104,
+ "sha256": "85491c48d953b8a0ad15d61817b3f6bdb8d90201c6e6e6c44f53c9a3aff70562",
+ "source_directory": "local/native-modules/sprite-graphics-167-obj",
+ "persist": true
+}

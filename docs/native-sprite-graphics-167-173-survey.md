@@ -30,7 +30,7 @@ The object tiles that the actors use are `384`, `386`, `416` and `418`.
 An earlier draft of this note compared those tiles at byte `N*32` from the
 start of VRAM. That is the wrong address. `OBSEL` is `3`, so the object
 character base is byte `0xC000` and tile `N` starts at `0xC000 + N*32`.
-See [native-sprite-graphics-167-objslot.md](native-sprite-graphics-167-objslot.md)
+See [native-sprite-graphics-167-fix.md](native-sprite-graphics-167-fix.md)
 for the corrected measurement and for the difference that the two images hold.
 
 ## Room 173
