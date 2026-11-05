@@ -261,5 +261,43 @@ class Room167TargetTests(unittest.TestCase):
 
 
 
+R24_TARGET = "demo11-native-product-r24"
+
+
+@unittest.skipUnless((ROOT / "config/restorations" / (R24_TARGET + ".json")).exists(),
+                     "requires the prepared r24 target")
+class Sprite34FixTests(unittest.TestCase):
+    """One byte lets rooms outside the sprite 34 dispatch list use the default branch."""
+
+    def config(self):
+        return json.loads(
+            (ROOT / "config/restorations" / (R24_TARGET + ".json")).read_text())
+
+    def test_target_inherits_the_parent_image(self):
+        config = self.config()
+        parent = json.loads(
+            (ROOT / "config/restorations/demo11-native-product-r22.json").read_text())
+        self.assertEqual(config["base_restoration"], "demo11-native-product-r22")
+        self.assertEqual(config["native_sprite_graphics"],
+                         parent["native_sprite_graphics"])
+
+    def test_patch_is_one_byte(self):
+        patches = self.config()["native_sprite_gap"]["extra_patches"]
+        self.assertEqual(len(patches), 1)
+        self.assertEqual(patches[0]["offset"], 0x1F6C06)
+        self.assertEqual(patches[0]["before"], "6b")
+        self.assertEqual(patches[0]["after"], "ea")
+
+    def test_candidate_differs_from_the_parent_in_one_byte(self):
+        parent = (ROOT / "local/restoration/demo11-native-product-r22/rom.sfc").read_bytes()
+        candidate = (ROOT / "local/restoration" / R24_TARGET / "rom.sfc").read_bytes()
+        self.assertEqual(len(parent), len(candidate))
+        differing = [index for index in range(len(parent)) if parent[index] != candidate[index]]
+        self.assertEqual(differing, [0x1F6C06])
+
+    def test_the_patched_byte_was_a_return(self):
+        parent = (ROOT / "local/restoration/demo11-native-product-r22/rom.sfc").read_bytes()
+        self.assertEqual(parent[0x1F6C06], 0x6B)
+
 if __name__ == '__main__':
     unittest.main()
