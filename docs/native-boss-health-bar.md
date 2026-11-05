@@ -1,68 +1,59 @@
-# Boss health bar: root cause and port plan
+# Boss health bar: the fix
 
 ## Result
 
-The boss sprites work. The health bar does not show because the recipient
-baseline `demo-1-1` has no bar drawing routine.
+Product r26 shows the boss label and the health bar in rooms `08A`, `08B`
+and `091`. The bars match the `cheap-demo` reference byte for byte.
 
-## The bar routine
+## Cause
 
-The official images draw the bar with one routine. The routine is 156 bytes.
-It reads `$7FFFDF`, copies 16 bytes from the `$349F00` room table, and writes
-the background map.
+The product image already has a complete bar upload routine. It sits at
+`40:A508`. The routine writes the background map from the legacy buffer
+`$7FFFDF`.
 
-| Image | Routine address |
-| --- | --- |
-| `cheap-demo` | `34:9DF8` |
-| `boss` | `10FEDE` |
-| `7hero` | `10FEDE` |
-| `demo-only-1` | `10FEDE` |
-| `mazo` | `13:82AF` |
-| `ow` | `34:9DF8` |
-| `demo6`, `demo7` | `34:9E05` |
-| `demo-1-1` | **absent** |
+The routine starts with a room gate. The gate accepts only these rooms:
 
-The product image takes `demo-1-1` as its baseline. Therefore the routine is
-absent from the product image.
+`00BC` `00CC` `0128` `0146` `00CF`
 
-## The room table
+Rooms `08A`, `08B` and `091` are not in that list. The routine therefore
+returns before it draws the bar.
 
-The routine indexes a 4096-byte table at `$349F00`. The table gives 16 map
-bytes for each room low byte.
+## The boss programs are correct
 
-| Image | Room `8B` entry |
-| --- | --- |
-| `boss` | `FC FC FC FC FC FC 3A 3B 3B 3A FC FC FC FC FC FC` |
-| `demo-1-1` | all zero |
-| product r25 | `88 0D 27 01 00 14 22 00 00 77 44 00 15 02 25 00` |
-
-The product image holds different data at `$349F00`. A 2623-byte sprite block
-starts at `$349EF0` and covers that address. The bar table is therefore absent
-as well.
-
-## What the boss programs do
-
-The boss programs write the bar data to `$7FFFDF`. Slot `32` does this at
-`21DECD` from its init at `21C34D`. The data is correct in both images:
+Each boss program writes the bar data at init. Slot `32` does this at
+`21DECD`. The data is correct in every image:
 
 `01 0B 18 1C 1C FC 44 44 44 44`
 
-The bytes decode to the label `B O S S` and a four-cell bar. Tiles `0B`, `18`,
-`1C` form the label. Tile `44` forms the bar.
+Byte `01` at `$7FFFDF` is the enable flag. Bytes `0B 18 1C 1C` form the label.
+Bytes `44 44 44 44` form the bar.
 
-## The port plan
+## Fix
 
-The port needs three items:
+Product r26 adds a room gate shim at `40:A570`. The shim checks the three new
+rooms, then chains to the existing routine.
 
-1. The 156-byte bar routine.
-2. The 4096-byte room table at `$349F00`.
-3. A call to the routine each frame.
+| Item | Value |
+| --- | --- |
+| Hook | `00:8DE1` changes `2208A540` to `2270A540` |
+| Shim | `40:A570`, 34 bytes |
+| Shim size | fits in the 48 free bytes at `40:A569` to `40:A599` |
 
-Item 3 is open. No direct call to the routine exists in any image. The
-routine must be reached by an indirect jump or by a table of handlers.
+The shim tests `$010B` against `008A`, `008B` and `0091`. A match jumps to the
+upload tail at `40:A52C`. No match chains to the old gate at `40:A510`.
 
-## Open issue
+## Verification
 
-The product image has 88 free bytes at `10FED0`. The routine needs 156 bytes.
-The port must place the routine in a larger free area or in a native content
-pack.
+| Room | BG3 row 1, columns 8 to 17 |
+| --- | --- |
+| `cheap-demo` reference `08B` | `11 24 28 28 252 68 68 68 68 252` |
+| product r26 `08B` | `11 24 28 28 252 68 68 68 68 252` |
+
+Room `08A` shows the `ULTIMA` label. Room `091` shows the `XAN BIE` label.
+
+## Deferred issues
+
+- The bar length does not change with the boss health in these rooms. The
+  reference images behave the same way.
+- Rooms `009`, `07E` and `130` also place boss programs. They keep the
+  previous behavior.
