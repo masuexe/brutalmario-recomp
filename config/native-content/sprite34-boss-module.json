@@ -1,0 +1,86 @@
+{
+ "schema": 1,
+ "id": "sprite34-boss-module",
+ "scope": "Static module review for the boss sprite 34 program. The recipe pins the donor record and the protected block. The program draws the moving light circle that the player must follow. It names the recipient rooms, including 0x16A, which the cheap-demo program does not handle.",
+ "donor_manifest": "config/boss-donor.json",
+ "base_restoration": "demo11-native-product-r22",
+ "base_output": {
+  "size": 4194304,
+  "sha256": "f4185fe22f57c66c338b800bbe423dcd915860c87cc2ec395baa7236cad5e567"
+ },
+ "review_status": "static-review",
+ "record": {
+  "slot": "34",
+  "raw": "013600003f8319640dce207ccf200000",
+  "init": "20CE0D",
+  "main": "20CF7C",
+  "relative": {
+   "init": "F",
+   "main": "17E"
+  },
+  "rooms": [
+   "0EA",
+   "0EB",
+   "0EC",
+   "0ED",
+   "0EE",
+   "108",
+   "152",
+   "153",
+   "15E",
+   "167",
+   "169",
+   "16A",
+   "16D"
+  ],
+  "native_raw": "013600003f8319640dce807ccf800000"
+ },
+ "entry_seeds": [
+  "20CE0D",
+  "20CF7C"
+ ],
+ "dispatch_tables": [],
+ "code_patches": [],
+ "external_calls": [
+  "01801A",
+  "018022",
+  "01802A",
+  "01803A",
+  "0187A7",
+  "019138",
+  "01A7DC",
+  "01AB99",
+  "01ACF9",
+  "01B7B3",
+  "02A9DE",
+  "03B664",
+  "03B72B",
+  "07F7D2",
+  "27FAF4",
+  "28FCC0",
+  "2E8DF0"
+ ],
+ "shared_dependencies": [],
+ "graphics": [],
+ "open_dependencies": [
+  "runtime mapping of the 80 code view",
+  "sprite graphics review for the rooms that place slot 34",
+  "entry qualification against the boss donor"
+ ],
+ "unapplied_rom_patches": [
+  {
+   "offset": 1607090,
+   "before": "013600003f831964dbeb3e0eed3e0000",
+   "after": "013600003f8319640dce807ccf800000",
+   "role": "Install the boss sprite 34 record and point init/main into the CB module view"
+  }
+ ],
+ "code": {
+  "source_address": "20CDFE",
+  "native_address": "80CDFE",
+  "size": 5645,
+  "sha256": "8e3ee73d44ee6a0b231d712a00b26c59bd8d52b5c4a4ceb30435f6d279a3b153",
+  "adapted_sha256": "8e3ee73d44ee6a0b231d712a00b26c59bd8d52b5c4a4ceb30435f6d279a3b153",
+  "pack_file": "sprite34-code.bin"
+ }
+}
