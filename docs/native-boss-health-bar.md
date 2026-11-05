@@ -1,52 +1,68 @@
-# Boss health bar: the complete chain
+# Boss health bar: root cause and port plan
 
 ## Result
 
-The boss programs write the bar data. The data reaches WRAM. The data does
-not reach the background map, so the bar and the boss label do not appear.
+The boss sprites work. The health bar does not show because the recipient
+baseline `demo-1-1` has no bar drawing routine.
 
-## The chain, step by step
+## The bar routine
 
-| Step | Address | Result |
-| --- | --- | --- |
-| 1 | `21C34D` | The slot `32` init calls `JSR $DECD`. |
-| 2 | `21DECD` | The routine writes `$7FFFDF` to `$7FFFE8`. |
-| 3 | `$7FFFDF` | WRAM holds `01 0B 18 1C 1C FC 44 44 44 44`. |
-| 4 | BG3 map | The product image does not receive this data. |
+The official images draw the bar with one routine. The routine is 156 bytes.
+It reads `$7FFFDF`, copies 16 bytes from the `$349F00` room table, and writes
+the background map.
 
-Both images hold the same data at step 3:
-
-| Image | `$7FFFDF` to `$7FFFE8` |
+| Image | Routine address |
 | --- | --- |
-| product r25 | `01 0B 18 1C 1C FC 44 44 44 44` |
-| cheap-demo | `01 0B 18 1C 1C FC 44 44 44 44` |
+| `cheap-demo` | `34:9DF8` |
+| `boss` | `10FEDE` |
+| `7hero` | `10FEDE` |
+| `demo-only-1` | `10FEDE` |
+| `mazo` | `13:82AF` |
+| `ow` | `34:9DF8` |
+| `demo6`, `demo7` | `34:9E05` |
+| `demo-1-1` | **absent** |
 
-The bytes decode to the label `B O S S` and a four-cell bar. Tiles `0B`,
-`18`, `1C` form the label. Tile `44` forms the bar.
+The product image takes `demo-1-1` as its baseline. Therefore the routine is
+absent from the product image.
 
-## Where the images differ
+## The room table
 
-| Address | product r25 | cheap-demo |
-| --- | --- | --- |
-| `21DECD` writer | present | present |
-| `32:D0E5` | `BD 02 16 A8` code | `41 7C 00 0C` data |
-| `00:8F25` | `JSL $10A71D` | `INC $0DBF` |
-| BG3 map row 1 | empty | label and bar |
+The routine indexes a 4096-byte table at `$349F00`. The table gives 16 map
+bytes for each room low byte.
 
-The product keeps the recipient baseline form at `00:8F25`. The baseline
-routes through `10:A71D`, which ends at `INC $0DBF`. The bar refresh therefore
-depends on `$13CC`, and `$13CC` stays zero in every product capture.
+| Image | Room `8B` entry |
+| --- | --- |
+| `boss` | `FC FC FC FC FC FC 3A 3B 3B 3A FC FC FC FC FC FC` |
+| `demo-1-1` | all zero |
+| product r25 | `88 0D 27 01 00 14 22 00 00 77 44 00 15 02 25 00` |
 
-## Evidence from the captures
+The product image holds different data at `$349F00`. A 2623-byte sprite block
+starts at `$349EF0` and covers that address. The bar table is therefore absent
+as well.
 
-| Capture | Room | BG3 label tiles | BG3 bar tiles |
-| --- | --- | --- | --- |
-| product r25 `f060` | `08B` | none | `58 59 59 58` only |
-| cheap-demo `entry` | `08B` | `11 24 28 28` at entry 40 | `44 44 44 44` |
+## What the boss programs do
+
+The boss programs write the bar data to `$7FFFDF`. Slot `32` does this at
+`21DECD` from its init at `21C34D`. The data is correct in both images:
+
+`01 0B 18 1C 1C FC 44 44 44 44`
+
+The bytes decode to the label `B O S S` and a four-cell bar. Tiles `0B`, `18`,
+`1C` form the label. Tile `44` forms the bar.
+
+## The port plan
+
+The port needs three items:
+
+1. The 156-byte bar routine.
+2. The 4096-byte room table at `$349F00`.
+3. A call to the routine each frame.
+
+Item 3 is open. No direct call to the routine exists in any image. The
+routine must be reached by an indirect jump or by a table of handlers.
 
 ## Open issue
 
-The bar refresh waits on `$13CC`. The feeder at `32:D0E5` exists in the product
-image but never runs. The next step is to find what calls that feeder. The
-cheap-demo image does not have the feeder at all, so it must reach the bar
-through a different path.
+The product image has 88 free bytes at `10FED0`. The routine needs 156 bytes.
+The port must place the routine in a larger free area or in a native content
+pack.
