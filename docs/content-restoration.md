@@ -1766,5 +1766,6 @@ range, and 16 differing bytes inside it against the donor.
 
 The room `175` platforms now render. The yellow platform pixel count is 570
 on the donor, 570 on the candidate and 38 on the parent. A frame difference of
-1,575 pixels stays open and is not the platform art. The design and the next
-work are in `docs/native-sprite-content-packs.md`.
+1,575 pixels stays open. The platform actors stand at different object
+coordinates, which matches the known `99` start-position offset. The design
+and the next work are in `docs/native-sprite-content-packs.md`.

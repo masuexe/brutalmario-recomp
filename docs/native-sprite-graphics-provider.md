@@ -83,8 +83,17 @@ donor.
 
 The remaining difference is not the platform art. The candidate and the donor
 hold the same sprite entries, the same object tiles and the same palette.
-The remaining candidates are the object attribute table timing and the object
-priority against the background layers.
+
+The three platform actors stand at different positions on the two hosts. The
+donor places them at object coordinates `(12,84)`, `(172,108)` and
+`(108,140)`. The candidate places them at `(10,87)`, `(183,106)` and
+`(119,138)`. The offset is `(-2,+3)`, `(+11,-2)` and `(+11,-2)`.
+
+The offset matches the known `99` position offset from the modern sprite
+review: the candidate starts the actors at a settled point, and the donor
+starts them earlier. The platform art, the tiles and the palette are correct.
+
+The open work is the actor start position, not the graphics.
 
 ## Limits
 
