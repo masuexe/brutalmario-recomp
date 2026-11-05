@@ -104,3 +104,9 @@ Rules:
   range bounds, range overlap, room scope, header identity and patch
   idempotence.
 - The remaining gap is the frame difference, not the delivery.
+- A reviewed pack now delivers object VRAM for room `175` and the platforms
+  render. See [the graphics provider checkpoint](native-sprite-graphics-provider.md).
+- A pack can hold bytes that other rooms also read. Review those bytes before a
+  product promotion.
+- The provider writes VRAM, not the image. A target that changes image bytes
+  and a target that adds a pack need separate receipts.

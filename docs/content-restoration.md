@@ -1759,10 +1759,12 @@ mounts one reviewed VRAM pack. The provider writes the pack when the game
 enters a room that the manifest names.
 
 The r21 ROM SHA-256 equals the r20 ROM SHA-256: the provider is a runtime
-feature, not an image change. One pack covers room `175`. Its qualification
-shows one application in that room, none in room `154`, zero bytes outside
-the range and an exact match with the donor VRAM inside it.
+feature, not an image change. One pack covers the object character range of
+room `175` and rewrites it on every frame of that room. Its qualification
+shows 514 applications in that room, none in room `154`, no write outside the
+range, and 16 differing bytes inside it against the donor.
 
-The candidate frame still equals the parent frame. The reviewed VRAM does not
-change the picture, so the frame difference stays open. The design and the
-next work are in `docs/native-sprite-content-packs.md`.
+The room `175` platforms now render. The yellow platform pixel count is 570
+on the donor, 570 on the candidate and 38 on the parent. A frame difference of
+1,575 pixels stays open and is not the platform art. The design and the next
+work are in `docs/native-sprite-content-packs.md`.

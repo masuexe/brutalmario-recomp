@@ -66,7 +66,8 @@ def reviewed(spec):
     return dict(id=spec['id'], slot=spec['slot'], rooms=[int(r, 16) for r in rooms],
                 bitmap=room_bitmap(rooms).hex(),
                 ranges=[[start, end] for start, end in seen], pack_file=spec['pack_file'],
-                size=spec['size'], sha256=spec['sha256'])
+                size=spec['size'], sha256=spec['sha256'],
+                persist=bool(spec.get('persist', False)))
 
 
 def packs(target):
@@ -86,12 +87,13 @@ def header(target):
     digest = lambda value: '{' + ','.join(str(n) for n in bytes.fromhex(value)) + '}'
     text = ('/* Generated external sprite graphics packs. */\n#include <stdint.h>\n'
             f'#define BM_SPRITE_GRAPHICS_PACKS {len(packs_)}u\n'
-            'typedef struct { const char *variable; unsigned size; uint8_t rooms[64]; '
-            'uint8_t sha256[32]; } BmSpriteGraphicsPack;\n'
+            'typedef struct { const char *variable; unsigned size, persist; '
+            'uint8_t rooms[64]; uint8_t sha256[32]; } BmSpriteGraphicsPack;\n'
             'static const BmSpriteGraphicsPack bm_sprite_graphics_packs[BM_SPRITE_GRAPHICS_PACKS] = {\n')
     for pack in packs_:
         rooms = '{' + ','.join(str(n) for n in bytes.fromhex(pack['bitmap'])) + '}'
-        text += ('{"' + pack['variable'] + '",' + str(pack['size']) + 'u,' + rooms + ',' +
+        text += ('{"' + pack['variable'] + '",' + str(pack['size']) + 'u,' +
+                 str(1 if pack['persist'] else 0) + 'u,' + rooms + ',' +
                  digest(pack['sha256']) + '},\n')
     return text + '};\n'
 

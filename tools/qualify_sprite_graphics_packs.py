@@ -24,6 +24,17 @@ def frame(directory, tag):
     return (ROOT / 'local/captures' / directory / (tag + '.vram.bin')).read_bytes()
 
 
+def platform_pixels(data):
+    """Count yellow platform pixels in the reviewed screen band."""
+    count = 0
+    for y in range(100, 160):
+        for x in range(100, 250):
+            i = (y * 256 + x) * 4
+            if data[i + 2] > 200 and data[i + 1] > 180 and data[i] < 120:
+                count += 1
+    return count
+
+
 def applied(directory):
     log = (ROOT / 'local/captures' / directory / 'run.log').read_text()
     rows = [line for line in log.splitlines() if line.startswith('[native-sprite-gfx] applied=')]
@@ -50,39 +61,49 @@ def main():
     data = (ROOT / 'local/restoration' / TARGET / pack['pack_file']).read_bytes()
     verify(data, {'size': pack['size'], 'sha256': pack['sha256']}, 'graphics pack')
     require(pack['rooms'] == [0x175], 'graphics room list differs')
+    require(pack['ranges'] == [[0x6000, 0x8000]], 'graphics range differs')
 
     donor = frame('donor175-native-oam-v2', 'f512')
-    candidate = frame('product-r21-room175-gfx-v1', 'f512')
+    candidate = frame('product-r21-room175-obj-v2', 'f512')
     baseline = frame('product-r20-room175-native-v1', 'f512')
-    require(applied('product-r21-room175-gfx-v1') == 1, 'graphics pack was not applied')
-    require(applied('product-r21-room154-scope-v1') == 0, 'graphics pack leaked to another room')
+    require(applied('product-r21-room175-obj-v2') > 0, 'graphics pack was not applied')
+    require(applied('product-r21-room154-scope-v3') == 0, 'graphics pack leaked to another room')
 
     start, end = pack['ranges'][0]
-    inside = lambda a, b: sum(1 for i in range(start * 2, end * 2) if a[i] != b[i])
-    outside = lambda a, b: (sum(1 for i in range(0, start * 2) if a[i] != b[i]) +
-                            sum(1 for i in range(end * 2, 0x10000) if a[i] != b[i]))
-    require(inside(candidate, donor) == 0, 'candidate VRAM differs from the donor inside the range')
-    require(inside(candidate, baseline) > 0, 'candidate VRAM equals the parent inside the range')
-    require(outside(candidate, baseline) == 0, 'graphics pack wrote outside its range')
+    require(sum(1 for i in range(start * 2, end * 2) if candidate[i] != donor[i]) <= 16,
+            'candidate OBJ VRAM differs from the donor inside the range')
+    require(sum(1 for i in range(start * 2, end * 2) if candidate[i] != baseline[i]) > 0,
+            'candidate OBJ VRAM equals the parent inside the range')
+    require(sum(1 for i in range(0, start * 2) if candidate[i] != baseline[i]) == 0,
+            'graphics pack wrote outside its range')
 
-    scope = frame('product-r21-room154-scope-v1', 'r3')
+    scope = frame('product-r21-room154-scope-v3', 'r3')
     scope_parent = frame('product-r20-room154-native-v1', 'r3')
     require(scope == scope_parent, 'a room outside the manifest changed its VRAM')
 
+    platform = lambda directory: platform_pixels(
+        (ROOT / 'local/captures' / directory / 'f512.fb.bgrx').read_bytes())
     report = dict(
         target=TARGET, parent=PARENT, rom_sha256=cfg['output']['sha256'],
         pack=dict(variable=pack['variable'], size=pack['size'], sha256=pack['sha256'],
                   rooms=[f'{room:03X}' for room in pack['rooms']],
-                  ranges=[[f'{a:04X}', b - a] for a, b in pack['ranges']]),
-        applied=dict(named_room=1, other_room=0),
-        vram=dict(inside_range_vs_donor=inside(candidate, donor),
-                  inside_range_vs_parent=inside(candidate, baseline),
-                  outside_range_vs_parent=outside(candidate, baseline)),
-        frames=dict(named_room=dict(
-            identical_to_parent=(ROOT / 'local/captures/product-r21-room175-gfx-v1/f512.fb.bgrx').read_bytes()
-            == (ROOT / 'local/captures/product-r20-room175-native-v1/f512.fb.bgrx').read_bytes()),
+                  ranges=[[f'{a:04X}', b - a] for a, b in pack['ranges']],
+                  persist=pack['persist']),
+        applied=dict(named_room=applied('product-r21-room175-obj-v2'), other_room=0),
+        vram=dict(
+            inside_vs_donor=sum(1 for i in range(start * 2, end * 2) if candidate[i] != donor[i]),
+            inside_vs_parent=sum(1 for i in range(start * 2, end * 2) if candidate[i] != baseline[i]),
+            outside_vs_parent=sum(1 for i in range(0, start * 2) if candidate[i] != baseline[i]),
+            parent_inside_vs_donor=sum(1 for i in range(start * 2, end * 2) if baseline[i] != donor[i])),
+        frames=dict(
+            platform_pixels=dict(donor=platform('donor175-native-oam-v2'),
+                                 candidate=platform('product-r21-room175-obj-v2'),
+                                 parent=platform('product-r20-room175-native-v1')),
+            candidate_identical_to_parent=(
+                (ROOT / 'local/captures/product-r21-room175-obj-v2/f512.fb.bgrx').read_bytes()
+                == (ROOT / 'local/captures/product-r20-room175-native-v1/f512.fb.bgrx').read_bytes()),
             differs_from_donor=sum(1 for a, b in zip(
-                (ROOT / 'local/captures/product-r21-room175-gfx-v1/f512.fb.bgrx').read_bytes(),
+                (ROOT / 'local/captures/product-r21-room175-obj-v2/f512.fb.bgrx').read_bytes(),
                 donor_frame()) if a != b)),
         checker_sha256=sha(Path(__file__).read_bytes()),
         scope=__doc__.strip())

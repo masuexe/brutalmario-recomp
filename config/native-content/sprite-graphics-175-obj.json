@@ -1,0 +1,26 @@
+{
+ "schema": 1,
+ "id": "sprite-graphics-175-obj",
+ "slot": "175",
+ "donor": "demo-only-1",
+ "scope": "OBJ character range for room 175. The platform sprites read tiles from this range.",
+ "source": {
+  "kind": "decoded-vram",
+  "capture": "donor175-native-oam-v2",
+  "frame": "f512"
+ },
+ "rooms": [
+  "175"
+ ],
+ "ranges": [
+  {
+   "vram": "6000",
+   "words": 8192
+  }
+ ],
+ "pack_file": "sprite175-vram.bin",
+ "size": 16392,
+ "sha256": "58ee028b92d17b340abf052386de3ea2c3369f17c37d55b0c8580ac737a9dd82",
+ "source_directory": "local/native-modules/sprite-graphics-175-obj",
+ "persist": true
+}

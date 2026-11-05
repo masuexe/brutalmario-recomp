@@ -13,7 +13,7 @@ import sys
 ROOT = Path(__file__).resolve().parents[1]
 BASE = 'demo11-native-product-r20'
 TARGET = 'demo11-native-product-r21'
-GRAPHICS = ['config/native-content/sprite-graphics-99.json']
+GRAPHICS = ['config/native-content/sprite-graphics-175-obj.json']
 
 
 def main():

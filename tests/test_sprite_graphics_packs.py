@@ -13,7 +13,7 @@ import patch_sprite_graphics
 import prepare_sprite_graphics_pack
 
 TARGET = 'demo11-native-product-r21'
-MANIFEST = ROOT / 'config/native-content/sprite-graphics-99.json'
+MANIFEST = ROOT / 'config/native-content/sprite-graphics-175-obj.json'
 
 
 class ManifestTests(unittest.TestCase):
@@ -23,10 +23,11 @@ class ManifestTests(unittest.TestCase):
 
     def test_manifest_pins_the_payload(self):
         self.assertEqual(self.spec['schema'], 1)
-        self.assertEqual(self.spec['slot'], '99')
+        self.assertEqual(self.spec['slot'], '175')
         self.assertEqual(self.spec['rooms'], ['175'])
-        self.assertEqual(self.spec['ranges'], [{'vram': '3000', 'words': 4096}])
-        self.assertEqual(self.spec['size'], 4 + 4 + 4096 * 2)
+        self.assertEqual(self.spec['ranges'], [{'vram': '6000', 'words': 8192}])
+        self.assertEqual(self.spec['size'], 4 + 4 + 8192 * 2)
+        self.assertTrue(self.spec['persist'])
 
     def test_pack_matches_its_pin(self):
         import hashlib
@@ -37,14 +38,14 @@ class ManifestTests(unittest.TestCase):
         count = struct.unpack_from('<I', data, 0)[0]
         self.assertEqual(count, 1)
         address, words = struct.unpack_from('<HH', data, 4)
-        self.assertEqual((address, words), (0x3000, 4096))
+        self.assertEqual((address, words), (0x6000, 8192))
 
     def test_pack_bytes_equal_the_reviewed_vram(self):
         directory = ROOT / self.spec['source_directory']
         data = (directory / self.spec['pack_file']).read_bytes()
         capture = ROOT / 'local/captures' / self.spec['source']['capture']
         vram = (capture / (self.spec['source']['frame'] + '.vram.bin')).read_bytes()
-        self.assertEqual(data[8:], vram[0x3000 * 2:(0x3000 + 4096) * 2])
+        self.assertEqual(data[8:], vram[0x6000 * 2:(0x6000 + 8192) * 2])
 
 
 class ReviewTests(unittest.TestCase):
@@ -59,7 +60,8 @@ class ReviewTests(unittest.TestCase):
     def test_review_accepts_the_manifest(self):
         row = graphics.reviewed(self.spec)
         self.assertEqual(row['rooms'], [0x175])
-        self.assertEqual(row['ranges'], [[0x3000, 0x3000 + 4096]])
+        self.assertEqual(row['ranges'], [[0x6000, 0x6000 + 8192]])
+        self.assertTrue(row['persist'])
         bitmap = bytes.fromhex(row['bitmap'])
         self.assertEqual(bitmap[0x175 >> 3], 1 << (0x175 & 7))
 
@@ -90,7 +92,7 @@ class HeaderTests(unittest.TestCase):
     def test_header_names_the_variable(self):
         text = graphics.header(TARGET)
         self.assertIn('BM_SPRITE_GRAPHICS_PACKS 1u', text)
-        self.assertIn('"BM_SPRITE_GRAPHICS_PACK",8200u', text)
+        self.assertIn('"BM_SPRITE_GRAPHICS_PACK",16392u,1u', text)
         expected = ','.join(str(n) for n in bytes.fromhex(self.spec_digest()))
         self.assertIn('{' + expected + '}', text)
 
@@ -145,9 +147,17 @@ class TargetTests(unittest.TestCase):
         parent = json.loads((ROOT / 'config/restorations/demo11-native-product-r20.json').read_text())
         self.assertEqual(config['base_restoration'], 'demo11-native-product-r20')
         self.assertEqual(config['output'], parent['output'])
-        self.assertEqual(config['native_sprite_graphics'], ['config/native-content/sprite-graphics-99.json'])
+        self.assertEqual(config['native_sprite_graphics'],
+                         ['config/native-content/sprite-graphics-175-obj.json'])
         self.assertEqual(config['native_sprite_gap']['frozen_manifests'],
                          config['native_sprite_gap']['manifests'])
+
+    def test_pack_range_stays_in_vram(self):
+        rows = graphics.packs(TARGET)
+        self.assertEqual(len(rows), 1)
+        start, end = rows[0]['ranges'][0]
+        self.assertLessEqual(end, 0x8000)
+        self.assertEqual(rows[0]['persist'], True)
 
 
 if __name__ == '__main__':

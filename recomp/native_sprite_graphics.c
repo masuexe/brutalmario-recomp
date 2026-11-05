@@ -19,6 +19,7 @@ typedef struct {
   uint8_t *payload;
   unsigned ranges;
   int last_room;
+  unsigned writes;
 } BmSpriteGraphicsState;
 
 static BmSpriteGraphicsState state[BM_SPRITE_GRAPHICS_PACKS];
@@ -116,9 +117,14 @@ void bm_sprite_graphics_tick(void) {
     if (!state[i].payload) continue;
     int wanted = (bm_sprite_graphics_packs[i].rooms[room >> 3] >> (room & 7)) & 1;
     if (!wanted) { state[i].last_room = -1; continue; }
-    if (state[i].last_room == (int)room) continue;
+    /* The game re-uploads some ranges while the room runs. A pack that names
+     * such a range is written again on every frame of the room, so the
+     * reviewed bytes stay in VRAM. */
+    if (state[i].last_room != (int)room) state[i].writes = 0;
+    if (!bm_sprite_graphics_packs[i].persist && state[i].last_room == (int)room) continue;
     apply_pack(i, room);
     state[i].last_room = (int)room;
+    ++state[i].writes;
     ++applied;
   }
 }
