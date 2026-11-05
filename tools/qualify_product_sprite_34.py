@@ -71,6 +71,13 @@ def main():
     require(room16a["x"] != room16a_parent["x"] or room16a["y"] != room16a_parent["y"],
             "the candidate sprite did not move")
 
+    room16d = state(body("r24-room16d-v1", "r2"), 7)
+    room16d_parent = state(body("r22-room16d-v1", "r2"), 7)
+    require(room16d_parent["state"] == 0, "the parent 16D sprite state differs")
+    require(room16d["state"] == 0x0C, "the candidate 16D sprite state differs")
+    require(room16d["x"] != room16d_parent["x"] or room16d["y"] != room16d_parent["y"],
+            "the candidate 16D sprite did not move")
+
     room167 = state(body("r24-room167-v1", "r2"), 6)
     room167_parent = state(body("r22-room167-v1", "r2"), 6)
     require(room167 == room167_parent, "room 167 state changed")
@@ -86,6 +93,9 @@ def main():
         room16a=dict(candidate=room16a, parent=room16a_parent,
                      frame_candidate=frame("r24-room16a-v1", "r2"),
                      frame_parent=frame("r22-room16a-v1", "r2")),
+        room16d=dict(candidate=room16d, parent=room16d_parent,
+                     frame_candidate=frame("r24-room16d-v1", "r2"),
+                     frame_parent=frame("r22-room16d-v1", "r2")),
         room167=dict(candidate=room167, parent=room167_parent,
                      frame_candidate=frame("r24-room167-v1", "r2"),
                      frame_parent=frame("r22-room167-v1", "r2")),
