@@ -1,0 +1,49 @@
+# Diagnostic official demoOnly1 source entry: forced exit destination and translevel43.
+# Starts at naturally entered Baby Yoshi Hill; not ordinary hollow-course traversal.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+dump map
+press right 30
+wait 180
+press right 30
+wait 180
+dump hill-map
+press y 30
+wait 240
+dump hill-entry
+
+# Diagnostic primary-room/pipe/immunity fixture; no actor/HP/progress/save writes.
+poke 94 80006001
+poke 19b8 73
+poke 19d8 05
+poke 88 0000
+poke 71 06
+until 010b == 73 500
+until 0100 == 14 500
+dump entered
+forcepoke 1497 ff
+wait 1
+dump f001
+wait 15
+dump f016
+wait 16
+dump f032
+wait 32
+dump f064
+wait 64
+dump f128
+wait 128
+dump f256
+wait 256
+dump f512
+quit

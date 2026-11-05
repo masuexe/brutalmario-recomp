@@ -25,11 +25,13 @@ placeholder, so a record install is not the missing part.
 Four slot `34` actors spawn and move in room `167`. At frame `512` they hold
 positions `(43,361)`, `(193,361)`, `(129,207)` and `(16,320)`.
 
-The object tiles that the actors use are `384`, `386`, `416` and `418`. Their
-bytes in the product capture are identical to the `cheap-demo` reference
-capture. The sprite art is therefore present.
+The object tiles that the actors use are `384`, `386`, `416` and `418`.
 
-The room frame differs from the `cheap-demo` reference in 25,880 pixels.
+An earlier draft of this note compared those tiles at byte `N*32` from the
+start of VRAM. That is the wrong address. `OBSEL` is `3`, so the object
+character base is byte `0xC000` and tile `N` starts at `0xC000 + N*32`.
+See [native-sprite-graphics-167-objslot.md](native-sprite-graphics-167-objslot.md)
+for the corrected measurement and for the difference that the two images hold.
 
 ## Room 173
 
@@ -44,10 +46,11 @@ The room leaves gameplay after frame `256`: mode `0x0B` then `0x0E`. The
 
 - The frame comparison pairs a `cheap-demo` reference frame with a product
   frame at a different frame index. The pixel count is not a parity claim.
-- Injecting the full `cheap-demo` VRAM for room `167` changed the stored VRAM
-  but not the rendered frame. The remaining difference is outside the
-  injected range, most likely the object attribute table and the actor
-  positions.
+- The reference capture comes from a core that does not export object
+  attribute memory, palette memory or PPU registers. The donor tile indices
+  and palettes are therefore unknown.
+- The two frames come from different frame indices and different scroll
+  positions. A pixel count between them is not a parity measurement.
 - Room `173` leaves gameplay, so no graphics conclusion is possible there
   yet.
 
