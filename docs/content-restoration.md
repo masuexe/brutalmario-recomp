@@ -1764,8 +1764,9 @@ room `175` and rewrites it on every frame of that room. Its qualification
 shows 514 applications in that room, none in room `154`, no write outside the
 range, and 16 differing bytes inside it against the donor.
 
-The room `175` platforms now render. The yellow platform pixel count is 570
-on the donor, 570 on the candidate and 38 on the parent. A frame difference of
-1,575 pixels stays open. The platform actors stand at different object
-coordinates, which matches the known `99` start-position offset. The design
-and the next work are in `docs/native-sprite-content-packs.md`.
+The room `175` platforms now render, and the user accepted them on
+2026-11-05. The yellow platform pixel count is 570 on the donor, 570 on the
+candidate and 38 on the parent. A frame difference of 1,575 pixels remains a
+technical observation, not a defect: the platform actors stand at different
+object coordinates, which matches the known `99` start-position offset. The
+design and the next work are in `docs/native-sprite-content-packs.md`.

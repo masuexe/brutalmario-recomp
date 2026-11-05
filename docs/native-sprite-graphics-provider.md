@@ -93,7 +93,15 @@ The offset matches the known `99` position offset from the modern sprite
 review: the candidate starts the actors at a settled point, and the donor
 starts them earlier. The platform art, the tiles and the palette are correct.
 
-The open work is the actor start position, not the graphics.
+## User acceptance
+
+The user checked the delivered target on 2026-11-05 and reported that the
+room `175` platform sprites are correct. The object-coordinate offset above
+is therefore a technical observation, not a visible defect. Do not reopen the
+platform graphics for room `175`.
+
+The open work is the actor start position for slots that a later review
+selects, not the graphics delivery.
 
 ## Limits
 
