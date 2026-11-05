@@ -2,8 +2,21 @@
 
 ## Result
 
-Product r25 shows the light circle in room `16A`. The user can play the room
-with the circle active. The circle moves and it changes the terrain effect.
+Product r25 shows the light circle in room `16A`. The user accepted the result
+in play on 2026-11-05.
+
+## How the circle works
+
+The circle is not a sprite tile. The program uses an HDMA window effect:
+
+| Register | Product r22 | Product r25 |
+| --- | --- | --- |
+| `hdmaen` | `00` | `30` |
+| `window` | `0, 255, 0, 0` | `15, 39, 0, 0` |
+| `windowsel` | `0` | `3` |
+
+Channels `4` and `5` feed the window from WRAM `7F:DF00` and `7F:E100`.
+This is why the object attribute table does not change between r22 and r25.
 
 ## Cause
 
@@ -60,10 +73,13 @@ Use a bank between `0x80` and `0xBF` for a sprite code pack.
 
 Report: `local/reports/product-r25-sprite-34-light.json`.
 
+## User acceptance
+
+The user started the r25 build and reported that the room works. This
+confirms the circle, the terrain effect and the frame rate.
+
 ## Deferred issues
 
-- The circle palette comes from the room palette set. The user must confirm
-  the appearance in play.
 - Rooms `15E` and `16D` also take the circle branch. They are not tested here.
 - Product r24 is superseded. Its one-byte patch made room `16A` take the
   platform branch, which does not change the terrain.
