@@ -78,8 +78,23 @@ Report: `local/reports/product-r25-sprite-34-light.json`.
 The user started the r25 build and reported that the room works. This
 confirms the circle, the terrain effect and the frame rate.
 
+The user also tested rooms `15E` and `16D`. Both behave as expected. They do
+not show the light circle, because the program gives them other states.
+
+## Remaining placement
+
+The `boss` program names thirteen rooms. The product image places slot `34`
+in fourteen rooms, so one placement has no branch:
+
+| Room | Low byte | In the program list |
+| --- | --- | --- |
+| `192` | `92` | no |
+
+Room `192` holds data that starts with `FF` bytes. Its level header reads
+`FF 30 FF 60`, which is not a normal header. Treat room `192` as an unused
+entry, not as a missing light circle.
+
 ## Deferred issues
 
-- Rooms `15E` and `16D` also take the circle branch. They are not tested here.
 - Product r24 is superseded. Its one-byte patch made room `16A` take the
   platform branch, which does not change the terrain.
