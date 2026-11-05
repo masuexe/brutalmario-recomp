@@ -33,9 +33,18 @@ frames. The projectile count grows and stays:
 
 The game mode stays at `0x14` for the whole run. The boss does not stop.
 
-## Deferred issues
+## The magenta rectangle
 
-The frame shows a magenta rectangle near the top center. The product image
-changes only 32 bytes from r25, and all of them belong to the HP row. The
-rectangle is therefore older than r26. No earlier capture reached room `144`,
-so the rectangle needs a separate check.
+The frame shows a magenta rectangle near the top center. It is not a port
+defect. The level data and the background setup are the same in both images.
+
+| Item | product r26 | cheap-demo |
+| --- | --- | --- |
+| Level pointer | `FCBDDC` | `FCBDDC` |
+| Level header | `00 00 60 40 30 58 70 0F` | `00 00 60 40 30 58 70 0F` |
+| `BG2SC` at run time | `0x33` | same source bytes |
+
+`BG2SC = 0x33` gives a character base and a map base of `0x6000`. The two
+regions overlap. The background then reads map entries as character data.
+The product image changes only 32 bytes from r25, and all of them belong to
+the HP row. The rectangle is therefore original behavior.
