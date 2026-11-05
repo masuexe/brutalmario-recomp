@@ -44,12 +44,17 @@ upload tail at `40:A52C`. No match chains to the old gate at `40:A510`.
 
 ## Verification
 
-| Room | BG3 row 1, columns 8 to 17 |
-| --- | --- |
-| `cheap-demo` reference `08B` | `11 24 28 28 252 68 68 68 68 252` |
-| product r26 `08B` | `11 24 28 28 252 68 68 68 68 252` |
+`tools/qualify_product_boss_hp_row.py` checks the image and the captures.
 
-Room `08A` shows the `ULTIMA` label. Room `091` shows the `XAN BIE` label.
+| Room | Label tiles | Bar tiles |
+| --- | --- | --- |
+| `08A` | `1E 15 1D 12 16 0A` (`ULTIMA`) | `FD FD FD FD` |
+| `08B` | `0B 18 1C 1C` (`BOSS`) | `44 44 44 44` |
+| `091` | `21 0A 17 FC 0B 12 0E` (`XAN BIE`) | `FD FD FD FD` |
+
+Room `08B` matches the `cheap-demo` reference row byte for byte.
+
+Report: `local/reports/product-r26-boss-hp-row.json`.
 
 ## Deferred issues
 
