@@ -37,9 +37,31 @@ room `080` only. Every newer image places it in rooms `080` and `173`.
 | `LDA $010B` | absent | offset `0x14` |
 | `CMP #$73` | absent | offset `0x17` |
 
-The `boss` program tests the room byte. It has a branch for room `173`. The
-product program does not test the room at all, so it cannot give room `173`
-its own behavior.
+The `boss` init at `20:94E0` is:
+
+```
+94E0  LDA #$01
+94E2  STA $157C,X
+94E5  LDA $010B        ; the room byte
+94E8  CMP #$73         ; room 173
+94EA  BEQ $94FF        ; the room 173 path
+94EC  LDA $7EC10E
+94F0  CMP #$77
+94F2  BNE $94FE
+94F4  LDA #$FF / STA $19B8
+94F9  LDA #$04 / STA $19D8
+94FE  RTL
+94FF  LDA #$02 / STA $C2,X   ; state = 2
+9503  LDA #$20 / STA $1570,X
+9507  LDA #$E0 / STA $15AC,X
+950B  RTL
+```
+
+Only room `173` sets state `2` at init. The other rooms leave the state at `0`.
+The main routine at `20:9512` then dispatches on the state.
+
+The product program is a different program with a different layout. It has no
+room test and no state `2` handler. A one-byte patch cannot add this behavior.
 
 ## The capture
 
