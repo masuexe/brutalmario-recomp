@@ -65,7 +65,7 @@ The `cheap-demo` table at `0F:E000` does not resolve these two slots either.
 engine. The new family replaced that engine, and the new table has no entry
 for the low ids. `docs/demo11-low-id-music.md` records the same limit.
 
-## Product r28: the stall is cleared
+## Product r28 fills the two slots
 
 Product r28 points slots `0x19` and `0x1E` at an installed boss-battle track.
 The track is slot `0x33` (Last Battle). The image changes 6 bytes.
@@ -75,11 +75,29 @@ The track is slot `0x33` (Last Battle). The image changes 6 bytes.
 | `0x19` | `000000` | `14F3EA` |
 | `0x1E` | `000000` | `14F3EA` |
 
-Room `08B` runs to frame `12720` in mode `14` with the row intact. The stall
-needs no further work.
+Room `08B` runs to frame `12720` in mode `14` with the row intact.
 
-**Warning:** the track is not the original. The original second-phase music
-is still open. Restore it only when the original sequence data is available.
+**Warning:** the track is not the original.
+
+## An in-play change does not stall
+
+A direct probe writes `$1DFB = 1E` while room `08B` runs. The mode stays at
+`14` on product r27, where the slot is null. A null low slot therefore does
+not stall an in-play music change. The stall in
+`docs/demo11-low-id-music.md` applies to a level load.
+
+Automation did not reproduce the second-phase freeze. The boss program plays
+`$1E` when its `$15AC` counter enters certain ranges. That is animation
+timing, not the phase change itself.
+
+## Open question
+
+The freeze needs a report of its exact form:
+
+- Does the picture stop while the sound continues?
+- Does the sound stop as well?
+- Does the screen go black?
+- Does the freeze start when the boss changes shape, or later?
 
 ## Fix plan for the exact track
 
