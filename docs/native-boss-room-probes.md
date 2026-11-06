@@ -63,6 +63,18 @@ gate therefore covers exactly the rooms that request a bar.
 The room table lists slots `13` and `2D`. Only slot `13` appears. Slot `2D`
 does not. This needs a separate check.
 
+## Regression check
+
+The r26 image must not change the rooms that the user already accepted.
+
+| Room | Before | r26 | Result |
+| --- | --- | --- | --- |
+| `167` | 4 actors, slot `34`, state `0C` | same | no change |
+| `16A` | 4 actors, slot `34` at `0E` | same up to frame `420` | no change |
+
+Room `16A` ends at frame `1020` in the probe. The probe does not follow the
+moving light circle, so Mario falls. The wiki describes this behavior.
+
 ## Limits
 
 - The probe presses few buttons, so a boss that waits for input stays idle.
