@@ -44,6 +44,20 @@ behavior, not a port defect.
 The capture shows the `MARX` label at columns 4 to 8 and tile `68` at columns
 11 to 22. The row is present. The bar uses a red palette in this room.
 
+## Rooms `009` and `07E`
+
+Slot `28` also places in rooms `009` and `07E`. The probes show that these
+rooms do not set the bar flag.
+
+| Room | Boss actor | `$7FFFDF` | Bar buffer |
+| --- | --- | --- | --- |
+| `009` | yes (slot `28`) | `00` | all zero |
+| `07E` | none | `00` | all zero |
+| `08A` | yes (slot `28`) | `01` | `1E 15 1D 12 16 0A` |
+
+The slot `28` room dispatch writes the bar data only for room `08A`. The r26
+gate therefore covers exactly the rooms that request a bar.
+
 ## Room `15D`
 
 The room table lists slots `13` and `2D`. Only slot `13` appears. Slot `2D`
