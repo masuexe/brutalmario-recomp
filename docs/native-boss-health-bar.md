@@ -54,6 +54,17 @@ upload tail at `40:A52C`. No match chains to the old gate at `40:A510`.
 
 Room `08B` matches the `cheap-demo` reference row byte for byte.
 
+The row holds for the whole run.
+
+| Room | First frame with the row | Frames checked to |
+| --- | --- | --- |
+| `08A` | `f420` | `f12720` |
+| `08B` | `f060` | `f12720` |
+| `091` | `f060` | `f12720` |
+
+The `entry` frame has no row in any room, because the boss init runs after
+that frame.
+
 Report: `local/reports/product-r26-boss-hp-row.json`.
 
 ## Deferred issues

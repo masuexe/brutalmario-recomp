@@ -30,10 +30,10 @@ poke 71 06
 until 010b == 83 500
 until 0100 == 14 500
 dump entry
-press y 2
+press down 4
 wait 60
 dump f060
-press y 2
+press down 4
 wait 120
 dump f180b
 wait 240
