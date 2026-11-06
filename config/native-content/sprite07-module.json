@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "sprite07-module",
+  "scope": "Static module review for the boss sprite 07 program. The recipe pins the donor record and the protected block. The program tests the room byte and gives room 173 its own path. It has no calls outside its block.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-product-r26",
+  "review_status": "static-review",
+  "code": {
+    "source_address": "2094D1",
+    "native_address": "8494D1",
+    "size": 5836,
+    "sha256": "2dc6a898ea4fe3ae291b55a0d82294ebed02f0b29c6172c0e6f91f0ddc99ebcb",
+    "adapted_sha256": "2dc6a898ea4fe3ae291b55a0d82294ebed02f0b29c6172c0e6f91f0ddc99ebcb",
+    "pack_file": "sprite07-code.bin"
+  },
+  "record": {
+    "slot": "07",
+    "raw": "013601063f031964e094201295200000",
+    "init": "2094E0",
+    "main": "209512",
+    "relative": {
+      "init": "F",
+      "main": "41"
+    },
+    "rooms": [
+      "080",
+      "173"
+    ],
+    "native_raw": "013601063f031964e094841295840000"
+  },
+  "external_calls": [],
+  "shared_dependencies": [],
+  "code_patches": [],
+  "dispatch_tables": [],
+  "entry_seeds": [],
+  "graphics": null,
+  "open_dependencies": [
+    "runtime qualification of rooms 080 and 173"
+  ],
+  "unapplied_rom_patches": [],
+  "base_output": null
+}
