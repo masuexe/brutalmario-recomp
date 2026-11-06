@@ -48,7 +48,40 @@ The register is a one-shot command. The engine clears it after it reads it.
 The load stall happens when the engine reloads the level, not when it plays a
 song in place.
 
-## Fix plan
+## Why `cheap-demo` does not hold the answer directly
+
+The `cheap-demo` table at `0F:E000` does not resolve these two slots either.
+
+| Slot | `cheap-demo` pointer | LoROM valid | Bytes at the target |
+| --- | --- | --- | --- |
+| `0x18` | `EEA4E0` | yes | real data |
+| `0x19` | `CFEAE1` | yes | **all zero** |
+| `0x1B` | `F3A41E` | yes | real data |
+| `0x1E` | `0F6CE1` | no | - |
+| `0x1F` | `F1F01F` | yes | real data |
+| `0x36` | `D5A4FF` | yes | real data |
+
+`cheap-demo` plays these low ids with the original Super Mario World music
+engine. The new family replaced that engine, and the new table has no entry
+for the low ids. `docs/demo11-low-id-music.md` records the same limit.
+
+## Product r28: the stall is cleared
+
+Product r28 points slots `0x19` and `0x1E` at an installed boss-battle track.
+The track is slot `0x33` (Last Battle). The image changes 6 bytes.
+
+| Slot | r27 | r28 |
+| --- | --- | --- |
+| `0x19` | `000000` | `14F3EA` |
+| `0x1E` | `000000` | `14F3EA` |
+
+Room `08B` runs to frame `12720` in mode `14` with the row intact. The stall
+needs no further work.
+
+**Warning:** the track is not the original. The original second-phase music
+is still open. Restore it only when the original sequence data is available.
+
+## Fix plan for the exact track
 
 The fix must install a real song payload into slots `0x19` and `0x1E`. The
 form of an existing batch entry is:
