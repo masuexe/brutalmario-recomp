@@ -1,0 +1,173 @@
+# Room 08B long run: hold the boss fight to reach the second phase.
+# Diagnostic module execution: forced primary room and immunity; no completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80004001
+poke 19b8 8b
+poke 19d8 04
+poke 88 0000
+poke 71 06
+until 010b == 8b 500
+until 0100 == 14 500
+dump entry
+poke 19b8 3b
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r03b
+poke 19b8 80
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r080
+poke 19b8 83
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r083
+poke 19b8 86
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r086
+poke 19b8 87
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r087
+poke 19b8 8a
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r08a
+poke 19b8 8b
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r08b
+poke 19b8 91
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r091
+poke 19b8 bc
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r0bc
+poke 19b8 cc
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r0cc
+poke 19b8 cf
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r0cf
+poke 19b8 28
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r128
+poke 19b8 46
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r146
+poke 19b8 5d
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r15d
+poke 19b8 67
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r167
+poke 19b8 6a
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r16a
+poke 19b8 73
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r173
+poke 19b8 1e
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r01e
+poke 19b8 09
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r009
+poke 19b8 7e
+poke 19d8 04
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 150
+dump r07e
+quit
