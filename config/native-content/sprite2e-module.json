@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "id": "sprite2e-module",
+  "scope": "Install the cheap-demo slot 2E program. The room 15D boss spawns this slot for the Wily Capsule second phase. The product target held the default record.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-product-r31",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "00ac274dec29eb90076659da35d931fff6ad89e1e0b6f10e437cc9f32431f299"
+  },
+  "review_status": "static-review",
+  "code": {
+    "source_address": "219D06",
+    "native_address": "859D06",
+    "size": 9768,
+    "sha256": "2a18bcab99025f8561a5aadd76df007a46f85674bd5ebcfc7d22061787cee1fe",
+    "adapted_sha256": "2a18bcab99025f8561a5aadd76df007a46f85674bd5ebcfc7d22061787cee1fe",
+    "pack_file": "sprite2e-code.bin"
+  },
+  "record": {
+    "slot": "2E",
+    "raw": "0136008038031144159d211e9d210000",
+    "init": "219D15",
+    "main": "219D1E",
+    "relative": {
+      "init": "F",
+      "main": "18"
+    },
+    "rooms": [],
+    "native_raw": "0136008038031144159d851e9d850000"
+  },
+  "code_patches": [],
+  "external_calls": [],
+  "shared_dependencies": [],
+  "dispatch_tables": [],
+  "entry_seeds": [],
+  "graphics": null,
+  "open_dependencies": [
+    "runtime qualification of the room 15D second phase"
+  ],
+  "unapplied_rom_patches": []
+}
