@@ -48,6 +48,21 @@ The register is a one-shot command. The engine clears it after it reads it.
 The load stall happens when the engine reloads the level, not when it plays a
 song in place.
 
+## The original engine image is gone from the new family
+
+The sprite region near ROM offset `0x70000` holds the sound engine image. A
+block hash comparison shows that the new family replaced it.
+
+| Offset | cheap-demo | demo-1-1 | demo-only-1 | product r29 |
+| --- | --- | --- | --- | --- |
+| `070000` | `0011f331` | `31867130` | `31867130` | `31867130` |
+| `071000` | `f13c40cb` | `c8b4220a` | `c8b4220a` | `c8b4220a` |
+| `072000` | `e3e2d31c` | `428e3b33` | `428e3b33` | `428e3b33` |
+| `073000` | `542eed64` | `542eed64` | `542eed64` | `542eed64` |
+
+Only four of the sixteen blocks in that window match across all images. The
+legacy engine image exists only in `cheap-demo`.
+
 ## Why `cheap-demo` does not hold the answer directly
 
 The `cheap-demo` table at `0F:E000` does not resolve these two slots either.
