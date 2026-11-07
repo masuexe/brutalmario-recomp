@@ -30,6 +30,39 @@ room `080` only. Every newer image places it in rooms `080` and `173`.
 | `cheap-demo` | `080` |
 | `boss`, `7hero`, `demo-only-1`, `demo-1-1` | `080`, `173` |
 
+## Product r29: the port is done
+
+Product r29 installs the `boss` slot `07` program.
+
+| Item | Value |
+| --- | --- |
+| Source block | `20:94D1`, 5836 bytes |
+| Block SHA-256 | `2dc6a898ea4fe3ae291b55a0d82294ebed02f0b29c6172c0e6f91f0ddc99ebcb` |
+| Native address | `84:94D1` |
+| Record | `013601063f031964e094841295840000` |
+| Recipe | `config/native-content/sprite07-module.json` |
+| Pack | `sprite07-code.bin` |
+
+The block is self-contained. A full decode found five entry points and no
+call outside the block. It has no reference to another data bank.
+
+### Room `173`
+
+| Frame | r28 mode | r29 mode |
+| --- | --- | --- |
+| `f0300` | `14` | `14` |
+| `f0600` | **`0E`** | **`14`** |
+| `f1200` | - | `14` |
+| `f1800` | - | `14` |
+
+Product r28 loses the level at frame `600`. Product r29 keeps the level.
+The room also plays song `1A`, which is present in the table.
+
+### Room `080` regression
+
+Room `080` keeps mode `14` on every frame and keeps song `19`. The slot `07`
+actors continue to run.
+
 ## The difference in the code
 
 | Pattern | product r26 | `boss` |
