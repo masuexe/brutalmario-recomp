@@ -54,6 +54,16 @@ upload tail at `40:A52C`. No match chains to the old gate at `40:A510`.
 
 Room `08B` matches the `cheap-demo` reference row byte for byte.
 
+## Product r28 regression
+
+| Room | Result |
+| --- | --- |
+| `08A` | label `ULTIMA` and the bar from `f420` to `f12720`; the row tail is `FC` |
+| `08B` | label `BOSS` and the bar from `f060` to `f12720` |
+| `091` | label `XAN BIE` and the bar from `f060` to `f1920` |
+| `167` | four slot `34` actors at state `0C` on every frame |
+| `16A` | slot `34` at state `0E` in mode `14` |
+
 The row holds for the whole run.
 
 | Room | First frame with the row | Frames checked to |
