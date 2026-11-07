@@ -1,0 +1,331 @@
+{
+  "schema": 1,
+  "id": "demo11-native-product-r36",
+  "target": "Brutal Mario Demo11 Product R25",
+  "recipient": "demo-1-1",
+  "donor": "cheap-demo",
+  "base_restoration": "demo11-native-product-r22",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "f4185fe22f57c66c338b800bbe423dcd915860c87cc2ec395baa7236cad5e567"
+  },
+  "scope": "Relocate only real pointer fields in the moved song blocks. Revision r35 moved every word in the source range, which corrupted 115 note parameters of the room 0F5 song. tools/adapt_song_base.py now walks the pattern table and the channel tracks and moves only the pattern pointers, the channel pointers, the target of command e9 and the sequence self-pointer.",
+  "native_sprite_gap": {
+    "manifests": [
+      "config/native-content/sprite10-module.json",
+      "config/native-content/sprite11-module.json",
+      "config/native-content/sprite12-module.json",
+      "config/native-content/sprite13-module.json",
+      "config/native-content/sprite14-module.json",
+      "config/native-content/sprite0f-module.json",
+      "config/native-content/sprite19-yfix-module.json",
+      "config/native-content/sprite22-module.json",
+      "config/native-content/sprite3b-module.json",
+      "config/native-content/sprite55-module.json",
+      "config/native-content/sprite92-module.json",
+      "config/native-content/spritea0-module.json",
+      "config/native-content/sprite9d-module.json",
+      "config/native-content/sprite93-module.json",
+      "config/native-content/sprite7e-module.json",
+      "config/native-content/sprite79-module.json",
+      "config/native-content/sprite76-module.json",
+      "config/native-content/sprite66-module.json",
+      "config/native-content/sprite5d-module.json",
+      "config/native-content/sprite4a-module.json",
+      "config/native-content/sprite3f-module.json",
+      "config/native-content/sprite3d-module.json",
+      "config/native-content/sprite3c-module.json",
+      "config/native-content/sprite38-module.json",
+      "config/native-content/sprite36-lowmirror-module.json",
+      "config/native-content/sprite32-lowmirror-module.json",
+      "config/native-content/sprite31-lowmirror-module.json",
+      "config/native-content/sprite2d-15d-music-module.json",
+      "config/native-content/sprite23-lowmirror-module.json",
+      "config/native-content/sprite20-lowmirror-module.json",
+      "config/native-content/sprite1c-lowmirror-module.json",
+      "config/native-content/sprite9b-9e-module.json",
+      "config/native-content/sprite9c-9f-phasebgm2-module.json",
+      "config/native-content/sprite2c-lowmirror-module.json",
+      "config/native-content/sprite7f-module.json",
+      "config/native-content/sprite80-module.json",
+      "config/native-content/sprite95-boss-module.json",
+      "config/native-content/type3-shooters-c2-v2.json",
+      "config/native-content/type3-c2-boss-lowmirror.json",
+      "config/native-content/sprite25-boss-product-module.json",
+      "config/native-content/sprite33-boss-product-module.json",
+      "config/native-content/sprite94-boss-product-module.json",
+      "config/native-content/sprite99-modern-module.json",
+      "config/native-content/sprite97-modern-module.json",
+      "config/native-content/sprite34-boss-module.json",
+      "config/native-content/sprite07-module.json",
+      "config/native-content/sprite2e-module.json"
+    ],
+    "extra_packs": [
+      {
+        "variable": "BM_SEVEN_CODE_PACK_EXTRA",
+        "pack_file": "seven-code.bin",
+        "address": "A28000",
+        "size": 28478,
+        "sha256": "24a58ba8e1c2ad716d73428795164d36c1b808efa53ea141854085b807318787",
+        "executable": true,
+        "source": "local/native-modules/seven-v1"
+      },
+      {
+        "variable": "BM_SEVEN_GRAPHICS_PACK_EXTRA",
+        "pack_file": "seven-graphics.bin",
+        "address": "A68000",
+        "size": 23165,
+        "sha256": "f37524950aace0fa931a051bc751b365ddea3ef6ee27fc29a8712971e0de209d",
+        "executable": false,
+        "source": "local/native-modules/seven-v1"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_TYPE3_C0",
+        "pack_file": "type3-c0.bin",
+        "address": "9486D7",
+        "size": 205,
+        "sha256": "11db36ef4b3f6ca9d4b848173072cba0e4c08a87c776e75fd9376a9154dee92e",
+        "executable": true,
+        "source": "local/native-modules/demo11-native-type3b-final-type3_c0_block"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_TYPE3_C1",
+        "pack_file": "type3-c1.bin",
+        "address": "93AE08",
+        "size": 213,
+        "sha256": "a1b87ca2135ad18140195aa885a239eb36300815cd886ff9abee5baa2ddf6ac3",
+        "executable": true,
+        "source": "local/native-modules/demo11-native-type3b-final-type3_c1_block"
+      },
+      {
+        "variable": "BM_SEVEN_CODE_PACK_MAZO_B0",
+        "pack_file": "mazo-b0-code.bin",
+        "address": "A18989",
+        "size": 419,
+        "sha256": "b98c2ce2014d4cff3e8fcbb75eec936b8e04446e503f541ce9efdff85b8846e8",
+        "executable": true,
+        "source": "local/native-modules/mazo-b0-v1"
+      },
+      {
+        "variable": "BM_MAZO_DATA_PACK",
+        "pack_file": "mazo-b0-corridor.bin",
+        "address": "CA8000",
+        "size": 288,
+        "sha256": "4d90fc094324a035745d9c26d26af49299ff1e771cbf13a85c3744ed788af94d",
+        "executable": false,
+        "source": "local/native-modules/mazo-b0-corridor-v1"
+      },
+      {
+        "variable": "BM_CORRIDOR_INVISIBLE_PACK",
+        "pack_file": "corridor-invisible.bin",
+        "address": "D08000",
+        "size": 4105,
+        "sha256": "6dcddb8214d00d859142e5d81b0a8ad37b9e581be0a498ff39be427318435644",
+        "executable": false,
+        "source": "local/native-modules/corridor-orb-v2"
+      },
+      {
+        "variable": "BM_CORRIDOR_WAVE_PACK",
+        "pack_file": "corridor-wave.bin",
+        "address": "D18000",
+        "size": 1553,
+        "sha256": "d70774e7549b1af3e368b976782b04b09aa7df84c83fd844bb39c22e5f7fa3e5",
+        "executable": false,
+        "source": "local/native-modules/corridor-wave-v1"
+      },
+      {
+        "variable": "BM_FOREST_A2_CODE_PACK",
+        "pack_file": "spritea2-modern-code.bin",
+        "address": "9DD7B4",
+        "size": 7400,
+        "sha256": "ccd76df8480d3c753d605720dd809db3e47739123d2f8fae8130727297eeb8fc",
+        "executable": true,
+        "source": "local/native-modules/forest-a2-v3"
+      },
+      {
+        "variable": "BM_NATIVE_SPRITE_A1_PACK",
+        "pack_file": "spritea1-modern-code.bin",
+        "address": "8A88EB",
+        "size": 5724,
+        "sha256": "c90d51865fde2e6bad2a17e06ed92d023d9bffdaff34cb7145981fef40c7571f",
+        "executable": true,
+        "source": "local/native-modules/spritea1-modern-v1"
+      }
+    ],
+    "extra_patches": [],
+    "frozen_manifests": [
+      "config/native-content/sprite10-module.json",
+      "config/native-content/sprite11-module.json",
+      "config/native-content/sprite12-module.json",
+      "config/native-content/sprite13-module.json",
+      "config/native-content/sprite14-module.json",
+      "config/native-content/sprite0f-module.json",
+      "config/native-content/sprite19-yfix-module.json",
+      "config/native-content/sprite22-module.json",
+      "config/native-content/sprite3b-module.json",
+      "config/native-content/sprite55-module.json",
+      "config/native-content/sprite92-module.json",
+      "config/native-content/spritea0-module.json",
+      "config/native-content/sprite9d-module.json",
+      "config/native-content/sprite93-module.json",
+      "config/native-content/sprite7e-module.json",
+      "config/native-content/sprite79-module.json",
+      "config/native-content/sprite76-module.json",
+      "config/native-content/sprite66-module.json",
+      "config/native-content/sprite5d-module.json",
+      "config/native-content/sprite4a-module.json",
+      "config/native-content/sprite3f-module.json",
+      "config/native-content/sprite3d-module.json",
+      "config/native-content/sprite3c-module.json",
+      "config/native-content/sprite38-module.json",
+      "config/native-content/sprite36-lowmirror-module.json",
+      "config/native-content/sprite32-lowmirror-module.json",
+      "config/native-content/sprite31-lowmirror-module.json",
+      "config/native-content/sprite2d-lowmirror-module.json",
+      "config/native-content/sprite23-lowmirror-module.json",
+      "config/native-content/sprite20-lowmirror-module.json",
+      "config/native-content/sprite1c-lowmirror-module.json",
+      "config/native-content/sprite9b-9e-module.json",
+      "config/native-content/sprite9c-9f-phasebgm2-module.json",
+      "config/native-content/sprite2c-lowmirror-module.json",
+      "config/native-content/sprite7f-module.json",
+      "config/native-content/sprite80-module.json",
+      "config/native-content/sprite95-boss-module.json",
+      "config/native-content/type3-shooters-c2-v2.json",
+      "config/native-content/type3-c2-boss-lowmirror.json",
+      "config/native-content/sprite25-boss-product-module.json",
+      "config/native-content/sprite33-boss-product-module.json",
+      "config/native-content/sprite94-boss-product-module.json",
+      "config/native-content/sprite99-modern-module.json",
+      "config/native-content/sprite97-modern-module.json"
+    ]
+  },
+  "native_sprite_graphics": [
+    "config/native-content/sprite-graphics-175-obj.json",
+    "config/native-content/sprite-graphics-167-obj.json"
+  ],
+  "music_region_pack": {
+    "id": "demo11-product-r19-music",
+    "pack_file": "music-pack.bin",
+    "regions": [
+      {
+        "slot": "4F",
+        "offset": 2293760,
+        "size": 6144,
+        "block_sha256": "e1c53f0268890430c47e95dbe692a84392dbb637da14bc5ecff164e22abc3083"
+      },
+      {
+        "slot": "03",
+        "offset": 2476352,
+        "size": 6144,
+        "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+      },
+      {
+        "slot": "05",
+        "offset": 2490368,
+        "size": 6144,
+        "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+      },
+      {
+        "slot": "06",
+        "offset": 2530904,
+        "size": 6144,
+        "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+      },
+      {
+        "slot": "07",
+        "offset": 624165,
+        "size": 961,
+        "block_sha256": "3c84f7eb4ae2a60d243fa9c783265b521dbb9929e6cbef1fbb1c2cf0fe71aadb"
+      },
+      {
+        "slot": "08",
+        "offset": 625126,
+        "size": 1894,
+        "block_sha256": "ae65e20168c2d2ed90a64cd9045e7e2d1a36cb44329cf98a2c837318fbaabec8"
+      }
+    ],
+    "pack_size": 27431,
+    "pack_sha256": "aa10d68e27340d069ec032b98cf8323c68d6492f7f5df79e347a7fe75e7ab103",
+    "manifest": "config/native-content/product-r19-music.json"
+  },
+  "output": {
+    "size": 4194304,
+    "sha256": "183752725fb83056eb6cd0cc141483d7ff44dc17d24e5ba886ec13c11109455a"
+  },
+  "parent_restoration": "demo11-native-product-r35",
+  "code_patches": [
+    {
+      "address": "26CC48",
+      "before": "6b960cc7",
+      "after": "7f960cc7",
+      "role": "Song slot 1A: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "2156C1",
+      "before": "5602e92c",
+      "after": "6a02e92c",
+      "role": "Song slot 36: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "21CD80",
+      "before": "6bc7c660",
+      "after": "7fc7c660",
+      "role": "Song slot 3B: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "1EBD51",
+      "before": "6bb5bcba",
+      "after": "7fb5bcba",
+      "role": "Song slot 3C: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "220059",
+      "before": "5a25e7a0",
+      "after": "6e25e7a0",
+      "role": "Song slot 3E: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "1EDD49",
+      "before": "5a25e7a0",
+      "after": "6e25e7a0",
+      "role": "Song slot 3F: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "224A9B",
+      "before": "6bc7c660",
+      "after": "7fc7c660",
+      "role": "Song slot 42: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "22CFC3",
+      "before": "6bc7c660",
+      "after": "7fc7c660",
+      "role": "Song slot 43: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "20000E",
+      "before": "6164ff00",
+      "after": "7564ff00",
+      "role": "Song slot 46: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "2057C6",
+      "before": "6366ff00",
+      "after": "7766ff00",
+      "role": "Song slot 47: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "218063",
+      "before": "6bc7c6da",
+      "after": "7fc7c6da",
+      "role": "Song slot 5B: restore note parameters and keep pointer fields."
+    },
+    {
+      "address": "280060",
+      "before": "6b960cc7",
+      "after": "7f960cc7",
+      "role": "Song slot 6D: restore note parameters and keep pointer fields."
+    }
+  ]
+}

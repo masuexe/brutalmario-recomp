@@ -30,23 +30,57 @@ through `tools/render_song_payload.py` with the pinned reference host:
 
 ## Recipe rule
 
-When a donor song uses base `6800`, make a `5400` payload. Do these steps:
+When a donor song uses base `6800`, make a `5400` payload. Use
+`tools/adapt_song_base.py`. It does these steps:
 
-1. Build the raw payload with `raw_group_song`.
-2. Subtract `1400` from every 16-bit word in the song area in the range
-   `[6800, 6800 + length)`.
-3. Set the sequence self-pointer at song offset `6` to `5402`.
-4. Keep the destination field at `5400`.
+1. Read the sequence header and the two pattern pointers.
+2. Read the eight channel pointers of each pattern.
+3. Walk every channel track and collect the target of command `e9`.
+4. Subtract `1400` from those pointer fields only.
+5. Set the sequence self-pointer at song offset `6` to `5402`.
+6. Keep the destination field at `5400`.
 
 The sequence header must then look like a product song header, for example
 `f4610462ff000254` against the product song `1e572e57ff000254`.
 
+## Do not relocate every word
+
+A blanket pass over the source range corrupts note parameters. The room `0F5`
+song holds 66 real pointer fields and 115 words that are note or parameter
+values in the same range. Revision r35 moved all 181 words and the melody
+was wrong. Revision r36 moves the 66 pointer fields and the melody is
+correct.
+
+## Command table
+
+The walk needs the parameter byte count of each command at or above `da`.
+These counts are in use:
+
+| Command | Bytes | Notes |
+| --- | ---: | --- |
+| `da` | 1 | |
+| `db` | 1 | |
+| `dc` | 1 | The parameter holds a volume value, for example `20` or `40`. |
+| `dd` | 1 | Not seen in the tested songs. |
+| `de` | 1 | |
+| `df` | 1 | |
+| `e0` | 1 | |
+| `e2` | 1 | |
+| `e7` | 1 | |
+| `e8` | 2 | The room `0F5` song fails without this entry. |
+| `e9` | 3 | The first two bytes are an ARAM pointer. |
+| `ef` | 3 | |
+| `f0` | 0 | |
+| `f1` | 3 | |
+| `f2` | 3 | |
+
+Commands below `80` are a duration. Commands `80` to `d9` are a note value.
+
 ## Limits
 
-- The blanket word relocation is safe for the group 17 slot 3 song. A song
-  with note data that forms a value in the source range needs a command walk.
-  `adapt_music` does that walk, but it rejects this song.
-- The relocation keeps the song data. The reference render of the relocated
+- The walk raises an error for a command that is not in the table. Add the
+  command only after you confirm its parameter count.
+- The relocation keeps the song data. The reference render of a relocated
   payload is not compared with a legacy-engine render. The legacy engine is
   not in the reference set.
 ## Affected slots, revision r35
