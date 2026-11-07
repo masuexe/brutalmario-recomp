@@ -30,14 +30,44 @@ The boss program is the full `cheap-demo` program.
 
 The pack mounts and runs. The ROM block at `27:96DC` is unrelated data.
 
-### Why the state stays zero
+### The boss does start its attack path
 
-The init at `9AE7` writes `$15AC` and the scroll registers. It does not write
-the state at `$1504`. The state handler for state `0` at `A74F` tests a button
-before it sets state `1`.
+The init at `9AE7` writes `$15AC` and the scroll registers.
 
-The probe does not press that button, so the state stays `0`. This is program
-behavior, not a port defect.
+The state handler at `A74F` follows this sequence:
+
+```
+A74F  LDA $9D
+A751  BNE $A773          ; return while the game is paused
+A753  LDA $15AC,X
+A756  CMP #$FE
+A758  BEQ $A774          ; return while the timer is FE
+A75A  LDA $77
+A75C  AND #$04           ; the down button
+A75E  BEQ $A773          ; return when down is not held
+A760  LDA #$01
+A762  STA $7FF111        ; set the start marker
+A766  STZ $1412
+A769  LDA #$01
+A76B  STA $C2,X          ; set the state
+```
+
+A probe that holds down reaches this path. The capture shows the result.
+
+| Frame | `$7FF111` | `$1412` | `$77` |
+| --- | --- | --- | --- |
+| `f060` | `00` | `01` | `00` |
+| `f420` | `01` | `00` | `04` |
+| `f1020` | `01` | `00` | `04` |
+| `f1920` | `01` | `00` | `04` |
+
+The marker stays at `01`, so the handler took the branch and the boss left
+state `0`. The program works.
+
+`$1504` is not the state table for this sprite. Read `$7FF111` and `$1412`
+instead. An earlier note that the state stayed zero used the wrong variable.
+
+The boss spawns no child actors because this boss attacks directly.
 
 ### The HP row
 
