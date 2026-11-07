@@ -9,7 +9,7 @@
     "size": 4194304,
     "sha256": "f4185fe22f57c66c338b800bbe423dcd915860c87cc2ec395baa7236cad5e567"
   },
-  "scope": "Give room 0F5 the correct song. Slot 53 held a different data area with the same sequence header and the same payload shape. The recipe replaces the payload in place with the cheap-demo group 17 slot 3 slice, Haunted Chase.",
+  "scope": "Give room 0F5 the correct song. Slot 53 held a legacy payload with ARAM base 6800 and another data area. The recipe installs the cheap-demo group 17 slot 3 slice, relocates its pointers to the recipient base 5400 and fixes the sequence self-pointer.",
   "native_sprite_gap": {
     "manifests": [
       "config/native-content/sprite10-module.json",
@@ -251,7 +251,7 @@
   },
   "output": {
     "size": 4194304,
-    "sha256": "136bf5da32cf059fb4c6f3d087670d64b005aadd8c07327a3b5d2730ab07532c"
+    "sha256": "b5f0f6c5c9e9c36ce639983f74bdfedb496756fa7822ffdcbc6c085deada0572"
   },
   "parent_restoration": "demo11-native-product-r33",
   "code_patches": [
