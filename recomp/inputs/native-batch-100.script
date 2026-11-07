@@ -1,0 +1,385 @@
+# Room 08B long run: hold the boss fight to reach the second phase.
+# Diagnostic module execution: forced primary room and immunity; no completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80004001
+poke 19b8 8b
+poke 19d8 04
+poke 88 0000
+poke 71 06
+until 010b == 8b 500
+until 0100 == 14 500
+dump entry
+poke 19b8 00
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 00
+poke 19d8 01
+until 010b == 00 2500
+until 0100 == 14 1200
+dump r100
+poke 19b8 01
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 01
+poke 19d8 01
+until 010b == 01 2500
+until 0100 == 14 1200
+dump r101
+poke 19b8 02
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 02
+poke 19d8 01
+until 010b == 02 2500
+until 0100 == 14 1200
+dump r102
+poke 19b8 03
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 03
+poke 19d8 01
+until 010b == 03 2500
+until 0100 == 14 1200
+dump r103
+poke 19b8 04
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 04
+poke 19d8 01
+until 010b == 04 2500
+until 0100 == 14 1200
+dump r104
+poke 19b8 05
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 05
+poke 19d8 01
+until 010b == 05 2500
+until 0100 == 14 1200
+dump r105
+poke 19b8 06
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 06
+poke 19d8 01
+until 010b == 06 2500
+until 0100 == 14 1200
+dump r106
+poke 19b8 07
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 07
+poke 19d8 01
+until 010b == 07 2500
+until 0100 == 14 1200
+dump r107
+poke 19b8 08
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 08
+poke 19d8 01
+until 010b == 08 2500
+until 0100 == 14 1200
+dump r108
+poke 19b8 09
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 09
+poke 19d8 01
+until 010b == 09 2500
+until 0100 == 14 1200
+dump r109
+poke 19b8 0a
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0a
+poke 19d8 01
+until 010b == 0a 2500
+until 0100 == 14 1200
+dump r10a
+poke 19b8 0b
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0b
+poke 19d8 01
+until 010b == 0b 2500
+until 0100 == 14 1200
+dump r10b
+poke 19b8 0c
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0c
+poke 19d8 01
+until 010b == 0c 2500
+until 0100 == 14 1200
+dump r10c
+poke 19b8 0d
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0d
+poke 19d8 01
+until 010b == 0d 2500
+until 0100 == 14 1200
+dump r10d
+poke 19b8 0e
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0e
+poke 19d8 01
+until 010b == 0e 2500
+until 0100 == 14 1200
+dump r10e
+poke 19b8 0f
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 0f
+poke 19d8 01
+until 010b == 0f 2500
+until 0100 == 14 1200
+dump r10f
+poke 19b8 10
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 10
+poke 19d8 01
+until 010b == 10 2500
+until 0100 == 14 1200
+dump r110
+poke 19b8 11
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 11
+poke 19d8 01
+until 010b == 11 2500
+until 0100 == 14 1200
+dump r111
+poke 19b8 12
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 12
+poke 19d8 01
+until 010b == 12 2500
+until 0100 == 14 1200
+dump r112
+poke 19b8 13
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 13
+poke 19d8 01
+until 010b == 13 2500
+until 0100 == 14 1200
+dump r113
+poke 19b8 14
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 14
+poke 19d8 01
+until 010b == 14 2500
+until 0100 == 14 1200
+dump r114
+poke 19b8 15
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 15
+poke 19d8 01
+until 010b == 15 2500
+until 0100 == 14 1200
+dump r115
+poke 19b8 16
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 16
+poke 19d8 01
+until 010b == 16 2500
+until 0100 == 14 1200
+dump r116
+poke 19b8 17
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 17
+poke 19d8 01
+until 010b == 17 2500
+until 0100 == 14 1200
+dump r117
+poke 19b8 18
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 18
+poke 19d8 01
+until 010b == 18 2500
+until 0100 == 14 1200
+dump r118
+poke 19b8 19
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 19
+poke 19d8 01
+until 010b == 19 2500
+until 0100 == 14 1200
+dump r119
+poke 19b8 1a
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1a
+poke 19d8 01
+until 010b == 1a 2500
+until 0100 == 14 1200
+dump r11a
+poke 19b8 1b
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1b
+poke 19d8 01
+until 010b == 1b 2500
+until 0100 == 14 1200
+dump r11b
+poke 19b8 1c
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1c
+poke 19d8 01
+until 010b == 1c 2500
+until 0100 == 14 1200
+dump r11c
+poke 19b8 1d
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1d
+poke 19d8 01
+until 010b == 1d 2500
+until 0100 == 14 1200
+dump r11d
+poke 19b8 1e
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1e
+poke 19d8 01
+until 010b == 1e 2500
+until 0100 == 14 1200
+dump r11e
+poke 19b8 1f
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 1f
+poke 19d8 01
+until 010b == 1f 2500
+until 0100 == 14 1200
+dump r11f
+quit

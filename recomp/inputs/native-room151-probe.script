@@ -1,0 +1,47 @@
+# Room 08B long run: hold the boss fight to reach the second phase.
+# Diagnostic module execution: forced primary room and immunity; no completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80004001
+poke 19b8 8b
+poke 19d8 04
+poke 88 0000
+poke 71 06
+until 010b == 8b 500
+until 0100 == 14 500
+dump entry
+poke 19b8 51
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 51
+poke 19d8 01
+until 010b == 51 3000
+dump switched
+until 0100 == 14 2000
+dump inlevel
+wait 300
+dump f0300
+quit

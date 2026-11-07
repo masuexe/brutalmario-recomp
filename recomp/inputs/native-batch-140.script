@@ -1,0 +1,110 @@
+# Room 08B long run: hold the boss fight to reach the second phase.
+# Diagnostic module execution: forced primary room and immunity; no completion writes.
+wait 600
+dump title
+press start 2
+wait 180
+dump files
+press start 2
+wait 900
+dump intro
+press b 30
+wait 180
+press a 30
+wait 180
+poke 1f11 0000
+poke 1f17 b8015801b8015801
+poke 1f1f 1b0015001b001500
+poke 0100 0b
+wait 240
+dump node
+press y 2
+until 0100 == 14 500
+dump active
+forcepoke 1497 ff
+poke 94 80004001
+poke 19b8 8b
+poke 19d8 04
+poke 88 0000
+poke 71 06
+until 010b == 8b 500
+until 0100 == 14 500
+dump entry
+poke 19b8 40
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 40
+poke 19d8 01
+until 010b == 40 2500
+until 0100 == 14 1200
+dump r140
+poke 19b8 41
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 41
+poke 19d8 01
+until 010b == 41 2500
+until 0100 == 14 1200
+dump r141
+poke 19b8 42
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 42
+poke 19d8 01
+until 010b == 42 2500
+until 0100 == 14 1200
+dump r142
+poke 19b8 43
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 43
+poke 19d8 01
+until 010b == 43 2500
+until 0100 == 14 1200
+dump r143
+poke 19b8 44
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 44
+poke 19d8 01
+until 010b == 44 2500
+until 0100 == 14 1200
+dump r144
+poke 19b8 45
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 45
+poke 19d8 01
+until 010b == 45 2500
+until 0100 == 14 1200
+dump r145
+poke 19b8 46
+poke 19d8 01
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 46
+poke 19d8 01
+until 010b == 46 2500
+until 0100 == 14 1200
+dump r146
+quit

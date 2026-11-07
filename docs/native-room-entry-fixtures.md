@@ -30,6 +30,42 @@ For a room below `0x100`, use `19d8 04`. For a room at `0x100` or above, use
 Room `080` stayed in mode `12` with the earlier order. It reaches mode `14`
 with this order.
 
+## Wait for the room, do not wait a fixed time
+
+A fixed wait is not reliable. Room loads take between 100 and 2000 frames.
+Use two `until` steps instead.
+
+```
+poke 19b8 <room low>
+poke 19d8 <subroom>
+poke 94 80004001
+poke 88 0000
+poke 71 06
+wait 60
+poke 19b8 <room low>
+poke 19d8 <subroom>
+until 010b == <room low> 2500
+until 0100 == 14 1200
+dump r<room>
+```
+
+## One capture holds six or seven rooms
+
+After about seven forced room changes, the next `until 010b` times out. The
+game stops accepting the forced change.
+
+| Batch | Rooms | Result |
+| --- | --- | --- |
+| `100` | `100` to `105` | 6 of 6 load |
+| `106` | `106` to `10B` | `106` loads, then the limit stops the run |
+| `140` | `140` to `145` | 6 of 6 load |
+| `148` | `148` to `14E` | 7 of 7 load |
+| `150` | `150` | `151` times out in sequence, but loads alone |
+| `158` | `158`, `159` | `15A` times out in sequence, but loads alone |
+
+Rooms `151`, `15A` and `107` load correctly in a single-room probe. A timeout
+in a batch is a limit of the fixture, not a defect in the room.
+
 ## Room `080` baseline for slot `07`
 
 `recomp/inputs/native-room080-r28.script`, capture `r28-room080-base`.
