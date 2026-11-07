@@ -38,5 +38,8 @@
     "runtime qualification of rooms 080 and 173"
   ],
   "unapplied_rom_patches": [],
-  "base_output": null
+  "base_output": {
+    "size": 4194304,
+    "sha256": "2f9db4ec2642f1b32d47e4aed4ffa78f635aedafa50b78504d4d4ceba64c57b2"
+  }
 }

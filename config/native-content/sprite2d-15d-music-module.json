@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "id": "sprite2d-15d-music-module",
+  "scope": "Port the cheap-demo slot 2D program for room 15D with the music ids remapped to the recipient slots. Legacy 0x24 becomes 0x4F, the X vs. Zero track that is already installed. Legacy 0x22 becomes 0xA1.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-product-r30",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "00ac274dec29eb90076659da35d931fff6ad89e1e0b6f10e437cc9f32431f299"
+  },
+  "review_status": "static-review",
+  "record": {
+    "slot": "2D",
+    "raw": "01360080380311441cb31d3ab31d0000",
+    "init": "1DB31C",
+    "main": "1DB33A",
+    "relative": {
+      "init": "0F",
+      "main": "2D"
+    },
+    "rooms": [
+      "15D"
+    ],
+    "native_raw": "01360080380311441cb3993ab3990000"
+  },
+  "code": {
+    "source_address": "1DB30D",
+    "native_address": "99B30D",
+    "size": 2732,
+    "sha256": "0e8d35afda900dfdb0aa5908d75197fef895344e13dc3e2daf37c73a3545b44f",
+    "adapted_sha256": "af60e6c7c5a6b35d8030e058da5b46abfaa2078fcc395a0f9eff7b169fca7d4c",
+    "pack_file": "sprite2d-code.bin"
+  },
+  "entry_seeds": [
+    "1DB31C",
+    "1DB33A"
+  ],
+  "dispatch_tables": [],
+  "code_patches": [
+    {
+      "address": "1DB648",
+      "before": "24",
+      "after": "4f",
+      "note": "music 0x24 -> 0x4F (X vs. Zero)"
+    },
+    {
+      "address": "1DB917",
+      "before": "22",
+      "after": "a1",
+      "note": "music 0x22 -> 0xA1"
+    }
+  ],
+  "external_calls": [
+    "01801A",
+    "018022",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01ACF9",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "28FCC0"
+  ],
+  "graphics": [],
+  "shared_dependencies": [],
+  "open_dependencies": [
+    "runtime mapping of the 99 code view",
+    "sprite graphics review",
+    "entry qualification against the donor"
+  ],
+  "unapplied_rom_patches": [
+    {
+      "offset": 1606978,
+      "before": "0000ffffffffffff218001218001ffff",
+      "after": "01360080380311441cb3993ab3990000",
+      "role": "Install slot 2D in native bank99 with source-compatible low WRAM/IO mirrors"
+    }
+  ]
+}
