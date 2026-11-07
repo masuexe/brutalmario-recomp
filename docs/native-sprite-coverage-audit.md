@@ -47,6 +47,20 @@ They need no port.
 | `0x2E` | `21:9D15`, block 9768 bytes | none |
 | `0x49` | `1E:8E22`, block 1322 bytes | none |
 
+## Cumulative target verification
+
+Product r29 carries every earlier fix. A direct byte check confirms it.
+
+| Fix | Check | Result |
+| --- | --- | --- |
+| r22 | graphics recipes for `167` and `175` | present |
+| r25 | `sprite34-code.bin`, SHA `8e3ee73d44ee6a0b231d` | present |
+| r26 and r27 | hook at `00:8DE1` is `220d7d40` | correct |
+| r27 | shim at `40:7D0D` starts `2208a03e08c22048` | correct |
+| r28 | music slots `0x19` and `0x1E` are `14f3ea` | correct |
+| r29 | record at `0x1882E2` is `…e094841295840000` | correct |
+| r29 | `sprite07-code.bin`, SHA `2dc6a898ea4fe3ae291b` | present |
+
 ## Conclusion
 
 After product r29, no room uses a custom sprite slot that has no program.
