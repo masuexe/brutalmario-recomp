@@ -54,6 +54,47 @@ upload tail at `40:A52C`. No match chains to the old gate at `40:A510`.
 
 Room `08B` matches the `cheap-demo` reference row byte for byte.
 
+## Product r30: the flag replaces the room list
+
+The original routine tests the boss request flag `$7FFFDF` already, at
+`40:A537`. A fixed room list sits in front of that test.
+
+Product r30 replaces the list with a direct jump to `40:A52C`. That path
+tests `$0100 == 14` and `$7FFFDF`, so every boss room draws the row.
+
+| Room | Label | Bar | Frames |
+| --- | --- | --- | --- |
+| `0BB` | `BOSS` | 8 cells | `f0300` to `f2400` |
+| `03B` | `KRACKO` | 4 cells | `f0600` to `f3000` |
+| `14E` | `REACTOR` | 4 cells, counts down | `f0600` to `f3000` |
+| `08A` | `ULTIMA` | 6 cells | `f420` to `f12720` |
+| `08B` | `BOSS` | 4 cells | `f060` to `f12720` |
+| `091` | `XAN BIE` | 6 cells | `f060` to `f12720` |
+
+### The flag is the correct signal
+
+| Frame | Room | `$7FFFDF` | Buffer |
+| --- | --- | --- | --- |
+| boss | `0BB` | `01` | `BOSS` and the bar |
+| after the change | `000` | `00` | all zero |
+
+The engine clears the flag and the buffer when the room changes. A room
+without a boss cannot show a stale row.
+
+### Shim
+
+```
+7D0D  JSL $3EA008
+7D11  PHP / REP #$20 / PHA
+7D15  LDA $010B
+7D18  CMP #$008A
+7D1B  BNE $7D2C
+7D1D  LDA #$00FC / STA $7FFFED / STA $7FFFEE / STA $7FFFEF
+7D2C  JML $40A52C
+```
+
+The shim keeps the room `08A` tail fix. The draw decision comes from the flag.
+
 ## Product r28 regression
 
 | Room | Result |
