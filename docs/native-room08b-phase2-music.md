@@ -65,6 +65,26 @@ The `cheap-demo` table at `0F:E000` does not resolve these two slots either.
 engine. The new family replaced that engine, and the new table has no entry
 for the low ids. `docs/demo11-low-id-music.md` records the same limit.
 
+## Audit of every requested id
+
+Every installed sprite pack that writes `$1DFB` was scanned. Ten ids are
+requested. Before r28, two of them pointed at null slots.
+
+| Id | r27 | r28 | Packs that request it |
+| --- | --- | --- | --- |
+| `0x05` | ok | ok | sprite38, sprite3b, sprite3c |
+| `0x0B` | ok | ok | sprite0f, sprite1c |
+| `0x19` | **null** | ok | sprite32, sprite5d |
+| `0x1E` | **null** | ok | sprite0f, sprite10, sprite11 |
+| `0x21` | ok | ok | sprite14, sprite25 |
+| `0x22` | ok | ok | sprite2d |
+| `0x23` | ok | ok | sprite11, sprite12, sprite25 |
+| `0x24` | ok | ok | sprite14, sprite25 |
+| `0xA5` | ok | ok | sprite9c |
+| `0xAD` | ok | ok | sprite9c |
+
+No requested id is null in r28.
+
 ## Product r28 fills the two slots
 
 Product r28 points slots `0x19` and `0x1E` at an installed boss-battle track.
