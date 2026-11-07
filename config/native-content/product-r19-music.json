@@ -3,14 +3,29 @@
   "id": "demo11-product-r19-music",
   "pack_file": "music-pack.bin",
   "payload": {
-    "size": 8999,
-    "sha256": "aa44e8ca1426f24a9390c0339a94327f8cdb6fd09fc86ba1d849aebe3e6e8fef"
+    "size": 27431,
+    "sha256": "aa10d68e27340d069ec032b98cf8323c68d6492f7f5df79e347a7fe75e7ab103"
   },
   "regions": [
     {
       "offset": 2293760,
       "size": 6144,
       "block_sha256": "e1c53f0268890430c47e95dbe692a84392dbb637da14bc5ecff164e22abc3083"
+    },
+    {
+      "offset": 2476352,
+      "size": 6144,
+      "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+    },
+    {
+      "offset": 2490368,
+      "size": 6144,
+      "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+    },
+    {
+      "offset": 2530904,
+      "size": 6144,
+      "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
     },
     {
       "offset": 624165,
