@@ -186,3 +186,61 @@ no conversion is needed. To find it:
 
 A user can also name the room that already plays the theme. The slot of that
 room gives the same answer in one step.
+
+## Music banks, 2026-11-08
+
+Super Mario World loads music in banks. Each bank is one upload chunk. The
+chunk destination is always ARAM `1360`. The bank head at ARAM `1360` is a
+pattern pointer table, not a sequence header table.
+
+Nine banks exist in the image:
+
+| File offset | Length | ARAM header count |
+| --- | ---: | ---: |
+| `00A61B` | 684 | 0 |
+| `01E400` | 6598 | 0 |
+| `032460` | 12031 | 0 |
+| `032CA7` | 9215 | 0 |
+| `0331B4` | 9215 | 0 |
+| `033B28` | 22706 | 0 |
+| `039D83` | 9215 | 0 |
+| `0718B1` | 5661 | 3 |
+| `072ED6` | 16893 | 2 |
+
+The total is about 104 KB. That is the full soundtrack.
+
+The credits bank at `072ED6` holds a 31-entry pattern table at ARAM `1360`.
+The other bank at `01E400` holds 30 entries. The overworld bank at `0718B1`
+holds 13.
+
+## The pointer setup pattern
+
+The code sets the 24-bit source pointer in `\$00`, `\$01` and `\$02` before
+it calls `00:8079`. Search for this byte pattern:
+
+    a9 lo 8d 00 00  a9 hi 8d 01 00  a9 bank 8d 02 00
+
+Five sites use it:
+
+| Code site | Pointer | File offset | Purpose |
+| --- | --- | --- | --- |
+| `00:80E8` | `0E8000` | `070000` | engine image |
+| `00:80FD` | `0F8000` | `078000` | sample directory |
+| `00:810E` | `0E98B1` | `0718B1` | overworld music bank |
+| `00:8148` | `0EAED6` | `072ED6` | credits music bank |
+| `00:8159` | `03E400` | `01E400` | another music bank |
+
+## What a bank holds
+
+A bank head holds pattern pointers. A pattern starts with eight channel
+pointers. This matches the engine structure, not a song list.
+
+A scan for the pair `FF 00` with a self pointer finds only five headers in
+all nine banks. A Super Mario World image holds about thirty songs. Therefore
+the song sequences are not stored in this shape.
+
+## Remaining unknown
+
+The relation between a music id, a bank and a sequence address is not known.
+The next worker must read the driver code at ARAM `0500` and find the routine
+that handles the song request port. That routine holds the mapping.
