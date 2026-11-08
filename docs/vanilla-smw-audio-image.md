@@ -52,18 +52,40 @@ bytes. The music regions are `1360` to about `1DBF` and `5570` to about
 
 ## Sequence header format
 
-The vanilla header has ten bytes:
+The vanilla header has eight bytes, the same size as the product header:
 
 | Offset | Content |
 | --- | --- |
 | +0 | pattern pointer 0 |
 | +2 | pattern pointer 1 |
-| +4 | pattern pointer 2 |
-| +6 | `FF` and `00` |
-| +8 | self pointer, equal to the header address plus two |
+| +4 | `FF` and `00` |
+| +6 | self pointer, equal to the header address |
 
-A scan of the dumped image with that layout finds only two headers,
-`13DC` and `1440`. Most vanilla songs do not use this layout.
+The product header differs in one value. Its self pointer is the header
+address plus two, for example `5402` against a base of `5400`.
+
+The song table holds entries two bytes before the header. Entry `13DC` of the
+first table addresses a header at `13DE`. Add two to each table entry to
+reach the header.
+
+The first table starts at `12DB` and holds these entries:
+
+| Index | Entry | Header |
+| ---: | --- | --- |
+| 0 | `11BD` | `11BF` |
+| 1 | `12CB` | `12CD` |
+| 2 | `13E9` | `13EB` |
+| 3 | `1518` | `151A` |
+| 4 | `1659` | `165B` |
+| 5 | `17AD` | `17AF` |
+| 6 | `1916` | `1918` |
+| 7 | `1A94` | `1A96` |
+| 8 | `1C28` | `1C2A` |
+| 9 | `1DD5` | `1DD7` |
+| 10 | `1F9B` | `1F9D` |
+
+The table ends at `12F1` with the value `E800`. That value is code, not an
+address. The index is not yet confirmed as the music id.
 
 ## Open question
 
