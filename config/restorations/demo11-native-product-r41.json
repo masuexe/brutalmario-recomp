@@ -376,10 +376,178 @@
       "role": "Sample group table ($0F:CF06): set sample_group=02 so SRCN $20..$25 load on direct entry."
     },
     {
+      "address": "07CF19",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF19): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
       "address": "07CF1A",
       "before": "00",
       "after": "02",
       "role": "Sample group table ($0F:CF1A): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF1E",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF1E): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF2C",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF2C): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF2E",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF2E): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF2F",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF2F): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF35",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF35): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF36",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF36): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3A",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3A): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3B",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3B): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3C",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3C): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3D",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3D): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3E",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3E): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF3F",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF3F): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF42",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF42): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF43",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF43): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF45",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF45): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF46",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF46): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF47",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF47): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF4C",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF4C): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF4F",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF4F): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF53",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF53): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF54",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF54): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF55",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF55): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF56",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF56): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF57",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF57): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF5B",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF5B): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF5D",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF5D): set sample_group=02 so SRCN $20..$25 load on direct entry."
+    },
+    {
+      "address": "07CF6D",
+      "before": "00",
+      "after": "02",
+      "role": "Sample group table ($0F:CF6D): set sample_group=02 so SRCN $20..$25 load on direct entry."
     }
   ]
 }

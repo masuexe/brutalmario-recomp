@@ -76,8 +76,19 @@ class TestVanillaSmwMusic(unittest.TestCase):
         self.assertEqual(cfg["id"], "demo11-native-product-r41")
         self.assertEqual(cfg["parent_restoration"], "demo11-native-product-r40")
 
+        slots_sg = [
+            0x02, 0x03, 0x05, 0x06, 0x19, 0x1A, 0x1E, 0x2C, 0x2E, 0x2F, 0x35, 0x36,
+            0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F, 0x42, 0x43, 0x45, 0x46, 0x47, 0x4C,
+            0x4F, 0x53, 0x54, 0x55, 0x56, 0x57, 0x5B, 0x5D, 0x6D,
+        ]
+        patch_addrs = {p["address"] for p in cfg["code_patches"]}
+        for slot in slots_sg:
+            self.assertIn(f"07CF{slot:02X}", patch_addrs)
+
         rom_path = ROOT / "local/restoration/demo11-native-product-r41/rom.sfc"
         pack_path = ROOT / "local/restoration/demo11-native-product-r41/music-pack.bin"
+        r40_rom_path = ROOT / "local/restoration/demo11-native-product-r40/rom.sfc"
+        r40_pack_path = ROOT / "local/restoration/demo11-native-product-r40/music-pack.bin"
         if rom_path.is_file() and pack_path.is_file():
             rom = rom_path.read_bytes()
             pack = pack_path.read_bytes()
@@ -89,10 +100,65 @@ class TestVanillaSmwMusic(unittest.TestCase):
             ptr_4f = rom[table + 0x4F * 3 : table + 0x4F * 3 + 3].hex()
             self.assertEqual(ptr_02, "4dd008")
             self.assertEqual(ptr_4f, "468008")
-            # Sample group 02 for 02, 03, 05, 06, 1A
+            # Sample group 02 for all 33 restored slots
             sg_table = lorom(0x0FCF00)
-            for slot in (0x02, 0x03, 0x05, 0x06, 0x1A, 0x4F, 0x6D):
+            for slot in slots_sg:
                 self.assertEqual(rom[sg_table + slot], 0x02)
+
+            # Walk and verify adapt invariance across all 33 restored song slots
+            pack_map = {}
+            pos = 0
+            for region in cfg["music_region_pack"]["regions"]:
+                sz = region["size"]
+                pack_map[region["offset"]] = pack[pos : pos + sz]
+                pos += sz
+            for slot in slots_sg:
+                p = rom[table + slot * 3 : table + slot * 3 + 3]
+                addr = (p[0] << 16) | (p[1] << 8) | p[2]
+                off = lorom(addr)
+                star_off = off - 8
+                blk = pack_map[star_off][8:] if star_off in pack_map else rom[off:]
+                plen = int.from_bytes(blk[0:2], "little")
+                pdst = int.from_bytes(blk[2:4], "little")
+                self.assertEqual(pdst, 0x5400, f"slot {slot:02X}")
+                payload = blk[4 : 4 + plen]
+                fields, walked = asb._walk(payload, 0x5400)
+                self.assertGreater(walked, 0, f"slot {slot:02X}")
+                for f_off in fields:
+                    ptr = int.from_bytes(payload[f_off : f_off + 2], "little")
+                    self.assertTrue(0x5400 <= ptr < 0x5400 + plen, f"slot {slot:02X} ptr {ptr:04X}")
+                upload = blk[: 4 + plen + 4]
+                self.assertEqual(asb.adapt(upload, 0x5400), upload)
+
+            # Verify exact byte-for-byte derivation from r40 + vanilla SMW ROM
+            if r40_rom_path.is_file() and r40_pack_path.is_file() and SMW_ROM.is_file():
+                smw = SMW_ROM.read_bytes()
+                bank = smw[asb.VANILLA_BANK_OFFSET : asb.VANILLA_BANK_OFFSET + asb.VANILLA_BANK_LENGTH]
+                cand_rom = bytearray(r40_rom_path.read_bytes())
+                cand_pack = bytearray(r40_pack_path.read_bytes())
+                cand_pack[6144:12288] = asb.wrap_star_block(
+                    asb.wrap_upload_block(asb.extract_vanilla_payload(bank, 0x03)), pad_to=6144
+                )
+                cand_pack[12288:18432] = asb.wrap_star_block(
+                    asb.wrap_upload_block(asb.extract_vanilla_payload(bank, 0x05)), pad_to=6144
+                )
+                cand_pack[18432:24576] = asb.wrap_star_block(
+                    asb.wrap_upload_block(asb.extract_vanilla_payload(bank, 0x06)), pad_to=6144
+                )
+                cand_rom[0x26CBE8:0x26D000] = asb.wrap_star_block(
+                    asb.wrap_upload_block(asb.extract_vanilla_payload(bank, 0x1A)),
+                    pad_to=0x26D000 - 0x26CBE8,
+                )
+                cand_rom[0x26D000:0x26E3E8] = asb.wrap_star_block(
+                    asb.wrap_upload_block(asb.extract_vanilla_payload(bank, 0x02)),
+                    pad_to=0x26E3E8 - 0x26D000,
+                )
+                cand_rom[0x07E006:0x07E009] = bytes.fromhex("4dd008")
+                cand_rom[0x28019A] = 0x56
+                for slot in slots_sg:
+                    cand_rom[0x07CF00 + slot] = 0x02
+                self.assertEqual(bytes(cand_rom), rom)
+                self.assertEqual(bytes(cand_pack), pack)
 
 
 if __name__ == "__main__":
