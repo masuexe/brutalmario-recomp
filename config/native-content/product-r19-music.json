@@ -4,7 +4,7 @@
   "pack_file": "music-pack.bin",
   "payload": {
     "size": 27431,
-    "sha256": "014b4998a194b5acbf6a6feccb55678efdc6bd056cd09e339300e32765ed8b7e"
+    "sha256": "b054d450165eb0f4a32f7a15f2f6c65e41389616da8a336b42bf9ec9bb032c47"
   },
   "regions": [
     {
@@ -15,17 +15,17 @@
     {
       "offset": 2476352,
       "size": 6144,
-      "block_sha256": "13ea18e6fd5aeb399927c984ab9d8b16d04593a411384edb115c7670d7d0aa2b"
+      "block_sha256": "7487f90f149c303c22cb499380b63ffe5d675b32166caa72e79ab5ec60a8dfcc"
     },
     {
       "offset": 2490368,
       "size": 6144,
-      "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+      "block_sha256": "5efdafc89d10025f964481f4e0bf909d0fe9b69db62ab907a0de711555bf6596"
     },
     {
       "offset": 2530904,
       "size": 6144,
-      "block_sha256": "999df88d7b7073576416faa154196ec4d5d30109804680a0670cf87d714f6c2c"
+      "block_sha256": "d9128df40747f6fc2bf1d9268486612a912ba9fb15bb02ae7564bdab466a927d"
     },
     {
       "offset": 624165,

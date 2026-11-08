@@ -244,3 +244,33 @@ the song sequences are not stored in this shape.
 The relation between a music id, a bank and a sequence address is not known.
 The next worker must read the driver code at ARAM `0500` and find the routine
 that handles the song request port. That routine holds the mapping.
+
+## Resolution: Bank `072ED6` sequence table and `r41` extraction (2026-11-08)
+
+The level music bank at file offset `0x72ED6` (`4-byte` chunk header `FD 41 60 13`:
+length `16,893`, uploaded to `ARAM $1360` from `0x72EDA`) begins with a 1-based
+song sequence pointer table at `word[$1360 + (song_id - 1) * 2]`.
+
+The `demo-1-1` SPC700 driver (AddmusicM at `ARAM $0400`) uses the identical
+N-SPC command dispatch table (`$DA`–`$F2` at `ARAM $0400` / parameter lengths at
+`$043E` and `$0F58`), standard instrument table (`< $80` at `ARAM $2046`), and
+arbitrary-length sequence pointer lists terminated by `00FF <loop_addr>`.
+
+Packing each song at `ARAM $5400` as `[sequence pointer list] + [deduplicated
+16-byte pattern tables] + [merged track & $E9 subroutine ranges]` via
+`tools/adapt_song_base.py` (`extract_vanilla_payload`) yields the five missing
+vanilla tracks:
+
+| Song ID | Theme | Source sequence (`$1360` bank) | Packed `$5400` size | Payload SHA-256 prefix | Reference render RMS |
+| --- | --- | --- | ---: | --- | ---: |
+| `02` | Overworld | `$18AA` | 2,321 B | `aa684a98384e042f` | 910.7 |
+| `03` | Water | `$16C6` | 1,063 B | `98b9793f39f2c39e` | 753.1 |
+| `05` | Boss | `$13B0` | 1,150 B | `fa5cd901f808fbda` | 819.1 |
+| `06` | Underground / Cave | `$1772` | 447 B | `dfd89b4b9f71f99d` | 797.1 |
+| `1A` | Bowser Phase 3 | `$1B64` | 924 B | `68bab6e815feb52e` | 1531.5 |
+
+Product target `demo11-native-product-r41` installs all five tracks, unaliases
+Slot `02` (`$0F:E006` -> `4DD008` at file offset `0x26D000`) from Slot `4F`
+(`468008`), and sets `sample_group = 02` in `$0F:CF00` (`0x07CF00`) for all 33
+restored song slots so `SRCN $20..$25` load on direct room entry.
+

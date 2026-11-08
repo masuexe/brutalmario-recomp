@@ -93,5 +93,19 @@ wrong song plays, and the player hears the wrong music.
 
 ## Where the correct data is
 
-The vanilla Super Mario World image holds the built-in songs, but in a
-different format. See [the vanilla audio note](vanilla-smw-audio-image.md).
+The vanilla Super Mario World image holds the built-in songs at file offset
+`0x72EDA` (uploaded to `ARAM $1360`). See [the vanilla audio note](vanilla-smw-audio-image.md).
+
+## Vanilla low-id restoration in `demo11-native-product-r41` (2026-11-08)
+
+Target `demo11-native-product-r41` extracts the five vanilla SMW tracks (`02`,
+`03`, `05`, `06`, `1A`) from `0x72EDA`, relocates their sequence, pattern, track
+and `$E9` subroutine pointers to `ARAM $5400`, unaliases Slot `02` (`4DD008` at
+`0x26D000`) from Slot `4F` (`468008`), replaces Slots `03`, `05` and `06` in
+`music-pack.bin` and Slot `1A` at `4DCBF0` (`0x26CBE8`), and sets
+`sample_group = 02` in `$0F:CF00` (`0x07CF00`) across all 33 restored song
+slots. Native captures with `M1_AUDIO_WAV` verify gameplay (`mode = 14`), exact
+`ARAM $5400` payload uploads, `sample_group = 02` (`$7E:C112 = 02`), and
+distinct non-silent PCM output across rooms `02E`, `122`, `081`, `062`, `173`
+and `0A2`.
+

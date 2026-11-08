@@ -1770,3 +1770,35 @@ candidate and 38 on the parent. A frame difference of 1,575 pixels remains a
 technical observation, not a defect: the platform actors stand at different
 object coordinates, which matches the known `99` start-position offset. The
 design and the next work are in `docs/native-sprite-content-packs.md`.
+
+## Vanilla SMW music restoration (`demo11-native-product-r41`, 2026-11-08)
+
+The [vanilla SMW audio image checkpoint](vanilla-smw-audio-image.md) and
+[low-ID music note](demo11-low-id-music.md) document the restoration of the five
+vanilla Super Mario World music tracks into `demo11-native-product-r41`:
+
+- Slot `02` (Overworld, vanilla `$18AA`, `2,321` B payload at `ARAM $5400`) is
+  unaliased from Slot `4F` (`468008`) to `4DD008` (`0x26D000`).
+- Slot `03` (Water, vanilla `$16C6`, `1,063` B payload at `ARAM $5400`) replaces
+  the `r40` *Undersea Palace* substitute at `music-pack.bin` offset `2476352`.
+- Slot `05` (Boss, vanilla `$13B0`, `1,150` B payload at `ARAM $5400`) and Slot
+  `06` (Underground/Cave, vanilla `$1772`, `447` B payload at `ARAM $5400`)
+  replace the placeholder blocks at `music-pack.bin` offsets `2490368` and
+  `2530904`.
+- Slot `1A` (Bowser Phase 3, vanilla `$1B64`, `924` B payload at `ARAM $5400`)
+  replaces the `4DCBF0` (`0x26CBE8`) STAR block.
+- `$0F:CF00` (`0x07CF00`) Sample Group entries for the 33 restored song slots
+  (`02`, `03`, `05`, `06`, `19`, `1A`, `1E`, `2C`, `2E`, `2F`, `35`, `36`, `3A`–`3F`,
+  `42`, `43`, `45`–`47`, `4C`, `4F`, `53`–`57`, `5B`, `5D`, `6D`) are set to `0x02`
+  so `SRCN $20..$25` stay populated on direct room entry.
+- `tools/adapt_song_base.py` uses the exact AddmusicM command parameter table at
+  `ARAM $043E`/`$0F58` (`0xDF: 0`, `0xF0: 0`), fixing a missed `$E9` relocation
+  at `0x28019A` in Slot `6D`.
+
+ROM SHA-256 is `220c00cbafab815a9ec194d250c6ba330dd580032c806caa46c06a21144d36d6`
+(CRC32 `1a575a2b`); `music-pack.bin` SHA-256 is
+`b054d450165eb0f4a32f7a15f2f6c65e41389616da8a336b42bf9ec9bb032c47`. Native
+captures with `M1_AUDIO_WAV` on rooms `02E`, `122`, `081`, `062`, `173`, and
+`0A2` confirm `mode == 0x14`, `$7E:C112 == 0x02`, exact `ARAM $5400` payload
+upload, and non-silent PCM output (`tests/test_vanilla_smw_music.py`).
+

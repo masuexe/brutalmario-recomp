@@ -53,76 +53,25 @@ correct.
 
 ## Command table
 
-The walk needs the parameter byte count of each command at or above `da`.
-These counts are in use:
+The walk needs the exact N-SPC parameter byte count of each command at or above
+`da` (verified against `ARAM $043E` / `$0F58` in the `demo-1-1` SPC700 driver):
 
-| Command | Bytes | Notes |
-| --- | ---: | --- |
-| `da` | 1 | |
-| `db` | 1 | |
-| `dc` | 1 | The parameter holds a volume value, for example `20` or `40`. |
-| `dd` | 1 | Not seen in the tested songs. |
-| `de` | 1 | |
-| `df` | 1 | |
-| `e0` | 1 | |
-| `e2` | 1 | |
-| `e7` | 1 | |
-| `e8` | 2 | The room `0F5` song fails without this entry. |
-| `e9` | 3 | The first two bytes are an ARAM pointer. |
-| `ef` | 3 | |
-| `f0` | 0 | |
-| `f1` | 3 | |
-| `f2` | 3 | |
+| Parameter bytes | Commands | Notes |
+| ---: | --- | --- |
+| 0 | `df`, `f0` | `df` is 0 bytes (`slot 6D` has `df e9 d7 6a 01`, which requires `df` = 0 to relocate the `e9` target). |
+| 1 | `da`, `db`, `e0`, `e2`, `e4`, `e6`, `e7`, `ea`, `ee` | Instrument, pan, tempo, volume, transpose, vibrato off, etc. |
+| 2 | `dc`, `e1`, `e3`, `e8`, `ed` | Fade/sweep and 2-byte parameter commands. |
+| 3 | `dd`, `de`, `e5`, `e9`, `eb`, `ec`, `ef`, `f1`, `f2` | `e9` holds a 2-byte ARAM subroutine pointer followed by a 1-byte repeat count. |
 
-Commands below `80` are a duration. Commands `80` to `d9` are a note value.
+Commands below `80` are a duration (with an optional second byte `< 80` for
+quantization/velocity). Commands `80` to `d9` are a note, tie, rest or
+percussion value.
 
-## Limits
+## Defect to review (resolved in r41)
 
-- The walk raises an error for a command that is not in the table. Add the
-  command only after you confirm its parameter count.
-- The relocation keeps the song data. The reference render of a relocated
-  payload is not compared with a legacy-engine render. The legacy engine is
-  not in the reference set.
-## Affected slots, revision r35
-
-Revision r35 relocated these slots from base `6800` to base `5400`:
-
-| Slot | Rooms that request it |
-| --- | --- |
-| `1A` | `173` |
-| `36` | `01A`, `0C3`, `0C6`, `118`, `13E` |
-| `3B` | `065` |
-| `3C` | `041`, `060`, `063`, `064`, `103`, `11C` |
-| `3E` | `0EA` to `0ED`, `108` |
-| `3F` | `01B`, `0BD` |
-| `42` | `027` to `030`, `075`, `088`, `124`, `12A` |
-| `43` | `0A9`, `110`, `131`, `132` |
-| `46` | `02D`, `07C`, `086`, `087`, `0B7` |
-| `47` | `015`, `021`, `03E`, `044`, `057` to `05C`, `0F8` |
-| `5B` | none |
-| `6D` | `182` |
-| `03`, `05`, `06` | `122`, `081`, `062` |
-
-The last three are region pack blocks. They came from the r19 music batch and
-were never in the reference image, which leaves those slots empty.
-
-## Verification
-
-The reference host rendered bare payloads through `tools/render_song_payload.py`.
-That tool always targets base `5400`.
-
-| Slot | Base before | Silent before | Base after | Silent after |
-| --- | --- | ---: | --- | ---: |
-| `03` | `6800` | 0.989 | `5400` | 0.043 |
-| `47` | `6800` | 0.989 | `5400` | 0.215 |
-| `36` | `6800` | 0.989 | `5400` | 0.091 |
-| `5B` | `6800` | 0.989 | `5400` | 0.645 |
-| `6D` | `6800` | 0.989 | `5400` | 0.043 |
-| `42` | `6800` | 0.989 | `5400` | 0.086 |
-| `4F` | `5400` | 0.043 | `5400` | 0.043 |
-
-## Defect to review
-
-Slots `03`, `05` and `06` hold the same block. Rooms `122`, `081` and `062`
-therefore play the same song. This condition comes from the r19 music batch.
-The user did not confirm it.
+In r36–r39, Slots `03`, `05` and `06` held the same placeholder block, and Slot
+`02` shared `468008` with Slot `4F`. Revision `demo11-native-product-r41`
+replaces Slots `02`, `03`, `05`, `06` and `1A` with the relocated vanilla Super
+Mario World tracks at `ARAM $5400`, unaliases Slot `02` to `4DD008` (`0x26D000`),
+relocates the missed `$E9` pointer in Slot `6D` at `0x28019A`, and sets
+`sample_group = 02` in `$0F:CF00` (`0x07CF00`) for all 33 restored slots.
