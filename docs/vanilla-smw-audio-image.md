@@ -157,3 +157,32 @@ a self pointer equal to the destination.
    the song request port. The table it reads is the song table.
 3. Or take a recording of the vanilla water theme and compare it with product
    slot renders. A match gives the slot without any format conversion.
+
+## Attempt: reach a level with the reference host
+
+Two fixtures exist:
+
+- `recomp/inputs/vanilla-attract.script` waits 600 frames, then dumps every
+  300 frames to frame 9000.
+- `recomp/inputs/vanilla-entry.script` presses Start twice, presses A, walks
+  right, and presses A again.
+
+| Fixture | Result |
+| --- | --- |
+| attract | mode `07`, song `02` for all 9000 frames. No demo starts. |
+| entry | the overworld loads, mode `14`, song `13`. The next A press leaves the game at mode `0E` for 2700 frames. |
+
+Mode `0E` does not become `14`. The level does not load in a headless run
+without a save file.
+
+## A cheaper way to the answer
+
+The product holds 116 song slots. If the water theme is already among them,
+no conversion is needed. To find it:
+
+1. Render a product slot with `tools/render_slot.py`.
+2. Compare the render with a reference recording of the water theme.
+3. Copy the matching slot block to slot `03`.
+
+A user can also name the room that already plays the theme. The slot of that
+room gives the same answer in one step.

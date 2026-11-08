@@ -1,0 +1,22 @@
+# Vanilla Super Mario World level entry probe 2.
+wait 600
+press start 2
+wait 300
+press start 2
+wait 300
+press a 2
+wait 900
+dump ovw0
+press right 200
+wait 300
+dump ovw1
+press a 2
+wait 900
+dump lvlA
+wait 900
+dump lvlB
+wait 900
+dump lvlC
+wait 900
+dump lvlD
+quit
