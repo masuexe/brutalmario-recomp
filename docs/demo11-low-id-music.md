@@ -62,3 +62,36 @@ music is the engine's built-in track. Music batch N installs the handshake
 payloads and all 39 remaining chain stalls reach gameplay.
 
 See [the batch N note](demo11-course-batch-n.md).
+
+## Correction, 2026-11-08
+
+The resolution above is out of date for the current product engine.
+
+The native product build writes a WAV file when `M1_AUDIO_WAV` is set. A probe
+replaced the region block at slot `03` with the block of slot `42` and
+captured room `122`. The audio changed:
+
+| Build | PCM SHA-256 | RMS |
+| --- | --- | ---: |
+| r39, original block | `916a97971bd4a72c` | 2756.2 |
+| probe, slot 42 block | `8890502975c37d6b` | 2687.5 |
+
+The two captures differ, so the engine does play the payload for a low id. The
+old note said the engine ignores the payload content. That was true for the
+engine generation that the note tested. It is not true now.
+
+The consequence is important. A low id needs the correct song data. A real but
+wrong song plays, and the player hears the wrong music.
+
+## Rules for a low id
+
+1. Keep the table entry non-null. A null entry stalls the level load at mode
+   `12`. Compare room `122` at r36, mode `14`, against r38, mode `12`.
+2. Put the correct song data in the slot.
+3. Capture room audio with `M1_AUDIO_WAV` and compare two builds with
+   `tools/compare_audio.py`. A music-selection byte is not an audible match.
+
+## Where the correct data is
+
+The vanilla Super Mario World image holds the built-in songs, but in a
+different format. See [the vanilla audio note](vanilla-smw-audio-image.md).
