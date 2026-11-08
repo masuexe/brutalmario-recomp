@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "id": "sprite0a-module",
+  "scope": "Restore the cheap-demo custom sprite 0A program for room 081. In demo-1-1, slot 0A was overwritten by an unreachable room 011 test sprite ($13:83BE / $13:83C2), leaving the room 081 end-of-room custom sprite inert.",
+  "donor_manifest": "config/cheap-demo-donor.json",
+  "base_restoration": "demo11-native-product-r41",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "220c00cbafab815a9ec194d250c6ba330dd580032c806caa46c06a21144d36d6"
+  },
+  "review_status": "static-review",
+  "code": {
+    "source_address": "13FBC5",
+    "native_address": "86FBC5",
+    "size": 885,
+    "sha256": "cf5559f3eaedcf809aeb0fbbeddbabc50b04f334b5b8d40a1c434d507c90abcf",
+    "adapted_sha256": "cf5559f3eaedcf809aeb0fbbeddbabc50b04f334b5b8d40a1c434d507c90abcf",
+    "pack_file": "sprite0a-code.bin"
+  },
+  "record": {
+    "slot": "0A",
+    "raw": "013601062f01196c20fc1340fc130000",
+    "init": "13FC20",
+    "main": "13FC40",
+    "relative": {
+      "init": "5B",
+      "main": "7B"
+    },
+    "rooms": [
+      "081"
+    ],
+    "native_raw": "013601062f01196c20fc8640fc860000"
+  },
+  "code_patches": [],
+  "external_calls": [
+    "01802A",
+    "018032",
+    "01A7DC",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2"
+  ],
+  "shared_dependencies": [],
+  "dispatch_tables": [],
+  "entry_seeds": [
+    "13FC20",
+    "13FC40"
+  ],
+  "graphics": null,
+  "open_dependencies": [],
+  "unapplied_rom_patches": []
+}

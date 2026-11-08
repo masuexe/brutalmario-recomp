@@ -1802,3 +1802,35 @@ captures with `M1_AUDIO_WAV` on rooms `02E`, `122`, `081`, `062`, `173`, and
 `0A2` confirm `mode == 0x14`, `$7E:C112 == 0x02`, exact `ARAM $5400` payload
 upload, and non-silent PCM output (`tests/test_vanilla_smw_music.py`).
 
+## Room 0x081 custom sprite 0x0A restoration (`demo11-native-product-r42`, 2026-11-08)
+
+Room `0x081` (Yoshi's Island 2 underground subroom, reached via screen exits from
+rooms `0x03C` and `0x06C`) places custom sprite `0x0A` (`extra=2`, raw bytes
+`49 91 0a`) at the end of the room (`X=0x0190, Y=0x0140`).
+
+- In `cheap-demo`, custom sprite slot `0x0A` holds record
+  `013601062f01196c20fc1340fc130000` (`INIT = $13:FC20`, `MAIN = $13:FC40`,
+  885-byte RATS block at `$13:FBC5..$13:FF39`).
+- In `demo-1-1`, custom sprite slot `0x0A` at `$31:8312` (`0x188312`) was
+  overwritten by an unreachable test room `0x011` (`ザ・ワールド 時よ止まれ`)
+  program (`012800003f9bb9c4be8313c283130000`, `INIT = $13:83BE`,
+  `MAIN = $13:83C2`). Earlier sprite-coverage passes only checked for slots
+  holding the default stub (`0000ffffffffffff218001218001ffff`) and skipped
+  slot `0x0A`, leaving room `0x081`'s end-of-room custom sprite inert in `r41`
+  (`num=0x28`, zero velocity, drawing four uninitialized `$7F:FFC0` tiles).
+- `config/native-content/sprite0a-module.json` maps the `cheap-demo` 885-byte
+  RATS block (`$13:FBC5..$13:FF39`, SHA-256
+  `cf5559f3eaedcf809aeb0fbbeddbabc50b04f334b5b8d40a1c434d507c90abcf`) to low-mirror
+  native bank `$86:FBC5` (`sprite0a-code.bin`, `INIT = $86:FC20`,
+  `MAIN = $86:FC40`) with zero internal code edits, and
+  `config/restorations/demo11-native-product-r42.json` patches `0x188312` to
+  `013601062f01196c20fc8640fc860000`.
+- `demo11-native-product-r42` ROM SHA-256 is
+  `9f5403a46186d6f7415b98deb7a65646358c05837d77bb6c4d1836032329daa7`.
+  Runtime captures (`local/captures/r42-room081-sprite0a-v2` vs
+  `local/captures/cheap-demo-room081-sprite0a`) and `tests/test_room081_sprite0a.py`
+  confirm that custom sprite `0x0A` initializes with `num=0x36` and
+  `($1570 + $1558) & 0xFF == 0xD0`, moves horizontally (`$B6` alternating `0x08` /
+  `0xF8`), jumps (`Y < 0x0140`), and spawns child projectile sprite `0xB3`.
+
+
