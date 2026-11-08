@@ -117,3 +117,43 @@ The native build writes a WAV file when `M1_AUDIO_WAV` is set. Use it to
 compare two builds with `tools/compare_audio.py`. This is evidence that the
 payload content reaches the engine. A payload swap at slot `03` changed the
 room `122` audio, so the engine does play the payload for low ids.
+
+## Verified by direct comparison
+
+The ROM chunk at `0x718B1` and the ARAM region at `1360` are identical. The
+chunk header is four bytes. Compare from `0x718B5`, not from `0x718B1`. The
+same rule holds for the chunk at `0x70E42`.
+
+That check shows the reference host trace is correct.
+
+## Only the boot image is in the dump
+
+The dump came from the title screen at frame 900. It holds eight `FF 00`
+pairs in the region `1360` to `2980` and none in `5570` to `5FE0`. A Super
+Mario World image holds about thirty songs. Eight markers are too few.
+
+Therefore the two chunks are the boot image only. Each level uploads its own
+song later through `00:80F7`. The per-level song table is not found yet.
+
+## Searches that failed
+
+| Search | Result |
+| --- | --- |
+| Three-byte LoROM pointer table in the ROM | none with 12 of 20 valid blocks |
+| Two-byte table pointing at valid blocks in bank `0E` | none with a strict block test |
+| Strict upload blocks in bank `0E` | zero |
+| Pointer table inside the driver `0500` to `0E42` | no clean run |
+
+A valid block test needs all of these: a length from `32` to `6000`, an ARAM
+destination from `0100` to `7C00`, the pair `FF 00` at header offset `+4`, and
+a self pointer equal to the destination.
+
+## What to do next
+
+1. Dump the APU RAM while a water level runs. Compare that dump with the boot
+   dump. The extra bytes are the level song, and its upload destination shows
+   the ARAM base.
+2. Or read the driver code at ARAM `0500` and find the routine that handles
+   the song request port. The table it reads is the song table.
+3. Or take a recording of the vanilla water theme and compare it with product
+   slot renders. A match gives the slot without any format conversion.
