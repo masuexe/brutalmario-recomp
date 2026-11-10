@@ -174,6 +174,59 @@ class TestSprite6A8CBossUpgrade(unittest.TestCase):
             log_081 = (cap_081 / "run.log").read_text()
             self.assertIn("bank=86 resolutions=216495 executed_page_instructions=33952", log_081)
 
+    def test_default_launchers_point_to_product_r43(self):
+        import subprocess
+        import launch_native
+
+        self.assertIn(
+            'default="demo11-native-product-r43"',
+            (ROOT / "tools/launch_native.py").read_text(),
+        )
+        self.assertIn(
+            "default='demo11-native-product-r43'",
+            (ROOT / "tools/play_native_target.py").read_text(),
+        )
+        self.assertIn(
+            "default='demo11-native-product-r43'",
+            (ROOT / "tools/play_native_cheats.py").read_text(),
+        )
+
+        r43_bin = (
+            ROOT
+            / "local/build/demo11-native-product-r43"
+            / "BrutalMarioDemo11ProductR43SNESRecomp"
+        )
+        if R43_ROM.is_file() and r43_bin.is_file():
+            result = subprocess.run(
+                [sys.executable, "tools/play_native_target.py", "--print-env"],
+                cwd=ROOT,
+                capture_output=True,
+                text=True,
+                check=True,
+            )
+            env_map = dict(
+                line.split("=", 1)
+                for line in result.stdout.splitlines()
+                if line.startswith("BM_")
+            )
+            values = set(env_map.values())
+            for expected_file in (
+                "sprite6a-boss-code.bin",
+                "sprite8c-boss-code.bin",
+                "sprite0a-code.bin",
+                "music-pack.bin",
+            ):
+                self.assertTrue(
+                    any(val.endswith("/" + expected_file) for val in values),
+                    f"missing {expected_file} in default launcher env",
+                )
+            launch_env = {
+                k: v
+                for k, v in launch_native.environment("demo11-native-product-r43").items()
+                if k.startswith("BM_")
+            }
+            self.assertEqual(env_map, launch_env)
+
 
 if __name__ == "__main__":
     unittest.main()

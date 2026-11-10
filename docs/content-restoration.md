@@ -1894,5 +1894,14 @@ rooms (`0x000..0x1FF`) was executed across the official demo chronology
      `executed_page_instructions=33952`) confirm that in room `0x16B`, actor 6
      (`cust=0x8C`) now stops at ceiling `Y=0x00C9` in state `C2=0x01` (`AA=0x00`),
      matching `local/captures/type3-room16b-7hero-v1` (`tests/test_sprite6a_8c_boss_upgrade.py`).
+5. **User Playtest Acceptance & Default Product Head Promotion**:
+   - Following initial playtesting without issues, the user approved promoting
+     `demo11-native-product-r43` as the default interactive native product head.
+   - `tools/launch_native.py`, `tools/play_native_target.py`, and
+     `tools/play_native_cheats.py` now default `--target` to
+     `demo11-native-product-r43` (`65` mounted `BM_*` content packs in total).
+     Historical milestone baselines (`demo11-native-product`, `r14` Windows bundle
+     pin in `tools/package_windows_product.py`, `r22`, `r41`, `r42`) remain intact
+     for reproducible regression checks.
 
 

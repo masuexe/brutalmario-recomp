@@ -104,6 +104,7 @@ class ProductTargetTests(unittest.TestCase):
     def test_launcher_lists_every_pack(self):
         import subprocess
         result = subprocess.run([sys.executable, "tools/play_native_target.py",
+                                 "--target", "demo11-native-product",
                                  "--print-env"], cwd=ROOT, capture_output=True,
                                 text=True, check=True)
         variables = [line.split("=")[0] for line in result.stdout.splitlines()
