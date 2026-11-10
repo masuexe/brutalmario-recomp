@@ -1833,4 +1833,66 @@ rooms `0x03C` and `0x06C`) places custom sprite `0x0A` (`extra=2`, raw bytes
   `($1570 + $1558) & 0xFF == 0xD0`, moves horizontally (`$B6` alternating `0x08` /
   `0xF8`), jumps (`Y < 0x0140`), and spawns child projectile sprite `0xB3`.
 
+## Full 256-slot custom sprite chronology audit and slots 6A/8C upgrade (`demo11-native-product-r43`, 2026-11-10)
+
+Following user confirmation of `demo11-native-product-r42`, a 4-dimensional
+automated audit across all 256 custom sprite slots (`0x00..0xFF`) and all 512
+rooms (`0x000..0x1FF`) was executed across the official demo chronology
+(`cheap-demo -> ow -> mazo -> 7hero -> boss -> demo-only-1 -> demo-1-1`):
+
+1. **RATS Block & 65816 Instruction Integrity Audit**: Using `decode_function`
+   seeded with `INIT`, `MAIN`, `JSL $0086DF`, and `JMP ($0000)` tables, all
+   active in-ROM (`$10..$3F`) and native-pack (`$80..$BF`) custom sprite blocks
+   in `r42` were verified to have zero unrelocated self-bank `JSL`/`JML` calls,
+   zero escaped bank-local operands, and zero embedded `STAR` collisions
+   (except `sprite7f-module`, which intentionally appends a 128-byte data block).
+2. **Base-Address Normalized Equivalence (`is_pure_relocation`)**: Slots `0x09`,
+   `0x35`, `0x4E`, and `0x9A` are pure base-address relocations with identical
+   instruction streams. Slots `0x58` and `0x78` in `demo-only-1` differ from
+   `cheap-demo` only by replacing inlined `JSR SubOffScreen` with `JSL $28:FD6D`
+   (saving 115 and 117 bytes of ROM space with identical runtime semantics).
+3. **Dynamic Custom Sprite Spawn (`STA $7FAB9E,x`) & Slot-Reuse Audit**:
+   - In `demo-1-1`, slot `0x43` (`$32:CFB2` / `$32:D015`, 4,155 bytes)
+     intentionally merges `demo-only-1`'s `extra=2` coin-drop controller
+     (`$7FAB10,x & 0x04 == 0`, spawned by room `0x08F` boss slot `0x42` at
+     `$23:CE38`) with room `0x179`'s `extra=3` world conquest rate screen
+     (`$7FAB10,x & 0x04 != 0`).
+   - In `Room 0x0FF`, the Seven Koopalings (`seven-code.bin` at `$A2:84D5`, slot
+     `0x2A`) dynamically spawns custom sprite `0x6A` with state `$C2,x = 0x15`.
+4. **Chronology Precedence Audit (Slots `0x6A` and `0x8C`)**:
+   - Across all 256 slots, `Slot 6A` and `Slot 8C` were the only two remaining
+     slots where `r42` still carried an older `cheap-demo` program instead of a
+     newer official `7hero`/`boss` update:
+     - **`Slot 6A`** (placed in rooms `0x0D8`, `0x0E2`, `0x0E3`, `0x0E4` and
+       dynamically spawned in `Room 0x0FF` by `Slot 2A`): `r42` held `cheap-demo`'s
+       `$20:BEE5` (`3,376` bytes, record `013610003b8b1840f4be203fbf200000`),
+       which lacked state `0x15` handling, lacked the `LDA $010B; CMP #$FF` guard,
+       lacked `$166E` bit `$20` (`0xAB`), and wrote `$7F:FDF0..$7F:FDF2` instead
+       of `$7F:EDF0..$7F:EDF2`. `config/native-content/sprite6a-boss-module.json`
+       maps the `7hero`/`boss` program (`$1E:C20E..$1E:CF46`, `3,385` bytes,
+       SHA-256 `8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb`)
+       to `$87:C20E` (`INIT = $87:C21D`, `MAIN = $87:C265`, record
+       `013610003bab18401dc28765c2870000` at `0x188912`).
+     - **`Slot 8C`** (placed in rooms `0x0B0` and `0x16B`): `r42` held
+       `cheap-demo`'s `$23:9A96` (`358` bytes, record
+       `0136000035031944a79a23c39a230000`), which only checked Map16 tile
+       `0x0005` (`LDA $03; CMP #$05`). In room `0x16B`, actor 6 (`cust=0x8C`)
+       flew straight through the ceiling into out-of-bounds `Y=0xFEE9` (`C2=0x00`).
+       `config/native-content/sprite8c-boss-module.json` maps the `7hero`/`boss`
+       program (`$13:AC37..$13:AE07`, `465` bytes, SHA-256
+       `cbc93d999faadc4fe56309d6739466c5f57f4ed93352ea94db8619f9b8711463`) to
+       `$88:AC37` (`INIT = $88:AC48`, `MAIN = $88:AC62`, record
+       `013600003503194448ac8862ac880000` at `0x188B32`).
+   - `demo11-native-product-r43` ROM SHA-256 is
+     `8400f89dcc552170373548d1f10a6dd147df9e7c7622e1ecf3ceb6f0b8180dbd`.
+     Captures `local/captures/r43-room0d8-sprite6a` (`bank=87`
+     `executed_page_instructions=102017`), `local/captures/r43-room0e3-sprite6a`
+     (`bank=87` `executed_page_instructions=105`),
+     `local/captures/r43-room16b-sprite8c` (`bank=88`
+     `executed_page_instructions=41399`), and
+     `local/captures/r43-room081-sprite0a` (`bank=86`
+     `executed_page_instructions=33952`) confirm that in room `0x16B`, actor 6
+     (`cust=0x8C`) now stops at ceiling `Y=0x00C9` in state `C2=0x01` (`AA=0x00`),
+     matching `local/captures/type3-room16b-7hero-v1` (`tests/test_sprite6a_8c_boss_upgrade.py`).
+
 

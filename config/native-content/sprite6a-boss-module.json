@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "id": "sprite6a-boss-module",
+  "scope": "Upgrade custom sprite slot 6A from the older cheap-demo program ($23:BEE5, relocated to $20:BEE5 in ROM) to the newest official 7hero/boss program ($1E:C20E -> $87:C20E, 3385 bytes). The 7hero/boss update sets property byte $166E bit $20 (0xAB), adds state $15 handling and the room 0FF guard for dynamic spawns from the Seven Koopalings (slot 2A), and moves internal communication WRAM from $7F:FDF0..$7F:FDF2 to $7F:EDF0..$7F:EDF2 while preserving rooms 0D8, 0E2, 0E3, and 0E4.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-product-r42",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "9f5403a46186d6f7415b98deb7a65646358c05837d77bb6c4d1836032329daa7"
+  },
+  "review_status": "static-review",
+  "code": {
+    "source_address": "1EC20E",
+    "native_address": "87C20E",
+    "size": 3385,
+    "sha256": "8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb",
+    "adapted_sha256": "8301000a2fed1e9c534958f06ef1d82eeb7e62f92cce9ef674b1f369c4fd0dbb",
+    "pack_file": "sprite6a-boss-code.bin"
+  },
+  "record": {
+    "slot": "6A",
+    "raw": "013610003bab18401dc21e65c21e0000",
+    "init": "1EC21D",
+    "main": "1EC265",
+    "relative": {
+      "init": "0F",
+      "main": "57"
+    },
+    "rooms": [
+      "0D8",
+      "0E2",
+      "0E3",
+      "0E4"
+    ],
+    "native_raw": "013610003bab18401dc28765c2870000"
+  },
+  "code_patches": [],
+  "external_calls": [
+    "00F5B7",
+    "01802A",
+    "0187A7",
+    "01A7DC",
+    "01AB99",
+    "01B7B3",
+    "02A9DE",
+    "07F7D2",
+    "27FAF4"
+  ],
+  "shared_dependencies": [],
+  "dispatch_tables": [],
+  "entry_seeds": [
+    "1EC21D",
+    "1EC265"
+  ],
+  "graphics": null,
+  "open_dependencies": [],
+  "unapplied_rom_patches": []
+}

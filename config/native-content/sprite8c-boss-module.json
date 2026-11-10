@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "id": "sprite8c-boss-module",
+  "scope": "Upgrade custom sprite slot 8C from the older cheap-demo program ($1D:9A96, relocated to $23:9A96 in ROM, 358 bytes) to the newest official 7hero/boss program ($13:AC37 -> $88:AC37, 465 bytes) for rooms 0B0 and 16B. The 7hero/boss update checks Map16 tiles $0003 and $020x, adds periodic smoke effects ($0285DF), and renders a 4-tile sprite.",
+  "donor_manifest": "config/boss-donor.json",
+  "base_restoration": "demo11-native-product-r42",
+  "base_output": {
+    "size": 4194304,
+    "sha256": "9f5403a46186d6f7415b98deb7a65646358c05837d77bb6c4d1836032329daa7"
+  },
+  "review_status": "static-review",
+  "code": {
+    "source_address": "13AC37",
+    "native_address": "88AC37",
+    "size": 465,
+    "sha256": "cbc93d999faadc4fe56309d6739466c5f57f4ed93352ea94db8619f9b8711463",
+    "adapted_sha256": "cbc93d999faadc4fe56309d6739466c5f57f4ed93352ea94db8619f9b8711463",
+    "pack_file": "sprite8c-boss-code.bin"
+  },
+  "record": {
+    "slot": "8C",
+    "raw": "013600003503194448ac1362ac130000",
+    "init": "13AC48",
+    "main": "13AC62",
+    "relative": {
+      "init": "11",
+      "main": "2B"
+    },
+    "rooms": [
+      "0B0",
+      "16B"
+    ],
+    "native_raw": "013600003503194448ac8862ac880000"
+  },
+  "code_patches": [],
+  "external_calls": [
+    "01801A",
+    "019138",
+    "01A7DC",
+    "01B7B3",
+    "0285DF",
+    "27FAF4"
+  ],
+  "shared_dependencies": [],
+  "dispatch_tables": [],
+  "entry_seeds": [
+    "13AC48",
+    "13AC62"
+  ],
+  "graphics": null,
+  "open_dependencies": [],
+  "unapplied_rom_patches": []
+}
