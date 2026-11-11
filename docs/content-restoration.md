@@ -1904,4 +1904,53 @@ rooms (`0x000..0x1FF`) was executed across the official demo chronology
      pin in `tools/package_windows_product.py`, `r22`, `r41`, `r42`) remain intact
      for reproducible regression checks.
 
+## ROM-free Public Beta packaging (`demo11-native-product-r43`, 2026-11-10)
+
+To distribute `demo11-native-product-r43` publicly on Linux and Windows without
+shipping any Nintendo `Super Mario World` ROM image or extracted asset packs, and
+without requiring Python on player machines:
+
+- **`BMPT` v1 Delta Patch Container (`tools/build_smw_delta.py`)**:
+  - Encodes `data/rom.sfc` plus all `65` runtime `BM_*` content packs (`50`
+    `BM_SEVEN_CODE_PACK*` sprite-gap packs, `BM_NATIVE_CONTENT_PACK` `music-pack.bin`,
+    and `14` `BM_SPRITE_GRAPHICS_PACK*` packs = `66` files, `4,503,021` bytes total)
+    as a self-verifying binary delta (`patch/brutalmario.bmpatch`, `3,699,352` bytes,
+    SHA-256 `1fce1fb0d6664283f2d43ead646cd1c32a2a1ea1bc5c750710ed9e6b55bdca93`)
+    against the unmodified US **`Super Mario World (U) [!]`** ROM (`524,288` bytes
+    headerless or `524,800` bytes `.smc` with 512-byte copier header, body SHA-256
+    `0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b`).
+  - Copies `738,774` bytes directly from the player's vanilla SMW ROM and RLE-encodes
+    `344,260` zero bytes.
+- **Zero-Dependency Native C Launcher (`recomp/bm_release_launcher.c`)**:
+  - Compiled natively as `bin/bm_launcher` (Linux x86_64, `libc` only) and
+    `bin/bm_launcher.exe` (Windows x86_64 `/MT`, UTF-16 Win32 APIs + `MessageBoxW`).
+  - On first launch, scans the bundle root (or `--base-rom <path>`) for a `.sfc`/`.smc`
+    file matching the US `Super Mario World (U) [!]` SHA-256, synthesizes and
+    SHA-256-verifies all `66` runtime files under `data/`, exports the `65` `BM_*`
+    environment variables, optionally applies `--unlock special-zone|complete-all`
+    (backing up `saves/save.srm` to `saves/save.srm.before-cheat`), and launches
+    `bin/BrutalMario[.exe] --config config/config.ini` with `cwd` anchored to the
+    bundle root so paths with non-ASCII/CJK characters and spaces work cleanly on
+    both OSes.
+- **Cross-Platform Build, Qualification & Clean-Room Smoke Verification (`tools/package_public_beta.py`)**:
+  - Linux x86_64 binary (`d3b7b6e7890abb0d6667b2615210d6842120d3fee16da9ef6748c4062507f45e`):
+    60-frame qualification `guest_mean_ms = 9.139` ms (closed) / `11.652` ms (`help;close`).
+  - Windows x86_64 binary (`local/build-windows/demo11-native-product-r43/BrutalMarioDemo11ProductR43SNESRecomp.exe`,
+    SHA-256 `bb33edcc9e05e7396833540c49d86573c533803f475f9c01f7dd7aa703576656`, bundled
+    with app-local VC143 `msvcp140.dll`, `vcruntime140.dll`, `vcruntime140_1.dll`):
+    60-frame qualification `guest_mean_ms = 11.894` ms (closed) / `8.588` ms (`help;close`).
+  - Cross-platform 60-frame state & pixel dumps (`wram.bin`, `vram.bin`, `sram.bin`,
+    `cgram.bin`, `oam.bin`, `fb.bgrx`, `fb.bmp`) and CRLF-normalized register/APU/PPU
+    logs match 100% byte-for-byte between Linux and Windows, both in qualification
+    and in clean-room player extraction tests inside directories containing Chinese
+    characters and spaces (`tests/test_public_beta_package.py`).
+  - Generated ROM-free Public Beta archives (`dist/public-beta-r43/release-receipt.json`):
+    - `dist/public-beta-r43/BrutalMario-PublicBeta-r43-Linux.zip` (`2,873,366` B,
+      SHA-256 `a3b5a3c2bb2913ac0c93cbfbdebf3d1d629a808ca8f24a8ffcb159e3af0d0f72`)
+    - `dist/public-beta-r43/BrutalMario-PublicBeta-r43-Windows.zip` (`4,030,433` B,
+      SHA-256 `fd02cbfad75dfb1c171f325727a6bd9da2af118490b11cfaaf52b5b0be7401ce`)
+  - Full unassisted human playthrough across every course and boss remains open, so
+    these archives are framed as Public Beta builds.
+
+
 
