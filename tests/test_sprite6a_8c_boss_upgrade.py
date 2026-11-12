@@ -174,22 +174,9 @@ class TestSprite6A8CBossUpgrade(unittest.TestCase):
             log_081 = (cap_081 / "run.log").read_text()
             self.assertIn("bank=86 resolutions=216495 executed_page_instructions=33952", log_081)
 
-    def test_default_launchers_point_to_product_r43(self):
+    def test_launchers_mount_product_r43_env(self):
         import subprocess
         import launch_native
-
-        self.assertIn(
-            'default="demo11-native-product-r43"',
-            (ROOT / "tools/launch_native.py").read_text(),
-        )
-        self.assertIn(
-            "default='demo11-native-product-r43'",
-            (ROOT / "tools/play_native_target.py").read_text(),
-        )
-        self.assertIn(
-            "default='demo11-native-product-r43'",
-            (ROOT / "tools/play_native_cheats.py").read_text(),
-        )
 
         r43_bin = (
             ROOT
@@ -198,7 +185,13 @@ class TestSprite6A8CBossUpgrade(unittest.TestCase):
         )
         if R43_ROM.is_file() and r43_bin.is_file():
             result = subprocess.run(
-                [sys.executable, "tools/play_native_target.py", "--print-env"],
+                [
+                    sys.executable,
+                    "tools/play_native_target.py",
+                    "--target",
+                    "demo11-native-product-r43",
+                    "--print-env",
+                ],
                 cwd=ROOT,
                 capture_output=True,
                 text=True,

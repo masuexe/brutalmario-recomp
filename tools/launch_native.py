@@ -54,7 +54,7 @@ def environment(target):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r43")
+    parser.add_argument("--target", default="demo11-native-product-r44")
     parser.add_argument("--rom", type=Path)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--extra", nargs=argparse.REMAINDER,

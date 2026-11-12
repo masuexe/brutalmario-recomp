@@ -5,13 +5,13 @@ Each generated archive contains:
   - Native executable + zero-Python-dependency bm_launcher[.exe]
   - BMPT v1 delta patch container (patch/brutalmario.bmpatch) against unmodified
     US Super Mario World (U) [!] (524,288 B headerless or 524,800 B headered)
-  - Pack manifest (config/packs.manifest) naming data/rom.sfc and all 65 BM_* packs
+  - Pack manifest (config/packs.manifest) naming data/rom.sfc and all BM_* packs
   - Desktop config.ini, keybinds.ini, optional Special Zone / Complete-All scripts,
     and bilingual README
 
 No .sfc/.smc ROM image or extracted data/packs/*.bin payload is shipped inside
 the archive; players drop their own US Super Mario World (U) [!] ROM into the
-folder and launch once to synthesize and SHA-256-verify all 66 runtime files.
+folder and launch once to synthesize and SHA-256-verify all runtime files.
 """
 import argparse
 import hashlib
@@ -345,6 +345,7 @@ def format_config_ini(platform: str) -> str:
 
 
 def format_readme(target: str) -> str:
+    pack_count = len(delta.collect_target_packs(target))
     return f"""========================================================================
   Brutal Mario (鬼畜马里奥 / Super Kitiku Mario) - 原生 PC 重编译公测版
   Public Beta ({target}) — Windows x64 & Linux x86_64
@@ -369,13 +370,13 @@ def format_readme(target: str) -> str:
      - 无头 SHA-256：0838e531fe22c077528febe14cb3ff7c492f1f5fa8de354192bdff7137c27f5b
   2. 将该 ROM 直接放入本压缩包解压后的【根目录】（与启动脚本同一层目录）。
   3. 正常启动游戏即可！启动器会自动校验原版 ROM，离线合成 data/rom.sfc 与
-     全部 65 个原生扩展资源包（data/packs/*.bin）并进行 SHA-256 完整性校验，
+     全部 {pack_count} 个原生扩展资源包（data/packs/*.bin）并进行 SHA-256 完整性校验，
      合成完成后立即进入游戏。之后每次启动将直接秒开游戏。
 
   (English: Place an unmodified US 'Super Mario World (U) [!]' .sfc or .smc
    ROM into this root folder and launch the game. On first run, the built-in
    native launcher automatically synthesizes and SHA-256-verifies data/rom.sfc
-   and all 65 native content packs in under 1 second. No Python required.)
+   and all {pack_count} native content packs in under 1 second. No Python required.)
 
 ------------------------------------------------------------------------
 【第二步：启动游戏 / Launching the Game】
@@ -655,10 +656,10 @@ def run_end_to_end_smoke_test(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r43")
+    parser.add_argument("--target", default="demo11-native-product-r44")
     parser.add_argument("--base-rom", type=Path, default=ROOT.parent / "roms/Super Mario World (U) [!].smc")
-    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r43")
-    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r43")
+    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r44")
+    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r44")
     parser.add_argument("--force-rebuild-windows", action="store_true")
     args = parser.parse_args()
 
@@ -702,8 +703,10 @@ def main() -> None:
 
     # 4. Stage Linux & Windows Public Beta ZIPs
     out_dir.mkdir(parents=True, exist_ok=False)
-    lin_name = "BrutalMario-PublicBeta-r43-Linux"
-    win_name = "BrutalMario-PublicBeta-r43-Windows"
+    match = re.search(r"-(r\d+)$", target)
+    suffix = match.group(1) if match else target
+    lin_name = f"BrutalMario-PublicBeta-{suffix}-Linux"
+    win_name = f"BrutalMario-PublicBeta-{suffix}-Windows"
     linux_zip = stage_platform_bundle(
         target, "linux", linux_game_bin, linux_launcher, patch_bytes, out_dir / lin_name
     )

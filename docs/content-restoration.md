@@ -1952,5 +1952,48 @@ without requiring Python on player machines:
   - Full unassisted human playthrough across every course and boss remains open, so
     these archives are framed as Public Beta builds.
 
+## Room 0x134 ExGFX 0x1B2 restoration (`demo11-native-product-r44`, 2026-11-12)
+
+In Room `0x134` (translevel `0x058`), custom sprite `0x98` already ran identically
+in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08 +
+0x134 * 32`) loads ExGFX `0x1B2` into SP4 (`VRAM 0xF000..0xFFFF`).
+
+- In `r43`, the ExGFX `0x1B2` pointer at `$14:821E` (PC `0x0A021E` = `655902`)
+  held `38f22f` (`$2F:F238`), an older `cheap-demo` `1,930`-byte LZ2 stream in
+  which NT1 tiles `A8..AB`, `AE..AF`, `B8..BB`, `BE..BF`, `CE..CF`, and
+  `DE..DF` were zeroed.
+- In `demo-only-1`, ExGFX `0x1B2` at `$20:F10C` (`2,175`-byte LZ2 stream, SHA-256
+  `c045d50b8c107e807c9c661177940667f47b8c38ae0674203a035d8ee0f22778`; `4,096`-byte
+  decoded SP4 image SHA-256
+  `23c81a9ae6106d21facd642e54e1a6b9ec338c2f19ca1b03f06548198b14d529`) adds those
+  exact 16 tiles from zero (`0` modified, `0` zeroed): sun (`AE,AF,BE,BF`),
+  horizon glow (`CE,CF,DE,DF`), and moving snow/ice platform (`A8..AB,B8..BB`).
+- `tools/prepare_product_r44.py` extracts the `demo-only-1` stream into
+  `local/native-modules/exgfx-1b2-v1/exgfx-1b2.bin`, generates
+  `config/restorations/demo11-native-product-r44.json` (with all 50 sprite-gap
+  manifests frozen and `BM_EXGFX_1B2_PACK` mounted at `$D2:8000`), and patches
+  the 3 bytes at `0x0A021E` from `38f22f` to `0080d2`.
+- `demo11-native-product-r44` ROM SHA-256 is
+  `8014c789ac9bf9f79d2972f7100ae2c677d7f7489e49c87801dadd4340d4a69b` (`66`
+  mounted `BM_*` content packs, `67` encoded files total).
+- Runtime captures `local/captures/r44-room134-sun` (vs
+  `local/captures/diag-room134-do1-ref`) and `local/captures/r44-room174-exgfx1b2`
+  confirm SP4 `VRAM[0xF000:0x10000]` matches `demo-only-1` byte-for-byte,
+  `room134_f60.fb.bgrx` renders the sun at `(128, 64)` as `RGB(255, 255, 156)`
+  with scanlines spanning `y=49..78, x=113..142` (`724` pixels), and shared
+  ExGFX `0x1B2` room `0x174` loads SP4 cleanly (`tests/test_room134_exgfx1b2.py`).
+- Default `--target` in `tools/launch_native.py`, `tools/play_native_target.py`,
+  `tools/play_native_cheats.py`, `tools/build_smw_delta.py`, and
+  `tools/package_public_beta.py` is promoted to `demo11-native-product-r44`
+  (preserving `dist/public-beta-r43/` intact).
+- Public Beta `r44` bundles (`dist/public-beta-r44/release-receipt.json`,
+  `BMPT` v1 delta `3,701,596` B, SHA-256
+  `54576443b2696745ff31359dfa571cc80cb7fbf9beabea176cadafe2658dfde8`):
+  - `dist/public-beta-r44/BrutalMario-PublicBeta-r44-Linux.zip` (`2,875,015` B,
+    SHA-256 `8efc8ff135d7543ba90145b12517f2a7a1c6287768850d01193a5dfea0828299`)
+  - `dist/public-beta-r44/BrutalMario-PublicBeta-r44-Windows.zip` (`4,032,142` B,
+    SHA-256 `242d1f9cbd10575f62cf8720d87d63d911b79466e22236f4fe026ff6a71da77b`)
+
+
 
 
