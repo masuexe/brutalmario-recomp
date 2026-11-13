@@ -209,6 +209,55 @@ class PublicBetaPackageTests(unittest.TestCase):
             r_ver = subprocess.run([str(launcher), "--verify"], capture_output=True, text=True)
             self.assertEqual(r_ver.returncode, 0, r_ver.stderr)
 
+    def test_r48_delta_patch_roundtrip_and_manifest(self):
+        r48_rom_path = ROOT / "local/restoration/demo11-native-product-r48/rom.sfc"
+        if not r48_rom_path.is_file():
+            self.skipTest("demo11-native-product-r48 restoration files not present")
+
+        import package_public_beta as ppb
+
+        packs = delta.collect_target_packs("demo11-native-product-r48")
+        self.assertEqual(len(packs), 71)
+        variables = {p["variable"] for p in packs}
+        self.assertEqual(len(variables), 71)
+        self.assertIn("BM_NATIVE_CONTENT_PACK", variables)
+        self.assertIn("BM_LANG_R47_DATA_PACK", variables)
+        self.assertIn("BM_LANG_R47_CODE_PACK", variables)
+
+        manifest_text = ppb.format_manifest_text("demo11-native-product-r48")
+        lines = [ln for ln in manifest_text.splitlines() if ln and not ln.startswith("#")]
+        self.assertEqual(len(lines), 72)
+        r48_rom = r48_rom_path.read_bytes()
+        self.assertIn(
+            f"ROM\tdata/rom.sfc\t{len(r48_rom)}\t{hashlib.sha256(r48_rom).hexdigest()}",
+            lines,
+        )
+        for p in packs:
+            self.assertIn(
+                f"{p['variable']}\t{p['rel_path']}\t{p['size']}\t{p['sha256']}",
+                lines,
+            )
+
+        readme = ppb.format_readme("demo11-native-product-r48")
+        self.assertIn("demo11-native-product-r48", readme)
+        self.assertIn("全部 71 个原生扩展资源包", readme)
+        self.assertIn("all 71 native content packs", readme)
+
+        base_candidates = [
+            ROOT.parent / "roms/Super Mario World (U) [!].smc",
+            (ROOT / "local").resolve().parent.parent / "roms/Super Mario World (U) [!].smc",
+        ]
+        base_rom = next((p for p in base_candidates if p.is_file()), None)
+        if base_rom is None:
+            self.skipTest("US Super Mario World base ROM not present for live BMPT roundtrip")
+
+        patch_bytes, stats = delta.build_patch_bytes("demo11-native-product-r48", base_rom)
+        self.assertEqual(stats["file_count"], len({p["rel_path"] for p in packs}) + 1)
+        decoded = delta.apply_patch_bytes(base_rom.read_bytes(), patch_bytes)
+        self.assertEqual(decoded["data/rom.sfc"], r48_rom)
+        for p in packs:
+            self.assertEqual(decoded[p["rel_path"]], p["source_path"].read_bytes())
+
 
 if __name__ == "__main__":
     unittest.main()

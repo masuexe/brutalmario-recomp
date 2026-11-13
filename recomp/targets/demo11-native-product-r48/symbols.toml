@@ -1,0 +1,95 @@
+# Symbol map for Brutal Mario Demo11 Product R48.
+#
+# All forged $90 (BM_LANG_R47_CODE_PACK) entrypoints MUST stay LLE (emit = false)
+# so AOT never reads ROM bank $10 as a LoROM mirror of bank $90.
+
+[[func]]
+name = "I_RESET"
+addr = "8000"
+bank = 0
+emit = false
+note = "Emulation RESET vector ($FFFC)"
+
+[[func]]
+name = "I_NMI"
+addr = "816a"
+bank = 0
+emit = false
+note = "Native NMI vector ($FFEA)"
+
+[[func]]
+name = "r47_nmi_upload_ja_gfx02a"
+addr = "8000"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_nmi_upload_en_gfx02a"
+addr = "8009"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_nmi_upload_gfx02a_common"
+addr = "8010"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_ow_level_name"
+addr = "8092"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_msg_entry"
+addr = "8134"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_msg_render"
+addr = "8190"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_msg_close"
+addr = "829b"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_room1c5_init"
+addr = "82da"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_room14d_exit"
+addr = "82f3"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_gfx_decompress"
+addr = "8312"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"
+
+[[func]]
+name = "r47_hook_title_stripe"
+addr = "83bf"
+bank = 144
+emit = false
+note = "BM_LANG_R47_CODE_PACK forged bank $90"

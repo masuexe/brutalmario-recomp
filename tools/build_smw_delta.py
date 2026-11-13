@@ -333,7 +333,7 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r47")
+    parser.add_argument("--target", default="demo11-native-product-r48")
     parser.add_argument("--base", type=Path, default=ROOT.parent / "roms/Super Mario World (U) [!].smc")
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()

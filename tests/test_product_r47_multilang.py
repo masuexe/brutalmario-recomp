@@ -145,9 +145,14 @@ class ProductR47MultilangTests(unittest.TestCase):
             RESTORATIONS["demo11-native-product-r47"]["binary"],
             "BrutalMarioDemo11ProductR47SNESRecomp",
         )
+        self.assertIn("demo11-native-product-r48", RESTORATIONS)
+        self.assertEqual(
+            RESTORATIONS["demo11-native-product-r48"]["binary"],
+            "BrutalMarioDemo11ProductR48SNESRecomp",
+        )
         for script in ("launch_native.py", "play_native_target.py", "play_native_cheats.py"):
             text = (ROOT / "tools" / script).read_text()
-            self.assertIn("demo11-native-product-r47", text, script)
+            self.assertIn("demo11-native-product-r48", text, script)
             res = subprocess.run(
                 [sys.executable, str(ROOT / "tools" / script), "--help"],
                 cwd=ROOT,
@@ -159,7 +164,7 @@ class ProductR47MultilangTests(unittest.TestCase):
 
         for script in ("build_smw_delta.py", "package_public_beta.py"):
             text = (ROOT / "tools" / script).read_text()
-            self.assertIn('default="demo11-native-product-r47"', text, script)
+            self.assertIn('default="demo11-native-product-r48"', text, script)
 
     def test_public_beta_config_and_bilingual_readme(self):
         for plat in ("linux", "windows"):

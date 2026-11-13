@@ -54,7 +54,7 @@ def environment(target):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r47")
+    parser.add_argument("--target", default="demo11-native-product-r48")
     parser.add_argument("--lang", choices=["en", "ja", "auto"],
                         help="override runtime language via BM_LANG (en, ja, or auto)")
     parser.add_argument("--rom", type=Path)
