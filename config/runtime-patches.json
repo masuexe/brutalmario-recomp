@@ -102,6 +102,31 @@
       "patch_sha256": "55979f7a6686d7b3fa9b93931b30eb94f030307df542378e630ca22348553cd4",
       "result_sha256": "e05559d7061056832f7a5803e3a00349a177b43c73a70a3c7bd3d540292b9cec",
       "base_patch": "frame-scoped-swim"
+    },
+    {
+      "id": "config-language-field",
+      "source": "runner/src/desktop/config.h",
+      "patch": "patches/runtime/0014-config-language-field.patch",
+      "source_sha256": "226b5e87bac64d41bb535c8a470364785702f07b1d50fb2ae804976d8a7a662f",
+      "patch_sha256": "6a7ae8a09dc6280fd349fbd3a11c5e44bd4d9b747ca29402577b5f55461b00a9",
+      "result_sha256": "bc75ef74b08b0bfc0b6cfa60dd0adba154dfaad4b943ae98a7c3c75a098c06c5"
+    },
+    {
+      "id": "config-language-persistence",
+      "source": "runner/src/desktop/mmx_config.c",
+      "patch": "patches/runtime/0015-config-language-persistence.patch",
+      "source_sha256": "dbb7553d569ec734d59d15be44f7b5138a487d3c725b1d6bcedabdacf19d531a",
+      "patch_sha256": "d9576fc636f510718fc419173473eead40a012c8910624bbee5760948a54d691",
+      "result_sha256": "c3facdae2f50699157096ea97d57b6beab4faad692c49c2c57c235551b129095"
+    },
+    {
+      "id": "settings-overlay-and-language",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0016-settings-overlay-and-language.patch",
+      "source_sha256": "e05559d7061056832f7a5803e3a00349a177b43c73a70a3c7bd3d540292b9cec",
+      "patch_sha256": "fc21fdfd6390d60a8cb2087fa3b013cf78092cb70d351f5e0e362ea13a6cf92e",
+      "result_sha256": "676859e4013803b401d076b6d68ee04690e206d592a73676bb90e58d01939e24",
+      "base_patch": "console-world-coordinate-teleport"
     }
   ]
 }

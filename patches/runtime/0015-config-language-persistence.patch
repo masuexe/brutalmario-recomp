@@ -1,0 +1,46 @@
+diff --git a/runner/src/desktop/mmx_config.c b/runner/src/desktop/mmx_config.c
+index 2743775..6b80bc9 100644
+--- a/runner/src/desktop/mmx_config.c
++++ b/runner/src/desktop/mmx_config.c
+@@ -604,6 +604,16 @@ static bool HandleIniConfig(int section, const char *key, char *value) {
+       return ParseBool(value, &g_config.enable_snes9x_oracle);
+     } else if (StringEqualsNoCase(key, "SkipLauncher")) {
+       return ParseBool(value, &g_config.skip_launcher);
++    } else if (StringEqualsNoCase(key, "Language")) {
++      if (StringEqualsNoCase(value, "ja") || StringEqualsNoCase(value, "jp") ||
++          StringEqualsNoCase(value, "japanese")) {
++        snprintf(g_config.language, sizeof(g_config.language), "ja");
++      } else if (StringEqualsNoCase(value, "en") || StringEqualsNoCase(value, "english")) {
++        snprintf(g_config.language, sizeof(g_config.language), "en");
++      } else {
++        snprintf(g_config.language, sizeof(g_config.language), "auto");
++      }
++      return true;
+     }
+   } else if (section == 6) {
+     if (StringEqualsNoCase(key, "PlayerName")) {
+@@ -691,6 +701,7 @@ void ParseConfigFile(const char *filename) {
+   g_config.gamepad_deadzone = SNES_CONFIG_DEFAULT_DEADZONE;
+   g_config.display_aspect = kSnesDisplayAspect_Crt4x3;
+   g_config.skip_launcher = false;
++  snprintf(g_config.language, sizeof(g_config.language), "auto");
+   /* Rewind's built-in ring, matching snes_rewind.c's own defaults so a host
+    * that opts into the launcher rows starts from what it already had. */
+   g_config.rewind_enabled = true;
+@@ -893,6 +904,7 @@ void WriteConfigFile(const char *filename) {
+     { "GamepadMap", "EnableGamepad1" },
+     { "GamepadMap", "EnableGamepad2" },
+     { "General",    "SkipLauncher" },
++    { "General",    "Language" },
+     { "GamepadMap", "GamepadDeadzone" },
+     { "Netplay",    "PlayerName" },
+     { "Graphics",   "FrameBlend" },
+@@ -935,6 +947,8 @@ void WriteConfigFile(const char *filename) {
+   CfgSet(kvs, N, "GamepadMap", "EnableGamepad2", "%s",
+          g_config.enable_gamepad[1] ? "true" : "false");
+   CfgSet(kvs, N, "General", "SkipLauncher", "%d", g_config.skip_launcher ? 1 : 0);
++  CfgSet(kvs, N, "General", "Language", "%s",
++         g_config.language[0] ? g_config.language : "auto");
+   CfgSet(kvs, N, "GamepadMap", "GamepadDeadzone", "%d", g_config.gamepad_deadzone);
+   CfgSet(kvs, N, "Netplay", "PlayerName", "%s", g_config.netplay_player_name);
+   CfgSet(kvs, N, "Graphics", "FrameBlend", "%d", g_config.frame_blend ? 1 : 0);
