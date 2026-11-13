@@ -204,7 +204,7 @@
         "pack_file": "lang-r47-code.bin",
         "address": "908000",
         "size": 4096,
-        "sha256": "45362d4cddb1c431d431fee66a1957b7264b19777824d4cfc86ac3b7436eb605",
+        "sha256": "ea1c8cef78d1f32b68fa9db0dfdc5767f11d3ad36fa9f94aff9df75555e0deb8",
         "executable": true,
         "source": "local/native-modules/lang-r47-v1"
       }

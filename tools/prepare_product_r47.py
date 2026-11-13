@@ -223,7 +223,7 @@ def build_code_pack_and_entrypoints() -> tuple[bytes, dict[str, int]]:
 
     # ------------------------------------------------------------------
     # Hook 2a: Message Box Entry ($03:BB90 -> JML hook_msg_entry).
-    # Handles Mazo 0x191 ($1426==1) and 0x192 ($1426==2) before $10:B6A6.
+    # Handles Mazo 0x191 ($1426==2) and 0x192 ($1426==1) before $10:B6A6.
     # ------------------------------------------------------------------
     a.label("hook_msg_entry")
     a.emit("08 c2 20 48")      # PHP; REP #$20; PHA
@@ -237,7 +237,7 @@ def build_code_pack_and_entrypoints() -> tuple[bytes, dict[str, int]]:
     a.emit("5c a6 b6 10")      # JML $10B6A6
 
     a.label("msg_chk_191")
-    a.emit("e2 20 ad 26 14 c9 01")  # SEP #$20; LDA $1426; CMP #$01
+    a.emit("e2 20 ad 26 14 c9 02")  # SEP #$20; LDA $1426; CMP #$02
     a.branch(0xD0, "msg_entry_fallback")
     a.emit("c2 20 68 28")      # REP #$20; PLA; PLP
     a.emit("e2 30")            # SEP #$30
@@ -248,7 +248,7 @@ def build_code_pack_and_entrypoints() -> tuple[bytes, dict[str, int]]:
     a.jmp("shared_msg_stripe_render")
 
     a.label("msg_chk_192")
-    a.emit("e2 20 ad 26 14 c9 02")  # SEP #$20; LDA $1426; CMP #$02
+    a.emit("e2 20 ad 26 14 c9 01")  # SEP #$20; LDA $1426; CMP #$01
     a.branch(0xD0, "msg_entry_fallback")
     a.emit("c2 20 68 28")      # REP #$20; PLA; PLP
     a.emit("e2 30")            # SEP #$30
