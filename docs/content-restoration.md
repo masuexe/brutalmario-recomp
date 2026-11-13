@@ -1994,6 +1994,100 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   - `dist/public-beta-r44/BrutalMario-PublicBeta-r44-Windows.zip` (`4,032,142` B,
     SHA-256 `242d1f9cbd10575f62cf8720d87d63d911b79466e22236f4fe026ff6a71da77b`)
 
+## ExGFX 0x257 repair & pure-addition/NULL-pointer batch restoration (demo11-native-product-r45, 2026-11-12)
+
+- **Root cause & scope**:
+  - ExGFX `0x257` pointer at `$14:840D` (PC `0x0A040D`, `88cc42` -> `$42:CC88`) was
+    corrupted when `r34` merged `boss` music data over bank `0x42`, breaking Wily Capsule
+    Phase 2 (`sprite2e` state `8` / `0B` / `0E` / `11` calls to `$85:A997` / `$85:AAE3`).
+  - Five additional ExGFX entries in `demo11-native-product-r44` had pure tile additions in
+    newer official donors (`boss` for `0x1E3`; `demo-only-1` for `0x163`, `0x18F`, `0x192`,
+    `0x1AE`) with zero removed or modified existing tiles (`-0`, `~0`).
+  - Two ExGFX slots pointed to NULL `$00:0000` in the `$0F:F600` low table despite active
+    room usages: `0x0DA` (PC `0x07F70E`, restored from `boss` `$4A:94A6`) and `0x0BE`
+    (PC `0x07F6BA`, restored from `demo-only-1` `$28:DCE8`).
+- **Recipe & pack**:
+  - `tools/prepare_product_r45.py`, `config/restorations/demo11-native-product-r45.json`
+    (descendant of `demo11-native-product-r44`, ROM `4,194,304` B, SHA-256
+    `d13003a1e9a7c0a473f97af885a0740cdb40539d2b10b30c4f5fa676de7611e2`, exact 24-byte
+    pointer diff across 8 slots).
+  - Consolidated non-executable native pack `BM_EXGFX_R45_PACK` at `$D3:8000`
+    (`local/native-modules/exgfx-r45-v1/exgfx-r45.bin`, `14,530` B, SHA-256
+    `965b85b0ea22473deb44a74eab0e57c0a0f2d38658cbbf16420f8089df22252a`), concatenating in
+    exact order:
+    1. `0x257` (`boss` `$3C:921A`, `2204` B -> `4096` B): PC `0x0A040D`, `88cc42` ->
+       `0080d3` (`$D3:8000`) — restores `sprite2e` Wily Capsule Phase 2 graphics.
+    2. `0x1E3` (`boss` `$32:E5D0`, `2551` B -> `4096` B): PC `0x0A02B1`, `49c44c` ->
+       `9c88d3` (`$D3:889C`) — pure `+105`-tile upgrade for room `0x0E4` SP4.
+    3. `0x163` (`demo-only-1` `$20:C8CA`, `1148` B -> `4096` B): PC `0x0A0131`, `08b24c` ->
+       `9392d3` (`$D3:9293`) — pure `+1`-tile upgrade for rooms `0x072, 0x117, 0x125, 0x176`
+       SP2.
+    4. `0x18F` (`demo-only-1` `$20:D41C`, `1213` B -> `4096` B): PC `0x0A01B5`, `2dbd5c` ->
+       `0f97d3` (`$D3:970F`) — pure `+8`-tile upgrade for rooms
+       `0x022, 0x097, 0x098, 0x09D, 0x175` SP4.
+    5. `0x192` (`demo-only-1` `$20:DBB6`, `917` B -> `4096` B): PC `0x0A01BE`, `f8b65c` ->
+       `cc9bd3` (`$D3:9BCC`) — pure `+8`-tile upgrade for rooms `0x022, 0x175` BG3.
+    6. `0x1AE` (`demo-only-1` `$20:DF53`, `1548` B -> `4096` B): PC `0x0A0212`, `d8d934` ->
+       `619fd3` (`$D3:9F61`) — pure `+5`-tile upgrade for rooms `0x117, 0x176` BG2.
+    7. `0x0DA` (`boss` `$4A:94A6`, `2768` B -> `4096` B): PC `0x07F70E`, `000000` ->
+       `6da5d3` (`$D3:A56D`) — restores NULL `$0F:F600` pointer for rooms `0x0EE, 0x152` BG3.
+    8. `0x0BE` (`demo-only-1` `$28:DCE8`, `2181` B -> `4096` B): PC `0x07F6BA`, `000000` ->
+       `3db0d3` (`$D3:B03D`) — restores NULL `$0F:F600` pointer for rooms
+       `0x062, 0x06C, 0x0C2` ANM.
+- **Verification**:
+  - `local/captures/r45-room0e4-exgfx1e3` (`recomp/inputs/seven-child-existing-0e4.script`):
+    `bank=D3 resolutions=5102`, `existing_later.vram.bin[0xF000:0x10000]` matches `boss`
+    `0x1E3` (`4096` B).
+  - `local/captures/r45-room175-exgfx18f-192` (`recomp/inputs/native-modern-175.script`):
+    `bank=D3 resolutions=7928`, `f512.vram.bin[0xF000:0x10000]` matches `demo-only-1`
+    `0x18F` (`4096` B), `f512.wram.bin[0xAD00:0xBD00]` matches `demo-only-1` `0x192`
+    (`4096` B), and `f512.vram.bin[0x3000:0x4000]` matches `0x192` on `126/128` tiles
+    including all 8 added tiles (`0x4C..0x4F`, `0x5C..0x5F`).
+  - `local/captures/r45-multi-rooms` (`local/probes/r45-exgfx/r45-rooms.script`, labelled
+    pipe-transfer + invulnerability fixture): `bank=D3 resolutions=15290`; `r176` exact
+    4096B matches for `0x163` (`VRAM[0xE000:0xF000]`), `0x1AE` (`VRAM[0x2000:0x3000]`), and
+    `0x1B2` (`VRAM[0xF000:0x10000]`); `r152` exact 4096B match for `0x0DA`
+    (`VRAM[0x3000:0x4000]`); `r062` `107/128` static tiles in `VRAM[0xC000:0xD000]` match
+    `0x0BE` (remaining 21 are player dynamic DMA slots); `r134` preserves `724` setting sun
+    `RGB(255,255,156)` pixels.
+  - `local/captures/r45-room15d-wily257`
+    (`local/probes/r45-exgfx/r45-room15d-wily257.script`, labelled pipe-transfer +
+    invulnerability + P1->P2 state-transition diagnostic fixture): `bank=85
+    resolutions=774838 executed_page_instructions=116167`, `bank=D3 resolutions=4408`;
+    `p2_wily257` (`room=0x15D`, `$7FFF90=0x0257`) decodes `boss` `0x257` verbatim to
+    `WRAM[0x0AD00:0x0BD00]` (`4096` B) and DMAs all 10 `sprite2e` BG3 slices
+    (`0x3100..0x3EC0`) into VRAM.
+  - `tests/test_exgfx_r45_batch.py`, `tests/test_room134_exgfx1b2.py`, and
+    `tests/test_public_beta_package.py` pass.
+- **Public Beta promotion (`demo11-native-product-r45`)**:
+  - Default `--target` promoted to `demo11-native-product-r45` in `tools/launch_native.py`,
+    `tools/play_native_target.py`, `tools/play_native_cheats.py`, `tools/build_smw_delta.py`,
+    and `tools/package_public_beta.py` (`67` `BM_*` runtime packs / `68` manifest files,
+    `BMPT` v1 delta `3,716,170` B, SHA-256
+    `7f2f9702abb2ca87af9341e1318eae025b12682c92c57fe9ae563ffcacd8bb36`):
+    - `dist/public-beta-r45/BrutalMario-PublicBeta-r45-Linux.zip` (`2,887,397` B,
+      SHA-256 `ad59fe0f4d137ec89f5c91af126d2fbad9d3714d3a23afb9fcb1201406955ba4`)
+    - `dist/public-beta-r45/BrutalMario-PublicBeta-r45-Windows.zip` (`4,044,401` B,
+      SHA-256 `974e3b524341ccbf1747dae9653701d038a7cf90cefdf7403465ea8f38d5c864`)
+    - Linux vs Windows binary parity & clean-room Unicode path ZIP smoke tests pass
+      (`Linux guest_mean_ms`: closed `4.458`, console `4.402`; `Windows guest_mean_ms`:
+      closed `3.990`, console `3.931`).
+- **Deferred ExGFX & non-upgrade notes**:
+  - Deferred for visual/layout review (not upgraded in `r45` because existing tiles are
+    modified or zeroed):
+    - `0x1AF`: `demo-only-1` `$20:E567` (`1629` B) vs `r44` `$34:C6B8` (`1612` B) has `+3`
+      added (`4D, 5C, 5D`), `~5` modified (`4C, 4E, 4F, 5E, 5F`), `-0`, `same=106`; used in
+      rooms `0x117(s1), 0x164(s1), 0x165(s1), 0x166(s1), 0x176(s1)`.
+    - `0x1B0`: `demo-only-1` `$20:EBCC` (`1336` B) vs `r44` `$34:85E8` (`1268` B) has `+6`
+      added (`02, 12, 24, 25, 34, 35`), `-2` zeroed (`04, 14`), `~4` modified
+      (`05, 06, 15, 16`), `same=68`; used in rooms `0x117(s3), 0x176(s3)`.
+  - Non-upgrade rule (`0x400`, `0x401`): `r44` preserves `boss` / `cheap-demo` room `0x13B`
+    (`0x400` at `$44:E240`, `2074` B; `0x401` at `$44:EA62`, `2952` B; identical Layer 1 /
+    Sprite / `$14:AD08` across official demos through `boss`). `demo-only-1` repurposed
+    `0x400`/`0x401` (`$23:BE92` `1913` B, `$23:C613` `2305` B) for its own room `0x168`
+    with unrelated artwork (`same=0` tiles). Do not overwrite `r44` `0x400`/`0x401` from
+    `demo-only-1`.
+
 
 
 

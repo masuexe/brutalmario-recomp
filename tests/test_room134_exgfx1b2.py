@@ -166,29 +166,8 @@ class TestRoom134ExGfx1B2(unittest.TestCase):
             sp4 = (cap_174 / "room174_f60.vram.bin").read_bytes()[0xF000:0x10000]
             self.assertEqual(hashlib.sha256(sp4).hexdigest(), DECODED_SHA)
 
-    def test_default_launchers_point_to_product_r44(self):
+    def test_launchers_mount_product_r44_env(self):
         import launch_native
-
-        self.assertIn(
-            'default="demo11-native-product-r44"',
-            (ROOT / "tools/launch_native.py").read_text(),
-        )
-        self.assertIn(
-            "default='demo11-native-product-r44'",
-            (ROOT / "tools/play_native_target.py").read_text(),
-        )
-        self.assertIn(
-            "default='demo11-native-product-r44'",
-            (ROOT / "tools/play_native_cheats.py").read_text(),
-        )
-        self.assertIn(
-            'default="demo11-native-product-r44"',
-            (ROOT / "tools/build_smw_delta.py").read_text(),
-        )
-        pkg_text = (ROOT / "tools/package_public_beta.py").read_text()
-        self.assertIn('default="demo11-native-product-r44"', pkg_text)
-        self.assertIn('default=ROOT / "dist/public-beta-r44"', pkg_text)
-        self.assertIn('default=ROOT / "local/diagnostics/public-beta-r44"', pkg_text)
 
         r44_bin = (
             ROOT
@@ -197,7 +176,13 @@ class TestRoom134ExGfx1B2(unittest.TestCase):
         )
         if R44_ROM.is_file() and r44_bin.is_file():
             result = subprocess.run(
-                [sys.executable, "tools/play_native_target.py", "--print-env"],
+                [
+                    sys.executable,
+                    "tools/play_native_target.py",
+                    "--target",
+                    "demo11-native-product-r44",
+                    "--print-env",
+                ],
                 cwd=ROOT,
                 capture_output=True,
                 text=True,

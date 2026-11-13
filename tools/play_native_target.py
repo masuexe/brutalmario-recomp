@@ -46,7 +46,7 @@ def packs_env(target, cfg, env):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--target', default='demo11-native-product-r44')
+    parser.add_argument('--target', default='demo11-native-product-r45')
     parser.add_argument('--script', type=Path,
                         help='optional script file, for a smoke test')
     parser.add_argument('--print-env', action='store_true',
