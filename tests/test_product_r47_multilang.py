@@ -89,6 +89,18 @@ class ProductR47MultilangTests(unittest.TestCase):
         # Ensure $10:D8D0 NMI queue helper is referenced twice (ja + en).
         self.assertEqual(code_blob.count(bytes.fromhex("22d0d810")), 2)
 
+        # Verify Mazo hook_msg_entry matches 0x191 -> $1426==2 (hdr+0x2E) and 0x192 -> $1426==1 (hdr+0x2C).
+        msg_entry_off = entrypoints["hook_msg_entry"] - r47.CODE_PACK_ADDRESS
+        msg_render_off = entrypoints["hook_msg_render"] - r47.CODE_PACK_ADDRESS
+        msg_entry_slice = code_blob[msg_entry_off:msg_render_off]
+        idx_191_cmp = msg_entry_slice.index(bytes.fromhex("e220ad2614c902"))
+        idx_191_hdr = msg_entry_slice.index(bytes.fromhex("af2e80d5"))
+        idx_192_cmp = msg_entry_slice.index(bytes.fromhex("e220ad2614c901"))
+        idx_192_hdr = msg_entry_slice.index(bytes.fromhex("af2c80d5"))
+        self.assertLess(idx_191_cmp, idx_191_hdr)
+        self.assertLess(idx_191_hdr, idx_192_cmp)
+        self.assertLess(idx_192_cmp, idx_192_hdr)
+
     def test_native_sprite_gap_header_and_lle_only_forbidden_bank_handling(self):
         r47_hdr = native_sprite_gap.header("demo11-native-product-r47")
         self.assertIn("#define BM_LANG_R47_SUPPORT 1", r47_hdr)
