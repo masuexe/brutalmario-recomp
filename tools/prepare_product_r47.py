@@ -19,10 +19,10 @@ TARGET = "demo11-native-product-r47"
 R46_SHA = "142ee768d1d5cd436a17d459719b30a02ba5dafaa79271b9d3c37da4965a0b7e"
 MUSIC_PACK_SHA = "b054d450165eb0f4a32f7a15f2f6c65e41389616da8a336b42bf9ec9bb032c47"
 AUDIT_JSON = ROOT / "config/native-content/localization-audit-r47.json"
-EXPECTED_BMLG_SHA = "dc88751479e1342c31da4fd292a8c371b4c792179de547439b258ee24f7b819a"
+EXPECTED_BMLG_SHA = "1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f"
 EXPECTED_BMLG_SIZE = 30814
 
-PACK_SOURCE = "local/native-modules/lang-r47-v1"
+PACK_SOURCE = "local/native-modules/lang-r47-v2"
 
 DATA_PACK_ADDRESS = 0xD58000
 DATA_PACK_FILE = "lang-r47-data.bin"

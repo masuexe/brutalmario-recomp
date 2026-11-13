@@ -90,6 +90,10 @@ DEMO_ONLY_1_EN_OW_SLOTS = (0x0A, 0x0C, 0x0D, 0x34, 0x3A, 0x4A, 0x4E, 0x51, 0x58)
 DEMO_1_1_EN_OW_SLOTS = (0x29,)
 # Verified blank (all 0x1F space) Overworld slots in boss/Demo 1-1.
 BLANK_OW_SLOTS = (0x00, 0x4F, 0x5F)
+# Pinned Demo 7 English Overworld level-name recipe & post-demo7 JP fallback slots.
+DEMO7_EN_OW_CFG_PATH = ROOT / "config/native-content/demo7-en-ow-names.json"
+DEMO7_EN_SHA = "7c98fe8e0f95efbe5c186bf379a1682310304307551d62ab64dcc466719baafa"
+POST_DEMO7_JP_OW_SLOTS = (0x01, 0x10, 0x30, 0x3D, 0x46, 0x47, 0x48, 0x4D, 0x50, 0x59, 0x5A, 0x5D)
 # Verified Demo 1-1 English Message Box slots (all other non-empty slots are Japanese).
 DEMO_1_1_EN_MSG_SLOTS = (6, 7, 82, 83)
 
@@ -121,7 +125,7 @@ EN_GFX02A_CHARS: dict[int, str] = {
     0x38: "Y",
     0x3D: "?",
     0x3E: "O",
-    0x3F: "/",
+    0x3F: "!",
     **{0x40 + i: chr(ord("a") + i) for i in range(26)},
     0x5A: "#",
     0x5B: "(",
@@ -270,7 +274,7 @@ def build_en_tile_translator() -> dict:
         list(range(0x00, 0x21))  # A-Z, ! . - , ? space '
         + list(range(0x22, 0x2C))  # 0-9 (plain in r46/boss, outlined in SMWU/demo6/demo7)
         + list(range(0x2C, 0x32))  # B C * T M S
-        + [0x38, 0x3D, 0x3E, 0x3F]  # Y ? O /
+        + [0x38, 0x3D, 0x3E, 0x3F]  # Y ? O !
         + list(range(0x40, 0x5F))  # a-z # ( ) ' "
         + list(range(0x64, 0x6C))  # 1-8 (plain message/OW digits, byte-identical!)
         + [0x78, 0x7A]  # degree, R
@@ -289,6 +293,73 @@ def build_en_tile_translator() -> dict:
         ],
         "identity_tile_map": table,
     }
+
+
+def load_demo7_en_ow_recipe(local_dir: Path) -> dict[int, dict]:
+    """Load, validate, and optionally ROM-verify the pinned Demo 7 English OW name recipe."""
+    cfg = json.loads(DEMO7_EN_OW_CFG_PATH.read_text())
+    assert cfg.get("schema") == 1, f"unexpected schema in {DEMO7_EN_OW_CFG_PATH}"
+    donor = cfg["donor"]
+    assert donor["headerless_sha256"] == DEMO7_EN_SHA
+    assert donor["ow_table_base"] == "$13E1D7"
+
+    excluded = tuple(sorted(int(e["slot"]) for e in cfg["excluded_post_demo7_slots"]))
+    assert excluded == POST_DEMO7_JP_OW_SLOTS, (excluded, POST_DEMO7_JP_OW_SLOTS)
+
+    by_slot: dict[int, dict] = {}
+    for entry in cfg["slots"]:
+        slot = int(entry["slot"])
+        assert slot not in by_slot, f"duplicate slot 0x{slot:02X}"
+        assert entry["slot_hex"] == f"0x{slot:02X}"
+        donor_bytes = bytes.fromhex(entry["donor_hex"])
+        adapted_bytes = bytes.fromhex(entry["adapted_hex"])
+        assert len(donor_bytes) == 19 and len(adapted_bytes) == 19
+        for b in adapted_bytes:
+            assert b < 0x80 and b in EN_GFX02A_CHARS, (
+                f"demo7-en adapted slot 0x{slot:02X} uses unsupported tile 0x{b:02X}"
+            )
+        by_slot[slot] = entry
+
+    covered = (
+        set(DEMO_1_1_EN_OW_SLOTS)
+        | set(DEMO_ONLY_1_EN_OW_SLOTS)
+        | set(BLANK_OW_SLOTS)
+        | set(POST_DEMO7_JP_OW_SLOTS)
+        | set(by_slot.keys())
+    )
+    assert len(by_slot) == 71, len(by_slot)
+    assert len(covered) == 96 and covered == set(range(96)), len(covered)
+    assert (
+        len(DEMO_1_1_EN_OW_SLOTS)
+        + len(DEMO_ONLY_1_EN_OW_SLOTS)
+        + len(BLANK_OW_SLOTS)
+        + len(POST_DEMO7_JP_OW_SLOTS)
+        + len(by_slot)
+        == 96
+    )
+
+    # Cross-check against extracted local ROM or archival .smc if present on disk.
+    rom_candidates = [
+        local_dir / donor["local_relative_path"],
+        Path("/home/harp/projects/sfc/roms/Super Kitiku Brutal Mario/Brutal Mario 7 SMWCentral")
+        / donor["source_filename"],
+    ]
+    for cand in rom_candidates:
+        if cand.is_file():
+            raw = cand.read_bytes()
+            if len(raw) % 1024 == 512:
+                raw = raw[512:]
+            assert len(raw) == 4194304, (cand, len(raw))
+            assert sha(raw) == DEMO7_EN_SHA, (cand, sha(raw))
+            base, table = read_ow_table(raw)
+            assert base == 0x13E1D7, hex(base)
+            for slot, entry in by_slot.items():
+                assert table[slot].hex() == entry["donor_hex"], (
+                    f"demo7-en ROM mismatch at slot 0x{slot:02X}"
+                )
+            break
+
+    return by_slot
 
 
 def translate_en_bytes(raw: bytes) -> bytes:
@@ -481,6 +552,7 @@ def generate_audit(local_dir: Path | None = None) -> dict:
     # Overworld level names across ROMs.
     ow_tables = {name: read_ow_table(rom) for name, rom in roms.items()}
     assert ow_tables["r46"][1] == ow_tables["demo-1-1"][1]
+    demo7_en_by_slot = load_demo7_en_ow_recipe(ldir)
 
     ja_ow_names = []
     en_ow_names = []
@@ -508,6 +580,17 @@ def generate_audit(local_dir: Path | None = None) -> dict:
             source = "demo-only-1"
             text = decode_en_bytes(en_raw).rstrip()
             needs_jp = 0
+        elif slot in demo7_en_by_slot:
+            d7e_entry = demo7_en_by_slot[slot]
+            en_raw = bytes.fromhex(d7e_entry["adapted_hex"])
+            source = (
+                "demo7-en"
+                if d7e_entry["adapted_hex"] == d7e_entry["donor_hex"]
+                else "demo7-en (adapted)"
+            )
+            text = decode_en_bytes(en_raw).rstrip()
+            assert text == d7e_entry["text"], f"slot 0x{slot:02X}: {text!r} != {d7e_entry['text']!r}"
+            needs_jp = 0
         elif slot in BLANK_OW_SLOTS:
             en_raw = d11_raw
             assert en_raw == b"\x1f" * 19
@@ -515,10 +598,17 @@ def generate_audit(local_dir: Path | None = None) -> dict:
             text = ""
             needs_jp = 0
         else:
-            en_raw = d11_raw
-            source = "demo-1-1" if d11_raw != boss_raw else "demo-1-1 (matches boss)"
+            assert slot in POST_DEMO7_JP_OW_SLOTS, f"unclassified OW slot 0x{slot:02X}"
+            en_raw = boss_raw
+            source = "boss (post-demo7 JP fallback)"
             text = None
             needs_jp = 1
+
+        if needs_jp == 0:
+            for b in en_raw:
+                assert b < 0x80 and b in EN_GFX02A_CHARS, (
+                    f"OW slot 0x{slot:02X} uses non-English tile 0x{b:02X}"
+                )
 
         en_ow_names.append(
             {
@@ -749,15 +839,16 @@ def generate_audit(local_dir: Path | None = None) -> dict:
             "messages": ja_messages,
         },
         "en": {
-            "priority": ["demo-1-1", "demo-only-1", "demo7", "demo6"],
+            "priority": ["demo-1-1", "demo-only-1", "demo7-en", "demo6"],
             "ow_summary": {
                 "total": 96,
-                "english": len(DEMO_1_1_EN_OW_SLOTS) + len(DEMO_ONLY_1_EN_OW_SLOTS),
+                "english": len(DEMO_1_1_EN_OW_SLOTS) + len(DEMO_ONLY_1_EN_OW_SLOTS) + len(demo7_en_by_slot),
                 "blank": len(BLANK_OW_SLOTS),
-                "japanese_fallback": 96 - len(DEMO_1_1_EN_OW_SLOTS) - len(DEMO_ONLY_1_EN_OW_SLOTS) - len(BLANK_OW_SLOTS),
+                "japanese_fallback": len(POST_DEMO7_JP_OW_SLOTS),
                 "demo11_en_slots": [f"0x{s:02X}" for s in DEMO_1_1_EN_OW_SLOTS],
                 "demo_only_1_en_slots": [f"0x{s:02X}" for s in DEMO_ONLY_1_EN_OW_SLOTS],
-                "excluded_demo6_demo7_vanilla_slots": ["0x5A (STAR WORLD 5)"],
+                "demo7_en_slots": [f"0x{s:02X}" for s in sorted(demo7_en_by_slot)],
+                "excluded_post_demo7_slots": [f"0x{s:02X}" for s in POST_DEMO7_JP_OW_SLOTS],
             },
             "message_summary": {
                 "total": 144,

@@ -39,6 +39,8 @@ class ProductR47MultilangTests(unittest.TestCase):
         self.assertIn("BM_LANG_R47_DATA_PACK", extra)
         self.assertIn("BM_LANG_R47_CODE_PACK", extra)
         self.assertEqual(extra["BM_LANG_R47_DATA_PACK"]["address"], "D58000")
+        self.assertEqual(extra["BM_LANG_R47_DATA_PACK"]["source"], r47.PACK_SOURCE)
+        self.assertEqual(r47.PACK_SOURCE, "local/native-modules/lang-r47-v2")
         self.assertFalse(extra["BM_LANG_R47_DATA_PACK"]["executable"])
         self.assertEqual(extra["BM_LANG_R47_DATA_PACK"]["size"], r47.EXPECTED_BMLG_SIZE)
         self.assertEqual(extra["BM_LANG_R47_DATA_PACK"]["sha256"], r47.EXPECTED_BMLG_SHA)
@@ -225,7 +227,7 @@ class ProductR47MultilangTests(unittest.TestCase):
                         "--script",
                         str(script),
                     ],
-                    cwd=tmp_path,
+                    cwd=dump_dir,
                     env=env,
                     capture_output=True,
                     text=True,
@@ -247,6 +249,73 @@ class ProductR47MultilangTests(unittest.TestCase):
                 room = intro_wram[0x010B] | (intro_wram[0x010C] << 8)
                 self.assertIn(room, (0x01C5, 0x014B, 0x014C, 0x014D), f"{lang}: got 0x{room:03X}")
                 self.assertEqual(intro_vram[0x9000 : 0x9000 + 2048], expected_ja_02a, f"{lang} 0x1C5 GFX 0x2A mismatch")
+
+    def test_built_r47_binary_headless_demo7_ow_banner_en_ja(self):
+        binary = ROOT / "local/build/demo11-native-product-r47/BrutalMarioDemo11ProductR47SNESRecomp"
+        rom = ROOT / "local/restoration/demo11-native-product-r47/rom.sfc"
+        if not binary.is_file() or not rom.is_file():
+            self.skipTest("demo11-native-product-r47 native binary not built yet")
+
+        bmlg = r47.build_data_pack()
+        ja_02a_off = struct.unpack_from("<H", bmlg, 0x0E)[0]
+        en_02a_off = struct.unpack_from("<H", bmlg, 0x14)[0]
+        ja_ow_off, en_ow_off, ow_flags_off = struct.unpack_from("<HHH", bmlg, 0x18)
+        expected_ja_02a = bmlg[ja_02a_off : ja_02a_off + 2048]
+        expected_en_02a = bmlg[en_02a_off : en_02a_off + 2048]
+        # Starting World 1 Overworld node 0x28 ("Yoshi's House" from demo7-en, needs_jp_font == 0).
+        self.assertEqual(bmlg[ow_flags_off + 0x28], 0)
+        expected_en_banner_28 = bmlg[en_ow_off + 0x28 * 19 : en_ow_off + 0x29 * 19]
+        expected_ja_banner_28 = bmlg[ja_ow_off + 0x28 * 19 : ja_ow_off + 0x29 * 19]
+        self.assertNotEqual(expected_en_banner_28, expected_ja_banner_28)
+
+        env_base = os.environ.copy()
+        env_base.update(SDL_VIDEODRIVER="dummy", SDL_AUDIODRIVER="dummy", SNESRECOMP_REWIND="0")
+        native_sprite_gap.environment("demo11-native-product-r47", env_base)
+
+        ow_script_text = (ROOT / "recomp/inputs/cheat-complete-all.script").read_text() + "\ndump ow28\nquit\n"
+        with tempfile.TemporaryDirectory(prefix="bm-r47-ow-") as tmp:
+            tmp_path = Path(tmp)
+            script = tmp_path / "ow28.script"
+            script.write_text(ow_script_text)
+            cfg = tmp_path / "config.ini"
+            cfg.write_text(ppb.format_config_ini("linux"))
+
+            for lang, exp_02a, exp_banner in (
+                ("en", expected_en_02a, expected_en_banner_28),
+                ("ja", expected_ja_02a, expected_ja_banner_28),
+            ):
+                dump_dir = tmp_path / f"dump_{lang}"
+                dump_dir.mkdir()
+                env = dict(env_base)
+                env["BM_LANG"] = lang
+                env["SNESRECOMP_DUMP_DIR"] = str(dump_dir)
+                res = subprocess.run(
+                    [
+                        str(binary),
+                        "--no-launcher",
+                        "--config",
+                        str(cfg),
+                        "--rom",
+                        str(rom),
+                        "--script",
+                        str(script),
+                    ],
+                    cwd=dump_dir,
+                    env=env,
+                    capture_output=True,
+                    text=True,
+                    timeout=60,
+                )
+                self.assertEqual(res.returncode, 0, f"{lang}: {res.stderr}\n{res.stdout}")
+                ow_wram = (dump_dir / "ow28.wram.bin").read_bytes()
+                ow_vram = (dump_dir / "ow28.vram.bin").read_bytes()
+                self.assertEqual(ow_wram[0x0100], 0x0E, f"{lang}: mode 0x{ow_wram[0x0100]:02X}")
+                self.assertEqual(ow_vram[0x9000 : 0x9000 + 2048], exp_02a, f"{lang} OW GFX 0x2A mismatch")
+                # PPU VRAM words 0x508B..0x509D (byte offsets 0xA116..0xA13B) hold 19 (tile, attr=0x39) pairs.
+                banner_words = struct.unpack_from("<19H", ow_vram, 0x508B * 2)
+                banner_tiles = bytes(w & 0xFF for w in banner_words)
+                self.assertEqual(banner_tiles, exp_banner, f"{lang} 0x28 banner tiles mismatch")
+                self.assertTrue(all((w >> 8) == 0x39 for w in banner_words))
 
 
 if __name__ == "__main__":

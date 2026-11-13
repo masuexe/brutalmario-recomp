@@ -66,7 +66,7 @@ class LocalizationAuditR47Test(unittest.TestCase):
         self.assertEqual(len(en_ow), 96)
 
         en_slots = [e for e in en_ow if e["needs_jp_font"] == 0 and e["text"]]
-        self.assertEqual(len(en_slots), 10)
+        self.assertEqual(len(en_slots), 81)
         by_slot = {e["slot"]: e for e in en_ow}
         self.assertEqual(by_slot[0x29]["text"], "Hey,I am Mario!")
         self.assertEqual(by_slot[0x0A]["text"], "Special Warp Star")
@@ -79,8 +79,28 @@ class LocalizationAuditR47Test(unittest.TestCase):
         self.assertEqual(by_slot[0x51]["text"], "Wily's Revenge")
         self.assertEqual(by_slot[0x58]["text"], "Athletic Special")
 
-        # 0x5A must keep Carol's JP name rather than vanilla SMW(U) "STAR WORLD 5".
-        self.assertEqual(by_slot[0x5A]["needs_jp_font"], 1)
+        # Representative demo7-en Overworld slots (including 0x13 and 0x5E adaptations).
+        self.assertEqual(by_slot[0x28]["text"], "Yoshi's House")
+        self.assertEqual(by_slot[0x2A]["text"], "Catch Yoshi!")
+        self.assertEqual(by_slot[0x37]["text"], "Boss Bass Bridge")
+        self.assertEqual(by_slot[0x13]["text"], "Yellow Switch")
+        self.assertEqual(by_slot[0x25]["text"], "Careful! Lightning!")
+        self.assertEqual(by_slot[0x5E]["text"], "LIFT GO! 1")
+
+        # All 84 non-JP OW entries (81 EN + 3 blank) must use valid EN GFX 0x2A tiles < 0x80.
+        for e in en_ow:
+            if e["needs_jp_font"] == 0:
+                raw = bytes.fromhex(e["hex"])
+                self.assertEqual(len(raw), 19)
+                for b in raw:
+                    self.assertLess(b, 0x80, f"slot {e['slot_hex']} tile 0x{b:02X}")
+                    self.assertIn(b, al.EN_GFX02A_CHARS, f"slot {e['slot_hex']} tile 0x{b:02X}")
+
+        # All 12 post-demo7 courses keep boss Japanese bytes with needs_jp_font = 1.
+        for jslot in al.POST_DEMO7_JP_OW_SLOTS:
+            self.assertEqual(by_slot[jslot]["needs_jp_font"], 1)
+            self.assertIsNone(by_slot[jslot]["text"])
+            self.assertEqual(by_slot[jslot]["hex"], ja_ow[jslot]["hex"])
         self.assertNotIn("53130011", by_slot[0x5A]["hex"])
 
         # Blank slots 0x00, 0x4F, 0x5F have needs_jp_font = 0.
@@ -88,7 +108,7 @@ class LocalizationAuditR47Test(unittest.TestCase):
             self.assertEqual(by_slot[bslot]["needs_jp_font"], 0)
             self.assertEqual(by_slot[bslot]["hex"], "1f" * 19)
 
-        self.assertEqual(sum(e["needs_jp_font"] for e in en_ow), 83)
+        self.assertEqual(sum(e["needs_jp_font"] for e in en_ow), 12)
 
     def test_messages_en_ja_mazo_and_custom_rooms(self) -> None:
         ja_msgs = self.audit["ja"]["messages"]

@@ -2182,25 +2182,33 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   of strings (`10` Overworld names + `4` non-tutorial message boxes), causing untranslated
   Japanese strings in English builds to render as mojibake (`乱码`) and offering no Japanese UI
   option.
-- **Data audit & `BMLG` v1 pack**:
-  - `tools/audit_localization.py` + `config/native-content/localization-audit-r47.json` audit the
-    10 official ROMs (`demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss ->
-    demoonly1 -> 1-1`) and deterministically build `lang-r47-data.bin` (`BMLG` v1, `30,814` B,
-    SHA-256 `dc88751479e1342c31da4fd292a8c371b4c792179de547439b258ee24f7b819a`):
+- **Data audit & `BMLG` v1 pack (`lang-r47-v2`)**:
+  - `tools/audit_localization.py` + `config/native-content/demo7-en-ow-names.json` +
+    `config/native-content/localization-audit-r47.json` audit the 10 official ROMs
+    (`demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss -> demoonly1 -> 1-1`)
+    plus the archived `Brutal Mario Demo 7 English.smc` (`$13E1D7` OW table, headerless SHA-256
+    `7c98fe8e0f95efbe5c186bf379a1682310304307551d62ab64dcc466719baafa`) and deterministically
+    build `local/native-modules/lang-r47-v2/lang-r47-data.bin` (`BMLG` v1, `30,814` B,
+    SHA-256 `1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f`):
     - **Japanese payload (`boss` + Mazo)**: `boss` Layer 3 fonts (`GFX 0x28`/`0x2A`/`0x2B`),
       Title stripe image, `96` Japanese Overworld level names (`$15:827F`), `144` Japanese SMW
       message boxes (`$15:89A7`), and Mazo `0x192`/`0x191` Japanese messages (`70` B / `86` B).
     - **English payload + auto-JP fallback**: newest-first official English merge (`Demo 1-1 >
-      demoOnly1 > demo7 > demo6`, excluding untouched vanilla US SMW tutorial messages on cleared
-      slots) paired with per-slot/per-room `needs_jp_font` tables so untranslated Japanese
-      strings and Japanese rooms (`0x0FF`, `0x17B`, `0x191`, `0x192`, `0x1C5..0x14D`) in EN mode
-      automatically display with Japanese `GFX 0x2A` instead of garbled glyphs.
+      demoOnly1 > demo7-en > demo6`, expanding English Overworld level names to `81 / 93`
+      non-blank courses: `1` `Demo 1-1` slot `0x29`, `9` `demoOnly1` slots, and `71` matching
+      `Demo 7 English` slots with minimal tile adaptations on `0x13` `"Yellow Switch"` and
+      `0x5E` `"LIFT GO! 1"`, plus `3` blank slots `0x00, 0x4F, 0x5F` and excluding the `12`
+      post-`demo7` replaced/renamed courses `0x01, 0x10, 0x30, 0x3D, 0x46, 0x47, 0x48, 0x4D, 0x50, 0x59, 0x5A, 0x5D`;
+      in-level message boxes remain unchanged at `4` non-tutorial EN slots) paired with
+      per-slot/per-room `needs_jp_font` tables so untranslated Japanese strings and Japanese rooms
+      (`0x0FF`, `0x17B`, `0x191`, `0x192`, `0x1C5..0x14D`) in EN mode automatically display with
+      Japanese `GFX 0x2A` instead of garbled glyphs.
 - **Recipe, packs & runtime UI**:
   - `tools/prepare_product_r47.py` + `config/restorations/demo11-native-product-r47.json`
     (descendant of `demo11-native-product-r46`, ROM `4,194,304` B, SHA-256
     `2123f5e3415364d3a5def92b8ac3ab1f581ec68f0cf6469ffda12f4a9da80b0a`, `8` code hooks across
     `0005D4`, `003A28`, `01BB20`, `01BB90`, `01BBC9`, `02B11D`, `1FE296`, `1FE44D`):
-    - `BM_LANG_R47_DATA_PACK` at `$D5:8000` (`30,814` B, SHA-256 `dc887514...`, non-executable).
+    - `BM_LANG_R47_DATA_PACK` at `$D5:8000` (`30,814` B, SHA-256 `1fe91ec2...`, non-executable).
     - `BM_LANG_R47_CODE_PACK` at `$90:8000` (`4,096` B, SHA-256
       `ea1c8cef78d1f32b68fa9db0dfdc5767f11d3ad36fa9f94aff9df75555e0deb8`, executable LoROM
       system-mirror bank `$90`), reserving `$90:8FF0..8FFF` (`0`-initialized on disk) with
@@ -2219,28 +2227,44 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
       and `en` on all other locales; `--lang en|ja|auto` overrides on `bm_launcher` and
       `tools/launch_native.py` / `tools/play_native_target.py` / `tools/play_native_cheats.py`.
 - **Verification**:
-  - Headless E2E captures under `local/captures/r47-*` verified EN & JA Title `GFX 0x28/0x2A/0x2B`
-    + Title stripe, `0x1C5 -> 0x14D -> Overworld` (`ja_gfx02a` retained on OW in `ja`, `en_gfx02a`
-    restored on EN-named OW node in `en`), untranslated JP OW node (`0x28`) & JP message (`0x106`)
+  - Initial `lang-r47-v1` headless E2E captures under `local/captures/r47-*` verified EN & JA Title
+    `GFX 0x28/0x2A/0x2B` + Title stripe, `0x1C5 -> 0x14D -> Overworld`, JP message (`0x106`)
     auto-switching `GFX 0x2A` to Japanese in EN mode, Mazo `0x191` (`$1426==2`) & `0x192`
     (`$1426==1`) diagnostic teleport+poke fixtures rendering Japanese text and restoring `en_gfx02a`
     on close, `GAME SETTINGS` overlay dump (`SNESRECOMP_SETTINGS_MENU=1`), live Overworld banner
     + font round-trip hot-swap (`en -> ja -> en`, `$13BF == 0x00` on `0x29`, `save.srm` invariant),
     and `native-room1c5-intro.script` / `native-room1c5-skip.script` / `native-modern-175.script`
     regressions.
-  - Full repository unit test suite: `python3 -m unittest discover -s tests -p "test_*.py" -v`
-    passed **586/586** (`0` failures, `0` errors, `0` skipped); `local/upstream/snesrecomp` clean.
+  - Updated `lang-r47-v2` (`BMLG` v1 SHA-256 `1fe91ec2...`) Overworld verification:
+    - `local/captures/r47-ow-en-v2/receipt.json` (`cheat-complete-all` + `map_teleport`
+      diagnostic fixture in `BM_LANG=en`) verified `demo7-en` Overworld banners and `en_gfx02a`
+      on `0x28` (`"Yoshi's House"`), `0x2A` (`"Catch Yoshi!"`, tile `0x3F` `'!'`), `0x13`
+      (`"Yellow Switch"`), and `0x5E` (`"LIFT GO! 1"`, tile `0x64` `'1'` + `0x3F` `'!'`), plus
+      post-`demo7` excluded course `0x10` (`うつくしきたびじ`, `needs_jp_font == 1`) auto-switching
+      `GFX 0x2A` to `ja_gfx02a` via `$10:D8D0` NMI VBlank queue and restoring `en_gfx02a` upon
+      returning to `0x5E`.
+    - `tests/test_product_r47_multilang.py` passed **8/8** (`0` failures, `0` errors), including
+      headless EN & JA Title + `0x1C5` VRAM verification and headless EN & JA `0x28` Overworld
+      banner (`$508B..$509D`) + `GFX 0x2A` verification.
+  - Isolated-worktree unit tests: targeted localization, language-runtime, packaging, and cheat
+    suites (`test_localization_audit`, `test_language_runtime`, `test_public_beta_package`,
+    `test_play_native_cheats`, `test_completion_cheat`: `41` ran, `38` passed, `3` skipped due to
+    absent historical cheat captures; plus `test_product_r47_multilang`: `8/8` passed) completed
+    with `0` failures and `0` errors; full `python3 -m unittest discover -s tests -p "test_*.py"` in
+    the isolated worktree ran `573` tests with `0` failures (`39` skipped and `14`
+    `FileNotFoundError`s on unpopulated historical `r1..r46` local captures/reports/builds);
+    `local/upstream/snesrecomp` clean.
 - **Public Beta promotion (`demo11-native-product-r47`)**:
   - Default `--target` promoted to `demo11-native-product-r47` across launch, delta, and
-    packaging tools (`71` `BM_*` runtime packs / `72` manifest files, `BMPT` v1 delta `3,758,610`
-    B, SHA-256 `b893d48681a98ecfee7ff3434998cd4ead152343656e03ffea09df0dc0770be0`):
-    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Linux.zip` (`2,910,207` B, SHA-256
-      `d5420e784a6fc211be656cf8257e9004a7a1a194ed3b2a34e06816d8282a917d`)
-    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Windows.zip` (`4,065,802` B, SHA-256
-      `c6c257d92f52f3ba54fa4cccd2d1c3d45e63f45873edf9d04eec6af12a91fbf0`)
+    packaging tools (`71` `BM_*` runtime packs / `72` manifest files, `BMPT` v1 delta `3,758,571`
+    B, SHA-256 `1628096547732b60d9008a898227bbcf71d00d964f97d33cea47a9d33a8f3b2f`):
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Linux.zip` (`2,910,497` B, SHA-256
+      `34ac9a11f938341b17c82e4b3861d41e921b9bcc2695933e2729df91cbafdd3b`)
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Windows.zip` (`4,066,087` B, SHA-256
+      `4d479d15dc0e80210f955dfd7ca7e0a7236eb476837405bcf3db134efefad26f`)
     - Linux vs Windows binary parity & clean-room Unicode path ZIP smoke tests pass
-      (`Linux guest_mean_ms`: closed `4.858`, console `4.981`; `Windows guest_mean_ms`:
-      closed `4.326`, console `4.257`), including clean-room `cheat-complete-all.script`
+      (`Linux guest_mean_ms`: closed `11.443`, console `11.266`; `Windows guest_mean_ms`:
+      closed `9.075`, console `9.076`), including clean-room `cheat-complete-all.script`
       (Linux) and `cheat-special-zone.script` (Windows) smoke runs after syncing
       `recomp/inputs/cheat-complete-all.script`, `recomp/inputs/cheat-special-zone.script`, and
       `tools/play_native_cheats.py` (`STARTUP`/`FAST_STARTUP`) to skip all `4` scenes

@@ -2670,14 +2670,14 @@
     "priority": [
       "demo-1-1",
       "demo-only-1",
-      "demo7",
+      "demo7-en",
       "demo6"
     ],
     "ow_summary": {
       "total": 96,
-      "english": 10,
+      "english": 81,
       "blank": 3,
-      "japanese_fallback": 83,
+      "japanese_fallback": 12,
       "demo11_en_slots": [
         "0x29"
       ],
@@ -2692,8 +2692,92 @@
         "0x51",
         "0x58"
       ],
-      "excluded_demo6_demo7_vanilla_slots": [
-        "0x5A (STAR WORLD 5)"
+      "demo7_en_slots": [
+        "0x02",
+        "0x03",
+        "0x04",
+        "0x05",
+        "0x06",
+        "0x07",
+        "0x08",
+        "0x09",
+        "0x0B",
+        "0x0E",
+        "0x0F",
+        "0x11",
+        "0x12",
+        "0x13",
+        "0x14",
+        "0x15",
+        "0x16",
+        "0x17",
+        "0x18",
+        "0x19",
+        "0x1A",
+        "0x1B",
+        "0x1C",
+        "0x1D",
+        "0x1E",
+        "0x1F",
+        "0x20",
+        "0x21",
+        "0x22",
+        "0x23",
+        "0x24",
+        "0x25",
+        "0x26",
+        "0x27",
+        "0x28",
+        "0x2A",
+        "0x2B",
+        "0x2C",
+        "0x2D",
+        "0x2E",
+        "0x2F",
+        "0x31",
+        "0x32",
+        "0x33",
+        "0x35",
+        "0x36",
+        "0x37",
+        "0x38",
+        "0x39",
+        "0x3B",
+        "0x3C",
+        "0x3E",
+        "0x3F",
+        "0x40",
+        "0x41",
+        "0x42",
+        "0x43",
+        "0x44",
+        "0x45",
+        "0x49",
+        "0x4B",
+        "0x4C",
+        "0x52",
+        "0x53",
+        "0x54",
+        "0x55",
+        "0x56",
+        "0x57",
+        "0x5B",
+        "0x5C",
+        "0x5E"
+      ],
+      "excluded_post_demo7_slots": [
+        "0x01",
+        "0x10",
+        "0x30",
+        "0x3D",
+        "0x46",
+        "0x47",
+        "0x48",
+        "0x4D",
+        "0x50",
+        "0x59",
+        "0x5A",
+        "0x5D"
       ]
     },
     "message_summary": {
@@ -2734,7 +2818,7 @@
       {
         "slot": 1,
         "slot_hex": "0x01",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "58795e44181d09361f1f1f1f1f1f1f1f1f1f1f"
@@ -2742,66 +2826,66 @@
       {
         "slot": 2,
         "slot_hex": "0x02",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0902087943184d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Plains Star",
+        "hex": "0f4b40484d521f125340511f1f1f1f1f1f1f1f"
       },
       {
         "slot": 3,
         "slot_hex": "0x03",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "a10b433743184d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Forest Star",
+        "hex": "054e514452531f125340511f1f1f1f1f1f1f1f"
       },
       {
         "slot": 4,
         "slot_hex": "0x04",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "013703184d50a71f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Bay Star",
+        "hex": "0140581f125340511f1f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 5,
         "slot_hex": "0x05",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0e02087943184d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Grassland Star",
+        "hex": "06514052524b404d431f125340511f1f1f1f1f"
       },
       {
         "slot": 6,
         "slot_hex": "0x06",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1b0f09795e88541f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Twin Lifts",
+        "hex": "1356484d1f0b484553521f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 7,
         "slot_hex": "0x07",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1379020711184d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Cave Star",
+        "hex": "024055441f125340511f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 8,
         "slot_hex": "0x08",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0d11087943184d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Snow Star",
+        "hex": "124d4e561f125340511f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 9,
         "slot_hex": "0x09",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "12430702184d50a71f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Sky Star",
+        "hex": "124a581f125340511f1f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 10,
@@ -2814,10 +2898,10 @@
       {
         "slot": 11,
         "slot_hex": "0x0B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "4879696018305fff5379681f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Wendy the Girl",
+        "hex": "16444d43581f5347441f0648514b1f1f1f1f1f"
       },
       {
         "slot": 12,
@@ -2838,23 +2922,23 @@
       {
         "slot": 14,
         "slot_hex": "0x0E",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "34013a1379020711241f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Maze Cave 2",
+        "hex": "0c4059441f024055441f651f1f1f1f1f1f1f1f"
       },
       {
         "slot": 15,
         "slot_hex": "0x0F",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5aa79dff4979485da7180667021b1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Dread Homing Bill",
+        "hex": "03514440431f074e4c484d461f01484b4b1f1f"
       },
       {
         "slot": 16,
         "slot_hex": "0x10",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "0211070b060f1a790b791f1f1f1f1f1f1f1f1f"
@@ -2862,194 +2946,194 @@
       {
         "slot": 17,
         "slot_hex": "0x11",
-        "source": "demo-1-1",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "4c695a79ff0f791e1f13430f791f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Where Is This?",
+        "hex": "16474451441f08521f134748521e1f1f1f1f1f"
       },
       {
         "slot": 18,
         "slot_hex": "0x12",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "495d6b4ca55f618d79a750a71f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Castle Crush",
+        "hex": "024052534b441f02515452471f1f1f1f1f1f1f"
       },
       {
         "slot": 19,
         "slot_hex": "0x13",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "06013a4d456b510666021279431f1f1f1f1f1f"
+        "source": "demo7-en (adapted)",
+        "needs_jp_font": 0,
+        "text": "Yellow Switch",
+        "hex": "18444b4b4e561f1256485342471f1f1f1f1f1f"
       },
       {
         "slot": 20,
         "slot_hex": "0x14",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "321379374d456b510666021279431f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Green Switch Palace",
+        "hex": "065144444d1f1256485342471f0f404b404244"
       },
       {
         "slot": 21,
         "slot_hex": "0x15",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1c0610185a79623b1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Intangible House",
+        "hex": "084d53404d4648414b441f074e5452441f1f1f"
       },
       {
         "slot": 22,
         "slot_hex": "0x16",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0d43054358605879a754791f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Battleship Halberd",
+        "hex": "014053534b445247484f1f07404b414451431f"
       },
       {
         "slot": 23,
         "slot_hex": "0x17",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "6c7964a76054791f130640131e391f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Za Warudo Switch",
+        "hex": "19401f16405154434e1f1256485342471f1f1f"
       },
       {
         "slot": 24,
         "slot_hex": "0x18",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1a0702120118190519791f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Airborne Cemetery",
+        "hex": "004851414e514d441f02444c44534451581f1f"
       },
       {
         "slot": 25,
         "slot_hex": "0x19",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5079a74948696b4d601f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Dark Castle",
+        "hex": "0340514a1f024052534b441f1f1f1f1f1f1f1f"
       },
       {
         "slot": 26,
         "slot_hex": "0x1A",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5ad41860547930686b49791f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Fort of Ludwig",
+        "hex": "054e51531f4e451f0b54435648461f1f1f1f1f"
       },
       {
         "slot": 27,
         "slot_hex": "0x1B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "260b670718133712791f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Four-Color Fort",
+        "hex": "054e54511c024e4b4e511f054e51531f1f1f1f"
       },
       {
         "slot": 28,
         "slot_hex": "0x1C",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "060f18071505361f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Northern Resort",
+        "hex": "0d4e51534744514d1f1144524e51531f1f1f1f"
       },
       {
         "slot": 29,
         "slot_hex": "0x1D",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "a1495e4d5b4d1066020b18040b360d1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Warning - Christmas",
+        "hex": "1640514d484d461f1c1f0247514852534c4052"
       },
       {
         "slot": 30,
         "slot_hex": "0x1E",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "64ff64ff587a566b49241f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Chomp Chomp Panic 2",
+        "hex": "02474e4c4f1f02474e4c4f1f0f404d48421f65"
       },
       {
         "slot": 31,
         "slot_hex": "0x1F",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "44a75457455169a762451f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Roy the Crafty",
+        "hex": "114e581f5347441f0251404553581f1f1f1f1f"
       },
       {
         "slot": 32,
         "slot_hex": "0x20",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1b0202431f5379537953790b7967021f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Dedede's Sky Castle",
+        "hex": "0344434443445d521f124a581f024052534b44"
       },
       {
         "slot": 33,
         "slot_hex": "0x21",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "07010b431d79021853616c1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Gourmet Boo",
+        "hex": "064e54514c44531f014e4e1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 34,
         "slot_hex": "0x22",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "d5a2cd0b660236011f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "The Future of UFOs",
+        "hex": "1347441f0554535451441f4e451f14050e521f"
       },
       {
         "slot": 35,
         "slot_hex": "0x23",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "9d5da74c79a5587a614d1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Mirage Palace",
+        "hex": "0c48514046441f0f404b4042441f1f1f1f1f1f"
       },
       {
         "slot": 36,
         "slot_hex": "0x24",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "64a7887a4d50a71f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Warp Star",
+        "hex": "1640514f1f125340511f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 37,
         "slot_hex": "0x25",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0e09150b4c597939383f0009057939383f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Careful! Lightning!",
+        "hex": "0240514445544b3f1f0b484647534d484d463f"
       },
       {
         "slot": 38,
         "slot_hex": "0x26",
-        "source": "demo-1-1",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5a5da758304d1f1f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Four-Room House",
+        "hex": "054e54511c114e4e4c1f074e5452441f1f1f1f"
       },
       {
         "slot": 39,
         "slot_hex": "0x27",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "4747799d18133712791f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Mirror Fort",
+        "hex": "0c4851514e511f054e51531f1f1f1f1f1f1f1f"
       },
       {
         "slot": 40,
         "slot_hex": "0x28",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "636b4ca71801031f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Yoshi's House",
+        "hex": "184e5247485d521f074e5452441f1f1f1f1f1f"
       },
       {
         "slot": 41,
@@ -3062,82 +3146,82 @@
       {
         "slot": 42,
         "slot_hex": "0x2A",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "636b4ca74204033f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Catch Yoshi!",
+        "hex": "02405342471f184e5247483f1f1f1f1f1f1f1f"
       },
       {
         "slot": 43,
         "slot_hex": "0x2B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0667021b1808791140021a791f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Fear of Monday",
+        "hex": "054440511f4e451f0c4e4d4340581f1f1f1f1f"
       },
       {
         "slot": 44,
         "slot_hex": "0x2C",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "08650d433f496b587a0b7967021f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Finish! Bowser Keep",
+        "hex": "05484d4852473f1f014e565244511f0a44444f"
       },
       {
         "slot": 45,
         "slot_hex": "0x2D",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "050112010b431279431f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Deep Sea Ruins",
+        "hex": "0344444f1f1244401f1154484d521f1f1f1f1f"
       },
       {
         "slot": 46,
         "slot_hex": "0x2E",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "474879191379091500381f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "What Matches a Key?",
+        "hex": "164740531f0c4053424744521f401f0a44581e"
       },
       {
         "slot": 47,
         "slot_hex": "0x2F",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5aa75c614d185d5ea71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Abode of Larry",
+        "hex": "00414e43441f4e451f0b405151581f1f1f1f1f"
       },
       {
         "slot": 48,
         "slot_hex": "0x30",
-        "source": "demo-1-1",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
-        "hex": "1243070240020a011f1f1f1f1f1f1f1f1f1f1f"
+        "hex": "1243070240020a011f6045a74c7954795ea75c"
       },
       {
         "slot": 49,
         "slot_hex": "0x31",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0b79660237670718133712791f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Fort of Gravity",
+        "hex": "054e51531f4e451f065140554853581f1f1f1f"
       },
       {
         "slot": 50,
         "slot_hex": "0x32",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1a06093537619da71f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Lemmy the Hermit",
+        "hex": "0b444c4c581f5347441f0744514c48531f1f1f"
       },
       {
         "slot": 51,
         "slot_hex": "0x33",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1379073a4ba74d50a71f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Skull Ride",
+        "hex": "124a544b4b1f114843441f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 52,
@@ -3150,42 +3234,42 @@
       {
         "slot": 53,
         "slot_hex": "0x35",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0918190b410f381c7905360c791f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Unfinished Bridge",
+        "hex": "144d45484d48524744431f0151484346441f1f"
       },
       {
         "slot": 54,
         "slot_hex": "0x36",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "00044d456b510666021279431f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Blue Switch Palace",
+        "hex": "014b54441f1256485342471f0f404b4042441f"
       },
       {
         "slot": 55,
         "slot_hex": "0x37",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "11371e07371f1f1f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Boss Bass Bridge",
+        "hex": "014e52521f014052521f0151484346441f1f1f"
       },
       {
         "slot": 56,
         "slot_hex": "0x38",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "041979081835371f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Ghost Forest",
+        "hex": "06474e52531f054e514452531f1f1f1f1f1f1f"
       },
       {
         "slot": 57,
         "slot_hex": "0x39",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "101d020b6702454879a71f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Iggy the Crazy",
+        "hex": "084646581f5347441f02514059581f1f1f1f1f"
       },
       {
         "slot": 58,
@@ -3198,23 +3282,23 @@
       {
         "slot": 59,
         "slot_hex": "0x3B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "496b587a180f15184d50a71f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Valley Star",
+        "hex": "15404b4b44581f125340511f1f1f1f1f1f1f1f"
       },
       {
         "slot": 60,
         "slot_hex": "0x3C",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5b5e460b660236011f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Mario's Attack",
+        "hex": "0c4051484e5d521f00535340424a1f1f1f1f1f"
       },
       {
         "slot": 61,
         "slot_hex": "0x3D",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "48844b040209074d53a74c79241f1f1f1f1f1f"
@@ -3222,71 +3306,71 @@
       {
         "slot": 62,
         "slot_hex": "0x3E",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "456047181e383b061f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Dolphin Barbeque",
+        "hex": "034e4b4f47484d1f01405141445054441f1f1f"
       },
       {
         "slot": 63,
         "slot_hex": "0x3F",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "049d4d79180d05011f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Tide Cave",
+        "hex": "134843441f024055441f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 64,
         "slot_hex": "0x40",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "56a75418d4a754ff1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Morton the Neat",
+        "hex": "0c4e51534e4d1f5347441f0d4440531f1f1f1f"
       },
       {
         "slot": 65,
         "slot_hex": "0x41",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "34013a1379020711231f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Maze Cave 1",
+        "hex": "0c4059441f024055441f641f1f1f1f1f1f1f1f"
       },
       {
         "slot": 66,
         "slot_hex": "0x42",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "1d02051e5b5e461f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Pyro Mario",
+        "hex": "0f58514e1f0c4051484e1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 67,
         "slot_hex": "0x43",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "3062181405194759790f7936081f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Acceptable Cave",
+        "hex": "004242444f5340414b441f024055441f1f1f1f"
       },
       {
         "slot": 68,
         "slot_hex": "0x44",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0106421334111179083a1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Lively Water",
+        "hex": "0b4855444b581f16405344511f1f1f1f1f1f1f"
       },
       {
         "slot": 69,
         "slot_hex": "0x45",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "00054d456b510666021279431f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Red Switch Palace",
+        "hex": "1144431f1256485342471f0f404b4042441f1f"
       },
       {
         "slot": 70,
         "slot_hex": "0x46",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "073a4d456b510666021279431f1f1f1f1f1f1f"
@@ -3294,7 +3378,7 @@
       {
         "slot": 71,
         "slot_hex": "0x47",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "1e40011835371f1f1f1f1f1f1f1f1f1f1f1f1f"
@@ -3302,7 +3386,7 @@
       {
         "slot": 72,
         "slot_hex": "0x48",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "477951695a7a4b5dff54791f1f1f1f1f1f1f1f"
@@ -3310,10 +3394,10 @@
       {
         "slot": 73,
         "slot_hex": "0x49",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0b4305011067020a1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Deep Sea Adventure",
+        "hex": "0344444f1f1244401f004355444d535451441f"
       },
       {
         "slot": 74,
@@ -3326,23 +3410,23 @@
       {
         "slot": 75,
         "slot_hex": "0x4B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "4d49a74b4d5d4554791f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Squawks Ride",
+        "hex": "12505440564a521f114843441f1f1f1f1f1f1f"
       },
       {
         "slot": 76,
         "slot_hex": "0x4C",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "54795d4b79ff4d795aa7601f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Hall of Dragons",
+        "hex": "07404b4b1f4e451f035140464e4d521f1f1f1f"
       },
       {
         "slot": 77,
         "slot_hex": "0x4D",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "183a01183b050f1f1f1f1f1f1f1f1f1f1f1f1f"
@@ -3366,7 +3450,7 @@
       {
         "slot": 80,
         "slot_hex": "0x50",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "48844b040209074d53a74c79231f1f1f1f1f1f"
@@ -3382,50 +3466,50 @@
       {
         "slot": 82,
         "slot_hex": "0x52",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "504550566b491f1f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Titanic",
+        "hex": "134853404d48421f1f1f1f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 83,
         "slot_hex": "0x53",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "0904371813790207111f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Frozen Cave",
+        "hex": "05514e59444d1f024055441f1f1f1f1f1f1f1f"
       },
       {
         "slot": 84,
         "slot_hex": "0x54",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "4b45ff5479a76c79a71835371f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Koindozer Forest",
+        "hex": "0a4e484d434e5944511f054e514452531f1f1f"
       },
       {
         "slot": 85,
         "slot_hex": "0x55",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "067943057912111379021840381f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Night Galaxy Train",
+        "hex": "0d484647531f06404b4057581f135140484d1f"
       },
       {
         "slot": 86,
         "slot_hex": "0x56",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "54474a7935040f791237210e3642131b791f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Really Big Jump",
+        "hex": "1144404b4b581f0148461f09544c4f1f1f1f1f"
       },
       {
         "slot": 87,
         "slot_hex": "0x57",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5b5e46180d6513021b79111d05430b79671f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Mario's Item Theft",
+        "hex": "0c4051484e5d521f0853444c1f13474445531f"
       },
       {
         "slot": 88,
@@ -3438,7 +3522,7 @@
       {
         "slot": 89,
         "slot_hex": "0x59",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "06100704025b5e461f1f1f1f1f1f1f1f1f1f1f"
@@ -3446,7 +3530,7 @@
       {
         "slot": 90,
         "slot_hex": "0x5A",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "48844b040209074d53a74c79251f1f1f1f1f1f"
@@ -3454,23 +3538,23 @@
       {
         "slot": 91,
         "slot_hex": "0x5B",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "64ff64ff587a566b49231f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Chomp Chomp Panic 1",
+        "hex": "02474e4c4f1f02474e4c4f1f0f404d48421f64"
       },
       {
         "slot": 92,
         "slot_hex": "0x5C",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "3312061858795e441f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en",
+        "needs_jp_font": 0,
+        "text": "Invincible Barrier",
+        "hex": "084d55484d4248414b441f014051514844511f"
       },
       {
         "slot": 93,
         "slot_hex": "0x5D",
-        "source": "demo-1-1 (matches boss)",
+        "source": "boss (post-demo7 JP fallback)",
         "needs_jp_font": 1,
         "text": null,
         "hex": "597aa75148696b4d601f1f1f1f1f1f1f1f1f1f"
@@ -3478,10 +3562,10 @@
       {
         "slot": 94,
         "slot_hex": "0x5E",
-        "source": "demo-1-1 (matches boss)",
-        "needs_jp_font": 1,
-        "text": null,
-        "hex": "5e88541279a4cd3f1f1f1f1f1f1f1f1f1f1f1f"
+        "source": "demo7-en (adapted)",
+        "needs_jp_font": 0,
+        "text": "LIFT GO! 1",
+        "hex": "0b0805131f060e3f1f641f1f1f1f1f1f1f1f1f"
       },
       {
         "slot": 95,
@@ -10648,7 +10732,7 @@
     "bank_address": "D58000",
     "header_size": 64,
     "total_size": 30814,
-    "sha256": "dc88751479e1342c31da4fd292a8c371b4c792179de547439b258ee24f7b819a",
+    "sha256": "1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f",
     "control_block_address": "908FF0",
     "control_block_size": 16,
     "effective_lang_address": "908FF0",

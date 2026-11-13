@@ -195,9 +195,9 @@
         "pack_file": "lang-r47-data.bin",
         "address": "D58000",
         "size": 30814,
-        "sha256": "dc88751479e1342c31da4fd292a8c371b4c792179de547439b258ee24f7b819a",
+        "sha256": "1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f",
         "executable": false,
-        "source": "local/native-modules/lang-r47-v1"
+        "source": "local/native-modules/lang-r47-v2"
       },
       {
         "variable": "BM_LANG_R47_CODE_PACK",
@@ -206,7 +206,7 @@
         "size": 4096,
         "sha256": "ea1c8cef78d1f32b68fa9db0dfdc5767f11d3ad36fa9f94aff9df75555e0deb8",
         "executable": true,
-        "source": "local/native-modules/lang-r47-v1"
+        "source": "local/native-modules/lang-r47-v2"
       }
     ],
     "extra_patches": [
