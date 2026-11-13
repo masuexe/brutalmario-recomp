@@ -293,11 +293,42 @@ void bm_lang_apply_live_vram(void) {
 
   uint8_t game_mode = g_ram[0x0100];
   uint8_t translevel = g_ram[0x13BF];
+  uint8_t ow_idx = translevel;
   uint16_t room = (uint16_t)(g_ram[0x010B] | (g_ram[0x010C] << 8));
   uint8_t msg_flag = g_ram[0x1426];
   int eff = bm_lang_resolve_effective();
-  int is_mazo_msg = (msg_flag != 0 && (room == 0x0191u || room == 0x0192u));
+  int is_mazo_msg =
+      ((room == 0x0191u && msg_flag == 2u) || (room == 0x0192u && msg_flag == 1u));
   uint16_t msg_slot = 0xFFFFu;
+
+  if (game_mode == 0x0Eu) {
+    /* $03:BB20 draws hovered OW level names without updating $13BF; match the live 19-tile banner first. */
+    uint8_t cur_banner[19];
+    for (size_t i = 0; i < 19u; ++i) {
+      cur_banner[i] = (uint8_t)(g_snes->ppu->vram[0x508Bu + i] & 0xFFu);
+    }
+    const uint8_t *en_ow = bmlg + en_ow_off;
+    const uint8_t *ja_ow = bmlg + ja_ow_off;
+    int matched = 0;
+    if (translevel < 96u) {
+      size_t off = (size_t)translevel * 19u;
+      if (memcmp(cur_banner, en_ow + off, 19u) == 0 ||
+          memcmp(cur_banner, ja_ow + off, 19u) == 0) {
+        ow_idx = translevel;
+        matched = 1;
+      }
+    }
+    if (!matched) {
+      for (uint8_t t = 0; t < 96u; ++t) {
+        size_t off = (size_t)t * 19u;
+        if (memcmp(cur_banner, en_ow + off, 19u) == 0 ||
+            memcmp(cur_banner, ja_ow + off, 19u) == 0) {
+          ow_idx = t;
+          break;
+        }
+      }
+    }
+  }
 
   if (msg_flag != 0 && !is_mazo_msg) {
     if (msg_flag == 3u) {
@@ -323,7 +354,7 @@ void bm_lang_apply_live_vram(void) {
   int use_jp_font = eff ? 1 : 0;
   if (!eff) {
     if (game_mode == 0x0Eu) {
-      if (translevel < 96u && bmlg[ow_flags_off + translevel] != 0)
+      if (ow_idx < 96u && bmlg[ow_flags_off + ow_idx] != 0)
         use_jp_font = 1;
     } else if (game_mode >= 0x0Fu) {
       if (room < 512u && bmlg[room_policy_off + room] != 0)
@@ -345,9 +376,9 @@ void bm_lang_apply_live_vram(void) {
     bm_vram_write_2kb(g_snes->ppu, 0x4800u, bmlg + (use_jp_font ? ja_02a_off : en_02a_off));
   }
 
-  if (game_mode == 0x0Eu && translevel < 96u) {
+  if (game_mode == 0x0Eu && ow_idx < 96u) {
     const uint8_t *ow_names = bmlg + (eff ? ja_ow_off : en_ow_off);
-    const uint8_t *row_tiles = ow_names + (size_t)translevel * 19u;
+    const uint8_t *row_tiles = ow_names + (size_t)ow_idx * 19u;
     for (size_t i = 0; i < 19u; ++i) {
       g_snes->ppu->vram[0x508Bu + i] = (uint16_t)row_tiles[i] | 0x3900u;
     }
@@ -356,10 +387,10 @@ void bm_lang_apply_live_vram(void) {
   if (msg_flag != 0) {
     const uint8_t *msg_ptr = NULL;
     size_t msg_max = 0;
-    if (room == 0x0192u) {
+    if (room == 0x0192u && msg_flag == 1u) {
       msg_ptr = bmlg + mazo_192_off;
       msg_max = 70u;
-    } else if (room == 0x0191u) {
+    } else if (room == 0x0191u && msg_flag == 2u) {
       msg_ptr = bmlg + mazo_191_off;
       msg_max = 86u;
     } else if (msg_slot < 144u) {

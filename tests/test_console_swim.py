@@ -46,6 +46,17 @@ static char g_cheat_input[64], g_cheat_status[256];
 static void CheatQueueMap(int m,int x,int y) { (void)m;(void)x;(void)y; assert(0); }
 static void CheatQueueRoom(int room) { (void)room;assert(0); }
 static void CheatQueuePoke(unsigned a,const uint8_t *b,int n) { (void)a;(void)b;(void)n;assert(0); }
+static int HostStrEqNoCase(const char *a,const char *b) {
+  for (; *a && *b; ++a, ++b) {
+    int ca = (*a >= 'A' && *a <= 'Z') ? (*a + 32) : *a;
+    int cb = (*b >= 'A' && *b <= 'Z') ? (*b + 32) : *b;
+    if (ca != cb) return 0;
+  }
+  return *a == *b;
+}
+static const char *snes_host_get_language_mode(void) { return "auto"; }
+static int snes_host_set_language_mode(const char *m) { (void)m; return 1; }
+static int snes_host_get_effective_language(void) { return 0; }
 '''
 
 BODY = r'''

@@ -615,11 +615,34 @@ int main(int argc, char **argv) {
   AssertEqInt(ppu.vram[0x508B], 0x3900 | ((0x40 + (0x29 & 0x1F)) & 0xFF), "OW 0x29 EN name");
 
   g_ram[0x13BF] = 0x01; /* needs_jp_font = 1 even in EN mode */
+  memset(&ppu.vram[0x508B], 0, 19 * sizeof(uint16_t));
   bm_lang_apply_live_vram();
   AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "OW 0x01 EN falls back to JA font");
 
   bm_lang_set_mode("ja");
   AssertEqInt(ppu.vram[0x508B], 0x3900 | ((0x80 + (0x01 & 0x1F)) & 0xFF), "OW 0x01 JA name");
+
+  /* Hovered OW banner mismatch with $13BF (e.g. $03:BB20 drew 0x29 while $13BF == 0x00) */
+  bm_lang_set_mode("en");
+  g_ram[0x13BF] = 0x29;
+  memset(&ppu.vram[0x508B], 0, 19 * sizeof(uint16_t));
+  bm_lang_apply_live_vram();
+  g_ram[0x13BF] = 0x00; /* stale $13BF while VRAM still displays 0x29 banner */
+  bm_lang_set_mode("ja");
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "hovered OW 0x29 JA font");
+  AssertEqInt(ppu.vram[0x508B], 0x3900 | ((0x80 + (0x29 & 0x1F)) & 0xFF), "hovered OW 0x29 JA name");
+  bm_lang_set_mode("en");
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x50, "hovered OW 0x29 EN font restored");
+  AssertEqInt(ppu.vram[0x508B], 0x3900 | ((0x40 + (0x29 & 0x1F)) & 0xFF), "hovered OW 0x29 EN name restored");
+
+  /* Hovered JP-only OW 0x01 with stale $13BF == 0x00 still activates JP font in EN mode */
+  g_ram[0x13BF] = 0x01;
+  memset(&ppu.vram[0x508B], 0, 19 * sizeof(uint16_t));
+  bm_lang_apply_live_vram();
+  g_ram[0x13BF] = 0x00;
+  bm_lang_set_mode("en");
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "hovered OW 0x01 EN falls back to JA font");
+  AssertEqInt(ppu.vram[0x508B], 0x3900 | ((0x40 + (0x01 & 0x1F)) & 0xFF), "hovered OW 0x01 EN name");
 
   /* Level mode 0x14: room policy + ExGFX shop + open Message Box */
   bm_lang_set_mode("en");
@@ -647,13 +670,36 @@ int main(int argc, char **argv) {
   AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "room 0x106 msg8 JA font");
   AssertEqInt(ppu.vram[0x50C7], 0x3900 | (0x90 + 8), "room 0x106 msg8 JA byte 0");
 
-  /* Mazo 0x192 message-scoped in EN mode */
+  /* Mazo 0x192 ($1426==1) and 0x191 ($1426==2) message-scoped in EN mode */
   bm_lang_set_mode("en");
   g_ram[0x010B] = 0x92; g_ram[0x010C] = 0x01;
+  g_ram[0x13BF] = 0x00;
   g_ram[0x1426] = 1;
   bm_lang_apply_live_vram();
-  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "mazo 0x192 EN falls back to JA font");
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "mazo 0x192 $1426=1 EN falls back to JA font");
   AssertEqInt(ppu.vram[0x50C7], 0x39A1, "mazo 0x192 byte 0");
+
+  g_ram[0x010B] = 0x91; g_ram[0x010C] = 0x01;
+  g_ram[0x1426] = 2;
+  bm_lang_apply_live_vram();
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x20, "mazo 0x191 $1426=2 EN falls back to JA font");
+  AssertEqInt(ppu.vram[0x50C7], 0x39B1, "mazo 0x191 byte 0");
+
+  /* Mazo $1426 mismatch (room 0x191 with $1426==1 uses normal msg_slot, NOT mazo_191) */
+  g_ram[0x010B] = 0x91; g_ram[0x010C] = 0x01;
+  g_ram[0x13BF] = 0x04; /* msg_slot 8 has msg_flags[8]=0 */
+  g_ram[0x1426] = 1;
+  bm_lang_apply_live_vram();
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x50, "mazo 0x191 $1426=1 mismatch keeps EN font");
+  AssertEqInt(ppu.vram[0x50C7], 0x3900 | (0x0A + 8), "mazo 0x191 $1426=1 does not load mazo_191");
+
+  /* Room 0x192 with $1426==2 mismatch does NOT load mazo_192 */
+  g_ram[0x010B] = 0x92; g_ram[0x010C] = 0x01;
+  g_ram[0x13BF] = 0x04;
+  g_ram[0x1426] = 2;
+  bm_lang_apply_live_vram();
+  AssertEqInt(ppu.vram[0x4800] & 0xFF, 0x50, "mazo 0x192 $1426=2 mismatch keeps EN font");
+  AssertEqInt(ppu.vram[0x50C7], 0x3900 | (0x0A + 9), "mazo 0x192 $1426=2 does not load mazo_192");
 
   bm_content_clear(rom);
   printf("ALL_HOST_BRIDGE_CHECKS_OK\n");
