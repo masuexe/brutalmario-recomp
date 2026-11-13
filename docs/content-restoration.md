@@ -2173,5 +2173,76 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
       closed `4.001`, console `4.126`).
 
 
+## Multi-language EN/JA switching (`demo11-native-product-r47`)
+
+- **Problem**: Official Japanese demos through `boss` share Japanese `GFX 0x28`/`0x2A`/`0x2B`
+  fonts, `boss` Overworld level names (`96` slots), `boss` message boxes (`144` slots), and
+  Mazo `0x191`/`0x192` Japanese messages, whereas `demo6`/`demo7`/`demoOnly1`/`Demo 1-1`
+  replaced `GFX 0x2A` (`$4800..$4BFF`) with English tiles while translating only a small subset
+  of strings (`10` Overworld names + `4` non-tutorial message boxes), causing untranslated
+  Japanese strings in English builds to render as mojibake (`乱码`) and offering no Japanese UI
+  option.
+- **Data audit & `BMLG` v1 pack**:
+  - `tools/audit_localization.py` + `config/native-content/localization-audit-r47.json` audit the
+    10 official ROMs (`demo6 -> demo6.5 -> demo7 -> cheap_demo -> ow -> mazo -> 7hero -> boss ->
+    demoonly1 -> 1-1`) and deterministically build `lang-r47-data.bin` (`BMLG` v1, `30,814` B,
+    SHA-256 `dc88751479e1342c31da4fd292a8c371b4c792179de547439b258ee24f7b819a`):
+    - **Japanese payload (`boss` + Mazo)**: `boss` Layer 3 fonts (`GFX 0x28`/`0x2A`/`0x2B`),
+      Title stripe image, `96` Japanese Overworld level names (`$15:827F`), `144` Japanese SMW
+      message boxes (`$15:89A7`), and Mazo `0x192`/`0x191` Japanese messages (`70` B / `86` B).
+    - **English payload + auto-JP fallback**: newest-first official English merge (`Demo 1-1 >
+      demoOnly1 > demo7 > demo6`, excluding untouched vanilla US SMW tutorial messages on cleared
+      slots) paired with per-slot/per-room `needs_jp_font` tables so untranslated Japanese
+      strings and Japanese rooms (`0x0FF`, `0x17B`, `0x191`, `0x192`, `0x1C5..0x14D`) in EN mode
+      automatically display with Japanese `GFX 0x2A` instead of garbled glyphs.
+- **Recipe, packs & runtime UI**:
+  - `tools/prepare_product_r47.py` + `config/restorations/demo11-native-product-r47.json`
+    (descendant of `demo11-native-product-r46`, ROM `4,194,304` B, SHA-256
+    `2123f5e3415364d3a5def92b8ac3ab1f581ec68f0cf6469ffda12f4a9da80b0a`, `8` code hooks across
+    `0005D4`, `003A28`, `01BB20`, `01BB90`, `01BBC9`, `02B11D`, `1FE296`, `1FE44D`):
+    - `BM_LANG_R47_DATA_PACK` at `$D5:8000` (`30,814` B, SHA-256 `dc887514...`, non-executable).
+    - `BM_LANG_R47_CODE_PACK` at `$90:8000` (`4,096` B, SHA-256
+      `ea1c8cef78d1f32b68fa9db0dfdc5767f11d3ad36fa9f94aff9df75555e0deb8`, executable LoROM
+      system-mirror bank `$90`), reserving `$90:8FF0..8FFF` (`0`-initialized on disk) with
+      `$90:8FF0` carrying host `effective_lang` (`0 = en`, `1 = ja`) and queuing mid-frame-safe
+      `GFX 0x2A` VRAM updates through SMW's `$10:D8D0` NMI VBlank scheduler.
+  - Runtime & host patches (`patches/runtime/0014..0016` in `config/runtime-patches.json`),
+    `recomp/native_seven.c` (`#ifdef BM_LANG_R47_SUPPORT`), and `recomp/bm_release_launcher.c`:
+    - `Esc` (single-player idle) / `O` opens the `GAME SETTINGS` modal (`ENGLISH` / `JAPANESE` /
+      `AUTO (SYSTEM)`) and `~` console supports `lang [en|ja|jp|auto|toggle]`.
+    - Live hot-swap immediately updates `$90:8FF0`, VRAM Layer 3 font tiles (`$4000`, `$4800`,
+      `$4C00`), active Overworld 19-tile banner (`$508B..$509D`, resolved via hovered banner
+      tiles so stale `$13BF` does not misindex), and any open `8x18` message box without
+      touching `save.srm`, persisting `[General] Language = auto|en|ja` in `config.ini`.
+    - First-launch `auto` defaults to `ja` strictly on Japanese OS locales (`LANG_JAPANESE` on
+      Win32; `LC_ALL` > `LC_MESSAGES` > `LANG` starting with `ja` case-insensitively on POSIX)
+      and `en` on all other locales; `--lang en|ja|auto` overrides on `bm_launcher` and
+      `tools/launch_native.py` / `tools/play_native_target.py` / `tools/play_native_cheats.py`.
+- **Verification**:
+  - Headless E2E captures under `local/captures/r47-*` verified EN & JA Title `GFX 0x28/0x2A/0x2B`
+    + Title stripe, `0x1C5 -> 0x14D -> Overworld` (`ja_gfx02a` retained on OW in `ja`, `en_gfx02a`
+    restored on EN-named OW node in `en`), untranslated JP OW node (`0x28`) & JP message (`0x106`)
+    auto-switching `GFX 0x2A` to Japanese in EN mode, Mazo `0x191` (`$1426==2`) & `0x192`
+    (`$1426==1`) diagnostic teleport+poke fixtures rendering Japanese text and restoring `en_gfx02a`
+    on close, `GAME SETTINGS` overlay dump (`SNESRECOMP_SETTINGS_MENU=1`), live Overworld banner
+    + font round-trip hot-swap (`en -> ja -> en`, `$13BF == 0x00` on `0x29`, `save.srm` invariant),
+    and `native-room1c5-intro.script` / `native-room1c5-skip.script` / `native-modern-175.script`
+    regressions.
+  - Full repository unit test suite: `python3 -m unittest discover -s tests -p "test_*.py" -v`
+    passed **586/586** (`0` failures, `0` errors, `0` skipped); `local/upstream/snesrecomp` clean.
+- **Public Beta promotion (`demo11-native-product-r47`)**:
+  - Default `--target` promoted to `demo11-native-product-r47` across launch, delta, and
+    packaging tools (`71` `BM_*` runtime packs / `72` manifest files, `BMPT` v1 delta `3,758,610`
+    B, SHA-256 `b893d48681a98ecfee7ff3434998cd4ead152343656e03ffea09df0dc0770be0`):
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Linux.zip` (`2,909,730` B, SHA-256
+      `125d9f81aeccfa6d1289b7996cf6dc6cf0ecc36a88cbf33e0ab513d47cf126f1`)
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Windows.zip` (`4,065,322` B, SHA-256
+      `e7d0f64b4490a0ffeb2f35c8d2f3c28a01a55b39ff70c505d62fac77a62e5361`)
+    - Linux vs Windows binary parity & clean-room Unicode path ZIP smoke tests pass
+      (`Linux guest_mean_ms`: closed `5.059`, console `5.006`; `Windows guest_mean_ms`:
+      closed `4.644`, console `4.508`); historical `dist/public-beta-r43..r46/` preserved.
+
+
+
 
 
