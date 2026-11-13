@@ -54,7 +54,9 @@ def environment(target):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r46")
+    parser.add_argument("--target", default="demo11-native-product-r47")
+    parser.add_argument("--lang", choices=["en", "ja", "auto"],
+                        help="override runtime language via BM_LANG (en, ja, or auto)")
     parser.add_argument("--rom", type=Path)
     parser.add_argument("--config", type=Path)
     parser.add_argument("--extra", nargs=argparse.REMAINDER,
@@ -73,6 +75,8 @@ def main():
     if args.extra:
         command.extend(args.extra)
     env = environment(args.target)
+    if args.lang is not None:
+        env["BM_LANG"] = args.lang
     print("launch:", " ".join(command))
     print("packs:", {k: v for k, v in env.items() if k.startswith("BM_")})
     return subprocess.call(command, cwd=str(build), env=env)

@@ -135,12 +135,12 @@ class Room1C5IntroCutsceneTest(unittest.TestCase):
             src = (TOOLS_DIR / tool_name).read_text(encoding="utf-8")
             self.assertRegex(
                 src,
-                r"""--target["']\s*,\s*default\s*=\s*["']demo11-native-product-r46["']""",
-                f"{tool_name} missing r46 --target default",
+                r"""--target["']\s*,\s*default\s*=\s*["']demo11-native-product-r(?:4[6-9]|[5-9]\d)["']""",
+                f"{tool_name} missing r46+ --target default",
             )
         pkg_src = (TOOLS_DIR / "package_public_beta.py").read_text(encoding="utf-8")
-        self.assertIn('ROOT / "dist/public-beta-r46"', pkg_src)
-        self.assertIn('ROOT / "local/diagnostics/public-beta-r46"', pkg_src)
+        self.assertRegex(pkg_src, r"""ROOT\s*/\s*["']dist/public-beta-r(?:4[6-9]|[5-9]\d)["']""")
+        self.assertRegex(pkg_src, r"""ROOT\s*/\s*["']local/diagnostics/public-beta-r(?:4[6-9]|[5-9]\d)["']""")
 
         packs = build_smw_delta.collect_target_packs(p46.TARGET)
         self.assertEqual(len(packs), 69)

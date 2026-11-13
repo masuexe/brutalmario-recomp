@@ -112,6 +112,8 @@ def header(target):
     text += '};\n'
     if any(pack['variable'] == 'BM_MAZO_PRIMARY_ENTRY_PACK' for pack in data):
         text += '#define BM_MAZO_PRIMARY_ENTRY 1\n'
+    if any(pack['variable'] == 'BM_LANG_R47_DATA_PACK' for pack in data):
+        text += '#define BM_LANG_R47_SUPPORT 1\n'
     return text
 
 
@@ -258,7 +260,11 @@ def configure(experiment, binary, target):
     program = json.loads((experiment / 'src/gen/program_manifest.json').read_text())
     forged = {int(pack['address'], 16) >> 16 for pack in feature['packs']}
     forbidden = set((0x22, 0xa2, 0x25, 0xa5, 0x26, 0xa6, 0x36, 0xb6, 0x23, 0xa3, 0x24, 0xa4)) | forged
-    if any(int(key.split(':')[0], 16) >> 16 in forbidden for key in program['nodes']):
+    if any(
+        int(key.split(':')[0], 16) >> 16 in forbidden
+        and node.get('disposition') != 'lle_only'
+        for key, node in program['nodes'].items()
+    ):
         raise ValueError('sprite gap entry forbids AOT in mapped banks and aliases')
     directory = ROOT / 'local/native-content-runtime' / target
     cart = directory / 'runner/src/snes/cart.c'

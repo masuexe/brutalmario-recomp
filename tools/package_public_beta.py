@@ -341,6 +341,7 @@ def format_config_ini(platform: str) -> str:
         "EnableAudio=1\n\n"
         "[General]\n"
         "RunAhead=0\n"
+        "Language=auto\n"
     )
 
 
@@ -418,11 +419,16 @@ def format_readme(target: str) -> str:
     - lives 99       : 设置生命数
     - teleport 0x151 : 传送至指定房间号（0x000 - 0x1FF）
     - xy X Y         : 关卡内坐标瞬移
+    - lang [en|ja|auto|toggle] : 切换文本语言（English / 日本語 / 跟随系统）
     - Esc            : 关闭控制台
 
-  [画面与音量调整]
-  • 编辑 config/config.ini 可修改窗口倍率（WindowScale=3 默认 3 倍大小）、
-    垂直同步（VSync=1）与音频开关（EnableAudio=1）。
+  [画面、语言与音量调整 / Video, Language & Audio Settings]
+  • 按 Esc 或 O 键可打开游戏内设置界面（GAME SETTINGS），支持实时切换语言
+    （Auto 跟随系统 / English / Japanese）并自动保存至 config/config.ini。
+  • 命令行也可通过 `--lang en|ja|auto` 参数或设置环境变量 `BM_LANG=en|ja|auto` 启动。
+  • 编辑 config/config.ini 可修改语言（Language=auto 默认自动识别日语系统为
+    Japanese、其余系统为 English）、窗口倍率（WindowScale=3）、垂直同步
+    （VSync=1）与音频开关（EnableAudio=1）。
 ========================================================================
 """
 
@@ -656,10 +662,10 @@ def run_end_to_end_smoke_test(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r46")
+    parser.add_argument("--target", default="demo11-native-product-r47")
     parser.add_argument("--base-rom", type=Path, default=ROOT.parent / "roms/Super Mario World (U) [!].smc")
-    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r46")
-    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r46")
+    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r47")
+    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r47")
     parser.add_argument("--force-rebuild-windows", action="store_true")
     args = parser.parse_args()
 
