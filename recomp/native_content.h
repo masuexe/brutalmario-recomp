@@ -20,4 +20,10 @@ uint8_t *bm_content_backing(uint8_t *rom, size_t size);
 void bm_region_load(uint8_t *rom, size_t size);
 void bm_region_clear(const uint8_t *rom);
 uint8_t *bm_region_resolve(const uint8_t *rom, uint8_t bank, uint16_t address);
+
+#ifdef BM_LANG_R47_SUPPORT
+const char *bm_lang_get_mode(void);
+void bm_lang_set_mode(const char *mode);
+void bm_lang_apply_live_vram(void);
+#endif
 #endif
