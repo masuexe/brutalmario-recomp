@@ -18,27 +18,46 @@ sys.path.insert(0, str(ROOT / 'tools'))
 
 from restore_star_world_1 import sha
 
-# Wait for the title, open the file, skip the intro, and reach the map.
+# Wait for the title, open the file, skip the 4-scene intro, and reach the map.
 STARTUP = '''wait 600
 press start 2
 wait 180
 press start 2
-wait 900
-press b 30
+wait 240
+press a 2
 wait 180
-press a 30
+press b 2
 wait 180
+press a 2
+wait 180
+press b 2
+wait 240
 '''
 
-# Fast-entry startup: poll game mode instead of fixed waits, skip the intro.
+# Fast-entry startup: poll game mode instead of fixed waits, skip the 4-scene intro.
 FAST_STARTUP = '''turbo on
 until 0100 == 07 4000
+wait 10
 press start 2
 until 0100 == 08 900
+wait 180
 press start 2
-until 0100 == 14 2400
-wait 780
-press b 30
+until16 010b == 01c5 900
+until 0100 == 14 600
+wait 60
+press a 2
+until16 010b == 014b 900
+until 0100 == 14 600
+wait 60
+press b 2
+until16 010b == 014c 900
+until 0100 == 14 600
+wait 60
+press a 2
+until16 010b == 014d 900
+until 0100 == 14 600
+wait 60
+press b 2
 until 0100 == 0e 2400
 '''
 

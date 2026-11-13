@@ -1,13 +1,27 @@
-wait 600
+turbo on
+until 0100 == 07 800
+wait 10
 press start 2
+until 0100 == 08 300
 wait 180
 press start 2
-wait 900
-press b 30
-wait 180
-press a 30
-wait 180
-until 0100 == 0e 900
+until16 010b == 01c5 600
+until 0100 == 14 300
+wait 60
+press a 2
+until16 010b == 014b 600
+until 0100 == 14 300
+wait 60
+press b 2
+until16 010b == 014c 600
+until 0100 == 14 300
+wait 60
+press a 2
+until16 010b == 014d 600
+until 0100 == 14 300
+wait 60
+press b 2
+until 0100 == 0e 1200
 # Completed-progress cheat.
 poke 1ea2 9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f9f
 poke 1f02 ffffffffffffffffffffffffffffff
@@ -15,6 +29,7 @@ poke 1f27 01010101
 poke 1f2e 60
 poke 1f2f ffffffffffffffffffffffff
 poke 1182c 000000000000000000000000000000000000000000000000
+poke 0109 00
 poke 0100 0b
 wait 300
 # Move to the Special Zone map (map 5) at the star head.
@@ -25,4 +40,6 @@ poke 1f1f 1100120011001200
 poke 0100 0b
 wait 300
 until 1f11 == 05 600
+until 0100 == 0e 600
 wait 60
+turbo off

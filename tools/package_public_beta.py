@@ -603,6 +603,24 @@ def run_end_to_end_smoke_test(
     )
     subprocess.run([str(lin_pkg / "bin/bm_launcher"), "--verify"], check=True)
 
+    # 1c. Verify cheat-complete-all.script reaches all-unlocked Overworld cleanly
+    lin_cheat_script = smoke_root / "lin-complete-all.script"
+    lin_cheat_script.write_text(
+        (lin_pkg / "scripts/cheat-complete-all.script").read_text(encoding="utf-8")
+        + "\ndump complete\nquit\n",
+        encoding="utf-8",
+    )
+    (lin_pkg / "saves/save.srm").unlink(missing_ok=True)
+    subprocess.run(
+        [str(lin_pkg / "play.sh"), "--script", str(lin_cheat_script)],
+        env=lin_env, check=True, timeout=120,
+    )
+    lin_complete_wram = (lin_dump / "complete.wram.bin").read_bytes()
+    if lin_complete_wram[0x0100] != 0x0E or lin_complete_wram[0x1EA2] != 0x9F:
+        raise AssertionError(
+            f"Linux cheat-complete-all smoke mismatch: mode={lin_complete_wram[0x0100]:#x} 1EA2={lin_complete_wram[0x1EA2]:#x}"
+        )
+
     # 2. Windows clean-room simulation ( inside Chinese + space directory, with 512B SMC header! )
     win_extract = smoke_root / "鬼畜马里奥 公测 Windows"
     win_extract.mkdir(parents=True)
@@ -639,6 +657,37 @@ def run_end_to_end_smoke_test(
         encoding="utf-8",
     )
     run_cmd_bat(boot_bat, smoke_root / "win_boot.log", timeout=120)
+
+    # 2c. Verify cheat-special-zone.script reaches Special Zone (map 5) cleanly on Windows
+    win_sz_script = smoke_root / "win-special-zone.script"
+    win_sz_script.write_text(
+        (win_pkg / "scripts/cheat-special-zone.script").read_text(encoding="utf-8")
+        + "\ndump sz\nquit\n",
+        encoding="utf-8",
+    )
+    (win_pkg / "saves/save.srm").unlink(missing_ok=True)
+    sz_bat = smoke_root / "test_win_special_zone.bat"
+    sz_bat.write_text(
+        "@echo off\r\n"
+        "chcp 65001 >nul\r\n"
+        "set BM_NO_MSGBOX=1\r\n"
+        "set SDL_VIDEODRIVER=dummy\r\n"
+        "set SDL_AUDIODRIVER=dummy\r\n"
+        f'set "SNESRECOMP_DUMP_DIR={host_path(win_dump, "windows")}"\r\n'
+        f'call "{host_path(win_pkg / "启动游戏.bat", "windows")}" --script "{host_path(win_sz_script, "windows")}" || exit /b 1\r\n',
+        encoding="utf-8",
+    )
+    run_cmd_bat(sz_bat, smoke_root / "win_sz.log", timeout=180)
+    win_sz_wram = (win_dump / "sz.wram.bin").read_bytes()
+    win_sz_pos = (
+        win_sz_wram[0x1F17] | (win_sz_wram[0x1F18] << 8),
+        win_sz_wram[0x1F19] | (win_sz_wram[0x1F1A] << 8),
+    )
+    if win_sz_wram[0x0100] != 0x0E or win_sz_wram[0x1F11] != 0x05 or win_sz_pos != (0x118, 0x128):
+        raise AssertionError(
+            f"Windows cheat-special-zone smoke mismatch: mode={win_sz_wram[0x0100]:#x} "
+            f"map={win_sz_wram[0x1F11]} pos=({win_sz_pos[0]:#x},{win_sz_pos[1]:#x})"
+        )
 
     # 3. Assert 100% binary state parity between unpacked Linux ZIP and unpacked Windows ZIP!
     parity = {}

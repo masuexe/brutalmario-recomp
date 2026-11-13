@@ -2234,13 +2234,18 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   - Default `--target` promoted to `demo11-native-product-r47` across launch, delta, and
     packaging tools (`71` `BM_*` runtime packs / `72` manifest files, `BMPT` v1 delta `3,758,610`
     B, SHA-256 `b893d48681a98ecfee7ff3434998cd4ead152343656e03ffea09df0dc0770be0`):
-    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Linux.zip` (`2,909,730` B, SHA-256
-      `125d9f81aeccfa6d1289b7996cf6dc6cf0ecc36a88cbf33e0ab513d47cf126f1`)
-    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Windows.zip` (`4,065,322` B, SHA-256
-      `e7d0f64b4490a0ffeb2f35c8d2f3c28a01a55b39ff70c505d62fac77a62e5361`)
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Linux.zip` (`2,910,207` B, SHA-256
+      `d5420e784a6fc211be656cf8257e9004a7a1a194ed3b2a34e06816d8282a917d`)
+    - `dist/public-beta-r47/BrutalMario-PublicBeta-r47-Windows.zip` (`4,065,802` B, SHA-256
+      `c6c257d92f52f3ba54fa4cccd2d1c3d45e63f45873edf9d04eec6af12a91fbf0`)
     - Linux vs Windows binary parity & clean-room Unicode path ZIP smoke tests pass
-      (`Linux guest_mean_ms`: closed `5.059`, console `5.006`; `Windows guest_mean_ms`:
-      closed `4.644`, console `4.508`); historical `dist/public-beta-r43..r46/` preserved.
+      (`Linux guest_mean_ms`: closed `4.858`, console `4.981`; `Windows guest_mean_ms`:
+      closed `4.326`, console `4.257`), including clean-room `cheat-complete-all.script`
+      (Linux) and `cheat-special-zone.script` (Windows) smoke runs after syncing
+      `recomp/inputs/cheat-complete-all.script`, `recomp/inputs/cheat-special-zone.script`, and
+      `tools/play_native_cheats.py` (`STARTUP`/`FAST_STARTUP`) to skip all `4` scenes
+      (`0x1C5 -> 0x14B -> 0x14C -> 0x14D -> 0x0E`); historical `dist/public-beta-r43..r46/`
+      preserved.
 
 
 
