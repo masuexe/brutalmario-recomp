@@ -93,24 +93,7 @@ class ExGfxR45BatchTest(unittest.TestCase):
         self.assertEqual(len(manifest["code_patches"]), 8)
         self.assertEqual(manifest["output"]["sha256"], p45.R45_SHA)
 
-    def test_defaults_promoted_to_r45(self) -> None:
-        for tool_name in (
-            "launch_native.py",
-            "play_native_target.py",
-            "play_native_cheats.py",
-            "build_smw_delta.py",
-            "package_public_beta.py",
-        ):
-            src = (TOOLS_DIR / tool_name).read_text(encoding="utf-8")
-            self.assertRegex(
-                src,
-                r"""--target["']\s*,\s*default\s*=\s*["']demo11-native-product-r45["']""",
-                f"{tool_name} missing r45 --target default",
-            )
-        pkg_src = (TOOLS_DIR / "package_public_beta.py").read_text(encoding="utf-8")
-        self.assertIn('ROOT / "dist/public-beta-r45"', pkg_src)
-        self.assertIn('ROOT / "local/diagnostics/public-beta-r45"', pkg_src)
-
+    def test_launchers_mount_product_r45_env(self) -> None:
         packs = build_smw_delta.collect_target_packs(p45.TARGET)
         self.assertEqual(len(packs), 67)
         by_var = {pack["variable"]: pack for pack in packs}

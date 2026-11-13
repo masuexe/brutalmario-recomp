@@ -1,0 +1,46 @@
+# Unassisted Boot -> Title -> New Save File A -> 0x1C5..0x14D story cutscene -> World 1 Overworld -> Course 1-1 -> File A reload.
+until 0100 == 07 800
+wait 10
+dump title
+press start 2
+until 0100 == 08 300
+wait 180
+dump files
+press start 2
+until16 010b == 01c5 300
+until 0100 == 14 300
+wait 120
+dump room1c5
+until16 010b == 014b 900
+until 0100 == 14 300
+wait 120
+dump room14b
+until16 010b == 014c 1200
+until 0100 == 14 300
+wait 120
+dump room14c
+until16 010b == 014d 1200
+until 0100 == 14 300
+wait 120
+dump room14d
+until 0100 == 0e 1500
+wait 120
+dump ow
+press left 30
+wait 60
+dump ow_node
+press y 2
+until 0100 == 14 600
+wait 60
+dump course104
+reset
+until 0100 == 07 800
+wait 10
+press start 2
+until 0100 == 08 300
+wait 180
+press start 2
+until 0100 == 0e 900
+wait 60
+dump reload_ow
+quit

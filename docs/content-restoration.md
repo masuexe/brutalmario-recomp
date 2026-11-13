@@ -2088,6 +2088,90 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
     with unrelated artwork (`same=0` tiles). Do not overwrite `r44` `0x400`/`0x401` from
     `demo-only-1`.
 
+## Room `0x1C5` opening story cutscene (`demo11-native-product-r46`)
+
+- **Problem**: `demo11-native-product-r45` inherited `demo-1-1`'s `24`-byte Message 1 stub in
+  Room `0x1C5`, disabled Super GFX Bypass, pointed `$00:9EF0` submap `0x00` through
+  `$13:EDAF` (`TYA; BEQ` -> `0x0C5` Yoshi's House), and lacked `cheap-demo` ExGFX
+  `0x239/0x23A/0x23C` and the Japanese `GFX 0x02A` font tiles needed by custom Sprite `0x00`'s
+  opening story sequence (`0x1C5 -> 0x14B -> 0x14C -> 0x14D -> World 1 Overworld`).
+- **Recipe & packs**:
+  - `tools/prepare_product_r46.py`, `config/restorations/demo11-native-product-r46.json`
+    (descendant of `demo11-native-product-r45`, ROM `4,194,304` B, SHA-256
+    `142ee768d1d5cd436a17d459719b30a02ba5dafaa79271b9d3c37da4965a0b7e`, exact `56`-byte
+    diff across `15` patches).
+  - `BM_ROOM1C5_R46_DATA_PACK` at `$D4:8000`
+    (`local/native-modules/room1c5-r46-v1/room1c5-r46-data.bin`, `14,181` B, SHA-256
+    `754eadae48ceb2376090d2ca43148ff3c47d6af90071c3f8952dd1e72ac36a07`, non-executable):
+    1. `$D4:8000` (`3,099` B): `cheap-demo` ExGFX `0x23A` LZ2 (`$45:CF66`), mounted at
+       `$14:83B6` (PC `0x0A03B6`).
+    2. `$D4:8C1B` (`3,250` B): `cheap-demo` ExGFX `0x239` LZ2 (`$43:EB1E`), mounted at
+       `$14:83B3` (PC `0x0A03B3`).
+    3. `$D4:98CD` (`2,655` B): `cheap-demo` ExGFX `0x23C` LZ2 (`$45:E484`), mounted at
+       `$14:83BC` (PC `0x0A03BC`).
+    4. `$D4:A32C` (`514` B): `cheap-demo` Room `0x1C5` Custom Palette (`$57:DA95`),
+       mounted at `$0E:FB4F` (PC `0x077B4F`).
+    5. `$D4:A52E` (`546` B): `cheap-demo` Room `0x1C5` Layer 1 (`$57:A065`) with music byte
+       patched `40 60 44 ff` -> `40 60 5a ff` (modern slot `$59`, *Aboard the Hilda Garde*),
+       mounted at `$05:E54F` (PC `0x02E54F`).
+    6. `$D4:A750` (`16` B): `cheap-demo` Room `0x1C5` Layer 2 RLE stream (`$57:A28F`),
+       mounted at `$05:EB4F` (PC `0x02EB4F`).
+    7. `$D4:A760` (`5` B): `cheap-demo` Room `0x1C5` Sprite list (`$57:DC9F`, `00e83000ff`),
+       mounted at `$05:EF8A` / `$0E:F2C5` (PC `0x02EF8A` / `0x0772C5`).
+    8. `$D4:A765` (`2,048` B): decoded `cheap-demo` Japanese `GFX 0x02A` (SHA-256
+       `2f0619a305c515d72c4707dd7f18a792dcc376d3a5ac65adab35e68e75e15e1f`).
+    9. `$D4:AF65` (`2,048` B): decoded `r45` / `demo-1-1` English `GFX 0x02A` (SHA-256
+       `310facf09c5f280859dcfcf4da215c63089377af4802aabea31e49ce5f09d0fa`).
+  - `BM_ROOM1C5_R46_CODE_PACK` at `$89:B000`
+    (`local/native-modules/room1c5-r46-v1/room1c5-r46-code.bin`, `123` B, SHA-256
+    `33d8328acd5aacf08ee50f332e1a12e3a6e7245e51d6b36fd826ce22f8721398`, executable LoROM
+    mirror bank `$89`):
+    - `$89:B000` (hooked from `$3F:E296`, `JSL $89B000; NOP`): DMA2 uploads Japanese `GFX 0x02A`
+      (`$D4:A765`) to VRAM word `$4800` while preserving full 16-bit `C`, `P`, `X`, `Y`, `DB`,
+      `D`, then replays `LDA #$FF; STA $18BD; RTL`.
+    - `$89:B040` (hooked from `$3F:E44D`, `JSL $89B040; NOP`): DMA2 restores English `GFX 0x02A`
+      (`$D4:AF65`) to VRAM word `$4800` when `0x14D` exits to the Overworld, then replays
+      `STZ $18BD; LDA #$A0; RTL`.
+  - Supporting patches: Room `0x1C5` secondary headers (`$05:F1C5` `5b`->`83`, `$0E:F4D5`
+    `00`->`02`), `32`-byte Super GFX Bypass (`$14:E5A8`), New-Save silence slot `$1E`
+    (`$00:9724` `01`->`1e`), and `$13:EDAF` (`98f006`->`eaeaea`) so New Save (`$0100>=$0B`
+    and `$0109!=0`) enters `0x1C5` even with World 1 `$1F11==0x00`.
+- **Verification**:
+  - `local/captures/r46-room1c5-intro` (`recomp/inputs/native-room1c5-intro.script`, `--audio`):
+    unassisted Boot -> Title (`0x00C7`, `mode=0x07`, `$0DDA=0x02`, audio `rms=589.09`) ->
+    File Select (`mode=0x08`) -> New Save File A -> `0x1C5 -> 0x14B -> 0x14C -> 0x14D`
+    (`bank=D4 resolutions=42488 executed=0`, `bank=89 resolutions=1712 executed=260`; `0x239` at
+    `VRAM[0x2000:0x3000]`, `0x23A` at `VRAM[0x3000:0x4000]`, `0x23C` matching `116/128` static
+    tiles at `VRAM[0x1000:0x2000]`, custom CGRAM matching `cheap-demo` `PAL_1C5` except animated
+    word `0x64`, Japanese `GFX 0x02A` at `VRAM[0x9000:0x9800]`, streamed `$39xx` BG3 subtitle
+    tiles in `VRAM[0xB200:0xB600]` across all `4` scenes, `$0DDA=0x1E` and `audio.wav` silence
+    `rms=0.00` during cutscene) -> natural exit to World 1 Overworld (`mode=0x0E`,
+    `submap=0x00`, `$0109=0x00`, English `GFX 0x02A` restored byte-for-byte at
+    `VRAM[0x9000:0x9800]`, `"Hey, I am Mario!"` BG3 HUD row 4 intact, Overworld BGM
+    `rms=1067.29`) -> Course `1-1` (`0x105`) entry from `(0048, 0198)` -> reset + File A reload
+    landing directly on Overworld `(0048, 0198)` without replaying intro.
+  - `local/captures/r46-room1c5-skip2` (`recomp/inputs/native-room1c5-skip.script`): `Start`
+    pauses (`$13D4=1`) and unpauses (`$13D4=0`), and `A`/`B` skips `0x1C5 -> 0x14B -> 0x14C ->
+    0x14D -> Overworld` with English `GFX 0x02A` restored.
+  - `local/captures/r46-reg-room175` (`recomp/inputs/native-modern-175.script`): `r45` ExGFX
+    `0x18F` / `0x192` and bank `D3` remain intact (`0x18F` exact at `VRAM[0xF000:0x10000]`,
+    `0x192` exact at `WRAM[0xAD00:0xBD00]`, `126/128` tiles at `VRAM[0x3000:0x4000]`).
+  - `tests/test_room1c5_intro_cutscene.py`, `tests/test_exgfx_r45_batch.py`, and
+    `tests/test_public_beta_package.py` pass.
+- **Public Beta promotion (`demo11-native-product-r46`)**:
+  - Default `--target` promoted to `demo11-native-product-r46` in `tools/launch_native.py`,
+    `tools/play_native_target.py`, `tools/play_native_cheats.py`, `tools/build_smw_delta.py`,
+    and `tools/package_public_beta.py` (`69` `BM_*` runtime packs / `70` manifest files,
+    `BMPT` v1 delta `3,730,473` B, SHA-256
+    `ed885d5a874401a780ab3299e3e71a1746036613d9ea5e2323629be8e8c911cc`):
+    - `dist/public-beta-r46/BrutalMario-PublicBeta-r46-Linux.zip` (`2,897,966` B, SHA-256
+      `9cb5d23e5f9c78e0353d078cbc3d50a52c8b12aa68b17c51888744b4fcddb23f`)
+    - `dist/public-beta-r46/BrutalMario-PublicBeta-r46-Windows.zip` (`4,055,052` B, SHA-256
+      `e4a63ef437bd5ab18a94118262c503a60572626a34ea14cd371125ae65b09508`)
+    - Linux vs Windows binary parity & clean-room Unicode path ZIP smoke tests pass
+      (`Linux guest_mean_ms`: closed `4.665`, console `4.640`; `Windows guest_mean_ms`:
+      closed `4.001`, console `4.126`).
+
 
 
 

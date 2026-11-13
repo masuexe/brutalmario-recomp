@@ -1,0 +1,36 @@
+# Unassisted Start pause/unpause and A/B scene-skip route across 0x1C5 -> 0x14B -> 0x14C -> 0x14D -> Overworld.
+until 0100 == 07 800
+wait 10
+press start 2
+until 0100 == 08 300
+wait 180
+press start 2
+until16 010b == 01c5 300
+until 0100 == 14 300
+wait 120
+press start 2
+wait 90
+dump paused
+press start 2
+wait 60
+dump unpaused
+press a 2
+until16 010b == 014b 600
+until 0100 == 14 300
+wait 60
+dump skip_14b
+press b 2
+until16 010b == 014c 600
+until 0100 == 14 300
+wait 60
+dump skip_14c
+press a 2
+until16 010b == 014d 600
+until 0100 == 14 300
+wait 60
+dump skip_14d
+press b 2
+until 0100 == 0e 600
+wait 120
+dump skip_ow
+quit

@@ -121,6 +121,27 @@ class PublicBetaPackageTests(unittest.TestCase):
         self.assertIn("全部 67 个原生扩展资源包", readme)
         self.assertIn("all 67 native content packs", readme)
 
+    def test_collect_r46_packs_covers_all_69_runtime_variables(self):
+        r46_rom = ROOT / "local/restoration/demo11-native-product-r46/rom.sfc"
+        if not r46_rom.is_file():
+            self.skipTest("demo11-native-product-r46 restoration files not present")
+        packs = delta.collect_target_packs("demo11-native-product-r46")
+        self.assertEqual(len(packs), 69)
+        variables = {p["variable"] for p in packs}
+        self.assertEqual(len(variables), 69)
+        self.assertIn("BM_NATIVE_CONTENT_PACK", variables)
+        self.assertIn("BM_SPRITE_GRAPHICS_PACK", variables)
+        self.assertIn("BM_SPRITE_GRAPHICS_PACK_2", variables)
+        self.assertIn("BM_SEVEN_CODE_PACK_50", variables)
+        self.assertIn("BM_EXGFX_1B2_PACK", variables)
+        self.assertIn("BM_EXGFX_R45_PACK", variables)
+        self.assertIn("BM_ROOM1C5_R46_DATA_PACK", variables)
+        self.assertIn("BM_ROOM1C5_R46_CODE_PACK", variables)
+        import package_public_beta as ppb
+        readme = ppb.format_readme("demo11-native-product-r46")
+        self.assertIn("全部 69 个原生扩展资源包", readme)
+        self.assertIn("all 69 native content packs", readme)
+
     def test_bm_launcher_c_synthesizes_and_verifies_on_unicode_path(self):
         with tempfile.TemporaryDirectory() as tmp:
             pkg = Path(tmp) / "鬼畜马里奥 LauncherTest"

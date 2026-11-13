@@ -337,7 +337,7 @@ def console_loop(command, env, play_dir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--target', default='demo11-native-product-r45')
+    parser.add_argument('--target', default='demo11-native-product-r46')
     parser.add_argument('--map', type=coordinate, metavar='MAP',
                         help='map id for a position teleport, for example 6')
     parser.add_argument('--x', type=coordinate, help='map X for --map')
