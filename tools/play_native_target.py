@@ -46,7 +46,9 @@ def packs_env(target, cfg, env):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--target', default='demo11-native-product-r46')
+    parser.add_argument('--target', default='demo11-native-product-r47')
+    parser.add_argument('--lang', choices=['en', 'ja', 'auto'],
+                        help='override runtime language via BM_LANG (en, ja, or auto)')
     parser.add_argument('--script', type=Path,
                         help='optional script file, for a smoke test')
     parser.add_argument('--print-env', action='store_true',
@@ -98,6 +100,8 @@ def main():
 
     env = dict(os.environ)
     packs_env(args.target, cfg, env)
+    if args.lang is not None:
+        env['BM_LANG'] = args.lang
     if args.print_env:
         for key in sorted(env):
             if key.startswith('BM_'):

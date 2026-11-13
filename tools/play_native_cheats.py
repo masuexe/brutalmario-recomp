@@ -337,7 +337,9 @@ def console_loop(command, env, play_dir):
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--target', default='demo11-native-product-r46')
+    parser.add_argument('--target', default='demo11-native-product-r47')
+    parser.add_argument('--lang', choices=['en', 'ja', 'auto'],
+                        help='override runtime language via BM_LANG (en, ja, or auto)')
     parser.add_argument('--map', type=coordinate, metavar='MAP',
                         help='map id for a position teleport, for example 6')
     parser.add_argument('--x', type=coordinate, help='map X for --map')
@@ -438,6 +440,8 @@ def main():
 
     env = dict(os.environ)
     packs_env(target, cfg, env)
+    if args.lang is not None:
+        env['BM_LANG'] = args.lang
     command = [str(binary), '--no-launcher',
                '--config', str(ROOT / 'recomp/m1-config.ini'),
                '--rom', str(rom), '--script', str(script_path)]
