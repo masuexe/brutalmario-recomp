@@ -1,0 +1,12 @@
+diff --git a/runner/src/desktop/config.h b/runner/src/desktop/config.h
+index f42a5dc..74cb12c 100644
+--- a/runner/src/desktop/config.h
++++ b/runner/src/desktop/config.h
+@@ -186,6 +186,7 @@ typedef struct Config {
+ 
+   // Which players have keyboard controls
+   uint8 has_keyboard_controls;
++  char language[16];
+ } Config;
+ 
+ enum {

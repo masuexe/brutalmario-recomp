@@ -532,6 +532,21 @@ static void set_env_kv(const char *k, const char *v, int overwrite) {
 #endif
 }
 
+static const char *normalize_lang_arg(const char *val) {
+    if (!val || !*val) return NULL;
+    char buf[16];
+    size_t len = strlen(val);
+    if (len >= sizeof(buf)) return NULL;
+    for (size_t i = 0; i <= len; ++i) {
+        char c = val[i];
+        buf[i] = (c >= 'A' && c <= 'Z') ? (char)(c + 32) : c;
+    }
+    if (strcmp(buf, "en") == 0 || strcmp(buf, "english") == 0) return "en";
+    if (strcmp(buf, "ja") == 0 || strcmp(buf, "jp") == 0 || strcmp(buf, "japanese") == 0) return "ja";
+    if (strcmp(buf, "auto") == 0) return "auto";
+    return NULL;
+}
+
 #ifdef _WIN32
 static char *win_quote_arg(const char *arg) {
     int need_quotes = (arg[0] == '\0' || strchr(arg, ' ') != NULL || strchr(arg, '\t') != NULL);
@@ -562,6 +577,7 @@ int main(int argc, char **argv) {
     int verify_only = 0;
     int special_zone = 0;
     int complete_all = 0;
+    const char *lang_override = NULL;
     const char *extra_args[128];
     int extra_count = 0;
 
@@ -574,6 +590,22 @@ int main(int argc, char **argv) {
             special_zone = 1;
         } else if (strcmp(argv[i], "--complete-all") == 0 || strcmp(argv[i], "-c") == 0) {
             complete_all = 1;
+        } else if (strcmp(argv[i], "--lang") == 0) {
+            if (i + 1 >= argc) {
+                fprintf(stderr, "Error: --lang requires an argument (en|ja|auto).\n");
+                return 2;
+            }
+            lang_override = normalize_lang_arg(argv[++i]);
+            if (!lang_override) {
+                fprintf(stderr, "Error: invalid --lang value '%s' (expected en, ja, or auto).\n", argv[i]);
+                return 2;
+            }
+        } else if (strncmp(argv[i], "--lang=", 7) == 0) {
+            lang_override = normalize_lang_arg(argv[i] + 7);
+            if (!lang_override) {
+                fprintf(stderr, "Error: invalid --lang value '%s' (expected en, ja, or auto).\n", argv[i] + 7);
+                return 2;
+            }
         } else if (has_rom_extension(argv[i]) && argv[i][0] != '-') {
             /* Dragged-and-dropped ROM path handled by find_vanilla_smw_rom */
             continue;
@@ -635,6 +667,9 @@ int main(int argc, char **argv) {
     }
     set_env_kv("SNESRECOMP_APU_MASTER_CLOCK", "1", 0);
     set_env_kv("SNESRECOMP_REWIND", "0", 0);
+    if (lang_override) {
+        set_env_kv("BM_LANG", lang_override, 1);
+    }
 
 #ifdef _WIN32
     const char *game_bin = "bin\\BrutalMario.exe";
