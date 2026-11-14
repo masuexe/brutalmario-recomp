@@ -1,0 +1,576 @@
+{
+  "schema": 1,
+  "description": "Pinned Overworld English level name mapping extracted from SMWCentral Brutal Mario Demo 7 English for courses whose identity matches demo11/boss.",
+  "donor": {
+    "name": "Brutal Mario Demo 7 English (SMWCentral)",
+    "source_filename": "Brutal Mario Demo 7 English.smc",
+    "headered_size": 4194816,
+    "headerless_size": 4194304,
+    "headerless_sha256": "7c98fe8e0f95efbe5c186bf379a1682310304307551d62ab64dcc466719baafa",
+    "ow_table_base": "$13E1D7",
+    "local_relative_path": "content-versions/demo7-en/rom.sfc"
+  },
+  "excluded_post_demo7_slots": [
+    {
+      "slot": 1,
+      "slot_hex": "0x01",
+      "reason": "demo7 had Yoshi's House (shared with 0x28); boss repurposed slot 0x01 to ボ゛リアのほこら / World 1 shrine."
+    },
+    {
+      "slot": 16,
+      "slot_hex": "0x10",
+      "reason": "demo7 had ×たびのおわり (Journey's End); boss replaced slot 0x10 with うつくしきたびじ (Beautiful Flight)."
+    },
+    {
+      "slot": 48,
+      "slot_hex": "0x30",
+      "reason": "demo7 had ケメーをさけて (Colorful Lifts); boss replaced slot 0x30 with てんくうようさい ルイージドリーム."
+    },
+    {
+      "slot": 61,
+      "slot_hex": "0x3D",
+      "reason": "demo7 had ジングーのもり (Numbered Forest); boss replaced slot 0x3D with ケーズおうこくステージ2."
+    },
+    {
+      "slot": 70,
+      "slot_hex": "0x46",
+      "reason": "demo7 had あらしのみずうみ (Rainstorm Lake); boss replaced slot 0x46 with くろスイッチきゅうでん (Black Switch Palace)."
+    },
+    {
+      "slot": 71,
+      "slot_hex": "0x47",
+      "reason": "demo7 had ×もりのこかげで (Giant Tree Forest); boss replaced slot 0x47 with まよいのもり (Lost Forest)."
+    },
+    {
+      "slot": 72,
+      "slot_hex": "0x48",
+      "reason": "demo7 had ×あおぞらとすなはまとたいようと; boss replaced slot 0x48 with ガチャポコランド (Gachapoko Land)."
+    },
+    {
+      "slot": 77,
+      "slot_hex": "0x4D",
+      "reason": "demo7 had あねはぶゃけん (Aneha Estate); boss replaced slot 0x4D with のろいのやかた (Cursed Mansion)."
+    },
+    {
+      "slot": 80,
+      "slot_hex": "0x50",
+      "reason": "demo7 had でんきをとめられた (End of Life Story); boss replaced slot 0x50 with ケーズおうこくステージ1."
+    },
+    {
+      "slot": 89,
+      "slot_hex": "0x59",
+      "reason": "demo7 had さいごのたたかい (Final Battle); boss replaced slot 0x59 with きちくおうマリオ."
+    },
+    {
+      "slot": 90,
+      "slot_hex": "0x5A",
+      "reason": "boss repurposed slot 0x5A to ケーズおうこくステージ3; demo7 left vanilla US SMW 'STAR WORLD 5'."
+    },
+    {
+      "slot": 93,
+      "slot_hex": "0x5D",
+      "reason": "demo7 had ルイージキャッスル (Luigi's Castle); boss replaced slot 0x5D with ピーチキャッスル (Peach's Castle)."
+    }
+  ],
+  "slots": [
+    {
+      "slot": 2,
+      "slot_hex": "0x02",
+      "donor_hex": "0f4b40484d521f125340511f1f1f1f1f1f1f1f",
+      "adapted_hex": "0f4b40484d521f125340511f1f1f1f1f1f1f1f",
+      "text": "Plains Star"
+    },
+    {
+      "slot": 3,
+      "slot_hex": "0x03",
+      "donor_hex": "054e514452531f125340511f1f1f1f1f1f1f1f",
+      "adapted_hex": "054e514452531f125340511f1f1f1f1f1f1f1f",
+      "text": "Forest Star"
+    },
+    {
+      "slot": 4,
+      "slot_hex": "0x04",
+      "donor_hex": "0140581f125340511f1f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "0140581f125340511f1f1f1f1f1f1f1f1f1f1f",
+      "text": "Bay Star"
+    },
+    {
+      "slot": 5,
+      "slot_hex": "0x05",
+      "donor_hex": "06514052524b404d431f125340511f1f1f1f1f",
+      "adapted_hex": "06514052524b404d431f125340511f1f1f1f1f",
+      "text": "Grassland Star"
+    },
+    {
+      "slot": 6,
+      "slot_hex": "0x06",
+      "donor_hex": "1356484d1f0b484553521f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "1356484d1f0b484553521f1f1f1f1f1f1f1f1f",
+      "text": "Twin Lifts"
+    },
+    {
+      "slot": 7,
+      "slot_hex": "0x07",
+      "donor_hex": "024055441f125340511f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "024055441f125340511f1f1f1f1f1f1f1f1f1f",
+      "text": "Cave Star"
+    },
+    {
+      "slot": 8,
+      "slot_hex": "0x08",
+      "donor_hex": "124d4e561f125340511f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "124d4e561f125340511f1f1f1f1f1f1f1f1f1f",
+      "text": "Snow Star"
+    },
+    {
+      "slot": 9,
+      "slot_hex": "0x09",
+      "donor_hex": "124a581f125340511f1f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "124a581f125340511f1f1f1f1f1f1f1f1f1f1f",
+      "text": "Sky Star"
+    },
+    {
+      "slot": 11,
+      "slot_hex": "0x0B",
+      "donor_hex": "16444d43581f5347441f0648514b1f1f1f1f1f",
+      "adapted_hex": "16444d43581f5347441f0648514b1f1f1f1f1f",
+      "text": "Wendy the Girl"
+    },
+    {
+      "slot": 14,
+      "slot_hex": "0x0E",
+      "donor_hex": "0c4059441f024055441f651f1f1f1f1f1f1f1f",
+      "adapted_hex": "0c4059441f024055441f651f1f1f1f1f1f1f1f",
+      "text": "Maze Cave 2"
+    },
+    {
+      "slot": 15,
+      "slot_hex": "0x0F",
+      "donor_hex": "03514440431f074e4c484d461f01484b4b1f1f",
+      "adapted_hex": "03514440431f074e4c484d461f01484b4b1f1f",
+      "text": "Dread Homing Bill"
+    },
+    {
+      "slot": 17,
+      "slot_hex": "0x11",
+      "donor_hex": "16474451441f08521f134748521e1f1f1f1f1f",
+      "adapted_hex": "16474451441f08521f134748521e1f1f1f1f1f",
+      "text": "Where Is This?"
+    },
+    {
+      "slot": 18,
+      "slot_hex": "0x12",
+      "donor_hex": "024052534b441f02515452471f1f1f1f1f1f1f",
+      "adapted_hex": "024052534b441f02515452471f1f1f1f1f1f1f",
+      "text": "Castle Crush"
+    },
+    {
+      "slot": 19,
+      "slot_hex": "0x13",
+      "donor_hex": "38393a3b3c1f1256485342471f0f404b404244",
+      "adapted_hex": "18444b4b4e561f1256485342471f1f1f1f1f1f",
+      "text": "Yellow Switch",
+      "adaptation_note": "demo7-en donor used GFX 0x2A ligature tiles 0x39..0x3C ('Y[el][lo][w ] Switch Palace') which differ in r46/Demo 1-1 Credits stripes; adapted to 'Yellow Switch' using standard ASCII tiles (matching 0x17 'Za Warudo Switch')."
+    },
+    {
+      "slot": 20,
+      "slot_hex": "0x14",
+      "donor_hex": "065144444d1f1256485342471f0f404b404244",
+      "adapted_hex": "065144444d1f1256485342471f0f404b404244",
+      "text": "Green Switch Palace"
+    },
+    {
+      "slot": 21,
+      "slot_hex": "0x15",
+      "donor_hex": "084d53404d4648414b441f074e5452441f1f1f",
+      "adapted_hex": "084d53404d4648414b441f074e5452441f1f1f",
+      "text": "Intangible House"
+    },
+    {
+      "slot": 22,
+      "slot_hex": "0x16",
+      "donor_hex": "014053534b445247484f1f07404b414451431f",
+      "adapted_hex": "014053534b445247484f1f07404b414451431f",
+      "text": "Battleship Halberd"
+    },
+    {
+      "slot": 23,
+      "slot_hex": "0x17",
+      "donor_hex": "19401f16405154434e1f1256485342471f1f1f",
+      "adapted_hex": "19401f16405154434e1f1256485342471f1f1f",
+      "text": "Za Warudo Switch"
+    },
+    {
+      "slot": 24,
+      "slot_hex": "0x18",
+      "donor_hex": "004851414e514d441f02444c44534451581f1f",
+      "adapted_hex": "004851414e514d441f02444c44534451581f1f",
+      "text": "Airborne Cemetery"
+    },
+    {
+      "slot": 25,
+      "slot_hex": "0x19",
+      "donor_hex": "0340514a1f024052534b441f1f1f1f1f1f1f1f",
+      "adapted_hex": "0340514a1f024052534b441f1f1f1f1f1f1f1f",
+      "text": "Dark Castle"
+    },
+    {
+      "slot": 26,
+      "slot_hex": "0x1A",
+      "donor_hex": "054e51531f4e451f0b54435648461f1f1f1f1f",
+      "adapted_hex": "054e51531f4e451f0b54435648461f1f1f1f1f",
+      "text": "Fort of Ludwig"
+    },
+    {
+      "slot": 27,
+      "slot_hex": "0x1B",
+      "donor_hex": "054e54511c024e4b4e511f054e51531f1f1f1f",
+      "adapted_hex": "054e54511c024e4b4e511f054e51531f1f1f1f",
+      "text": "Four-Color Fort"
+    },
+    {
+      "slot": 28,
+      "slot_hex": "0x1C",
+      "donor_hex": "0d4e51534744514d1f1144524e51531f1f1f1f",
+      "adapted_hex": "0d4e51534744514d1f1144524e51531f1f1f1f",
+      "text": "Northern Resort"
+    },
+    {
+      "slot": 29,
+      "slot_hex": "0x1D",
+      "donor_hex": "1640514d484d461f1c1f0247514852534c4052",
+      "adapted_hex": "1640514d484d461f1c1f0247514852534c4052",
+      "text": "Warning - Christmas"
+    },
+    {
+      "slot": 30,
+      "slot_hex": "0x1E",
+      "donor_hex": "02474e4c4f1f02474e4c4f1f0f404d48421f65",
+      "adapted_hex": "02474e4c4f1f02474e4c4f1f0f404d48421f65",
+      "text": "Chomp Chomp Panic 2"
+    },
+    {
+      "slot": 31,
+      "slot_hex": "0x1F",
+      "donor_hex": "114e581f5347441f0251404553581f1f1f1f1f",
+      "adapted_hex": "114e581f5347441f0251404553581f1f1f1f1f",
+      "text": "Roy the Crafty"
+    },
+    {
+      "slot": 32,
+      "slot_hex": "0x20",
+      "donor_hex": "0344434443445d521f124a581f024052534b44",
+      "adapted_hex": "0344434443445d521f124a581f024052534b44",
+      "text": "Dedede's Sky Castle"
+    },
+    {
+      "slot": 33,
+      "slot_hex": "0x21",
+      "donor_hex": "064e54514c44531f014e4e1f1f1f1f1f1f1f1f",
+      "adapted_hex": "064e54514c44531f014e4e1f1f1f1f1f1f1f1f",
+      "text": "Gourmet Boo"
+    },
+    {
+      "slot": 34,
+      "slot_hex": "0x22",
+      "donor_hex": "1347441f0554535451441f4e451f14050e521f",
+      "adapted_hex": "1347441f0554535451441f4e451f14050e521f",
+      "text": "The Future of UFOs"
+    },
+    {
+      "slot": 35,
+      "slot_hex": "0x23",
+      "donor_hex": "0c48514046441f0f404b4042441f1f1f1f1f1f",
+      "adapted_hex": "0c48514046441f0f404b4042441f1f1f1f1f1f",
+      "text": "Mirage Palace"
+    },
+    {
+      "slot": 36,
+      "slot_hex": "0x24",
+      "donor_hex": "1640514f1f125340511f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "1640514f1f125340511f1f1f1f1f1f1f1f1f1f",
+      "text": "Warp Star"
+    },
+    {
+      "slot": 37,
+      "slot_hex": "0x25",
+      "donor_hex": "0240514445544b3f1f0b484647534d484d463f",
+      "adapted_hex": "0240514445544b3f1f0b484647534d484d463f",
+      "text": "Careful! Lightning!"
+    },
+    {
+      "slot": 38,
+      "slot_hex": "0x26",
+      "donor_hex": "054e54511c114e4e4c1f074e5452441f1f1f1f",
+      "adapted_hex": "054e54511c114e4e4c1f074e5452441f1f1f1f",
+      "text": "Four-Room House"
+    },
+    {
+      "slot": 39,
+      "slot_hex": "0x27",
+      "donor_hex": "0c4851514e511f054e51531f1f1f1f1f1f1f1f",
+      "adapted_hex": "0c4851514e511f054e51531f1f1f1f1f1f1f1f",
+      "text": "Mirror Fort"
+    },
+    {
+      "slot": 40,
+      "slot_hex": "0x28",
+      "donor_hex": "184e5247485d521f074e5452441f1f1f1f1f1f",
+      "adapted_hex": "184e5247485d521f074e5452441f1f1f1f1f1f",
+      "text": "Yoshi's House"
+    },
+    {
+      "slot": 42,
+      "slot_hex": "0x2A",
+      "donor_hex": "02405342471f184e5247483f1f1f1f1f1f1f1f",
+      "adapted_hex": "02405342471f184e5247483f1f1f1f1f1f1f1f",
+      "text": "Catch Yoshi!"
+    },
+    {
+      "slot": 43,
+      "slot_hex": "0x2B",
+      "donor_hex": "054440511f4e451f0c4e4d4340581f1f1f1f1f",
+      "adapted_hex": "054440511f4e451f0c4e4d4340581f1f1f1f1f",
+      "text": "Fear of Monday"
+    },
+    {
+      "slot": 44,
+      "slot_hex": "0x2C",
+      "donor_hex": "05484d4852473f1f014e565244511f0a44444f",
+      "adapted_hex": "05484d4852473f1f014e565244511f0a44444f",
+      "text": "Finish! Bowser Keep"
+    },
+    {
+      "slot": 45,
+      "slot_hex": "0x2D",
+      "donor_hex": "0344444f1f1244401f1154484d521f1f1f1f1f",
+      "adapted_hex": "0344444f1f1244401f1154484d521f1f1f1f1f",
+      "text": "Deep Sea Ruins"
+    },
+    {
+      "slot": 46,
+      "slot_hex": "0x2E",
+      "donor_hex": "164740531f0c4053424744521f401f0a44581e",
+      "adapted_hex": "164740531f0c4053424744521f401f0a44581e",
+      "text": "What Matches a Key?"
+    },
+    {
+      "slot": 47,
+      "slot_hex": "0x2F",
+      "donor_hex": "00414e43441f4e451f0b405151581f1f1f1f1f",
+      "adapted_hex": "00414e43441f4e451f0b405151581f1f1f1f1f",
+      "text": "Abode of Larry"
+    },
+    {
+      "slot": 49,
+      "slot_hex": "0x31",
+      "donor_hex": "054e51531f4e451f065140554853581f1f1f1f",
+      "adapted_hex": "054e51531f4e451f065140554853581f1f1f1f",
+      "text": "Fort of Gravity"
+    },
+    {
+      "slot": 50,
+      "slot_hex": "0x32",
+      "donor_hex": "0b444c4c581f5347441f0744514c48531f1f1f",
+      "adapted_hex": "0b444c4c581f5347441f0744514c48531f1f1f",
+      "text": "Lemmy the Hermit"
+    },
+    {
+      "slot": 51,
+      "slot_hex": "0x33",
+      "donor_hex": "124a544b4b1f114843441f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "124a544b4b1f114843441f1f1f1f1f1f1f1f1f",
+      "text": "Skull Ride"
+    },
+    {
+      "slot": 53,
+      "slot_hex": "0x35",
+      "donor_hex": "144d45484d48524744431f0151484346441f1f",
+      "adapted_hex": "144d45484d48524744431f0151484346441f1f",
+      "text": "Unfinished Bridge"
+    },
+    {
+      "slot": 54,
+      "slot_hex": "0x36",
+      "donor_hex": "014b54441f1256485342471f0f404b4042441f",
+      "adapted_hex": "014b54441f1256485342471f0f404b4042441f",
+      "text": "Blue Switch Palace"
+    },
+    {
+      "slot": 55,
+      "slot_hex": "0x37",
+      "donor_hex": "014e52521f014052521f0151484346441f1f1f",
+      "adapted_hex": "014e52521f014052521f0151484346441f1f1f",
+      "text": "Boss Bass Bridge"
+    },
+    {
+      "slot": 56,
+      "slot_hex": "0x38",
+      "donor_hex": "06474e52531f054e514452531f1f1f1f1f1f1f",
+      "adapted_hex": "06474e52531f054e514452531f1f1f1f1f1f1f",
+      "text": "Ghost Forest"
+    },
+    {
+      "slot": 57,
+      "slot_hex": "0x39",
+      "donor_hex": "084646581f5347441f02514059581f1f1f1f1f",
+      "adapted_hex": "084646581f5347441f02514059581f1f1f1f1f",
+      "text": "Iggy the Crazy"
+    },
+    {
+      "slot": 59,
+      "slot_hex": "0x3B",
+      "donor_hex": "15404b4b44581f125340511f1f1f1f1f1f1f1f",
+      "adapted_hex": "15404b4b44581f125340511f1f1f1f1f1f1f1f",
+      "text": "Valley Star"
+    },
+    {
+      "slot": 60,
+      "slot_hex": "0x3C",
+      "donor_hex": "0c4051484e5d521f00535340424a1f1f1f1f1f",
+      "adapted_hex": "0c4051484e5d521f00535340424a1f1f1f1f1f",
+      "text": "Mario's Attack"
+    },
+    {
+      "slot": 62,
+      "slot_hex": "0x3E",
+      "donor_hex": "034e4b4f47484d1f01405141445054441f1f1f",
+      "adapted_hex": "034e4b4f47484d1f01405141445054441f1f1f",
+      "text": "Dolphin Barbeque"
+    },
+    {
+      "slot": 63,
+      "slot_hex": "0x3F",
+      "donor_hex": "134843441f024055441f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "134843441f024055441f1f1f1f1f1f1f1f1f1f",
+      "text": "Tide Cave"
+    },
+    {
+      "slot": 64,
+      "slot_hex": "0x40",
+      "donor_hex": "0c4e51534e4d1f5347441f0d4440531f1f1f1f",
+      "adapted_hex": "0c4e51534e4d1f5347441f0d4440531f1f1f1f",
+      "text": "Morton the Neat"
+    },
+    {
+      "slot": 65,
+      "slot_hex": "0x41",
+      "donor_hex": "0c4059441f024055441f641f1f1f1f1f1f1f1f",
+      "adapted_hex": "0c4059441f024055441f641f1f1f1f1f1f1f1f",
+      "text": "Maze Cave 1"
+    },
+    {
+      "slot": 66,
+      "slot_hex": "0x42",
+      "donor_hex": "0f58514e1f0c4051484e1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "0f58514e1f0c4051484e1f1f1f1f1f1f1f1f1f",
+      "text": "Pyro Mario"
+    },
+    {
+      "slot": 67,
+      "slot_hex": "0x43",
+      "donor_hex": "004242444f5340414b441f024055441f1f1f1f",
+      "adapted_hex": "004242444f5340414b441f024055441f1f1f1f",
+      "text": "Acceptable Cave"
+    },
+    {
+      "slot": 68,
+      "slot_hex": "0x44",
+      "donor_hex": "0b4855444b581f16405344511f1f1f1f1f1f1f",
+      "adapted_hex": "0b4855444b581f16405344511f1f1f1f1f1f1f",
+      "text": "Lively Water"
+    },
+    {
+      "slot": 69,
+      "slot_hex": "0x45",
+      "donor_hex": "1144431f1256485342471f0f404b4042441f1f",
+      "adapted_hex": "1144431f1256485342471f0f404b4042441f1f",
+      "text": "Red Switch Palace"
+    },
+    {
+      "slot": 73,
+      "slot_hex": "0x49",
+      "donor_hex": "0344444f1f1244401f004355444d535451441f",
+      "adapted_hex": "0344444f1f1244401f004355444d535451441f",
+      "text": "Deep Sea Adventure"
+    },
+    {
+      "slot": 75,
+      "slot_hex": "0x4B",
+      "donor_hex": "12505440564a521f114843441f1f1f1f1f1f1f",
+      "adapted_hex": "12505440564a521f114843441f1f1f1f1f1f1f",
+      "text": "Squawks Ride"
+    },
+    {
+      "slot": 76,
+      "slot_hex": "0x4C",
+      "donor_hex": "07404b4b1f4e451f035140464e4d521f1f1f1f",
+      "adapted_hex": "07404b4b1f4e451f035140464e4d521f1f1f1f",
+      "text": "Hall of Dragons"
+    },
+    {
+      "slot": 82,
+      "slot_hex": "0x52",
+      "donor_hex": "134853404d48421f1f1f1f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "134853404d48421f1f1f1f1f1f1f1f1f1f1f1f",
+      "text": "Titanic"
+    },
+    {
+      "slot": 83,
+      "slot_hex": "0x53",
+      "donor_hex": "05514e59444d1f024055441f1f1f1f1f1f1f1f",
+      "adapted_hex": "05514e59444d1f024055441f1f1f1f1f1f1f1f",
+      "text": "Frozen Cave"
+    },
+    {
+      "slot": 84,
+      "slot_hex": "0x54",
+      "donor_hex": "0a4e484d434e5944511f054e514452531f1f1f",
+      "adapted_hex": "0a4e484d434e5944511f054e514452531f1f1f",
+      "text": "Koindozer Forest"
+    },
+    {
+      "slot": 85,
+      "slot_hex": "0x55",
+      "donor_hex": "0d484647531f06404b4057581f135140484d1f",
+      "adapted_hex": "0d484647531f06404b4057581f135140484d1f",
+      "text": "Night Galaxy Train"
+    },
+    {
+      "slot": 86,
+      "slot_hex": "0x56",
+      "donor_hex": "1144404b4b581f0148461f09544c4f1f1f1f1f",
+      "adapted_hex": "1144404b4b581f0148461f09544c4f1f1f1f1f",
+      "text": "Really Big Jump"
+    },
+    {
+      "slot": 87,
+      "slot_hex": "0x57",
+      "donor_hex": "0c4051484e5d521f0853444c1f13474445531f",
+      "adapted_hex": "0c4051484e5d521f0853444c1f13474445531f",
+      "text": "Mario's Item Theft"
+    },
+    {
+      "slot": 91,
+      "slot_hex": "0x5B",
+      "donor_hex": "02474e4c4f1f02474e4c4f1f0f404d48421f64",
+      "adapted_hex": "02474e4c4f1f02474e4c4f1f0f404d48421f64",
+      "text": "Chomp Chomp Panic 1"
+    },
+    {
+      "slot": 92,
+      "slot_hex": "0x5C",
+      "donor_hex": "084d55484d4248414b441f014051514844511f",
+      "adapted_hex": "084d55484d4248414b441f014051514844511f",
+      "text": "Invincible Barrier"
+    },
+    {
+      "slot": 94,
+      "slot_hex": "0x5E",
+      "donor_hex": "0b0805131f060e3f1f231f1f1f1f1f1f1f1f1f",
+      "adapted_hex": "0b0805131f060e3f1f641f1f1f1f1f1f1f1f1f",
+      "text": "LIFT GO! 1",
+      "adaptation_note": "Mapped digit tile 0x23 ('1') to full-height 0x64 ('1') matching 'Maze Cave 1' (0x41) and 'Chomp Chomp Panic 1' (0x5B)."
+    }
+  ]
+}

@@ -2328,3 +2328,68 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
       console `11.53`; `Windows guest_mean_ms`: closed `9.823`, console `9.44`); historical
       `r14..r47` targets and `dist/public-beta-r43..r47/` preserved untouched.
 
+
+## Demo 7 English Overworld level names & cumulative integration (demo11-native-product-r49)
+
+- **Donor & pinned mapping (`demo7-en`)**:
+  - Source donor: `Brutal Mario Demo 7 English.smc` (`4,194,816` B headered -> `4,194,304` B
+    headerless at `local/content-versions/demo7-en/rom.sfc`, SHA-256
+    `7c98fe8e0f95efbe5c186bf379a1682310304307551d62ab64dcc466719baafa`, Overworld level name
+    table at `$13E1D7`).
+  - `config/native-content/demo7-en-ow-names.json`, `tools/audit_localization.py` (`include_demo7_en_ow=True`),
+    and `config/native-content/localization-audit-r49.json` expand the English Overworld level-name
+    table in `local/native-modules/lang-r47-v2/lang-r47-data.bin` (`BMLG` v1, `30,814` B, SHA-256
+    `1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f`) from `10` to **81 / 93**
+    non-blank courses (`1` `Demo 1-1` slot `0x29`, `9` `demoOnly1` slots, and `71` `Demo 7 English`
+    slots including minimal GFX `0x2A` tile adaptations on `0x13` `"Yellow Switch"` and `0x5E`
+    `"LIFT GO! 1"`), keeping `3` blank slots (`0x00, 0x4F, 0x5F`) and excluding the `12` post-`demo7`
+    replaced/renamed courses (`0x01, 0x10, 0x30, 0x3D, 0x46, 0x47, 0x48, 0x4D, 0x50, 0x59, 0x5A, 0x5D`)
+    which automatically switch `GFX 0x2A` to `ja_gfx02a` cleanly via `needs_jp_font = 1`; in-level
+    SMW (`144` slots) and Mazo (`0x191`/`0x192`) message boxes remain unchanged.
+- **Cumulative recipe (`demo11-native-product-r49`)**:
+  - `tools/prepare_product_r49.py` + `config/restorations/demo11-native-product-r49.json` +
+    `recomp/targets/demo11-native-product-r49/symbols.toml` descend from
+    `demo11-native-product-r48` (`ROM` `4,194,304` B, SHA-256
+    `bbd52ff43fe86e872ee2c55da7adf40ca0eb52e117d529bc5449f3aae5b1bc52` — keeping 100% of `r48`'s
+    Room `0x116` countdown `ExGFX 0x12A` & Super GFX Bypass `SP2` protection plus all `r14..r48`
+    patches), upgrade `BM_LANG_R47_DATA_PACK` (`$D5:8000`) & `BM_LANG_R47_CODE_PACK` (`$90:8000`,
+    SHA-256 `ea1c8cef78d1f32b68fa9db0dfdc5767f11d3ad36fa9f94aff9df75555e0deb8`) to
+    `local/native-modules/lang-r47-v2`, and mount all `71` `BM_*` packs (`72` manifest files),
+    leaving historical `r47` (`lang-r47-v1`, `dc887514...`, `dist/public-beta-r47/`) and `r48`
+    (`dist/public-beta-r48/`) baselines intact.
+- **Cumulative verification & Public Beta `r49` promotion**:
+  - `local/captures/r49-ow-en-verify/receipt.json` (`cheat-complete-all + map_teleport`
+    diagnostic fixture in `BM_LANG=en`) verified `demo7-en` Overworld banners and `en_gfx02a` on
+    `0x28` (`"Yoshi's House"`), `0x2A` (`"Catch Yoshi!"`), `0x13` (`"Yellow Switch"`), post-`demo7`
+    excluded `0x10` (`needs_jp_font == 1` -> `ja_gfx02a`), and recovery on `0x5E` (`"LIFT GO! 1"`
+    -> `en_gfx02a`).
+  - `local/captures/r49-room116-complete/receipt.json` (`cheat-complete-all + room_warp` diagnostic
+    fixture) confirmed Room `0x116` with `$1F01 = 0x9F` retains `VRAM[0x6800*2 : 0x7000*2] ==
+    lz2(r49, 0x12A)` (`vanilla_gfx_031_overwritten: false`) in `r49`.
+  - Full repository unit test suite (`python3 -m unittest discover -s tests -p "test_*.py" -v`,
+    recorded in `local/reports/unit-tests-r49.log`): **598/598** passed in `287.892s` (`0`
+    failures, `0` errors, `0` skipped), including `tests/test_localization_audit.py`
+    (`LocalizationAuditR47Test` + `LocalizationAuditR49Demo7OwTest`),
+    `tests/test_product_r47_multilang.py` (`ProductR47MultilangTests` + `ProductR49Demo7OwTests`),
+    `tests/test_room116_countdown_gfx.py`, and
+    `tests/test_public_beta_package.py::test_r49_delta_patch_roundtrip_and_manifest`;
+    `local/upstream/snesrecomp` clean.
+  - Default `--target` promoted to `demo11-native-product-r49` across `tools/launch_native.py`,
+    `tools/play_native_target.py`, `tools/play_native_cheats.py`, `tools/build_smw_delta.py`,
+    and `tools/package_public_beta.py` (`--out-dir` `dist/public-beta-r49`, `--diag-dir`
+    `local/diagnostics/public-beta-r49`; `71` `BM_*` runtime packs / `72` manifest files, `BMPT`
+    v1 delta `3,758,410` B, SHA-256
+    `ebb745c1679c2cfbffc2bc163eb4e19ad348b14780011854e63d0aac04f1d13c`):
+    - `dist/public-beta-r49/BrutalMario-PublicBeta-r49-Linux.zip` (`2,910,513` B, SHA-256
+      `c24b265b23565a3a379b47d7892c840e332446067d86e65e5a7e0b851456e705`; `linux_binary_sha256`
+      `6f5fd67c93ef067296ee917d5fe8a68feb965ed16e3c4edb5020c0b8f0bc75fd`, `linux_launcher_sha256`
+      `6a16d1b9f51b4d4a0e332e8f51db4e8f8dd45d9bf313d115ade3fd8236feb11c`)
+    - `dist/public-beta-r49/BrutalMario-PublicBeta-r49-Windows.zip` (`4,066,106` B, SHA-256
+      `128e4dbd44fbde1b1242bfaff13c90fdee43483966fe757a24bbcb830c6315fa`; `windows_binary_sha256`
+      `543110143225bda56ae8f287e17c3b2d6d85e0ca20fa8f3241df1ee490c7edd5`, `windows_launcher_sha256`
+      `4dca7454d7d1026fbed7d1c924d780a51fdc47cb366ff5cb7871031ebae908a6`)
+    - Linux vs Windows 60-frame binary parity & clean-room `cheat-complete-all.script` /
+      `cheat-special-zone.script` smoke tests pass (`Linux guest_mean_ms`: closed `5.583`,
+      console `5.378`; `Windows guest_mean_ms`: closed `4.763`, console `4.718`); historical
+      `r14..r48` targets and `dist/public-beta-r43..r48/` preserved untouched.
+

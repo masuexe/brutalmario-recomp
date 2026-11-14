@@ -22,7 +22,7 @@ class LocalizationAuditR47Test(unittest.TestCase):
         cls.local_dir = al.resolve_local_dir()
 
     def test_pinned_json_matches_deterministic_generation(self) -> None:
-        fresh = al.generate_audit(self.local_dir)
+        fresh = al.generate_audit(self.local_dir, include_demo7_en_ow=False)
         self.assertEqual(fresh, self.audit)
 
     def test_all_10_roms_verified(self) -> None:
@@ -216,6 +216,84 @@ class LocalizationAuditR47Test(unittest.TestCase):
             self.assertEqual(pack[room_policy_off + r], self.audit["rooms"][r]["persistent_jp_font"])
         self.assertEqual(pack[remap_off], 3)
         self.assertEqual(sha(pack[ja_title_off : ja_title_off + ja_title_sz]), self.audit["stripe_audit"]["boss_title_stripe_sha256"])
+
+
+class LocalizationAuditR49Demo7OwTest(unittest.TestCase):
+    """Verify r49 localization audit & BMLG v2 pack with 71 Demo 7 English OW names."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.audit_path = ROOT / "config/native-content/localization-audit-r49.json"
+        cls.audit = json.loads(cls.audit_path.read_text())
+        cls.local_dir = al.resolve_local_dir()
+
+    def test_pinned_r49_json_matches_deterministic_generation(self) -> None:
+        self.assertEqual(self.audit["target"], "demo11-native-product-r49")
+        fresh = al.generate_audit(self.local_dir, include_demo7_en_ow=True)
+        self.assertEqual(fresh, self.audit)
+
+    def test_r49_ow_names_81_en_3_blank_12_jp_fallback(self) -> None:
+        ja_ow = self.audit["ja"]["ow_names"]
+        en_ow = self.audit["en"]["ow_names"]
+        self.assertEqual(len(ja_ow), 96)
+        self.assertEqual(len(en_ow), 96)
+
+        en_slots = [e for e in en_ow if e["needs_jp_font"] == 0 and e["text"]]
+        self.assertEqual(len(en_slots), 81)
+        by_slot = {e["slot"]: e for e in en_ow}
+        self.assertEqual(by_slot[0x29]["text"], "Hey,I am Mario!")
+        self.assertEqual(by_slot[0x0A]["text"], "Special Warp Star")
+        self.assertEqual(by_slot[0x58]["text"], "Athletic Special")
+        self.assertEqual(by_slot[0x28]["text"], "Yoshi's House")
+        self.assertEqual(by_slot[0x2A]["text"], "Catch Yoshi!")
+        self.assertEqual(by_slot[0x37]["text"], "Boss Bass Bridge")
+        self.assertEqual(by_slot[0x13]["text"], "Yellow Switch")
+        self.assertEqual(by_slot[0x25]["text"], "Careful! Lightning!")
+        self.assertEqual(by_slot[0x5E]["text"], "LIFT GO! 1")
+
+        # All 84 non-JP OW entries (81 EN + 3 blank) must use valid EN GFX 0x2A tiles < 0x80.
+        for e in en_ow:
+            if e["needs_jp_font"] == 0:
+                raw = bytes.fromhex(e["hex"])
+                self.assertEqual(len(raw), 19)
+                for b in raw:
+                    self.assertLess(b, 0x80, f"slot {e['slot_hex']} tile 0x{b:02X}")
+                    self.assertIn(b, al.EN_GFX02A_CHARS, f"slot {e['slot_hex']} tile 0x{b:02X}")
+
+        # All 12 post-demo7 courses keep boss Japanese bytes with needs_jp_font = 1.
+        for jslot in al.POST_DEMO7_JP_OW_SLOTS:
+            self.assertEqual(by_slot[jslot]["needs_jp_font"], 1)
+            self.assertIsNone(by_slot[jslot]["text"])
+            self.assertEqual(by_slot[jslot]["hex"], ja_ow[jslot]["hex"])
+        self.assertNotIn("53130011", by_slot[0x5A]["hex"])
+
+        # Blank slots 0x00, 0x4F, 0x5F have needs_jp_font = 0.
+        for bslot in al.BLANK_OW_SLOTS:
+            self.assertEqual(by_slot[bslot]["needs_jp_font"], 0)
+            self.assertEqual(by_slot[bslot]["hex"], "1f" * 19)
+
+        self.assertEqual(sum(e["needs_jp_font"] for e in en_ow), 12)
+
+    def test_r49_bmlg_binary_pack_round_trip(self) -> None:
+        pack = al.build_bmlg_pack(self.audit, self.local_dir)
+        self.assertEqual(len(pack), 30814)
+        self.assertEqual(
+            sha(pack),
+            "1fe91ec2d233cb300251461b93ca869fe3a6f5a641e32894f92e6c026a7cca3f",
+        )
+        self.assertEqual(sha(pack), self.audit["bmlg_pack"]["sha256"])
+
+        ja_ow_off, en_ow_off, ow_flags_off = struct.unpack_from("<HHH", pack, 0x18)
+        for i in range(96):
+            self.assertEqual(
+                pack[ja_ow_off + i * 19 : ja_ow_off + (i + 1) * 19].hex(),
+                self.audit["ja"]["ow_names"][i]["hex"],
+            )
+            self.assertEqual(
+                pack[en_ow_off + i * 19 : en_ow_off + (i + 1) * 19].hex(),
+                self.audit["en"]["ow_names"][i]["hex"],
+            )
+            self.assertEqual(pack[ow_flags_off + i], self.audit["en"]["ow_names"][i]["needs_jp_font"])
 
 
 if __name__ == "__main__":
