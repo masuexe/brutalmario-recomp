@@ -2248,6 +2248,83 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
       preserved.
 
 
+## Room 0x116 countdown & Super GFX Bypass SP2 protection (demo11-native-product-r48)
 
-
+- **Problem & 65816 root cause**:
+  - Room `0x116` (`translevel 0x03A`, Skull Coaster / *Ghost Special*) renders custom sprite `0x45`
+    (`$34:84A2` via `$31:86CA`, OAM tiles `$80..$89`/`$90..$99`, prop `$22`, `SP2` VRAM word
+    `$6800`) using Super GFX Bypass `SP2 = ExGFX 0x12A` (red brush-stroke countdown digits
+    `0..9`, `4,096` B LZ2-decompressed), while the vanilla header sprite table (`$00:A8C3`,
+    indexed via `$192B = $01`) gives `$06 = $01`.
+  - Inside `$00:AA35 -> JSR $AA6B -> JSL $0FF160 -> $0F:F840`, Super GFX Bypass decompresses
+    `ExGFX 0x12A` into `$7E:AD00`, then `$0F:F882: PLY` restores stale vanilla `Y = $01`. Back at
+    `$00:AA6F: CPY #$01 / BNE $AA80 / LDA $1F01 / BPL $AA80 / LDY #$31 / JSL $00BA28`, whenever
+    `$1F01` bit 7 is set (e.g., via the `complete` cheat writing `$1EA2..$1F01 = $9F` or a saved
+    `save.srm` from `complete`), SMW overwrites `$7E:AD00..$7E:B4FF` with `2,048`-byte vanilla
+    `GFX 0x31` (red berry / white creature).
+  - Blast radius across all `512` rooms (`$14:AD08 + room*32` vs `$00:A8C3`, where all `16`
+    vanilla sprite sets have `vanilla_sp2 == 0x01`): **127** Super GFX Bypass rooms (`43` in
+    `config/demo11-level-index.json`) have `vanilla_sp2 == 0x01` and `super_sp2 != 0x0001`
+    (including `0x116` = `0x012A`, `0x007` = `0x012A`, `0x105` = `0x029F`), whereas **385**
+    rooms (**235** Super GFX Bypass `super_sp2 == 0x0001`, e.g. `0x101`, plus **150** vanilla
+    fallback, e.g. `0x104`) have `effective_sp2 == 0x0001` where Autumn `GFX 0x31` is legitimately
+    expected (`$01:9825` / `$01:B9CC` also inspect `$1F01` bit 7).
+- **Recipe & 3 ROM patches**:
+  - `tools/prepare_product_r48.py` + `config/restorations/demo11-native-product-r48.json`
+    (descendant of `demo11-native-product-r47`, ROM `4,194,304` B, SHA-256
+    `bbd52ff43fe86e872ee2c55da7adf40ca0eb52e117d529bc5449f3aae5b1bc52`, `71` `BM_*` packs /
+    `72` manifest files with `frozen_manifests` preserving all `50` `r47` manifests and `16`
+    `extra_packs`, `recomp/targets/demo11-native-product-r48/symbols.toml` preserving all `11`
+    `r47_*` `bank = 144, emit = false` entries).
+  - `3` ROM patches (`002A6F`: `c001 -> c901`, `07F19B`: `20b7f1 -> 208cf8`, `07F884..07F8A1`:
+    `30`-byte `$0F:F840` epilogue update
+    `a9016020b7f180f5ffffffffffffffffffffffffffffffffffffffffffff -> a902604c92f8eaea4820b7f168604820b7f168c90100d0e5287afaa90160`)
+    return effective GFX indicator `A = $01` from `$0F:F160` iff effective decompressed GFX ID
+    `== $0001` (`$02` for other Super GFX Bypass slots), keeping vanilla `Y` and `$0F:F160` entry
+    stack depth (`$0F:F160: A3 04`) intact, and test `CMP #$01` at `$00:AA6F` while preserving `Y`
+    for `$00:AA8C`/`$00:AA90`.
+  - Registered `'demo11-native-product-r48'` (`BrutalMarioDemo11ProductR48SNESRecomp`) in
+    `tools/restoration_targets.py`.
+- **Verification & Public Beta `r48` promotion**:
+  - Captures under `local/captures/r48-*`:
+    - `local/captures/r48-repro-r47-room116-complete`: read-only `r47` repro in Room `0x116`
+      (`$1F01 = 0x9F`), confirming `VRAM[0x6800*2 : 0x6800*2+2048] == lz2(r47, 0x31)`.
+    - `local/captures/r48-verify-room116-normal`: `r48` Room `0x116` (`$1F01 = 0x1F`),
+      `VRAM[0x6800*2 : 0x7000*2] == lz2(r48, 0x12A)` (`4,096` B), OAM countdown digits `09`
+      (`0x80`/`0x90`, `0x89`/`0x99`, prop `0x22`), `0` `BRK`.
+    - `local/captures/r48-verify-room116-complete`: `r48` Room `0x116` post-`complete`
+      (`$1F01 = 0x9F`), `VRAM[0x6800*2 : 0x7000*2] == lz2(r48, 0x12A)`, OAM digits `09`
+      (`prop=0x22`), `146` red `(247, 8, 8)` pixels in digit bounding box, `0` `BRK`; visual
+      verification screenshot `local/reports/r48-room116-complete-after.png` (`4,035` B,
+      `256x224` RGBA PNG).
+    - `local/captures/r48-verify-room007-complete`: `r48` Room `0x007` (Cave Star, `SP2 = 0x012A`,
+      `$1F01 = 0x9F`), `VRAM[0x6800*2 : 0x7000*2] == lz2(r48, 0x12A)`, OAM digits `06`
+      (`prop=0x22`), `0` `BRK`.
+    - `local/captures/r48-verify-room104-autumn`: `r48` Room `0x104` (Yoshi's House, vanilla
+      `SP2 = $01`, `$1F01 = 0x9F`), `VRAM[0x6800*2 : 0x6800*2+2048] == lz2(r48, 0x31)`, `0` `BRK`.
+  - `tests/test_room116_countdown_gfx.py` (config/lineage/`symbols.toml`/3 patches/71 packs,
+    512-room static audit, headless `0x116` normal & `$1F01=0x9F`, `0x104`/`0x101` positive
+    controls, and `0x105` `ExGFX 0x29F` preservation),
+    `tests/test_public_beta_package.py::test_r48_delta_patch_roundtrip_and_manifest`, and the
+    full repository unit test suite (`python3 -m unittest discover -s tests -p "test_*.py" -v`
+    recorded in `local/reports/unit-tests-r48.log`: **591/591** passed in `236.494s`, `0`
+    failures, `0` errors, `0` skipped).
+  - Default `--target` promoted to `demo11-native-product-r48` across `tools/launch_native.py`,
+    `tools/play_native_target.py`, `tools/play_native_cheats.py`, `tools/build_smw_delta.py`,
+    and `tools/package_public_beta.py` (`--out-dir` `dist/public-beta-r48`, `--diag-dir`
+    `local/diagnostics/public-beta-r48`; `71` `BM_*` runtime packs / `72` manifest files, `BMPT`
+    v1 delta `3,758,449` B, SHA-256
+    `7feba77824945c8d69d11c0bf41c8e7f07798fb2c7f39262ddcff9c1664bb080`):
+    - `dist/public-beta-r48/BrutalMario-PublicBeta-r48-Linux.zip` (`2,909,856` B, SHA-256
+      `b479cff7bdea4bdcb3a0ad2f5e33a4f88d20b9a24e8868949837f86087059e17`; `linux_binary_sha256`
+      `6f20815c85cc0e582175691972553c74d838c86e556bbd9268b3867cd4b2a0cd`, `linux_launcher_sha256`
+      `6a16d1b9f51b4d4a0e332e8f51db4e8f8dd45d9bf313d115ade3fd8236feb11c`)
+    - `dist/public-beta-r48/BrutalMario-PublicBeta-r48-Windows.zip` (`4,065,447` B, SHA-256
+      `b315413bd0e090d602ba8d5ade4d7cabd5918d6aa20570ad8d4607692809e2a3`; `windows_binary_sha256`
+      `e76d62d1b06897562a443bc31da33ba04c6ca35b8e6261bceff6f103015d7d6c`, `windows_launcher_sha256`
+      `1fa13043ec6f81cbba98fcfc6e8a37079687534b59d5b80e308d288ef4bd9b8d`)
+    - Linux vs Windows 60-frame binary parity & clean-room `cheat-complete-all.script` /
+      `cheat-special-zone.script` smoke tests pass (`Linux guest_mean_ms`: closed `12.121`,
+      console `11.53`; `Windows guest_mean_ms`: closed `9.823`, console `9.44`); historical
+      `r14..r47` targets and `dist/public-beta-r43..r47/` preserved untouched.
 
