@@ -66,6 +66,17 @@ stays `393010107b0398756886cdcc2cc174661a4d49ea51ef6bc3891d31d06d31618b`. Produc
 capture `product-r14-yoshi-v1` shows the Yoshi start. `product-r14-node-default-v2`
 shows the default 10C entry.
 
+**Superseded in `demo11-native-product-r50` (`2026-11-15`)**: The runtime hook
+`bm_yoshi_start_override()` / `BM_YOSHI_START` in `recomp/native_seven.c`
+(which overwrote `(72, 408)` -> `(104, 408)` whenever Map 0 reached `(72, 408)`,
+preventing loaded saves at `1-1` or players walking onto `1-1` from staying on
+`1-1` once per session) has been removed. Instead, `demo11-native-product-r50`
+restores the original `demo6`/`demo7` SMW `InitialSaveData` (`$00:9EF0..$00:9F05`)
+directly in the ROM (`0x1EF6`, `0x1EFA`, `0x1EFE`, `0x1F02`: Mario/Luigi pixel X
+`0x0048 -> 0x0068` (`104`), tile X `0x0004 -> 0x0006` (`6`)), so new saves start
+at Yoshi's House `(104, 408)` naturally while existing saves and walking onto
+`1-1` `(72, 408)` remain un-teleported (`local/captures/r50-yoshi-start-verify/`).
+
 
 ## Later save-identity review
 
