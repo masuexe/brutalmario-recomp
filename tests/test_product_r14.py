@@ -38,8 +38,9 @@ class ProductR14Tests(unittest.TestCase):
         self.assertIn('BM_MAZO_190_NODE', self.source)
         self.assertIn("node[0] == '1'", self.source)
 
-    def test_yoshi_start_remains(self):
-        self.assertIn('BM_YOSHI_START', self.source)
+    def test_yoshi_teleport_hook_removed(self):
+        self.assertNotIn('bm_yoshi_start_override', self.source)
+        self.assertNotIn('BM_YOSHI_START', self.source)
 
 
 if __name__ == '__main__':

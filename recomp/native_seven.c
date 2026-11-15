@@ -51,10 +51,8 @@ __attribute__((weak)) int snes_host_get_effective_language(void) {
  * no music object of its own and inherits the shared default slot 0x02. Force
  * recipient slot 0x9E whenever the game is in room 0x190. */
 static int s_music_room = -1;
-static int s_yoshi_start_done;
 static int s_seven_return_done;
 static int s_seven_return_enabled = 1;
-static int s_yoshi_start_enabled = 1;
 static int s_mazo_node_enabled;
 
 /* These are launch settings. Resolve them once per content load: this file's
@@ -62,10 +60,8 @@ static int s_mazo_node_enabled;
  * can cost far more than the emulated instruction itself. */
 static void bm_load_launch_settings(void) {
   const char *flag = getenv("BM_SEVEN_RETURN");
-  const char *yoshi = getenv("BM_YOSHI_START");
   const char *node = getenv("BM_MAZO_190_NODE");
   s_seven_return_enabled = !(flag && flag[0] == '0' && flag[1] == 0);
-  s_yoshi_start_enabled = !(yoshi && yoshi[0] == '0' && yoshi[1] == 0);
   s_mazo_node_enabled = node && node[0] == '1' && node[1] == 0;
 }
 
@@ -87,17 +83,6 @@ static void bm_seven_return_override(void) {
   g_ram[0x1f20] = 0;
   g_ram[0x1f21] = 0x0f;
   g_ram[0x1f22] = 0;
-}
-static void bm_yoshi_start_override(void) {
-  if (s_yoshi_start_done || !s_yoshi_start_enabled) return;
-  if (g_ram[0x100] != 0x0e || g_ram[0x1f11] != 0) return;
-  if ((g_ram[0x1f17] | (g_ram[0x1f18] << 8)) != 72) return;
-  if ((g_ram[0x1f19] | (g_ram[0x1f1a] << 8)) != 408) return;
-  g_ram[0x1f17] = 104;
-  g_ram[0x1f18] = 0;
-  g_ram[0x1f1f] = 6;
-  g_ram[0x1f20] = 0;
-  s_yoshi_start_done = 1;
 }
 static void bm_mazo_map_node_override(void) {
 #ifdef BM_MAZO_PRIMARY_ENTRY
@@ -531,7 +516,6 @@ uint8_t *bm_content_backing(uint8_t *rom, size_t size) {
 
 uint8_t *bm_content_resolve(const uint8_t *rom, uint8_t bank, uint16_t address) {
   bm_seven_return_override();
-  bm_yoshi_start_override();
   bm_mazo_map_node_override();
   bm_room_music_override();
   if (rom != owner || !backing || address < 0x8000) return NULL;
