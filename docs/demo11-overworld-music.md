@@ -106,3 +106,16 @@ python3 tools/qualify_demo11_overworld_music.py
 
 The reference captures are `local/captures/owm-ref-{base,patch}-map{1,2,3,5}`.
 The native dense captures are `local/captures/owm-d2-{base,new}-map{1,2}`.
+
+## Product-Line Integration (`demo11-native-product-r51`)
+
+### Why the fix was absent in `r17..r50`
+
+`demo11-overworld-music` and `demo11-music-retarget` descended from `demo11-native-product` on a separate music branch, whereas `demo11-native-product-r9..r16` branched without `demo11-overworld-music` (`docs/product-tool.md`). When `tools/prepare_product_music.py` (commit `2be8efa`, `r17`) replayed the course music retarget onto `r16`, it ported the 208 course patches, three tracks, level music objects, and song region pack, omitting the four Overworld table bytes at `$04:8D8B..8C` and `$04:DBC9..CA`. All subsequent cumulative targets (`r17..r50`) therefore retained `1E 22 27 25 29 27 26`.
+
+### Cumulative restoration in `r51`
+
+`demo11-native-product-r51` (`tools/prepare_product_r51.py`, `config/restorations/demo11-native-product-r51.json`) reapplies those four byte patches onto `demo11-native-product-r50`, restoring `1E 23 22 25 29 27 26` to match `demoOnly1` (`b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b`):
+
+- `r51` ROM (`local/restoration/demo11-native-product-r51/rom.sfc`): `4,194,304` bytes, SHA-256 `be82cf49edd22a975fbce35ac7d570260494fc7812715fd2862f497504ce5948`.
+- `tests/test_product_r51_overworld_music.py` verifies the 4-byte ROM diff against `r50`, `demoOnly1` table parity, intact `$0F:E000` custom song payloads, a permanent regression guard on the active `--target` in `tools/launch_native.py`, and headless native execution on submaps `1..6` checking both `$1DFB` requests (`0x23` on World 6 submap 1, `0x22` on World 4 submap 2, `0x25` on submap 3, `0x29` on submap 4, `0x27` on Special Zone submap 5, `0x26` on submap 6) and exact SPC700 ARAM `$5400` song payload matches (`local/captures/r51-overworld-music-verify/receipt.json`).

@@ -711,10 +711,10 @@ def run_end_to_end_smoke_test(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r50")
+    parser.add_argument("--target", default="demo11-native-product-r51")
     parser.add_argument("--base-rom", type=Path, default=ROOT.parent / "roms/Super Mario World (U) [!].smc")
-    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r50")
-    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r50")
+    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r51")
+    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r51")
     parser.add_argument("--force-rebuild-windows", action="store_true")
     args = parser.parse_args()
 

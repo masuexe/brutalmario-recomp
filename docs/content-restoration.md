@@ -2417,3 +2417,32 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   - `dist/public-beta-r50/BrutalMario-PublicBeta-r50-Windows.zip`: `4,066,085` B, SHA-256 `c2994cf963212b82a625a40f2a371a9850794ab914cd038c58fb0860e4715b87` (`windows_binary_sha256` `a2a968ae473b6caf5b15326e9efe7adf2c2f31d9cd4a5ee2d94102f0616404ec`, `windows_launcher_sha256` `5b3f9e9601bc86f22a947a3418a06f95f59c5704d47905bf9f6495caa46f290f`).
   - Linux vs Windows 60-frame binary parity & clean-room `cheat-complete-all.script` / `cheat-special-zone.script` smoke checks pass (`Linux guest_mean_ms`: closed `3.638`, console `3.737`; `Windows guest_mean_ms`: closed `4.277`, console `4.342`); historical `r14..r49` targets and `dist/public-beta-r43..r49/` remain preserved untouched.
 
+## World 4 and World 6 Overworld map music restoration on product line (demo11-native-product-r51)
+
+- **Regression cause & fix**:
+  - The earlier isolated fix [`demo11-overworld-music`](demo11-overworld-music.md) (`27c8660`) lived on a branch parallel to `demo11-native-product-r9..r16`. When `tools/prepare_product_music.py` (`2be8efa`) replayed the course music retarget onto `r16` for `r17`, it omitted the four Overworld submap table patches, leaving `OverworldMusic` (`$04:8D8A`, offset `0x20D8A`) and `OverworldMusic2` (`$04:DBC8`, offset `0x25BC8`) at Demo 1-1's `1E 22 27 25 29 27 26` across `r17..r50` (playing World 4's `0x22` on World 6 submap 1 and Special Zone's `0x27` on World 4 submap 2).
+  - `demo11-native-product-r51` (`tools/prepare_product_r51.py`, `config/restorations/demo11-native-product-r51.json`, `recomp/targets/demo11-native-product-r51/symbols.toml`) restores the exact four table bytes from official donor `demo-only-1` (`local/content-versions/demo-only-1/rom.sfc`, SHA-256 `b8d86f894f6c07aeb74794c59adab8f336080285b4781a3e1c921615a2d8216b`) on top of `demo11-native-product-r50`:
+    - `0x20D8B` (`$04:8D8B`): `0x22 -> 0x23` (`OverworldMusic` submap 1, World 6 Sky)
+    - `0x20D8C` (`$04:8D8C`): `0x27 -> 0x22` (`OverworldMusic` submap 2, World 4 Cave)
+    - `0x25BC9` (`$04:DBC9`): `0x22 -> 0x23` (`OverworldMusic2` submap 1, World 6 Sky)
+    - `0x25BCA` (`$04:DBCA`): `0x27 -> 0x22` (`OverworldMusic2` submap 2, World 4 Cave)
+    - Both tables now hold `1E 23 22 25 29 27 26` while preserving all `r50` `InitialSaveData` (`0x1EF0..0x1F05`), custom song upload payloads at `$0F:E000`, and all `71` native `BM_*` packs.
+- **Target & pack identities (`demo11-native-product-r51`)**:
+  - Target ROM (`local/restoration/demo11-native-product-r51/rom.sfc`): `4,194,304` B, SHA-256 `be82cf49edd22a975fbce35ac7d570260494fc7812715fd2862f497504ce5948` (parent `demo11-native-product-r50`: `81ef0720233c18a2fa687f3d0d69768ce7c94904e21f00cceaed5379e88909a4`).
+  - Runtime packs: `71` `BM_*` packs / `72` manifest files retained from `r50`.
+  - Native Linux binary (`local/build/demo11-native-product-r51/BrutalMarioDemo11ProductR51SNESRecomp`): `1,636,256` B, SHA-256 `237a9248cd65a69d59752d3064ec1c1cc3616ece2fc462026b9c1d51f586920a`.
+  - Native Windows binary (`local/build-windows/demo11-native-product-r51/BrutalMarioDemo11ProductR51SNESRecomp.exe`): `3,565,056` B, SHA-256 `98e58bf4b6d72ee2d3b42793257ef9e00e1565ea4b17d70dcbe017884579f9db`.
+- **Headless E2E & unit verification**:
+  - `python3 tools/qualify_demo11_overworld_music.py`: `PASS: overworld music table corrected; 6 submap checks; target ROM 4ee6d47e0f3a6bfb`.
+  - `tests/test_product_r51_overworld_music.py` (`Ran 2 tests in 66.670s`, `OK`; captures in `local/captures/r51-overworld-music-verify/receipt.json`):
+    - Verifies exact 4-byte ROM diff against `r50`, `demo-only-1` table equality, `r50` `InitialSaveData` retention, intact `$0F:E000` custom song payloads for slots `0x1E, 0x22, 0x23, 0x25, 0x26, 0x27, 0x29`, and an active-target regression guard reading the default `--target` from `tools/launch_native.py`.
+    - Headless native execution across submaps `1..6` confirms both CPU `$1DFB` requests and byte-exact SPC700 ARAM `$5400` song payload uploads (`submap 1` World 6 Sky -> `0x23` `1,295` B; `submap 2` World 4 Cave -> `0x22` `949` B; `submap 3` World 7 -> `0x25` `1,465` B; `submap 4` Star World -> `0x29` `1,105` B; `submap 5` Special Zone -> `0x27` `580` B; `submap 6` World 5 -> `0x26` `1,273` B).
+  - `tests.test_product_r50_yoshi_start`, `tests.test_product_r47_multilang`, and `tests.test_public_beta_package` (`Ran 25 tests in 112.199s`, `OK`, including `test_r51_delta_patch_roundtrip_and_manifest`).
+  - Full repository unit test suite (`python3 -m unittest discover -s tests -p "test_*.py" -v > local/reports/unit-tests-r51.log 2>&1`): `607/607` passed in `410.461s` (`0` failures, `0` errors, `0` skipped).
+- **Public Beta `r51` release packages (`dist/public-beta-r51/`, receipt `dist/public-beta-r51/release-receipt.json`)**:
+  - `BMPT` v1 delta: `3,758,410` B, SHA-256 `aa601abad2e43cb1b77fac68c837b9e9b033b6c02b39bdea0b7b9a74e748ccfa` (`71` `BM_*` packs / `72` manifest files).
+  - `dist/public-beta-r51/BrutalMario-PublicBeta-r51-Linux.zip`: `2,910,385` B, SHA-256 `9291fceb885022707822ad676ac3d0361776f0c8f6b74ce728dcbc2df0bcd4ed` (`linux_binary_sha256` `237a9248cd65a69d59752d3064ec1c1cc3616ece2fc462026b9c1d51f586920a`, `linux_launcher_sha256` `6a16d1b9f51b4d4a0e332e8f51db4e8f8dd45d9bf313d115ade3fd8236feb11c`).
+  - `dist/public-beta-r51/BrutalMario-PublicBeta-r51-Windows.zip`: `4,066,087` B, SHA-256 `68c7964ac0c43f81a80e7cbd2bd48d62fa3cba9ddafb3668ca8b34e86c3f4241` (`windows_binary_sha256` `98e58bf4b6d72ee2d3b42793257ef9e00e1565ea4b17d70dcbe017884579f9db`, `windows_launcher_sha256` `2bd06e3154c4ddf31112e8fe85c7261d6ae826689ae63fba3407c97f5c28ce97`).
+  - Linux vs Windows 60-frame binary parity & clean-room smoke checks pass (`Linux guest_mean_ms`: closed `4.533`, console `4.206`; `Windows guest_mean_ms`: closed `4.706`, console `5.372`); historical `r14..r50` targets and `dist/public-beta-r43..r50/` remain preserved untouched.
+
+
