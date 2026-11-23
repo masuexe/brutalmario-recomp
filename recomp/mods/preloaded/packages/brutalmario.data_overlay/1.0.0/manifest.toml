@@ -1,0 +1,24 @@
+format_version = 1
+id = "brutalmario.data_overlay"
+version = "1.0.0"
+name = "Brutal Mario Data & Localization Overrides"
+author = "Brutal Mario Recomp"
+description = "Allows enabled mod packages or BM_MOD_OVERRIDES_DIR to override non-executable content and localization packs without modifying the ROM."
+license = "MIT"
+resolver = "declarative"
+save_compatibility = "shared"
+
+[[target]]
+game_id = "@GAME_ID@"
+rom_sha256 = "@ROM_SHA256@"
+
+[[feature]]
+id = "pack_overrides"
+name = "External Pack & Localization Overrides"
+description = "Resolves overrides/<BM_VAR>.bin or overrides/<pack_file> from enabled mod packages before falling back to stock packs."
+group = "Content"
+default_enabled = false
+
+[[plugin]]
+feature = "pack_overrides"
+id = "brutalmario.pack_overrides"

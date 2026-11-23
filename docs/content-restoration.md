@@ -2445,4 +2445,28 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   - `dist/public-beta-r51/BrutalMario-PublicBeta-r51-Windows.zip`: `4,066,087` B, SHA-256 `68c7964ac0c43f81a80e7cbd2bd48d62fa3cba9ddafb3668ca8b34e86c3f4241` (`windows_binary_sha256` `98e58bf4b6d72ee2d3b42793257ef9e00e1565ea4b17d70dcbe017884579f9db`, `windows_launcher_sha256` `2bd06e3154c4ddf31112e8fe85c7261d6ae826689ae63fba3407c97f5c28ce97`).
   - Linux vs Windows 60-frame binary parity & clean-room smoke checks pass (`Linux guest_mean_ms`: closed `4.533`, console `4.206`; `Windows guest_mean_ms`: closed `4.706`, console `5.372`); historical `r14..r50` targets and `dist/public-beta-r43..r50/` remain preserved untouched.
 
+## Native Mod Runtime & 16:9 Widescreen Phase 2A (`demo11-native-product-r52`)
+
+- **Scope & zero-regression isolation**:
+  - `demo11-native-product-r52` (`tools/prepare_product_r52.py`, `config/restorations/demo11-native-product-r52.json`, `recomp/targets/demo11-native-product-r52/symbols.toml`) descends from `demo11-native-product-r51` with **0 ROM byte changes** (`ROM` `4,194,304` B, SHA-256 `be82cf49edd22a975fbce35ac7d570260494fc7812715fd2862f497504ce5948`), preserving all `71` `BM_*` packs and leaving `recomp/native_seven.c` byte-identical to `r50`/`r51` (`2d63df3337c6fcaba5c51dbd749a21f12d53d386d8046566526e370705911379`).
+  - Opt-in `"native_enhancements": true` wiring in `tools/m1.py` links `recomp/native_mods.c` + `recomp/native_widescreen.c`, stages the preloaded mod catalog (`recomp/mods/preloaded/packages/`), and enables `SnesDesktopHostGame` widescreen/MSU-1 hooks without modifying any historical target (`r14..r51`, `demo-1-1`, `demo-only-1`).
+- **SNESRecomp Mod Runtime & Preloaded Catalog**:
+  - Preloaded packages (`default_enabled = false`):
+    - `brutalmario.display@1.0.0` (`widescreen` -> trusted presentation plugin `brutalmario.widescreen`; `no_sprite_limits` -> trusted presentation plugin `brutalmario.no_sprite_limits`).
+    - `brutalmario.data_overlay@1.0.0` (`pack_overrides` -> trusted activation plugin `brutalmario.pack_overrides`).
+  - `recomp/native_mods.c` registers plugins via `SNES_MOD_CONSTRUCTOR` and applies non-executable pack overrides from active `.snesmod` package roots (`<pkg_root>/overrides/<BM_VAR>.bin` or `<basename>`) or `BM_MOD_OVERRIDES_DIR` directly onto the shared backing map after stock ROM/pack verification.
+- **Native 16:9 Widescreen Phase 2A (`recomp/native_widescreen.c`)**:
+  - Default OFF (`256x224`, `g_ws_extra = 0`, zero regression). Activates via `BM_WIDESCREEN=1`, `brutalmario.display/widescreen` in `mods/preloaded/state.toml`, or `config.ini` `[Graphics] Widescreen = 1` (default `extra = 72` -> `400x224`, tunable via `BM_WIDESCREEN_EXTRA`).
+  - Per-frame PPU policy in `BmWidescreenApplyFramePolicy()`:
+    - Scrolling courses (`$0100 == 0x14`, `screens >= 2`, non-boss/non-cutscene): expands to `400x224` with dynamic horizontal edge clamping against `[0, screens * 256)` (`PpuSetExtraSideSpace`) and BG3 top HUD clamp (`y = 0..40`, `PpuSetWidescreenLayerClampBand`).
+    - Title (`0x07`), File Select (`0x08`), framed Overworld (`0x0E`), 4-scene intro (`0x1C5..0x14D`), and single-screen boss/special arenas (`0x0FF`, `0x17B`, `0x151`, `0x190..0x192`, `0x08F`, `0x079`, `0x06E..0x072`): cleanly centered 4:3 (`PpuSetExtraSpaceCentered`) with unused margins zero-cleared.
+- **Verification**:
+  - `tests/test_product_r52_widescreen_and_mods.py` (`4/4` passed in `30.652s`, captures under `local/captures/r52-widescreen-mods-verify/`):
+    - Stock default renders `256x224` (`installed=2 active=0 widescreen=0`).
+    - `BM_WIDESCREEN=1` tour verifies `400x224` framebuffers and visual PNGs (`local/reports/r52-ws-*.png`): centered 4:3 on Title, Intro `0x1C5`, and framed Overworld; left-clamped/right-widened at Course `1-1` spawn (`cam_x = 0`); full 16:9 left+right widened after scrolling right (`cam_x >= 72`).
+    - Real `mods/preloaded/state.toml` enables `brutalmario.display/widescreen` + `no_sprite_limits` (`width=400`, `active=1`).
+    - Real `brutalmario.data_overlay/pack_overrides` overrides `BM_LANG_R47_DATA_PACK` cleanly onto the backing map.
+  - Existing regressions verified green: `tests.test_product_r51_overworld_music` (`2/2`) and `tests.test_product_r50_yoshi_start` (`5/5`, including exact `native_seven.c` digest check).
+  - Remaining Phase 2B / release work: Map16 off-native column prefill + sprite cull/spawn margin relaxation, in-game `GAME SETTINGS` / `~` console widescreen & mod toggles, and Windows + Public Beta `r52` packaging.
+
 

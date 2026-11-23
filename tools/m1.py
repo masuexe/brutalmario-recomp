@@ -96,6 +96,95 @@ def install_metrics():
         source += ('\n# demoOnly1 legacy audio default (explicit environment override remains available).\n'
                    f'target_compile_definitions({TARGET} PRIVATE M1_SEPARATE_ECHO_DEFAULT=1)\n')
         cmake.write_text(source)
+    install_native_enhancements()
+
+
+def install_native_enhancements():
+    if TARGET_ID not in RESTORATIONS:
+        return
+    cfg_path = ROOT / 'config/restorations' / (TARGET_ID + '.json')
+    if not cfg_path.is_file():
+        return
+    cfg = json.loads(cfg_path.read_text())
+    if not cfg.get('native_enhancements'):
+        return
+
+    # 1. Stage preloaded mod catalog with target game_id and rom_sha256.
+    identity_text = (EXPERIMENT / 'rom_identity.txt').read_text()
+    gid_match = re.search(r'^game_id\s*=\s*(\S+)\s*$', identity_text, re.MULTILINE)
+    sha_match = re.search(r'^expected_sha256\s*=\s*([0-9a-f]{64})\s*$', identity_text, re.MULTILINE)
+    if not gid_match or not sha_match:
+        raise ValueError('rom_identity.txt missing game_id or expected_sha256 for mod catalog')
+    game_id, rom_sha = gid_match[1], sha_match[1]
+    src_mods = ROOT / 'recomp/mods/preloaded/packages'
+    dst_mods = EXPERIMENT / 'mods/preloaded/packages'
+    if src_mods.is_dir():
+        for src_file in sorted(src_mods.rglob('*')):
+            if src_file.is_dir():
+                continue
+            rel = src_file.relative_to(src_mods)
+            dst_file = dst_mods / rel
+            dst_file.parent.mkdir(parents=True, exist_ok=True)
+            if src_file.suffix == '.toml':
+                text = src_file.read_text(encoding='utf-8')
+                text = text.replace('@GAME_ID@', game_id).replace('@ROM_SHA256@', rom_sha)
+                dst_file.write_text(text, encoding='utf-8')
+            else:
+                dst_file.write_bytes(src_file.read_bytes())
+
+    # 2. Wire per-frame widescreen policy into src/game_rtl.c.
+    glue = EXPERIMENT / 'src/game_rtl.c'
+    glue_src = glue.read_text()
+    if 'BmWidescreenAfterDraw();' not in glue_src:
+        if 'BmWidescreenApplyFramePolicy();' not in glue_src:
+            glue_src = glue_src.replace(
+                '#include "beam_frame_driver.h"',
+                '#include "beam_frame_driver.h"\n#include "native_widescreen.h"',
+            )
+            glue_src = glue_src.replace(
+                '    snes_beam_frame_driver_draw_ppu_frame();',
+                '    BmWidescreenApplyFramePolicy();\n    snes_beam_frame_driver_draw_ppu_frame();\n    BmWidescreenAfterDraw();',
+            )
+        else:
+            glue_src = glue_src.replace(
+                '    snes_beam_frame_driver_draw_ppu_frame();',
+                '    snes_beam_frame_driver_draw_ppu_frame();\n    BmWidescreenAfterDraw();',
+            )
+        glue.write_text(glue_src)
+
+    # 3. Wire widescreen + MSU-1 host hooks into src/main.c.
+    main_c = EXPERIMENT / 'src/main.c'
+    main_src = main_c.read_text()
+    if '#include "native_widescreen.h"' not in main_src:
+        main_src = main_src.replace(
+            '#include "game_rtl.h"',
+            '#include "game_rtl.h"\n#include "native_widescreen.h"',
+        )
+    if '.native_widescreen   = 1,' not in main_src:
+        main_src = main_src.replace(
+            'static const SnesDesktopHostGame kGameHost = {',
+            'static const SnesDesktopHostGame kGameHost = {\n'
+            '    .widescreen_supported = 1,\n'
+            '    .native_widescreen   = 1,\n'
+            '    .msu1_supported      = 1,\n'
+            '    .after_config        = &BmWidescreenAfterConfig,\n'
+            '    .on_reset            = &BmWidescreenOnReset,\n'
+            '    .prepare_frame       = &BmWidescreenPrepareFrame,',
+        )
+    if main_src != main_c.read_text():
+        main_c.write_text(main_src)
+
+    # 4. Link native_mods.c and native_widescreen.c and enable BM_MODS_SUPPORT.
+    cmake = EXPERIMENT / 'CMakeLists.txt'
+    cmake_src = cmake.read_text()
+    if '# Native widescreen and mod runtime' not in cmake_src:
+        cmake_src += (
+            '\n# Native widescreen and mod runtime (project-owned enhancements).\n'
+            f'target_sources({TARGET} PRIVATE "{ROOT / "recomp/native_mods.c"}" "{ROOT / "recomp/native_widescreen.c"}")\n'
+            f'target_include_directories({TARGET} PRIVATE "{ROOT / "recomp"}")\n'
+            f'target_compile_definitions({TARGET} PRIVATE BM_MODS_SUPPORT=1)\n'
+        )
+        cmake.write_text(cmake_src)
 
 
 def analysis_identity():

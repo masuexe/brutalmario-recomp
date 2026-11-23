@@ -1,0 +1,37 @@
+format_version = 1
+id = "brutalmario.display"
+version = "1.0.0"
+name = "Brutal Mario Display Enhancements"
+author = "Brutal Mario Recomp"
+description = "Native 16:9 widescreen PPU rendering and optional sprite-limit removal."
+license = "MIT"
+resolver = "declarative"
+save_compatibility = "shared"
+
+[[target]]
+game_id = "@GAME_ID@"
+rom_sha256 = "@ROM_SHA256@"
+
+[[feature]]
+id = "widescreen"
+name = "Widescreen (16:9)"
+description = "Expands scrolling courses to 400x224 (16:9) while keeping HUDs, Overworld, cutscenes, and boss arenas cleanly centered."
+group = "Display"
+default_enabled = false
+presentation_only = true
+
+[[plugin]]
+feature = "widescreen"
+id = "brutalmario.widescreen"
+
+[[feature]]
+id = "no_sprite_limits"
+name = "Remove Sprite Limits"
+description = "Lifts the SNES per-scanline sprite cap to reduce flicker in busy rooms."
+group = "Display"
+default_enabled = false
+presentation_only = true
+
+[[plugin]]
+feature = "no_sprite_limits"
+id = "brutalmario.no_sprite_limits"
