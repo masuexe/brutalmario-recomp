@@ -141,6 +141,7 @@ def build_windows_game_binary(target: str, force: bool = False) -> Path:
         f'/DSNES_GAME_TITLE="\\"{title}\\"" /DSNES_GAME_VERSION="\\"0.1.0\\"" '
         f'/DSNESRECOMP_BOOT_WATCHDOG_DIAGNOSTICS=0 /DSNESRECOMP_FUNC_SNAPSHOT=0 '
         f'/DSNESRECOMP_STACK_BALANCE_DIAGNOSTICS=0 /DWIN32 /D_WINDOWS /DNDEBUG'
+        + (' /DBM_MODS_SUPPORT=1' if cfg.get("native_enhancements") else '')
     )
 
     rel_win_dir = f"local\\build-windows\\{target}"
@@ -420,15 +421,20 @@ def format_readme(target: str) -> str:
     - teleport 0x151 : 传送至指定房间号（0x000 - 0x1FF）
     - xy X Y         : 关卡内坐标瞬移
     - lang [en|ja|auto|toggle] : 切换文本语言（English / 日本語 / 跟随系统）
+    - widescreen [on|off|toggle] : 实时切换 16:9 原生宽屏 / 4:3 原版比例
+    - mods           : 查看已安装与已激活的 Mod 包
     - Esc            : 关闭控制台
 
-  [画面、语言与音量调整 / Video, Language & Audio Settings]
+  [画面、宽屏、Mod 与音量调整 / Video, Widescreen, Mods & Audio Settings]
   • 按 Esc 或 O 键可打开游戏内设置界面（GAME SETTINGS），支持实时切换语言
-    （Auto 跟随系统 / English / Japanese）并自动保存至 config/config.ini。
-  • 命令行也可通过 `--lang en|ja|auto` 参数或设置环境变量 `BM_LANG=en|ja|auto` 启动。
-  • 编辑 config/config.ini 可修改语言（Language=auto 默认自动识别日语系统为
-    Japanese、其余系统为 English）、窗口倍率（WindowScale=3）、垂直同步
-    （VSync=1）与音频开关（EnableAudio=1）。
+    （Auto / English / Japanese）、16:9 原生宽屏（4/W 键）、解除精灵上限（5 键）
+    并查看已挂载 Mod 数量，设置自动保存至 config/config.ini。
+  • 预置 Mod 目录位于 mods/preloaded/packages/（同时备份于 bin/mods/preloaded/packages/），
+    可通过 state.toml 或在数据包 overrides/ 目录挂载非可执行资源/汉化覆盖包。
+  • 命令行也可通过 `--lang en|ja|auto` 参数或设置环境变量 `BM_LANG=en|ja|auto`、
+    `BM_WIDESCREEN=1` 启动。
+  • 编辑 config/config.ini 可修改语言（Language=auto）、宽屏（Widescreen=0/1）、
+    窗口倍率（WindowScale=3）、垂直同步（VSync=1）与音频开关（EnableAudio=1）。
 ========================================================================
 """
 
@@ -463,7 +469,7 @@ def stage_platform_bundle(
     if bundle_dir.exists() or zip_path.exists():
         raise FileExistsError(f"Destination already exists: {bundle_dir} or {zip_path}")
 
-    for sub in ("bin/mods/preloaded/packages", "config", "patch", "scripts", "saves"):
+    for sub in ("bin/mods/preloaded/packages", "mods/preloaded/packages", "config", "patch", "scripts", "saves"):
         (bundle_dir / sub).mkdir(parents=True, exist_ok=True)
 
     # 1. Binaries + keybinds + mod state
@@ -493,9 +499,21 @@ def stage_platform_bundle(
         keybinds_src = ROOT / "local/build-windows/demo11-native-product/keybinds.ini"
     shutil.copy2(keybinds_src, bundle_dir / "bin/keybinds.ini")
 
+    mods_pkg_src = ROOT / "local/build" / target / "mods/preloaded/packages"
+    if mods_pkg_src.is_dir():
+        for dst_root in (bundle_dir / "bin/mods/preloaded/packages", bundle_dir / "mods/preloaded/packages"):
+            for item in sorted(mods_pkg_src.rglob("*")):
+                if item.is_dir() or item.name == ".gitkeep":
+                    continue
+                rel = item.relative_to(mods_pkg_src)
+                dst_item = dst_root / rel
+                dst_item.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(item, dst_item)
+
     state_toml = ROOT / "local/build" / target / "mods/preloaded/state.toml"
     if state_toml.is_file():
         shutil.copy2(state_toml, bundle_dir / "bin/mods/preloaded/state.toml")
+        shutil.copy2(state_toml, bundle_dir / "mods/preloaded/state.toml")
 
     # 2. Config & manifest
     (bundle_dir / "config/config.ini").write_text(format_config_ini(platform), encoding="utf-8")
@@ -711,10 +729,10 @@ def run_end_to_end_smoke_test(
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", default="demo11-native-product-r51")
+    parser.add_argument("--target", default="demo11-native-product-r52")
     parser.add_argument("--base-rom", type=Path, default=ROOT.parent / "roms/Super Mario World (U) [!].smc")
-    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r51")
-    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r51")
+    parser.add_argument("--out-dir", type=Path, default=ROOT / "dist/public-beta-r52")
+    parser.add_argument("--diag-dir", type=Path, default=ROOT / "local/diagnostics/public-beta-r52")
     parser.add_argument("--force-rebuild-windows", action="store_true")
     args = parser.parse_args()
 

@@ -429,6 +429,44 @@ class PublicBetaPackageTests(unittest.TestCase):
         for p in packs:
             self.assertEqual(decoded[p["rel_path"]], p["source_path"].read_bytes())
 
+    def test_r52_delta_patch_roundtrip_and_manifest(self):
+        r52_rom_path = ROOT / "local/restoration/demo11-native-product-r52/rom.sfc"
+        if not r52_rom_path.is_file():
+            self.skipTest("demo11-native-product-r52 restoration files not present")
+
+        import package_public_beta as ppb
+
+        packs = delta.collect_target_packs("demo11-native-product-r52")
+        self.assertEqual(len(packs), 71)
+        manifest_text = ppb.format_manifest_text("demo11-native-product-r52")
+        lines = [ln for ln in manifest_text.splitlines() if ln and not ln.startswith("#")]
+        self.assertEqual(len(lines), 72)
+        r52_rom = r52_rom_path.read_bytes()
+        r52_sha = hashlib.sha256(r52_rom).hexdigest()
+        self.assertEqual(
+            r52_sha,
+            "be82cf49edd22a975fbce35ac7d570260494fc7812715fd2862f497504ce5948",
+        )
+        readme = ppb.format_readme("demo11-native-product-r52")
+        self.assertIn("demo11-native-product-r52", readme)
+        self.assertIn("widescreen", readme)
+        self.assertIn("mods/preloaded/packages/", readme)
+
+        base_candidates = [
+            ROOT.parent / "roms/Super Mario World (U) [!].smc",
+            (ROOT / "local").resolve().parent.parent / "roms/Super Mario World (U) [!].smc",
+        ]
+        base_rom = next((p for p in base_candidates if p.is_file()), None)
+        if base_rom is None:
+            self.skipTest("US Super Mario World base ROM not present for live BMPT roundtrip")
+
+        patch_bytes, stats = delta.build_patch_bytes("demo11-native-product-r52", base_rom)
+        self.assertEqual(stats["file_count"], len({p["rel_path"] for p in packs}) + 1)
+        decoded = delta.apply_patch_bytes(base_rom.read_bytes(), patch_bytes)
+        self.assertEqual(decoded["data/rom.sfc"], r52_rom)
+        for p in packs:
+            self.assertEqual(decoded[p["rel_path"]], p["source_path"].read_bytes())
+
 
 if __name__ == "__main__":
     unittest.main()

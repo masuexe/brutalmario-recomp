@@ -127,6 +127,15 @@
       "patch_sha256": "fc21fdfd6390d60a8cb2087fa3b013cf78092cb70d351f5e0e362ea13a6cf92e",
       "result_sha256": "676859e4013803b401d076b6d68ee04690e206d592a73676bb90e58d01939e24",
       "base_patch": "console-world-coordinate-teleport"
+    },
+    {
+      "id": "widescreen-and-mods-settings",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0017-widescreen-and-mods-settings.patch",
+      "source_sha256": "676859e4013803b401d076b6d68ee04690e206d592a73676bb90e58d01939e24",
+      "patch_sha256": "7fea17b7bcdd206e079c77d8f88a37723b4259fa766be7c79b530f9403db457e",
+      "result_sha256": "4c5ce71ffceb6a3e19faac1e0b3c2a664a043f991f3687a11c74f2050058700a",
+      "base_patch": "settings-overlay-and-language"
     }
   ]
 }

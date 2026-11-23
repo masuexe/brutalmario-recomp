@@ -251,13 +251,17 @@ class ProductR52WidescreenAndModsTest(unittest.TestCase):
         self.assertEqual(_count_nonblack_in_rect(c_start, 400, 0, 72, 0, 224), 0, "course 1-1 start left edge not clamped")
         self.assertGreater(_count_nonblack_in_rect(c_start, 400, 328, 400, 48, 216), 2000, "course 1-1 start right margin not widened")
 
-        # 4. Course 1-1 after running right (cam_x >= 72): BOTH left and right margins widened!
+        # 4. Course 1-1 after running right (cam_x >= 72): BOTH left and right margins widened
+        #    and Map16 BG1 shadow prefill must achieve 0 east/west misses and 0 east raw fallbacks.
         c_scroll = frames["course105_scrolled"]
         wram_scroll = (sdir / "course105_scrolled.wram.bin").read_bytes()
         cam_x_scroll = int.from_bytes(wram_scroll[0x1A:0x1C], "little")
         self.assertGreaterEqual(cam_x_scroll, 72, f"expected cam_x>=72 after running right, got {cam_x_scroll}")
         self.assertGreater(_count_nonblack_in_rect(c_scroll, 400, 0, 72, 48, 216), 2000, "course 1-1 scrolled left margin not widened")
         self.assertGreater(_count_nonblack_in_rect(c_scroll, 400, 328, 400, 48, 216), 2000, "course 1-1 scrolled right margin not widened")
+        self.assertIn("westMiss=0", log)
+        self.assertIn("eastMiss=0", log)
+        self.assertIn("eastRawFallback=0", log)
 
     def test_03_mod_runtime_activates_widescreen_and_no_sprite_limits(self) -> None:
         state_toml = (
@@ -323,6 +327,46 @@ class ProductR52WidescreenAndModsTest(unittest.TestCase):
         self.assertIn("[native-mods] plugin activated: brutalmario.pack_overrides", log)
         self.assertIn("[native-mods] override pack=BM_LANG_R47_DATA_PACK", log)
         self.assertIn(f"bytes={len(mod_bytes)}", log)
+
+    def test_05_in_game_settings_and_console_hot_toggle_widescreen_and_mods(self) -> None:
+        # 1. Test GAME SETTINGS modal hot-toggling widescreen ON and persisting config.ini.
+        overlay_ppm = CAPTURE_ROOT / "settings_hot_toggle" / "settings-menu.ppm"
+        proc, sdir = _run_session(
+            CAPTURE_ROOT / "settings_hot_toggle",
+            SHORT_TITLE_SCRIPT,
+            widescreen_cfg=False,
+            extra_env={
+                "SNESRECOMP_SETTINGS_MENU": "1",
+                "SNESRECOMP_SETTINGS_COMMANDS": "widescreen on;close",
+                "SNESRECOMP_OVERLAY_DUMP": str(overlay_ppm),
+            },
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr[-1000:])
+        log = (sdir / "run.log").read_text(encoding="utf-8")
+        self.assertTrue(overlay_ppm.is_file(), "GAME SETTINGS overlay PPM was not dumped")
+        self.assertIn("[native-widescreen] enabled=1 extra=72 width=400", log)
+        cfg_after = (sdir / "config.ini").read_text(encoding="utf-8")
+        self.assertIn("Widescreen = 1", cfg_after)
+        w, h, _ = _find_presented_bmp(sdir, "title")
+        self.assertEqual((w, h), (400, 224))
+
+        # 2. Test ~ console `mods` and `widescreen on` commands.
+        proc2, sdir2 = _run_session(
+            CAPTURE_ROOT / "console_ws_mods",
+            SHORT_TITLE_SCRIPT,
+            widescreen_cfg=False,
+            extra_env={
+                "SNESRECOMP_CHEAT_CONSOLE": "1",
+                "SNESRECOMP_CHEAT_CONSOLE_COMMANDS": "mods;widescreen on;close",
+            },
+        )
+        self.assertEqual(proc2.returncode, 0, proc2.stderr[-1000:])
+        log2 = (sdir2 / "run.log").read_text(encoding="utf-8")
+        self.assertIn("[cheat] mods", log2)
+        self.assertIn("[cheat] widescreen", log2)
+        self.assertIn("[native-widescreen] enabled=1 extra=72 width=400", log2)
+        w2, h2, _ = _find_presented_bmp(sdir2, "title")
+        self.assertEqual((w2, h2), (400, 224))
 
 
 if __name__ == "__main__":

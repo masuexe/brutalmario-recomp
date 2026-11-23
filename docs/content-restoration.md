@@ -2445,7 +2445,7 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
   - `dist/public-beta-r51/BrutalMario-PublicBeta-r51-Windows.zip`: `4,066,087` B, SHA-256 `68c7964ac0c43f81a80e7cbd2bd48d62fa3cba9ddafb3668ca8b34e86c3f4241` (`windows_binary_sha256` `98e58bf4b6d72ee2d3b42793257ef9e00e1565ea4b17d70dcbe017884579f9db`, `windows_launcher_sha256` `2bd06e3154c4ddf31112e8fe85c7261d6ae826689ae63fba3407c97f5c28ce97`).
   - Linux vs Windows 60-frame binary parity & clean-room smoke checks pass (`Linux guest_mean_ms`: closed `4.533`, console `4.206`; `Windows guest_mean_ms`: closed `4.706`, console `5.372`); historical `r14..r50` targets and `dist/public-beta-r43..r50/` remain preserved untouched.
 
-## Native Mod Runtime & 16:9 Widescreen Phase 2A (`demo11-native-product-r52`)
+## Native Mod Runtime, 16:9 Widescreen & Public Beta `r52` (`demo11-native-product-r52`)
 
 - **Scope & zero-regression isolation**:
   - `demo11-native-product-r52` (`tools/prepare_product_r52.py`, `config/restorations/demo11-native-product-r52.json`, `recomp/targets/demo11-native-product-r52/symbols.toml`) descends from `demo11-native-product-r51` with **0 ROM byte changes** (`ROM` `4,194,304` B, SHA-256 `be82cf49edd22a975fbce35ac7d570260494fc7812715fd2862f497504ce5948`), preserving all `71` `BM_*` packs and leaving `recomp/native_seven.c` byte-identical to `r50`/`r51` (`2d63df3337c6fcaba5c51dbd749a21f12d53d386d8046566526e370705911379`).
@@ -2455,18 +2455,20 @@ in `r43` and `demo-only-1`, but Room `0x134`'s Super GFX Bypass table (`$14:AD08
     - `brutalmario.display@1.0.0` (`widescreen` -> trusted presentation plugin `brutalmario.widescreen`; `no_sprite_limits` -> trusted presentation plugin `brutalmario.no_sprite_limits`).
     - `brutalmario.data_overlay@1.0.0` (`pack_overrides` -> trusted activation plugin `brutalmario.pack_overrides`).
   - `recomp/native_mods.c` registers plugins via `SNES_MOD_CONSTRUCTOR` and applies non-executable pack overrides from active `.snesmod` package roots (`<pkg_root>/overrides/<BM_VAR>.bin` or `<basename>`) or `BM_MOD_OVERRIDES_DIR` directly onto the shared backing map after stock ROM/pack verification.
-- **Native 16:9 Widescreen Phase 2A (`recomp/native_widescreen.c`)**:
-  - Default OFF (`256x224`, `g_ws_extra = 0`, zero regression). Activates via `BM_WIDESCREEN=1`, `brutalmario.display/widescreen` in `mods/preloaded/state.toml`, or `config.ini` `[Graphics] Widescreen = 1` (default `extra = 72` -> `400x224`, tunable via `BM_WIDESCREEN_EXTRA`).
-  - Per-frame PPU policy in `BmWidescreenApplyFramePolicy()`:
-    - Scrolling courses (`$0100 == 0x14`, `screens >= 2`, non-boss/non-cutscene): expands to `400x224` with dynamic horizontal edge clamping against `[0, screens * 256)` (`PpuSetExtraSideSpace`) and BG3 top HUD clamp (`y = 0..40`, `PpuSetWidescreenLayerClampBand`).
+- **Native 16:9 Widescreen + Map16 BG1 Margin Prefill (`recomp/native_widescreen.c`)**:
+  - Default OFF (`256x224`, `g_ws_extra = 0`, zero regression). Activates via `BM_WIDESCREEN=1`, `brutalmario.display/widescreen` in `mods/preloaded/state.toml`, `config.ini` `[Graphics] Widescreen = 1`, or live hot-toggle in `GAME SETTINGS` / `~` console (default `extra = 72` -> `400x224`, tunable via `BM_WIDESCREEN_EXTRA`).
+  - Per-frame PPU policy + read-only Map16 BG1 margin prefill (`WsShadowForceTile` over Lunar Magic / Brutal Mario Map16 lookup verified `1728/1728` = `100%` against live BG1 VRAM; kill-switch `BM_WS_PREFILL=0`):
+    - Scrolling horizontal courses (`$0100 == 0x14`, `screens >= 2`, non-boss/non-cutscene): expands to `400x224` with dynamic horizontal edge clamping against `[0, screens * 256)`, BG3 top HUD clamp (`y = 0..40`), and seamless Map16 BG1 margin fill (`westMiss=0`, `eastMiss=0`, `eastRawFallback=0`).
     - Title (`0x07`), File Select (`0x08`), framed Overworld (`0x0E`), 4-scene intro (`0x1C5..0x14D`), and single-screen boss/special arenas (`0x0FF`, `0x17B`, `0x151`, `0x190..0x192`, `0x08F`, `0x079`, `0x06E..0x072`): cleanly centered 4:3 (`PpuSetExtraSpaceCentered`) with unused margins zero-cleared.
-- **Verification**:
-  - `tests/test_product_r52_widescreen_and_mods.py` (`4/4` passed in `30.652s`, captures under `local/captures/r52-widescreen-mods-verify/`):
-    - Stock default renders `256x224` (`installed=2 active=0 widescreen=0`).
-    - `BM_WIDESCREEN=1` tour verifies `400x224` framebuffers and visual PNGs (`local/reports/r52-ws-*.png`): centered 4:3 on Title, Intro `0x1C5`, and framed Overworld; left-clamped/right-widened at Course `1-1` spawn (`cam_x = 0`); full 16:9 left+right widened after scrolling right (`cam_x >= 72`).
-    - Real `mods/preloaded/state.toml` enables `brutalmario.display/widescreen` + `no_sprite_limits` (`width=400`, `active=1`).
-    - Real `brutalmario.data_overlay/pack_overrides` overrides `BM_LANG_R47_DATA_PACK` cleanly onto the backing map.
-  - Existing regressions verified green: `tests.test_product_r51_overworld_music` (`2/2`) and `tests.test_product_r50_yoshi_start` (`5/5`, including exact `native_seven.c` digest check).
-  - Remaining Phase 2B / release work: Map16 off-native column prefill + sprite cull/spawn margin relaxation, in-game `GAME SETTINGS` / `~` console widescreen & mod toggles, and Windows + Public Beta `r52` packaging.
+    - 65816 sprite simulation/cull remains intentionally unmodified in `r52` so zero custom-sprite or boss mechanics can desync or regress.
+- **In-Game `GAME SETTINGS` & `~` Console Integration (`patches/runtime/0017-widescreen-and-mods-settings.patch`)**:
+  - Adds live hot-toggle rows in `GAME SETTINGS` (`Esc`/`O`) for `WIDESCREEN (4/W)` (`4:3` <-> `16:9`), `SPRITE LIMIT (5)` (`STOCK` <-> `UNLIMITED`), and a live `MODS: N INSTALLED / M ACTIVE` readout (persisted to `config.ini`), plus `widescreen [on|off|toggle]` (`ws`) and `mods` commands in the `~` console.
+- **Verification & Public Beta `r52` promotion (`dist/public-beta-r52/release-receipt.json`)**:
+  - `tests/test_product_r52_widescreen_and_mods.py` (`5/5` passed): stock `256x224` zero-regression, `BM_WIDESCREEN=1` 400x224 tour + Map16 `westMiss=0`/`eastMiss=0`/`eastRawFallback=0` + visual PNG checks (`local/reports/r52-ws-*.png`, `local/reports/r52-settings-menu.png`), `mods/preloaded/state.toml` plugin activation, `brutalmario.data_overlay` non-executable pack override, and in-game `GAME SETTINGS` + `~` console live hot-toggle.
+  - Combined regression suite (`test_product_r52_widescreen_and_mods`, `test_public_beta_package`, `test_product_r51_overworld_music`, `test_language_runtime`): **23/23 passed** (`0` failures, `0` errors), plus `test_product_r50_yoshi_start` (`5/5`), `test_cheat_console` (`2/2`), and `test_host_audio_startup` (`6/6`).
+  - Default `--target` promoted to `demo11-native-product-r52` across `tools/launch_native.py`, `tools/play_native_target.py`, `tools/play_native_cheats.py`, `tools/build_smw_delta.py`, and `tools/package_public_beta.py` (which now stages `mods/preloaded/packages/` into both `mods/preloaded/packages/` and `bin/mods/preloaded/packages/`):
+    - `BrutalMario-PublicBeta-r52-Linux.zip`: `2,920,455` B, SHA-256 `381da500cd7bc0b0e5b961cd83a5029c67d54c4f455835da615d3084e7e474ee` (`linux_binary_sha256` `adb92e749284e97067556b64f1d98364ef1fe92a8d7a5037b010f2f2fafa9e2d`).
+    - `BrutalMario-PublicBeta-r52-Windows.zip`: `4,110,530` B, SHA-256 `0615cf129be37b67bc6cf49d431352794e92543971a3124ff3cd17f65840d958` (`windows_binary_sha256` `1cc84661e0fee511ce3739fbc61975240bf4106934fb8677d2af9ee822550eb9`).
+    - Linux vs Windows 60-frame binary parity & clean-room Unicode path ZIP smoke tests pass (`Linux guest_mean_ms`: closed `8.119`, console `7.403`; `Windows guest_mean_ms`: closed `9.680`, console `9.528`); historical `dist/public-beta-r43..r51/` preserved untouched.
 
 
