@@ -7,7 +7,7 @@ A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate ori
 ### 1. Interactive play (normal window)
 
 ```sh
-# Standard play (4:3 default, isolated saves under local/play/demo11-native-product-r52/)
+# Standard play (8:7 square pixels default, isolated saves under local/play/demo11-native-product-r52/)
 python3 tools/play_native_target.py
 
 # Launch with 16:9 widescreen enabled and/or language override (en | ja | auto)
@@ -30,8 +30,8 @@ python3 tools/play_native_cheats.py --room 0x0FF --invincible --swim
 ```
 
 **In-game shortcuts:**
-- **`Esc` / `O`**: Open **GAME SETTINGS** (live hot-toggle `Language` `1/2/3`, `Widescreen 16:9` `4/W`, `Sprite Limit` `5`, and view installed/active `Mods`).
-- **`~` (backquote)**: Open **Practice Cheat Console** (`invincible`, `swim`, `xy X Y`, `lives N`, `music HEX`, `map M X Y`, `teleport ROOM`, `lang en|ja|auto|toggle`, `widescreen on|off|toggle`, `mods`, `complete`, `help`).
+- **`Esc` / `O`**: Open **GAME SETTINGS** (live hot-toggle `Language` `1/2/3`, `Widescreen 16:9` `4/W`, `Sprite Limit` `5`, `Pixel Aspect` `6` for `8:7` 1:1 square pixels vs `4:3` CRT 7:6 pixels, and view installed/active `Mods`).
+- **`~` (backquote)**: Open **Practice Cheat Console** (`invincible`, `swim`, `xy X Y`, `lives N`, `music HEX`, `map M X Y`, `teleport ROOM`, `lang en|ja|auto|toggle`, `widescreen on|off|toggle`, `aspect 8:7|4:3|1:1|toggle`, `mods`, `complete`, `help`).
 
 ### 3. Useful debug environment variables
 

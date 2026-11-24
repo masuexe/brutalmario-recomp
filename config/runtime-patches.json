@@ -136,6 +136,24 @@
       "patch_sha256": "7fea17b7bcdd206e079c77d8f88a37723b4259fa766be7c79b530f9403db457e",
       "result_sha256": "4c5ce71ffceb6a3e19faac1e0b3c2a664a043f991f3687a11c74f2050058700a",
       "base_patch": "settings-overlay-and-language"
+    },
+    {
+      "id": "default-square-pixels",
+      "source": "runner/src/desktop/mmx_config.c",
+      "patch": "patches/runtime/0018-default-square-pixels.patch",
+      "source_sha256": "c3facdae2f50699157096ea97d57b6beab4faad692c49c2c57c235551b129095",
+      "patch_sha256": "d18f305aa1345fe904d7e3f774c614023a6775e2e6fdcc00c6cc201da8b5d788",
+      "result_sha256": "e68f3144e8f04e1b4f0f340d94f690e17c600c97164a8fd30a0f498832592cca",
+      "base_patch": "config-language-persistence"
+    },
+    {
+      "id": "settings-pixel-aspect",
+      "source": "runner/src/desktop/host_main.c",
+      "patch": "patches/runtime/0019-settings-pixel-aspect.patch",
+      "source_sha256": "4c5ce71ffceb6a3e19faac1e0b3c2a664a043f991f3687a11c74f2050058700a",
+      "patch_sha256": "0ee0f3787681d626c0a5fd0881a0f82d1407617124648ba91d62a4752e0f33dc",
+      "result_sha256": "07335cc1994f8be523630744cbebc990546c1beb6412a11852563d589621bc19",
+      "base_patch": "widescreen-and-mods-settings"
     }
   ]
 }

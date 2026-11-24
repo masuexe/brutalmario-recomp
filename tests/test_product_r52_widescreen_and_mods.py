@@ -368,6 +368,48 @@ class ProductR52WidescreenAndModsTest(unittest.TestCase):
         w2, h2, _ = _find_presented_bmp(sdir2, "title")
         self.assertEqual((w2, h2), (400, 224))
 
+    def test_06_default_square_pixels_and_crt_option(self) -> None:
+        # 1. Default config persists DisplayAspect = 8:7 (1:1 square pixels) and
+        #    hot-toggling `aspect 4:3` in GAME SETTINGS switches to CRT 7:6 pixels
+        #    and adjusts widescreen width to 342x224 (342*7/6 / 224 ~= 16:9).
+        proc, sdir = _run_session(
+            CAPTURE_ROOT / "settings_aspect_crt",
+            SHORT_TITLE_SCRIPT,
+            widescreen_cfg=False,
+            extra_env={
+                "SNESRECOMP_SETTINGS_MENU": "1",
+                "SNESRECOMP_SETTINGS_COMMANDS": "widescreen on;aspect 4:3;close",
+            },
+        )
+        self.assertEqual(proc.returncode, 0, proc.stderr[-1000:])
+        log = (sdir / "run.log").read_text(encoding="utf-8")
+        self.assertIn("[settings] display_aspect=4:3", log)
+        self.assertIn("[native-widescreen] enabled=1 extra=43 width=342", log)
+        cfg_after = (sdir / "config.ini").read_text(encoding="utf-8")
+        self.assertIn("DisplayAspect = 4:3", cfg_after)
+        w, h, _ = _find_presented_bmp(sdir, "title")
+        self.assertEqual((w, h), (342, 224))
+
+        # 2. Console `aspect square` switches back to 8:7 (1:1 square pixels) -> 400x224.
+        proc2, sdir2 = _run_session(
+            CAPTURE_ROOT / "console_aspect_square",
+            SHORT_TITLE_SCRIPT,
+            widescreen_cfg=False,
+            extra_env={
+                "SNESRECOMP_CHEAT_CONSOLE": "1",
+                "SNESRECOMP_CHEAT_CONSOLE_COMMANDS": "widescreen on;aspect 4:3;aspect square;close",
+            },
+        )
+        self.assertEqual(proc2.returncode, 0, proc2.stderr[-1000:])
+        log2 = (sdir2 / "run.log").read_text(encoding="utf-8")
+        self.assertIn("[cheat] aspect", log2)
+        self.assertIn("[settings] display_aspect=8:7", log2)
+        self.assertIn("[native-widescreen] enabled=1 extra=72 width=400", log2)
+        cfg_after2 = (sdir2 / "config.ini").read_text(encoding="utf-8")
+        self.assertIn("DisplayAspect = 8:7", cfg_after2)
+        w2, h2, _ = _find_presented_bmp(sdir2, "title")
+        self.assertEqual((w2, h2), (400, 224))
+
 
 if __name__ == "__main__":
     unittest.main()

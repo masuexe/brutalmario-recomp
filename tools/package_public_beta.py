@@ -421,13 +421,15 @@ def format_readme(target: str) -> str:
     - teleport 0x151 : 传送至指定房间号（0x000 - 0x1FF）
     - xy X Y         : 关卡内坐标瞬移
     - lang [en|ja|auto|toggle] : 切换文本语言（English / 日本語 / 跟随系统）
-    - widescreen [on|off|toggle] : 实时切换 16:9 原生宽屏 / 4:3 原版比例
+    - widescreen [on|off|toggle] : 实时切换 16:9 原生宽屏 / 标准比例
+    - aspect [8:7|4:3|1:1|toggle] : 实时切换像素比例（默认 8:7 正方形像素 / 可选 4:3 CRT 长方形像素）
     - mods           : 查看已安装与已激活的 Mod 包
     - Esc            : 关闭控制台
 
   [画面、宽屏、Mod 与音量调整 / Video, Widescreen, Mods & Audio Settings]
   • 按 Esc 或 O 键可打开游戏内设置界面（GAME SETTINGS），支持实时切换语言
-    （Auto / English / Japanese）、16:9 原生宽屏（4/W 键）、解除精灵上限（5 键）
+    （Auto / English / Japanese）、16:9 原生宽屏（4/W 键）、像素比例（6 键：
+    默认 1:1 正方形像素 8:7 / 可选 CRT 7:6 长方形像素 4:3）、解除精灵上限（5 键）
     并查看已挂载 Mod 数量，设置自动保存至 config/config.ini。
   • 预置 Mod 目录位于 mods/preloaded/packages/（同时备份于 bin/mods/preloaded/packages/），
     可通过 state.toml 或在数据包 overrides/ 目录挂载非可执行资源/汉化覆盖包。

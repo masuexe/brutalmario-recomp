@@ -10,6 +10,8 @@ void BmWidescreenAfterConfig(void);
 void BmWidescreenOnReset(void);
 void BmWidescreenPrepareFrame(int drawable_w, int drawable_h,
                               int *frame_w, int *frame_h);
+int BmWidescreenWindowBaseWidth(int frame_w);
+int BmWidescreenWindowBaseHeight(void);
 
 /* Called inside GameDrawPpuFrame() immediately before and after
  * snes_beam_frame_driver_draw_ppu_frame(). */

@@ -1,0 +1,11 @@
+--- a/runner/src/desktop/mmx_config.c
++++ b/runner/src/desktop/mmx_config.c
+@@ -699,7 +699,7 @@
+   }
+   for (int i = 0; i < kSnesHostPadSeats; ++i) s_player_src_seen[i] = false;
+   g_config.gamepad_deadzone = SNES_CONFIG_DEFAULT_DEADZONE;
+-  g_config.display_aspect = kSnesDisplayAspect_Crt4x3;
++  g_config.display_aspect = kSnesDisplayAspect_SquarePixels8x7;
+   g_config.skip_launcher = false;
+   snprintf(g_config.language, sizeof(g_config.language), "auto");
+   /* Rewind's built-in ring, matching snes_rewind.c's own defaults so a host

@@ -2,6 +2,7 @@
 #include "native_mods.h"
 
 #include "config.h"
+#include "display_aspect.h"
 #include "widescreen.h"
 #include "snes/cart.h"
 #include "snes/ppu.h"
@@ -18,11 +19,17 @@ extern Config g_config;
 extern Snes *g_snes;
 extern Ppu *g_ppu;
 
-/* Default 16:9 margin: 72 px per side -> 256 + 144 = 400x224 (aspect 1.7857). */
-enum { kBmWsDefaultExtra = 72 };
+/* Default 16:9 margins per side:
+ * - 1:1 square pixels (8:7): 72 px/side -> 400x224 (1.7857:1 ~= 16:9).
+ * - CRT 7:6 pixels (4:3):    43 px/side -> 342x224 (342*7/6 / 224 = 1.781:1 ~= 16:9). */
+enum {
+  kBmWsDefaultExtra = 72,
+  kBmWsCrtExtra = 43,
+};
 
 static int s_ws_env_override = -1; /* -1 = unset, 0 = force off, 1 = force on */
 static int s_ws_extra_target = kBmWsDefaultExtra;
+static int s_ws_extra_env_set = 0;
 static int s_ws_prefill_enabled = 1; /* BM_WS_PREFILL=0 disables Map16 shadow prefill */
 static int s_ws_logged_state = -1;
 static int s_ws_shadow_active = 0;
@@ -43,6 +50,7 @@ static void bm_ws_init_env(void) {
     long val = strtol(extra_env, NULL, 10);
     if (val >= 0 && val <= kPpuExtraLeftRight && val <= kWsExtraMax) {
       s_ws_extra_target = (int)val;
+      s_ws_extra_env_set = 1;
     }
   }
 
@@ -57,6 +65,18 @@ static int bm_ws_is_enabled(void) {
   if (s_ws_env_override >= 0) return s_ws_env_override;
   if (bm_mod_widescreen_enabled()) return 1;
   return g_config.widescreen ? 1 : 0;
+}
+
+int BmWidescreenWindowBaseWidth(int frame_w) {
+  int w = 0, h = 0;
+  SnesDisplayAspect_ComputePresentationSize(
+      frame_w > 0 ? frame_w : 256, 224,
+      SnesDisplayAspect_Clamp(g_config.display_aspect), &w, &h);
+  return w;
+}
+
+int BmWidescreenWindowBaseHeight(void) {
+  return 224;
 }
 
 void BmWidescreenAfterConfig(void) {
@@ -83,7 +103,12 @@ void BmWidescreenPrepareFrame(int drawable_w, int drawable_h,
   }
 
   int enabled = bm_ws_is_enabled();
-  int extra = enabled ? s_ws_extra_target : 0;
+  int target_extra = s_ws_extra_target;
+  if (!s_ws_extra_env_set &&
+      SnesDisplayAspect_Clamp(g_config.display_aspect) == kSnesDisplayAspect_Crt4x3) {
+    target_extra = kBmWsCrtExtra;
+  }
+  int extra = enabled ? target_extra : 0;
   if (extra > kPpuExtraLeftRight) extra = kPpuExtraLeftRight;
   if (extra > kWsExtraMax) extra = kWsExtraMax;
   if (extra < 0) extra = 0;

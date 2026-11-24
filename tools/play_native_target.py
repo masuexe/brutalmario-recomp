@@ -113,12 +113,17 @@ def main():
                 print(key + '=' + env[key])
         return
 
+    play_config = play_dir / 'config.ini'
+    if not play_config.is_file():
+        import shutil
+        shutil.copy2(ROOT / 'recomp/m1-config.ini', play_config)
+
     if script:
         scratch = ROOT / 'local/captures' / ('play-' + args.target)
         scratch.mkdir(parents=True, exist_ok=True)
         env.update(SNESRECOMP_DUMP_DIR=str(scratch))
     command = [str(binary), '--no-launcher',
-               '--config', str(ROOT / 'recomp/m1-config.ini'),
+               '--config', str(play_config),
                '--rom', str(rom)]
     if script:
         command += ['--script', str(script)]

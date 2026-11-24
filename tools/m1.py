@@ -166,10 +166,24 @@ def install_native_enhancements():
             'static const SnesDesktopHostGame kGameHost = {\n'
             '    .widescreen_supported = 1,\n'
             '    .native_widescreen   = 1,\n'
+            '    .display_aspect_supported = 1,\n'
             '    .msu1_supported      = 1,\n'
             '    .after_config        = &BmWidescreenAfterConfig,\n'
             '    .on_reset            = &BmWidescreenOnReset,\n'
+            '    .prepare_frame       = &BmWidescreenPrepareFrame,\n'
+            '    .window_base_width   = &BmWidescreenWindowBaseWidth,\n'
+            '    .window_base_height  = &BmWidescreenWindowBaseHeight,',
+        )
+    elif '.display_aspect_supported = 1,' not in main_src:
+        main_src = main_src.replace(
+            '    .native_widescreen   = 1,',
+            '    .native_widescreen   = 1,\n'
+            '    .display_aspect_supported = 1,',
+        ).replace(
             '    .prepare_frame       = &BmWidescreenPrepareFrame,',
+            '    .prepare_frame       = &BmWidescreenPrepareFrame,\n'
+            '    .window_base_width   = &BmWidescreenWindowBaseWidth,\n'
+            '    .window_base_height  = &BmWidescreenWindowBaseHeight,',
         )
     if main_src != main_c.read_text():
         main_c.write_text(main_src)
