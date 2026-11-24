@@ -1,6 +1,69 @@
 # Brutal Mario Recomp
 
-A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The accepted Demo 1-1 checkpoint has 68 AOT-eligible variants; demoOnly1 has separate bounded Boss, shop and map regressions. **Current restoration:** eight surrounding Star World courses have qualified exits, now combined in the cumulative center candidate. The center has bounded graphics, cannon/DK, damage and Boss-phase checks; its unfinished donor Boss ending is an accepted exception, preserved as-is with no authored clear condition. Sky Star was manually accepted with normal audio; later checkpoints use automation. Restoration proceeds through checked commits, with human checks requested only for essential unresolved questions. Whole-game fidelity and content recovery remain incomplete.
+A native PC port of carol's Brutal Mario / Super Kitiku Mario, with separate original-version baselines and a cross-version content-restoration track. The active Public Beta target is **`demo11-native-product-r52`** (all 71 native content packs, bilingual EN/JA runtime localization, Demo 7 English Overworld names, native SNESRecomp mod runtime, and opt-in 16:9 widescreen with Map16 BG1 margin prefill).
+
+## Quick Start: Run & Debug (`demo11-native-product-r52`)
+
+### 1. Interactive play (normal window)
+
+```sh
+# Standard play (4:3 default, isolated saves under local/play/demo11-native-product-r52/)
+python3 tools/play_native_target.py
+
+# Launch with 16:9 widescreen enabled and/or language override (en | ja | auto)
+BM_WIDESCREEN=1 python3 tools/play_native_target.py --lang en
+
+# Start with all levels unlocked (or warp straight to Special Zone)
+python3 tools/play_native_target.py --complete-all
+python3 tools/play_native_target.py --special-zone
+
+# Interactive launch directly from the build directory (uses local/build/<target>/)
+python3 tools/launch_native.py
+```
+
+### 2. Practice & debug cheats
+
+```sh
+# Warp directly to any room (0x000..0x1FF), with optional invincibility / air swim
+python3 tools/play_native_cheats.py --room 0x105 --invincible
+python3 tools/play_native_cheats.py --room 0x0FF --invincible --swim
+```
+
+**In-game shortcuts:**
+- **`Esc` / `O`**: Open **GAME SETTINGS** (live hot-toggle `Language` `1/2/3`, `Widescreen 16:9` `4/W`, `Sprite Limit` `5`, and view installed/active `Mods`).
+- **`~` (backquote)**: Open **Practice Cheat Console** (`invincible`, `swim`, `xy X Y`, `lives N`, `music HEX`, `map M X Y`, `teleport ROOM`, `lang en|ja|auto|toggle`, `widescreen on|off|toggle`, `mods`, `complete`, `help`).
+
+### 3. Useful debug environment variables
+
+| Variable | Effect |
+| --- | --- |
+| `BM_WIDESCREEN=1` / `0` | Force 16:9 widescreen on (`400x224`) or off (`256x224`) |
+| `BM_WIDESCREEN_EXTRA=72` | Override per-side widescreen pixel margin (default `72`) |
+| `BM_WS_PREFILL=0` | Disable Map16 BG1 margin prefill for A/B debugging |
+| `BM_LANG=en\|ja\|auto` | Override runtime localization language |
+| `BM_MOD_OVERRIDES_DIR=<dir>` | Override non-executable `BM_*` packs from a local directory |
+
+### 4. Build, test, and package
+
+```sh
+export PATH="/home/harp/.local/bin:$PATH"
+
+# Rebuild current product target (incremental Ninja build)
+python3 tools/m1.py --target demo11-native-product-r52 build
+
+# Run targeted widescreen + mod runtime E2E tests
+python3 -m unittest tests.test_product_r52_widescreen_and_mods -v
+
+# Run full unit test suite
+python3 -m unittest discover -s tests -p "test_*.py" -v
+
+# Build Windows binary + Linux/Windows ROM-free Public Beta ZIPs
+python3 tools/package_public_beta.py --target demo11-native-product-r52 --force-rebuild-windows
+```
+
+---
+
+## Inventory and Documentation
 
 User inputs remain in the sibling `patches/`, `references/`, and `roms/` directories. Inventory tools only read them. The M1 tools prepare a verified ROM copy and execute locally built tools; all downloaded sources, derived ROMs/code, executables, and captures stay under gitignored `local/`.
 

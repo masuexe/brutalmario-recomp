@@ -89,6 +89,11 @@ def main():
     play_dir = (args.play_dir or ROOT / 'local/play' / args.target).resolve()
     saves = play_dir / 'saves'
     saves.mkdir(parents=True, exist_ok=True)
+    mods_src = binary.parent / 'mods/preloaded/packages'
+    mods_dst = play_dir / 'mods/preloaded/packages'
+    if mods_src.is_dir() and not mods_dst.exists():
+        import shutil
+        shutil.copytree(mods_src, mods_dst)
     if args.complete_all or args.special_zone:
         current = saves / 'save.srm'
         if current.is_file():
